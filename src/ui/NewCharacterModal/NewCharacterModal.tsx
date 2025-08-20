@@ -38,7 +38,7 @@ export const NewCharacterModal: React.FC<NewCharacterModalProps> = (props) => {
             <Typography variant="h6" color="primary.main" fontWeight={"bold"}>
                 new character
             </Typography>
-            <Box sx={{ gap: 1 }}>
+            <Box sx={{ gap: 1, maxWidth: "75vw", overflow: "auto", margin: -2, padding: 2 }}>
                 {classes.map((character) => (
                     <NewCharacterContainer character={character} key={character.id} onChoose={onChooseCharacter} />
                 ))}

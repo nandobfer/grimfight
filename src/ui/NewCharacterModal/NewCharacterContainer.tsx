@@ -29,7 +29,7 @@ export const NewCharacterContainer: React.FC<NewCharacterContainerProps> = (prop
     )
 
     return (
-        <Button sx={{ padding: 0 }} variant="outlined" onClick={() => props.onChoose(character)}>
+        <Button sx={{ padding: 0, flexShrink: 0 }} variant="outlined" onClick={() => props.onChoose(character)}>
             <Paper sx={{ flexDirection: "column", gap: 1, padding: 1 }} elevation={5}>
                 <Typography variant="body1" fontWeight={"bold"}>
                     {character.name}
