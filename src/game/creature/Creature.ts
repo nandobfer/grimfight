@@ -426,7 +426,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     gainMana(manaGained: number) {
-        this.mana += manaGained
+        this.mana = Math.min(this.mana + manaGained, this.maxMana)
         this.manaBar?.setValue(this.mana, this.maxMana)
     }
 
