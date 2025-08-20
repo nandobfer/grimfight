@@ -7,6 +7,7 @@ import { Character } from "./Character"
 export class CharacterGroup extends Phaser.GameObjects.Group {
     isPlayer: boolean = false
     damageChart: DamageChart
+    declare scene: Game
 
     constructor(
         scene: Game,
@@ -56,11 +57,55 @@ export class CharacterGroup extends Phaser.GameObjects.Group {
     }
 
     reset() {
+        const grid = this.scene.grid
         const characters = this.getChildren()
-        const y = this.isPlayer ? 503 : 166
+        if (!grid || characters.length === 0) return
 
-        Phaser.Actions.GridAlign(characters, { cellHeight: 64, cellWidth: 64, y, x: 214 })
-        characters.forEach((character) => character.reset())
+        const cols = grid.cols
+        const rows = grid.rows
+
+        // Prefer bottom 3 for player, top 3 for enemy
+        const baseRows = this.isPlayer ? [rows - 1, rows - 2, rows - 3] : [0, 1, 2]
+
+        // Keep only valid rows
+        let rowsOrder = baseRows.filter((r) => r >= 0 && r < rows)
+
+        // If more units than slots, add additional rows outward until enough (optional but safe)
+        while (rowsOrder.length * cols < characters.length) {
+            const next = this.isPlayer ? Math.min(...rowsOrder) - 1 : Math.max(...rowsOrder) + 1
+            if (next < 0 || next >= rows) break
+            rowsOrder.push(next)
+        }
+
+        // How many per row (row-major), then center them horizontally
+        const perRow: number[] = []
+        {
+            let remaining = characters.length
+            for (let i = 0; i < rowsOrder.length && remaining > 0; i++) {
+                const take = Math.min(remaining, cols)
+                perRow.push(take)
+                remaining -= take
+            }
+        }
+
+        // Place
+        let idx = 0
+        for (let i = 0; i < perRow.length; i++) {
+            const row = rowsOrder[i]
+            const count = perRow[i]
+            const startCol = Math.floor((cols - count) / 2) // center this row’s group
+
+            for (let j = 0; j < count; j++) {
+                const col = startCol + j
+                const { x, y } = grid.cellToCenter(col, row)
+                const c = characters[idx++]
+
+                c.setPosition(x, y)
+                c.body?.reset(x, y)
+
+                c.reset() // HP/mana/ui/etc
+            }
+        }
     }
 
     clear(removeFromScene?: boolean, destroyChild?: boolean) {
