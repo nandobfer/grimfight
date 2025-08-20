@@ -131,14 +131,12 @@ export class Game extends Scene {
 
     clearStage() {
         this.stage += 1
+        this.enemyTeam.clear(true, true)
         this.buildStage()
     }
 
     buildStage() {
-        // clear previous enemies
-        this.enemyTeam.clear(true, true)
-
-        const { monsters } = generateEncounter(this, this.stage)
+        const { monsters } = generateEncounter(this, 3)
 
         // add to group; positions come from enemyTeam.reset() honoring preferredPosition
         for (const m of monsters) {
@@ -150,12 +148,16 @@ export class Game extends Scene {
     }
 
     anyTeamWiped() {
-        const aliveEnemyCharacters = this.enemyTeam.countActive()
-        if (aliveEnemyCharacters === 0) {
+        if (this.enemyTeam.countActive() === 0) {
             this.clearStage()
+            return true
         }
-        const alivePlayerCharacters = this.playerTeam.countActive()
-        return aliveEnemyCharacters === 0 || alivePlayerCharacters === 0
+
+        if (this.playerTeam.countActive() === 0) {
+            return true
+        }
+
+        return false
     }
 
     loadPlayerGold() {

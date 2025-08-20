@@ -17,9 +17,9 @@ export function generateEncounter(scene: Game, stage: number, seedBase = 1337): 
     if (isBoss) {
         // random boss base
         const { ctor } = rng.pick(MonsterRegistry.entries())
-        const m = new ctor(scene, -1000, -1000) // temp offscreen; positioned in reset()
-        m.makeBoss(targetCR)
-        out.push(m)
+        const monster = new ctor(scene, -1000, -1000) // temp offscreen; positioned in reset()
+        monster.makeBoss(targetCR)
+        out.push(monster)
         return { monsters: out, isBoss: true }
     }
 
@@ -33,24 +33,27 @@ export function generateEncounter(scene: Game, stage: number, seedBase = 1337): 
 
     while (sum < targetCR - tol && out.length < maxSlots) {
         const pick = rng.pick(pool)
-        const m = new pick.ctor(scene, -1000, -1000)
-        const cr = m.challengeRating
+        const monster = new pick.ctor(scene, -1000, -1000)
+        const cr = monster.challengeRating
         // If overshooting too much, try another once; otherwise accept
         if (sum + cr > targetCR + tol && out.length > 0) {
             // one re-roll
             const alt = rng.pick(pool)
-            const m2 = new alt.ctor(scene, -1000, -1000)
-            const cr2 = m2.challengeRating
+            const altMonster = new alt.ctor(scene, -1000, -1000)
+            const cr2 = altMonster.challengeRating
             if (sum + cr2 <= targetCR + tol || cr2 <= cr) {
-                out.push(m2)
+                out.push(altMonster)
                 sum += cr2
+                monster.destroy()
                 continue
             }
-            m2.destroy()
+            altMonster.destroy()
         }
-        out.push(m)
+        out.push(monster)
         sum += cr
     }
+
+    console.log(out)
 
     return { monsters: out, isBoss: false }
 }
