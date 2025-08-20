@@ -133,10 +133,11 @@ export class Game extends Scene {
         this.stage += 1
         this.enemyTeam.clear(true, true)
         this.buildStage()
+        EventBus.emit("floor-change", this.stage)
     }
 
     buildStage() {
-        const { monsters } = generateEncounter(this, 3)
+        const { monsters } = generateEncounter(this, this.stage)
 
         // add to group; positions come from enemyTeam.reset() honoring preferredPosition
         for (const m of monsters) {

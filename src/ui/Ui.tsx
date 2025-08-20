@@ -8,6 +8,7 @@ import { useGameScene } from "../hooks/useGameScene"
 import { CharactersRow } from "./CharacterSheet/CharactersRow"
 import { LoadingGame } from "./LoadingGame"
 import { Recount } from "./Recount/Recount"
+import { Counters } from "./Counters/Counters"
 
 interface UiProps {}
 
@@ -54,6 +55,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                     <>
                         <CharactersRow charactersGroup={game.playerTeam} />
                         <Box sx={{ flexDirection: "column" }}>
+                            <Counters />
                             <Recount />
                             <GameStateButtons game={game} />
                         </Box>
