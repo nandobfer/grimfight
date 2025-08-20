@@ -1,6 +1,9 @@
 import { Scene } from "phaser"
 import { EventBus } from "../tools/EventBus"
 
+const available_classes = ["rogue", "knight", "archer", "mage"]
+const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic"]
+
 export class Preloader extends Scene {
     constructor() {
         super("Preloader")
@@ -22,7 +25,8 @@ export class Preloader extends Scene {
 
         this.load.image("arena", "dark_arena_2.png")
 
-        this.loadCharacterSpritesheets()
+        this.loadSpritesheets(available_classes, "characters")
+        this.loadSpritesheets(available_monsters, "monsters")
         this.loadParticles()
     }
 
@@ -30,11 +34,9 @@ export class Preloader extends Scene {
         this.scene.start("Game")
     }
 
-    loadCharacterSpritesheets() {
-        const available_sheets = ["rogue", "knight", "archer", "mage"]
-
-        for (const character_sheet of available_sheets) {
-            this.load.spritesheet(character_sheet, `spritesheets/characters/${character_sheet}.png`, {
+    loadSpritesheets(sheets: string[], dir: string) {
+        for (const sheet of sheets) {
+            this.load.spritesheet(sheet, `spritesheets/${dir}/${sheet}.png`, {
                 frameWidth: 64,
                 frameHeight: 64,
             })
