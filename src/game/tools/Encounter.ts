@@ -87,14 +87,15 @@ export function generateEncounter(scene: Game, stage: number, seedBase = 1337): 
         out.push(monster)
         sum += actual
 
-        console.debug("pick", monster.constructor.name, {
-            poolCr: picked.cr,
-            actualCr: actual,
-            sumBefore: sum,
-            sumAfter: sum + actual,
-            remaining: targetCR + tol - sum,
-        })
+        // console.debug("pick", monster.constructor.name, {
+        //     poolCr: picked.cr,
+        //     actualCr: actual,
+        //     sumBefore: sum,
+        //     sumAfter: sum + actual,
+        //     remaining: targetCR + tol - sum,
+        // })
     }
-
+    console.log(CR_CACHE)
+        
     return { monsters: out, isBoss: false }
 }
