@@ -1,0 +1,261 @@
+// src/game/scenes/Game.ts
+
+import { CharacterGroup } from "../characters/CharacterGroup"
+import { Knight } from "../characters/Knight"
+import { EventBus } from "../EventBus"
+import { Scene } from "phaser"
+import { Grid } from "../Grid"
+import { CharacterDto } from "../characters/Character"
+import { CharacterRegistry } from "../characters/CharacterRegistry"
+import { Torch } from "../fx/Torch"
+import { FireEffect } from "../fx/FireEffect"
+
+export type GameState = "fighting" | "idle"
+
+export class Game extends Scene {
+    camera: Phaser.Cameras.Scene2D.Camera
+    background: Phaser.GameObjects.Image
+    gameText: Phaser.GameObjects.Text
+    playerTeam: CharacterGroup
+    enemyTeam: CharacterGroup
+    state: GameState = "idle"
+    walls: Phaser.GameObjects.Group
+    stage = 1
+    grid: Grid
+    private fireEffects: Phaser.GameObjects.Group
+
+    playerGold = 0
+
+    constructor() {
+        super("Game")
+    }
+
+    create() {
+        this.camera = this.cameras.main
+
+        this.createBackground()
+        this.grid = new Grid(this, this.background)
+
+        this.playerTeam = new CharacterGroup(this, [], { isPlayer: true })
+
+        const knight = new Knight(this, this.camera.width / 2.5, this.camera.height / 2.5, "123")
+        const knight2 = new Knight(this, this.camera.width / 1.5, this.camera.height / 2.5, "321")
+        this.enemyTeam = new CharacterGroup(this, [knight, knight2])
+
+        this.configurePhysics()
+        this.lights.enable().setAmbientColor(0xffffff)
+
+        this.enemyTeam.reset()
+
+        this.loadPlayerCharacters()
+        this.loadPlayerGold()
+        this.createArenaTorches()
+
+        EventBus.emit("game-ready", this)
+    }
+
+    createBackground() {
+        this.background = this.add.image(this.camera.width / 2, this.camera.height / 2, "arena")
+        this.background.setDepth(-2)
+        this.background.setScale(0.6)
+        this.background.setPipeline("Light2D")
+
+        // Walls (invisible colliders)
+        const thickness = 50 // adjust to match your arena border thickness
+        const arenaWidth = this.background.displayWidth
+        const arenaHeight = this.background.displayHeight
+        const centerX = this.camera.width / 2
+        const centerY = this.camera.height / 2
+
+        this.walls = this.physics.add.staticGroup()
+
+        // Top wall
+        this.walls
+            .create(centerX, centerY + 68 - arenaHeight / 2)
+            .setDisplaySize(arenaWidth, thickness)
+            .setVisible(false)
+            .refreshBody()
+
+        // Bottom wall
+        this.walls
+            .create(centerX, centerY - 90 + arenaHeight / 2)
+            .setDisplaySize(arenaWidth, thickness)
+            .setVisible(false)
+            .refreshBody()
+
+        // Left wall
+        this.walls
+            .create(centerX + 72 - arenaWidth / 2, centerY)
+            .setDisplaySize(thickness, arenaHeight)
+            .setVisible(false)
+            .refreshBody()
+
+        // Right wall
+        this.walls
+            .create(centerX - 72 + arenaWidth / 2, centerY)
+            .setDisplaySize(thickness, arenaHeight)
+            .setVisible(false)
+            .refreshBody()
+    }
+
+    configurePhysics() {
+        this.physics.add.overlap(this.playerTeam, this.playerTeam)
+        this.physics.add.overlap(this.playerTeam, this.enemyTeam)
+        this.physics.add.overlap(this.enemyTeam, this.enemyTeam)
+
+        this.physics.add.collider(this.walls, this.playerTeam)
+        this.physics.add.collider(this.walls, this.enemyTeam)
+    }
+
+    changeScene() {
+        this.scene.start("GameOver")
+    }
+
+    changeState(state: GameState) {
+        this.state = state
+        EventBus.emit("gamestate", this.state)
+    }
+
+    finishRound() {
+        this.playerTeam.reset()
+    }
+
+    anyTeamWiped() {
+        const aliveEnemyCharacters = this.enemyTeam.countActive()
+        const alivePlayerCharacters = this.playerTeam.countActive()
+        return aliveEnemyCharacters === 0 || alivePlayerCharacters === 0
+    }
+
+    loadPlayerGold() {
+        try {
+            const data = localStorage.getItem("gold")
+            if (data) {
+                this.playerGold = Number(data)
+            }
+        } catch (error) {
+            console.error("Error loading player gold:", error)
+        }
+    }
+
+    getSavedCharacters(): CharacterDto[] {
+        try {
+            const data = localStorage.getItem("characters")
+            if (data) {
+                return JSON.parse(data) as CharacterDto[]
+            }
+        } catch (error) {
+            console.error("Error loading saved characters:", error)
+        }
+        return []
+    }
+
+    loadPlayerCharacters() {
+        this.playerTeam.clear(true, true)
+        const characters = this.getSavedCharacters()
+
+        for (const dto of characters) {
+            try {
+                const character = CharacterRegistry.create(dto.name, this, dto.boardX, dto.boardY, dto.id)
+                character.loadFromDto(dto)
+                this.playerTeam.add(character)
+            } catch (error) {
+                console.error("Error creating character:", error)
+            }
+        }
+
+        this.playerTeam.reset()
+
+        if (this.playerTeam.getLength() === 0) {
+            this.chooseNewCharacter()
+        }
+    }
+
+    savePlayerCharacters(characters: CharacterDto[]) {
+        try {
+            localStorage.setItem("characters", JSON.stringify(characters))
+        } catch (error) {
+            console.error("Error saving characters:", error)
+        }
+    }
+
+    newPlayerCharacter(dto: CharacterDto) {
+        const characters = this.getSavedCharacters()
+
+        // Check if character with this ID already exists
+        const existingIndex = characters.findIndex((c) => c.id === dto.id)
+        if (existingIndex >= 0) {
+            // Update existing character
+            characters[existingIndex] = dto
+        } else {
+            // Add new character
+            characters.push(dto)
+        }
+
+        this.savePlayerCharacters(characters)
+        this.loadPlayerCharacters() // Reload to reflect changes
+    }
+
+    // Add this method to remove a character
+    removePlayerCharacter(characterId: string) {
+        const characters = this.getSavedCharacters()
+        const filteredCharacters = characters.filter((c) => c.id !== characterId)
+        this.savePlayerCharacters(filteredCharacters)
+        this.loadPlayerCharacters()
+    }
+
+    // Add this method to clear all characters
+    clearAllCharacters() {
+        this.savePlayerCharacters([])
+        this.loadPlayerCharacters()
+    }
+
+    chooseNewCharacter() {
+        EventBus.emit("choose-character")
+    }
+
+    createArenaTorches() {
+        const centerX = this.camera.width / 2
+        const centerY = this.camera.height / 2
+        const arenaWidth = this.background.displayWidth
+        const arenaHeight = this.background.displayHeight
+        const offset = 83
+
+        // Calculate corner positions
+        const topLeft = {
+            x: centerX - arenaWidth / 2 + offset, // Adjust offset as needed
+            y: centerY - arenaHeight / 2 + offset + 17,
+        }
+
+        const topRight = {
+            x: centerX + arenaWidth / 2 - offset,
+            y: centerY - arenaHeight / 2 + offset + 17,
+        }
+
+        const bottomLeft = {
+            x: centerX - arenaWidth / 2 + offset,
+            y: centerY + arenaHeight / 2 - offset - 7,
+        }
+
+        const bottomRight = {
+            x: centerX + arenaWidth / 2 - offset,
+            y: centerY + arenaHeight / 2 - offset - 7,
+        }
+
+        this.fireEffects = this.add.group()
+
+        // Add fire effects to corners
+        this.fireEffects.add(new FireEffect(this, topLeft.x, topLeft.y))
+        this.fireEffects.add(new FireEffect(this, topRight.x, topRight.y))
+        this.fireEffects.add(new FireEffect(this, bottomLeft.x, bottomLeft.y))
+        this.fireEffects.add(new FireEffect(this, bottomRight.x, bottomRight.y))
+    }
+
+    update(time: number, delta: number): void {
+        if (this.state === "fighting") {
+            if (this.anyTeamWiped()) {
+                this.changeState("idle")
+                this.finishRound()
+            }
+        }
+    }
+}
