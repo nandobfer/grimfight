@@ -2,6 +2,8 @@
 import { Game } from "../../scenes/Game"
 import { Monster } from "./Monster"
 import { Skeleton } from "./Skeleton"
+import { Zombie } from "./Zombie"
+import { Demonic } from "./Zombie copy"
 
 type Ctor = new (scene: Game, x: number, y: number) => Monster
 
@@ -25,4 +27,5 @@ export class MonsterRegistry {
 }
 
 MonsterRegistry.register("skeleton", Skeleton)
-// register more as you add them
+MonsterRegistry.register("zombie", Zombie)
+MonsterRegistry.register("demonic", Demonic)
