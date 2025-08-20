@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {Box, CircularProgress, LinearProgress} from '@mui/material'
-import { EventBus } from '../game/EventBus'
+import { EventBus } from "../game/tools/EventBus"
 
 interface LoadingGameProps {
     

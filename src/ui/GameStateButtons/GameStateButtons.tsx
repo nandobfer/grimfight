@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Box, Button, Divider } from "@mui/material"
 import { Game, GameState } from "../../game/scenes/Game"
-import { EventBus } from "../../game/EventBus"
+import { EventBus } from "../../game/tools/EventBus"
 import { DebugMenu } from "../DebugMenu/DebugMenu"
 
 interface GameStateButtonsProps {
@@ -17,7 +17,7 @@ export const GameStateButtons: React.FC<GameStateButtonsProps> = (props) => {
     }
 
     const onPlayClick = () => {
-        props.game.changeState("fighting")
+        props.game.startRound()
     }
 
     const onStopClick = () => {

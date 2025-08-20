@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { Box, ThemeProvider } from "@mui/material"
-import { EventBus } from "../game/EventBus"
+import { EventBus } from "../game/tools/EventBus"
 import { useMuiTheme } from "../hooks/useMuiTheme"
 import { GameStateButtons } from "./GameStateButtons/GameStateButtons"
 import { NewCharacterModal } from "./NewCharacterModal/NewCharacterModal"
 import { useGameScene } from "../hooks/useGameScene"
 import { CharactersRow } from "./CharacterSheet/CharactersRow"
 import { LoadingGame } from "./LoadingGame"
+import { Recount } from "./Recount/Recount"
 
 interface UiProps {}
 
@@ -52,7 +53,10 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {game && (
                     <>
                         <CharactersRow charactersGroup={game.playerTeam} />
-                        <GameStateButtons game={game} />
+                        <Box sx={{ flexDirection: "column" }}>
+                            <Recount />
+                            <GameStateButtons game={game} />
+                        </Box>
                     </>
                 )}
             </Box>

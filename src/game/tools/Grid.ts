@@ -1,7 +1,7 @@
 // src/game/grid/Grid.ts
 import Phaser from "phaser"
-import { Game } from "./scenes/Game"
-import { Character } from "./characters/Character"
+import { Game } from "../scenes/Game"
+import { Character } from "../characters/Character"
 
 type Insets = { left: number; right: number; top: number; bottom: number }
 type GridOpts = {

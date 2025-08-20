@@ -2,9 +2,9 @@
 
 import { CharacterGroup } from "../characters/CharacterGroup"
 import { Knight } from "../characters/Knight"
-import { EventBus } from "../EventBus"
+import { EventBus } from "../tools/EventBus"
 import { Scene } from "phaser"
-import { Grid } from "../Grid"
+import { Grid } from "../tools/Grid"
 import { CharacterDto } from "../characters/Character"
 import { CharacterRegistry } from "../characters/CharacterRegistry"
 import { FireEffect } from "../fx/FireEffect"
@@ -118,6 +118,11 @@ export class Game extends Scene {
     changeState(state: GameState) {
         this.state = state
         EventBus.emit("gamestate", this.state)
+    }
+
+    startRound() {
+        this.changeState("fighting")
+        this.playerTeam.damageChart.reset()
     }
 
     finishRound() {

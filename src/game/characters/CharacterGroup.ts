@@ -1,12 +1,15 @@
 // src/game/characters/CharacterGroup.ts
 
-import { Scene } from "phaser"
+import { Game } from "../scenes/Game"
+import { DamageChart } from "../tools/DamageChart"
 import { Character } from "./Character"
 
 export class CharacterGroup extends Phaser.GameObjects.Group {
     isPlayer: boolean = false
+    damageChart: DamageChart
+
     constructor(
-        scene: Scene,
+        scene: Game,
         children?: Character[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig,
         config?: (Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig) & { isPlayer?: boolean }
     ) {
@@ -18,6 +21,7 @@ export class CharacterGroup extends Phaser.GameObjects.Group {
             this.setChildrenPlayer()
         }
         this.resetMouseEvents()
+        this.damageChart = new DamageChart(this)
     }
 
     override getChildren() {
@@ -31,6 +35,8 @@ export class CharacterGroup extends Phaser.GameObjects.Group {
             child.resetMouseEvents()
         }
 
+        child.team = this
+
         return this
     }
 
@@ -38,6 +44,7 @@ export class CharacterGroup extends Phaser.GameObjects.Group {
         const characters = this.getChildren()
         for (const character of characters) {
             character.isPlayer = true
+            character.team = this
         }
     }
 

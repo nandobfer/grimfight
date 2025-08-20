@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography, useMediaQuery } from "@mui/material"
 import { Character } from "../../game/characters/Character"
 import { ArrowDropDown, Expand } from "@mui/icons-material"
-import { EventBus } from "../../game/EventBus"
+import { EventBus } from "../../game/tools/EventBus"
 
 interface CharacterSheetProps {
     character: Character

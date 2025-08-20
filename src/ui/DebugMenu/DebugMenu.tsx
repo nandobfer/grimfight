@@ -1,7 +1,7 @@
 import React from 'react'
 import {Box, Button} from '@mui/material'
 import { Game } from '../../game/scenes/Game'
-import { EventBus } from '../../game/EventBus'
+import { EventBus } from "../../game/tools/EventBus"
 
 interface DebugMenuProps {
     game: Game   

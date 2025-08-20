@@ -3,9 +3,10 @@ import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 import { ProgressBar } from "../ui/ProgressBar"
 import { spawnParrySpark } from "../fx/Parry"
-import { EventBus } from "../EventBus"
+import { EventBus } from "../tools/EventBus"
 import { LevelBadge } from "../ui/LevelBadge"
 import { DamageType, showDamageText } from "../ui/DamageNumbers"
+import { CharacterGroup } from "./CharacterGroup"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -39,6 +40,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     originalDepth: number
     id: string
     isPlayer: boolean = false
+    team: CharacterGroup
 
     level = 1
     health = 0
@@ -489,6 +491,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         const damage = this.attackDamage * Math.max(1, damageMultiplier)
         this.target.takeDamage(damage, this, "bleeding", { crit: isCrit, type: damagetype })
         this.gainMana(this.manaPerAttack)
+        this.team.damageChart.plotDamage(this, damage)
     }
 
     takeDamage(damage: number, attacker: Character, effect = "bleeding", opts?: { crit?: boolean; type: DamageType }) {
