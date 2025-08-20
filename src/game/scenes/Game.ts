@@ -1,14 +1,14 @@
 // src/game/scenes/Game.ts
 
-import { CharacterGroup } from "../characters/CharacterGroup"
 import { EventBus } from "../tools/EventBus"
 import { Scene } from "phaser"
 import { Grid } from "../tools/Grid"
-import { CharacterDto } from "../characters/Character"
-import { CharacterRegistry } from "../characters/CharacterRegistry"
+import { CharacterRegistry } from "../creature/CharacterRegistry"
 import { FireEffect } from "../fx/FireEffect"
 import { generateEncounter } from "../tools/Encounter"
-import { MonsterGroup } from "../characters/monsters/MonsterGroup"
+import { MonsterGroup } from "../creature/monsters/MonsterGroup"
+import { CharacterGroup } from "../creature/character/CharacterGroup"
+import { CharacterDto } from "../creature/character/Character"
 
 export type GameState = "fighting" | "idle"
 

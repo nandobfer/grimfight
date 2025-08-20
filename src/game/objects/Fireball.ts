@@ -1,5 +1,5 @@
 // src/objects/Arrow.ts
-import { Character } from "../characters/Character"
+import { Creature } from "../creature/Creature"
 import { FireHit } from "../fx/FireHit"
 import { DamageType } from "../ui/DamageNumbers"
 import { Projectile } from "./Projectile"
@@ -9,8 +9,8 @@ export class Fireball extends Projectile {
     private light: Phaser.GameObjects.Light
     private explosion: FireHit
 
-    constructor(owner: Character) {
-        super(owner, "fireball0", "bleeding", 'fire')
+    constructor(owner: Creature) {
+        super(owner, "fireball0", "bleeding", "fire")
         this.setScale(0.075, 0.075)
         this.toggleFlipY()
         this.toggleFlipX()
@@ -82,16 +82,11 @@ export class Fireball extends Projectile {
             return
         }
 
-        const distance = Phaser.Math.Distance.Between(
-            this.x, 
-            this.y, 
-            enemy.x, 
-            enemy.y
-        );
-        
-        const enemyRadius = enemy.body.width / 2; // Approximate enemy radius
-        const penetrationDepth = enemyRadius - distance;
-        
+        const distance = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y)
+
+        const enemyRadius = enemy.body.width / 2 // Approximate enemy radius
+        const penetrationDepth = enemyRadius - distance
+
         if (penetrationDepth >= 15) {
             super.onHit()
             this.createExplosionEffect()
@@ -102,5 +97,4 @@ export class Fireball extends Projectile {
         this.createExplosionEffect()
         this.destroy()
     }
-
 }

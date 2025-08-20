@@ -1,33 +1,28 @@
-import { Character } from "../characters/Character"
-import { CharacterGroup } from "../characters/CharacterGroup"
+import { Creature } from "../creature/Creature"
+import { CreatureGroup } from "../creature/CreatureGroup"
 import { EventBus } from "./EventBus"
 
 export interface DamageMeter {
-    character: Character
+    character: Creature
     damage: number
 }
 
 export class DamageChart {
-    team: CharacterGroup
+    team: CreatureGroup
     damageMeter = new Map<string, DamageMeter>()
     damageMeterArray: DamageMeter[] = []
-    private emitUpdate = false
 
-    constructor(team: CharacterGroup) {
+    constructor(team: CreatureGroup) {
         this.team = team
-        if (this.team.isPlayer) {
-            this.emitUpdate = true
-        }
 
         this.reset()
 
-        EventBus.on('request-damage-chart', () => {
+        EventBus.on("request-damage-chart", () => {
             this.emitArray()
         })
-        
     }
 
-    plotDamage(character: Character, damage: number) {
+    plotDamage(character: Creature, damage: number) {
         this.damageMeter.set(character.id, { character, damage })
         this.updateMeterArray()
         this.emitArray()
@@ -38,16 +33,14 @@ export class DamageChart {
     }
 
     private emitArray() {
-        if (this.emitUpdate) {
-            EventBus.emit("damage-chart", this.damageMeterArray)
-        }
+        EventBus.emit("damage-chart", this.damageMeterArray)
     }
 
     reset() {
         this.damageMeter.clear()
         const characters = this.team.getChildren()
         for (const character of characters) {
-            this.damageMeter.set(character.id, {character, damage: 0})
+            this.damageMeter.set(character.id, { character, damage: 0 })
         }
 
         this.updateMeterArray()

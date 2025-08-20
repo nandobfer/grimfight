@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import { Character } from "../characters/Character"
+import { Creature } from "../creature/Creature"
 import { Game } from "../scenes/Game"
 
 type Opts = {
@@ -11,12 +11,12 @@ export type UiElementChildren = (Phaser.GameObjects.Graphics | Phaser.GameObject
 
 export class UiElement {
     scene: Game
-    target: Character
+    target: Creature
     offsetX: number
     offsetY: number
     elements: UiElementChildren[]
 
-    constructor(target: Character, opts: Opts = {}, elements: UiElementChildren[]) {
+    constructor(target: Creature, opts: Opts = {}, elements: UiElementChildren[]) {
         this.scene = target.scene
         this.target = target
 
@@ -24,10 +24,8 @@ export class UiElement {
         this.offsetY = opts.offsetY ?? 0
         this.elements = [...elements]
 
-        
         this.setVisible(true)
         this.updatePosition()
-        
     }
 
     updatePosition() {
@@ -46,7 +44,6 @@ export class UiElement {
 
     setAlpha(a: number) {
         this.elements.forEach((item) => item.setAlpha(a))
-        
     }
 
     destroy() {

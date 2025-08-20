@@ -1,11 +1,11 @@
 // src/objects/Arrow.ts
 import Phaser from "phaser"
 import { Game } from "../scenes/Game"
-import { Character } from "../characters/Character"
+import { Creature } from "../creature/Creature"
 import { DamageType } from "../ui/DamageNumbers"
 
 export class Projectile extends Phaser.Physics.Arcade.Sprite {
-    owner: Character
+    owner: Creature
     startX = 0
     startY = 0
     onHitEffect: string
@@ -15,7 +15,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     declare scene: Game
     declare body: Phaser.Physics.Arcade.Body
 
-    constructor(owner: Character, texture: string, onHitEffect: string, damageType: DamageType) {
+    constructor(owner: Creature, texture: string, onHitEffect: string, damageType: DamageType) {
         super(owner.scene, owner.x, owner.y, texture)
         owner.scene.add.existing(this)
         owner.scene.physics.add.existing(this)
@@ -39,7 +39,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
         const enemyTeam = this.scene.playerTeam.contains(this.owner) ? this.scene.enemyTeam : this.scene.playerTeam
         this.scene.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
-            const enemy = enemyObj as Character
+            const enemy = enemyObj as Creature
             if (!enemy.active) return
 
             this.onHit()
@@ -77,7 +77,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     onHit() {
-        this.owner.onAttack(this.damageType)
+        this.owner.onAttackLand(this.damageType)
         this.destroy()
     }
 

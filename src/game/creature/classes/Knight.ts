@@ -1,8 +1,8 @@
 import { Game } from "../../scenes/Game"
-import { Character } from "../Character"
+import { Character } from "../character/Character"
 
 export class Knight extends Character {
-    maxHealth = 200
+    maxHealth = 750
     armor = 5
     resistance = 10
 

@@ -1,6 +1,6 @@
 // src/ui/HealthBar.ts
 import Phaser from "phaser"
-import { Character } from "../characters/Character"
+import { Creature } from "../creature/Creature"
 import { UiElement } from "./UiElement"
 
 export interface BarOptions {
@@ -20,7 +20,7 @@ export class ProgressBar extends UiElement {
     private fillColor: number
     private interpolateColor: boolean
 
-    constructor(target: Character, options: BarOptions) {
+    constructor(target: Creature, options: BarOptions) {
         const scene = target.scene
 
         const bg = scene.add.graphics({ x: 0, y: 0 }).setDepth(target.depth + 100)
@@ -31,7 +31,7 @@ export class ProgressBar extends UiElement {
 
         this.width = 30
         this.height = 4
-        this.offsetX -= this.width/2
+        this.offsetX -= this.width / 2
         this.offsetY = options.offsetY
         this.borderColor = 0x000000
         this.borderWidth = 1

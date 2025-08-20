@@ -1,7 +1,7 @@
 // src/game/grid/Grid.ts
 import Phaser from "phaser"
 import { Game } from "../scenes/Game"
-import { Character } from "../characters/Character"
+import { Creature } from "../creature/Creature"
 
 type Insets = { left: number; right: number; top: number; bottom: number }
 type GridOpts = {
@@ -130,7 +130,7 @@ export class Grid {
         this.hi.setVisible(false)
     }
 
-    snapCharacter(character: Character, wx: number, wy: number) {
+    snapCharacter(character: Creature, wx: number, wy: number) {
         const cell = this.worldToCell(wx, wy)
         if (!cell || !this.isDroppableRow(cell.row)) return false
         const { x, y } = this.cellToCenter(cell.col, cell.row)

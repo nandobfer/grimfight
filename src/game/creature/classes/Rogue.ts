@@ -1,5 +1,5 @@
 import { Game } from "../../scenes/Game"
-import { Character } from "../Character"
+import { Character } from "../character/Character"
 
 export class Rogue extends Character {
     attackSpeed = 1.5

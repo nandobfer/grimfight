@@ -3,7 +3,22 @@ import { Game } from "../../scenes/Game"
 import { Monster } from "./Monster"
 import { Skeleton } from "./Skeleton"
 import { Zombie } from "./Zombie"
-import { Demonic } from "./Zombie copy"
+import { Demonic } from "./Demonic"
+import { StatsLike } from "../../tools/ChallengeRating"
+
+const CR_1_MONSTER: Record<string, StatsLike> = {
+    skeleton: {
+        maxHealth: 350,
+        armor: 0,
+        resistance: 0,
+        attackDamage: 15,
+        attackSpeed: 1,
+        critChance: 0,
+        critDamageMultiplier: 2,
+        attackRange: 1,
+        speed: 30,
+    },
+}
 
 type Ctor = new (scene: Game, x: number, y: number) => Monster
 
@@ -23,6 +38,11 @@ export class MonsterRegistry {
     }
     static entries(): Array<{ name: string; ctor: Ctor }> {
         return [...this.registry.entries()].map(([name, ctor]) => ({ name, ctor }))
+    }
+
+    static getBaseStats(id: keyof typeof CR_1_MONSTER): StatsLike {
+        // return a copy to avoid accidental mutation
+        return { ...CR_1_MONSTER[id] }
     }
 }
 

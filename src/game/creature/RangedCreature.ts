@@ -1,13 +1,15 @@
+// src/game/creature/RangedCreature.ts
+
 import { Projectile } from "../objects/Projectile"
 import { Game } from "../scenes/Game"
-import { Character } from "./Character"
+import { Creature } from "./Creature"
 
-export class RangedCharacter<T extends Projectile> extends Character {
+export class RangedCreature<T extends Projectile> extends Creature {
     attackRange = 3
-    projectile: new (character: RangedCharacter<T>) => T
+    projectile: new (character: RangedCreature<T>) => T
     fireProjectileOnFrame = 0
 
-    constructor(scene: Game, x: number, y: number, texture: string, projectile: new (character: RangedCharacter<T>) => T, id: string, fireProjectileOnFrame: number) {
+    constructor(scene: Game, x: number, y: number, texture: string, projectile: new (character: RangedCreature<T>) => T, id: string, fireProjectileOnFrame: number) {
         super(scene, x, y, texture, id)
         this.projectile = projectile
         this.fireProjectileOnFrame = fireProjectileOnFrame
@@ -23,7 +25,7 @@ export class RangedCharacter<T extends Projectile> extends Character {
         projectile.fire()
     }
 
-    handleAttack() {
+    startAttack() {
         if (this.isAttacking || !this.target?.active) {
             return
         }

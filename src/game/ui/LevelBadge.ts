@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import { Character } from "../characters/Character"
+import { Creature } from "../creature/Creature"
 import { UiElement } from "./UiElement"
 
 type Opts = {
@@ -17,7 +17,7 @@ export class LevelBadge extends UiElement {
     private text: Phaser.GameObjects.Text
     private radius: number
 
-    constructor(target: Character, opts: Opts = {}) {
+    constructor(target: Creature, opts: Opts = {}) {
         const scene = target.scene
         const radius = opts.radius ?? 7
         const bg = opts.bgColor ?? 0xffd54f // golden

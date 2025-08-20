@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react"
 import { Box, Paper, Typography } from "@mui/material"
 import { CharacterSheet } from "./CharacterSheet"
-import { CharacterGroup } from "../../game/characters/CharacterGroup"
+import { CreatureGroup } from "../../game/creature/CreatureGroup"
 
 interface CharactersRowProps {
-    charactersGroup: CharacterGroup
+    charactersGroup: CreatureGroup
 }
 
 export const CharactersRow: React.FC<CharactersRowProps> = (props) => {

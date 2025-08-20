@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography, useMediaQuery } from "@mui/material"
-import { Character } from "../../game/characters/Character"
+import { Creature } from "../../game/creature/Creature"
 import { ArrowDropDown, Expand } from "@mui/icons-material"
 import { EventBus } from "../../game/tools/EventBus"
 
 interface CharacterSheetProps {
-    character: Character
+    character: Creature
 }
 
 export interface SheetDataItem {
@@ -29,7 +29,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     const [character, setCharacter] = useState(props.character)
     const attributes: SheetDataItem[] = useMemo(
         () => [
-            { title: "Health", value: `${character.health} / ${character.maxHealth}` },
+            { title: "Health", value: `${Math.round(character.health)} / ${character.maxHealth}` },
             { title: "Mana", value: `${Math.round(character.mana)} / ${character.maxMana}` },
             { title: "Mana Regen", value: `${character.manaPerSecond} /s` },
             { title: "Mana /hit", value: `${character.manaPerAttack}` },
@@ -45,8 +45,8 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     )
 
     useEffect(() => {
-        const handler = (char: Character) => {
-            setCharacter({ ...char } as Character) // Create a new object to force re-render
+        const handler = (char: Creature) => {
+            setCharacter({ ...char } as Creature) // Create a new object to force re-render
         }
 
         EventBus.on(`character-${character.id}-update`, handler)

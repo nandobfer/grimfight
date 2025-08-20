@@ -1,5 +1,5 @@
 import { Game } from "../scenes/Game"
-import { Character } from "./Character"
+import { Character } from "./character/Character"
 import { Archer } from "./classes/Archer"
 import { Knight } from "./classes/Knight"
 import { Mage } from "./classes/Mage"

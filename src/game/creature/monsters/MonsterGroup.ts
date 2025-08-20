@@ -1,8 +1,8 @@
 import { Game } from "../../scenes/Game"
-import { CharacterGroup } from "../CharacterGroup"
+import { CreatureGroup } from "../CreatureGroup"
 import { Monster } from "./Monster"
 
-export class MonsterGroup extends CharacterGroup {
+export class MonsterGroup extends CreatureGroup {
     constructor(
         scene: Game,
         children?: Monster[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig,

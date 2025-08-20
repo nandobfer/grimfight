@@ -1,8 +1,8 @@
 // src/game/tools/Encounter.ts
 import { Game } from "../scenes/Game"
 import { RNG } from "./RNG"
-import { Monster } from "../characters/monsters/Monster"
-import { MonsterRegistry } from "../characters/monsters/MonsterRegistry"
+import { Monster } from "../creature/monsters/Monster"
+import { MonsterRegistry } from "../creature/monsters/MonsterRegistry"
 
 export type Encounter = { monsters: Monster[]; isBoss: boolean }
 

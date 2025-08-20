@@ -4,47 +4,25 @@ import { Game } from "../scenes/Game"
 import { ProgressBar } from "../ui/ProgressBar"
 import { spawnParrySpark } from "../fx/Parry"
 import { EventBus } from "../tools/EventBus"
-import { LevelBadge } from "../ui/LevelBadge"
 import { DamageType, showDamageText } from "../ui/DamageNumbers"
-import { CharacterGroup } from "./CharacterGroup"
+import { CreatureGroup } from "./CreatureGroup"
 
 export type Direction = "left" | "up" | "down" | "right"
 
-export interface CharacterDto {
-    level: number
-    name: string
-    id: string
-    isPlayer: boolean
-    maxHealth: number
-    attackSpeed: number
-    attackDamage: number
-    attackRange: number
-    maxMana: number
-    manaPerSecond: number
-    manaPerAttack: number
-    armor: number
-    resistance: number
-    speed: number
-    critChance: number
-    critDamageMultiplier: number
-    boardX: number
-    boardY: number
-}
-
-export class Character extends Phaser.Physics.Arcade.Sprite {
+export class Creature extends Phaser.Physics.Arcade.Sprite {
     facing: Direction = "down"
-    target?: Character
+    target?: Creature
     moving: boolean = true
     isAttacking: boolean = false
     avoidanceRange = 64
     originalDepth: number
     id: string
-    isPlayer: boolean = false
-    team: CharacterGroup
+    team: CreatureGroup
+    attackAnimationImpactFrame = 5
 
     level = 1
     health = 0
-    maxHealth = 100
+    maxHealth = 500
     attackSpeed = 1
     attackDamage = 10
     attackRange = 1
@@ -66,17 +44,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     declare scene: Game
     declare body: Phaser.Physics.Arcade.Body
 
-    private glowFx: Phaser.FX.Glow
-
     effectPool: Phaser.GameObjects.Particles.ParticleEmitter[] = []
     activeEffects: Set<Phaser.GameObjects.Particles.ParticleEmitter> = new Set()
     particles?: Phaser.GameObjects.Particles.ParticleEmitter
 
-    private preDrag?: { x: number; y: number }
-
     private healthBar: ProgressBar
     private manaBar: ProgressBar
-    private levelBadge!: LevelBadge
 
     constructor(scene: Game, x: number, y: number, name: string, id: string) {
         super(scene, x, y, name)
@@ -93,24 +66,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
         this.createAnimations()
 
-        this.on("animationupdate", this.handleAnimationUpdate, this)
-
-        this.glowFx = this.postFX.addGlow(0xffffff, 8, 0) // White glow
-        this.glowFx.outerStrength = 0
-
         this.anims.play(`${this.name}-idle-down`)
 
         this.healthBar = new ProgressBar(this, { color: 0x2ecc71, offsetY: -30, interpolateColor: true })
         this.manaBar = new ProgressBar(this, { color: 0x3498db, offsetY: -25 })
-        this.levelBadge = new LevelBadge(this, { offsetX: 22, offsetY: -15 })
-        this.levelBadge.setValue(this.level)
-        this.setPipeline("Light2D")
-    }
 
-    loadFromDto(dto: CharacterDto) {
-        for (const [key, value] of Object.entries(dto)) {
-            this[key as keyof this] = value
-        }
+        this.setPipeline("Light2D")
     }
 
     reset() {
@@ -123,13 +84,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.updateFacingDirection()
         this.stopMoving()
         this.idle()
-        this.levelBadge.reset()
-        this.target = undefined
 
-        if (this.isPlayer && this.boardX && this.boardY) {
-            this.x = this.boardX
-            this.y = this.boardY
-        }
+        this.target = undefined
     }
 
     resetUi() {
@@ -137,20 +93,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.healthBar.setValue(this.maxHealth, this.maxHealth)
         this.manaBar.reset()
         this.manaBar.setValue(0, this.maxMana)
-        this.levelBadge.reset()
-    }
-
-    saveInStorage() {
-        const dto = this.getDto()
-        const characters = this.scene.getSavedCharacters()
-        const index = characters.findIndex((c) => c.id === this.id)
-
-        if (index >= 0) {
-            characters[index] = dto // Update the array element
-        } else {
-            characters.push(dto) // Add new character
-        }
-        this.scene.savePlayerCharacters(characters)
     }
 
     createAnimations() {
@@ -183,23 +125,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.extractAnimationsFromSpritesheet("attacking2", 156, 6)
     }
 
-    handleAnimationUpdate(animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) {
-        this.triggerEffectonTarget(animation, frame, "bleeding", "attacking1", 5)
-        this.triggerEffectonTarget(animation, frame, "bleeding", "attacking2", 5)
-    }
-
-    triggerEffectonTarget(
-        animation: Phaser.Animations.Animation,
-        frame: Phaser.Animations.AnimationFrame,
-        effect: string,
-        animationKey: string,
-        onFrame: number
-    ) {
-        if (animation.key.includes(animationKey) && frame.index === onFrame && this.target) {
-            this.onAttack("normal")
-        }
-    }
-
     spawnHitEffect(effectType: string) {
         if (effectType === "bleeding") {
             const particles = this.scene.add.particles(this.x, this.y, "blood", {
@@ -219,7 +144,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    spawnParryngEffect(attacker: Character) {
+    spawnParryngEffect(attacker: Creature) {
         const ang = Phaser.Math.Angle.Between(attacker.x, attacker.y, this.x, this.y)
         spawnParrySpark(this.scene, this.x, this.y, ang)
     }
@@ -236,74 +161,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     handleMouseEvents() {
-        this.setInteractive({ useHandCursor: true, draggable: true })
+        this.setInteractive({ useHandCursor: true })
         // this.scene.input.enableDebug(this)
-
-        if (this.isPlayer) {
-            this.scene.input.setDraggable(this)
-
-            this.on("pointerover", () => {
-                if (this.scene.state === "idle") {
-                    this.animateGlow(5)
-                }
-            })
-
-            this.on("pointerout", () => {
-                this.animateGlow(0)
-            })
-
-            this.on("dragstart", (pointer: Phaser.Input.Pointer) => {
-                if (this.scene.state !== "idle") return
-                // remember original pos in case drop is invalid
-                this.preDrag = { x: this.x, y: this.y }
-                // show allowed tiles overlay immediately
-                this.scene.grid.showDropOverlay()
-                this.scene.grid.showHighlightAtWorld(pointer.worldX, pointer.worldY)
-            })
-
-            this.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-                if (this.scene.state !== "idle") return
-                this.setPosition(dragX, dragY)
-                this.scene.grid.showHighlightAtWorld(pointer.worldX, pointer.worldY)
-            })
-
-            this.on("dragend", (pointer: Phaser.Input.Pointer) => {
-                if (this.scene.state !== "idle") return
-                // Snap to tile center at drop
-                const snapped = this.scene.grid.snapCharacter(this, pointer.worldX, pointer.worldY)
-                if (snapped) {
-                    this.boardX = this.x
-                    this.boardY = this.y
-                    this.saveInStorage()
-                }
-
-                if (!snapped && this.preDrag) {
-                    // revert if dropped outside allowed rows
-                    this.setPosition(this.preDrag.x, this.preDrag.y)
-                    this.body?.reset(this.preDrag.x, this.preDrag.y)
-                }
-                this.scene.grid.hideHighlight()
-                this.scene.grid.hideDropOverlay()
-                this.preDrag = undefined
-            })
-
-            // this.on("drag", (_: never, x: number, y: number) => {
-            //     if (this.scene.state === "idle") {
-            //         this.setPosition(x, y)
-            //     }
-            // })
-        }
-    }
-
-    private animateGlow(targetStrength: number) {
-        if (!this.glowFx) return
-
-        this.scene.tweens.add({
-            targets: this.glowFx,
-            outerStrength: targetStrength,
-            duration: 250, // Animation duration (ms)
-            ease: "Sine.easeOut", // Smooth easing
-        })
     }
 
     newTarget() {
@@ -311,7 +170,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.idle()
         const enemyTeam = this.scene.playerTeam.contains(this) ? this.scene.enemyTeam : this.scene.playerTeam
         const enemies = enemyTeam.getChildren()
-        let closestEnemy: Character | undefined = undefined
+        let closestEnemy: Creature | undefined = undefined
         let closestEnemyDistance = 0
         for (const enemy of enemies) {
             if (!enemy.active) {
@@ -421,10 +280,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
         // Find closest character in front
         const allCharacters = [...this.scene.playerTeam.getChildren(), ...this.scene.enemyTeam.getChildren()].filter(
-            (c) => c !== this && c.active
-        ) as Character[]
+            (c) => (c as unknown) !== this && c.active
+        ) as Creature[]
 
-        let closestInFront: Character | null = null
+        let closestInFront: Creature | null = null
         let minDistance = Number.MAX_VALUE
 
         for (const other of allCharacters) {
@@ -459,7 +318,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.play(`${this.name}-walking-${this.facing}`, true)
     }
 
-    handleAttack() {
+    startAttack() {
         if (this.isAttacking || !this.target?.active) {
             return
         }
@@ -470,18 +329,31 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         const animKey = `${this.name}-attacking${spriteVariant}-${this.facing}`
         const anim = this.anims.get(animKey)
 
+        const onUpdate = (animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) => {
+            if (animation.key !== animKey) return
+            if (frame.index === this.attackAnimationImpactFrame) {
+                this.landAttack()
+            }
+        }
+
+        this.on("animationupdate", onUpdate)
+
         this.play({ key: animKey, frameRate: anim.frames.length * this.attackSpeed, repeat: 0 }, true)
 
-        this.once("animationcomplete", () => {
+        const cleanup = () => {
+            this.off("animationupdate", onUpdate)
             this.isAttacking = false
-        })
-        this.once("animationstop", () => {
-            this.isAttacking = false
-        })
+        }
+        this.once("animationcomplete", cleanup)
+        this.once("animationstop", cleanup)
     }
 
-    onAttack(damagetype: DamageType) {
-        if (!this.target) return
+    landAttack() {
+        this.onAttackLand('normal')
+    }
+
+    onAttackLand(damagetype: DamageType) {
+        if (!this.target) return 0
         let damageMultiplier = 0
 
         const isCrit = Phaser.Math.FloatBetween(0, 100) <= this.critChance
@@ -491,10 +363,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         const damage = this.attackDamage * Math.max(1, damageMultiplier)
         this.target.takeDamage(damage, this, "bleeding", { crit: isCrit, type: damagetype })
         this.gainMana(this.manaPerAttack)
-        this.team.damageChart.plotDamage(this, damage)
+
+        return damage
     }
 
-    takeDamage(damage: number, attacker: Character, effect = "bleeding", opts?: { crit?: boolean; type: DamageType }) {
+    takeDamage(damage: number, attacker: Creature, effect = "bleeding", opts?: { crit?: boolean; type: DamageType }) {
         const incomingDamage = damage - this.armor
         const resistanceMultiplier = 1 - this.resistance / 100
         const finalDamage = Math.max(0, incomingDamage * resistanceMultiplier)
@@ -533,7 +406,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.createBloodPool()
         this.healthBar.fadeOut()
         this.manaBar.fadeOut()
-        this.levelBadge.fadeOut()
     }
 
     private createBloodPool() {
@@ -569,25 +441,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     destroyUi() {
         this.healthBar.destroy()
         this.manaBar.destroy()
-        this.levelBadge.destroy()
-    }
-
-    increaseExp() {
-        this.experience += 1
-
-        if (this.experience === this.level * 2) {
-            this.levelUp()
-        }
-
-        this.saveInStorage()
-    }
-
-    levelUp() {
-        this.experience = 0
-        this.level += 1
-
-        this.maxHealth += 50
-        this.attackDamage += 5
     }
 
     selfUpdate(delta: number) {
@@ -606,7 +459,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
         if (this.isInAttackRange()) {
             this.stopMoving()
-            this.handleAttack()
+            this.startAttack()
         } else {
             if (!this.isAttacking) {
                 this.moveToTarget()
@@ -618,7 +471,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     updateCharUi() {
         this.healthBar.updatePosition()
         this.manaBar.updatePosition()
-        this.levelBadge.updatePosition()
     }
 
     update(time: number, delta: number): void {
@@ -636,29 +488,5 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
         this.selfUpdate(delta)
         EventBus.emit(`character-${this.id}-update`, this)
-    }
-
-    getDto() {
-        const data: CharacterDto = {
-            level: this.level,
-            armor: this.armor,
-            attackDamage: this.attackDamage,
-            attackRange: this.attackRange,
-            attackSpeed: this.attackSpeed,
-            boardX: this.x,
-            boardY: this.y,
-            critChance: this.critChance,
-            critDamageMultiplier: this.critDamageMultiplier,
-            id: this.id,
-            isPlayer: this.isPlayer,
-            manaPerAttack: this.manaPerAttack,
-            manaPerSecond: this.manaPerSecond,
-            maxHealth: this.maxHealth,
-            maxMana: this.maxMana,
-            name: this.name,
-            resistance: this.resistance,
-            speed: this.speed,
-        }
-        return data
     }
 }

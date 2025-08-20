@@ -1,58 +1,41 @@
-// src/game/characters/CharacterGroup.ts
+// src/game/creatures/CharacterGroup.ts
 
 import { Game } from "../scenes/Game"
 import { DamageChart } from "../tools/DamageChart"
-import { Character } from "./Character"
+import { Creature } from "./Creature"
 
-export class CharacterGroup extends Phaser.GameObjects.Group {
-    isPlayer: boolean = false
-    damageChart: DamageChart
+export class CreatureGroup extends Phaser.GameObjects.Group {
+    
     declare scene: Game
 
     constructor(
         scene: Game,
-        children?: Character[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig,
+        children?: Creature[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig,
         config?: (Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig) & { isPlayer?: boolean }
     ) {
         super(scene, children, config)
         scene.add.existing(this)
         this.runChildUpdate = true
-        this.isPlayer = !!config?.isPlayer
-        if (this.isPlayer) {
-            this.setChildrenPlayer()
-        }
         this.resetMouseEvents()
-        this.damageChart = new DamageChart(this)
+        
     }
 
     override getChildren() {
-        return super.getChildren() as Character[]
+        return super.getChildren() as Creature[]
     }
 
-    add(child: Character, addToScene?: boolean): this {
+    add(child: Creature, addToScene?: boolean): this {
         super.add(child, addToScene)
-        if (this.isPlayer) {
-            child.isPlayer = true
-            child.resetMouseEvents()
-        }
-
         child.team = this
 
         return this
     }
 
-    private setChildrenPlayer() {
-        const characters = this.getChildren()
-        for (const character of characters) {
-            character.isPlayer = true
-            character.team = this
-        }
-    }
 
     private resetMouseEvents() {
-        const characters = this.getChildren()
-        for (const character of characters) {
-            character.resetMouseEvents()
+        const creatures = this.getChildren()
+        for (const creature of creatures) {
+            creature.resetMouseEvents()
         }
     }
 
@@ -83,9 +66,9 @@ export class CharacterGroup extends Phaser.GameObjects.Group {
     }
 
     clear(removeFromScene?: boolean, destroyChild?: boolean) {
-        const characters = this.getChildren()
-        for (const character of characters) {
-            character.destroyUi()
+        const creatures = this.getChildren()
+        for (const creature of creatures) {
+            creature.destroyUi()
         }
         super.clear(removeFromScene, destroyChild)
 
@@ -93,7 +76,7 @@ export class CharacterGroup extends Phaser.GameObjects.Group {
     }
 
     getCharacterInPosition(x: number, y: number) {
-        const characters = this.getChildren()
-        return characters.find((char) => char.x === x && char.y === y)
+        const creatures = this.getChildren()
+        return creatures.find((char) => char.x === x && char.y === y)
     }
 }
