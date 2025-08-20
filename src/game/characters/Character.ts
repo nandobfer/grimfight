@@ -5,7 +5,7 @@ import { ProgressBar } from "../ui/ProgressBar"
 import { spawnParrySpark } from "../fx/Parry"
 import { EventBus } from "../EventBus"
 import { LevelBadge } from "../ui/LevelBadge"
-import { showDamageText } from "../ui/DamageNumbers"
+import { DamageType, showDamageText } from "../ui/DamageNumbers"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -102,7 +102,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.manaBar = new ProgressBar(this, { color: 0x3498db, offsetY: -25 })
         this.levelBadge = new LevelBadge(this, { offsetX: 22, offsetY: -15 })
         this.levelBadge.setValue(this.level)
-        this.setPipeline('Light2D')
+        this.setPipeline("Light2D")
     }
 
     loadFromDto(dto: CharacterDto) {
@@ -194,7 +194,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         onFrame: number
     ) {
         if (animation.key.includes(animationKey) && frame.index === onFrame && this.target) {
-            this.onAttack()
+            this.onAttack("normal")
         }
     }
 
@@ -478,7 +478,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
-    onAttack() {
+    onAttack(damagetype: DamageType) {
         if (!this.target) return
         let damageMultiplier = 0
 
@@ -487,16 +487,16 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
             damageMultiplier += this.critDamageMultiplier
         }
         const damage = this.attackDamage * Math.max(1, damageMultiplier)
-        this.target.takeDamage(damage, this, "bleeding", { crit: isCrit })
+        this.target.takeDamage(damage, this, "bleeding", { crit: isCrit, type: damagetype })
         this.gainMana(this.manaPerAttack)
     }
 
-    takeDamage(damage: number, attacker: Character, effect = "bleeding", opts?: { crit?: boolean }) {
+    takeDamage(damage: number, attacker: Character, effect = "bleeding", opts?: { crit?: boolean; type: DamageType }) {
         const incomingDamage = damage - this.armor
         const resistanceMultiplier = 1 - this.resistance / 100
         const finalDamage = Math.max(0, incomingDamage * resistanceMultiplier)
 
-        showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), finalDamage <= 0 ? { type: "block" } : { crit: !!opts?.crit })
+        showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit: !!opts?.crit, type: finalDamage <= 0 ? "block" : opts?.type })
 
         this.health -= finalDamage
         this.healthBar.setValue(this.health, this.maxHealth)

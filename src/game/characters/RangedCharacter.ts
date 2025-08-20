@@ -5,10 +5,12 @@ import { Character } from "./Character"
 export class RangedCharacter<T extends Projectile> extends Character {
     attackRange = 3
     projectile: new (character: RangedCharacter<T>) => T
+    fireProjectileOnFrame = 0
 
-    constructor(scene: Game, x: number, y: number, texture: string, projectile: new (character: RangedCharacter<T>) => T, id: string) {
+    constructor(scene: Game, x: number, y: number, texture: string, projectile: new (character: RangedCharacter<T>) => T, id: string, fireProjectileOnFrame: number) {
         super(scene, x, y, texture, id)
         this.projectile = projectile
+        this.fireProjectileOnFrame = fireProjectileOnFrame
     }
 
     handleAnimationUpdate(_a: Phaser.Animations.Animation, _f: Phaser.Animations.AnimationFrame) {
@@ -34,7 +36,7 @@ export class RangedCharacter<T extends Projectile> extends Character {
         const onUpdate = (animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) => {
             if (animation.key !== animKey) return
             // Phaser frame indices are 1-based; we want "frame 9"
-            if (frame.index === 9) {
+            if (frame.index === this.fireProjectileOnFrame) {
                 this.fireProjectile()
             }
         }

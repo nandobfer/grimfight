@@ -31,7 +31,7 @@ export class Preloader extends Scene {
     }
 
     loadCharacterSpritesheets() {
-        const available_sheets = ["rogue", "knight", "archer"]
+        const available_sheets = ["rogue", "knight", "archer", "mage"]
 
         for (const character_sheet of available_sheets) {
             this.load.spritesheet(character_sheet, `spritesheets/characters/${character_sheet}.png`, {
@@ -47,6 +47,14 @@ export class Preloader extends Scene {
 
         for (let i = 0; i <= 52; i++) {
             this.load.image(`fire${i}`, `particles/fx1/flame4/png/${i.toString().padStart(2, "0")}.png`)
+        }
+
+        for (let i = 0; i <= 40; i++) {
+            this.load.image(`fireball${i}`, `particles/fx1/flame10/png/${i.toString().padStart(2, "0")}.png`)
+        }
+
+        for (let i = 0; i <= 33; i++) {
+            this.load.image(`firehit${i}`, `particles/fx1/flame8/png/png_${i.toString().padStart(2, "0")}.png`)
         }
 
         this.textures.exists("parry") ||

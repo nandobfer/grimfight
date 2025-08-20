@@ -2,6 +2,7 @@ import { Game } from "../scenes/Game";
 import { Archer } from "./Archer";
 import { Character } from "./Character";
 import { Knight } from "./Knight";
+import { Mage } from "./Mage"
 import { Rogue } from "./Rogue";
 
 // Create a character registry
@@ -29,3 +30,4 @@ export class CharacterRegistry {
 CharacterRegistry.register('rogue', Rogue);
 CharacterRegistry.register('knight', Knight);
 CharacterRegistry.register('archer', Archer);
+CharacterRegistry.register("mage", Mage)

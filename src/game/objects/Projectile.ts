@@ -2,23 +2,27 @@
 import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 import { Character } from "../characters/Character"
+import { DamageType } from "../ui/DamageNumbers"
 
-export class Projectile extends Phaser.Physics.Arcade.Image {
+export class Projectile extends Phaser.Physics.Arcade.Sprite {
     owner: Character
     startX = 0
     startY = 0
     onHitEffect: string
     speed = 500
+    damageType: DamageType
 
     declare scene: Game
     declare body: Phaser.Physics.Arcade.Body
 
-    constructor(owner: Character, texture: string, onHitEffect: string) {
+    constructor(owner: Character, texture: string, onHitEffect: string, damageType: DamageType) {
         super(owner.scene, owner.x, owner.y, texture)
         owner.scene.add.existing(this)
         owner.scene.physics.add.existing(this)
         this.toggleFlipX()
         this.setScale(0.1, 0.1)
+
+        this.damageType = damageType
 
         this.setActive(false).setVisible(false)
         this.setDepth(1000) // over characters
@@ -28,6 +32,18 @@ export class Projectile extends Phaser.Physics.Arcade.Image {
         this.owner = owner
         this.onHitEffect = onHitEffect
         this.setPipeline("Light2D")
+
+        this.scene.physics.add.collider(this, this.scene.walls, () => {
+            this.onHitWall()
+        })
+
+        const enemyTeam = this.scene.playerTeam.contains(this.owner) ? this.scene.enemyTeam : this.scene.playerTeam
+        this.scene.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
+            const enemy = enemyObj as Character
+            if (!enemy.active) return
+
+            this.onHit()
+        })
     }
 
     fire() {
@@ -46,21 +62,6 @@ export class Projectile extends Phaser.Physics.Arcade.Image {
 
         this.scene.physics.velocityFromRotation(angle, this.speed, this.body.velocity)
 
-        this.scene.physics.add.collider(this, this.scene.walls, () => {
-            this.setVelocity(0)
-        })
-
-        // overlap with enemy team only
-        const enemyTeam = this.scene.playerTeam.contains(from) ? this.scene.enemyTeam : this.scene.playerTeam
-        this.scene.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
-            const enemy = enemyObj as Character
-            if (!enemy.active) return
-
-            this.owner.onAttack()
-
-            this.destroy()
-        })
-
         // clean up if it travels too far
         this.scene.time.addEvent({
             delay: 16,
@@ -73,5 +74,14 @@ export class Projectile extends Phaser.Physics.Arcade.Image {
         })
 
         return this
+    }
+
+    onHit() {
+        this.owner.onAttack(this.damageType)
+        this.destroy()
+    }
+
+    onHitWall() {
+        this.setVelocity(0)
     }
 }
