@@ -254,12 +254,16 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.moving = true
     }
 
+    get radiusPx(): number {
+        // tune factor; 0.25 ≈ "half the width of a foot-base"
+        return Math.max(this.displayWidth, this.displayHeight) * 0.25
+    }
+
     isInAttackRange(): boolean {
         if (!this.target) return false
-
+        const reachBonus = this.radiusPx + (this.target as Creature).radiusPx
         const distance = Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y)
-
-        return distance <= this.attackRange * 64
+        return distance <= reachBonus + this.attackRange * 64
     }
 
     avoidOtherCharacters() {
