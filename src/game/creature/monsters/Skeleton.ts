@@ -4,7 +4,7 @@ import { Game } from "../../scenes/Game";
 import { Monster } from "./Monster";
 
 export class Skeleton extends Monster {
-    maxHealth = 350
+    maxHealth = 150
     attackDamage = 15
     attackSpeed = 1
 

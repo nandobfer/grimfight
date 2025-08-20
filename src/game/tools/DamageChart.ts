@@ -22,7 +22,9 @@ export class DamageChart {
         })
     }
 
-    plotDamage(character: Creature, damage: number) {
+    plotDamage(character: Creature, damageDealt: number) {
+        const currentDamage = this.damageMeter.get(character.id)?.damage
+        const damage = damageDealt + (currentDamage || 0)
         this.damageMeter.set(character.id, { character, damage })
         this.updateMeterArray()
         this.emitArray()

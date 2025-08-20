@@ -2,8 +2,8 @@ import { Game } from "../../scenes/Game";
 import { Monster } from "./Monster";
 
 export class Zombie extends Monster {
-    maxHealth = 1500
-    attackDamage = 20
+    maxHealth = 750
+    attackDamage = 30
     attackSpeed = 0.5
 
     constructor(scene: Game, x: number, y: number) {

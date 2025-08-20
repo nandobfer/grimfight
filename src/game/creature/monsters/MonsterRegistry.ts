@@ -8,7 +8,7 @@ import { StatsLike } from "../../tools/ChallengeRating"
 
 const CR_1_MONSTER: Record<string, StatsLike> = {
     skeleton: {
-        maxHealth: 350,
+        maxHealth: 400,
         armor: 0,
         resistance: 0,
         attackDamage: 15,
