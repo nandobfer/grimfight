@@ -12,7 +12,7 @@ export const DebugFloor: React.FC<DebugFloorProps> = (props) => {
     const setFloor = (floor: number) => {
             if (floor <= 0) return
             props.game.floor = floor - 1
-            props.game.clearFloor()
+            props.game.onFloorDefeated()
         }
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {

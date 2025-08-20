@@ -467,6 +467,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     updateCharUi() {
+        if (this.health > 0 && this.scene.state === "idle") {
+            this.resetUi()
+        }
         this.healthBar.updatePosition()
         this.manaBar.updatePosition()
     }

@@ -25,6 +25,7 @@ export class Game extends Scene {
     private fireEffects: Phaser.GameObjects.Group
 
     playerGold = 0
+    playerLives = 5
 
     constructor() {
         super("Game")
@@ -129,7 +130,7 @@ export class Game extends Scene {
         this.playerTeam.reset()
     }
 
-    clearFloor() {
+    onFloorDefeated() {
         this.floor += 1
         this.enemyTeam.clear(true, true)
         this.buildFloor()
@@ -144,22 +145,46 @@ export class Game extends Scene {
             this.enemyTeam.add(m)
         }
 
+        this.resetFloor()
+    }
+
+    resetFloor() {
         this.enemyTeam.reset()
+        this.playerTeam.reset()
         this.changeState("idle") // wait for player to start
+    }
+
+    onPlayerDefeated() {
+        this.changePlayerLives(this.playerLives - 1)
+
+        if (this.playerLives === 0) {
+            this.gameOver()
+            return
+        }
+
+        this.resetFloor()
+    }
+
+    changePlayerLives(lives: number) {
+        this.playerLives = lives
+        EventBus.emit("lives-change", lives)
     }
 
     anyTeamWiped() {
         if (this.enemyTeam.countActive() === 0) {
-            this.clearFloor()
+            this.onFloorDefeated()
             return true
         }
 
         if (this.playerTeam.countActive() === 0) {
+            this.onPlayerDefeated()
             return true
         }
 
         return false
     }
+
+    gameOver() {}
 
     loadPlayerGold() {
         try {

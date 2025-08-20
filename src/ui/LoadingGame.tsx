@@ -22,7 +22,7 @@ export const LoadingGame: React.FC<LoadingGameProps> = (props) => {
     }, [])
     
     return (
-        <LinearProgress variant="determinate" sx={{ width: 1 }} value={progress} />
+        <LinearProgress variant="determinate" sx={{ width: 1 }} value={progress * 100} />
         // <CircularProgress variant='determinate' color='primary' value={progress} size={500} />
     )
 }
