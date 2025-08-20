@@ -1,13 +1,14 @@
 // src/game/scenes/Game.ts
 
 import { CharacterGroup } from "../characters/CharacterGroup"
-import { Knight } from "../characters/Knight"
 import { EventBus } from "../tools/EventBus"
 import { Scene } from "phaser"
 import { Grid } from "../tools/Grid"
 import { CharacterDto } from "../characters/Character"
 import { CharacterRegistry } from "../characters/CharacterRegistry"
 import { FireEffect } from "../fx/FireEffect"
+import { generateEncounter } from "../tools/Encounter"
+import { MonsterGroup } from "../characters/monsters/MonsterGroup"
 
 export type GameState = "fighting" | "idle"
 
@@ -16,7 +17,7 @@ export class Game extends Scene {
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
     playerTeam: CharacterGroup
-    enemyTeam: CharacterGroup
+    enemyTeam: MonsterGroup
     state: GameState = "idle"
     walls: Phaser.GameObjects.Group
     stage = 1
@@ -36,10 +37,7 @@ export class Game extends Scene {
         this.grid = new Grid(this, this.background)
 
         this.playerTeam = new CharacterGroup(this, [], { isPlayer: true })
-
-        const knight = new Knight(this, this.camera.width / 2.5, this.camera.height / 2.5, "123")
-        const knight2 = new Knight(this, this.camera.width / 1.5, this.camera.height / 2.5, "321")
-        this.enemyTeam = new CharacterGroup(this, [knight, knight2])
+        this.enemyTeam = new MonsterGroup(this, [])
 
         this.configurePhysics()
         this.createLight()
@@ -49,7 +47,7 @@ export class Game extends Scene {
         this.loadPlayerCharacters()
         this.loadPlayerGold()
         this.createArenaTorches()
-        // this.cameras.main.setZoom(0.7)
+        this.buildStage()
 
         EventBus.emit("game-ready", this)
     }
@@ -121,6 +119,8 @@ export class Game extends Scene {
     }
 
     startRound() {
+        this.enemyTeam.reset()
+        this.playerTeam.reset()
         this.changeState("fighting")
         this.playerTeam.damageChart.reset()
     }
@@ -129,8 +129,31 @@ export class Game extends Scene {
         this.playerTeam.reset()
     }
 
+    clearStage() {
+        this.stage += 1
+        this.buildStage()
+    }
+
+    buildStage() {
+        // clear previous enemies
+        this.enemyTeam.clear(true, true)
+
+        const { monsters } = generateEncounter(this, this.stage)
+
+        // add to group; positions come from enemyTeam.reset() honoring preferredPosition
+        for (const m of monsters) {
+            this.enemyTeam.add(m)
+        }
+
+        this.enemyTeam.reset()
+        this.changeState("idle") // wait for player to start
+    }
+
     anyTeamWiped() {
         const aliveEnemyCharacters = this.enemyTeam.countActive()
+        if (aliveEnemyCharacters === 0) {
+            this.clearStage()
+        }
         const alivePlayerCharacters = this.playerTeam.countActive()
         return aliveEnemyCharacters === 0 || alivePlayerCharacters === 0
     }

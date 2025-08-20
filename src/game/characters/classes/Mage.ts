@@ -1,6 +1,6 @@
-import { Fireball } from "../objects/Fireball"
-import { Game } from "../scenes/Game"
-import { RangedCharacter } from "./RangedCharacter"
+import { Fireball } from "../../objects/Fireball"
+import { Game } from "../../scenes/Game"
+import { RangedCharacter } from "../RangedCharacter"
 
 export class Mage extends RangedCharacter<Fireball> {
     attackSpeed = 0.5

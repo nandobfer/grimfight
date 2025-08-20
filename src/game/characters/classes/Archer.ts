@@ -1,6 +1,6 @@
-import { Arrow } from "../objects/Arrow"
-import { Game } from "../scenes/Game"
-import { RangedCharacter } from "./RangedCharacter"
+import { Arrow } from "../../objects/Arrow"
+import { Game } from "../../scenes/Game"
+import { RangedCharacter } from "../RangedCharacter"
 
 export class Archer extends RangedCharacter<Arrow> {
     attackSpeed = 0.75
