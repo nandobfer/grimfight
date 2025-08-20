@@ -17,13 +17,12 @@ export class MonsterGroup extends CreatureGroup {
 
     reset() {
         const grid = (this.scene as Game).grid
-        const chars = this.getChildren()
+        const chars = this.getChildren() as Monster[]
         if (!grid || chars.length === 0) return
 
         const cols = grid.cols
-        const rows = grid.rows
 
-        // Enemies: map preferred row
+        // Buckets
         const front: Monster[] = []
         const mid: Monster[] = []
         const back: Monster[] = []
@@ -33,28 +32,33 @@ export class MonsterGroup extends CreatureGroup {
             else if (pref === "back") back.push(c)
             else front.push(c)
         }
+
+        // FRONT is the row closest to the player (row 2), then middle (1), then back (0)
         const plan: Array<{ row: number; list: Monster[] }> = [
-            { row: 0, list: front },
+            { row: 2, list: front },
             { row: 1, list: mid },
-            { row: 2, list: back },
+            { row: 0, list: back },
         ]
 
         for (const { row, list } of plan) {
             const count = Math.min(list.length, cols)
             const startCol = Math.floor((cols - count) / 2)
+
+            // primary row
             for (let i = 0; i < count; i++) {
-                const c = list[i]
-                const { x, y } = grid.cellToCenter(startCol + i, row)
-                c.boardX = x
-                c.boardY = y
-                c.setPosition(x, y)
-                c.body?.reset(x, y)
-                c.reset()
+                const monster = list[i]
+                const { x, y } = grid.cellToCenter(startCol + i, row - 1)
+                monster.boardX = x
+                monster.boardY = y
+                monster.setPosition(x, y)
+                monster.body?.reset(x, y)
+                monster.reset()
             }
-            // overflow wraps to the next rows downward if any:
+
+            // overflow wraps toward the BACK (upwards), never into player's rows
             let idx = cols
-            let r = row + 1
-            while (idx < list.length && r < 3) {
+            let r = row - 1
+            while (idx < list.length && r >= 0) {
                 const left = Math.min(cols, list.length - idx)
                 const start = Math.floor((cols - left) / 2)
                 for (let j = 0; j < left; j++) {
@@ -66,8 +70,9 @@ export class MonsterGroup extends CreatureGroup {
                     c.body?.reset(x, y)
                     c.reset()
                 }
-                r++
+                r--
             }
         }
     }
+
 }
