@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography, useMediaQuery } from "@mui/material"
 import { Character } from "../../game/characters/Character"
 import { ArrowDropDown, Expand } from "@mui/icons-material"
 import { EventBus } from "../../game/EventBus"
@@ -14,9 +14,10 @@ export interface SheetDataItem {
 }
 
 export const SheetData: React.FC<SheetDataItem> = (props) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
     return (
-        <Box sx={{ gap: 1 }}>
-            <Typography fontWeight={"bold"} variant="caption">
+        <Box sx={{ gap: 1, alignItems: "center" }}>
+            <Typography fontWeight={"bold"} variant="caption" fontSize={isMobile ? 8 : undefined}>
                 {props.title}:
             </Typography>
             <Typography variant="caption">{props.value}</Typography>

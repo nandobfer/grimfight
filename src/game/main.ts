@@ -9,7 +9,7 @@ import { Preloader } from './scenes/Preloader';
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
 const config: Phaser.Types.Core.GameConfig = {
     type: AUTO,
-    width: 1600,
+    width: 768,
     height: 768,
     parent: "game-container",
     // backgroundColor: '#028af8',
@@ -26,8 +26,12 @@ const config: Phaser.Types.Core.GameConfig = {
     input: {
         // activePointers: 3,
         touch: {
-            capture: false, // Disable touch event capture
+            capture: true, // Disable touch event capture
         },
+    },
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
     },
 }
 

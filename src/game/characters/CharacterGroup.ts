@@ -52,7 +52,7 @@ export class CharacterGroup extends Phaser.GameObjects.Group {
         const characters = this.getChildren()
         const y = this.isPlayer ? 503 : 166
 
-        Phaser.Actions.GridAlign(characters, { cellHeight: 64, cellWidth: 64, y, x: 625 })
+        Phaser.Actions.GridAlign(characters, { cellHeight: 64, cellWidth: 64, y, x: 214 })
         characters.forEach((character) => character.reset())
     }
 

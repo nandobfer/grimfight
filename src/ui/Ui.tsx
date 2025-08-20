@@ -6,6 +6,7 @@ import { GameStateButtons } from "./GameStateButtons/GameStateButtons"
 import { NewCharacterModal } from "./NewCharacterModal/NewCharacterModal"
 import { useGameScene } from "../hooks/useGameScene"
 import { CharactersRow } from "./CharacterSheet/CharactersRow"
+import { LoadingGame } from "./LoadingGame"
 
 interface UiProps {}
 
@@ -13,16 +14,23 @@ export const Ui: React.FC<UiProps> = (props) => {
     const theme = useMuiTheme()
     const game = useGameScene()
     const [chooseCharacterModalOpen, setChooseCharacterModalOpen] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const handleFirstCharacterEmitted = () => {
         setChooseCharacterModalOpen(true)
     }
 
+    const finishLoading = () => {
+        setLoading(false)
+    }
+
     useEffect(() => {
         EventBus.on("choose-character", handleFirstCharacterEmitted)
+        EventBus.on("load-complete", finishLoading)
 
         return () => {
             EventBus.off("choose-character", handleFirstCharacterEmitted)
+            EventBus.off("load-complete", finishLoading)
         }
     }, [])
     return (
@@ -40,6 +48,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                     justifyContent: "space-between",
                 }}
             >
+                {loading && <LoadingGame />}
                 {game && (
                     <>
                         <CharactersRow charactersGroup={game.playerTeam} />

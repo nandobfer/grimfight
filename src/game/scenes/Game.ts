@@ -42,15 +42,20 @@ export class Game extends Scene {
         this.enemyTeam = new CharacterGroup(this, [knight, knight2])
 
         this.configurePhysics()
-        this.lights.enable().setAmbientColor(0xffffff)
+        this.createLight()
 
         this.enemyTeam.reset()
 
         this.loadPlayerCharacters()
         this.loadPlayerGold()
         this.createArenaTorches()
+        // this.cameras.main.setZoom(0.7)
 
         EventBus.emit("game-ready", this)
+    }
+
+    createLight() {
+        this.lights.enable().setAmbientColor(0xaaaaaa)
     }
 
     createBackground() {

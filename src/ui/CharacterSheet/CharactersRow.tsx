@@ -16,7 +16,6 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
                 flexDirection: "column",
                 padding: 1,
                 pointerEvents: "auto",
-                width: "20vw",
                 height: "min-content",
                 maxHeight: 1,
                 overflowY: "auto",

@@ -35,7 +35,7 @@ export const NewCharacterModal: React.FC<NewCharacterModalProps> = (props) => {
 
     return (
         <Dialog open={props.open} onClose={props.handleClose}>
-            <Typography variant="h5" color="primary.main" fontWeight={"bold"}>
+            <Typography variant="h6" color="primary.main" fontWeight={"bold"}>
                 new character
             </Typography>
             <Box sx={{ gap: 1 }}>

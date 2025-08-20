@@ -31,7 +31,9 @@ export const NewCharacterContainer: React.FC<NewCharacterContainerProps> = (prop
     return (
         <Button sx={{ padding: 0 }} variant="outlined" onClick={() => props.onChoose(character)}>
             <Paper sx={{ flexDirection: "column", gap: 1, padding: 1 }} elevation={5}>
-                <Typography variant="h6">{character.name}</Typography>
+                <Typography variant="body1" fontWeight={"bold"}>
+                    {character.name}
+                </Typography>
                 {attributes.map((data) => (
                     <SheetData key={data.title} title={data.title} value={data.value} />
                 ))}

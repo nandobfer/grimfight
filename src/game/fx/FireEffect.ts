@@ -56,11 +56,8 @@ export class FireEffect extends Phaser.GameObjects.Sprite {
     private addLightEffect() {
         // Create a light for the fire
         if (this.scene.lights) {
-            this.scene.lights.enable();
-            this.scene.lights.setAmbientColor(0x555555);
-            
-            this.light = this.scene.lights.addLight(this.x, this.y, 150, 0xff6600, 2);
-            
+            this.light = this.scene.lights.addLight(this.x, this.y, 150, 0xff6600, 2)
+
             // Add flicker to the light
             this.scene.tweens.add({
                 targets: this.light,
@@ -69,10 +66,10 @@ export class FireEffect extends Phaser.GameObjects.Sprite {
                 duration: 500,
                 yoyo: true,
                 repeat: -1,
-                ease: "Sine.easeInOut"
-            });
+                ease: "Sine.easeInOut",
+            })
 
-            // ! random 
+            // ! random
             // this.scene.tweens.add({
             //     targets: this.light,
             //     intensity: { from: 0.7, to: 1.3 },
@@ -90,11 +87,11 @@ export class FireEffect extends Phaser.GameObjects.Sprite {
             //     repeat: -1,
             //     ease: "Sine.easeInOut"
             // });
-            
+
             // Make light follow the fire
             this.scene.events.on("update", () => {
-                this.light.setPosition(this.x, this.y);
-            });
+                this.light.setPosition(this.x, this.y)
+            })
         }
     }
 
