@@ -7,7 +7,6 @@ import { Scene } from "phaser"
 import { Grid } from "../Grid"
 import { CharacterDto } from "../characters/Character"
 import { CharacterRegistry } from "../characters/CharacterRegistry"
-import { Torch } from "../fx/Torch"
 import { FireEffect } from "../fx/FireEffect"
 
 export type GameState = "fighting" | "idle"
