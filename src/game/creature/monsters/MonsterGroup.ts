@@ -16,17 +16,21 @@ export class MonsterGroup extends CreatureGroup {
     }
 
     reset() {
-        const grid = (this.scene as Game).grid
-        const chars = this.getChildren() as Monster[]
-        if (!grid || chars.length === 0) return
+        super.reset()
+        this.replaceInBoard()
+    }
 
+    replaceInBoard() {
+        const grid = (this.scene as Game).grid
+        const monsters = this.getChildren() as Monster[]
+        if (!grid || monsters.length === 0) return
         const cols = grid.cols
 
         // Buckets
         const front: Monster[] = []
         const mid: Monster[] = []
         const back: Monster[] = []
-        for (const c of chars) {
+        for (const c of monsters) {
             const pref = (c as any).preferredPosition as "front" | "middle" | "back" | undefined
             if (pref === "middle") mid.push(c)
             else if (pref === "back") back.push(c)
@@ -51,28 +55,25 @@ export class MonsterGroup extends CreatureGroup {
                 monster.boardX = x
                 monster.boardY = y
                 monster.setPosition(x, y)
-                monster.body?.reset(x, y)
-                monster.reset()
+                monster.body.reset(x, y)
             }
 
             // overflow wraps toward the BACK (upwards), never into player's rows
             let idx = cols
-            let r = row - 1
-            while (idx < list.length && r >= 0) {
+            let currentRow = row - 1
+            while (idx < list.length && currentRow >= 0) {
                 const left = Math.min(cols, list.length - idx)
                 const start = Math.floor((cols - left) / 2)
                 for (let j = 0; j < left; j++) {
-                    const c = list[idx++]
-                    const { x, y } = grid.cellToCenter(start + j, r)
-                    c.boardX = x
-                    c.boardY = y
-                    c.setPosition(x, y)
-                    c.body?.reset(x, y)
-                    c.reset()
+                    const monster = list[idx++]
+                    const { x, y } = grid.cellToCenter(start + j, currentRow)
+                    monster.boardX = x
+                    monster.boardY = y
+                    monster.setPosition(x, y)
+                    monster.body.reset(x, y)
                 }
-                r--
+                currentRow--
             }
         }
     }
-
 }
