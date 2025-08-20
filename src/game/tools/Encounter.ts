@@ -25,10 +25,10 @@ export function invalidateEncounterCRCache() {
     CR_CACHE = new WeakMap() as any // or just clear by recreating the map
 }
 
-export function generateEncounter(scene: Game, stage: number, seedBase = 1337): Encounter {
-    const rng = new RNG((stage * 1103515245 + seedBase) >>> 0)
-    const targetCR = Math.max(1, stage)
-    const isBoss = stage % 10 === 0
+export function generateEncounter(scene: Game, floor: number, seedBase = 1337): Encounter {
+    const rng = new RNG((floor * 1103515245 + seedBase) >>> 0)
+    const targetCR = Math.max(1, floor)
+    const isBoss = floor % 10 === 0
 
     if (isBoss) {
         const { ctor } = rng.pick(MonsterRegistry.entries())
@@ -96,6 +96,6 @@ export function generateEncounter(scene: Game, stage: number, seedBase = 1337): 
         // })
     }
     console.log(CR_CACHE)
-        
+
     return { monsters: out, isBoss: false }
 }

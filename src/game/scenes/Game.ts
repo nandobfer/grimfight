@@ -20,7 +20,7 @@ export class Game extends Scene {
     enemyTeam: MonsterGroup
     state: GameState = "idle"
     walls: Phaser.GameObjects.Group
-    stage = 1
+    floor = 1
     grid: Grid
     private fireEffects: Phaser.GameObjects.Group
 
@@ -47,7 +47,7 @@ export class Game extends Scene {
         this.loadPlayerCharacters()
         this.loadPlayerGold()
         this.createArenaTorches()
-        this.buildStage()
+        this.buildFloor()
 
         EventBus.emit("game-ready", this)
     }
@@ -129,15 +129,15 @@ export class Game extends Scene {
         this.playerTeam.reset()
     }
 
-    clearStage() {
-        this.stage += 1
+    clearFloor() {
+        this.floor += 1
         this.enemyTeam.clear(true, true)
-        this.buildStage()
-        EventBus.emit("floor-change", this.stage)
+        this.buildFloor()
+        EventBus.emit("floor-change", this.floor)
     }
 
-    buildStage() {
-        const { monsters } = generateEncounter(this, this.stage)
+    buildFloor() {
+        const { monsters } = generateEncounter(this, this.floor)
 
         // add to group; positions come from enemyTeam.reset() honoring preferredPosition
         for (const m of monsters) {
@@ -150,7 +150,7 @@ export class Game extends Scene {
 
     anyTeamWiped() {
         if (this.enemyTeam.countActive() === 0) {
-            this.clearStage()
+            this.clearFloor()
             return true
         }
 
