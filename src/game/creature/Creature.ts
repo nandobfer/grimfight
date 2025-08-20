@@ -125,23 +125,21 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.extractAnimationsFromSpritesheet("attacking2", 156, 6)
     }
 
-    spawnHitEffect(effectType: string) {
-        if (effectType === "bleeding") {
-            const particles = this.scene.add.particles(this.x, this.y, "blood", {
-                lifespan: 600,
-                speed: { min: 30, max: 80 },
-                scale: { start: 0.15, end: 0 },
-                quantity: 5,
-                blendMode: "NORMAL",
-                frequency: -1,
-            })
+    onHitFx() {
+        const particles = this.scene.add.particles(this.x, this.y, "blood", {
+            lifespan: 600,
+            speed: { min: 30, max: 80 },
+            scale: { start: 0.15, end: 0 },
+            quantity: 5,
+            blendMode: "NORMAL",
+            frequency: -1,
+        })
 
-            particles.explode(10)
+        particles.explode(10)
 
-            this.scene.time.delayedCall(600, () => {
-                particles.destroy()
-            })
-        }
+        this.scene.time.delayedCall(600, () => {
+            particles.destroy()
+        })
     }
 
     spawnParryngEffect(attacker: Creature) {
@@ -349,7 +347,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     landAttack() {
-        this.onAttackLand('normal')
+        this.onAttackLand("normal")
     }
 
     onAttackLand(damagetype: DamageType) {
@@ -384,7 +382,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         if (finalDamage === 0) {
             this.spawnParryngEffect(attacker)
         } else {
-            this.spawnHitEffect(effect)
+            this.onHitFx()
         }
     }
 
@@ -403,12 +401,12 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.anims.stop()
         this.active = false
         this.setDepth(this.depth - 1)
-        this.createBloodPool()
+        this.onDieFx()
         this.healthBar.fadeOut()
         this.manaBar.fadeOut()
     }
 
-    private createBloodPool() {
+    onDieFx() {
         const poolSize = Phaser.Math.FloatBetween(0.3, 0.8)
 
         const bloodPool = this.scene.add
@@ -429,7 +427,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     gainMana(manaGained: number) {
         this.mana += manaGained
-        this.manaBar.setValue(this.mana, this.maxMana)
+        this.manaBar?.setValue(this.mana, this.maxMana)
     }
 
     regenMana(delta: number) {

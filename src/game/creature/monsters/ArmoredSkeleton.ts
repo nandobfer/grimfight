@@ -1,9 +1,9 @@
 // src/game/characters/monsters/Skeleton.ts
 
 import { Game } from "../../scenes/Game";
-import { Monster } from "./Monster";
+import { Skeleton } from "./Skeleton"
 
-export class ArmoredSkeleton extends Monster {
+export class ArmoredSkeleton extends Skeleton {
     maxHealth = 500
     attackDamage = 30
     attackSpeed = 1
