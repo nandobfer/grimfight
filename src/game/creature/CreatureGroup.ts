@@ -37,9 +37,9 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
     }
 
     reset() {
-        const monsters = this.getChildren()
-        for (const monster of monsters) {
-            monster.reset()
+        const creatures = this.getChildren()
+        for (const creature of creatures) {
+            creature.reset()
         }
     }
 
