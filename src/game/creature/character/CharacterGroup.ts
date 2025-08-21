@@ -22,6 +22,7 @@ export class CharacterGroup extends CreatureGroup {
 
     reset() {
         super.reset()
+        this.damageChart.reset()
         EventBus.emit("characters-change", this.getChildren())
     }
 
@@ -60,6 +61,9 @@ export class CharacterGroup extends CreatureGroup {
                 }
             }
         }
+
+        this.reset()
+        child.saveInStorage()
 
         return this
     }

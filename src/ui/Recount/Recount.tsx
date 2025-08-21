@@ -13,7 +13,7 @@ export const Recount: React.FC<RecountProps> = (props) => {
 
     useEffect(() => {
         const handler = (damages: DamageMeter[]) => {
-            setDamageChart(damages)
+            setDamageChart([...damages])
         }
         EventBus.on("damage-chart", handler)
         EventBus.emit('request-damage-chart')

@@ -18,7 +18,7 @@ export class DamageChart {
         this.reset()
 
         EventBus.on("request-damage-chart", () => {
-            this.emitArray()
+            this.reset()
         })
     }
 
@@ -34,7 +34,7 @@ export class DamageChart {
         this.damageMeterArray = Array.from(this.damageMeter.values())
     }
 
-    private emitArray() {
+    emitArray() {
         EventBus.emit("damage-chart", this.damageMeterArray)
     }
 
