@@ -4,11 +4,6 @@ import { Game } from "../scenes/Game"
 import { Creature } from "../creature/Creature"
 
 type Insets = { left: number; right: number; top: number; bottom: number }
-type GridOpts = {
-    cell?: number
-    insets?: Partial<Insets> // to exclude arena borders if needed
-    depthOverArena?: number // highlight depth relative to arena
-}
 
 export class Grid {
     private scene: Game
@@ -133,13 +128,48 @@ export class Grid {
     snapCharacter(character: Creature, wx: number, wy: number) {
         const cell = this.worldToCell(wx, wy)
         if (!cell || !this.isDroppableRow(cell.row)) return false
+
         const { x, y } = this.cellToCenter(cell.col, cell.row)
-        const alreadyInCellSprite = this.scene.playerTeam.getCharacterInPosition(x, y)
-        if (alreadyInCellSprite) {
-            alreadyInCellSprite.setPosition(character.boardX, character.boardY)
+
+        // If already in this cell, just snap to the exact center and update board coords
+        const currentCell = character.boardX > 0 && character.boardY > 0 ? this.worldToCell(character.boardX, character.boardY) : null
+        if (currentCell && currentCell.col === cell.col && currentCell.row === cell.row) {
+            character.boardX = x
+            character.boardY = y
+            character.setPosition(x, y)
+            character.body?.reset(x, y)
+            return true
         }
+
+        // Find any existing character at the destination cell
+        const other =
+            (this.scene.playerTeam as any).getCharacterInPosition?.(x, y) ??
+            this.scene.playerTeam.getChildren().find((c: Creature) => c.boardX === x && c.boardY === y)
+
+        if (other && other !== character) {
+            // Swap positions if the dragged character had a valid previous cell
+            if (character.boardX > 0 && character.boardY > 0) {
+                const prevX = character.boardX
+                const prevY = character.boardY
+
+                // Move 'other' to our previous cell (update board + body)
+                other.boardX = prevX
+                other.boardY = prevY
+                other.setPosition(prevX, prevY)
+                other.body?.reset(prevX, prevY)
+                other.reset()
+            } else {
+                // No previous valid cell for 'character' → simple move (no swap target)
+                // (If you prefer to block the move in this case, return false here.)
+            }
+        }
+
+        // Place dragged character at destination (update board + body)
+        character.boardX = x
+        character.boardY = y
         character.setPosition(x, y)
-        character.body.reset(x, y)
+        character.body?.reset(x, y)
+        character.reset()
         return true
     }
 
