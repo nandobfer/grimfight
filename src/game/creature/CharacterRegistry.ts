@@ -1,4 +1,5 @@
 import { Game } from "../scenes/Game"
+import { RNG } from "../tools/RNG"
 import { Character } from "./character/Character"
 import { Archer } from "./classes/Archer"
 import { Knight } from "./classes/Knight"
@@ -24,6 +25,10 @@ export class CharacterRegistry {
 
     static getAllRegistered(): string[] {
         return Array.from(this.registry.keys())
+    }
+
+    static random() {
+        return RNG.pick(this.getAllRegistered())
     }
 }
 

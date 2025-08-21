@@ -49,6 +49,8 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
         [character]
     )
 
+    const characterHealthPercent = useMemo(() => (character.health / character.maxHealth) * 100, [character.health, character.maxHealth])
+
     useEffect(() => {
         const handler = (char: Creature) => {
             setCharacter({ ...char } as Creature) // Create a new object to force re-render
@@ -69,9 +71,9 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                         <Typography variant="subtitle2">{character.name}</Typography>
                         <LinearProgress
                             variant="determinate"
-                            value={(character.health / character.maxHealth) * 100}
+                            value={characterHealthPercent}
                             sx={{ width: 1, height: 7 }}
-                            color="success"
+                            color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
                         />
                     </Box>
                 </Button>

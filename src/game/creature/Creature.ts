@@ -457,6 +457,14 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             duration: Phaser.Math.FloatBetween(500, 1000),
             ease: "Sine.easeIn",
         })
+
+        const removePool = () => {
+            bloodPool.destroy(true)
+            EventBus.off("gameover", removePool)
+        }
+
+        EventBus.on("gameover", () => removePool())
+        
     }
 
     gainMana(manaGained: number) {

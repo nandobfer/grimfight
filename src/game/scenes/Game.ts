@@ -12,6 +12,14 @@ import { CharacterDto } from "../creature/character/Character"
 
 export type GameState = "fighting" | "idle"
 
+export interface GameProgressDto {
+    playerLives: number
+    playerGold: number
+    floor: number
+}
+
+const starting_player_lives = 3
+
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
@@ -25,7 +33,7 @@ export class Game extends Scene {
     private fireEffects: Phaser.GameObjects.Group
 
     playerGold = 0
-    playerLives = 5
+    playerLives = starting_player_lives
 
     constructor() {
         super("Game")
@@ -46,11 +54,12 @@ export class Game extends Scene {
         this.enemyTeam.reset()
 
         this.loadPlayerCharacters()
-        this.loadPlayerGold()
+        this.loadProgress()
         this.createArenaTorches()
         this.buildFloor()
 
         EventBus.emit("game-ready", this)
+        EventBus.on("get-progress", () => this.emitProgress())
     }
 
     createLight() {
@@ -132,9 +141,14 @@ export class Game extends Scene {
 
     onFloorDefeated() {
         this.floor += 1
-        this.enemyTeam.clear(true, true)
+        this.clearFloor()
         this.buildFloor()
         EventBus.emit("floor-change", this.floor)
+        this.saveProgress()
+    }
+
+    clearFloor() {
+        this.enemyTeam.clear(true, true)
     }
 
     buildFloor() {
@@ -163,11 +177,13 @@ export class Game extends Scene {
         }
 
         this.resetFloor()
+        this.saveProgress()
     }
 
     changePlayerLives(lives: number) {
         this.playerLives = lives
         EventBus.emit("lives-change", lives)
+        this.saveProgress()
     }
 
     anyTeamWiped() {
@@ -184,17 +200,22 @@ export class Game extends Scene {
         return false
     }
 
-    gameOver() {}
+    gameOver() {
+        this.resetProgress()
+        this.loadProgress()
+        this.emitProgress()
+        this.clearFloor()
+        this.buildFloor()
+        this.loadPlayerCharacters()
+        EventBus.emit("gameover")
+    }
 
-    loadPlayerGold() {
-        try {
-            const data = localStorage.getItem("gold")
-            if (data) {
-                this.playerGold = Number(data)
-            }
-        } catch (error) {
-            console.error("Error loading player gold:", error)
-        }
+    resetProgress() {
+        this.floor = 1
+        this.playerLives = starting_player_lives
+        this.playerGold = 0
+        this.saveProgress()
+        this.savePlayerCharacters([])
     }
 
     getSavedCharacters(): CharacterDto[] {
@@ -236,6 +257,49 @@ export class Game extends Scene {
         } catch (error) {
             console.error("Error saving characters:", error)
         }
+    }
+
+    saveProgress() {
+        const data = this.getProgress()
+        try {
+            localStorage.setItem("progress", JSON.stringify(data))
+        } catch (error) {
+            console.error("Error saving progress:", error)
+        }
+    }
+
+    getProgress() {
+        const progress: GameProgressDto = {
+            floor: this.floor,
+            playerGold: this.playerGold,
+            playerLives: this.playerLives,
+        }
+        return progress
+    }
+
+    loadProgress() {
+        try {
+            const data = localStorage.getItem("progress")
+            if (data) {
+                const progress = JSON.parse(data) as GameProgressDto
+                this.floor = progress.floor
+                this.playerGold = progress.playerGold
+                this.playerLives = progress.playerLives
+            }
+        } catch (error) {
+            console.error("Error loading saved progress:", error)
+        }
+    }
+
+    emitProgress() {
+        const progress = this.getProgress()
+        EventBus.emit("load-progress", progress)
+    }
+
+    changePlayerGold(gold: number) {
+        this.playerGold = gold
+        EventBus.emit("gold-change", gold)
+        this.saveProgress()
     }
 
     newPlayerCharacter(dto: CharacterDto) {
