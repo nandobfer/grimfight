@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Badge, Box, Button, Divider, Typography } from "@mui/material"
 import { CharacterAvatar } from "../CharacterSheet/CharacterAvatar"
 import { Game } from "../../game/scenes/Game"
@@ -15,19 +15,27 @@ interface CharacterCardProps {
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirst, isLast, disabled }) => {
     const character = item.character
+    const [sold, setSold] = useState(false)
 
     const buyCharacter = () => {
         game.playerTeam.store.buy(item)
+        setSold(true)
     }
-
 
     return (
         <>
             {!isFirst && <Divider />}
             <Button
                 fullWidth
-                sx={{ padding: 1, gap: 1, flexDirection: "column", justifyContent: "start", filter: disabled ? "grayscale(100%)" : undefined }}
-                disabled={disabled}
+                sx={{
+                    padding: 1,
+                    gap: 1,
+                    flexDirection: "column",
+                    justifyContent: "start",
+                    filter: disabled ? "grayscale(100%)" : undefined,
+                    visibility: sold ? "hidden" : undefined,
+                }}
+                disabled={disabled || sold}
                 onClick={buyCharacter}
             >
                 <Badge badgeContent={character.level} color="warning" overlap="circular">
