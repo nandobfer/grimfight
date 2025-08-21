@@ -22,33 +22,45 @@ export class CharacterGroup extends CreatureGroup {
 
     reset() {
         super.reset()
-        this.replaceInBoard()
         EventBus.emit("characters-change", this.getChildren())
     }
 
-    replaceInBoard() {
-        const grid = (this.scene as Game).grid
-        const characters = this.getChildren()
-        if (!grid || characters.length === 0) return
+    add(child: Character, addToScene?: boolean): this {
+        super.add(child, addToScene)
 
-        const cols = grid.cols
-        const rows = grid.rows
+        const grid = this.scene.grid
+        if (!grid) return this
 
-        // Players: use bottom three rows centered (unchanged idea)
-        const baseRows = [rows - 1, rows - 2, rows - 3].filter((r) => r >= 0)
-        let idx = 0
-        for (const row of baseRows) {
-            const remaining = characters.length - idx
-            if (remaining <= 0) break
-            const take = Math.min(remaining, cols)
-            const startCol = Math.floor((cols - take) / 2)
-            for (let i = 0; i < take; i++) {
-                const character = characters[idx++]
-                const { x, y } = grid.cellToCenter(startCol + i, row)
-                character.setPosition(x, y)
-                character.body?.reset(x, y)
-                character.reset()
+        // bottom 3 rows for player
+        const rows = [grid.rows - 1, grid.rows - 2, grid.rows - 3].filter((r) => r >= 0)
+
+        const centeredCols = (n: number) => {
+            const mid = Math.floor((n - 1) / 2)
+            const out = [mid]
+            for (let d = 1; out.length < n; d++) {
+                if (mid + d < n) out.push(mid + d)
+                if (mid - d >= 0) out.push(mid - d)
+            }
+            return out
+        }
+        const colOrder = centeredCols(grid.cols)
+
+        outer: for (const row of rows) {
+            for (const col of colOrder) {
+                const { x, y } = grid.cellToCenter(col, row)
+                // consider the cell taken if any character is at that cell center
+                const taken = this.getChildren().some((c) => c !== child && c.boardX === x && c.boardY === y)
+                if (!taken) {
+                    child.boardX = x
+                    child.boardY = y
+                    child.setPosition(x, y)
+                    child.body?.reset(x, y)
+                    child.reset()
+                    break outer
+                }
             }
         }
+
+        return this
     }
 }
