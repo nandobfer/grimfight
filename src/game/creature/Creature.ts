@@ -66,8 +66,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     private healthBar: ProgressBar
     private manaBar: ProgressBar
 
-    constructor(scene: Game, x: number, y: number, name: string, id: string) {
-        super(scene, x, y, name)
+    constructor(scene: Game, name: string, id: string) {
+        super(scene, -1000, -1000, name)
 
         this.id = id
         this.name = name
@@ -76,10 +76,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true)
         this.body.pushable = false
         this.originalDepth = this.depth
-        this.boardX = x
-        this.boardY = y
 
         this.createAnimations()
+        console.log(this)
 
         this.anims.play(`${this.name}-idle-down`)
 
@@ -464,7 +463,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
 
         EventBus.on("gameover", () => removePool())
-        
     }
 
     gainMana(manaGained: number) {
@@ -518,7 +516,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     update(time: number, delta: number): void {
         this.updateCharUi()
-        EventBus.emit(`character-${this.id}-update`, this)
 
         if (this.scene.state === "idle") {
             return

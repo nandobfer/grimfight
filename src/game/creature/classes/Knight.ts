@@ -6,8 +6,8 @@ export class Knight extends Character {
     baseArmor = 5
     baseResistance = 10
 
-    constructor(scene: Game, x: number, y: number, id: string) {
-        super(scene, x, y, "knight", id)
+    constructor(scene: Game, id: string) {
+        super(scene, "knight", id)
     }
 
     levelUp(): void {

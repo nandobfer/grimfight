@@ -21,7 +21,7 @@ const CR_1_MONSTER: Record<string, StatsLike> = {
     },
 }
 
-type Ctor = new (scene: Game, x: number, y: number) => Monster
+type Ctor = new (scene: Game) => Monster
 
 export class MonsterRegistry {
     private static registry: Map<string, Ctor> = new Map()
@@ -29,10 +29,10 @@ export class MonsterRegistry {
     static register(name: string, cls: Ctor) {
         this.registry.set(name, cls)
     }
-    static create(name: string, scene: Game, x: number, y: number): Monster {
+    static create(name: string, scene: Game): Monster {
         const C = this.registry.get(name)
         if (!C) throw new Error(`Monster not found: ${name}`)
-        return new C(scene, x, y)
+        return new C(scene)
     }
     static names(): string[] {
         return [...this.registry.keys()]

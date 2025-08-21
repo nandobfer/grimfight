@@ -15,8 +15,8 @@ export class Monster extends Creature {
     private smokeParticles?: Phaser.GameObjects.Particles.ParticleEmitter
     private darkAura?: Phaser.FX.Glow
 
-    constructor(scene: Game, x: number, y: number, texture: string) {
-        super(scene, x, y, texture, Phaser.Utils.String.UUID())
+    constructor(scene: Game, texture: string) {
+        super(scene, texture, Phaser.Utils.String.UUID())
     }
 
     calculateCR(): number {

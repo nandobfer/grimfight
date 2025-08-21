@@ -15,15 +15,18 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
     }
 
     const addChar = () => {
-        game.chooseNewCharacter()
+        game.generateFirstCharacter()
     }
 
-    
+    const resetGame = () => {
+        game.gameOver()
+    }
 
     return (
         <Box sx={{ flexDirection: "column", gap: 1 }}>
-            <Button onClick={clearSavedChars}>clear saved chars</Button>
+            <Button onClick={clearSavedChars}>clear characters</Button>
             <Button onClick={addChar}>add char</Button>
+            <Button onClick={resetGame}>reset game</Button>
             <DebugFloor game={game} />
         </Box>
     )

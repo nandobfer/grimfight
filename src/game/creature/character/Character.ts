@@ -1,6 +1,7 @@
 // src/game/creature/character/Character.ts
 
 import { Game } from "../../scenes/Game"
+import { EventBus } from "../../tools/EventBus"
 import { DamageType } from "../../ui/DamageNumbers"
 import { LevelBadge } from "../../ui/LevelBadge"
 import { Creature } from "../Creature"
@@ -33,11 +34,13 @@ export class Character extends Creature {
     private glowFx: Phaser.FX.Glow
     private preDrag?: { x: number; y: number }
 
-    constructor(scene: Game, x: number, y: number, name: string, id: string) {
-        super(scene, x, y, name, id)
+    constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
+        super(scene, name, id)
 
         this.levelBadge = new LevelBadge(this, { offsetX: 22, offsetY: -15 })
         this.levelBadge.setValue(this.level)
+        this.boardX = boardX || 0
+        this.boardY = boardY || 0
         this.handleMouseEvents()
     }
 
@@ -138,6 +141,7 @@ export class Character extends Creature {
     die() {
         super.die()
         this.levelBadge.fadeOut()
+        EventBus.emit(`character-${this.id}-update`, this)
     }
 
     destroyUi(): void {
@@ -196,5 +200,10 @@ export class Character extends Creature {
             name: this.name,
         }
         return data
+    }
+
+    update(time: number, delta: number): void {
+        EventBus.emit(`character-${this.id}-update`, this)
+        super.update(time, delta)
     }
 }

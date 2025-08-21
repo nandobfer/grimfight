@@ -27,11 +27,11 @@ export const Ui: React.FC<UiProps> = (props) => {
     }
 
     useEffect(() => {
-        EventBus.on("choose-character", handleFirstCharacterEmitted)
+        // EventBus.on("choose-character", handleFirstCharacterEmitted)
         EventBus.on("load-complete", finishLoading)
 
         return () => {
-            EventBus.off("choose-character", handleFirstCharacterEmitted)
+            // EventBus.off("choose-character", handleFirstCharacterEmitted)
             EventBus.off("load-complete", finishLoading)
         }
     }, [])

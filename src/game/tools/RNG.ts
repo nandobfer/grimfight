@@ -10,6 +10,10 @@ export class RNG {
         return Phaser.Math.RND.weightedPick(array)
     }
 
+    static uuid() {
+        return Phaser.Utils.String.UUID()
+    }
+
     constructor(seed: number) {
         // mulberry32
         this.s = seed >>> 0

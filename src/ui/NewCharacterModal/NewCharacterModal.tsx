@@ -20,7 +20,7 @@ export const NewCharacterModal: React.FC<NewCharacterModalProps> = (props) => {
 
         const availableCharacters = CharacterRegistry.getAllRegistered()
         for (const name of availableCharacters) {
-            const character = CharacterRegistry.create(name, game, 0, 0, Phaser.Utils.String.UUID())
+            const character = CharacterRegistry.create(name, game, Phaser.Utils.String.UUID())
             characters.push(character.getDto())
             character.destroy(true)
         }

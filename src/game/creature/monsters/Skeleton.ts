@@ -8,8 +8,8 @@ export class Skeleton extends Monster {
     baseAttackDamage = 15
     baseAttackSpeed = 1
 
-    constructor(scene: Game, x: number, y: number, texture?: string) {
-        super(scene, x, y, texture || "skeleton")
+    constructor(scene: Game, texture?: string) {
+        super(scene, texture || "skeleton")
         this.preferredPosition = "middle"
         this.challengeRating = this.calculateCR()
     }

@@ -8,8 +8,8 @@ export class Mage extends Character {
     baseAttackRange = 3
     baseManaPerSecond = 20
 
-    constructor(scene: Game, x: number, y: number, id: string) {
-        super(scene, x, y, "mage", id)
+    constructor(scene: Game, id: string) {
+        super(scene, "mage", id)
         this.attackAnimationImpactFrame = 6
     }
 

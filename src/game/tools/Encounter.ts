@@ -14,7 +14,7 @@ let CR_CACHE = new WeakMap<RegistryEntry["ctor"], number>()
 function ctorCR(scene: Game, ctor: RegistryEntry["ctor"]): number {
     const hit = CR_CACHE.get(ctor)
     if (hit != null) return hit
-    const tmp = new ctor(scene, -1_000_000, -1_000_000)
+    const tmp = new ctor(scene)
     const cr = tmp.challengeRating
     tmp.destroy()
     CR_CACHE.set(ctor, cr)
@@ -32,7 +32,7 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
 
     if (isBoss) {
         const { ctor } = rng.pick(MonsterRegistry.entries())
-        const boss = new ctor(scene, -1000, -1000)
+        const boss = new ctor(scene)
         boss.makeBoss(targetCR)
         return { monsters: [boss], isBoss: true }
     }
@@ -65,14 +65,14 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
         const picked = rng.pick(topK)
 
         // Instantiate and use the actual CR for accounting (extra safety)
-        const monster = new picked.ctor(scene, -1000, -1000)
+        const monster = new picked.ctor(scene)
         const actual = monster.challengeRating
 
         // Final guard: if due to any discrepancy actual would overshoot, fallback to smallest that fits
         if (sum + actual > targetCR + tol && fit.length > 1) {
             monster.destroy()
             const smallest = fit[0]
-            const m2 = new smallest.ctor(scene, -1000, -1000)
+            const m2 = new smallest.ctor(scene)
             const actual2 = m2.challengeRating
             if (sum + actual2 > targetCR + tol && out.length > 0) {
                 // nothing reasonable fits; stop filling

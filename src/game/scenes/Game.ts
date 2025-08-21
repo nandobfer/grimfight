@@ -202,11 +202,9 @@ export class Game extends Scene {
 
     gameOver() {
         this.resetProgress()
-        this.loadProgress()
-        this.emitProgress()
         this.clearFloor()
         this.buildFloor()
-        this.loadPlayerCharacters()
+        
         EventBus.emit("gameover")
     }
 
@@ -215,7 +213,9 @@ export class Game extends Scene {
         this.playerLives = starting_player_lives
         this.playerGold = 0
         this.saveProgress()
+        this.emitProgress()
         this.savePlayerCharacters([])
+        this.loadPlayerCharacters()
     }
 
     getSavedCharacters(): CharacterDto[] {
@@ -236,7 +236,7 @@ export class Game extends Scene {
 
         for (const dto of characters) {
             try {
-                const character = CharacterRegistry.create(dto.name, this, dto.boardX, dto.boardY, dto.id)
+                const character = CharacterRegistry.create(dto.name, this, dto.id, dto.boardX, dto.boardY)
                 character.loadFromDto(dto)
                 this.playerTeam.add(character)
             } catch (error) {
@@ -247,7 +247,7 @@ export class Game extends Scene {
         this.playerTeam.reset()
 
         if (this.playerTeam.getLength() === 0) {
-            this.chooseNewCharacter()
+            this.generateFirstCharacter()
         }
     }
 
@@ -333,8 +333,10 @@ export class Game extends Scene {
         this.loadPlayerCharacters()
     }
 
-    chooseNewCharacter() {
-        EventBus.emit("choose-character")
+    generateFirstCharacter() {
+        const randomCharacter = CharacterRegistry.random(this)
+        this.playerTeam.add(randomCharacter)
+        this.playerTeam.reset()
     }
 
     createArenaTorches() {

@@ -7,8 +7,8 @@ export class Rogue extends Character {
     baseAttackDamage = 20
     baseCritChance = 50
 
-    constructor(scene: Game, x: number, y: number, id: string) {
-        super(scene, x, y, "rogue", id)
+    constructor(scene: Game, id: string) {
+        super(scene, "rogue", id)
     }
 
     levelUp(): void {

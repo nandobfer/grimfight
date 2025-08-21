@@ -6,8 +6,8 @@ export class Zombie extends Monster {
     baseAttackDamage = 30
     baseAttackSpeed = 0.5
 
-    constructor(scene: Game, x: number, y: number) {
-        super(scene, x, y, "zombie")
+    constructor(scene: Game) {
+        super(scene, "zombie")
         this.preferredPosition = "front"
         this.challengeRating = this.calculateCR()
     }

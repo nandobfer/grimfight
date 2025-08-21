@@ -8,8 +8,8 @@ export class Demonic extends Monster {
     baseAttackSpeed = 0.75
     baseAttackRange = 3
 
-    constructor(scene: Game, x: number, y: number) {
-        super(scene, x, y, "demonic")
+    constructor(scene: Game) {
+        super(scene, "demonic")
         this.preferredPosition = "back"
         this.attackAnimationImpactFrame = 9
         this.challengeRating = this.calculateCR()

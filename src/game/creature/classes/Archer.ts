@@ -8,8 +8,8 @@ export class Archer extends Character {
     baseAttackDamage = 30
     baseAttackRange = 4
 
-    constructor(scene: Game, x: number, y: number, id: string) {
-        super(scene, x, y, "archer", id)
+    constructor(scene: Game, id: string) {
+        super(scene, "archer", id)
         this.attackAnimationImpactFrame = 9
     }
 
