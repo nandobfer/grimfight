@@ -10,7 +10,7 @@ interface CharacterStoreDrawerProps {
 }
 
 export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game }) => {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(true)
 
     const closeStore = () => {
         setOpen(false)

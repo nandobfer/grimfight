@@ -165,6 +165,13 @@ export class Character extends Creature {
 
         this.maxHealth += 50
         this.attackDamage += 5
+        this.resetUi()
+    }
+
+    resetUi(): void {
+        super.resetUi()
+        this.levelBadge.reset()
+        this.levelBadge.setValue(this.level)
     }
 
     updateCharUi(): void {
@@ -200,6 +207,11 @@ export class Character extends Creature {
             name: this.name,
         }
         return data
+    }
+
+    destroy(fromScene?: boolean): void {
+        super.destroy(fromScene)
+        this.destroyUi()
     }
 
     update(time: number, delta: number): void {

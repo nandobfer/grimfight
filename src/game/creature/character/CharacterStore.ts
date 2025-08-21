@@ -1,5 +1,6 @@
 import { Game } from "../../scenes/Game"
 import { EventBus } from "../../tools/EventBus"
+import { RNG } from "../../tools/RNG"
 import { CharacterRegistry } from "../CharacterRegistry"
 import { CharacterDto } from "./Character"
 import { CharacterGroup } from "./CharacterGroup"
@@ -61,6 +62,7 @@ export class CharacterStore {
 
     buy(item: StoreItem) {
         const character = CharacterRegistry.create(item.character.name, this.scene, item.character.id)
+        character.id = RNG.uuid()
         this.team.add(character)
         this.scene.changePlayerGold(this.scene.playerGold - item.cost)
     }

@@ -32,7 +32,7 @@ export class Game extends Scene {
     grid: Grid
     private fireEffects: Phaser.GameObjects.Group
 
-    playerGold = 0
+    playerGold = 3
     playerLives = starting_player_lives
 
     constructor() {
@@ -205,14 +205,14 @@ export class Game extends Scene {
         this.resetProgress()
         this.clearFloor()
         this.buildFloor()
-        
+
         EventBus.emit("gameover")
     }
 
     resetProgress() {
         this.floor = 1
         this.playerLives = starting_player_lives
-        this.playerGold = 0
+        this.playerGold = 3
         this.saveProgress()
         this.emitProgress()
         this.savePlayerCharacters([])
