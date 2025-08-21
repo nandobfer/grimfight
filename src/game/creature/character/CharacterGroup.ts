@@ -1,5 +1,6 @@
 import { Game } from "../../scenes/Game"
 import { DamageChart } from "../../tools/DamageChart"
+import { EventBus } from "../../tools/EventBus"
 import { CreatureGroup } from "../CreatureGroup"
 import { Character } from "./Character"
 
@@ -22,6 +23,7 @@ export class CharacterGroup extends CreatureGroup {
     reset() {
         super.reset()
         this.replaceInBoard()
+        EventBus.emit("characters-change", this.getChildren())
     }
 
     replaceInBoard() {

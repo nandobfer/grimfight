@@ -52,6 +52,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     const characterHealthPercent = useMemo(() => (character.health / character.maxHealth) * 100, [character.health, character.maxHealth])
 
     useEffect(() => {
+        setCharacter(character)
         const handler = (char: Creature) => {
             setCharacter({ ...char } as Creature) // Create a new object to force re-render
         }

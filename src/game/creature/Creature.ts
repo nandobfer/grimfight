@@ -78,7 +78,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.originalDepth = this.depth
 
         this.createAnimations()
-        console.log(this)
 
         this.anims.play(`${this.name}-idle-down`)
 
