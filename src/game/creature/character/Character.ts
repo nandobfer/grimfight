@@ -166,6 +166,7 @@ export class Character extends Creature {
         this.baseMaxHealth += 50
         this.baseAttackDamage += 5
         this.resetUi()
+        EventBus.emit(`character-${this.id}-update`, this)
     }
 
     resetUi(): void {

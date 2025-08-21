@@ -66,7 +66,8 @@ export class Fireball extends Projectile {
     }
 
     destroy(fromScene?: boolean): void {
-        this.owner?.scene?.lights?.removeLight(this.light)
+        const scene = this.owner?.scene || this.scene
+        scene?.lights?.removeLight(this.light)
         super.destroy(fromScene)
     }
 

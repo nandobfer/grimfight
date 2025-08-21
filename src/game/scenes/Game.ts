@@ -205,6 +205,7 @@ export class Game extends Scene {
         this.resetProgress()
         this.clearFloor()
         this.buildFloor()
+        this.playerTeam.store.shuffle()
 
         EventBus.emit("gameover")
     }
