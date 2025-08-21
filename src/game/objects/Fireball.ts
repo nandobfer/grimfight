@@ -1,7 +1,6 @@
 // src/objects/Arrow.ts
 import { Creature } from "../creature/Creature"
 import { FireHit } from "../fx/FireHit"
-import { DamageType } from "../ui/DamageNumbers"
 import { Projectile } from "./Projectile"
 
 export class Fireball extends Projectile {
@@ -16,7 +15,6 @@ export class Fireball extends Projectile {
         this.toggleFlipX()
         this.setCircle(this.width / 4)
 
-        this.scene = owner.scene
         if (!this.scene.anims.exists("fireball")) {
             const frames = []
 
@@ -72,7 +70,7 @@ export class Fireball extends Projectile {
         const enemy = this.owner.target
         const x = enemy?.x || this.x
         const y = enemy?.y || this.y
-        this.explosion = new FireHit(this.owner.scene, x, y)
+        new FireHit(this.scene, x, y)
     }
 
     onHit() {

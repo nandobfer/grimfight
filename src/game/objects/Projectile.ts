@@ -17,8 +17,9 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
     constructor(owner: Creature, texture: string, onHitEffect: string, damageType: DamageType) {
         super(owner.scene, owner.x, owner.y, texture)
-        owner.scene.add.existing(this)
-        owner.scene.physics.add.existing(this)
+        this.scene = owner.scene
+        this.scene.add.existing(this)
+        this.scene.physics.add.existing(this)
         this.toggleFlipX()
         this.setScale(0.1, 0.1)
 
@@ -77,7 +78,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     onHit() {
-        this.owner.onAttackLand(this.damageType)
+        this.owner?.onAttackLand(this.damageType)
         this.destroy()
     }
 

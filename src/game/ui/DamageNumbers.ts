@@ -2,7 +2,7 @@
 import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 
-export type DamageType = "normal" | "crit" | "block" | "heal" | "fire" | "cold" | "poison" | "true"
+export type DamageType = "normal" | "block" | "heal" | "fire" | "cold" | "poison" | "true"
 
 export type DamageTextOpts = {
     crit?: boolean
@@ -42,7 +42,7 @@ function createLayer(scene: Game, bm: boolean): Layer {
 }
 
 function acquire(scene: Game): Entry {
-    const pool = POOL.get(scene) ?? (POOL.set(scene, []), POOL.get(scene)!)
+    const pool = POOL.get(scene) ?? (POOL.set(scene, []), POOL.get(scene))
     const bm = hasBM(scene)
     const make = () => {
         const back = createLayer(scene, bm)
@@ -60,7 +60,7 @@ function acquire(scene: Game): Entry {
         return c
     }
 
-    return pool.pop() ?? make()
+    return pool?.pop() ?? make()
 }
 
 function release(scene: Game, e: Entry) {
@@ -81,11 +81,12 @@ function setTintOrColor(layer: Layer, tintHex: number, cssHex: string) {
 /** Diablo-like floating damage numbers */
 export function showDamageText(scene: Game, x: number, y: number, value: number | string, opts: DamageTextOpts = {}) {
     const num = value
-    const kind: NonNullable<DamageTextOpts["type"]> = opts.type ?? (opts.crit ? "crit" : typeof num === "number" && num <= 0 ? "block" : "normal")
+    const isCrit = !!opts.crit
+    const kind: NonNullable<DamageTextOpts["type"]> = opts.type ?? (typeof num === "number" && num <= 0 ? "block" : "normal")
 
-    const duration = opts.duration ?? (kind === "crit" ? 2000 : 1500)
-    const float = opts.float ?? (kind === "crit" ? 64 : 32)
-    const baseScale = opts.baseScale ?? (kind === "crit" ? 1.25 : 1.0)
+    const duration = opts.duration ?? (isCrit ? 2000 : 1500)
+    const float = opts.float ?? (isCrit ? 64 : 32)
+    const baseScale = opts.baseScale ?? (isCrit ? 1.25 : 1.0)
 
     const entry = acquire(scene)
     const { front, back } = entry
@@ -97,9 +98,9 @@ export function showDamageText(scene: Game, x: number, y: number, value: number 
 
     // Tints per kind (front only; back stays dark)
     switch (kind) {
-        case "crit":
-            setTintOrColor(front, 0xffd54f, "#ffd54f") // gold
-            break
+        // case "crit":
+        //     setTintOrColor(front, 0xffd54f, "#ffd54f") // gold
+        //     break
         case "block":
             setTintOrColor(front, 0xb0bec5, "#b0bec5") // gray/steel
             break
@@ -130,7 +131,7 @@ export function showDamageText(scene: Game, x: number, y: number, value: number 
     entry.setPosition(x + Phaser.Math.Between(-2, 2), y - 18)
 
     // Layer tweaks
-    front.setBlendMode(kind === "crit" ? Phaser.BlendModes.NORMAL : Phaser.BlendModes.NORMAL)
+    front.setBlendMode(isCrit ? Phaser.BlendModes.NORMAL : Phaser.BlendModes.NORMAL)
     front.setScale(baseScale)
     back.setScale(baseScale * 1.1)
 
@@ -140,7 +141,7 @@ export function showDamageText(scene: Game, x: number, y: number, value: number 
     const endY = startY - float
 
     // Crit “pop” + micro wobble
-    if (kind === "crit") {
+    if (isCrit) {
         scene.tweens.add({
             targets: front,
             scale: baseScale * 1.25,
