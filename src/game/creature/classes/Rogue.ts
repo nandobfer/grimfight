@@ -14,6 +14,6 @@ export class Rogue extends Character {
     levelUp(): void {
         super.levelUp()
 
-        this.attackDamage += 5
+        this.baseAttackDamage += 5
     }
 }

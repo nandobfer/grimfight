@@ -14,6 +14,6 @@ export class Knight extends Character {
     levelUp(): void {
         super.levelUp()
 
-        this.maxHealth += 50
+        this.baseMaxHealth += 50
     }
 }

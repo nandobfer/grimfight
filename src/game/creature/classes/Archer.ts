@@ -21,7 +21,7 @@ export class Archer extends Character {
     levelUp(): void {
         super.levelUp()
 
-        this.attackDamage += 10
+        this.baseAttackDamage += 10
     }
 
     landAttack() {

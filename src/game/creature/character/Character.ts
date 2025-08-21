@@ -163,8 +163,8 @@ export class Character extends Creature {
         this.experience = 0
         this.level += 1
 
-        this.maxHealth += 50
-        this.attackDamage += 5
+        this.baseMaxHealth += 50
+        this.baseAttackDamage += 5
         this.resetUi()
     }
 

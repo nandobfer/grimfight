@@ -78,7 +78,7 @@ export class CharacterGroup extends CreatureGroup {
 
         const name = pivot.name
         const level = pivot.level
-        const matches = this.getChildren().filter((c) => c.name === name && c.level === level)
+        const matches = this.getChildren().filter((character) => character.name === name && character.level === level)
 
         if (matches.length < 3) return
 
@@ -146,8 +146,8 @@ export class CharacterGroup extends CreatureGroup {
                     ease: "Sine.easeOut",
                     onComplete: () => {
                         keep.levelUp()
-                        keep.saveInStorage()
                         enable(keep)
+                        keep.saveInStorage()
                         EventBus.emit("characters-change", this.getChildren())
                         onComplete?.()
                     },

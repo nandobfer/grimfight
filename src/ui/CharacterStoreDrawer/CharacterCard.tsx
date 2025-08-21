@@ -23,10 +23,15 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
 
     return (
         <>
-            {!isFirst && <Divider  />}
-            <Button fullWidth sx={{ padding: 1, gap: 1, flexDirection: "column", justifyContent: "start", filter: disabled ? "grayscale(100%)" : undefined }} disabled={disabled} onClick={buyCharacter}>
-                <Badge badgeContent={character.level} color="warning" overlap="circular" >
-                    <CharacterAvatar name={character.name} size={(10 / 100) * window.innerWidth} disabled={disabled} />
+            {!isFirst && <Divider />}
+            <Button
+                fullWidth
+                sx={{ padding: 1, gap: 1, flexDirection: "column", justifyContent: "start", filter: disabled ? "grayscale(100%)" : undefined }}
+                disabled={disabled}
+                onClick={buyCharacter}
+            >
+                <Badge badgeContent={character.level} color="warning" overlap="circular">
+                    <CharacterAvatar name={character.name} size={(5 / 100) * window.innerWidth} disabled={disabled} />
                 </Badge>
 
                 <Box sx={{ width: 1, gap: 1 }}>
