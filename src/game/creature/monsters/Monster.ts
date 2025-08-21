@@ -24,11 +24,11 @@ export class Monster extends Creature {
     }
 
     scaleStats(mult: number) {
-        this.maxHealth *= mult
-        this.health = this.maxHealth
-        this.attackDamage *= mult
-        this.armor *= mult * 0.5
-        this.resistance *= mult * 0.25
+        this.baseMaxHealth *= mult
+        this.health = this.baseMaxHealth
+        this.baseAttackDamage *= mult
+        this.baseArmor *= mult * 0.5
+        this.baseResistance *= mult * 0.25
         this.challengeRating = this.calculateCR()
     }
 
