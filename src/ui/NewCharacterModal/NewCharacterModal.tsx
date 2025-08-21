@@ -2,7 +2,7 @@ import React, { useMemo } from "react"
 import { Box, Dialog, Typography } from "@mui/material"
 import { CharacterRegistry } from "../../game/creature/CharacterRegistry"
 import { NewCharacterContainer } from "./NewCharacterContainer"
-import { useGameScene } from "../../hooks/useGameScene"
+import { useGameScene } from "../hooks/useGameScene"
 import { CharacterDto } from "../../game/creature/character/Character"
 
 interface NewCharacterModalProps {

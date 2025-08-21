@@ -1,7 +1,7 @@
 import { createTheme, LinearProgress, useMediaQuery } from "@mui/material"
 import { useMemo } from "react"
 // import { ptBR } from "@mui/x-data-grid/locales"
-import { colors } from "../style/colors"
+import { colors } from "../../style/colors"
 
 export const useMuiTheme = () => {
     const isMobile = useMediaQuery("(orientation: portrait)")

@@ -3,9 +3,11 @@ import { DamageChart } from "../../tools/DamageChart"
 import { EventBus } from "../../tools/EventBus"
 import { CreatureGroup } from "../CreatureGroup"
 import { Character } from "./Character"
+import { CharacterStore } from "./CharacterStore"
 
 export class CharacterGroup extends CreatureGroup {
     damageChart: DamageChart
+    store: CharacterStore
 
     constructor(
         scene: Game,
@@ -14,6 +16,7 @@ export class CharacterGroup extends CreatureGroup {
     ) {
         super(scene, children, config)
         this.damageChart = new DamageChart(this)
+        this.store = new CharacterStore(this)
     }
 
     override getChildren() {
@@ -66,5 +69,10 @@ export class CharacterGroup extends CreatureGroup {
         child.saveInStorage()
 
         return this
+    }
+
+    grantFloorReward(floor: number) {
+        const gold = 3 + Math.round(floor * 0.25)
+        this.scene.changePlayerGold(this.scene.playerGold + gold)
     }
 }

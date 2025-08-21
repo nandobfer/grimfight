@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { EventBus } from "../game/tools/EventBus"
-import { Game } from "../game/scenes/Game"
+import { EventBus } from "../../game/tools/EventBus"
+import { Game } from "../../game/scenes/Game"
 
 export const useGameScene = () => {
     const [game, setGame] = useState<Game | null>(null)

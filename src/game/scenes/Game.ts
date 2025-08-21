@@ -140,6 +140,7 @@ export class Game extends Scene {
     }
 
     onFloorDefeated() {
+        this.playerTeam.grantFloorReward(this.floor)
         this.floor += 1
         this.clearFloor()
         this.buildFloor()

@@ -3,6 +3,7 @@ import { Box, Button, Divider } from "@mui/material"
 import { Game, GameState } from "../../game/scenes/Game"
 import { EventBus } from "../../game/tools/EventBus"
 import { DebugMenu } from "../DebugMenu/DebugMenu"
+import { CharacterStoreDrawer } from "../CharacterStoreDrawer/CharacterStoreDrawer"
 
 interface GameStateButtonsProps {
     game: Game
@@ -42,6 +43,8 @@ export const GameStateButtons: React.FC<GameStateButtonsProps> = (props) => {
             <Button variant="outlined" onClick={gameState === "fighting" ? onStopClick : onPlayClick}>
                 {gameState === "fighting" ? "stop" : "fight"}
             </Button>
+
+            <CharacterStoreDrawer game={props.game} />
 
             <Divider />
             <DebugMenu game={props.game} />
