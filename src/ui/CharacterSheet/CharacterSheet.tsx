@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography, useMediaQuery } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, LinearProgress, Typography, useMediaQuery } from "@mui/material"
 import { Creature } from "../../game/creature/Creature"
-import { ArrowDropDown, Expand } from "@mui/icons-material"
 import { EventBus } from "../../game/tools/EventBus"
 
 interface CharacterSheetProps {
@@ -33,7 +32,12 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
             { title: "Mana", value: `${Math.round(character.mana)} / ${character.maxMana}` },
             { title: "Mana Regen", value: `${character.manaPerSecond} /s` },
             { title: "Mana /hit", value: `${character.manaPerAttack}` },
-            { title: "Attack Damage", value: character.attackDamage },
+            {
+                title: "Attack Damage",
+                value: `${Math.round(character.attackDamage * character.minDamageMultiplier)} - ${Math.round(
+                    character.attackDamage * character.maxDamageMultiplier
+                )}`,
+            },
             { title: "Attack Speed", value: `${character.attackSpeed} /s` },
             { title: "Crit Chance", value: `${character.critChance} %` },
             { title: "Crit Damage Multiplier", value: `x ${character.critDamageMultiplier}` },
@@ -57,12 +61,21 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     }, [character.id])
     return (
         <Accordion sx={{ flexDirection: "column" }} slots={{ root: Box }}>
-            <AccordionSummary sx={{ padding: 0 }}>
-                <Button variant="outlined" fullWidth sx={{ justifyContent: "start" }}>
-                    <Typography variant="subtitle2">{character.name}</Typography>
+            <AccordionSummary sx={{ padding: 0, marginTop: -1.5, marginBottom: -0.5 }}>
+                <Button variant="outlined" fullWidth sx={{ justifyContent: "start", padding: 1, gap: 1, alignItems: "center" }}>
+                    <Avatar sx={{ bgcolor: "primary.main", width: 30, aspectRatio: 1, height: "auto" }} />
+                    <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
+                        <Typography variant="subtitle2">{character.name}</Typography>
+                        <LinearProgress
+                            variant="determinate"
+                            value={(character.health / character.maxHealth) * 100}
+                            sx={{ width: 1, height: 7 }}
+                            color="success"
+                        />
+                    </Box>
                 </Button>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails sx={{ marginTop: -1.5, marginBottom: -0.5 }}>
                 <Box sx={{ flexDirection: "column" }}>
                     {attributes.map((data) => (
                         <SheetData key={data.title} title={data.title} value={data.value} />

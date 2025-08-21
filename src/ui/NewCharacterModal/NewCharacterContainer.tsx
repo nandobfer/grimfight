@@ -1,11 +1,11 @@
 import React, { useMemo } from "react"
-import { Box, Button, MenuItem, Paper, Typography } from "@mui/material"
-import { CreatureDto } from "../../game/creature/Creature"
+import { Button, Paper, Typography } from "@mui/material"
 import { SheetData, SheetDataItem } from "../CharacterSheet/CharacterSheet"
+import { CharacterDto } from "../../game/creature/character/Character"
 
 interface NewCharacterContainerProps {
-    character: CreatureDto
-    onChoose: (character: CreatureDto) => void
+    character: CharacterDto
+    onChoose: (character: CharacterDto) => void
 }
 
 export const NewCharacterContainer: React.FC<NewCharacterContainerProps> = (props) => {
