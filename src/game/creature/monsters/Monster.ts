@@ -133,6 +133,15 @@ export class Monster extends Creature {
         return this
     }
 
+    updateFx() {
+        if (this.shadowParticles && this.shadowParticles.active) {
+            this.shadowParticles.setPosition(this.x, this.y)
+        }
+        if (this.smokeParticles && this.smokeParticles.active) {
+            this.smokeParticles.setPosition(this.x, this.y)
+        }
+    }
+
     // Clean up effects when monster is destroyed
     destroy(fromScene?: boolean): void {
         this.clearFX()
@@ -142,12 +151,6 @@ export class Monster extends Creature {
     update(time: number, delta: number): void {
         super.update(time, delta)
 
-        // Keep particles centered on boss if they exist
-        if (this.shadowParticles && this.shadowParticles.active) {
-            this.shadowParticles.setPosition(this.x, this.y)
-        }
-        if (this.smokeParticles && this.smokeParticles.active) {
-            this.smokeParticles.setPosition(this.x, this.y)
-        }
+        this.updateFx()
     }
 }
