@@ -9,15 +9,15 @@ import { ArmoredSkeleton } from "./ArmoredSkeleton"
 
 const CR_1_MONSTER: Record<string, StatsLike> = {
     skeleton: {
-        maxHealth: 400,
-        armor: 0,
-        resistance: 0,
-        attackDamage: 15,
-        attackSpeed: 1,
-        critChance: 0,
-        critDamageMultiplier: 2,
-        attackRange: 1,
-        speed: 30,
+        baseMaxHealth: 400,
+        baseArmor: 0,
+        baseResistance: 0,
+        baseAttackDamage: 15,
+        baseAttackSpeed: 1,
+        baseCritChance: 0,
+        baseCritDamageMultiplier: 2,
+        baseAttackRange: 1,
+        baseSpeed: 30,
     },
 }
 

@@ -13,17 +13,17 @@ export const NewCharacterContainer: React.FC<NewCharacterContainerProps> = (prop
 
     const attributes: SheetDataItem[] = useMemo(
         () => [
-            { title: "Health", value: character.maxHealth },
+            { title: "Health", value: character.baseMaxHealth },
             // { title: "Mana", value: character.maxMana },
             // { title: "Mana Regen", value: `${character.manaPerSecond} /s` },
             // { title: "Mana /hit", value: `${character.manaPerAttack}` },
-            { title: "Attack Damage", value: character.attackDamage },
-            { title: "Attack Speed", value: `${character.attackSpeed} /s` },
-            { title: "Crit Chance", value: `${character.critChance} %` },
+            { title: "Attack Damage", value: character.baseAttackDamage },
+            { title: "Attack Speed", value: `${character.baseAttackSpeed} /s` },
+            { title: "Crit Chance", value: `${character.baseCritChance} %` },
             // { title: "Crit Damage Multiplier", value: `x ${character.critDamageMultiplier}` },
-            { title: "Armor", value: character.armor },
-            { title: "Resistance", value: character.resistance },
-            { title: "Movement Speed", value: character.speed },
+            { title: "Armor", value: character.baseArmor },
+            { title: "Resistance", value: character.baseResistance },
+            { title: "Movement Speed", value: character.baseSpeed },
         ],
         [character]
     )

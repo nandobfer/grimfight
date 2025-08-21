@@ -10,18 +10,18 @@ export interface CharacterDto {
     level: number
     name: string
     id: string
-    maxHealth: number
-    attackSpeed: number
-    attackDamage: number
-    attackRange: number
-    maxMana: number
-    manaPerSecond: number
-    manaPerAttack: number
-    armor: number
-    resistance: number
-    speed: number
-    critChance: number
-    critDamageMultiplier: number
+    baseMaxHealth: number
+    baseAttackSpeed: number
+    baseAttackDamage: number
+    baseAttackRange: number
+    baseMaxMana: number
+    baseManaPerSecond: number
+    baseManaPerAttack: number
+    baseArmor: number
+    baseResistance: number
+    baseSpeed: number
+    baseCritChance: number
+    baseCritDamageMultiplier: number
     boardX: number
     boardY: number
 }
@@ -178,22 +178,22 @@ export class Character extends Creature {
     getDto() {
         const data: CharacterDto = {
             level: this.level,
-            armor: this.armor,
-            attackDamage: this.attackDamage,
-            attackRange: this.attackRange,
-            attackSpeed: this.attackSpeed,
+            baseArmor: this.baseArmor,
+            baseAttackDamage: this.baseAttackDamage,
+            baseAttackRange: this.baseAttackRange,
+            baseAttackSpeed: this.baseAttackSpeed,
+            baseCritChance: this.baseCritChance,
+            baseCritDamageMultiplier: this.baseCritDamageMultiplier,
+            baseManaPerAttack: this.baseManaPerAttack,
+            baseManaPerSecond: this.baseManaPerSecond,
+            baseMaxHealth: this.baseMaxHealth,
+            baseMaxMana: this.baseMaxMana,
+            baseResistance: this.baseResistance,
+            baseSpeed: this.baseSpeed,
             boardX: this.x,
             boardY: this.y,
-            critChance: this.critChance,
-            critDamageMultiplier: this.critDamageMultiplier,
             id: this.id,
-            manaPerAttack: this.manaPerAttack,
-            manaPerSecond: this.manaPerSecond,
-            maxHealth: this.maxHealth,
-            maxMana: this.maxMana,
             name: this.name,
-            resistance: this.resistance,
-            speed: this.speed,
         }
         return data
     }

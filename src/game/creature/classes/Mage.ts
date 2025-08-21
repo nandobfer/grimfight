@@ -3,10 +3,10 @@ import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
 export class Mage extends Character {
-    attackSpeed = 0.5
-    attackDamage = 50
-    attackRange = 3
-    manaPerSecond = 20
+    baseAttackSpeed = 0.5
+    baseAttackDamage = 50
+    baseAttackRange = 3
+    baseManaPerSecond = 20
 
     constructor(scene: Game, x: number, y: number, id: string) {
         super(scene, x, y, "mage", id)

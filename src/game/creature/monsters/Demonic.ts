@@ -3,10 +3,10 @@ import { Game } from "../../scenes/Game"
 import { Monster } from "./Monster"
 
 export class Demonic extends Monster {
-    maxHealth = 2000
-    attackDamage = 50
-    attackSpeed = 0.75
-    attackRange = 3
+    baseMaxHealth = 2000
+    baseAttackDamage = 50
+    baseAttackSpeed = 0.75
+    baseAttackRange = 3
 
     constructor(scene: Game, x: number, y: number) {
         super(scene, x, y, "demonic")

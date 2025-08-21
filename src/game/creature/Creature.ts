@@ -24,19 +24,32 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     level = 1
     health = 0
-    maxHealth = 500
-    attackSpeed = 1
-    attackDamage = 10
-    attackRange = 1
+    baseMaxHealth = 500
+    baseAttackSpeed = 1
+    baseAttackDamage = 10
+    baseAttackRange = 1
     mana = 0
-    maxMana = 100
-    manaPerSecond = 10
-    manaPerAttack = 10
+    baseMaxMana = 100
+    baseManaPerSecond = 10
+    baseManaPerAttack = 10
+    baseArmor = 0
+    baseResistance = 0
+    baseSpeed = 30
+    baseCritChance = 10
+    baseCritDamageMultiplier = 2
+
+    maxHealth = 0
+    attackSpeed = 0
+    attackDamage = 0
+    attackRange = 0
+    maxMana = 0
+    manaPerSecond = 0
+    manaPerAttack = 0
     armor = 0
     resistance = 0
-    speed = 30
-    critChance = 10
-    critDamageMultiplier = 2
+    speed = 0
+    critChance = 0
+    critDamageMultiplier = 0
 
     boardX = 0
     boardY = 0
@@ -77,6 +90,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     reset() {
+        this.calculateStats()
         this.health = this.maxHealth
         this.mana = 0
         this.active = true
@@ -88,6 +102,21 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.idle()
 
         this.target = undefined
+    }
+
+    calculateStats() {
+        this.maxHealth = this.baseMaxHealth
+        this.attackSpeed = this.baseAttackSpeed
+        this.attackDamage = this.baseAttackDamage
+        this.attackRange = this.baseAttackRange
+        this.maxMana = this.baseMaxMana
+        this.manaPerSecond = this.baseManaPerSecond
+        this.manaPerAttack = this.baseManaPerAttack
+        this.armor = this.baseArmor
+        this.resistance = this.baseResistance
+        this.speed = this.baseSpeed
+        this.critChance = this.baseCritChance
+        this.critDamageMultiplier = this.baseCritDamageMultiplier
     }
 
     resetUi() {

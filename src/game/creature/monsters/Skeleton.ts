@@ -4,9 +4,9 @@ import { Game } from "../../scenes/Game"
 import { Monster } from "./Monster"
 
 export class Skeleton extends Monster {
-    maxHealth = 150
-    attackDamage = 15
-    attackSpeed = 1
+    baseMaxHealth = 150
+    baseAttackDamage = 15
+    baseAttackSpeed = 1
 
     constructor(scene: Game, x: number, y: number, texture?: string) {
         super(scene, x, y, texture || "skeleton")

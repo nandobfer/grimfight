@@ -4,10 +4,10 @@ import { Game } from "../../scenes/Game";
 import { Skeleton } from "./Skeleton"
 
 export class ArmoredSkeleton extends Skeleton {
-    maxHealth = 500
-    attackDamage = 30
-    attackSpeed = 1
-    armor = 10
+    baseMaxHealth = 500
+    baseAttackDamage = 30
+    baseAttackSpeed = 1
+    baseArmor = 10
 
     constructor(scene: Game, x: number, y: number) {
         super(scene, x, y, "armored_skeleton")
