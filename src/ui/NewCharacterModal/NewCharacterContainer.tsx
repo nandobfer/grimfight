@@ -1,7 +1,8 @@
 import React, { useMemo } from "react"
-import { Avatar, Button, Paper, Typography } from "@mui/material"
+import { Button, Paper, Typography } from "@mui/material"
 import { SheetData, SheetDataItem } from "../CharacterSheet/CharacterSheet"
 import { CharacterDto } from "../../game/creature/character/Character"
+import { CharacterAvatar } from "../CharacterSheet/CharacterAvatar"
 
 interface NewCharacterContainerProps {
     character: CharacterDto
@@ -34,7 +35,7 @@ export const NewCharacterContainer: React.FC<NewCharacterContainerProps> = (prop
                 <Typography variant="body1" fontWeight={"bold"}>
                     {character.name}
                 </Typography>
-                <Avatar sx={{ width: 75, aspectRatio: 1, height: "auto", alignSelf: "center" }} />
+                <CharacterAvatar name={character.name} size={75} />
                 {attributes.map((data) => (
                     <SheetData key={data.title} title={data.title} value={data.value} />
                 ))}

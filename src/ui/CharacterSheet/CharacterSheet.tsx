@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, Button, LinearProgress, Typography, useMediaQuery } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, LinearProgress, Typography, useMediaQuery } from "@mui/material"
 import { Creature } from "../../game/creature/Creature"
 import { EventBus } from "../../game/tools/EventBus"
+import { CharacterAvatar } from "./CharacterAvatar"
 
 interface CharacterSheetProps {
     character: Creature
@@ -63,7 +64,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
         <Accordion sx={{ flexDirection: "column" }} slots={{ root: Box }}>
             <AccordionSummary sx={{ padding: 0, marginTop: -1.5, marginBottom: -0.5 }}>
                 <Button variant="outlined" fullWidth sx={{ justifyContent: "start", padding: 1, gap: 1, alignItems: "center" }}>
-                    <Avatar sx={{ bgcolor: "primary.main", width: 30, aspectRatio: 1, height: "auto" }} />
+                    <CharacterAvatar name={character.name} size={30} />
                     <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
                         <Typography variant="subtitle2">{character.name}</Typography>
                         <LinearProgress
