@@ -19,6 +19,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     id: string
     team: CreatureGroup
     attackAnimationImpactFrame = 5
+    minDamageMultiplier = 0.8
+    maxDamageMultiplier = 1.2
 
     level = 1
     health = 0
@@ -358,7 +360,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         if (isCrit) {
             damageMultiplier += this.critDamageMultiplier
         }
-        const damage = this.attackDamage * Math.max(1, damageMultiplier)
+
+        const randomizedDamage = this.attackDamage * Phaser.Math.FloatBetween(this.minDamageMultiplier, this.maxDamageMultiplier)
+        const damage = randomizedDamage * Math.max(1, damageMultiplier)
+
         this.target.takeDamage(damage, this, "bleeding", { crit: isCrit, type: damagetype })
         this.gainMana(this.manaPerAttack)
 
@@ -476,6 +481,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     update(time: number, delta: number): void {
         this.updateCharUi()
+        EventBus.emit(`character-${this.id}-update`, this)
 
         if (this.scene.state === "idle") {
             return
@@ -488,6 +494,5 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.selfUpdate(delta)
-        EventBus.emit(`character-${this.id}-update`, this)
     }
 }
