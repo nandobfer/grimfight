@@ -99,6 +99,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.stopMoving()
         this.idle()
 
+        this.active = true
         this.target = undefined
     }
 
@@ -436,6 +437,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.onDieFx()
         this.healthBar.fadeOut()
         this.manaBar.fadeOut()
+        this.active = false
     }
 
     onDieFx() {

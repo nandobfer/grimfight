@@ -24,10 +24,12 @@ export const Recount: React.FC<RecountProps> = (props) => {
     }, [])
 
     return (
-        <Paper sx={{ flexDirection: "column", bgcolor: "#ffffff05", padding: 1 }} elevation={1}>
-            {damageChart.sort((a, b) => b.damage - a.damage).map((meter) => (
-                <DamageBar highest_damage={highestDamage} meter={meter} key={meter.character.id} />
-            ))}
+        <Paper sx={{ flexDirection: "column", bgcolor: "#ffffff05", padding: 1, gap: 1 }} elevation={1}>
+            {damageChart
+                .sort((a, b) => b.damage - a.damage)
+                .map((meter) => (
+                    <DamageBar highest_damage={highestDamage} meter={meter} key={meter.character.id} />
+                ))}
         </Paper>
     )
 }
