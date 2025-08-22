@@ -3,6 +3,7 @@ import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 import { Creature } from "../creature/Creature"
 import { DamageType } from "../ui/DamageNumbers"
+import { EventBus } from "../tools/EventBus"
 
 export class Projectile extends Phaser.Physics.Arcade.Sprite {
     owner: Creature
@@ -44,6 +45,9 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
             if (!enemy.active) return
 
             this.onHit(enemy)
+        })
+        EventBus.on("gamestate", (state: string) => {
+            this.destroy()
         })
     }
 

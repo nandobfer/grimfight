@@ -1,13 +1,11 @@
 // src/objects/Arrow.ts
 import { Creature } from "../creature/Creature"
 import { FireHit } from "../fx/FireHit"
-import { EventBus } from "../tools/EventBus"
 import { Projectile } from "./Projectile"
 
 export class Fireball extends Projectile {
     speed = 400
     private light: Phaser.GameObjects.Light
-    private explosion: FireHit
 
     constructor(owner: Creature) {
         super(owner, "fireball0", "bleeding", "fire")
@@ -40,9 +38,6 @@ export class Fireball extends Projectile {
         this.addLightEffect()
 
         this.play("fireball")
-        EventBus.on("gamestate", (state: string) => {
-            this.destroy()
-        })
     }
 
     private addLightEffect() {
