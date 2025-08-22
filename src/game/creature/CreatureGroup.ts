@@ -1,7 +1,6 @@
 // src/game/creatures/CharacterGroup.ts
 
 import { Game } from "../scenes/Game"
-import { DamageChart } from "../tools/DamageChart"
 import { Creature } from "./Creature"
 
 export class CreatureGroup extends Phaser.GameObjects.Group {

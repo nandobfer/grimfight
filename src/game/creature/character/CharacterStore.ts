@@ -13,6 +13,8 @@ export interface StoreItem {
     sold: boolean
 }
 
+const BASE_COST = 1
+
 export class CharacterStore {
     team: CharacterGroup
     items: StoreItem[] = []
@@ -28,14 +30,22 @@ export class CharacterStore {
         }
     }
 
-    shuffle() {
+    shuffle(free = true) {
         this.items = []
+        const highestPossibleLevel = Math.max(1, this.team.getHighestLevelChar())
 
         for (let index = 1; index <= MAX_ITEMS_IN_STORE; index++) {
             const character = CharacterRegistry.random(this.scene)
+            const targetLevel = RNG.characterLevel(highestPossibleLevel)
+            character.levelUpTo(targetLevel)
+
             const dto = character.getDto()
             this.items.push({ character: dto, cost: this.getCost(dto.level), sold: false })
             character.destroy(true)
+        }
+
+        if (!free) {
+            this.scene.changePlayerGold(this.scene.playerGold - 2)
         }
 
         EventBus.emit("character-store", this.items)
@@ -61,22 +71,54 @@ export class CharacterStore {
         }
     }
 
-    buy(item: StoreItem) {
-        const wouldLevelUp = this.team.getMatchingCharacters(item.character.name, item.character.level).length === 2
-        if (this.team.countActive() === this.scene.max_characters_in_board && !wouldLevelUp) {
-            return
+    buy(item: StoreItem, recurrentBuy = false) {
+        const name = item.character.name
+        const level = item.character.level
+        const matchingCharsInBoard = this.team.getMatchingCharacters(name, level)
+        const matchingCharsInStore: StoreItem[] = []
+        let shouldBuyNextItems = false
+
+        const wouldLevelUp = () => matchingCharsInBoard.length + matchingCharsInStore.length >= 2
+
+        if (this.team.countActive() === this.scene.max_characters_in_board && !recurrentBuy) {
+            for (const potentialItem of this.items) {
+                if (potentialItem.sold || potentialItem === item) {
+                    continue
+                }
+
+                if (potentialItem.character.name === name && potentialItem.character.level === level) {
+                    matchingCharsInStore.push(potentialItem)
+                    if (wouldLevelUp()) {
+                        shouldBuyNextItems = true
+                        break
+                    }
+                }
+            }
+
+            if (!wouldLevelUp()) {
+                return
+            }
         }
 
-        const character = CharacterRegistry.create(item.character.name, this.scene, item.character.id)
+        const character = CharacterRegistry.create(name, this.scene, item.character.id)
         character.id = RNG.uuid()
+        character.levelUpTo(item.character.level)
         this.team.add(character)
         this.scene.changePlayerGold(this.scene.playerGold - item.cost)
         item.sold = true
-        this.save()
+
+        if (!recurrentBuy) {
+            if (shouldBuyNextItems) {
+                for (const nextItem of matchingCharsInStore) {
+                    this.buy(nextItem, true)
+                }
+            }
+            this.save()
+        }
     }
 
     getCost(level: number) {
-        return Math.max(3, Math.pow(3, level))
+        return Math.max(BASE_COST, Math.pow(3, level - 1))
     }
 
     sell(id: string) {

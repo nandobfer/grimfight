@@ -16,13 +16,15 @@ export interface GameProgressDto {
     playerLives: number
     playerGold: number
     floor: number
+    version?: string
 }
 
 const starting_player_lives = 3
-const starting_player_gold = 3
-const max_characters_in_board = 5
+const starting_player_gold = 1
+const max_characters_in_board = 6
 
 export class Game extends Scene {
+    version = "v1.0.0"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
@@ -279,6 +281,7 @@ export class Game extends Scene {
             floor: this.floor,
             playerGold: this.playerGold,
             playerLives: this.playerLives,
+            version: this.version,
         }
         return progress
     }
@@ -291,6 +294,10 @@ export class Game extends Scene {
                 this.floor = progress.floor
                 this.playerGold = progress.playerGold
                 this.playerLives = progress.playerLives
+
+                if (this.version !== progress.version) {
+                    this.gameOver()
+                }
             }
         } catch (error) {
             console.error("Error loading saved progress:", error)
@@ -308,6 +315,7 @@ export class Game extends Scene {
         this.saveProgress()
     }
 
+    // ! usada naquele modalzinho de selecionar boneco, não está sendo usado mais, mas por motivos de debug, deixei aqui
     newPlayerCharacter(dto: CharacterDto) {
         const characters = this.getSavedCharacters()
 
@@ -325,13 +333,6 @@ export class Game extends Scene {
         this.loadPlayerCharacters() // Reload to reflect changes
     }
 
-    // Add this method to remove a character
-    removePlayerCharacter(characterId: string) {
-        const characters = this.getSavedCharacters()
-        const filteredCharacters = characters.filter((c) => c.id !== characterId)
-        this.savePlayerCharacters(filteredCharacters)
-        this.loadPlayerCharacters()
-    }
 
     // Add this method to clear all characters
     clearAllCharacters() {

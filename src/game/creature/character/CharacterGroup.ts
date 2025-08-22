@@ -29,8 +29,8 @@ export class CharacterGroup extends CreatureGroup {
 
     reset() {
         super.reset()
-        this.damageChart.reset()
-        EventBus.emit("characters-change", this.getChildren())
+        this.deleteFuckedUpCharacter()
+        this.emitArray()
     }
 
     add(child: Character, addToScene?: boolean): this {
@@ -69,9 +69,9 @@ export class CharacterGroup extends CreatureGroup {
             }
         }
 
-        this.reset()
         this.tryMerge(child)
-        child.saveInStorage()
+        this.reset()
+        this.saveCurrentCharacters()
 
         return this
     }
@@ -134,7 +134,6 @@ export class CharacterGroup extends CreatureGroup {
                 ease: "Sine.easeInOut",
                 onComplete: () => {
                     // destroy donor after reaching the keeper
-                    this.scene.savePlayerCharacters(this.getChildren().filter((item) => item.id !== donor.id))
                     donor.destroy(true)
                     doneOne()
                 },
@@ -155,8 +154,8 @@ export class CharacterGroup extends CreatureGroup {
                     onComplete: () => {
                         keep.levelUp()
                         enable(keep)
-                        keep.saveInStorage()
-                        EventBus.emit("characters-change", this.getChildren())
+                        this.emitArray()
+                        this.saveCurrentCharacters()
                         onComplete?.()
                     },
                 })
@@ -168,8 +167,79 @@ export class CharacterGroup extends CreatureGroup {
     }
 
     grantFloorReward(floor: number) {
-        const gold = 3 + Math.round(floor * 0.5)
+        const gold = 1 + Math.round(floor * 0.5)
         this.scene.changePlayerGold(this.scene.playerGold + gold)
         this.store.shuffle()
+    }
+
+    getHighestLevelChar() {
+        return this.getChildren().reduce((level, char) => (level > char.level ? level : char.level), 0)
+    }
+
+    saveCurrentCharacters() {
+        const characters = this.getChildren()
+        this.scene.savePlayerCharacters(characters.map((char) => char.getDto()))
+    }
+
+    deleteFuckedUpCharacter() {
+        const grid = this.scene.grid
+        if (!grid) return
+
+        // allowed team rows (bottom 3)
+        const allowedRows = [grid.rows - 1, grid.rows - 2, grid.rows - 3].filter((r) => r >= 0)
+
+        const toDestroy: Character[] = []
+        const keepByCell = new Map<string, Character>()
+
+        const key = (col: number, row: number) => `${col},${row}`
+
+        for (const character of this.getChildren()) {
+            // invalid stored coords
+            if (!(character.boardX > 0 && character.boardY > 0)) {
+                toDestroy.push(character)
+                continue
+            }
+
+            const cell = grid.worldToCell(character.boardX, character.boardY)
+            // outside grid
+            if (!cell) {
+                toDestroy.push(character)
+                continue
+            }
+            // not a player row
+            // if (!allowedRows.includes(cell.row)) {
+            //     toDestroy.push(character)
+            //     continue
+            // }
+
+            // snap slightly off-center characters to exact center (no reflow)
+            const center = grid.cellToCenter(cell.col, cell.row)
+            if (Math.abs(character.x - center.x) > 1 || Math.abs(character.y - center.y) > 1) {
+                character.setPosition(center.x, center.y)
+                character.body?.reset(center.x, center.y)
+                character.boardX = center.x
+                character.boardY = center.y
+                character.reset()
+            }
+
+            // de-dup per cell: keep the first, destroy extras
+            // const k = key(cell.col, cell.row)
+            // if (!keepByCell.has(k)) {
+            //     keepByCell.set(k, character)
+            // } else {
+            //     toDestroy.push(character)
+            // }
+        }
+
+        if (toDestroy.length) {
+            // remove & destroy extras/out-of-bounds without touching survivors
+            for (const character of toDestroy) character.destroy(true)
+            // persist only alive characters
+            this.saveCurrentCharacters()
+        }
+    }
+
+    emitArray() {
+        EventBus.emit("characters-change", this.getChildren())
     }
 }

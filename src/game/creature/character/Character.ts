@@ -63,19 +63,6 @@ export class Character extends Creature {
         }
     }
 
-    saveInStorage() {
-        const dto = this.getDto()
-        const characters = this.scene.getSavedCharacters()
-        const index = characters.findIndex((c) => c.id === this.id)
-
-        if (index >= 0) {
-            characters[index] = dto // Update the array element
-        } else {
-            characters.push(dto) // Add new character
-        }
-        this.scene.savePlayerCharacters(characters)
-    }
-
     handleMouseEvents(): void {
         super.handleMouseEvents()
 
@@ -116,7 +103,7 @@ export class Character extends Creature {
             if (snapped) {
                 this.boardX = this.x
                 this.boardY = this.y
-                this.saveInStorage()
+                this.team.saveCurrentCharacters()
             }
 
             if (!snapped && this.preDrag) {
@@ -152,24 +139,20 @@ export class Character extends Creature {
         this.levelBadge.destroy()
     }
 
-    increaseExp() {
-        this.experience += 1
-
-        if (this.experience === this.level * 2) {
-            this.levelUp()
-        }
-
-        this.saveInStorage()
-    }
-
     levelUp() {
         this.experience = 0
         this.level += 1
 
-        this.baseMaxHealth *= 1.5
-        this.baseAttackDamage *= 1.5
+        this.baseMaxHealth *= 1.85
+        this.baseAttackDamage *= 1.85
         this.resetUi()
         EventBus.emit(`character-${this.id}-update`, this)
+    }
+
+    levelUpTo(quantity: number) {
+        for (let level = 1; level < quantity; level++) {
+            this.levelUp()
+        }
     }
 
     resetUi(): void {
