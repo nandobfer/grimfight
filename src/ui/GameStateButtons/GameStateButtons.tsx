@@ -36,7 +36,7 @@ export const GameStateButtons: React.FC<GameStateButtonsProps> = (props) => {
     }, [])
 
     return (
-        <Box sx={{ pointerEvents: "auto", flexDirection: "column", gap: 1, height: "min-content", marginTop: "auto" }}>
+        <Box sx={{ pointerEvents: "auto", flexDirection: "column", gap: 1, height: "min-content" }}>
             {gameState === "idle" && (
                 <Button variant="outlined" onClick={onPlayClick}>
                     fight

@@ -54,14 +54,16 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {loading && <LoadingGame />}
                 {game && (
                     <>
-                        <Box sx={{ flexDirection: "column",  height: 1, pointerEvents: "none" }}>
+                        <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
                             <CharactersRow charactersGroup={game.playerTeam} />
                             <CharacterStoreDrawer game={game} />
                         </Box>
                         <Box sx={{ flexDirection: "column" }}>
                             <Counters />
-                            <Recount />
-                            <GameStateButtons game={game} />
+                            <Box sx={{ flexDirection: "column", marginTop: "auto" }}>
+                                <Recount />
+                                <GameStateButtons game={game} />
+                            </Box>
                         </Box>
                     </>
                 )}

@@ -131,12 +131,16 @@ export class Character extends Creature {
     die() {
         super.die()
         this.levelBadge.fadeOut()
-        EventBus.emit(`character-${this.id}-update`, this)
+        this.emitSelf()
     }
 
     destroyUi(): void {
         super.destroyUi()
         this.levelBadge.destroy()
+    }
+
+    emitSelf() {
+        EventBus.emit(`character-${this.id}-update`, this)
     }
 
     levelUp() {
@@ -145,8 +149,8 @@ export class Character extends Creature {
 
         this.baseMaxHealth *= 1.85
         this.baseAttackDamage *= 1.85
-        this.resetUi()
-        EventBus.emit(`character-${this.id}-update`, this)
+        this.reset()
+        this.emitSelf()
     }
 
     levelUpTo(quantity: number) {
@@ -202,7 +206,7 @@ export class Character extends Creature {
     }
 
     update(time: number, delta: number): void {
-        EventBus.emit(`character-${this.id}-update`, this)
+        this.emitSelf()
         super.update(time, delta)
     }
 }

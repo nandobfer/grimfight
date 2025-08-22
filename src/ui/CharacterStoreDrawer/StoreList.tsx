@@ -18,7 +18,7 @@ export const StoreList: React.FC<StoreListProps> = (props) => {
     const [characters, setCharacters] = useState<StoreItem[]>(props.game.playerTeam.store.items)
 
     const shuffle = () => {
-        props.game.playerTeam.store.shuffle()
+        props.game.playerTeam.store.shuffle(false)
     }
 
     useEffect(() => {
