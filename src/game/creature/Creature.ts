@@ -194,31 +194,64 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         // this.scene.input.enableDebug(this)
     }
 
-    newTarget() {
-        this.stopMoving()
-        this.idle()
-        const enemyTeam = this.scene.playerTeam.contains(this) ? this.scene.enemyTeam : this.scene.playerTeam
+    getOppositeDirection(): Direction {
+        switch (this.facing) {
+            case "down":
+                return "up"
+            case "up":
+                return "down"
+            case "left":
+                return "right"
+            case "right":
+                return "left"
+        }
+    }
+
+    private findEnemyByDistance(closest = true): Creature | undefined {
+        const enemyTeam = this.getEnemyTeam()
         const enemies = enemyTeam.getChildren()
-        let closestEnemy: Creature | undefined = undefined
+        let chosenEnemy: Creature | undefined = undefined
         let closestEnemyDistance = 0
         for (const enemy of enemies) {
             if (!enemy.active) {
                 continue
             }
             const distance = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y)
-            if (!closestEnemy) {
-                closestEnemy = enemy
+            if (!chosenEnemy) {
+                chosenEnemy = enemy
                 closestEnemyDistance = distance
                 continue
             }
 
-            if (distance < closestEnemyDistance) {
-                closestEnemy = enemy
-                closestEnemyDistance = distance
+            if (closest) {
+                if (distance < closestEnemyDistance) {
+                    chosenEnemy = enemy
+                    closestEnemyDistance = distance
+                }
+            } else {
+                if (distance > closestEnemyDistance) {
+                    chosenEnemy = enemy
+                    closestEnemyDistance = distance
+                }
             }
         }
 
-        this.target = closestEnemy
+        return chosenEnemy
+    }
+
+    getClosestEnemy() {
+        return this.findEnemyByDistance(true)
+    }
+
+    getFartestEnemy() {
+        return this.findEnemyByDistance(false)
+    }
+
+    newTarget() {
+        this.stopMoving()
+        this.idle()
+
+        this.target = this.getClosestEnemy()
         this.updateFacingDirection()
     }
 
@@ -249,6 +282,18 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         // Play appropriate walking animation
         this.play(`${this.name}-walking-${this.facing}`, true)
+    }
+
+    getEnemyTeam() {
+        return this.scene.playerTeam.contains(this) ? this.scene.enemyTeam : this.scene.playerTeam
+    }
+
+    removeFromEnemyTarget() {
+        for (const enemy of this.getEnemyTeam().getChildren()) {
+            if (enemy.target === this) {
+                enemy.target = undefined
+            }
+        }
     }
 
     updateFacingDirection() {
