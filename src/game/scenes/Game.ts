@@ -46,6 +46,7 @@ export class Game extends Scene {
 
     create() {
         this.physics.world.createDebugGraphic()
+        this.physics.world.debugGraphic.visible = false
         this.camera = this.cameras.main
 
         this.createBackground()
