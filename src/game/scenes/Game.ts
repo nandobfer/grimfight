@@ -24,7 +24,7 @@ const starting_player_gold = 1
 const max_characters_in_board = 6
 
 export class Game extends Scene {
-    version = "v1.0.0"
+    version = "v1.0.1"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
@@ -332,7 +332,6 @@ export class Game extends Scene {
         this.savePlayerCharacters(characters)
         this.loadPlayerCharacters() // Reload to reflect changes
     }
-
 
     // Add this method to clear all characters
     clearAllCharacters() {
