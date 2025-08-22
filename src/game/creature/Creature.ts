@@ -14,6 +14,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     target?: Creature
     moving: boolean = true
     attacking: boolean = false
+    casting = false
     avoidanceRange = 64
     originalDepth: number
     id: string
@@ -491,6 +492,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.gainMana(-this.mana)
 
         this.castAbility()
+
+        // failsafe
+        if (!this.casting) {
+            this.attacking = false
+        }
     }
 
     castAbility() {
