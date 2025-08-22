@@ -13,7 +13,7 @@ export class Mage extends Character {
         this.attackAnimationImpactFrame = 6
     }
 
-    extractAttackingAnimation() {
+    override extractAttackingAnimation() {
         this.extractAnimationsFromSpritesheet("attacking1", 1, 6)
         this.extractAnimationsFromSpritesheet("attacking2", 1, 6)
     }
@@ -24,7 +24,7 @@ export class Mage extends Character {
     //     this.baseAttackDamage += 10
     // }
 
-    landAttack() {
+    override landAttack() {
         const fireball = new Fireball(this)
         fireball.fire()
     }

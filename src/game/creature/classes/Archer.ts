@@ -13,7 +13,7 @@ export class Archer extends Character {
         this.attackAnimationImpactFrame = 9
     }
 
-    extractAttackingAnimation() {
+    override extractAttackingAnimation() {
         this.extractAnimationsFromSpritesheet("attacking1", 208, 13)
         this.extractAnimationsFromSpritesheet("attacking2", 208, 13)
     }
@@ -24,7 +24,7 @@ export class Archer extends Character {
     //     this.baseAttackDamage += 10
     // }
 
-    landAttack() {
+    override landAttack() {
         const arrow = new Arrow(this)
         arrow.fire()
     }

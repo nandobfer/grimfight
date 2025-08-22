@@ -15,12 +15,12 @@ export class Demonic extends Monster {
         this.challengeRating = this.calculateCR()
     }
 
-    extractAttackingAnimation() {
+    override extractAttackingAnimation() {
         this.extractAnimationsFromSpritesheet("attacking1", 208, 13)
         this.extractAnimationsFromSpritesheet("attacking2", 208, 13)
     }
 
-    landAttack() {
+    override landAttack() {
         const fireball = new Fireball(this)
         fireball.fire()
     }

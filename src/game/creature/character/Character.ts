@@ -47,7 +47,7 @@ export class Character extends Creature {
         this.handleMouseEvents()
     }
 
-    reset() {
+    override reset() {
         super.reset()
         this.levelBadge.reset()
 
@@ -128,13 +128,13 @@ export class Character extends Creature {
         })
     }
 
-    die() {
+    override die() {
         super.die()
         this.levelBadge.fadeOut()
         this.emitSelf()
     }
 
-    destroyUi(): void {
+    override destroyUi(): void {
         super.destroyUi()
         this.levelBadge.destroy()
     }
@@ -159,7 +159,7 @@ export class Character extends Creature {
         }
     }
 
-    resetUi(): void {
+    override resetUi(): void {
         super.resetUi()
         this.levelBadge.reset()
         this.levelBadge.setValue(this.level)
@@ -170,7 +170,7 @@ export class Character extends Creature {
         this.levelBadge.updatePosition()
     }
 
-    onAttackLand(damagetype: DamageType): number {
+    override onAttackLand(damagetype: DamageType): number {
         const damage = super.onAttackLand(damagetype)
         this.team.damageChart.plotDamage(this, damage)
 
@@ -200,12 +200,12 @@ export class Character extends Creature {
         return data
     }
 
-    destroy(fromScene?: boolean): void {
+    override destroy(fromScene?: boolean): void {
         super.destroy(fromScene)
         this.destroyUi()
     }
 
-    update(time: number, delta: number): void {
+    override update(time: number, delta: number): void {
         this.emitSelf()
         super.update(time, delta)
     }

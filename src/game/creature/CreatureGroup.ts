@@ -21,7 +21,7 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         return super.getChildren() as Creature[]
     }
 
-    add(child: Creature, addToScene?: boolean): this {
+    override add(child: Creature, addToScene?: boolean): this {
         super.add(child, addToScene)
         child.team = this
 
@@ -42,7 +42,7 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         }
     }
 
-    clear(removeFromScene?: boolean, destroyChild?: boolean) {
+    override clear(removeFromScene?: boolean, destroyChild?: boolean) {
         const creatures = this.getChildren()
         for (const creature of creatures) {
             creature.destroyUi()

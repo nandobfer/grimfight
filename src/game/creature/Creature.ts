@@ -13,7 +13,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     facing: Direction = "down"
     target?: Creature
     moving: boolean = true
-    isAttacking: boolean = false
+    attacking: boolean = false
     avoidanceRange = 64
     originalDepth: number
     id: string
@@ -347,12 +347,12 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     startAttack() {
-        if (this.isAttacking || !this.target?.active) {
+        if (this.attacking || !this.target?.active) {
             return
         }
 
         this.updateFacingDirection()
-        this.isAttacking = true
+        this.attacking = true
         const spriteVariant = Phaser.Math.RND.weightedPick([1, 2])
         const animKey = `${this.name}-attacking${spriteVariant}-${this.facing}`
         const anim = this.anims.get(animKey)
@@ -370,7 +370,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         const cleanup = () => {
             this.off("animationupdate", onUpdate)
-            this.isAttacking = false
+            this.attacking = false
         }
         this.once("animationcomplete", cleanup)
         this.once("animationstop", cleanup)
@@ -480,6 +480,17 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.gainMana(manaGained)
     }
 
+    startCastingAbility() {
+        this.attacking = true
+        this.gainMana(-this.mana)
+
+        this.castAbility()
+    }
+
+    castAbility() {
+        // each character and monster will have it's own
+    }
+
     destroyUi() {
         this.healthBar.destroy()
         this.manaBar.destroy()
@@ -503,7 +514,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             this.stopMoving()
             this.startAttack()
         } else {
-            if (!this.isAttacking) {
+            if (!this.attacking) {
                 this.moveToTarget()
                 this.avoidOtherCharacters()
             }
@@ -518,7 +529,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaBar.updatePosition()
     }
 
-    update(time: number, delta: number): void {
+    override update(time: number, delta: number): void {
         this.updateCharUi()
 
         if (this.scene.state === "idle") {

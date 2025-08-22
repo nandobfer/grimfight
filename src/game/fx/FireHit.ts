@@ -2,29 +2,29 @@
 import Phaser from "phaser";
 
 export class FireHit extends Phaser.GameObjects.Sprite {
-    private light: Phaser.GameObjects.Light;
-    
+    private light: Phaser.GameObjects.Light
+
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "firehit0"); 
-        
+        super(scene, x, y, "firehit0")
+
         if (!scene.anims.exists("fire-hit")) {
-            const frames = [];
-            
+            const frames = []
+
             for (let i = 0; i <= 22; i++) {
                 frames.push({
                     key: `firehit${i}`,
-                    frame: undefined
-                });
+                    frame: undefined,
+                })
             }
-            
+
             scene.anims.create({
                 key: "fire-hit",
                 frames: frames,
                 frameRate: 45,
                 repeat: 0,
-            });
+            })
         }
-        
+
         this.once("animationcomplete", () => {
             this.destroy()
         })
@@ -32,12 +32,12 @@ export class FireHit extends Phaser.GameObjects.Sprite {
             this.destroy()
         })
 
-        this.play("fire-hit");
-        scene.add.existing(this);
+        this.play("fire-hit")
+        scene.add.existing(this)
         this.setScale(0.15)
-        this.addLightEffect();
+        this.addLightEffect()
     }
-    
+
     private addLightEffect() {
         if (this.scene.lights) {
             this.light = this.scene.lights.addLight(this.x, this.y, 150, 0xff6600, 1)
@@ -60,11 +60,8 @@ export class FireHit extends Phaser.GameObjects.Sprite {
         }
     }
 
-    destroy(fromScene?: boolean): void {
+    override destroy(fromScene?: boolean): void {
         this.scene.lights.removeLight(this.light)
         super.destroy(fromScene)
     }
-
-    
-
 }

@@ -14,7 +14,7 @@ export class Skeleton extends Monster {
         this.challengeRating = this.calculateCR()
     }
 
-    onHitFx() {
+    override onHitFx() {
         const particles = this.scene.add.particles(this.x, this.y, "blood", {
             lifespan: 600,
             speed: { min: 30, max: 80 },
@@ -31,5 +31,5 @@ export class Skeleton extends Monster {
             particles.destroy()
         })
     }
-    onDieFx(): void {}
+    override onDieFx(): void {}
 }

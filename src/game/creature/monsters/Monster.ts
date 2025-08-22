@@ -144,12 +144,12 @@ export class Monster extends Creature {
     }
 
     // Clean up effects when monster is destroyed
-    destroy(fromScene?: boolean): void {
+    override destroy(fromScene?: boolean): void {
         this.clearFX()
         super.destroy(fromScene)
     }
 
-    update(time: number, delta: number): void {
+    override update(time: number, delta: number): void {
         super.update(time, delta)
 
         this.updateFx()

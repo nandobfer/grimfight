@@ -65,7 +65,7 @@ export class Fireball extends Projectile {
         }
     }
 
-    destroy(fromScene?: boolean): void {
+    override destroy(fromScene?: boolean): void {
         const scene = this.owner?.scene || this.scene
         scene?.lights?.removeLight(this.light)
         super.destroy(fromScene)
@@ -81,7 +81,7 @@ export class Fireball extends Projectile {
         }
     }
 
-    onHit() {
+    override onHit() {
         const enemy = this.owner.target
         if (!enemy) {
             this.destroy()
@@ -98,7 +98,7 @@ export class Fireball extends Projectile {
             this.createExplosionEffect()
         }
     }
-    onHitWall() {
+    override onHitWall() {
         super.onHitWall()
         this.createExplosionEffect()
         this.destroy()
