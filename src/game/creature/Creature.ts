@@ -450,6 +450,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             .setAlpha(0)
             .setRotation(Phaser.Math.FloatBetween(0, 2 * 3.14))
         bloodPool.setPipeline("Light2D")
+        bloodPool.state = this.scene.floor
 
         this.scene.tweens.add({
             targets: bloodPool,
@@ -458,12 +459,14 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             ease: "Sine.easeIn",
         })
 
-        const removePool = () => {
-            bloodPool.destroy(true)
-            EventBus.off("gameover", removePool)
+        const removePool = (floor: number) => {
+            if (bloodPool.state !== floor) {
+                bloodPool.destroy(true)
+                EventBus.off("gameover", removePool)
+            }
         }
 
-        EventBus.on("gameover", () => removePool())
+        EventBus.on("floor-change", removePool)
     }
 
     gainMana(manaGained: number) {
