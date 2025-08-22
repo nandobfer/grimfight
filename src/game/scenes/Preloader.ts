@@ -3,6 +3,7 @@ import { EventBus } from "../tools/EventBus"
 
 const available_classes = ["rogue", "knight", "archer", "mage"]
 const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic"]
+const available_ragnarok_sprites = ["aqua_elemental"]
 
 export class Preloader extends Scene {
     constructor() {
@@ -40,6 +41,12 @@ export class Preloader extends Scene {
                 frameWidth: 64,
                 frameHeight: 64,
             })
+        }
+    }
+
+    loadRagnarokSprites() {
+        for (const sheet of available_ragnarok_sprites) {
+            this.load.spritesheet(`spritesheets/ragnarok/${sheet}.png`), {}
         }
     }
 
