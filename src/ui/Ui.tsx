@@ -9,6 +9,7 @@ import { CharactersRow } from "./CharacterSheet/CharactersRow"
 import { LoadingGame } from "./LoadingGame"
 import { Recount } from "./Recount/Recount"
 import { Counters } from "./Counters/Counters"
+import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawer"
 
 interface UiProps {}
 
@@ -53,7 +54,10 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {loading && <LoadingGame />}
                 {game && (
                     <>
-                        <CharactersRow charactersGroup={game.playerTeam} />
+                        <Box sx={{ flexDirection: "column",  height: 1, pointerEvents: "none" }}>
+                            <CharactersRow charactersGroup={game.playerTeam} />
+                            <CharacterStoreDrawer game={game} />
+                        </Box>
                         <Box sx={{ flexDirection: "column" }}>
                             <Counters />
                             <Recount />

@@ -24,7 +24,7 @@ export class CharacterGroup extends CreatureGroup {
     }
 
     getById(id: string) {
-        return this.getChildren().find(character => character.id === id)
+        return this.getChildren().find((character) => character.id === id)
     }
 
     reset() {
@@ -76,13 +76,17 @@ export class CharacterGroup extends CreatureGroup {
         return this
     }
 
+    getMatchingCharacters(name: string, level: number) {
+        return this.getChildren().filter((character) => character.name === name && character.level === level)
+    }
+
     private tryMerge(pivot: Character, guard = 0) {
         // Prevent accidental infinite chains
         if (guard > 8) return
 
         const name = pivot.name
         const level = pivot.level
-        const matches = this.getChildren().filter((character) => character.name === name && character.level === level)
+        const matches = this.getMatchingCharacters(name, level)
 
         if (matches.length < 3) return
 

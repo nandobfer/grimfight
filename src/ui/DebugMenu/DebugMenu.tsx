@@ -25,7 +25,7 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
 
     return (
         <Box sx={{ flexDirection: "column", gap: 1 }}>
-            <Button onClick={clearSavedChars}>clear characters</Button>
+            {/* <Button onClick={clearSavedChars}>clear characters</Button> */}
             <Button onClick={resetGame}>reset game</Button>
             <DebugFloor game={game} />
             <DebugGold game={game} />

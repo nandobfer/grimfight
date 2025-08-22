@@ -30,6 +30,7 @@ export class Monster extends Creature {
         this.baseArmor *= mult * 0.5
         this.baseResistance *= mult * 0.25
         this.challengeRating = this.calculateCR()
+        this.baseAttackSpeed *= 0.75
     }
 
     makeBoss(targetCR: number) {

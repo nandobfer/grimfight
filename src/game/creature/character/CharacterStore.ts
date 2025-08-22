@@ -62,7 +62,8 @@ export class CharacterStore {
     }
 
     buy(item: StoreItem) {
-        if (this.team.countActive() === this.scene.max_characters_in_board) {
+        const wouldLevelUp = this.team.getMatchingCharacters(item.character.name, item.character.level).length === 2
+        if (this.team.countActive() === this.scene.max_characters_in_board && !wouldLevelUp) {
             return
         }
 
@@ -75,7 +76,7 @@ export class CharacterStore {
     }
 
     getCost(level: number) {
-        return Math.max(3, Math.pow(level, 2))
+        return Math.max(3, Math.pow(3, level))
     }
 
     sell(id: string) {

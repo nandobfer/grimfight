@@ -28,7 +28,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
 
     return (
         <>
-            <Button variant="contained" onClick={toggleStore}>
+            <Button variant="contained" onClick={toggleStore} sx={{ pointerEvents: "auto", marginTop: "auto" }}>
                 Loja
             </Button>
 
@@ -55,7 +55,6 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                     },
                 }}
             >
-                
                 <StoreList game={game} />
                 <Box sx={{ flexDirection: "column", alignItems: "center" }}>
                     <IconButton color="primary" size="small" onClick={closeStore}>
