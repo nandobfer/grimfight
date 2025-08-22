@@ -14,7 +14,7 @@ export class Fireball extends Projectile {
         this.setScale(0.075, 0.075)
         this.toggleFlipY()
         this.toggleFlipX()
-        this.setCircle(this.width / 10)
+        this.setCircle(this.width / 8)
 
         if (!this.scene.anims.exists("fireball")) {
             const frames = []
@@ -71,10 +71,9 @@ export class Fireball extends Projectile {
         super.destroy(fromScene)
     }
 
-    private createExplosionEffect() {
-        const enemy = this.owner.target
-        const x = enemy?.x || this.x
-        const y = enemy?.y || this.y
+    private createExplosionEffect(target?: Creature) {
+        const x = target?.x || this.x
+        const y = target?.y || this.y
         const scene = this.owner?.scene || this.scene
         if (scene) {
             new FireHit(scene, x, y)
@@ -94,7 +93,7 @@ export class Fireball extends Projectile {
 
         // if (penetrationDepth >= 15) {
         super.onHit(target)
-        this.createExplosionEffect()
+        this.createExplosionEffect(target)
         // }
     }
     override onHitWall() {

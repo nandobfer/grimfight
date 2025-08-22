@@ -3,7 +3,7 @@ import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
 export class Archer extends Character {
-    baseAttackSpeed = 0.75
+    baseAttackSpeed = 1
     baseApeed = 80
     baseAttackDamage = 30
     baseAttackRange = 4
