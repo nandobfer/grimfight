@@ -51,6 +51,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                             borderTopLeftRadius: 10,
                             borderTopRightRadius: 10,
                             flexDirection: "row",
+                            pointerEvents: "auto",
                         },
                     },
                 }}

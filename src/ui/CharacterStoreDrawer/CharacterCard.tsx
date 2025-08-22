@@ -38,14 +38,16 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                 onClick={buyCharacter}
             >
                 <Badge badgeContent={character.level} color="warning" overlap="circular">
-                    <CharacterAvatar name={character.name} size={((isMobile ? 20 : 4) / 100) * window.innerWidth} disabled={disabled} />
+                    <CharacterAvatar name={character.name} size={((isMobile ? 10 : 4) / 100) * window.innerWidth} disabled={disabled} />
                 </Badge>
 
                 <Box sx={{ width: 1, gap: 1 }}>
-                    <Typography variant="subtitle2">{character.name}</Typography>
+                    <Typography variant="subtitle2" fontSize={isMobile ? 8 : undefined}>
+                        {character.name}
+                    </Typography>
 
                     <Box sx={{ marginLeft: "auto" }}>
-                        <GoldCoin quantity={item.cost} size={15} fontSize={16} reverted />
+                        <GoldCoin quantity={item.cost} size={isMobile ? 10 : 15} fontSize={isMobile ? 12 : 16} reverted />
                     </Box>
                 </Box>
             </Button>
