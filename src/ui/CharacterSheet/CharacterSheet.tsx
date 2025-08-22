@@ -4,6 +4,7 @@ import { Creature } from "../../game/creature/Creature"
 import { EventBus } from "../../game/tools/EventBus"
 import { CharacterAvatar } from "./CharacterAvatar"
 import { CharacterStore } from "../../game/creature/character/CharacterStore"
+import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
 
 interface CharacterSheetProps {
     character: Creature
@@ -52,6 +53,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     )
 
     const characterHealthPercent = useMemo(() => (character.health / character.maxHealth) * 100, [character.health, character.maxHealth])
+    const levelColor = useMemo(() => convertColorToString(colorFromLevel(character.level)), [character.level])
 
     const sell = () => {
         props.store.sell(character.id)
@@ -73,7 +75,10 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
         <Accordion sx={{ flexDirection: "column" }} slots={{ root: Box }}>
             <AccordionSummary sx={{ padding: 0, marginTop: -1.5, marginBottom: -0.5 }}>
                 <Button variant="outlined" fullWidth sx={{ justifyContent: "start", padding: 1, gap: 1, alignItems: "center" }}>
-                    <Badge badgeContent={character.level} color="warning">
+                    <Badge
+                        badgeContent={`${character.level}`}
+                        slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
+                    >
                         <CharacterAvatar name={character.name} size={30} />
                     </Badge>
                     <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>

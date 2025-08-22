@@ -474,6 +474,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     gainMana(manaGained: number) {
         this.mana = Math.min(this.mana + manaGained, this.maxMana)
         this.manaBar?.setValue(this.mana, this.maxMana)
+
+        if (this.mana === this.maxMana) {
+            this.startCastingAbility()
+        }
     }
 
     regenMana(delta: number) {
