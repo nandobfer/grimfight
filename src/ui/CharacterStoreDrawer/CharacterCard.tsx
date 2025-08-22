@@ -15,11 +15,9 @@ interface CharacterCardProps {
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirst, isLast, disabled }) => {
     const character = item.character
-    const [sold, setSold] = useState(false)
 
     const buyCharacter = () => {
         game.playerTeam.store.buy(item)
-        setSold(true)
     }
 
     return (
@@ -33,13 +31,13 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                     flexDirection: "column",
                     justifyContent: "start",
                     filter: disabled ? "grayscale(100%)" : undefined,
-                    visibility: sold ? "hidden" : undefined,
+                    visibility: item.sold ? "hidden" : undefined,
                 }}
-                disabled={disabled || sold}
+                disabled={disabled || item.sold}
                 onClick={buyCharacter}
             >
                 <Badge badgeContent={character.level} color="warning" overlap="circular">
-                    <CharacterAvatar name={character.name} size={(5 / 100) * window.innerWidth} disabled={disabled} />
+                    <CharacterAvatar name={character.name} size={(4 / 100) * window.innerWidth} disabled={disabled} />
                 </Badge>
 
                 <Box sx={{ width: 1, gap: 1 }}>

@@ -23,6 +23,10 @@ export class CharacterGroup extends CreatureGroup {
         return super.getChildren() as Character[]
     }
 
+    getById(id: string) {
+        return this.getChildren().find(character => character.id === id)
+    }
+
     reset() {
         super.reset()
         this.damageChart.reset()
@@ -160,7 +164,7 @@ export class CharacterGroup extends CreatureGroup {
     }
 
     grantFloorReward(floor: number) {
-        const gold = 3 + Math.round(floor * 0.25)
+        const gold = 3 + Math.round(floor * 0.5)
         this.scene.changePlayerGold(this.scene.playerGold + gold)
         this.store.shuffle()
     }

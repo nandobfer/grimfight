@@ -19,6 +19,8 @@ export interface GameProgressDto {
 }
 
 const starting_player_lives = 3
+const starting_player_gold = 3
+const max_characters_in_board = 5
 
 export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera
@@ -32,8 +34,9 @@ export class Game extends Scene {
     grid: Grid
     private fireEffects: Phaser.GameObjects.Group
 
-    playerGold = 3
+    playerGold = starting_player_gold
     playerLives = starting_player_lives
+    max_characters_in_board = max_characters_in_board
 
     constructor() {
         super("Game")
@@ -213,7 +216,7 @@ export class Game extends Scene {
     resetProgress() {
         this.floor = 1
         this.playerLives = starting_player_lives
-        this.playerGold = 3
+        this.playerGold = starting_player_gold
         this.saveProgress()
         this.emitProgress()
         this.savePlayerCharacters([])

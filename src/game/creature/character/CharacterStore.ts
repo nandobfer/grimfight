@@ -10,6 +10,7 @@ const MAX_ITEMS_IN_STORE = 5
 export interface StoreItem {
     character: CharacterDto
     cost: number
+    sold: boolean
 }
 
 export class CharacterStore {
@@ -33,7 +34,7 @@ export class CharacterStore {
         for (let index = 1; index <= MAX_ITEMS_IN_STORE; index++) {
             const character = CharacterRegistry.random(this.scene)
             const dto = character.getDto()
-            this.items.push({ character: dto, cost: dto.level * 3 })
+            this.items.push({ character: dto, cost: this.getCost(dto.level), sold: false })
             character.destroy(true)
         }
 
@@ -61,9 +62,30 @@ export class CharacterStore {
     }
 
     buy(item: StoreItem) {
+        if (this.team.countActive() === this.scene.max_characters_in_board) {
+            return
+        }
+
         const character = CharacterRegistry.create(item.character.name, this.scene, item.character.id)
         character.id = RNG.uuid()
         this.team.add(character)
         this.scene.changePlayerGold(this.scene.playerGold - item.cost)
+        item.sold = true
+        this.save()
+    }
+
+    getCost(level: number) {
+        return Math.max(3, Math.pow(level, 2))
+    }
+
+    sell(id: string) {
+        const character = this.team.getById(id)
+        if (character) {
+            const refund = this.getCost(character.level)
+            this.scene.changePlayerGold(this.scene.playerGold + refund)
+            character.destroy(true)
+            this.team.reset()
+            this.scene.savePlayerCharacters(this.team.getChildren())
+        }
     }
 }

@@ -18,11 +18,11 @@ export class Mage extends Character {
         this.extractAnimationsFromSpritesheet("attacking2", 1, 6)
     }
 
-    levelUp(): void {
-        super.levelUp()
+    // levelUp(): void {
+    //     super.levelUp()
 
-        this.baseAttackDamage += 10
-    }
+    //     this.baseAttackDamage += 10
+    // }
 
     landAttack() {
         const fireball = new Fireball(this)

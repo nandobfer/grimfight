@@ -3,7 +3,7 @@ import { Character } from "../character/Character"
 
 export class Rogue extends Character {
     baseAttackSpeed = 1.5
-    baseSpeed = 50
+    baseSpeed = 100
     baseAttackDamage = 20
     baseCritChance = 50
 
@@ -11,9 +11,9 @@ export class Rogue extends Character {
         super(scene, "rogue", id)
     }
 
-    levelUp(): void {
-        super.levelUp()
+    // levelUp(): void {
+    //     super.levelUp()
 
-        this.baseAttackDamage += 5
-    }
+    //     this.baseAttackDamage += 5
+    // }
 }

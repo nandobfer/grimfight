@@ -4,7 +4,7 @@ import { Character } from "../character/Character"
 
 export class Archer extends Character {
     baseAttackSpeed = 0.75
-    baseApeed = 40
+    baseApeed = 80
     baseAttackDamage = 30
     baseAttackRange = 4
 
@@ -18,11 +18,11 @@ export class Archer extends Character {
         this.extractAnimationsFromSpritesheet("attacking2", 208, 13)
     }
 
-    levelUp(): void {
-        super.levelUp()
+    // levelUp(): void {
+    //     super.levelUp()
 
-        this.baseAttackDamage += 10
-    }
+    //     this.baseAttackDamage += 10
+    // }
 
     landAttack() {
         const arrow = new Arrow(this)

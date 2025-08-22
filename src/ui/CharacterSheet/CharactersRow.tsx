@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Box, Paper, Typography } from "@mui/material"
 import { CharacterSheet } from "./CharacterSheet"
-import { CreatureGroup } from "../../game/creature/CreatureGroup"
 import { Character } from "../../game/creature/character/Character"
 import { EventBus } from "../../game/tools/EventBus"
+import { CharacterGroup } from "../../game/creature/character/CharacterGroup"
 
 interface CharactersRowProps {
-    charactersGroup: CreatureGroup
+    charactersGroup: CharacterGroup
 }
 
 export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
@@ -35,7 +35,7 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
             }}
         >
             {characters.map((char) => (
-                <CharacterSheet character={char} key={char.id} />
+                <CharacterSheet character={char} key={char.id} store={props.charactersGroup.store} />
             ))}
         </Box>
     )

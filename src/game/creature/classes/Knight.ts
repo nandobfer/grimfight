@@ -2,7 +2,7 @@ import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
 export class Knight extends Character {
-    baseMaxHealth = 750
+    baseMaxHealth = 500
     baseArmor = 5
     baseResistance = 10
     baseAttackDamage = 13
@@ -11,9 +11,9 @@ export class Knight extends Character {
         super(scene, "knight", id)
     }
 
-    levelUp(): void {
-        super.levelUp()
+    // levelUp(): void {
+    //     super.levelUp()
 
-        this.baseMaxHealth += 50
-    }
+    //     this.baseMaxHealth += 50
+    // }
 }

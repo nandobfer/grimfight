@@ -3,9 +3,11 @@ import { Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, Line
 import { Creature } from "../../game/creature/Creature"
 import { EventBus } from "../../game/tools/EventBus"
 import { CharacterAvatar } from "./CharacterAvatar"
+import { CharacterStore } from "../../game/creature/character/CharacterStore"
 
 interface CharacterSheetProps {
     character: Creature
+    store: CharacterStore
 }
 
 export interface SheetDataItem {
@@ -51,6 +53,10 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
 
     const characterHealthPercent = useMemo(() => (character.health / character.maxHealth) * 100, [character.health, character.maxHealth])
 
+    const sell = () => {
+        props.store.sell(character.id)
+    }
+
     useEffect(() => {
         setCharacter(character)
         const handler = (char: Creature) => {
@@ -86,6 +92,9 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     {attributes.map((data) => (
                         <SheetData key={data.title} title={data.title} value={data.value} />
                     ))}
+                    <Button color="warning" onClick={sell}>
+                        Sell: {props.store.getCost(character.level)} g
+                    </Button>
                 </Box>
             </AccordionDetails>
         </Accordion>
