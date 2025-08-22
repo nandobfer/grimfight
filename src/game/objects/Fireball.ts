@@ -14,7 +14,7 @@ export class Fireball extends Projectile {
         this.setScale(0.075, 0.075)
         this.toggleFlipY()
         this.toggleFlipX()
-        this.setCircle(this.width / 40)
+        this.setCircle(this.width / 10)
 
         if (!this.scene.anims.exists("fireball")) {
             const frames = []

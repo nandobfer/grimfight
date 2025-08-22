@@ -37,7 +37,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                 disabled={disabled || item.sold}
                 onClick={buyCharacter}
             >
-                <Badge badgeContent={character.level} color="warning" overlap="circular">
+                <Badge badgeContent={`Lv ${character.level}`} color="info" overlap="circular">
                     <CharacterAvatar name={character.name} size={((isMobile ? 10 : 4) / 100) * window.innerWidth} disabled={disabled} />
                 </Badge>
 
