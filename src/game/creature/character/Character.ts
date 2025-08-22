@@ -34,7 +34,7 @@ export class Character extends Creature {
     private glowFx: Phaser.FX.Glow
     private preDrag?: { x: number; y: number }
 
-    baseSpeed = 50
+    baseSpeed = 70
     baseMaxHealth = 350
 
     constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
@@ -147,8 +147,8 @@ export class Character extends Creature {
         this.experience = 0
         this.level += 1
 
-        this.baseMaxHealth *= 1.85
-        this.baseAttackDamage *= 1.85
+        this.baseMaxHealth *= 1.65
+        this.baseAttackDamage *= 1.65
         this.reset()
         this.emitSelf()
     }
