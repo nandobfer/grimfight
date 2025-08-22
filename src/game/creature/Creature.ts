@@ -380,11 +380,13 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.onAttackLand("normal")
     }
 
-    onAttackLand(damagetype: DamageType) {
-        if (!this.target) return 0
-        let damageMultiplier = 0
+    onAttackLand(damagetype: DamageType, target?: Creature) {
+        const victim = target ?? this.target
+        if (!victim?.active) return 0
 
         const isCrit = Phaser.Math.FloatBetween(0, 100) <= this.critChance
+        let damageMultiplier = 0
+
         if (isCrit) {
             damageMultiplier += this.critDamageMultiplier
         }
@@ -392,7 +394,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         const randomizedDamage = this.attackDamage * Phaser.Math.FloatBetween(this.minDamageMultiplier, this.maxDamageMultiplier)
         const damage = randomizedDamage * Math.max(1, damageMultiplier)
 
-        this.target.takeDamage(damage, this, "bleeding", { crit: isCrit, type: damagetype })
+        victim.takeDamage(damage, this, "bleeding", { crit: isCrit, type: damagetype })
         this.gainMana(this.manaPerAttack)
 
         return damage

@@ -14,7 +14,7 @@ export class Fireball extends Projectile {
         this.setScale(0.075, 0.075)
         this.toggleFlipY()
         this.toggleFlipX()
-        this.setCircle(this.width / 4)
+        this.setCircle(this.width / 40)
 
         if (!this.scene.anims.exists("fireball")) {
             const frames = []
@@ -81,22 +81,21 @@ export class Fireball extends Projectile {
         }
     }
 
-    override onHit() {
-        const enemy = this.owner.target
-        if (!enemy) {
+    override onHit(target: Creature) {
+        if (!target) {
             this.destroy()
             return
         }
 
-        const distance = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y)
+        // const distance = Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y)
 
-        const enemyRadius = enemy.body.width / 2 // Approximate enemy radius
-        const penetrationDepth = enemyRadius - distance
+        // const enemyRadius = target.body.width / 2 // Approximate enemy radius
+        // const penetrationDepth = enemyRadius - distance
 
-        if (penetrationDepth >= 15) {
-            super.onHit()
-            this.createExplosionEffect()
-        }
+        // if (penetrationDepth >= 15) {
+        super.onHit(target)
+        this.createExplosionEffect()
+        // }
     }
     override onHitWall() {
         super.onHitWall()

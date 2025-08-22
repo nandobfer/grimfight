@@ -7,6 +7,7 @@ export class Archer extends Character {
     baseApeed = 80
     baseAttackDamage = 30
     baseAttackRange = 4
+    baseMaxHealth = 200
 
     constructor(scene: Game, id: string) {
         super(scene, "archer", id)

@@ -7,6 +7,7 @@ export class Mage extends Character {
     baseAttackDamage = 50
     baseAttackRange = 3
     baseManaPerSecond = 20
+    baseMaxHealth = 200
 
     constructor(scene: Game, id: string) {
         super(scene, "mage", id)

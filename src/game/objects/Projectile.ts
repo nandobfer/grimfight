@@ -43,7 +43,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
             const enemy = enemyObj as Creature
             if (!enemy.active) return
 
-            this.onHit()
+            this.onHit(enemy)
         })
     }
 
@@ -77,8 +77,8 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         return this
     }
 
-    onHit() {
-        this.owner?.onAttackLand(this.damageType)
+    onHit(target: Creature) {
+        this.owner?.onAttackLand(this.damageType, target)
         this.destroy()
     }
 

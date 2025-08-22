@@ -30,7 +30,6 @@ export class Monster extends Creature {
         this.baseArmor *= mult * 0.5
         this.baseResistance *= mult * 0.25
         this.challengeRating = this.calculateCR()
-        this.baseAttackSpeed *= 0.75
     }
 
     makeBoss(targetCR: number) {
@@ -43,9 +42,11 @@ export class Monster extends Creature {
         // const glow = this.postFX.addGlow(0xffd54f, 8, 0)
         // glow.outerStrength = 4
 
-        // Add dark, smoky boss effects
-        this.addDarkAura()
-        this.addShadowParticles()
+        if (this.scene.floor >= 10) {
+            // Add dark, smoky boss effects
+            this.addDarkAura()
+            this.addShadowParticles()
+        }
     }
 
     private addDarkAura() {
@@ -57,8 +58,8 @@ export class Monster extends Creature {
         // Pulsating shimmer effect
         this.scene.tweens.add({
             targets: this.darkAura,
-            outerStrength: { from: 1, to: 2 },
-            innerStrength: { from: 1, to: 2 },
+            outerStrength: { from: 1, to: Math.min(2, this.challengeRating / 5) },
+            innerStrength: { from: 1, to: Math.min(2, this.challengeRating / 5) },
             duration: 1500,
             yoyo: true,
             repeat: -1,
