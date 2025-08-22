@@ -24,7 +24,7 @@ const starting_player_gold = 1
 const max_characters_in_board = 6
 
 export class Game extends Scene {
-    version = "v1.0.1"
+    version = "v1.0.2"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
@@ -45,6 +45,7 @@ export class Game extends Scene {
     }
 
     create() {
+        this.physics.world.createDebugGraphic()
         this.camera = this.cameras.main
 
         this.createBackground()
@@ -62,6 +63,12 @@ export class Game extends Scene {
         this.loadProgress()
         this.createArenaTorches()
         this.buildFloor()
+
+        this.input.keyboard?.on("keydown-D", () => {
+            const currentlyDebugging = this.physics.world.debugGraphic.visible
+            this.physics.world.debugGraphic.visible = !currentlyDebugging
+            console.log(`Physics debug: ${!currentlyDebugging}`)
+        })
 
         EventBus.emit("game-ready", this)
         EventBus.on("get-progress", () => this.emitProgress())

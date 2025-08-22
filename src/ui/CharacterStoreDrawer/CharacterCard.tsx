@@ -1,9 +1,10 @@
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import { Badge, Box, Button, Divider, Typography, useMediaQuery } from "@mui/material"
 import { CharacterAvatar } from "../CharacterSheet/CharacterAvatar"
 import { Game } from "../../game/scenes/Game"
 import { GoldCoin } from "../components/GoldCoin"
 import { StoreItem } from "../../game/creature/character/CharacterStore"
+import { colorFromLevel, convertColorToString, RarityColors } from "../../game/tools/RarityColors"
 
 interface CharacterCardProps {
     game: Game
@@ -16,6 +17,8 @@ interface CharacterCardProps {
 export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirst, isLast, disabled }) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     const character = item.character
+
+    const levelColor = useMemo(() => convertColorToString(colorFromLevel(character.level)), [character.level])
 
     const buyCharacter = () => {
         game.playerTeam.store.buy(item)
@@ -37,7 +40,11 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                 disabled={disabled || item.sold}
                 onClick={buyCharacter}
             >
-                <Badge badgeContent={`Lv ${character.level}`} color="info" overlap="circular">
+                <Badge
+                    badgeContent={`Lv ${character.level}`}
+                    slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
+                    overlap="circular"
+                >
                     <CharacterAvatar name={character.name} size={((isMobile ? 10 : 4) / 100) * window.innerWidth} disabled={disabled} />
                 </Badge>
 

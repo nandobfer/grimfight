@@ -61,6 +61,8 @@ export class Character extends Creature {
         for (const [key, value] of Object.entries(dto)) {
             this[key as keyof this] = value
         }
+
+        this.levelBadge.setValue(this.level)
     }
 
     handleMouseEvents(): void {
@@ -146,6 +148,7 @@ export class Character extends Creature {
     levelUp() {
         this.experience = 0
         this.level += 1
+        this.levelBadge.setValue(this.level)
 
         this.baseMaxHealth *= 1.65
         this.baseAttackDamage *= 1.65
@@ -161,8 +164,6 @@ export class Character extends Creature {
 
     override resetUi(): void {
         super.resetUi()
-        this.levelBadge.reset()
-        this.levelBadge.setValue(this.level)
     }
 
     updateCharUi(): void {
