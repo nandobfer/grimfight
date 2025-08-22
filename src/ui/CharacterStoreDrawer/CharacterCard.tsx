@@ -47,7 +47,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                     </Typography>
 
                     <Box sx={{ marginLeft: "auto" }}>
-                        <GoldCoin quantity={item.cost} size={isMobile ? 8 : 15} fontSize={isMobile ? 10 : 16} reverted />
+                        <GoldCoin quantity={item.cost} size={isMobile ? 7 : 15} fontSize={isMobile ? 9 : 16} reverted />
                     </Box>
                 </Box>
             </Button>
