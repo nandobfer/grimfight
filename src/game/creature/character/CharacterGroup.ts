@@ -36,6 +36,11 @@ export class CharacterGroup extends CreatureGroup {
     add(child: Character, addToScene?: boolean): this {
         super.add(child, addToScene)
 
+        if (child.boardX !== 0 && child.boardY !== 0) {
+            child.reset()
+            return this
+        }
+
         const grid = this.scene.grid
         if (!grid) return this
 
