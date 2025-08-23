@@ -37,7 +37,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     baseManaPerAttack = 10
     baseArmor = 0
     baseResistance = 0
-    baseSpeed = 30
+    baseSpeed = 50
     baseCritChance = 10
     baseCritDamageMultiplier = 2
 
@@ -477,21 +477,21 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         const { damage, crit: isCrit } = this.calculateDamage(this.attackDamage)
 
-        victim.takeDamage(damage, this, "bleeding", { crit: isCrit, type: damagetype })
+        victim.takeDamage(damage, this, { crit: isCrit, type: damagetype })
         this.gainMana(this.manaPerAttack)
 
         return damage
     }
 
-    heal(value: number) {
+    heal(value: number, crit?: boolean) {
         this.health = Math.min(this.maxHealth, this.health + value)
         this.healthBar.setValue(this.health, this.maxHealth)
 
-        showDamageText(this.scene, this.x, this.y, Math.round(value), { type: "heal" })
+        showDamageText(this.scene, this.x, this.y, Math.round(value), { type: "heal", crit })
         this.onHealFx()
     }
 
-    takeDamage(damage: number, attacker: Creature, effect = "bleeding", opts?: { crit?: boolean; type: DamageType }) {
+    takeDamage(damage: number, attacker: Creature, opts?: { crit?: boolean; type: DamageType }) {
         const incomingDamage = damage - this.armor
         const resistanceMultiplier = 1 - this.resistance / 100
         const finalDamage = Math.max(0, incomingDamage * resistanceMultiplier)

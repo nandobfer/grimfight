@@ -24,7 +24,7 @@ const starting_player_gold = 1
 const max_characters_in_board = 6
 
 export class Game extends Scene {
-    version = "v1.0.2"
+    version = "v1.0.3"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text

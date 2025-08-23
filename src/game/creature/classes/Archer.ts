@@ -27,11 +27,15 @@ export class Archer extends Character {
     // }
 
     override landAttack() {
+        if (!this.target) return
+
         const arrow = new Arrow(this)
-        arrow.fire()
+        arrow.fire(this.target)
     }
 
     override castAbility(): void {
+        if (!this.target) return
+
         this.casting = true
         const originalAttackDamage = this.attackDamage
         const originalManaPerAttack = this.manaPerAttack
@@ -101,7 +105,7 @@ export class Archer extends Character {
                 arrow.destroy()
             }
 
-            arrow.fire()
+            arrow.fire(this.target)
         }
 
         this.casting = false

@@ -32,4 +32,24 @@ export class Skeleton extends Monster {
         })
     }
     override onDieFx(): void {}
+
+    override castAbility(): void {
+        this.casting = true
+        const originalAD = this.attackDamage
+        this.attackDamage = originalAD * 3
+
+        this.scene.tweens.add({
+            targets: this,
+            scale: { from: this.scale, to: this.scale * 1.25 },
+            yoyo: true,
+            repeat: 0,
+            duration: 500,
+            ease: "Sine.easeInOut",
+        })
+
+        this.landAttack()
+        this.attackDamage = originalAD
+
+        this.casting = false
+    }
 }

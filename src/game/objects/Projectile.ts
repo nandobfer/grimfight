@@ -51,8 +51,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
-    fire() {
-        if (!this.owner.target) return
+    fire(target: Creature) {
         const from = this.owner
 
         // this.maxDistance = from.attackRange * 64 // keep consistent with range logic
@@ -62,7 +61,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.setPosition(from.x, from.y)
         this.setActive(true).setVisible(true)
 
-        const angle = Phaser.Math.Angle.Between(from.x, from.y, this.owner.target.x, this.owner.target.y)
+        const angle = Phaser.Math.Angle.Between(from.x, from.y, target.x, target.y)
         this.setRotation(angle)
 
         this.scene.physics.velocityFromRotation(angle, this.speed, this.body.velocity)

@@ -14,7 +14,8 @@ export class Knight extends Character {
 
     castAbility(): void {
         this.casting = true
-        this.heal(this.maxHealth * 0.1 + this.abilityPower)
+        const { damage: healing, crit } = this.calculateDamage(this.maxHealth * 0.1 + this.abilityPower)
+        this.heal(healing, crit)
         this.casting = false
     }
 }

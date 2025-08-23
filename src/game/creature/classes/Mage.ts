@@ -29,8 +29,10 @@ export class Mage extends Character {
     // }
 
     override landAttack() {
+        if (!this.target) return
+
         const fireball = new Fireball(this)
-        fireball.fire()
+        fireball.fire(this.target)
     }
 
     override castAbility(): void {
@@ -56,7 +58,7 @@ export class Mage extends Character {
         const finishSpell = () => {
             if (!this.target?.active) this.newTarget()
 
-            this.target?.takeDamage(damage, this, "fire", { crit, type: "fire" })
+            this.target?.takeDamage(damage, this, { crit, type: "fire" })
             this.casting = false
         }
 
