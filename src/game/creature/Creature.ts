@@ -29,6 +29,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     baseMaxHealth = 500
     baseAttackSpeed = 1
     baseAttackDamage = 10
+    baseAbilityPower = 50
     baseAttackRange = 1
     mana = 0
     baseMaxMana = 100
@@ -44,6 +45,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     attackSpeed = 0
     attackDamage = 0
     attackRange = 0
+    abilityPower = 0
     maxMana = 0
     manaPerSecond = 0
     manaPerAttack = 0
@@ -110,6 +112,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.attackSpeed = this.baseAttackSpeed
         this.attackDamage = this.baseAttackDamage
         this.attackRange = this.baseAttackRange
+        this.abilityPower = this.baseAbilityPower
         this.maxMana = this.baseMaxMana
         this.manaPerSecond = this.baseManaPerSecond
         this.manaPerAttack = this.baseManaPerAttack
@@ -494,6 +497,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         const finalDamage = Math.max(0, incomingDamage * resistanceMultiplier)
 
         showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit: !!opts?.crit, type: finalDamage <= 0 ? "block" : opts?.type })
+        if (attacker.team === this.scene.playerTeam) {
+            this.scene.playerTeam.damageChart.plotDamage(attacker, finalDamage)
+        }
 
         this.health -= finalDamage
         this.healthBar.setValue(this.health, this.maxHealth)

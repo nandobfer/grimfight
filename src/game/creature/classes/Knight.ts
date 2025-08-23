@@ -12,15 +12,9 @@ export class Knight extends Character {
         super(scene, "knight", id)
     }
 
-    // levelUp(): void {
-    //     super.levelUp()
-
-    //     this.baseMaxHealth += 50
-    // }
-
     castAbility(): void {
         this.casting = true
-        this.heal(this.maxHealth * 0.1)
+        this.heal(this.maxHealth * 0.1 + this.abilityPower)
         this.casting = false
     }
 }

@@ -5,9 +5,9 @@ import { Character } from "../character/Character"
 
 export class Mage extends Character {
     baseAttackSpeed = 0.5
-    baseAttackDamage = 50
     baseAttackRange = 3
     baseManaPerSecond = 10
+    baseMaxMana = 50
     baseMaxHealth = 200
 
     constructor(scene: Game, id: string) {
@@ -37,7 +37,7 @@ export class Mage extends Character {
         this.casting = true
         this.anims.stop()
 
-        // deals 2x attack damage to the target and 0.5x attack damage to nearby enemies
+        // deals 2x ability power to the target and 0.5x ability power to nearby enemies
         this.explodeTarget()
     }
 
@@ -51,7 +51,7 @@ export class Mage extends Character {
         if (!this.target?.active) {
         }
 
-        const { damage, crit } = this.calculateDamage(this.attackDamage * 2)
+        const { damage, crit } = this.calculateDamage(this.abilityPower * 2)
 
         const finishSpell = () => {
             if (!this.target?.active) this.newTarget()
@@ -74,7 +74,7 @@ export class Mage extends Character {
             this.casting = false
         }
 
-        const explosion = new Explosion(this, this.target, this.attackDamage / 2)
+        const explosion = new Explosion(this, this.target, this.abilityPower / 2, 2.5)
         explosion.on("animationupdate", onAnimationUpdate)
         explosion.once("animationcomplete", cleanup)
         explosion.once("animationstop", cleanup)

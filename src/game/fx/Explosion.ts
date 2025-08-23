@@ -7,8 +7,8 @@ export class Explosion extends FxSprite {
     baseDamage: number
     damagedEnemies = new Set<Creature>()
 
-    constructor(caster: Creature, target: Creature, baseDamage: number) {
-        super(target.scene, target.x, target.y, "explosion", 2)
+    constructor(caster: Creature, target: Creature, baseDamage: number, scaleFactor: number) {
+        super(target.scene, target.x, target.y, "explosion", scaleFactor)
         this.target = target
         this.caster = caster
         this.baseDamage = baseDamage

@@ -15,6 +15,7 @@ export interface CharacterDto {
     baseAttackSpeed: number
     baseAttackDamage: number
     baseAttackRange: number
+    baseAbilityPower: number
     baseMaxMana: number
     baseManaPerSecond: number
     baseManaPerAttack: number
@@ -152,6 +153,7 @@ export class Character extends Creature {
 
         this.baseMaxHealth *= 1.65
         this.baseAttackDamage *= 1.65
+        this.baseAbilityPower *= 1.65
         this.reset()
         this.emitSelf()
     }
@@ -173,7 +175,6 @@ export class Character extends Creature {
 
     override onAttackLand(damagetype: DamageType, victim: Creature): number {
         const damage = super.onAttackLand(damagetype, victim)
-        this.team.damageChart.plotDamage(this, damage)
 
         return damage
     }
@@ -185,6 +186,7 @@ export class Character extends Creature {
             baseAttackDamage: this.baseAttackDamage,
             baseAttackRange: this.baseAttackRange,
             baseAttackSpeed: this.baseAttackSpeed,
+            baseAbilityPower: this.baseAbilityPower,
             baseCritChance: this.baseCritChance,
             baseCritDamageMultiplier: this.baseCritDamageMultiplier,
             baseManaPerAttack: this.baseManaPerAttack,

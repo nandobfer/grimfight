@@ -36,6 +36,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
             { title: "Mana", value: `${Math.round(character.mana)} / ${character.maxMana}` },
             { title: "Mana Regen", value: `${character.manaPerSecond} /s` },
             { title: "Mana /hit", value: `${character.manaPerAttack}` },
+            { title: "Ability Power", value: `${Math.round(character.abilityPower)}` },
             {
                 title: "Attack Damage",
                 value: `${Math.round(character.attackDamage * character.minDamageMultiplier)} - ${Math.round(
@@ -43,6 +44,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                 )}`,
             },
             { title: "Attack Speed", value: `${character.attackSpeed} /s` },
+
             { title: "Crit Chance", value: `${character.critChance} %` },
             { title: "Crit Damage Multiplier", value: `x ${character.critDamageMultiplier}` },
             { title: "Armor", value: character.armor },
