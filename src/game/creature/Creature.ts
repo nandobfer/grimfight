@@ -6,6 +6,7 @@ import { spawnParrySpark } from "../fx/Parry"
 import { EventBus } from "../tools/EventBus"
 import { DamageType, showDamageText } from "../ui/DamageNumbers"
 import { CreatureGroup } from "./CreatureGroup"
+import { Heal } from "../fx/Heal"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -157,32 +158,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     onHealFx() {
-        const healEffect = this.scene.add.sprite(this.x, this.y, "heal4")
-        healEffect.setDepth(this.depth + 1) // Make sure it appears above the character
-        healEffect.setScale(0.5)
-        healEffect.play("heal4")
-        const followCharacter = () => {
-            if (healEffect.active) {
-                healEffect.setPosition(this.x, this.y)
-            }
-        }
-
-        // Update position each frame
-        this.scene.events.on("update", followCharacter)
-
-        // Clean up when animation completes
-        healEffect.once("animationcomplete", () => {
-            this.scene.events.off("update", followCharacter)
-            healEffect.destroy()
-        })
-
-        // Also clean up if character is destroyed first
-        this.once("destroy", () => {
-            if (healEffect.active) {
-                this.scene.events.off("update", followCharacter)
-                healEffect.destroy()
-            }
-        })
+        const healEffect = new Heal(this)
     }
 
     onHitFx() {
