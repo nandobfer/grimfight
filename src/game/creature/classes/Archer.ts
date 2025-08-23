@@ -1,6 +1,7 @@
 import { Arrow } from "../../objects/Arrow"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
+import { Creature } from "../Creature"
 
 export class Archer extends Character {
     baseAttackSpeed = 1
@@ -32,7 +33,9 @@ export class Archer extends Character {
 
     override castAbility(): void {
         this.casting = true
-        this.attackDamage = this.attackDamage * 0.5
+
+        const originalAttackDamage = this.attackDamage
+        const originalManaPerAttack = this.manaPerAttack
 
         let baseAngle = 0
         if (this.target) {
@@ -90,10 +93,18 @@ export class Archer extends Character {
                 return arrow
             }
 
+            arrow.onHit = (victim: Creature) => {
+                this.attackDamage = originalAttackDamage / 2
+                this.manaPerAttack = 0
+                this.onAttackLand(arrow.damageType, victim)
+                this.attackDamage = originalAttackDamage
+                this.manaPerAttack = originalManaPerAttack
+                arrow.destroy()
+            }
+
             arrow.fire()
         }
 
-        this.attackDamage = this.attackDamage * 2
         // on animation complete, if any
         this.casting = false
     }
