@@ -8,8 +8,8 @@ export enum RarityColors {
 
 export const colorFromLevel = (level: number) => {
     const colors = [RarityColors.common, RarityColors.uncommon, RarityColors.rare, RarityColors.epic, RarityColors.legendary]
-    const index = ((level % colors.length) + colors.length) % colors.length
-    const phaserColor = colors[index - 1]
+    const index = (((level - 1) % colors.length) + colors.length) % colors.length
+    const phaserColor = colors[index]
     return phaserColor
 }
 
