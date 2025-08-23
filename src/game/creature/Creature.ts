@@ -156,6 +156,35 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.extractAnimationsFromSpritesheet("attacking2", 156, 6)
     }
 
+    onHealFx() {
+        const healEffect = this.scene.add.sprite(this.x, this.y, "heal4")
+        healEffect.setDepth(this.depth + 1) // Make sure it appears above the character
+        healEffect.setScale(0.5)
+        healEffect.play("heal4")
+        const followCharacter = () => {
+            if (healEffect.active) {
+                healEffect.setPosition(this.x, this.y)
+            }
+        }
+
+        // Update position each frame
+        this.scene.events.on("update", followCharacter)
+
+        // Clean up when animation completes
+        healEffect.once("animationcomplete", () => {
+            this.scene.events.off("update", followCharacter)
+            healEffect.destroy()
+        })
+
+        // Also clean up if character is destroyed first
+        this.once("destroy", () => {
+            if (healEffect.active) {
+                this.scene.events.off("update", followCharacter)
+                healEffect.destroy()
+            }
+        })
+    }
+
     onHitFx() {
         const particles = this.scene.add.particles(this.x, this.y, "blood", {
             lifespan: 600,
@@ -444,6 +473,14 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.gainMana(this.manaPerAttack)
 
         return damage
+    }
+
+    heal(value: number) {
+        this.health = Math.min(this.maxHealth, this.health + value)
+        this.healthBar.setValue(this.health, this.maxHealth)
+
+        showDamageText(this.scene, this.x, this.y, Math.round(value), { type: "heal" })
+        this.onHealFx()
     }
 
     takeDamage(damage: number, attacker: Creature, effect = "bleeding", opts?: { crit?: boolean; type: DamageType }) {

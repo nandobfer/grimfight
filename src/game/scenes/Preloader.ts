@@ -50,9 +50,18 @@ export class Preloader extends Scene {
         }
     }
 
+    loadHealFx() {
+        this.load.spritesheet("heal1", "particles/heal.png", { frameWidth: 192, frameHeight: 192, startFrame: 1, endFrame: 7 })
+        this.load.spritesheet("heal2", "particles/heal.png", { frameWidth: 192, frameHeight: 192, startFrame: 8, endFrame: 11 })
+        this.load.spritesheet("heal3", "particles/heal.png", { frameWidth: 192, frameHeight: 192, startFrame: 12, endFrame: 18 })
+        this.load.spritesheet("heal4", "particles/heal.png", { frameWidth: 192, frameHeight: 192, startFrame: 19, endFrame: 30 })
+    }
+
     loadParticles() {
         this.load.image("blood", "particles/blood.png")
         this.load.image("arrow", "particles/arrow.webp")
+
+        this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {
             this.load.image(`fire${i}`, `particles/fx1/flame4/png/${i.toString().padStart(2, "0")}.png`)

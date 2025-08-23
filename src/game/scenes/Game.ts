@@ -73,6 +73,13 @@ export class Game extends Scene {
 
         EventBus.emit("game-ready", this)
         EventBus.on("get-progress", () => this.emitProgress())
+
+        this.anims.create({
+            key: "heal4",
+            frames: this.anims.generateFrameNumbers("heal4"),
+            frameRate: 15,
+            repeat: 0,
+        })
     }
 
     createLight() {
