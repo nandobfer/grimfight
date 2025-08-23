@@ -59,7 +59,7 @@ export class Preloader extends Scene {
     loadParticles() {
         this.load.image("blood", "particles/blood.png")
         this.load.image("arrow", "particles/arrow.webp")
-        this.load.spritesheet("explosion", "particles/explodion.png", { frameWidth: 104 })
+        this.load.spritesheet("explosion", "particles/explosion.png", { frameWidth: 110.6, frameHeight: 104, startFrame: 1, endFrame: 10 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

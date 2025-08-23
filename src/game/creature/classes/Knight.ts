@@ -20,7 +20,6 @@ export class Knight extends Character {
 
     castAbility(): void {
         this.casting = true
-
         this.heal(this.maxHealth * 0.1)
         this.casting = false
     }

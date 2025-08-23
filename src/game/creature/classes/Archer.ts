@@ -33,7 +33,6 @@ export class Archer extends Character {
 
     override castAbility(): void {
         this.casting = true
-
         const originalAttackDamage = this.attackDamage
         const originalManaPerAttack = this.manaPerAttack
 
@@ -105,7 +104,6 @@ export class Archer extends Character {
             arrow.fire()
         }
 
-        // on animation complete, if any
         this.casting = false
     }
 }

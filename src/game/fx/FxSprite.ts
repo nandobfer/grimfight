@@ -1,6 +1,5 @@
 // src/game/FireHit.ts
 import Phaser from "phaser"
-import { Creature } from "../creature/Creature"
 import { Game } from "../scenes/Game"
 
 interface LightParams {
@@ -16,17 +15,19 @@ interface LightParams {
     yoyo?: boolean
 }
 
-export class FxSprite extends Phaser.GameObjects.Sprite {
+export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     private light?: Phaser.GameObjects.Light
     sprite: string
+    frameRate = 15
 
-    constructor(scene: Game, x: number, y: number, sprite: string) {
+    constructor(scene: Game, x: number, y: number, sprite: string, scale: number) {
         super(scene, x, y, sprite)
 
         this.sprite = sprite
         this.scene.add.existing(this)
+        this.scene.physics.add.existing(this)
         this.setDepth(this.depth + 1) // Make sure it appears above the character
-        this.setScale(0.5)
+        this.setScale(scale)
         this.initAnimation()
 
         this.scene.events.on("update", this.followCharacter)
@@ -37,6 +38,15 @@ export class FxSprite extends Phaser.GameObjects.Sprite {
     }
 
     initAnimation() {
+        if (!this.scene.anims.exists(this.sprite)) {
+            this.scene.anims.create({
+                key: this.sprite,
+                frames: this.anims.generateFrameNumbers(this.sprite),
+                frameRate: this.frameRate,
+                repeat: 0,
+            })
+        }
+
         this.play(this.texture)
     }
 
@@ -47,7 +57,9 @@ export class FxSprite extends Phaser.GameObjects.Sprite {
     }
 
     cleanup() {
-        this.scene.events.off("update", this.followCharacter)
+        if (this.scene) {
+            this.scene.events.off("update", this.followCharacter)
+        }
         this.destroy()
     }
 
@@ -75,7 +87,7 @@ export class FxSprite extends Phaser.GameObjects.Sprite {
 
     override destroy(fromScene?: boolean): void {
         if (this.light) {
-            this.scene.lights.removeLight(this.light)
+            this.scene?.lights.removeLight(this.light)
         }
         super.destroy(fromScene)
     }

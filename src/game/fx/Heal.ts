@@ -5,7 +5,7 @@ export class Heal extends FxSprite {
     target: Creature
     
     constructor(target: Creature) {
-        super(target.scene, target.x, target.y, "heal4")
+        super(target.scene, target.x, target.y, "heal4", 0.5)
         this.target = target
 
         this.addLightEffect({
@@ -21,10 +21,10 @@ export class Heal extends FxSprite {
             yoyo: true,
         })
 
-        this.target.once("destroy", () => {
-            if (this.active) {
-                this.cleanup()
-            }
-        })
+        // this.target.once("destroy", () => {
+        //     if (this.active) {
+        //         this.cleanup()
+        //     }
+        // })
     }
 }

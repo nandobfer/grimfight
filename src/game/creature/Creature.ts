@@ -397,8 +397,41 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.play(`${this.name}-walking-${this.facing}`, true)
     }
 
+    startCastingAbility() {
+        this.gainMana(-this.mana)
+
+        this.castAbility()
+    }
+
+    castAbility() {
+        // each character and monster will have it's own
+    }
+
+    onAnimationFrame(key: string, executeOnFrame: number, callback: Function, onCleanup?: Function, override?: boolean) {
+        const anim = this.anims.get(key)
+
+        const onUpdate = (animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) => {
+            if (animation.key !== key) return
+
+            if (frame.index === executeOnFrame) {
+                callback()
+            }
+        }
+
+        this.on("animationupdate", onUpdate)
+
+        this.play({ key: key, frameRate: anim.frames.length * this.attackSpeed, repeat: 0 }, !override)
+
+        const cleanup = () => {
+            this.off("animationupdate", onUpdate)
+            onCleanup?.()
+        }
+        this.once("animationcomplete", cleanup)
+        this.once("animationstop", cleanup)
+    }
+
     startAttack() {
-        if (this.attacking || !this.target?.active) {
+        if (this.attacking || this.casting || !this.target?.active) {
             return
         }
 
@@ -406,44 +439,40 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.attacking = true
         const spriteVariant = Phaser.Math.RND.weightedPick([1, 2])
         const animKey = `${this.name}-attacking${spriteVariant}-${this.facing}`
-        const anim = this.anims.get(animKey)
 
-        const onUpdate = (animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) => {
-            if (animation.key !== animKey) return
-            if (frame.index === this.attackAnimationImpactFrame) {
-                this.landAttack()
-            }
-        }
-
-        this.on("animationupdate", onUpdate)
-
-        this.play({ key: animKey, frameRate: anim.frames.length * this.attackSpeed, repeat: 0 }, true)
-
-        const cleanup = () => {
-            this.off("animationupdate", onUpdate)
-            this.attacking = false
-        }
-        this.once("animationcomplete", cleanup)
-        this.once("animationstop", cleanup)
+        this.onAnimationFrame(
+            animKey,
+            this.attackAnimationImpactFrame,
+            () => this.landAttack(),
+            () => (this.attacking = false)
+        )
     }
 
     landAttack() {
         this.onAttackLand("normal")
     }
 
+    tryCrit() {
+        return Phaser.Math.FloatBetween(0, 100) <= this.critChance
+    }
+
+    calculateDamage(rawDamage: number) {
+        const crit = this.tryCrit()
+        let damageMultiplier = 0
+
+        if (crit) {
+            damageMultiplier += this.critDamageMultiplier
+        }
+
+        const damage = rawDamage * Phaser.Math.FloatBetween(this.minDamageMultiplier, this.maxDamageMultiplier)
+        return { damage: damage * Math.max(1, damageMultiplier), crit }
+    }
+
     onAttackLand(damagetype: DamageType, target?: Creature) {
         const victim = target ?? this.target
         if (!victim?.active) return 0
 
-        const isCrit = Phaser.Math.FloatBetween(0, 100) <= this.critChance
-        let damageMultiplier = 0
-
-        if (isCrit) {
-            damageMultiplier += this.critDamageMultiplier
-        }
-
-        const randomizedDamage = this.attackDamage * Phaser.Math.FloatBetween(this.minDamageMultiplier, this.maxDamageMultiplier)
-        const damage = randomizedDamage * Math.max(1, damageMultiplier)
+        const { damage, crit: isCrit } = this.calculateDamage(this.attackDamage)
 
         victim.takeDamage(damage, this, "bleeding", { crit: isCrit, type: damagetype })
         this.gainMana(this.manaPerAttack)
@@ -540,25 +569,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     regenMana(delta: number) {
+        if (this.casting) return
+
         const passedSeconds = delta / 1000
         const manaGained = this.manaPerSecond * passedSeconds
         this.gainMana(manaGained)
-    }
-
-    startCastingAbility() {
-        this.attacking = true
-        this.gainMana(-this.mana)
-
-        this.castAbility()
-
-        // failsafe
-        if (!this.casting) {
-            this.attacking = false
-        }
-    }
-
-    castAbility() {
-        // each character and monster will have it's own
     }
 
     destroyUi() {
