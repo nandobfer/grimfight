@@ -28,7 +28,8 @@ export function invalidateEncounterCRCache() {
 function scaleToCR(mon: Monster, targetCR: number) {
     const base = Math.max(0.1, mon.calculateCR())
     const mult = Math.max(1, targetCR / base)
-    mon.makeBoss(targetCR) // does not set boss flag / FX
+    mon.scaleStats(mult) // does not set boss flag / FX
+    mon.scaleSize(mult / 2)
 }
 
 export function generateEncounter(scene: Game, floor: number, seedBase = 1337): Encounter {

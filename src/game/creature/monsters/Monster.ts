@@ -33,21 +33,23 @@ export class Monster extends Creature {
         this.baseAttackSpeed = this.baseAttackSpeed * 0.75
     }
 
+    scaleSize(mult: number) {
+        this.setScale(this.scale * (1.1 + Math.log2(mult + 1) * 0.25))
+    }
+
     makeBoss(targetCR: number) {
         const base = Math.max(0.1, this.calculateCR())
         const mult = Math.max(1, targetCR / base)
         this.scaleStats(mult)
-        this.setScale(this.scale * (1.1 + Math.log2(mult + 1) * 0.25))
+        this.scaleSize(mult)
         this.boss = true
         // optional: glow/aura
         // const glow = this.postFX.addGlow(0xffd54f, 8, 0)
         // glow.outerStrength = 4
 
-        if (this.scene.floor >= 10) {
-            // Add dark, smoky boss effects
-            this.addDarkAura()
-            this.addShadowParticles()
-        }
+        // Add dark, smoky boss effects
+        this.addDarkAura()
+        this.addShadowParticles()
     }
 
     private addDarkAura() {

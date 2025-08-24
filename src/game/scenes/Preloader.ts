@@ -3,7 +3,6 @@ import { EventBus } from "../tools/EventBus"
 
 const available_classes = ["rogue", "knight", "archer", "mage"]
 const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic"]
-const available_ragnarok_sprites = ["aqua_elemental"]
 
 export class Preloader extends Scene {
     constructor() {
@@ -28,6 +27,7 @@ export class Preloader extends Scene {
 
         this.loadSpritesheets(available_classes, "characters")
         this.loadSpritesheets(available_monsters, "monsters")
+        this.loadRagnarokSprites()
         this.loadParticles()
     }
 
@@ -44,9 +44,10 @@ export class Preloader extends Scene {
     }
 
     loadRagnarokSprites() {
-        for (const sheet of available_ragnarok_sprites) {
-            this.load.spritesheet(`spritesheets/ragnarok/${sheet}.png`), {}
-        }
+        const path = (name: string) => "spritesheets/ragnarok/" + name + ".png"
+        // this.load.spritesheet("aqua_elemental.idle", path("aqua_elemental")), { frameWidth: 69, frameHeight: 100, startFrame: 1, endFrame: 12 }
+        // this.load.spritesheet("dracula.idle", path("dracula")), { frameWidth: 80, frameHeight: 155, startFrame: 1, endFrame: 11 }
+        this.load.spritesheet("evil_fanatic", path("evil_fanatic"), { frameWidth: 248, frameHeight: 218 })
     }
 
     loadHealFx() {

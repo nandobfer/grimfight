@@ -6,6 +6,7 @@ import { Zombie } from "./Zombie"
 import { Demonic } from "./Demonic"
 import { StatsLike } from "../../tools/ChallengeRating"
 import { ArmoredSkeleton } from "./ArmoredSkeleton"
+import { EvilFanatic } from "./EvilFanatic"
 
 const CR_1_MONSTER: Record<string, StatsLike> = {
     skeleton: {
@@ -51,3 +52,4 @@ MonsterRegistry.register("skeleton", Skeleton)
 MonsterRegistry.register("zombie", Zombie)
 MonsterRegistry.register("demonic", Demonic)
 MonsterRegistry.register("armored_skeleton", ArmoredSkeleton)
+MonsterRegistry.register("evil_fanatic", EvilFanatic)
