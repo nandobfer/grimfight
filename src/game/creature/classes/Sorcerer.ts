@@ -38,6 +38,9 @@ export class Sorcerer extends Character {
     }
 
     override castAbility(): void {
+        // cast blizzard
+        // apply frozen
+
         this.casting = false
     }
 }
