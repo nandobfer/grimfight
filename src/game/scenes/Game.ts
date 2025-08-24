@@ -207,12 +207,12 @@ export class Game extends Scene {
     }
 
     anyTeamWiped() {
-        if (this.enemyTeam.countActive() === 0) {
+        if (this.enemyTeam.isWiped()) {
             this.onFloorDefeated()
             return true
         }
 
-        if (this.playerTeam.countActive() === 0) {
+        if (this.playerTeam.isWiped()) {
             this.onPlayerDefeated()
             return true
         }

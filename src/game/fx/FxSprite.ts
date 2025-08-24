@@ -33,8 +33,12 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         this.scene.events.on("update", this.followCharacter)
 
         this.once("animationcomplete", () => {
-            this.cleanup()
+            this.onAnimationComplete()
         })
+    }
+
+    onAnimationComplete() {
+        this.cleanup()
     }
 
     initAnimation() {

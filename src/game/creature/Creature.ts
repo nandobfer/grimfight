@@ -106,13 +106,16 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.stopMoving()
         this.idle()
 
-        this.active = true
         this.target = undefined
+    }
+
+    calculateSpeeds() {
+        this.attackSpeed = this.baseAttackSpeed
+        this.speed = this.baseSpeed
     }
 
     calculateStats() {
         this.maxHealth = this.baseMaxHealth
-        this.attackSpeed = this.baseAttackSpeed
         this.attackDamage = this.baseAttackDamage
         this.attackRange = this.baseAttackRange
         this.abilityPower = this.baseAbilityPower
@@ -121,9 +124,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaPerAttack = this.baseManaPerAttack
         this.armor = this.baseArmor
         this.resistance = this.baseResistance
-        this.speed = this.baseSpeed
         this.critChance = this.baseCritChance
         this.critDamageMultiplier = this.baseCritDamageMultiplier
+        this.calculateSpeeds()
     }
 
     resetUi() {
@@ -519,7 +522,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.onDieFx()
         this.healthBar.fadeOut()
         this.manaBar.fadeOut()
-        this.active = false
     }
 
     onDieFx() {

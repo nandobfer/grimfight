@@ -1,4 +1,5 @@
 import { Creature } from "../creature/Creature"
+import { Frozen } from "./Frozen"
 import { FxSprite } from "./FxSprite"
 
 export class Blizzard extends FxSprite {
@@ -37,11 +38,12 @@ export class Blizzard extends FxSprite {
         })
 
         this.anims.stop()
-        this.anims.play({key: 'blizzard', frameRate: (this.duration / (this.anims.getTotalFrames()*2)) / 100 })
+        this.anims.play({ key: "blizzard", frameRate: this.duration / (this.anims.getTotalFrames() * 2) / 100 })
     }
 
     startDamageChain(target: Creature) {
         this.dealDamage(target, this.damageInstances)
+        this.freeze(target)
     }
 
     dealDamage(target: Creature, remaining: number) {
@@ -49,8 +51,32 @@ export class Blizzard extends FxSprite {
             remaining -= 1
             const { damage, crit } = this.caster.calculateDamage(this.baseDamage)
             console.log(`dealing ${damage} to ${target.name}`)
-            target.takeDamage(damage, this.caster, 'cold', crit)
+            target.takeDamage(damage, this.caster, "cold", crit)
             this.target?.scene?.time.delayedCall(this.duration / this.damageInstances, () => this.dealDamage(target, remaining))
         }
+    }
+
+    freeze(target: Creature) {
+        // spawn ice
+
+        const iceBlock = new Frozen(target)
+
+        target.scene.tweens.add({
+            targets: target,
+            duration: Phaser.Math.FloatBetween(this.duration * 0.5, this.duration * 1.25),
+            attackSpeed: 0,
+            speed: 0,
+            repeat: 0,
+            manaPerSecond: 0,
+            yoyo: true,
+            onUpdate: () => {
+                target.anims.stop()
+                target.attacking = false
+            },
+            onComplete: () => {
+                target.attacking = false
+                iceBlock.destroy()
+            },
+        })
     }
 }

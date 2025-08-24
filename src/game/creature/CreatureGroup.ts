@@ -56,4 +56,9 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         const creatures = this.getChildren()
         return creatures.find((char) => char.x === x && char.y === y)
     }
+
+    isWiped() {
+        const creatures = this.getChildren()
+        return creatures.every((creature) => creature.health <= 0)
+    }
 }

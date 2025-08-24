@@ -23,12 +23,6 @@ export class Sorcerer extends Character {
         this.extractAnimationsFromSpritesheet("casting", 208, 13)
     }
 
-    // levelUp(): void {
-    //     super.levelUp()
-
-    //     this.baseAttackDamage += 10
-    // }
-
     override landAttack() {
         if (!this.target) return
 
@@ -46,5 +40,10 @@ export class Sorcerer extends Character {
         const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5, 2)
 
         this.casting = false
+    }
+
+    override reset(): void {
+        super.reset()
+        this.mana = this.maxMana * 0.9
     }
 }
