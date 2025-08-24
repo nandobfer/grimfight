@@ -70,7 +70,7 @@ export class Blizzard extends FxSprite {
             manaPerSecond: 0,
             yoyo: true,
             onUpdate: () => {
-                target.anims.stop()
+                target?.anims?.stop()
                 target.attacking = false
             },
             onComplete: () => {
