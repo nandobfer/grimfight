@@ -49,7 +49,7 @@ export class Blizzard extends FxSprite {
             remaining -= 1
             const { damage, crit } = this.caster.calculateDamage(this.baseDamage)
             console.log(`dealing ${damage} to ${target.name}`)
-            target.takeDamage(damage, this.caster, { type: "cold", crit })
+            target.takeDamage(damage, this.caster, 'cold', crit)
             this.target?.scene?.time.delayedCall(this.duration / this.damageInstances, () => this.dealDamage(target, remaining))
         }
     }

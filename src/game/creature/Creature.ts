@@ -7,6 +7,9 @@ import { EventBus } from "../tools/EventBus"
 import { DamageType, showDamageText } from "../ui/DamageNumbers"
 import { CreatureGroup } from "./CreatureGroup"
 import { Heal } from "../fx/Heal"
+import { ColdHit } from "../fx/ColdHit"
+import { FireHit } from "../fx/FireHit"
+import { burstBlood } from "../fx/Blood"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -162,28 +165,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     onHealFx() {
         const healEffect = new Heal(this)
-    }
-
-    onHitFx() {
-        const particles = this.scene.add.particles(this.x, this.y, "blood", {
-            lifespan: 600,
-            speed: { min: 30, max: 80 },
-            scale: { start: 0.15, end: 0 },
-            quantity: 5,
-            blendMode: "NORMAL",
-            frequency: -1,
-        })
-
-        particles.explode(10)
-
-        this.scene.time.delayedCall(600, () => {
-            particles.destroy()
-        })
-    }
-
-    spawnParryngEffect(attacker: Creature) {
-        const ang = Phaser.Math.Angle.Between(attacker.x, attacker.y, this.x, this.y)
-        spawnParrySpark(this.scene, this.x, this.y, ang)
     }
 
     resetMouseEvents() {
@@ -477,7 +458,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         const { damage, crit: isCrit } = this.calculateDamage(this.attackDamage)
 
-        victim.takeDamage(damage, this, { crit: isCrit, type: damagetype })
+        victim.takeDamage(damage, this, damagetype, isCrit)
         this.gainMana(this.manaPerAttack)
 
         return damage
@@ -491,28 +472,33 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.onHealFx()
     }
 
-    takeDamage(damage: number, attacker: Creature, opts?: { crit?: boolean; type: DamageType }) {
+    takeDamage(damage: number, attacker: Creature, type: DamageType, crit = false) {
         const incomingDamage = damage - this.armor
         const resistanceMultiplier = 1 - this.resistance / 100
         const finalDamage = Math.max(0, incomingDamage * resistanceMultiplier)
 
-        showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit: !!opts?.crit, type: finalDamage <= 0 ? "block" : opts?.type })
+        if (finalDamage <= 0) {
+            type = "block"
+        }
+
+        showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit, type })
         if (attacker.team === this.scene.playerTeam) {
             this.scene.playerTeam.damageChart.plotDamage(attacker, finalDamage)
         }
 
         this.health -= finalDamage
         this.healthBar.setValue(this.health, this.maxHealth)
+
+        this.scene.onHitFx(type, this.x, this.y, this)
+
         if (this.health <= 0) {
             this.die()
             return
         }
+    }
 
-        if (finalDamage === 0) {
-            this.spawnParryngEffect(attacker)
-        } else {
-            this.onHitFx()
-        }
+    onNormalHit() {
+        burstBlood(this.scene, this.x, this.y)
     }
 
     die() {

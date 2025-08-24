@@ -9,6 +9,12 @@ import { generateEncounter } from "../tools/Encounter"
 import { MonsterGroup } from "../creature/monsters/MonsterGroup"
 import { CharacterGroup } from "../creature/character/CharacterGroup"
 import { CharacterDto } from "../creature/character/Character"
+import { DamageType } from "../ui/DamageNumbers"
+import { spawnParrySpark } from "../fx/Parry"
+import { ColdHit } from "../fx/ColdHit"
+import { FireHit } from "../fx/FireHit"
+import { burstBlood } from "../fx/Blood"
+import { Creature } from "../creature/Creature"
 
 export type GameState = "fighting" | "idle"
 
@@ -351,6 +357,28 @@ export class Game extends Scene {
         const randomCharacter = CharacterRegistry.random(this)
         this.playerTeam.add(randomCharacter)
         this.playerTeam.reset()
+    }
+
+    onHitFx(damageType: DamageType, _x: number, _y: number, target?: Creature) {
+        const x = target?.x || _x
+        const y = target?.y || _y
+
+        switch (damageType) {
+            case "block":
+                return spawnParrySpark(this, x, y)
+            case "cold":
+                return new ColdHit(this, x, y)
+            case "fire":
+                return new FireHit(this, x, y)
+            case "normal":
+                return target ? target.onNormalHit() : null
+            case "poison":
+                //
+                return
+            case "true":
+                //
+                return
+        }
     }
 
     createArenaTorches() {

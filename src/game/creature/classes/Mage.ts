@@ -47,7 +47,7 @@ export class Mage extends Character {
         const finishSpell = () => {
             if (!this.target?.active) this.newTarget()
 
-            this.target?.takeDamage(damage, this, { crit, type: "fire" })
+            this.target?.takeDamage(damage, this, 'fire', crit)
             this.casting = false
         }
 

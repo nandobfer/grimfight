@@ -35,7 +35,7 @@ export class Explosion extends FxSprite {
             const { damage, crit } = this.caster.calculateDamage(baseDamage)
             if (enemy.active) {
                 console.log(`dealing ${damage} to ${enemy.name}`)
-                enemy.takeDamage(damage, this.caster, { type: "fire", crit })
+                enemy.takeDamage(damage, this.caster, 'fire', crit)
                 this.damagedEnemies.add(enemy)
             }
         })

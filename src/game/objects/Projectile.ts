@@ -84,6 +84,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     onHitWall() {
+        this.scene.onHitFx(this.damageType, this.x, this.y)
         this.setVelocity(0)
     }
 }
