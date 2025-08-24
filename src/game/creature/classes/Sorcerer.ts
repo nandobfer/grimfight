@@ -7,7 +7,7 @@ import { Character } from "../character/Character"
 export class Sorcerer extends Character {
     baseAttackSpeed = 0.75
     baseAttackDamage = 15
-    baseAttackRange = 5
+    baseAttackRange = 3
     baseManaPerSecond = 10
     baseMaxMana = 150
     baseMaxHealth = 300
@@ -39,7 +39,5 @@ export class Sorcerer extends Character {
 
     override castAbility(): void {
         this.casting = false
-
     }
-
 }
