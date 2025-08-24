@@ -6,7 +6,7 @@ import { Creature } from "../Creature"
 export class Archer extends Character {
     baseAttackSpeed = 1
     baseApeed = 80
-    baseAttackDamage = 30
+    baseAttackDamage = 20
     baseAttackRange = 4
     baseMaxHealth = 200
 

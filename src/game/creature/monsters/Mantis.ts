@@ -1,26 +1,26 @@
 import { Game } from "../../scenes/Game"
 import { RagnarokMonster } from "./RagnarokMonster"
 
-export class EvilFanatic extends RagnarokMonster {
-    baseMaxHealth = 5000
-    baseAttackDamage = 50
+export class Mantis extends RagnarokMonster {
+    baseMaxHealth = 250
+    baseAttackDamage = 15
     baseAttackSpeed = 1
-    baseMaxMana = 100
+    baseMaxMana = 30
 
     constructor(scene: Game) {
-        super(scene, "evil_fanatic")
+        super(scene, "mantis")
         this.preferredPosition = "front"
         this.challengeRating = this.calculateCR()
 
-        this.setScale(0.4)
+        this.setScale(0.5)
         this.setSize(this.width / 2, this.height / 2)
     }
 
     override createAnimations() {
-        this.extractAnimationsFromSpritesheet("idle", 0, 5, 1, true)
-        this.extractAnimationsFromSpritesheet("walking", 15, 6, 1)
-        this.extractAnimationsFromSpritesheet("attacking1", 29, 6, 1)
-        this.extractAnimationsFromSpritesheet("attacking2", 29, 6, 1)
+        this.extractAnimationsFromSpritesheet("idle", 1, 8, 1, true)
+        this.extractAnimationsFromSpritesheet("walking", 19, 6, 3)
+        this.extractAnimationsFromSpritesheet("attacking1", 37, 7, 2)
+        this.extractAnimationsFromSpritesheet("attacking2", 37, 7, 2)
     }
 
     castAbility(): void {

@@ -48,6 +48,8 @@ export class Preloader extends Scene {
         // this.load.spritesheet("aqua_elemental.idle", path("aqua_elemental")), { frameWidth: 69, frameHeight: 100, startFrame: 1, endFrame: 12 }
         // this.load.spritesheet("dracula.idle", path("dracula")), { frameWidth: 80, frameHeight: 155, startFrame: 1, endFrame: 11 }
         this.load.spritesheet("evil_fanatic", path("evil_fanatic"), { frameWidth: 248, frameHeight: 218 })
+        // this.load.spritesheet("ifrit", path("ifrit"), { frameWidth: 106, frameHeight: 194 })
+        this.load.spritesheet("mantis", path("mantis"), { frameWidth: 80, frameHeight: 98 })
     }
 
     loadHealFx() {

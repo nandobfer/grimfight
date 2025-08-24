@@ -4,7 +4,7 @@ import { Character } from "../character/Character"
 export class Rogue extends Character {
     baseAttackSpeed = 1.5
     baseSpeed = 100
-    baseAttackDamage = 20
+    baseAttackDamage = 15
     baseCritChance = 20
 
     constructor(scene: Game, id: string) {
@@ -52,5 +52,10 @@ export class Rogue extends Character {
         this.scene.time.delayedCall(600, () => {
             smokeParticles.destroy()
         })
+    }
+
+    override reset(): void {
+        super.reset()
+        this.mana = this.maxMana * 0.9
     }
 }

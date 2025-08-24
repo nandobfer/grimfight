@@ -36,7 +36,7 @@ export class Character extends Creature {
     private preDrag?: { x: number; y: number }
 
     baseSpeed = 70
-    baseMaxHealth = 350
+    baseMaxHealth = 300
 
     constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
         super(scene, name, id)
@@ -151,9 +151,9 @@ export class Character extends Creature {
         this.level += 1
         this.levelBadge.setValue(this.level)
 
-        this.baseMaxHealth *= 1.65
-        this.baseAttackDamage *= 1.65
-        this.baseAbilityPower *= 1.65
+        this.baseMaxHealth *= 1.5
+        this.baseAttackDamage *= 1.5
+        this.baseAbilityPower *= 1.5
         this.reset()
         this.emitSelf()
     }

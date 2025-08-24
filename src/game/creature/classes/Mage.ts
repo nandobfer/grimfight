@@ -44,9 +44,15 @@ export class Mage extends Character {
     }
 
     explodeTarget() {
+        const finishSpell = () => {
+            if (!this.target?.active) this.newTarget()
+
+            this.target?.takeDamage(damage, this, { crit, type: "fire" })
+            this.casting = false
+        }
+
         if (!this.target?.active) {
-            this.newTarget()
-            this.explodeTarget()
+            finishSpell()
             return
         }
 
@@ -54,13 +60,6 @@ export class Mage extends Character {
         }
 
         const { damage, crit } = this.calculateDamage(this.abilityPower * 2)
-
-        const finishSpell = () => {
-            if (!this.target?.active) this.newTarget()
-
-            this.target?.takeDamage(damage, this, { crit, type: "fire" })
-            this.casting = false
-        }
 
         const onAnimationUpdate = (animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) => {
             if (animation.key !== "explosion") return
