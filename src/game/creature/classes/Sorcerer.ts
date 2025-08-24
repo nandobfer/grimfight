@@ -1,11 +1,10 @@
-import { Explosion } from "../../fx/Explosion"
-import { Fireball } from "../../objects/Fireball"
+import { Blizzard } from "../../fx/Blizzard"
 import { IceShard } from "../../objects/IceShard"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
 export class Sorcerer extends Character {
-    baseAttackSpeed = 0.75
+    baseAttackSpeed = 0.85
     baseAttackDamage = 15
     baseAttackRange = 3
     baseManaPerSecond = 10
@@ -38,8 +37,13 @@ export class Sorcerer extends Character {
     }
 
     override castAbility(): void {
-        // cast blizzard
-        // apply frozen
+        if (!this.target) {
+            return
+        }
+
+        this.casting = true
+
+        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5, 2)
 
         this.casting = false
     }
