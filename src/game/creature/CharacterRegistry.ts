@@ -5,6 +5,7 @@ import { Archer } from "./classes/Archer"
 import { Knight } from "./classes/Knight"
 import { Mage } from "./classes/Mage"
 import { Rogue } from "./classes/Rogue"
+import { Sorcerer } from "./classes/Sorcerer"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -42,3 +43,4 @@ CharacterRegistry.register("rogue", Rogue)
 CharacterRegistry.register("knight", Knight)
 CharacterRegistry.register("archer", Archer)
 CharacterRegistry.register("mage", Mage)
+CharacterRegistry.register("sorcerer", Sorcerer)

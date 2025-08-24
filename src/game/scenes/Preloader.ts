@@ -1,7 +1,7 @@
 import { Scene } from "phaser"
 import { EventBus } from "../tools/EventBus"
 
-const available_classes = ["rogue", "knight", "archer", "mage"]
+const available_classes = ["rogue", "knight", "archer", "mage", "sorcerer"]
 const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic"]
 
 export class Preloader extends Scene {
@@ -63,6 +63,8 @@ export class Preloader extends Scene {
         this.load.image("blood", "particles/blood.png")
         this.load.image("arrow", "particles/arrow.webp")
         this.load.spritesheet("explosion", "particles/explosion.png", { frameWidth: 110.6, frameHeight: 104, startFrame: 1, endFrame: 10 })
+        this.load.spritesheet("ice1", "particles/ice1.png", { frameWidth: 192 })
+        this.load.spritesheet("ice2", "particles/ice2.png", { frameWidth: 192 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

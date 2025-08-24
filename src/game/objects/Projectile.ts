@@ -9,14 +9,13 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     owner: Creature
     startX = 0
     startY = 0
-    onHitEffect: string
     speed = 500
     damageType: DamageType
 
     declare scene: Game
     declare body: Phaser.Physics.Arcade.Body
 
-    constructor(owner: Creature, texture: string, onHitEffect: string, damageType: DamageType) {
+    constructor(owner: Creature, texture: string, damageType: DamageType) {
         super(owner.scene, owner.x, owner.y, texture)
         this.scene = owner.scene
         this.scene.add.existing(this)
@@ -32,7 +31,6 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.body.allowGravity = false
 
         this.owner = owner
-        this.onHitEffect = onHitEffect
         this.setPipeline("Light2D")
 
         this.scene.physics.add.collider(this, this.scene.walls, () => {

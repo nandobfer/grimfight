@@ -1,58 +1,40 @@
 // src/objects/Arrow.ts
 import { Creature } from "../creature/Creature"
-import { FireHit } from "../fx/FireHit"
+import { ColdHit } from "../fx/ColdHit"
 import { Projectile } from "./Projectile"
 
-export class Fireball extends Projectile {
-    speed = 400
+export class IceShard extends Projectile {
+    speed = 300
     private light: Phaser.GameObjects.Light
 
     constructor(owner: Creature) {
-        super(owner, "fireball0", "fire")
-        this.setScale(0.075, 0.075)
-        this.toggleFlipY()
+        super(owner, "ice1", "cold")
+        this.setScale(0.15, 0.15)
+        // this.toggleFlipY()
         this.toggleFlipX()
         // this.setCircle(this.width / 9)
         this.setSize(this.width * 0.05, this.height * 0.05) // Adjust size as needed
         this.setOffset(this.width * 0.25, this.height * 0.25) // Center the hitbox
 
-        if (!this.scene.anims.exists("fireball")) {
-            const frames = []
-
-            for (let i = 0; i <= 40; i++) {
-                frames.push({
-                    key: `fireball${i}`,
-                    frame: undefined,
-                })
-            }
-
+        if (!this.scene.anims.exists("ice-shard")) {
             this.scene.anims.create({
-                key: "fireball",
-                frames: frames,
-                frameRate: 30,
-                repeat: -1,
+                key: `ice-shard`,
+                frames: this.anims.generateFrameNumbers('ice1', { start: 5, end: 7 }),
+                frameRate: 5,
+                repeat: 0,
+                hideOnComplete: false
             })
         }
 
-        this.setTint(0xffff00)
         this.addLightEffect()
 
-        this.play("fireball")
+        this.play("ice-shard")
     }
 
     private addLightEffect() {
         if (this.scene.lights) {
-            this.light = this.scene.lights.addLight(this.x, this.y, 150, 0xff6600, 1)
+            this.light = this.scene.lights.addLight(this.x, this.y, 45, 0x66ddff, 10)
 
-            this.scene.tweens.add({
-                targets: this.light,
-                radius: { from: 80, to: 120 },
-                intensity: { from: 3, to: 4 },
-                duration: 300,
-                yoyo: true,
-                repeat: -1,
-                ease: "Sine.easeInOut",
-            })
 
             this.scene.events.on("update", () => {
                 if (this.active && this.light) {
@@ -73,7 +55,7 @@ export class Fireball extends Projectile {
         const y = target?.y || this.y
         const scene = this.owner?.scene || this.scene
         if (scene) {
-            new FireHit(scene, x, y)
+            new ColdHit(scene, x, y)
         }
     }
 
