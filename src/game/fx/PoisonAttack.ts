@@ -8,7 +8,7 @@ export class PoisonAttack extends FxSprite {
 
         this.addLightEffect({
             color: 0x66ff66,
-            intensity: 1,
+            intensity: 5,
             radius: 40,
             duration: 300,
         })
