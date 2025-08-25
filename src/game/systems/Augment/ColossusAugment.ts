@@ -9,9 +9,12 @@ export class ColossusAugment extends Augment {
     }
 
     override applyModifier(creature: Creature): void {
-        if (creature.active) {
-            creature.maxHealth *= 1.1
-            creature.setScale(creature.scale * 1.25)
+        console.log(creature)
+        console.log(this)
+        console.log(creature.scale)
+        if (creature.getPlacement() === "front") {
+            creature.maxHealth *= 1.3
+            creature.setScale(creature.scale * 1.35)
         }
     }
 }

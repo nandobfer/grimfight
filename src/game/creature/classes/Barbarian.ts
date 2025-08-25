@@ -6,6 +6,7 @@ export class Barbarian extends Character {
     baseAttackDamage = 25
     baseMaxMana = 130
     baseAttackSpeed: number = 1.15
+    baseAbilityPower: number = 25
 
     constructor(scene: Game, id: string) {
         super(scene, "barbarian", id)
@@ -13,7 +14,7 @@ export class Barbarian extends Character {
 
     castAbility(): void {
         this.casting = true
-        const { damage: healing, crit } = this.calculateDamage((1 - this.health / this.maxHealth) * 0.12 * this.maxHealth + this.abilityPower)
+        const { damage: healing, crit } = this.calculateDamage((1 - this.health / this.maxHealth) * 0.12 * this.maxHealth + this.abilityPower * 2)
         this.heal(healing, crit)
 
         this.casting = false

@@ -2,9 +2,9 @@
 
 import { Game } from "../../scenes/Game"
 import { computeCR } from "../../tools/ChallengeRating"
+import { PreferredPosition } from "../../tools/Grid"
 import { Creature } from "../Creature"
 
-export type PreferredPosition = "front" | "middle" | "back" // one of the 3 available rows. For enemies are the top 3, for player characters are the bottom 3
 
 export class Monster extends Creature {
     preferredPosition: PreferredPosition = "front"

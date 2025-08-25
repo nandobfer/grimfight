@@ -15,6 +15,9 @@ import { ColdHit } from "../fx/ColdHit"
 import { FireHit } from "../fx/FireHit"
 import { Creature } from "../creature/Creature"
 import { PoisonHit } from "../fx/PoisonHit"
+import { RNG } from "../tools/RNG"
+import { AugmentsRegistry } from "../systems/Augment/AugmentsRegistry"
+import { Augment } from "../systems/Augment/Augment"
 
 export type GameState = "fighting" | "idle"
 
@@ -23,6 +26,8 @@ export interface GameProgressDto {
     playerGold: number
     floor: number
     version?: string
+    playerAugments: Augment[]
+    enemyAugments: Augment[]
 }
 
 const starting_player_lives = 3
@@ -79,6 +84,7 @@ export class Game extends Scene {
 
         EventBus.emit("game-ready", this)
         EventBus.on("get-progress", () => this.emitProgress())
+        EventBus.on("ui-augment", () => this.handleAugmentsFloor())
     }
 
     createLight() {
@@ -181,15 +187,25 @@ export class Game extends Scene {
 
         this.resetFloor()
 
-        if (this.floor % 5 === 0) {
-            // this.chooseAugment()
-        }
+        this.handleAugmentsFloor()
     }
 
-    // chooseAugment() {
-    //     const augments = []
-    //     EventBus.emit('choose-augment', augments)
-    // }
+    handleAugmentsFloor() {
+        if (this.floor % 5 !== 0) {
+            return
+        }
+
+        const playerAugments = Array.from(this.playerTeam.augments.values())
+        if (playerAugments.find((augment) => augment.chosenFloor === this.floor)) return
+
+        const augments = Phaser.Utils.Array.Shuffle(AugmentsRegistry.names())
+            .slice(0, 3)
+            .map((aug) => AugmentsRegistry.create(aug))
+
+        console.log({ augments })
+
+        EventBus.emit("choose-augment", augments)
+    }
 
     resetFloor() {
         this.enemyTeam.reset()
@@ -242,6 +258,8 @@ export class Game extends Scene {
         this.floor = 1
         this.playerLives = starting_player_lives
         this.playerGold = starting_player_gold
+        this.playerTeam.augments.clear()
+        this.enemyTeam.augments.clear()
         this.saveProgress()
         this.emitProgress()
         this.savePlayerCharacters([])
@@ -305,6 +323,8 @@ export class Game extends Scene {
             playerGold: this.playerGold,
             playerLives: this.playerLives,
             version: this.version,
+            playerAugments: Array.from(this.playerTeam.augments.values()),
+            enemyAugments: Array.from(this.enemyTeam.augments.values()),
         }
         return progress
     }
@@ -314,13 +334,17 @@ export class Game extends Scene {
             const data = localStorage.getItem("progress")
             if (data) {
                 const progress = JSON.parse(data) as GameProgressDto
-                this.floor = progress.floor
-                this.playerGold = progress.playerGold
-                this.playerLives = progress.playerLives
 
                 if (this.version !== progress.version) {
                     this.gameOver()
                 }
+
+                this.floor = progress.floor
+                this.playerGold = progress.playerGold
+                this.playerLives = progress.playerLives
+
+                progress.playerAugments.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
+                progress.enemyAugments.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
             }
         } catch (error) {
             console.error("Error loading saved progress:", error)

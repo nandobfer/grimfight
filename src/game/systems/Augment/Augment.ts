@@ -3,6 +3,7 @@ import { Creature } from "../../creature/Creature"
 export class Augment {
     name: string
     description: string
+    chosenFloor = 0
 
     constructor(name: string, description: string) {
         this.name = name

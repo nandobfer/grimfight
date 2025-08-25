@@ -10,6 +10,7 @@ export class Sorcerer extends Character {
     baseManaPerSecond = 10
     baseMaxMana = 150
     baseMaxHealth = 300
+    baseAbilityPower: number = 50
 
     constructor(scene: Game, id: string) {
         super(scene, "sorcerer", id)

@@ -11,6 +11,7 @@ export class Warlock extends Character {
     baseMaxMana = 150
     baseMaxHealth = 300
     baseArmor: number = 5
+    baseAbilityPower: number = 50
 
     constructor(scene: Game, id: string) {
         super(scene, "warlock", id)

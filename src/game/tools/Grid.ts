@@ -4,6 +4,7 @@ import { Game } from "../scenes/Game"
 import { Creature } from "../creature/Creature"
 
 type Insets = { left: number; right: number; top: number; bottom: number }
+export type PreferredPosition = "front" | "middle" | "back" // one of the 3 available rows. For enemies are the top 3, for player characters are the bottom 3
 
 export class Grid {
     private scene: Game
@@ -179,5 +180,29 @@ export class Grid {
 
     showDropOverlay() {
         this.overlay.setVisible(true)
+    }
+
+    getBandForRow(row: number, side: "player" | "enemy"): PreferredPosition | null {
+        if (row < 0 || row >= this.rows) return null
+
+        if (side === "player") {
+            // bottom 3 rows
+            const front = this.rows - 3 // closest to enemies
+            const middle = this.rows - 2
+            const back = this.rows - 1 // farthest from enemies
+            if (row === front) return "front"
+            if (row === middle) return "middle"
+            if (row === back) return "back"
+            return null
+        } else {
+            // top 3 rows
+            const back = 0 // farthest from players
+            const middle = 1
+            const front = 2 // closest to players
+            if (row === front) return "front"
+            if (row === middle) return "middle"
+            if (row === back) return "back"
+            return null
+        }
     }
 }

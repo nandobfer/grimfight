@@ -129,5 +129,7 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
     // cap at 6 defensively (should already be)
     while (out.length > hardMax) out.pop()?.destroy()
 
+    console.log(CR_CACHE)
+
     return { monsters: out, isBoss: false }
 }

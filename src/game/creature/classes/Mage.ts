@@ -9,6 +9,7 @@ export class Mage extends Character {
     baseManaPerSecond = 10
     baseMaxMana = 50
     baseMaxHealth = 200
+    baseAbilityPower: number = 50
 
     constructor(scene: Game, id: string) {
         super(scene, "mage", id)
@@ -47,7 +48,7 @@ export class Mage extends Character {
         const finishSpell = () => {
             if (!this.target?.active) this.newTarget()
 
-            this.target?.takeDamage(damage, this, 'fire', crit)
+            this.target?.takeDamage(damage, this, "fire", crit)
             this.casting = false
         }
 

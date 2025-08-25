@@ -37,6 +37,7 @@ export class Character extends Creature {
 
     baseSpeed = 70
     baseMaxHealth = 300
+    baseAbilityPower: number = 0
 
     constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
         super(scene, name, id)

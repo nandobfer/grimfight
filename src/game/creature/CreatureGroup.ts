@@ -77,4 +77,11 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         const creatures = this.getChildren()
         return creatures.every((creature) => creature.health <= 0)
     }
+
+    addAugment(augment: Augment) {
+        augment.chosenFloor = this.scene.floor
+        this.augments.add(augment)
+        this.reset()
+        this.scene.saveProgress()
+    }
 }

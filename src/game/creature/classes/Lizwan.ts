@@ -9,6 +9,7 @@ export class Lizwan extends Character {
     baseAttackDamage = 15
     baseCritChance = 20
     baseMaxMana: number = 50
+    baseAbilityPower: number = 25
 
     constructor(scene: Game, id: string) {
         super(scene, "lizwan", id)
@@ -27,7 +28,7 @@ export class Lizwan extends Character {
             damageType: "poison",
             duration: 10000,
             target: this.target,
-            tickDamage: this.abilityPower * 0.13,
+            tickDamage: this.abilityPower * 0.3,
             tickRate: 1000,
             user: this,
         })

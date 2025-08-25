@@ -10,6 +10,7 @@ import { LoadingGame } from "./LoadingGame"
 import { Recount } from "./Recount/Recount"
 import { Counters } from "./Counters/Counters"
 import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawer"
+import { AugmentModal } from "./AugmentModal/AugmentModal"
 
 interface UiProps {}
 
@@ -69,7 +70,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                 )}
             </Box>
 
-            <NewCharacterModal open={chooseCharacterModalOpen} handleClose={() => setChooseCharacterModalOpen(false)} />
+            {game && <AugmentModal team={game.playerTeam} />}
         </ThemeProvider>
     )
 }

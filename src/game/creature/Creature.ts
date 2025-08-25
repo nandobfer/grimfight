@@ -97,6 +97,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     reset() {
         this.calculateStats()
+        this.setScale(1)
         this.team.augments.forEach((augment) => augment.applyModifier(this))
         this.health = this.maxHealth
         this.mana = 0
@@ -143,6 +144,22 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.body.reset(x, y) // hard-sync body to sprite
         // this.setVelocity(0, 0) // clear any residual velocity
         // this.body.setAcceleration(0) // clear acceleration if used
+    }
+
+    getPlacement(): "front" | "middle" | "back" | null {
+        const grid = this.scene.grid
+        if (!grid) return null
+
+        // prefer board coordinates when set; fallback to current position
+        const wx = this.boardX > 0 && this.boardY > 0 ? this.boardX : this.x
+        const wy = this.boardY > 0 ? this.boardY : this.y
+        const cell = grid.worldToCell(wx, wy)
+        if (!cell) return null
+
+        // player side if in playerTeam or its minions; otherwise enemy side
+        const onPlayerSide = this.scene.playerTeam.contains(this.master || this)
+
+        return grid.getBandForRow(cell.row, onPlayerSide ? "player" : "enemy")
     }
 
     createAnimations() {
