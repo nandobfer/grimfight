@@ -13,7 +13,6 @@ import { DamageType } from "../ui/DamageNumbers"
 import { spawnParrySpark } from "../fx/Parry"
 import { ColdHit } from "../fx/ColdHit"
 import { FireHit } from "../fx/FireHit"
-import { burstBlood } from "../fx/Blood"
 import { Creature } from "../creature/Creature"
 import { PoisonHit } from "../fx/PoisonHit"
 
@@ -31,7 +30,7 @@ const starting_player_gold = 1
 const max_characters_in_board = 6
 
 export class Game extends Scene {
-    version = "v1.0.3"
+    version = "v1.0.4"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
