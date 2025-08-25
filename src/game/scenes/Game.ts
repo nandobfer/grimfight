@@ -15,6 +15,7 @@ import { ColdHit } from "../fx/ColdHit"
 import { FireHit } from "../fx/FireHit"
 import { burstBlood } from "../fx/Blood"
 import { Creature } from "../creature/Creature"
+import { PoisonHit } from "../fx/PoisonHit"
 
 export type GameState = "fighting" | "idle"
 
@@ -373,8 +374,7 @@ export class Game extends Scene {
             case "normal":
                 return target ? target.onNormalHit() : null
             case "poison":
-                //
-                return
+                return new PoisonHit(this, x, y)
             case "true":
                 //
                 return

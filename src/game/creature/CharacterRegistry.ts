@@ -3,6 +3,7 @@ import { RNG } from "../tools/RNG"
 import { Character } from "./character/Character"
 import { Archer } from "./classes/Archer"
 import { Knight } from "./classes/Knight"
+import { Lizwan } from "./classes/Lizwan"
 import { Mage } from "./classes/Mage"
 import { Rogue } from "./classes/Rogue"
 import { Sorcerer } from "./classes/Sorcerer"
@@ -44,3 +45,4 @@ CharacterRegistry.register("knight", Knight)
 CharacterRegistry.register("archer", Archer)
 CharacterRegistry.register("mage", Mage)
 CharacterRegistry.register("sorcerer", Sorcerer)
+CharacterRegistry.register("lizwan", Lizwan)

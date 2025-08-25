@@ -2,14 +2,12 @@
 import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 import { ProgressBar } from "../ui/ProgressBar"
-import { spawnParrySpark } from "../fx/Parry"
 import { EventBus } from "../tools/EventBus"
 import { DamageType, showDamageText } from "../ui/DamageNumbers"
 import { CreatureGroup } from "./CreatureGroup"
 import { Heal } from "../fx/Heal"
-import { ColdHit } from "../fx/ColdHit"
-import { FireHit } from "../fx/FireHit"
 import { burstBlood } from "../fx/Blood"
+import { StatusEffect } from "../objects/StatusEffect"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -26,6 +24,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     attackAnimationImpactFrame = 5
     minDamageMultiplier = 0.8
     maxDamageMultiplier = 1.2
+    statusEffects = new Set<StatusEffect>()
 
     level = 1
     health = 0
@@ -168,6 +167,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     onHealFx() {
         const healEffect = new Heal(this)
+    }
+
+    applyStatusEffect(statusEffect: StatusEffect) {
+        this.statusEffects.add(statusEffect)
     }
 
     resetMouseEvents() {
@@ -581,6 +584,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.regenMana(delta)
+        this.statusEffects.forEach((effect) => effect.update(delta))
     }
 
     withTargetUpdate() {

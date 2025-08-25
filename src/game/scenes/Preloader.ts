@@ -1,7 +1,7 @@
 import { Scene } from "phaser"
 import { EventBus } from "../tools/EventBus"
+import { CharacterRegistry } from "../creature/CharacterRegistry"
 
-const available_classes = ["rogue", "knight", "archer", "mage", "sorcerer"]
 const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic"]
 
 export class Preloader extends Scene {
@@ -25,7 +25,7 @@ export class Preloader extends Scene {
 
         this.load.image("arena", "dark_arena_2.png")
 
-        this.loadSpritesheets(available_classes, "characters")
+        this.loadSpritesheets(CharacterRegistry.getAllRegistered(), "characters")
         this.loadSpritesheets(available_monsters, "monsters")
         this.loadRagnarokSprites()
         this.loadParticles()
@@ -67,6 +67,9 @@ export class Preloader extends Scene {
         this.load.spritesheet("ice2", "particles/ice2.png", { frameWidth: 192 })
         this.load.spritesheet("blizzard", "particles/blizzard.png", { frameWidth: 192 })
         this.load.spritesheet("frozen", "particles/frozen.png", { frameWidth: 192, endFrame: 8 })
+        this.load.spritesheet("poison", "particles/poison.png", { frameWidth: 192 })
+        this.load.spritesheet("poison_attack", "particles/poison_attack.png", { frameWidth: 64 })
+        this.load.spritesheet("poison_magic", "particles/poison_magic.png", { frameWidth: 64 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

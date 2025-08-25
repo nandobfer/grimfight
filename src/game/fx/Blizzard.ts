@@ -31,7 +31,7 @@ export class Blizzard extends FxSprite {
 
         this.scene.physics.add.overlap(this, this.target.team, (_explosion, enemyObj) => {
             const enemy = enemyObj as Creature
-            if (this.damagedEnemies.has(enemy)) return
+            if (this.damagedEnemies.has(enemy) || !enemy.active) return
 
             this.damagedEnemies.add(enemy)
             this.startDamageChain(enemy)

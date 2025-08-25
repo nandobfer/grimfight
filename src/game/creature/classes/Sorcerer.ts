@@ -44,6 +44,5 @@ export class Sorcerer extends Character {
 
     override reset(): void {
         super.reset()
-        this.mana = this.maxMana * 0.9
     }
 }
