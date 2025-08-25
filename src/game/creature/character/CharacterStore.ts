@@ -108,7 +108,7 @@ export class CharacterStore {
         item.sold = true
 
         if (!recurrentBuy) {
-            if (shouldBuyNextItems) {
+            if (shouldBuyNextItems && this.scene.playerGold >= matchingCharsInStore.reduce((total, charItem) => (total += charItem.cost), 0)) {
                 for (const nextItem of matchingCharsInStore) {
                     this.buy(nextItem, true)
                 }
