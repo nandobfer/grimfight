@@ -23,8 +23,8 @@ export class ProgressBar extends UiElement {
     constructor(target: Creature, options: BarOptions) {
         const scene = target.scene
 
-        const bg = scene.add.graphics({ x: 0, y: 0 }).setDepth(target.depth + 100)
-        const bar = scene.add.graphics({ x: 0, y: 0 }).setDepth(target.depth + 101)
+        const bg = scene.add.graphics({ x: 0, y: 0 }).setDepth(target.depth + 10000)
+        const bar = scene.add.graphics({ x: 0, y: 0 }).setDepth(target.depth + 10001)
         super(target, options, [bg, bar])
         this.bg = bg
         this.bar = bar

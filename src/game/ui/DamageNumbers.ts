@@ -136,7 +136,7 @@ export function showDamageText(scene: Game, x: number, y: number, value: number 
     back.setScale(baseScale * 1.1)
 
     // Motion: slight horizontal drift, upward float, and fade
-    const driftX = Phaser.Math.Between(-8, 8)
+    const driftX = Phaser.Math.Between(-20, 20)
     const startY = entry.y
     const endY = startY - float
 
