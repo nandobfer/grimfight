@@ -314,13 +314,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    handleCollisionWithEnemy() {
-        if (!this.target) return
-
-        this.stopMoving()
-        this.idle()
-    }
-
     startMoving() {
         this.moving = true
     }
