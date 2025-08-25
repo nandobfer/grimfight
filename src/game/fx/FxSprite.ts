@@ -1,6 +1,7 @@
 // src/game/FireHit.ts
 import Phaser from "phaser"
-import { Game } from "../scenes/Game"
+import { Game, GameState } from "../scenes/Game"
+import { EventBus } from "../tools/EventBus"
 
 interface LightParams {
     color: number
@@ -30,7 +31,14 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         this.setScale(scale)
         this.initAnimation()
 
+        this.setPipeline("Light2D")
+
         this.scene.events.on("update", this.followCharacter)
+        EventBus.on("gamestate", (state: GameState) => {
+            if (state === "idle") {
+                this.cleanup()
+            }
+        })
 
         this.once("animationcomplete", () => {
             this.onAnimationComplete()
@@ -63,6 +71,7 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     cleanup() {
         if (this.scene) {
             this.scene.events.off("update", this.followCharacter)
+            EventBus.off("changestate")
         }
         this.destroy()
     }

@@ -1,11 +1,13 @@
 // src/game/creatures/CharacterGroup.ts
 
 import { Game } from "../scenes/Game"
+import { Augment } from "../systems/Augment/Augment"
 import { Creature } from "./Creature"
 
 export class CreatureGroup extends Phaser.GameObjects.Group {
     declare scene: Game
     minions: CreatureGroup
+    augments: Set<Augment>
 
     constructor(
         scene: Game,
@@ -17,6 +19,7 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         scene.add.existing(this)
         this.runChildUpdate = true
         this.resetMouseEvents()
+        this.augments = new Set()
         if (minions) {
             this.minions = new CreatureGroup(scene)
         }

@@ -5,7 +5,7 @@ export class Frozen extends FxSprite {
     target: Creature
 
     constructor(target: Creature) {
-        super(target.scene, target.x, target.y, "frozen", 1)
+        super(target.scene, target.x, target.y - 15, "frozen", 0.8)
         this.target = target
 
         const targetWidth = target.displayWidth * target.scaleX
@@ -17,18 +17,16 @@ export class Frozen extends FxSprite {
         const scaleX = targetWidth / iceBlockWidth
         const scaleY = targetHeight / iceBlockHeight
 
-        this.setScale(scaleX*1.15, scaleY*1.25)
+        this.setScale(scaleX * 1.15, scaleY * 1.25)
 
         this.addLightEffect({
             color: 0x66ddff,
             intensity: 1,
-            radius: 70,
+            radius: 50,
             duration: 300,
-            maxIntensity: 4,
-            minIntensity: 3,
-            maxRadius: 70,
-            minRadius: 40,
         })
+
+        this.setDepth(this.target.depth + 2)
     }
 
     override onAnimationComplete(): void {}

@@ -134,7 +134,6 @@ export class Game extends Scene {
         this.physics.add.overlap(this.playerTeam, this.enemyTeam)
         this.physics.add.overlap(this.enemyTeam, this.enemyTeam)
 
-
         this.physics.add.collider(this.walls, this.playerTeam)
         this.physics.add.collider(this.walls, this.enemyTeam)
     }
@@ -181,7 +180,16 @@ export class Game extends Scene {
         }
 
         this.resetFloor()
+
+        if (this.floor % 5 === 0) {
+            // this.chooseAugment()
+        }
     }
+
+    // chooseAugment() {
+    //     const augments = []
+    //     EventBus.emit('choose-augment', augments)
+    // }
 
     resetFloor() {
         this.enemyTeam.reset()

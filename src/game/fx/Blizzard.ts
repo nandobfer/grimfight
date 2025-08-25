@@ -36,6 +36,13 @@ export class Blizzard extends FxSprite {
             this.damagedEnemies.add(enemy)
             this.startDamageChain(enemy)
         })
+        this.scene.physics.add.overlap(this, this.target.team.minions, (_explosion, enemyObj) => {
+            const enemy = enemyObj as Creature
+            if (this.damagedEnemies.has(enemy) || !enemy.active) return
+
+            this.damagedEnemies.add(enemy)
+            this.startDamageChain(enemy)
+        })
 
         this.anims.stop()
         this.anims.play({ key: "blizzard", frameRate: this.duration / (this.anims.getTotalFrames() * 2) / 100 })

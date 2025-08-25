@@ -13,8 +13,8 @@ export class Fireball extends Projectile {
         this.toggleFlipY()
         this.toggleFlipX()
         // this.setCircle(this.width / 9)
-        this.setSize(this.width * 0.05, this.height * 0.05) // Adjust size as needed
-        this.setOffset(this.width * 0.25, this.height * 0.25) // Center the hitbox
+        this.setSize(this.width * 0.07, this.height * 0.07) // Adjust size as needed
+        // this.setOffset(this.width * 0.025, this.height * 0.25) // Center the hitbox
 
         if (!this.scene.anims.exists("fireball")) {
             const frames = []

@@ -35,7 +35,18 @@ export class Explosion extends FxSprite {
             const { damage, crit } = this.caster.calculateDamage(baseDamage)
             if (enemy.active) {
                 console.log(`dealing ${damage} to ${enemy.name}`)
-                enemy.takeDamage(damage, this.caster, 'fire', crit)
+                enemy.takeDamage(damage, this.caster, "fire", crit)
+                this.damagedEnemies.add(enemy)
+            }
+        })
+        this.scene.physics.add.overlap(this, this.target.team.minions, (_explosion, enemyObj) => {
+            const enemy = enemyObj as Creature
+            if (this.damagedEnemies.has(enemy)) return
+
+            const { damage, crit } = this.caster.calculateDamage(baseDamage)
+            if (enemy.active) {
+                console.log(`dealing ${damage} to ${enemy.name}`)
+                enemy.takeDamage(damage, this.caster, "fire", crit)
                 this.damagedEnemies.add(enemy)
             }
         })

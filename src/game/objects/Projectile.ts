@@ -44,6 +44,13 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
             this.onHit(enemy)
         })
+        this.scene.physics.add.overlap(this, enemyTeam.minions, (_arrow, enemyObj) => {
+            const enemy = enemyObj as Creature
+            if (!enemy.active) return
+
+            this.onHit(enemy)
+        })
+
         EventBus.on("gamestate", (state: string) => {
             this.destroy()
         })

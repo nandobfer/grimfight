@@ -97,6 +97,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     reset() {
         this.calculateStats()
+        this.team.augments.forEach((augment) => augment.applyModifier(this))
         this.health = this.maxHealth
         this.mana = 0
         this.active = true
@@ -181,6 +182,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             repeat: -1,
             ease: "Sine.easeInOut",
         })
+    }
+
+    removeAura() {
+        this.aura?.destroy()
+        this.aura = undefined
     }
 
     onHealFx() {
@@ -344,56 +350,110 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return distance <= this.attackRange * 64
     }
 
+    // - Prefers straight line if clear
+    // - Chooses the side (left/right) with more clearance (shorter, safer detour)
+    // - Small separation so units don’t stick together
     avoidOtherCharacters() {
         if (!this.target) return
 
-        // Calculate desired movement toward target
-        const angleToTarget = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y)
-        const desiredVelocity = new Phaser.Math.Vector2(Math.cos(angleToTarget) * this.speed, Math.sin(angleToTarget) * this.speed)
+        // ---------------- tuneables ----------------
+        const FRONT_PROBE = 56 // how far ahead to check for direct path (px)
+        const SIDE_PROBE = 72 // how far we check for detour feelers (px)
+        const SIDE_ANGLE = Phaser.Math.DegToRad(45) // feeler spread
+        const CLEAR_PAD = 8 // extra safety radius (px)
+        const SEP_RANGE = 40 // start separating when closer than this (px)
+        const SEP_WEIGHT = 0.6 // how strongly we apply separation (0..1)
+        // -------------------------------------------
 
-        // Check for immediate obstacles in front
-        const frontCheckDistance = 30
-        const frontCheckPoint = new Phaser.Math.Vector2(
-            this.x + Math.cos(angleToTarget) * frontCheckDistance,
-            this.y + Math.sin(angleToTarget) * frontCheckDistance
-        )
+        const pos = new Phaser.Math.Vector2(this.x, this.y)
+        const angToTarget = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y)
+        const fwd = new Phaser.Math.Vector2(Math.cos(angToTarget), Math.sin(angToTarget))
 
-        // Find closest character in front
-        const allCharacters = [...this.scene.playerTeam.getChildren(), ...this.scene.enemyTeam.getChildren()].filter(
-            (c) => (c as unknown) !== this && c.active
+        // collect potential obstacles (alive, not self, roughly in front)
+        const all = [...this.scene.playerTeam.getChildren(true), ...this.scene.enemyTeam.getChildren(true)].filter(
+            (c: Creature) => c !== this && c.active
         ) as Creature[]
 
-        let closestInFront: Creature | null = null
-        let minDistance = Number.MAX_VALUE
+        // helper: radius for a creature
+        const radiusOf = (c: Creature) => (c.body ? Math.max(c.body.width, c.body.height) / 2 : 16)
 
-        for (const other of allCharacters) {
-            const distance = Phaser.Math.Distance.Between(frontCheckPoint.x, frontCheckPoint.y, other.x, other.y)
+        // distance from segment p->q to point s (circle center)
+        const segDist = (p: Phaser.Math.Vector2, q: Phaser.Math.Vector2, s: Phaser.Math.Vector2) => {
+            const pq = q.clone().subtract(p)
+            const ps = s.clone().subtract(p)
+            const len2 = Math.max(1e-6, pq.lengthSq())
+            const t = Phaser.Math.Clamp(ps.dot(pq) / len2, 0, 1)
+            const proj = p.clone().add(pq.scale(t))
+            return proj.distance(s)
+        }
 
-            if (distance < other.body.width / 2 + 10 && distance < minDistance) {
-                closestInFront = other
-                minDistance = distance
+        // returns "clearance score" along a ray; >0 means clear by that many px (min over obstacles)
+        const clearanceScore = (angle: number, probeDist: number) => {
+            const dir = new Phaser.Math.Vector2(Math.cos(angle), Math.sin(angle))
+            const to = pos.clone().add(dir.scale(probeDist))
+            let minClear = Number.POSITIVE_INFINITY
+            let any = false
+
+            for (const o of all) {
+                // only consider obstacles roughly in front (avoid weird back detours)
+                const toO = new Phaser.Math.Vector2(o.x - this.x, o.y - this.y)
+                if (toO.dot(dir) < -8) continue
+
+                const d = segDist(pos, to, new Phaser.Math.Vector2(o.x, o.y))
+                const needed = radiusOf(o) + CLEAR_PAD
+                const clear = d - needed
+                if (clear < minClear) minClear = clear
+                any = true
+            }
+
+            return any ? minClear : probeDist // if no obstacles, pretend fully clear
+        }
+
+        // 1) try straight path first
+        const straightClear = clearanceScore(angToTarget, FRONT_PROBE)
+        if (straightClear > 0) {
+            const vel = fwd.scale(this.speed)
+            this.setVelocity(vel.x, vel.y)
+            this.updateFacingDirection()
+            this.play(`${this.name}-walking-${this.facing}`, true)
+            return
+        }
+
+        // 2) evaluate left/right detours; choose the side with more clearance
+        const leftAng = angToTarget - SIDE_ANGLE
+        const rightAng = angToTarget + SIDE_ANGLE
+        const leftScore = clearanceScore(leftAng, SIDE_PROBE)
+        const rightScore = clearanceScore(rightAng, SIDE_PROBE)
+
+        let steerAng: number
+        if (leftScore === rightScore) {
+            // tie-breaker: smaller turn from current heading (reduces “long” detours)
+            const curVelAng = this.body?.velocity?.angle() ?? angToTarget
+            const dl = Math.abs(Phaser.Math.Angle.Wrap(leftAng - curVelAng))
+            const dr = Math.abs(Phaser.Math.Angle.Wrap(rightAng - curVelAng))
+            steerAng = dl <= dr ? leftAng : rightAng
+        } else {
+            steerAng = leftScore > rightScore ? leftAng : rightAng
+        }
+
+        // 3) build desired velocity toward chosen steer angle
+        const steer = new Phaser.Math.Vector2(Math.cos(steerAng), Math.sin(steerAng)).scale(this.speed)
+
+        // 4) add a bit of separation to avoid clumping (local repulsion)
+        const sep = new Phaser.Math.Vector2()
+        for (const o of all) {
+            const to = new Phaser.Math.Vector2(this.x - o.x, this.y - o.y)
+            const d = to.length()
+            if (d > 1 && d < SEP_RANGE) {
+                sep.add(to.scale((SEP_RANGE - d) / SEP_RANGE / d))
             }
         }
-
-        // If obstacle in front, adjust path
-        if (closestInFront) {
-            // Calculate angle to go around the obstacle (left or right)
-            const angleToObstacle = Phaser.Math.Angle.Between(this.x, this.y, closestInFront.x, closestInFront.y)
-
-            // Choose shortest path around (left or right)
-            const goLeft =
-                Phaser.Math.Angle.ShortestBetween(angleToTarget, angleToObstacle - Math.PI / 2) <
-                Phaser.Math.Angle.ShortestBetween(angleToTarget, angleToObstacle + Math.PI / 2)
-
-            const avoidAngle = angleToObstacle + (goLeft ? -Math.PI / 2 : Math.PI / 2)
-
-            // Blend desired velocity with avoidance
-            desiredVelocity.x = Math.cos(avoidAngle) * this.speed * 0.7 + desiredVelocity.x * 0.3
-            desiredVelocity.y = Math.sin(avoidAngle) * this.speed * 0.7 + desiredVelocity.y * 0.3
+        if (sep.lengthSq() > 0) {
+            sep.normalize().scale(this.speed * SEP_WEIGHT)
+            steer.add(sep)
         }
 
-        // Apply final velocity
-        this.setVelocity(desiredVelocity.x, desiredVelocity.y)
+        this.setVelocity(steer.x, steer.y)
         this.updateFacingDirection()
         this.play(`${this.name}-walking-${this.facing}`, true)
     }

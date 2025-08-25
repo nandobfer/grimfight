@@ -25,7 +25,7 @@ export class Demonic extends Monster {
     }
 
     override landAttack(target = this.target) {
-        if (!target) return
+        if (!target || !this.active) return
 
         const fireball = new Fireball(this)
         fireball.fire(target)

@@ -39,22 +39,11 @@ export class Warlock extends Character {
         skeleton.master = this
         this.team.minions.add(skeleton)
 
-        // ---- random point in a forward cone (never behind the caster) ----
-        const minDist = 48 // tweak
-        const maxDist = 96 // tweak
-        const halfCone = Phaser.Math.DegToRad(75) // forward ±75°
-
-        const baseAngle = this.facing === "right" ? 0 : this.facing === "down" ? Math.PI / 2 : this.facing === "left" ? Math.PI : -Math.PI / 2 // up
-
-        const ang = baseAngle + Phaser.Math.FloatBetween(-halfCone, halfCone)
-        const dist = Phaser.Math.FloatBetween(minDist, maxDist)
-        const dx = Math.cos(ang) * dist
-        const dy = Math.sin(ang) * dist
-        skeleton.setPosition(this.x + dx, this.y + dy)
+        skeleton.setPosition(this.x, this.y)
         skeleton.setScale(0.7)
         skeleton.addAura(0x00ff66, 1)
         skeleton.baseSpeed = this.baseSpeed
-        skeleton.baseAttackDamage += this.abilityPower * 0.2
+        skeleton.baseAttackDamage += this.abilityPower * 0.08
         skeleton.baseMaxHealth += this.abilityPower
         skeleton.reset()
         skeleton.target = this.target
