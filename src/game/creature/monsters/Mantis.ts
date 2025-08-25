@@ -29,11 +29,9 @@ export class Mantis extends RagnarokMonster {
         // const originalAttackSpeed = this.attackSpeed
         // const originalScale = this.scale
         const duration = 4000
-        const originalManaPerAttack = this.manaPerAttack
-        const originalManaPerSecond = this.manaPerSecond
 
-        this.manaPerAttack = 0
-        this.manaPerSecond = 0
+        this.manaLocked = true
+        
 
         this.scene.tweens.add({
             targets: this,
@@ -45,8 +43,8 @@ export class Mantis extends RagnarokMonster {
             duration: duration,
             ease: "Sine.easeInOut",
             onComplete: () => {
-                this.manaPerAttack = originalManaPerAttack
-                this.manaPerSecond = originalManaPerSecond
+                        this.manaLocked = false
+
             },
         })
 

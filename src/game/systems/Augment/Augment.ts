@@ -1,4 +1,5 @@
 import { Creature } from "../../creature/Creature"
+import { CreatureGroup } from "../../creature/CreatureGroup"
 
 export class Augment {
     name: string
@@ -14,5 +15,5 @@ export class Augment {
     applyModifier(creature: Creature) {}
 
     // each augment must override
-    onPick() {}
+    onPick(team: CreatureGroup) {}
 }

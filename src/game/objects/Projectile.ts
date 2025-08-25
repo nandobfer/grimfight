@@ -11,6 +11,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     startY = 0
     speed = 500
     damageType: DamageType
+    light?: Phaser.GameObjects.Light
 
     declare scene: Game
     declare body: Phaser.Physics.Arcade.Body
@@ -18,8 +19,8 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     constructor(owner: Creature, texture: string, damageType: DamageType) {
         super(owner.scene, owner.x, owner.y, texture)
         this.scene = owner.scene
-        this.scene.add.existing(this)
-        this.scene.physics.add.existing(this)
+        this.scene?.add.existing(this)
+        this.scene?.physics.add.existing(this)
         this.toggleFlipX()
         this.setScale(0.1, 0.1)
 
@@ -33,18 +34,18 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.owner = owner
         this.setPipeline("Light2D")
 
-        this.scene.physics.add.collider(this, this.scene.walls, () => {
+        this.scene?.physics.add.collider(this, this.scene?.walls, () => {
             this.onHitWall()
         })
 
-        const enemyTeam = this.scene.playerTeam.contains(this.owner) ? this.scene.enemyTeam : this.scene.playerTeam
-        this.scene.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
+        const enemyTeam = this.scene?.playerTeam.contains(this.owner) ? this.scene?.enemyTeam : this.scene?.playerTeam
+        this.scene?.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
             if (!enemy.active) return
 
             this.onHit(enemy)
         })
-        this.scene.physics.add.overlap(this, enemyTeam.minions, (_arrow, enemyObj) => {
+        this.scene?.physics.add.overlap(this, enemyTeam.minions, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
             if (!enemy.active) return
 
@@ -69,10 +70,10 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         const angle = Phaser.Math.Angle.Between(from.x, from.y, target.x, target.y)
         this.setRotation(angle)
 
-        this.scene.physics.velocityFromRotation(angle, this.speed, this.body.velocity)
+        this.scene?.physics.velocityFromRotation(angle, this.speed, this.body.velocity)
 
         // clean up if it travels too far
-        this.scene.time.addEvent({
+        this.scene?.time.addEvent({
             delay: 16,
             loop: true,
             callback: () => {
@@ -91,7 +92,16 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     onHitWall() {
-        this.scene.onHitFx(this.damageType, this.x, this.y)
+        this.scene?.onHitFx(this.damageType, this.x, this.y)
         this.setVelocity(0)
+    }
+
+    destroy(fromScene?: boolean): void {
+        if (this.light) {
+            const scene = this.owner?.scene || this.scene
+            scene?.lights?.removeLight(this.light)
+        }
+
+        super.destroy(fromScene)
     }
 }

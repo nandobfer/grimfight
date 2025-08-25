@@ -18,12 +18,8 @@ export class Knight extends Character {
         this.casting = true
 
         const duration = 2500
+        this.manaLocked = true
 
-        const originalManaPerAttack = this.manaPerAttack
-        const originalManaPerSecond = this.manaPerSecond
-
-        this.manaPerAttack = 0
-        this.manaPerSecond = 0
         this.aura = this.postFX.addGlow(0xffffff, 0)
 
         this.scene.tweens.add({
@@ -44,8 +40,7 @@ export class Knight extends Character {
             yoyo: true,
             repeat: 0,
             onComplete: () => {
-                this.manaPerAttack = originalManaPerAttack
-                this.manaPerSecond = originalManaPerSecond
+                this.manaLocked = false
             },
         })
         this.casting = false

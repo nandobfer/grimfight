@@ -1,11 +1,9 @@
 // src/objects/Arrow.ts
 import { Creature } from "../creature/Creature"
-import { FireHit } from "../fx/FireHit"
 import { Projectile } from "./Projectile"
 
 export class Fireball extends Projectile {
     speed = 400
-    private light: Phaser.GameObjects.Light
 
     constructor(owner: Creature) {
         super(owner, "fireball0", "fire")
@@ -62,40 +60,16 @@ export class Fireball extends Projectile {
         }
     }
 
-    override destroy(fromScene?: boolean): void {
-        const scene = this.owner?.scene || this.scene
-        scene?.lights?.removeLight(this.light)
-        super.destroy(fromScene)
-    }
-
-    private createExplosionEffect(target?: Creature) {
-        const x = target?.x || this.x
-        const y = target?.y || this.y
-        const scene = this.owner?.scene || this.scene
-        if (scene) {
-            new FireHit(scene, x, y)
-        }
-    }
-
     override onHit(target: Creature) {
         if (!target) {
             this.destroy()
             return
         }
 
-        // const distance = Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y)
-
-        // const enemyRadius = target.body.width / 2 // Approximate enemy radius
-        // const penetrationDepth = enemyRadius - distance
-
-        // if (penetrationDepth >= 15) {
         super.onHit(target)
-        this.createExplosionEffect(target)
-        // }
     }
     override onHitWall() {
         super.onHitWall()
-        this.createExplosionEffect()
         this.destroy()
     }
 }

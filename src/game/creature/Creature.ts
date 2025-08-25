@@ -60,6 +60,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     critDamageMultiplier = 0
     lifesteal = 0
 
+    manaLocked = false
+
     boardX = 0
     boardY = 0
 
@@ -663,6 +665,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     gainMana(manaGained: number) {
+        if (this.manaLocked) return
+
         this.mana = Math.min(this.mana + manaGained, this.maxMana)
         this.manaBar?.setValue(this.mana, this.maxMana)
 

@@ -252,6 +252,7 @@ export class CharacterGroup extends CreatureGroup {
 
     override addAugment(augment: Augment): void {
         super.addAugment(augment)
+        augment.onPick(this)
         EventBus.emit("augments-add", augment)
     }
 }

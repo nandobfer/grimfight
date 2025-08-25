@@ -1,11 +1,9 @@
 // src/objects/Arrow.ts
 import { Creature } from "../creature/Creature"
-import { ColdHit } from "../fx/ColdHit"
 import { Projectile } from "./Projectile"
 
 export class IceShard extends Projectile {
     speed = 300
-    private light: Phaser.GameObjects.Light
 
     constructor(owner: Creature) {
         super(owner, "ice1", "cold")
@@ -41,12 +39,6 @@ export class IceShard extends Projectile {
                 }
             })
         }
-    }
-
-    override destroy(fromScene?: boolean): void {
-        const scene = this.owner?.scene || this.scene
-        scene?.lights?.removeLight(this.light)
-        super.destroy(fromScene)
     }
 
     override onHit(target: Creature) {

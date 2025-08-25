@@ -40,7 +40,6 @@ export class Archer extends Character {
 
         this.casting = true
         const originalAttackDamage = this.attackDamage
-        const originalManaPerAttack = this.manaPerAttack
 
         let baseAngle = 0
         if (this.target) {
@@ -100,10 +99,10 @@ export class Archer extends Character {
 
             arrow.onHit = (victim: Creature) => {
                 this.attackDamage = originalAttackDamage / 2
-                this.manaPerAttack = 0
+                this.manaLocked = true
                 this.onAttackLand(arrow.damageType, victim)
+                this.manaLocked = false
                 this.attackDamage = originalAttackDamage
-                this.manaPerAttack = originalManaPerAttack
                 arrow.destroy()
             }
 

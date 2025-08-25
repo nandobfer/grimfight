@@ -1,7 +1,14 @@
+import { AttackerAugment } from "./AttackerAugment"
 import { Augment } from "./Augment"
 import { BattlemageAugment } from "./BattlemageAugment"
+import { BonusGoldAugment } from "./BonusGoldAugment"
+import { BonusHealthAugment } from "./BonusHealthAugment"
+import { CasterAugment } from "./CasterAugment"
 import { ColossusAugment } from "./ColossusAugment"
+import { DexterousAugment } from "./DexterousAugment"
 import { LifedrinkerAugment } from "./LifedrinkerAugment"
+import { PowerfulAugment } from "./PowerfulAugment"
+import { RangerAugment } from "./RangerAugment"
 
 type Ctor = new () => Augment
 
@@ -36,3 +43,10 @@ export class AugmentsRegistry {
 AugmentsRegistry.register("colossus", ColossusAugment)
 AugmentsRegistry.register("battlemage", BattlemageAugment)
 AugmentsRegistry.register("lifedrinker", LifedrinkerAugment)
+AugmentsRegistry.register("attacker", AttackerAugment)
+AugmentsRegistry.register("bonusgold", BonusGoldAugment)
+AugmentsRegistry.register("bonushealth", BonusHealthAugment)
+AugmentsRegistry.register("caster", CasterAugment)
+AugmentsRegistry.register("powerful", PowerfulAugment)
+AugmentsRegistry.register("ranger", RangerAugment)
+AugmentsRegistry.register("dexterous", DexterousAugment)
