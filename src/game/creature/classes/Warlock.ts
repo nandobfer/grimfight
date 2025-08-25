@@ -39,7 +39,8 @@ export class Warlock extends Character {
         skeleton.master = this
         this.team.minions.add(skeleton)
 
-        skeleton.setPosition(this.x, this.y)
+        skeleton.teleportTo(this.x, this.y)
+        this.spawnSmoke()
         skeleton.setScale(0.7)
         skeleton.addAura(0x00ff66, 1)
         skeleton.baseSpeed = this.baseSpeed
@@ -49,6 +50,28 @@ export class Warlock extends Character {
         skeleton.target = this.target
 
         this.casting = false
+    }
+
+    private spawnSmoke(): void {
+        const smokeParticles = this.scene.add.particles(this.x, this.y, "blood", {
+            lifespan: { min: 300, max: 600 },
+            speed: { min: 20, max: 60 },
+            scale: { start: 0.4, end: 0 },
+            alpha: { start: 0.8, end: 0 },
+            quantity: 8,
+            blendMode: "NORMAL",
+            tint: 0x00ff66,
+            angle: { min: 0, max: 360 },
+            gravityY: -20,
+        })
+
+        // Explode the particles (one-time burst)
+        smokeParticles.explode(15)
+
+        // Auto-destroy after particles finish
+        this.scene.time.delayedCall(600, () => {
+            smokeParticles.destroy()
+        })
     }
 
     override reset(): void {

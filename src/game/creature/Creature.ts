@@ -138,6 +138,13 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaBar.setValue(0, this.maxMana)
     }
 
+    teleportTo(x: number, y: number) {
+        this.setPosition(x, y)
+        this.body.reset(x, y) // hard-sync body to sprite
+        // this.setVelocity(0, 0) // clear any residual velocity
+        // this.body.setAcceleration(0) // clear acceleration if used
+    }
+
     createAnimations() {
         this.extractAnimationsFromSpritesheet("walking", 104, 9)
         this.extractAnimationsFromSpritesheet("idle", 286, 2)
