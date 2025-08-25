@@ -7,6 +7,8 @@ export class Rogue extends Character {
     baseAttackDamage = 15
     baseCritChance = 20
 
+    abilityDescription: string = "Se teleporta para trás do inimigo mais longe, executando um ataque duplo imediatamente"
+
     constructor(scene: Game, id: string) {
         super(scene, "rogue", id)
     }

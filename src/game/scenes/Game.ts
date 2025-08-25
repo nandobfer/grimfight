@@ -30,9 +30,9 @@ export interface GameProgressDto {
     enemyAugments: Augment[]
 }
 
-const starting_player_lives = 3
-const starting_player_gold = 1
-const max_characters_in_board = 6
+export const starting_player_lives = 3
+export const starting_player_gold = 1
+export const max_characters_in_board = 6
 
 export class Game extends Scene {
     version = "v1.0.4"

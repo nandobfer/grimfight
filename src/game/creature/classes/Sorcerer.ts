@@ -12,6 +12,8 @@ export class Sorcerer extends Character {
     baseMaxHealth = 300
     baseAbilityPower: number = 50
 
+    abilityDescription: string = "Lança uma nevasca no campo, causando dano e congelando os inimigos atingidos"
+
     constructor(scene: Game, id: string) {
         super(scene, "sorcerer", id)
         this.attackAnimationImpactFrame = 6

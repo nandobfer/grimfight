@@ -24,8 +24,10 @@ export interface CharacterDto {
     baseSpeed: number
     baseCritChance: number
     baseCritDamageMultiplier: number
+    baseLifesteal: number
     boardX: number
     boardY: number
+    abilityDescription: string
 }
 
 export class Character extends Creature {
@@ -38,6 +40,8 @@ export class Character extends Creature {
     baseSpeed = 70
     baseMaxHealth = 300
     baseAbilityPower: number = 0
+
+    abilityDescription: string = ""
 
     constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
         super(scene, name, id)
@@ -191,6 +195,7 @@ export class Character extends Creature {
             baseAbilityPower: this.baseAbilityPower,
             baseCritChance: this.baseCritChance,
             baseCritDamageMultiplier: this.baseCritDamageMultiplier,
+            baseLifesteal: this.baseLifesteal,
             baseManaPerAttack: this.baseManaPerAttack,
             baseManaPerSecond: this.baseManaPerSecond,
             baseMaxHealth: this.baseMaxHealth,
@@ -201,6 +206,7 @@ export class Character extends Creature {
             boardY: this.y,
             id: this.id,
             name: this.name,
+            abilityDescription: this.abilityDescription,
         }
         return data
     }

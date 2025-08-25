@@ -11,6 +11,8 @@ export class Lizwan extends Character {
     baseMaxMana: number = 50
     baseAbilityPower: number = 25
 
+    abilityDescription: string = "Aplica um acúmulo de veneno no alvo"
+
     constructor(scene: Game, id: string) {
         super(scene, "lizwan", id)
     }

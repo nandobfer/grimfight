@@ -8,6 +8,8 @@ export class Knight extends Character {
     baseAttackDamage = 13
     baseMaxMana = 90
 
+    abilityDescription: string = "Multiplica sua armadura ao longo do tempo"
+
     constructor(scene: Game, id: string) {
         super(scene, "knight", id)
     }

@@ -10,6 +10,8 @@ export class Archer extends Character {
     baseAttackRange = 4
     baseMaxHealth = 200
 
+    abilityDescription: string = "Atira uma rajada de 10 flechas a sua frente"
+
     constructor(scene: Game, id: string) {
         super(scene, "archer", id)
         this.attackAnimationImpactFrame = 9

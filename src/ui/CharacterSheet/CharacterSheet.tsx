@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, LinearProgress, Typography, useMediaQuery } from "@mui/material"
-import { Creature } from "../../game/creature/Creature"
 import { EventBus } from "../../game/tools/EventBus"
 import { CharacterAvatar } from "./CharacterAvatar"
 import { CharacterStore } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
+import { AbilityTooltip } from "./AbilityTooltip"
+import { Character } from "../../game/creature/character/Character"
 
 interface CharacterSheetProps {
-    character: Creature
+    character: Character
     store: CharacterStore
 }
 
@@ -47,6 +48,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
 
             { title: "Crit Chance", value: `${character.critChance} %` },
             { title: "Crit Damage Multiplier", value: `x ${character.critDamageMultiplier}` },
+            { title: "Life Steal", value: `${Math.round(character.lifesteal)} %` },
             { title: "Armor", value: Math.round(character.armor) },
             { title: "Resistance", value: Math.round(character.resistance) },
             { title: "Movement Speed", value: Math.round(character.speed) },
@@ -63,8 +65,8 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
 
     useEffect(() => {
         setCharacter(character)
-        const handler = (char: Creature) => {
-            setCharacter({ ...char } as Creature) // Create a new object to force re-render
+        const handler = (char: Character) => {
+            setCharacter({ ...char } as Character) // Create a new object to force re-render
         }
 
         EventBus.on(`character-${character.id}-update`, handler)
@@ -76,23 +78,25 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     return (
         <Accordion sx={{ flexDirection: "column" }} slots={{ root: Box }}>
             <AccordionSummary sx={{ padding: 0, marginTop: -1.5, marginBottom: -0.5 }}>
-                <Button variant="outlined" fullWidth sx={{ justifyContent: "start", padding: 1, gap: 1, alignItems: "center" }}>
-                    <Badge
-                        badgeContent={`${character.level}`}
-                        slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
-                    >
-                        <CharacterAvatar name={character.name} size={30} />
-                    </Badge>
-                    <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
-                        <Typography variant="subtitle2">{character.name}</Typography>
-                        <LinearProgress
-                            variant="determinate"
-                            value={characterHealthPercent}
-                            sx={{ width: 1, height: 7 }}
-                            color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
-                        />
-                    </Box>
-                </Button>
+                <AbilityTooltip description={character.abilityDescription}>
+                    <Button variant="outlined" fullWidth sx={{ justifyContent: "start", padding: 1, gap: 1, alignItems: "center" }}>
+                        <Badge
+                            badgeContent={`${character.level}`}
+                            slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
+                        >
+                            <CharacterAvatar name={character.name} size={30} />
+                        </Badge>
+                        <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
+                            <Typography variant="subtitle2">{character.name}</Typography>
+                            <LinearProgress
+                                variant="determinate"
+                                value={characterHealthPercent}
+                                sx={{ width: 1, height: 7 }}
+                                color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
+                            />
+                        </Box>
+                    </Button>
+                </AbilityTooltip>
             </AccordionSummary>
             <AccordionDetails sx={{ marginTop: -1.5, marginBottom: -0.5 }}>
                 <Box sx={{ flexDirection: "column" }}>

@@ -8,6 +8,8 @@ export class Barbarian extends Character {
     baseAttackSpeed: number = 1.15
     baseAbilityPower: number = 25
 
+    abilityDescription: string = "Cura uma porcentagem da vida faltante"
+
     constructor(scene: Game, id: string) {
         super(scene, "barbarian", id)
     }

@@ -43,6 +43,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     baseSpeed = 50
     baseCritChance = 10
     baseCritDamageMultiplier = 2
+    baseLifesteal = 0
 
     maxHealth = 0
     attackSpeed = 0
@@ -57,6 +58,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     speed = 0
     critChance = 0
     critDamageMultiplier = 0
+    lifesteal = 0
 
     boardX = 0
     boardY = 0
@@ -129,6 +131,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.resistance = this.baseResistance
         this.critChance = this.baseCritChance
         this.critDamageMultiplier = this.baseCritDamageMultiplier
+        this.lifesteal = this.baseLifesteal
         this.calculateSpeeds()
     }
 
@@ -566,12 +569,15 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return damage
     }
 
-    heal(value: number, crit?: boolean) {
+    heal(value: number, crit?: boolean, fx = true) {
         this.health = Math.min(this.maxHealth, this.health + value)
         this.healthBar.setValue(this.health, this.maxHealth)
 
         showDamageText(this.scene, this.x, this.y, Math.round(value), { type: "heal", crit })
-        this.onHealFx()
+
+        if (fx) {
+            this.onHealFx()
+        }
     }
 
     takeDamage(damage: number, attacker: Creature, type: DamageType, crit = false) {
@@ -592,6 +598,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.healthBar.setValue(this.health, this.maxHealth)
 
         this.scene.onHitFx(type, this.x, this.y, this)
+
+        if (attacker?.lifesteal > 0 && finalDamage > 0) {
+            attacker.heal(finalDamage * (attacker.lifesteal / 100), crit, false)
+        }
 
         if (this.health <= 0) {
             this.die()

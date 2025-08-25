@@ -1,4 +1,5 @@
 import { Game } from "../../scenes/Game"
+import { Augment } from "../../systems/Augment/Augment"
 import { DamageChart } from "../../tools/DamageChart"
 import { EventBus } from "../../tools/EventBus"
 import { CreatureGroup } from "../CreatureGroup"
@@ -247,5 +248,10 @@ export class CharacterGroup extends CreatureGroup {
 
     emitArray() {
         EventBus.emit("characters-change", this.getChildren())
+    }
+
+    override addAugment(augment: Augment): void {
+        super.addAugment(augment)
+        EventBus.emit("augments-add", augment)
     }
 }

@@ -1,5 +1,7 @@
 import { Augment } from "./Augment"
+import { BattlemageAugment } from "./BattlemageAugment"
 import { ColossusAugment } from "./ColossusAugment"
+import { LifedrinkerAugment } from "./LifedrinkerAugment"
 
 type Ctor = new () => Augment
 
@@ -32,3 +34,5 @@ export class AugmentsRegistry {
 }
 
 AugmentsRegistry.register("colossus", ColossusAugment)
+AugmentsRegistry.register("battlemage", BattlemageAugment)
+AugmentsRegistry.register("lifedrinker", LifedrinkerAugment)

@@ -13,6 +13,8 @@ export class Warlock extends Character {
     baseArmor: number = 5
     baseAbilityPower: number = 50
 
+    abilityDescription: string = "Sumona um esqueletinho para lutar ao seu lado até a morte"
+
     constructor(scene: Game, id: string) {
         super(scene, "warlock", id)
         this.attackAnimationImpactFrame = 6

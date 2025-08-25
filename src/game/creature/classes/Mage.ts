@@ -11,6 +11,8 @@ export class Mage extends Character {
     baseMaxHealth = 200
     baseAbilityPower: number = 50
 
+    abilityDescription: string = "Explode o alvo atual, causando dano a ele e aos inimigos em volta"
+
     constructor(scene: Game, id: string) {
         super(scene, "mage", id)
         this.attackAnimationImpactFrame = 6
