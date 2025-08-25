@@ -29,6 +29,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     level = 1
     health = 0
+    baseScale = 1
     baseMaxHealth = 500
     baseAttackSpeed = 1
     baseAttackDamage = 10
@@ -101,7 +102,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     reset() {
         this.calculateStats()
-        this.setScale(1)
+        this.setScale(this.baseScale)
         this.team.augments.forEach((augment) => augment.applyModifier(this))
         this.health = this.maxHealth
         this.mana = 0

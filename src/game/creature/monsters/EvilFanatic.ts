@@ -6,13 +6,13 @@ export class EvilFanatic extends RagnarokMonster {
     baseAttackDamage = 50
     baseAttackSpeed = 1
     baseMaxMana = 100
+    baseScale: number = 0.4
 
     constructor(scene: Game) {
         super(scene, "evil_fanatic")
         this.preferredPosition = "front"
         this.challengeRating = this.calculateCR()
 
-        this.setScale(0.4)
         this.setSize(this.width / 2, this.height / 2)
     }
 

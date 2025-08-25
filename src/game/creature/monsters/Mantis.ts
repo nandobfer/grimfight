@@ -6,13 +6,13 @@ export class Mantis extends RagnarokMonster {
     baseAttackDamage = 15
     baseAttackSpeed = 1
     baseMaxMana = 30
+    baseScale: number = 0.5
 
     constructor(scene: Game) {
         super(scene, "mantis")
         this.preferredPosition = "front"
         this.challengeRating = this.calculateCR()
 
-        this.setScale(0.5)
         this.setSize(this.width / 2, this.height / 2)
     }
 
@@ -31,7 +31,6 @@ export class Mantis extends RagnarokMonster {
         const duration = 4000
 
         this.manaLocked = true
-        
 
         this.scene.tweens.add({
             targets: this,
@@ -43,8 +42,7 @@ export class Mantis extends RagnarokMonster {
             duration: duration,
             ease: "Sine.easeInOut",
             onComplete: () => {
-                        this.manaLocked = false
-
+                this.manaLocked = false
             },
         })
 
