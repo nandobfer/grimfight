@@ -6,7 +6,7 @@ export class Knight extends Character {
     baseArmor = 5
     baseResistance = 10
     baseAttackDamage = 13
-    baseMaxMana = 130
+    baseMaxMana = 110
 
     constructor(scene: Game, id: string) {
         super(scene, "knight", id)
@@ -14,8 +14,17 @@ export class Knight extends Character {
 
     castAbility(): void {
         this.casting = true
-        const { damage: healing, crit } = this.calculateDamage(this.maxHealth * 0.1 + this.abilityPower)
-        this.heal(healing, crit)
+        // const { damage: healing, crit } = this.calculateDamage(this.maxHealth * 0.1 + this.abilityPower)
+        // this.heal(healing, crit)
+
+        this.scene.tweens.add({
+            targets: this,
+            duration: 3500,
+            armor: this.armor * 5,
+            yoyo: true,
+            repeat: 0,
+            onComplete: () => {},
+        })
         this.casting = false
     }
 }

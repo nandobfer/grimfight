@@ -5,14 +5,15 @@ import { Monster } from "./Monster"
 export class MonsterGroup extends CreatureGroup {
     constructor(
         scene: Game,
+        minions?: boolean,
         children?: Monster[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig,
         config?: (Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig) & { isPlayer?: boolean }
     ) {
-        super(scene, children, config)
+        super(scene, minions, children, config)
     }
 
-    override getChildren() {
-        return super.getChildren() as Monster[]
+    override getChildren(minions = false) {
+        return super.getChildren(minions) as Monster[]
     }
 
     reset() {

@@ -47,9 +47,9 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
 
             { title: "Crit Chance", value: `${character.critChance} %` },
             { title: "Crit Damage Multiplier", value: `x ${character.critDamageMultiplier}` },
-            { title: "Armor", value: character.armor },
-            { title: "Resistance", value: character.resistance },
-            { title: "Movement Speed", value: character.speed },
+            { title: "Armor", value: Math.round(character.armor) },
+            { title: "Resistance", value: Math.round(character.resistance) },
+            { title: "Movement Speed", value: Math.round(character.speed) },
         ],
         [character]
     )

@@ -5,20 +5,31 @@ import { Creature } from "./Creature"
 
 export class CreatureGroup extends Phaser.GameObjects.Group {
     declare scene: Game
+    minions: CreatureGroup
 
     constructor(
         scene: Game,
+        minions?: boolean,
         children?: Creature[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig,
-        config?: (Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig) & { isPlayer?: boolean }
+        config?: Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig
     ) {
         super(scene, children, config)
         scene.add.existing(this)
         this.runChildUpdate = true
         this.resetMouseEvents()
+        if (minions) {
+            this.minions = new CreatureGroup(scene)
+        }
     }
 
-    override getChildren() {
-        return super.getChildren() as Creature[]
+    override getChildren(minions = false) {
+        let list = super.getChildren() as Creature[]
+
+        if (minions) {
+            list = [...list, ...this.minions.getChildren()]
+        }
+
+        return list
     }
 
     override add(child: Creature, addToScene?: boolean): this {
@@ -40,6 +51,8 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         for (const creature of creatures) {
             creature.reset()
         }
+
+        this.minions.clear(true, true)
     }
 
     override clear(removeFromScene?: boolean, destroyChild?: boolean) {

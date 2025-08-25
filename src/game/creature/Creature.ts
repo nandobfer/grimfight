@@ -25,6 +25,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     minDamageMultiplier = 0.8
     maxDamageMultiplier = 1.2
     statusEffects = new Set<StatusEffect>()
+    master?: Creature
 
     level = 1
     health = 0
@@ -71,6 +72,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     private healthBar: ProgressBar
     private manaBar: ProgressBar
+    aura?: Phaser.FX.Glow
 
     constructor(scene: Game, name: string, id: string) {
         super(scene, -1000, -1000, name)
@@ -165,6 +167,22 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.extractAnimationsFromSpritesheet("attacking2", 156, 6)
     }
 
+    addAura(color: number, maxIntensity: number) {
+        this.aura = this.postFX.addGlow(color, 1, 0)
+        this.aura.outerStrength = 6
+        this.aura.innerStrength = 2
+
+        this.scene.tweens.add({
+            targets: this.aura,
+            outerStrength: { from: 1, to: maxIntensity },
+            innerStrength: { from: 1, to: maxIntensity },
+            duration: 1500,
+            yoyo: true,
+            repeat: -1,
+            ease: "Sine.easeInOut",
+        })
+    }
+
     onHealFx() {
         const healEffect = new Heal(this)
     }
@@ -204,7 +222,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     private findEnemyByDistance(closest = true): Creature | undefined {
         const enemyTeam = this.getEnemyTeam()
-        const enemies = enemyTeam.getChildren()
+        const enemies = enemyTeam.getChildren(true)
         let chosenEnemy: Creature | undefined = undefined
         let closestEnemyDistance = 0
         for (const enemy of enemies) {
@@ -280,7 +298,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     getEnemyTeam() {
-        return this.scene.playerTeam.contains(this) ? this.scene.enemyTeam : this.scene.playerTeam
+        return this.scene.playerTeam.contains(this.master || this) ? this.scene.enemyTeam : this.scene.playerTeam
     }
 
     removeFromEnemyTarget() {
@@ -381,7 +399,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     startCastingAbility() {
-        this.gainMana(-this.mana)
+        this.mana = 0
+        this.manaBar.setValue(this.mana, this.maxMana)
 
         this.castAbility()
     }
@@ -481,8 +500,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
 
         showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit, type })
-        if (attacker.team === this.scene.playerTeam) {
-            this.scene.playerTeam.damageChart.plotDamage(attacker, finalDamage)
+        if (attacker.team === this.scene.playerTeam || attacker.team === this.scene.playerTeam.minions) {
+            this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage)
         }
 
         this.health -= finalDamage
@@ -553,7 +572,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.mana = Math.min(this.mana + manaGained, this.maxMana)
         this.manaBar?.setValue(this.mana, this.maxMana)
 
-        if (this.mana === this.maxMana) {
+        if (this.mana === this.maxMana && !this.casting) {
             this.startCastingAbility()
         }
     }

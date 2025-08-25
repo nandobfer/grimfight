@@ -2,11 +2,13 @@ import { Game } from "../scenes/Game"
 import { RNG } from "../tools/RNG"
 import { Character } from "./character/Character"
 import { Archer } from "./classes/Archer"
+import { Barbarian } from "./classes/Barbarian"
 import { Knight } from "./classes/Knight"
 import { Lizwan } from "./classes/Lizwan"
 import { Mage } from "./classes/Mage"
 import { Rogue } from "./classes/Rogue"
 import { Sorcerer } from "./classes/Sorcerer"
+import { Warlock } from "./classes/Warlock"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -46,3 +48,5 @@ CharacterRegistry.register("archer", Archer)
 CharacterRegistry.register("mage", Mage)
 CharacterRegistry.register("sorcerer", Sorcerer)
 CharacterRegistry.register("lizwan", Lizwan)
+CharacterRegistry.register("warlock", Warlock)
+CharacterRegistry.register("barbarian", Barbarian)

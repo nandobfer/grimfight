@@ -58,8 +58,8 @@ export class Game extends Scene {
         this.createBackground()
         this.grid = new Grid(this, this.background)
 
-        this.playerTeam = new CharacterGroup(this, [], { isPlayer: true })
-        this.enemyTeam = new MonsterGroup(this, [])
+        this.playerTeam = new CharacterGroup(this, true)
+        this.enemyTeam = new MonsterGroup(this, true)
 
         this.configurePhysics()
         this.createLight()
@@ -133,6 +133,7 @@ export class Game extends Scene {
         this.physics.add.overlap(this.playerTeam, this.playerTeam)
         this.physics.add.overlap(this.playerTeam, this.enemyTeam)
         this.physics.add.overlap(this.enemyTeam, this.enemyTeam)
+
 
         this.physics.add.collider(this.walls, this.playerTeam)
         this.physics.add.collider(this.walls, this.enemyTeam)

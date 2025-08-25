@@ -54,20 +54,7 @@ export class Monster extends Creature {
 
     private addDarkAura() {
         // Deep purple/black aura with shimmer effect
-        this.darkAura = this.postFX.addGlow(0x330033, 1, 0)
-        this.darkAura.outerStrength = 6
-        this.darkAura.innerStrength = 2
-
-        // Pulsating shimmer effect
-        this.scene.tweens.add({
-            targets: this.darkAura,
-            outerStrength: { from: 1, to: Math.min(2, this.challengeRating / 5) },
-            innerStrength: { from: 1, to: Math.min(2, this.challengeRating / 5) },
-            duration: 1500,
-            yoyo: true,
-            repeat: -1,
-            ease: "Sine.easeInOut",
-        })
+        this.addAura(0x330033, Math.min(2, this.challengeRating / 5))
     }
 
     private addShadowParticles() {

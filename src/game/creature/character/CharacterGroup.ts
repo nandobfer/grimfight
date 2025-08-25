@@ -11,16 +11,17 @@ export class CharacterGroup extends CreatureGroup {
 
     constructor(
         scene: Game,
+        minions?: boolean,
         children?: Character[] | Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig,
-        config?: (Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig) & { isPlayer?: boolean }
+        config?: Phaser.Types.GameObjects.Group.GroupConfig | Phaser.Types.GameObjects.Group.GroupCreateConfig
     ) {
-        super(scene, children, config)
+        super(scene, minions, children, config)
         this.damageChart = new DamageChart(this)
         this.store = new CharacterStore(this)
     }
 
-    override getChildren() {
-        return super.getChildren() as Character[]
+    override getChildren(minions = false) {
+        return super.getChildren(minions) as Character[]
     }
 
     getById(id: string) {
