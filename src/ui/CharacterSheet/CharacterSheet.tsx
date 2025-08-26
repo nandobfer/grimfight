@@ -44,7 +44,8 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     character.attackDamage * character.maxDamageMultiplier
                 )}`,
             },
-            { title: "Attack Speed", value: `${character.attackSpeed} /s` },
+            { title: "Attack Speed", value: `${character.attackSpeed.toFixed(2)} /s` },
+            { title: "Attack Range", value: `${character.attackRange}` },
 
             { title: "Crit Chance", value: `${character.critChance} %` },
             { title: "Crit Damage Multiplier", value: `x ${character.critDamageMultiplier}` },

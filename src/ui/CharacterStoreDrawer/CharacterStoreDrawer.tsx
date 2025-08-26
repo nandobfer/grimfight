@@ -58,7 +58,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                     paper: {
                         elevation: 1,
                         sx: {
-                            width: "min-content",
+                            width: "65vw",
                             // height: "20vh",
                             bgcolor: "background.default",
                             overflow: "visible",
@@ -73,8 +73,8 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
             >
                 <StoreList game={game} />
                 <Box sx={{ flexDirection: "column", alignItems: "center" }}>
-                    <IconButton color="primary" size="small" onClick={closeStore}>
-                        <Close fontSize="small" />
+                    <IconButton color="primary" onClick={closeStore}>
+                        <Close />
                     </IconButton>
                 </Box>
             </Drawer>

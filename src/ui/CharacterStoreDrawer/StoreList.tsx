@@ -34,16 +34,10 @@ export const StoreList: React.FC<StoreListProps> = (props) => {
     }, [])
 
     return (
-        <Box sx={{}}>
-            <Box sx={{ flexDirection: "column", alignItems: "center", filter: playerGold < 2 ? "grayscale(100%)" : undefined }}>
-                <IconButton
-                    color="primary"
-                    size="small"
-                    onClick={shuffle}
-                    disabled={playerGold < 2}
-                    sx={{  }}
-                >
-                    <Refresh fontSize="small" />
+        <Box sx={{ flex: 1 }}>
+            <Box sx={{ flexDirection: "column", alignItems: "center", filter: playerGold < 2 ? "grayscale(100%)" : undefined, flex: 1 }}>
+                <IconButton color="primary" onClick={shuffle} disabled={playerGold < 2} sx={{}}>
+                    <Refresh />
                 </IconButton>
                 <GoldCoin quantity={2} fontSize={10} size={10} />
             </Box>

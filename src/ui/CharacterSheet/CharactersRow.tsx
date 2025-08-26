@@ -19,16 +19,21 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
         const charactersHandler = (characters: Character[]) => {
             setCharacters([...characters])
         }
+        const augmentsHandler = (augments: Augment[]) => {
+            setAugments([...augments])
+        }
 
-        const augmentsHandler = (augment: Augment) => {
+        const addAgument = (augment: Augment) => {
             setAugments((augments) => [...augments, augment])
         }
         EventBus.on("characters-change", charactersHandler)
-        EventBus.on("augments-add", augmentsHandler)
+        EventBus.on("augments-add", addAgument)
+        EventBus.on("augments-change", augmentsHandler)
 
         return () => {
             EventBus.off("characters-change", charactersHandler)
-            EventBus.off("augments-add", augmentsHandler)
+            EventBus.off("augments-add", addAgument)
+            EventBus.off("augments-change", augmentsHandler)
         }
     }, [])
 

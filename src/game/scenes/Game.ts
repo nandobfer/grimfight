@@ -258,12 +258,17 @@ export class Game extends Scene {
         this.floor = 1
         this.playerLives = starting_player_lives
         this.playerGold = starting_player_gold
-        this.playerTeam.augments.clear()
-        this.enemyTeam.augments.clear()
+        this.resetAugments()
         this.saveProgress()
         this.emitProgress()
         this.savePlayerCharacters([])
         this.loadPlayerCharacters()
+    }
+
+    resetAugments() {
+        this.playerTeam.augments.clear()
+        this.enemyTeam.augments.clear()
+        this.playerTeam.emitAugments()
     }
 
     getSavedCharacters(): CharacterDto[] {
@@ -337,6 +342,7 @@ export class Game extends Scene {
 
                 if (this.version !== progress.version) {
                     this.gameOver()
+                    return
                 }
 
                 this.floor = progress.floor
@@ -345,6 +351,7 @@ export class Game extends Scene {
 
                 progress.playerAugments.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
+                this.playerTeam.emitAugments()
             }
         } catch (error) {
             console.error("Error loading saved progress:", error)

@@ -38,7 +38,7 @@ export class Fireball extends Projectile {
         this.play("fireball")
     }
 
-    private addLightEffect() {
+    addLightEffect() {
         if (this.scene.lights) {
             this.light = this.scene.lights.addLight(this.x, this.y, 150, 0xff6600, 1)
 

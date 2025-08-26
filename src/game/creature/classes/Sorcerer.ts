@@ -40,6 +40,7 @@ export class Sorcerer extends Character {
 
         this.casting = true
 
+        this.manaLocked = true
         const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5, 2)
 
         this.casting = false

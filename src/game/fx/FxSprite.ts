@@ -20,6 +20,7 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     private light?: Phaser.GameObjects.Light
     sprite: string
     frameRate = 15
+    declare scene: Game
 
     constructor(scene: Game, x: number, y: number, sprite: string, scale: number) {
         super(scene, x, y, sprite)
@@ -27,7 +28,12 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         this.sprite = sprite
         this.scene.add.existing(this)
         this.scene.physics.add.existing(this)
+        // const characterInPosition = this.scene.grid.
         this.setDepth(this.depth + 1) // Make sure it appears above the character
+        const currentRow = this.scene.grid.worldToCell(this.x, this.y)?.row
+        if (currentRow && this.active) {
+            this.setDepth(currentRow + 1)
+        }
         this.setScale(scale)
         this.initAnimation()
 

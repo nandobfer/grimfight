@@ -20,6 +20,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
     const character = item.character
 
     const levelColor = useMemo(() => convertColorToString(colorFromLevel(character.level)), [character.level])
+    const highlight = game.playerTeam.getChildren().find((char) => char.name === character.name)
 
     const buyCharacter = () => {
         game.playerTeam.store.buy(item)
@@ -30,6 +31,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
             {!isFirst && <Divider />}
             <AbilityTooltip description={character.abilityDescription}>
                 <Button
+                    variant={highlight ? "outlined" : undefined}
                     fullWidth
                     sx={{
                         padding: 1,
@@ -50,14 +52,12 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                         <CharacterAvatar name={character.name} size={((isMobile ? 10 : 4) / 100) * window.innerWidth} disabled={disabled} />
                     </Badge>
 
-                    <Box sx={{ width: 1, gap: 1 }}>
+                    <Box sx={{ width: 1, gap: 1, justifyContent: "center" }}>
                         <Typography variant="subtitle2" fontSize={isMobile ? 8 : undefined}>
                             {character.name}
                         </Typography>
 
-                        <Box sx={{ marginLeft: "auto" }}>
-                            <GoldCoin quantity={item.cost} size={isMobile ? 7 : 15} fontSize={isMobile ? 9 : 16} reverted />
-                        </Box>
+                        <GoldCoin quantity={item.cost} size={isMobile ? 7 : 15} fontSize={isMobile ? 9 : 16} reverted />
                     </Box>
                 </Button>
             </AbilityTooltip>

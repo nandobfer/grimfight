@@ -18,7 +18,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     attacking: boolean = false
     casting = false
     avoidanceRange = 64
-    originalDepth: number
     id: string
     team: CreatureGroup
     attackAnimationImpactFrame = 5
@@ -88,7 +87,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.existing(this)
         this.setCollideWorldBounds(true)
         this.body.pushable = false
-        this.originalDepth = this.depth
+        this.setOrigin(0.5, 0.75)
 
         this.createAnimations()
 
@@ -103,18 +102,23 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     reset() {
         this.calculateStats()
         this.setScale(this.baseScale)
-        this.team.augments.forEach((augment) => augment.applyModifier(this))
+        this.applyAugments()
         this.health = this.maxHealth
         this.mana = 0
         this.active = true
         this.setRotation(0)
         this.resetUi()
-        this.setDepth(this.originalDepth)
         this.updateFacingDirection()
         this.stopMoving()
         this.idle()
+        this.updateDepth()
 
         this.target = undefined
+    }
+
+    private applyAugments() {
+        const team = this.master?.team || this.team
+        team?.augments?.forEach((augment) => augment.applyModifier(this))
     }
 
     calculateSpeeds() {
@@ -576,9 +580,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.health = Math.min(this.maxHealth, this.health + value)
         this.healthBar.setValue(this.health, this.maxHealth)
 
-        showDamageText(this.scene, this.x, this.y, Math.round(value), { type: "heal", crit })
-
         if (fx) {
+            showDamageText(this.scene, this.x, this.y, Math.round(value), { type: "heal", crit })
             this.onHealFx()
         }
     }
@@ -626,6 +629,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             this.facing = "right"
             this.setRotation(-1.571)
         }
+
+        this.statusEffects.clear()
         this.stopMoving()
         this.idle()
         this.anims.stop()
@@ -689,11 +694,20 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaBar.destroy()
     }
 
+    updateDepth() {
+        const currentRow = this.scene.grid.worldToCell(this.x, this.y)?.row
+        if (currentRow && this.active) {
+            this.setDepth(currentRow)
+        }
+    }
+
     selfUpdate(delta: number) {
         if (this.health <= 0) {
             this.die()
+            return
         }
 
+        this.updateDepth()
         this.regenMana(delta)
         this.statusEffects.forEach((effect) => effect.update(delta))
     }

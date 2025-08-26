@@ -255,4 +255,8 @@ export class CharacterGroup extends CreatureGroup {
         augment.onPick(this)
         EventBus.emit("augments-add", augment)
     }
+
+    emitAugments() {
+        EventBus.emit("augments-change", Array.from(this.augments.values()))
+    }
 }

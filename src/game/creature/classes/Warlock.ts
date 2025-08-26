@@ -1,4 +1,4 @@
-import { Fireball } from "../../objects/Fireball"
+import { Deathbolt } from "../../objects/Deathbolt"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 import { MonsterRegistry } from "../monsters/MonsterRegistry"
@@ -30,9 +30,9 @@ export class Warlock extends Character {
     override landAttack() {
         if (!this.target) return
 
-        const fireball = new Fireball(this)
-        fireball.setTint(0x0000ff)
-        fireball.fire(this.target)
+        const deathbolt = new Deathbolt(this)
+
+        deathbolt.fire(this.target)
     }
 
     override castAbility(): void {
@@ -44,10 +44,10 @@ export class Warlock extends Character {
 
         skeleton.teleportTo(this.x, this.y)
         this.spawnSmoke()
-        skeleton.setScale(0.7)
+        skeleton.baseScale = 0.7
         skeleton.addAura(0x00ff66, 1)
         skeleton.baseSpeed = this.baseSpeed
-        skeleton.baseAttackDamage += this.abilityPower * 0.08
+        skeleton.baseAttackDamage += this.abilityPower * 0.07
         skeleton.baseMaxHealth += this.abilityPower
         skeleton.reset()
         skeleton.target = this.target

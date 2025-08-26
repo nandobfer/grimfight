@@ -96,6 +96,7 @@ export class Character extends Creature {
             // show allowed tiles overlay immediately
             this.scene.grid.showDropOverlay()
             this.scene.grid.showHighlightAtWorld(pointer.worldX, pointer.worldY)
+            this.setDepth(this.depth + 1000)
         })
 
         this.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -122,6 +123,7 @@ export class Character extends Creature {
             this.scene.grid.hideHighlight()
             this.scene.grid.hideDropOverlay()
             this.preDrag = undefined
+            this.updateDepth()
         })
     }
 

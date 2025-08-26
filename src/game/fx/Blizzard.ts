@@ -83,6 +83,9 @@ export class Blizzard extends FxSprite {
             onComplete: () => {
                 target.attacking = false
                 iceBlock.destroy()
+                if (this.caster) {
+                    this.caster.manaLocked = false
+                }
             },
         })
     }

@@ -34,7 +34,7 @@ export class Monster extends Creature {
     }
 
     scaleSize(mult: number) {
-        this.setScale(this.scale * (1.1 + Math.log2(mult + 1) * 0.25))
+        this.baseScale = this.baseScale * (1.1 + Math.log2(mult + 1) * 0.25)
     }
 
     makeBoss(targetCR: number) {
