@@ -213,6 +213,10 @@ export class Character extends Creature {
         return data
     }
 
+    override calculateAttackRange() {
+        return super.calculateAttackRange() * Math.max(1, this.scale * 0.75)
+    }
+
     override destroy(fromScene?: boolean): void {
         super.destroy(fromScene)
         this.destroyUi()

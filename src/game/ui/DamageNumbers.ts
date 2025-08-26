@@ -2,7 +2,7 @@
 import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 
-export type DamageType = "normal" | "block" | "heal" | "fire" | "cold" | "poison" | "true"
+export type DamageType = "normal" | "block" | "heal" | "fire" | "cold" | "poison" | "true" | "lightning"
 
 export type DamageTextOpts = {
     crit?: boolean
@@ -112,6 +112,9 @@ export function showDamageText(scene: Game, x: number, y: number, value: number 
             break
         case "cold":
             setTintOrColor(front, 0x66d9ff, "#66d9ff")
+            break
+        case "lightning":
+            setTintOrColor(front, 0x2525ff, "#2525ff")
             break
         case "poison":
             setTintOrColor(front, 0x9ccc65, "#9ccc65")

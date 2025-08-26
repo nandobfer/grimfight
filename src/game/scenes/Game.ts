@@ -15,9 +15,9 @@ import { ColdHit } from "../fx/ColdHit"
 import { FireHit } from "../fx/FireHit"
 import { Creature } from "../creature/Creature"
 import { PoisonHit } from "../fx/PoisonHit"
-import { RNG } from "../tools/RNG"
 import { AugmentsRegistry } from "../systems/Augment/AugmentsRegistry"
 import { Augment } from "../systems/Augment/Augment"
+import { LightningHit } from "../fx/LightningHit"
 
 export type GameState = "fighting" | "idle"
 
@@ -35,7 +35,7 @@ export const starting_player_gold = 1
 export const max_characters_in_board = 6
 
 export class Game extends Scene {
-    version = "v1.0.4"
+    version = "v1.0.5"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
@@ -410,6 +410,8 @@ export class Game extends Scene {
                 return new ColdHit(this, x, y)
             case "fire":
                 return new FireHit(this, x, y)
+            case "lightning":
+                return new LightningHit(this, x, y)
             case "normal":
                 return target ? target.onNormalHit() : null
             case "poison":

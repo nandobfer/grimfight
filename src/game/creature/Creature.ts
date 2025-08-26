@@ -181,20 +181,24 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     // 7) 0 - 52: spellcasting
     // 8) 53 - 103: thrusting
     // 9) 286 - 158: walking
-    extractAnimationsFromSpritesheet(key: string, startingFrame: number, framesPerRow: number) {
+    extractAnimationsFromSpritesheet(key: string, startingFrame: number, usedFramesPerRow: number, totalFramesPerRow = 13, texture = this.name) {
         const directions: Direction[] = ["up", "left", "down", "right"]
         let currentFrameCount = startingFrame
-        const offsetFrames = 13 - framesPerRow
+        const offsetFrames = totalFramesPerRow - usedFramesPerRow
+        const animations: Phaser.Animations.Animation[] = []
 
         for (const direction of directions) {
-            this.anims.create({
+            const animation = this.anims.create({
                 key: `${this.name}-${key}-${direction}`,
-                frames: this.anims.generateFrameNumbers(this.name, { start: currentFrameCount, end: currentFrameCount + framesPerRow - 1 }),
-                frameRate: framesPerRow + 1,
+                frames: this.anims.generateFrameNumbers(texture, { start: currentFrameCount, end: currentFrameCount + usedFramesPerRow - 1 }),
+                frameRate: usedFramesPerRow + 1,
                 repeat: -1,
             })
-            currentFrameCount += framesPerRow + offsetFrames
+            currentFrameCount += usedFramesPerRow + offsetFrames
+            if (animation) animations.push(animation)
         }
+
+        return animations
     }
 
     extractAttackingAnimation() {
@@ -376,12 +380,16 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.moving = true
     }
 
+    calculateAttackRange() {
+        return this.attackRange * 64
+    }
+
     isInAttackRange(): boolean {
         if (!this.target) return false
 
         const distance = Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y)
 
-        return distance <= this.attackRange * ((this.width + this.height) / 2) * Math.max(1, this.scale * 0.75)
+        return distance <= this.calculateAttackRange()
     }
 
     // - Prefers straight line if clear
@@ -526,6 +534,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.once("animationstop", cleanup)
     }
 
+    getAttackingAnimation() {
+        const spriteVariant = Phaser.Math.RND.weightedPick([1, 2])
+        return `attacking${spriteVariant}`
+    }
+
     startAttack() {
         if (this.attacking || this.casting || !this.target?.active) {
             return
@@ -533,11 +546,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.updateFacingDirection()
         this.attacking = true
-        const spriteVariant = Phaser.Math.RND.weightedPick([1, 2])
-        const animKey = `${this.name}-attacking${spriteVariant}-${this.facing}`
+        const animationKey = `${this.name}-${this.getAttackingAnimation()}-${this.facing}`
 
         this.onAnimationFrame(
-            animKey,
+            animationKey,
             this.attackAnimationImpactFrame,
             () => this.landAttack(),
             () => (this.attacking = false)

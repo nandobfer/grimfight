@@ -16,13 +16,15 @@ export class Sorcerer extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "sorcerer", id)
-        this.attackAnimationImpactFrame = 6
+    }
+
+    override getAttackingAnimation(): string {
+        return `attacking`
     }
 
     override extractAttackingAnimation() {
-        this.extractAnimationsFromSpritesheet("attacking1", 1, 6)
-        this.extractAnimationsFromSpritesheet("attacking2", 1, 6)
-
+        this.attackAnimationImpactFrame = 6
+        this.extractAnimationsFromSpritesheet("attacking", 1, 6)
         this.extractAnimationsFromSpritesheet("casting", 208, 13)
     }
 

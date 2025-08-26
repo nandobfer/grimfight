@@ -14,12 +14,16 @@ export class Archer extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "archer", id)
-        this.attackAnimationImpactFrame = 9
+        
     }
 
     override extractAttackingAnimation() {
-        this.extractAnimationsFromSpritesheet("attacking1", 208, 13)
-        this.extractAnimationsFromSpritesheet("attacking2", 208, 13)
+        this.attackAnimationImpactFrame = 9
+        this.extractAnimationsFromSpritesheet("attacking", 208, 13)
+    }
+
+    override getAttackingAnimation(): string {
+        return `attacking`
     }
 
     // levelUp(): void {

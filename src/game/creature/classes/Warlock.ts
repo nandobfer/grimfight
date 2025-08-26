@@ -17,13 +17,15 @@ export class Warlock extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "warlock", id)
-        this.attackAnimationImpactFrame = 6
+    }
+
+    override getAttackingAnimation(): string {
+        return `attacking`
     }
 
     override extractAttackingAnimation() {
-        this.extractAnimationsFromSpritesheet("attacking1", 1, 6)
-        this.extractAnimationsFromSpritesheet("attacking2", 1, 6)
-
+        this.attackAnimationImpactFrame = 9
+        this.extractAnimationsFromSpritesheet("attacking", 208, 13)
         this.extractAnimationsFromSpritesheet("casting", 208, 13)
     }
 

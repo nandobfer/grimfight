@@ -8,6 +8,7 @@ import { Lizwan } from "./classes/Lizwan"
 import { Mage } from "./classes/Mage"
 import { Rogue } from "./classes/Rogue"
 import { Sorcerer } from "./classes/Sorcerer"
+import { Statikk } from "./classes/Statikk"
 import { Warlock } from "./classes/Warlock"
 
 // Create a character registry
@@ -50,3 +51,4 @@ CharacterRegistry.register("sorcerer", Sorcerer)
 CharacterRegistry.register("lizwan", Lizwan)
 CharacterRegistry.register("warlock", Warlock)
 CharacterRegistry.register("barbarian", Barbarian)
+CharacterRegistry.register("statikk", Statikk)

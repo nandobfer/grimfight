@@ -16,6 +16,8 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     declare scene: Game
     declare body: Phaser.Physics.Arcade.Body
 
+    alreadyOverlaped = new Set<Creature>()
+
     constructor(owner: Creature, texture: string, damageType: DamageType) {
         super(owner.scene, owner.x, owner.y, texture)
         this.scene = owner.scene
@@ -42,12 +44,18 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.scene?.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
             if (!enemy.active) return
+            if (this.alreadyOverlaped.has(enemy)) return
+
+            this.alreadyOverlaped.add(enemy)
 
             this.onHit(enemy)
         })
         this.scene?.physics.add.overlap(this, enemyTeam.minions, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
             if (!enemy.active) return
+            if (this.alreadyOverlaped.has(enemy)) return
+
+            this.alreadyOverlaped.add(enemy)
 
             this.onHit(enemy)
         })
@@ -57,7 +65,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
-    fire(target: Creature) {
+    fire(target: Creature,) {
         const from = this.owner
 
         // this.maxDistance = from.attackRange * 64 // keep consistent with range logic

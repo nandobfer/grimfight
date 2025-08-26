@@ -41,6 +41,10 @@ export class Preloader extends Scene {
                 frameWidth: 64,
             })
         }
+
+        this.load.spritesheet("statikk_attacking", `spritesheets/${dir}/statikk_attacking.png`, {
+            frameWidth: 128,
+        })
     }
 
     loadRagnarokSprites() {
@@ -70,6 +74,8 @@ export class Preloader extends Scene {
         this.load.spritesheet("poison", "particles/poison.png", { frameWidth: 192 })
         this.load.spritesheet("poison_attack", "particles/poison_attack.png", { frameWidth: 64 })
         this.load.spritesheet("poison_magic", "particles/poison_magic.png", { frameWidth: 64 })
+        this.load.spritesheet("lightning_bolt", "particles/lightning_bolt.png", { frameWidth: 256, frameHeight: 128 })
+        this.load.spritesheet("lightning", "particles/lightning_hit.png", { frameWidth: 128 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

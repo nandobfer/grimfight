@@ -3,7 +3,6 @@ import { Box, ThemeProvider } from "@mui/material"
 import { EventBus } from "../game/tools/EventBus"
 import { useMuiTheme } from "./hooks/useMuiTheme"
 import { GameStateButtons } from "./GameStateButtons/GameStateButtons"
-import { NewCharacterModal } from "./NewCharacterModal/NewCharacterModal"
 import { useGameScene } from "./hooks/useGameScene"
 import { CharactersRow } from "./CharacterSheet/CharactersRow"
 import { LoadingGame } from "./LoadingGame"
@@ -11,18 +10,15 @@ import { Recount } from "./Recount/Recount"
 import { Counters } from "./Counters/Counters"
 import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawer"
 import { AugmentModal } from "./AugmentModal/AugmentModal"
+import { GameState } from "../game/scenes/Game"
 
 interface UiProps {}
 
 export const Ui: React.FC<UiProps> = (props) => {
     const theme = useMuiTheme()
     const game = useGameScene()
-    const [chooseCharacterModalOpen, setChooseCharacterModalOpen] = useState(false)
     const [loading, setLoading] = useState(true)
-
-    const handleFirstCharacterEmitted = () => {
-        setChooseCharacterModalOpen(true)
-    }
+    const [gameState, setGameState] = useState<GameState>(game?.state || "idle")
 
     const finishLoading = () => {
         setLoading(false)
@@ -37,6 +33,16 @@ export const Ui: React.FC<UiProps> = (props) => {
             EventBus.off("load-complete", finishLoading)
         }
     }, [])
+
+    useEffect(() => {
+        const handler = (state: GameState) => setGameState(state)
+        EventBus.on("gamestate", handler)
+
+        return () => {
+            EventBus.off("gamestate", handler)
+        }
+    }, [])
+
     return (
         <ThemeProvider theme={theme}>
             <Box
@@ -55,11 +61,13 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {loading && <LoadingGame />}
                 {game && (
                     <>
-                        <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
-                            <CharactersRow charactersGroup={game.playerTeam} />
-                            <CharacterStoreDrawer game={game} />
-                        </Box>
-                        <Box sx={{ flexDirection: "column" }}>
+                        {gameState === "idle" && (
+                            <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
+                                <CharactersRow charactersGroup={game.playerTeam} />
+                                <CharacterStoreDrawer game={game} />
+                            </Box>
+                        )}
+                        <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
                             <Counters />
                             <Box sx={{ flexDirection: "column", marginTop: "auto" }}>
                                 <Recount />
