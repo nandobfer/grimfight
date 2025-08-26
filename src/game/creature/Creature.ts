@@ -381,7 +381,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         const distance = Phaser.Math.Distance.Between(this.x, this.y, this.target.x, this.target.y)
 
-        return distance <= this.attackRange * 64
+        return distance <= this.attackRange * ((this.width + this.height) / 2) * Math.max(1, this.scale * 0.75)
     }
 
     // - Prefers straight line if clear
