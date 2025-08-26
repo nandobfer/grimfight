@@ -206,6 +206,25 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.extractAnimationsFromSpritesheet("attacking2", 156, 6)
     }
 
+    randomPointAround(frontOnly = false) {
+        // pick a radius in [min, max]
+        const min = 40
+        const max = 90
+        const r = Phaser.Math.Between(min, max)
+
+        // angle: either full 360° or a cone in front of the current facing
+        let ang: number
+        if (frontOnly) {
+            const facingAngle = this.facing === "right" ? 0 : this.facing === "down" ? Math.PI / 2 : this.facing === "left" ? Math.PI : -Math.PI / 2
+            const spread = Math.PI / 3 // ±60°
+            ang = Phaser.Math.FloatBetween(facingAngle - spread, facingAngle + spread)
+        } else {
+            ang = Phaser.Math.FloatBetween(0, Math.PI * 2)
+        }
+
+        return { x: this.x + Math.cos(ang) * r, y: this.y + Math.sin(ang) * r }
+    }
+
     addAura(color: number, maxIntensity: number) {
         this.aura = this.postFX.addGlow(color, 1, 0)
         this.aura.outerStrength = 6

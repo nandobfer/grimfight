@@ -9,7 +9,7 @@ import { Mage } from "./classes/Mage"
 import { Rogue } from "./classes/Rogue"
 import { Sorcerer } from "./classes/Sorcerer"
 import { Statikk } from "./classes/Statikk"
-import { Warlock } from "./classes/Warlock"
+import { Necromancer } from "./classes/Necromancer"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -49,6 +49,6 @@ CharacterRegistry.register("archer", Archer)
 CharacterRegistry.register("mage", Mage)
 CharacterRegistry.register("sorcerer", Sorcerer)
 CharacterRegistry.register("lizwan", Lizwan)
-CharacterRegistry.register("warlock", Warlock)
+CharacterRegistry.register("necromancer", Necromancer)
 CharacterRegistry.register("barbarian", Barbarian)
 CharacterRegistry.register("statikk", Statikk)

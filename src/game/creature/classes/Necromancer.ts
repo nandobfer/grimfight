@@ -1,9 +1,10 @@
+import { MagicCircleFx } from "../../fx/MagicCircleFx"
 import { Deathbolt } from "../../objects/Deathbolt"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 import { MonsterRegistry } from "../monsters/MonsterRegistry"
 
-export class Warlock extends Character {
+export class Necromancer extends Character {
     baseAttackSpeed = 0.85
     baseAttackDamage = 15
     baseAttackRange = 2
@@ -16,7 +17,7 @@ export class Warlock extends Character {
     abilityDescription: string = "Sumona um esqueletinho para lutar ao seu lado até a morte"
 
     constructor(scene: Game, id: string) {
-        super(scene, "warlock", id)
+        super(scene, "necromancer", id)
     }
 
     override getAttackingAnimation(): string {
@@ -43,9 +44,9 @@ export class Warlock extends Character {
         const skeleton = MonsterRegistry.create("skeleton", this.scene)
         skeleton.master = this
         this.team.minions.add(skeleton)
-
-        skeleton.teleportTo(this.x, this.y)
-        this.spawnSmoke()
+        const {x, y} = this.randomPointAround(true)
+        const fx = new MagicCircleFx(this.scene, x, y)
+        skeleton.teleportTo(x, y)
         skeleton.baseScale = 0.7
         skeleton.addAura(0x00ff66, 1)
         skeleton.baseSpeed = this.baseSpeed
@@ -57,8 +58,8 @@ export class Warlock extends Character {
         this.casting = false
     }
 
-    private spawnSmoke(): void {
-        const smokeParticles = this.scene.add.particles(this.x, this.y, "blood", {
+    private summonFx(x: number, y: number): void {
+        const smokeParticles = this.scene.add.particles(x, y, "blood", {
             lifespan: { min: 300, max: 600 },
             speed: { min: 20, max: 60 },
             scale: { start: 0.4, end: 0 },
