@@ -4,11 +4,13 @@ import { Augment } from "./Augment"
 export class LifedrinkerAugment extends Augment {
     constructor() {
         const name = "lifedrinker"
-        const description = "steal enemy's health when dealing damage"
-        super(name, description)
+        super(name)
+        this.values.boost = Phaser.Math.Between(5, 20)
+        this.descriptionValues.boost = { value: this.values.boost, color: "divider" }
+        this.description = `increases lifesteal by [boost:${this.descriptionValues.boost.value}%]`
     }
 
     override applyModifier(creature: Creature): void {
-        creature.lifesteal += 10
+        creature.lifesteal += this.values.boost
     }
 }

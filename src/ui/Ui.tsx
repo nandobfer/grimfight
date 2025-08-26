@@ -63,6 +63,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                     <>
                         {gameState === "idle" && (
                             <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
+                                <AugmentModal team={game.playerTeam} />
                                 <CharactersRow charactersGroup={game.playerTeam} />
                                 <CharacterStoreDrawer game={game} />
                             </Box>
@@ -77,8 +78,6 @@ export const Ui: React.FC<UiProps> = (props) => {
                     </>
                 )}
             </Box>
-
-            {game && <AugmentModal team={game.playerTeam} />}
         </ThemeProvider>
     )
 }

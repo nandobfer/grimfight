@@ -6,6 +6,7 @@ import { EventBus } from "../../game/tools/EventBus"
 import { CharacterGroup } from "../../game/creature/character/CharacterGroup"
 import { max_characters_in_board } from "../../game/scenes/Game"
 import { Augment } from "../../game/systems/Augment/Augment"
+import { renderDescription } from "../../game/tools/TokenizedText"
 
 interface CharactersRowProps {
     charactersGroup: CharacterGroup
@@ -53,7 +54,7 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
                 <Box sx={{ gap: 1, flexWrap: "wrap", maxHeight: 70, overflowY: "auto" }}>
                     <Typography variant="subtitle2">Aprimoramentos</Typography>
                     {augments.map((augment, index) => (
-                        <Tooltip title={augment.description} key={augment.name + index.toString()}>
+                        <Tooltip title={renderDescription(augment.descriptionValues, augment.description)} key={augment.name + index.toString()}>
                             <Chip label={augment.name} size="small" onClick={() => null} color="warning" />
                         </Tooltip>
                     ))}

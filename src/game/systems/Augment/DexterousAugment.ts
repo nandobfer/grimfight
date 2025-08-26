@@ -4,8 +4,10 @@ import { Augment } from "./Augment"
 export class DexterousAugment extends Augment {
     constructor() {
         const name = "dexterous"
-        const description = "increases attack speed by 20%"
-        super(name, description)
+        super(name)
+        this.values.boost = Phaser.Math.FloatBetween(0.1, 0.3)
+        this.descriptionValues.boost = { value: Math.round(this.values.boost * 100), color: "divider" }
+        this.description = `increases attack speed by [boost:${this.descriptionValues.boost.value}%]`
     }
 
     override applyModifier(creature: Creature): void {

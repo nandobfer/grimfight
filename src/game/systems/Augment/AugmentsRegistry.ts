@@ -41,7 +41,7 @@ export class AugmentsRegistry {
 }
 
 AugmentsRegistry.register("colossus", ColossusAugment)
-AugmentsRegistry.register("battlemage", BattlemageAugment)
+// AugmentsRegistry.register("battlemage", BattlemageAugment)
 AugmentsRegistry.register("lifedrinker", LifedrinkerAugment)
 AugmentsRegistry.register("attacker", AttackerAugment)
 AugmentsRegistry.register("bonusgold", BonusGoldAugment)

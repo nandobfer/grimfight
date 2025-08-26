@@ -4,8 +4,9 @@ import { Augment } from "./Augment"
 export class BonusGoldAugment extends Augment {
     constructor() {
         const name = "bonusgold"
-        const description = "you gain your floor in gold"
-        super(name, description)
+        super(name)
+        this.descriptionValues.gold = { value: "floor", color: "warning.main" }
+        this.description = `you gain your floor in [gold:gold]`
     }
 
     override onPick(team: CreatureGroup): void {

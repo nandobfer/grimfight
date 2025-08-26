@@ -53,7 +53,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                     </Badge>
 
                     <Box sx={{ width: 1, gap: 1, justifyContent: "center" }}>
-                        <Typography variant="subtitle2" fontSize={isMobile ? 8 : undefined}>
+                        <Typography variant="subtitle2" fontSize={isMobile ? 8 : "1vw"}>
                             {character.name}
                         </Typography>
 

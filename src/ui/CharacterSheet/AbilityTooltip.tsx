@@ -9,7 +9,7 @@ interface AbilityTooltipProps {
 export const AbilityTooltip:React.FC<AbilityTooltipProps> = (props) => {
     
     return (
-        <Tooltip title={props.description} placement='auto' >
+        <Tooltip title={props.description} placement="auto" slotProps={{ popper: { sx: { pointerEvents: "none" } } }}>
             {props.children}
         </Tooltip>
     )
