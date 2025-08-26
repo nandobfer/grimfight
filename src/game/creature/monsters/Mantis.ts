@@ -28,9 +28,9 @@ export class Mantis extends RagnarokMonster {
     }
 
     override createAnimations() {
-        this.extractAnimationsFromSpritesheet("idle", 1, 8, 1, true)
-        this.extractAnimationsFromSpritesheet("walking", 19, 6, 3)
-        this.extractAnimationsFromSpritesheet("attacking", 37, 7, 2)
+        this.extractAnimationsFromSpritesheet("idle", 1, 8, 9, this.name, true)
+        this.extractAnimationsFromSpritesheet("walking", 19, 6, 9)
+        this.extractAnimationsFromSpritesheet("attacking", 37, 7, 9)
     }
 
     scaleSpeedWithLife() {

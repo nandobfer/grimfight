@@ -1,15 +1,16 @@
 import React from 'react'
-import {Box, Tooltip} from '@mui/material'
+import { Box, PopperProps, Tooltip } from "@mui/material"
 
 interface AbilityTooltipProps {
     description: string
     children: React.ReactElement<unknown, any>
+    placement: PopperProps["placement"]
 }
 
 export const AbilityTooltip:React.FC<AbilityTooltipProps> = (props) => {
     
     return (
-        <Tooltip title={props.description} placement="auto" slotProps={{ popper: { sx: { pointerEvents: "none" } } }}>
+        <Tooltip title={props.description} placement={props.placement} slotProps={{ popper: { sx: { pointerEvents: "none" } } }}>
             {props.children}
         </Tooltip>
     )

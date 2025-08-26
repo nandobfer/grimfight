@@ -6,7 +6,7 @@ export class DexterousAugment extends Augment {
         const name = "dexterous"
         super(name)
         this.values.boost = Phaser.Math.FloatBetween(0.1, 0.3)
-        this.descriptionValues.boost = { value: Math.round(this.values.boost * 100), color: "divider" }
+        this.descriptionValues.boost = { value: Math.round(this.values.boost * 100), color: "primary.main" }
         this.description = `increases attack speed by [boost:${this.descriptionValues.boost.value}%]`
     }
 

@@ -29,7 +29,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
     return (
         <>
             {!isFirst && <Divider />}
-            <AbilityTooltip description={character.abilityDescription}>
+            <AbilityTooltip description={character.abilityDescription} placement="top">
                 <Button
                     variant={highlight ? "outlined" : undefined}
                     fullWidth

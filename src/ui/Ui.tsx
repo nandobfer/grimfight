@@ -61,13 +61,11 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {loading && <LoadingGame />}
                 {game && (
                     <>
-                        {gameState === "idle" && (
-                            <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
-                                <AugmentModal team={game.playerTeam} />
-                                <CharactersRow charactersGroup={game.playerTeam} />
-                                <CharacterStoreDrawer game={game} />
-                            </Box>
-                        )}
+                        <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
+                            <AugmentModal team={game.playerTeam} />
+                            <CharactersRow charactersGroup={game.playerTeam} />
+                            <CharacterStoreDrawer game={game} />
+                        </Box>
                         <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
                             <Counters />
                             <Box sx={{ flexDirection: "column", marginTop: "auto" }}>

@@ -1,3 +1,4 @@
+import { RNG } from "../../tools/RNG"
 import { AttackerAugment } from "./AttackerAugment"
 import { Augment } from "./Augment"
 import { BattlemageAugment } from "./BattlemageAugment"
@@ -37,6 +38,18 @@ export class AugmentsRegistry {
     }
     static entries(): Array<{ name: string; ctor: Ctor }> {
         return [...this.registry.entries()].map(([name, ctor]) => ({ name, ctor }))
+    }
+
+    static random() {
+        const name = RNG.pick(this.names())
+        const augment = this.create(name)
+        return augment
+    }
+
+    static randomList(quantity: number) {
+        return Phaser.Utils.Array.Shuffle(AugmentsRegistry.names())
+            .slice(0, quantity)
+            .map((aug) => AugmentsRegistry.create(aug))
     }
 }
 

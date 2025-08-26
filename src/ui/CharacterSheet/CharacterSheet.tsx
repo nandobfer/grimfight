@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, LinearProgress, Typography, useMediaQuery } from "@mui/material"
 import { EventBus } from "../../game/tools/EventBus"
 import { CharacterAvatar } from "./CharacterAvatar"
@@ -29,57 +29,97 @@ export const SheetData: React.FC<SheetDataItem> = (props) => {
     )
 }
 
+type Snap = {
+    level: number
+    name: string
+    health: number
+    maxHealth: number
+    mana: number
+    maxMana: number
+    abilityPower: number
+    adMin: number
+    adMax: number
+    attackSpeed: number
+    attackRange: number
+    critChance: number
+    critDamageMultiplier: number
+    armor: number
+    resistance: number
+    speed: number
+    lifesteal: number
+}
+
+const makeSnap = (c: Character): Snap => ({
+    level: c.level,
+    name: c.name,
+    health: Math.round(c.health),
+    maxHealth: Math.round(c.maxHealth),
+    mana: Math.round(c.mana),
+    maxMana: c.maxMana,
+    abilityPower: Math.round(c.abilityPower),
+    adMin: Math.round(c.attackDamage * c.minDamageMultiplier),
+    adMax: Math.round(c.attackDamage * c.maxDamageMultiplier),
+    attackSpeed: +c.attackSpeed.toFixed(2),
+    attackRange: c.attackRange,
+    critChance: c.critChance,
+    critDamageMultiplier: c.critDamageMultiplier,
+    lifesteal: c.lifesteal,
+    armor: Math.round(c.armor),
+    resistance: Math.round(c.resistance),
+    speed: Math.round(c.speed),
+})
+
+const shallowEqual = (a: Snap, b: Snap) => {
+    for (const k in a) if ((a as any)[k] !== (b as any)[k]) return false
+    return true
+}
+
 export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
-    const [character, setCharacter] = useState(props.character)
-    const attributes: SheetDataItem[] = useMemo(
-        () => [
-            { title: "Health", value: `${Math.round(character.health)} / ${Math.round(character.maxHealth)}` },
-            { title: "Mana", value: `${Math.round(character.mana)} / ${character.maxMana}` },
-            { title: "Mana Regen", value: `${character.manaPerSecond} /s` },
-            { title: "Mana /hit", value: `${character.manaPerAttack}` },
-            { title: "Ability Power", value: `${Math.round(character.abilityPower)}` },
-            {
-                title: "Attack Damage",
-                value: `${Math.round(character.attackDamage * character.minDamageMultiplier)} - ${Math.round(
-                    character.attackDamage * character.maxDamageMultiplier
-                )}`,
-            },
-            { title: "Attack Speed", value: `${character.attackSpeed.toFixed(2)} /s` },
-            { title: "Attack Range", value: `${character.attackRange}` },
+    const character = props.character
 
-            { title: "Crit Chance", value: `${character.critChance} %` },
-            { title: "Crit Damage Multiplier", value: `x ${character.critDamageMultiplier}` },
-            { title: "Life Steal", value: `${Math.round(character.lifesteal)} %` },
-            { title: "Armor", value: Math.round(character.armor) },
-            { title: "Resistance", value: Math.round(character.resistance) },
-            { title: "Movement Speed", value: Math.round(character.speed) },
-        ],
-        [character]
-    )
-
-    const characterHealthPercent = useMemo(() => (character.health / character.maxHealth) * 100, [character.health, character.maxHealth])
-    const levelColor = useMemo(() => convertColorToString(colorFromLevel(character.level)), [character.level])
-
-    const sell = () => {
-        props.store.sell(character.id)
-    }
+    const charRef = useRef(character)
+    useEffect(() => {
+        charRef.current = character
+    }, [character])
+    // sample UI state at 10 FPS (adjust as you like)
+    const [snap, setSnap] = useState(() => makeSnap(charRef.current))
 
     useEffect(() => {
-        setCharacter(character)
-        const handler = (char: Character) => {
-            setCharacter({ ...char } as Character) // Create a new object to force re-render
-        }
+        const id = setInterval(() => {
+            const next = makeSnap(charRef.current)
+            setSnap((prev) => (shallowEqual(prev, next) ? prev : next))
+        }, 100)
+        return () => clearInterval(id)
+    }, [])
 
-        EventBus.on(`character-${character.id}-update`, handler)
+    const attributes: SheetDataItem[] = useMemo(
+        () => [
+            { title: "Health", value: `${snap.health} / ${snap.maxHealth}` },
+            { title: "Mana", value: `${snap.mana} / ${snap.maxMana}` },
+            { title: "Mana Regen", value: `${charRef.current.manaPerSecond} /s` }, // rarely changes
+            { title: "Mana /hit", value: `${charRef.current.manaPerAttack}` },
+            { title: "Ability Power", value: `${snap.abilityPower}` },
+            { title: "Attack Damage", value: `${snap.adMin} - ${snap.adMax}` },
+            { title: "Attack Speed", value: `${snap.attackSpeed} /s` },
+            { title: "Attack Range", value: `${snap.attackRange}` },
+            { title: "Crit Chance", value: `${snap.critChance} %` },
+            { title: "Crit Damage Multiplier", value: `x ${snap.critDamageMultiplier}` },
+            { title: "Life Steal", value: `${character.lifesteal} %` },
+            { title: "Armor", value: snap.armor },
+            { title: "Resistance", value: snap.resistance },
+            { title: "Movement Speed", value: snap.speed },
+        ],
+        [snap]
+    )
 
-        return () => {
-            EventBus.off(`character-${character.id}-update`, handler)
-        }
-    }, [character.id])
+    const characterHealthPercent = useMemo(() => (snap.maxHealth > 0 ? (snap.health / snap.maxHealth) * 100 : 0), [snap.health, snap.maxHealth])
+    const levelColor = useMemo(() => convertColorToString(colorFromLevel(snap.level)), [snap.level])
+
+    const sell = () => props.store.sell(character.id)
     return (
         <Accordion sx={{ flexDirection: "column" }} slots={{ root: Box }}>
             <AccordionSummary sx={{ padding: 0, marginTop: -1.5, marginBottom: -0.5 }}>
-                <AbilityTooltip description={character.abilityDescription}>
+                <AbilityTooltip description={character.abilityDescription} placement="auto">
                     <Button variant="outlined" fullWidth sx={{ justifyContent: "start", padding: 1, gap: 1, alignItems: "center" }}>
                         <Badge
                             badgeContent={`${character.level}`}

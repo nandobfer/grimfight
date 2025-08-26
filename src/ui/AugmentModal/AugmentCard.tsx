@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Paper, Typography } from "@mui/material"
+import { Button, Paper, Typography } from "@mui/material"
 import { Augment } from "../../game/systems/Augment/Augment"
 import { renderDescription } from "../../game/tools/TokenizedText"
 
@@ -11,7 +11,7 @@ interface AugmentCardProps {
 export const AugmentCard: React.FC<AugmentCardProps> = (props) => {
     return (
         <Button sx={{ padding: 0, flexShrink: 0 }} onClick={() => props.onChoose(props.augment)} variant="outlined">
-            <Paper sx={{ flexDirection: "column", gap: 1, padding: 1, width: 300, minHeight: 75 }} elevation={5}>
+            <Paper sx={{ flexDirection: "column", gap: 1, padding: 1, width: 300, minHeight: 100 }} elevation={5}>
                 <Typography variant="body1" fontWeight={"bold"} color="primary">
                     {props.augment.name}
                 </Typography>

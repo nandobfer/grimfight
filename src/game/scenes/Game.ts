@@ -198,11 +198,7 @@ export class Game extends Scene {
         const playerAugments = Array.from(this.playerTeam.augments.values())
         if (playerAugments.find((augment) => augment.chosenFloor === this.floor)) return
 
-        const augments = Phaser.Utils.Array.Shuffle(AugmentsRegistry.names())
-            .slice(0, 3)
-            .map((aug) => AugmentsRegistry.create(aug))
-
-        console.log({ augments })
+        const augments = AugmentsRegistry.randomList(3)
 
         EventBus.emit("choose-augment", augments)
     }
