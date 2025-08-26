@@ -1,25 +1,29 @@
-import { LightningBolt } from "../../objects/Lightningbolt"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
+type DruidForm = "human" | "bear" | "cat"
 export class Helyna extends Character {
     baseAttackSpeed = 1
     baseSpeed = 60
     baseAttackDamage = 20
-    baseMaxMana: number = 0
-    baseAbilityPower: number = 20
-    manaLocked: boolean = true
+    baseMaxMana = 150
+    baseAbilityPower = 20
+    baseAttackRange = 2
 
     abilityDescription: string = `Se transforma em um animal, baseado na posição inicial, concedendo atributos e habilidades específicas para cada um.\n
     Urso (frente): Tamanho, armadura, vida e ataque aumentados. Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura e causando dano a atacantes\n
     Gato (meio): Velocidade, velocidade de ataque e chance de crítico aumentados. ataca inimigos a sua frente\n
-    Passarinho (atrás): `
+    Humano (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo.`
 
-    attacksCount = 0
-    bonusAttackSpeed = 0
+    bonusMaxHealth = 0
+    bonusArmor = 0
+    bonusScale = 0
+    bonusAD = 0
     bonusSpeed = 0
-    missingHealthPercent = 1
+    bonusAttackSpeed = 0
+    bonusCriticalChance = 0
     aura
+    druidForm: DruidForm = "human"
 
     constructor(scene: Game, id: string) {
         super(scene, "statikk", id)
@@ -44,51 +48,34 @@ export class Helyna extends Character {
         this.on("animationstart", onUpdate)
     }
 
-    override landAttack(): void {
-        super.landAttack()
-        this.attacksCount += 1
-
-        if (!this.target) {
+    override castAbility(): void {
+        if (this.druidForm === "human") {
             return
         }
+    }
 
-        if (this.attacksCount === 3) {
-            this.attacksCount = 0
+    private shapeshift() {
+        const placement = this.getPlacement()
 
-            const lightning = new LightningBolt(this, this.abilityPower)
-            lightning.fire(this.target)
+        if (placement === "front") {
+            this.druidForm = "bear"
+        }
+
+        if (placement === "middle") {
+            this.druidForm = "cat"
         }
     }
 
-    scaleSpeedWithLife() {
-        this.missingHealthPercent = this.multFromHealth()
-
-        this.attackSpeed = this.bonusAttackSpeed * this.missingHealthPercent
-        this.speed = this.bonusSpeed * this.missingHealthPercent
-
-        this.aura.outerStrength = (this.missingHealthPercent - 1) * 1.5
-    }
-
-    private multFromHealth(): number {
-        if (this.maxHealth <= 0) return 1
-        // 1 at full HP → 2 at 0 HP
-        const m = 2 - this.health / this.maxHealth
-        return Phaser.Math.Clamp(m, 1, 2)
+    makeBear() {
+        this.
     }
 
     override reset(): void {
         super.reset()
-        this.attacksCount = 0
-        this.bonusAttackSpeed = this.attackSpeed
         this.bonusSpeed = this.speed
-        this.missingHealthPercent = 1
     }
 
     override update(time: number, delta: number): void {
         super.update(time, delta)
-
-        if (this.active) {
-            this.scaleSpeedWithLife()
-        }
     }
 }

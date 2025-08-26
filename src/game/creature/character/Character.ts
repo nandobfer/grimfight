@@ -51,6 +51,9 @@ export class Character extends Creature {
 
     loadFromDto(dto: CharacterDto) {
         this.levelUpTo(dto.level)
+        this.boardX = dto.boardX
+        this.boardY = dto.boardY
+        this.id = dto.id
     }
 
     handleMouseEvents(): void {
