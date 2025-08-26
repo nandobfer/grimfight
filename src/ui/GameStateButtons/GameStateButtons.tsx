@@ -3,7 +3,6 @@ import { Box, Button, Divider } from "@mui/material"
 import { Game, GameState } from "../../game/scenes/Game"
 import { EventBus } from "../../game/tools/EventBus"
 import { DebugMenu } from "../DebugMenu/DebugMenu"
-import { CharacterStoreDrawer } from "../CharacterStoreDrawer/CharacterStoreDrawer"
 
 interface GameStateButtonsProps {
     game: Game
@@ -12,18 +11,8 @@ interface GameStateButtonsProps {
 export const GameStateButtons: React.FC<GameStateButtonsProps> = (props) => {
     const [gameState, setGameState] = useState(props.game.state)
 
-    const onResetClick = () => {
-        props.game.playerTeam.reset()
-        props.game.enemyTeam.reset()
-    }
-
     const onPlayClick = () => {
         props.game.startRound()
-    }
-
-    const onStopClick = () => {
-        props.game.changeState("idle")
-        onResetClick()
     }
 
     useEffect(() => {
@@ -38,13 +27,13 @@ export const GameStateButtons: React.FC<GameStateButtonsProps> = (props) => {
     return (
         <Box sx={{ pointerEvents: "auto", flexDirection: "column", gap: 1, height: "min-content" }}>
             {gameState === "idle" && (
-                <Button variant="outlined" onClick={onPlayClick}>
+                <Button variant="outlined" onClick={onPlayClick} color="error">
                     fight
                 </Button>
             )}
 
             <Divider />
-            <DebugMenu game={props.game} />
+            {/* <DebugMenu game={props.game} /> */}
         </Box>
     )
 }
