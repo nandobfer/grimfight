@@ -5,8 +5,13 @@ export class Mantis extends RagnarokMonster {
     baseMaxHealth = 250
     baseAttackDamage = 15
     baseAttackSpeed = 1
-    baseMaxMana = 30
+    baseMaxMana = 0
     baseScale: number = 0.5
+    manaLocked: boolean = true
+
+    bonusAttackSpeed = 0
+    missingHealthPercent = 1
+    aura
 
     constructor(scene: Game) {
         super(scene, "mantis")
@@ -14,38 +19,37 @@ export class Mantis extends RagnarokMonster {
         this.challengeRating = this.calculateCR()
 
         this.setSize(this.width / 2, this.height / 2)
+
+        this.aura = this.postFX.addGlow(0xff5555, 0)
+    }
+
+    override getAttackingAnimation(): string {
+        return "attacking"
     }
 
     override createAnimations() {
         this.extractAnimationsFromSpritesheet("idle", 1, 8, 1, true)
         this.extractAnimationsFromSpritesheet("walking", 19, 6, 3)
-        this.extractAnimationsFromSpritesheet("attacking1", 37, 7, 2)
-        this.extractAnimationsFromSpritesheet("attacking2", 37, 7, 2)
+        this.extractAnimationsFromSpritesheet("attacking", 37, 7, 2)
     }
 
-    castAbility(): void {
-        this.casting = true
+    scaleSpeedWithLife() {
+        this.missingHealthPercent = 2 - this.health / this.maxHealth
+        this.attackSpeed = this.baseAttackSpeed * this.bonusAttackSpeed * this.missingHealthPercent
+        this.aura.outerStrength = (this.missingHealthPercent - 1) * 1.5
+    }
 
-        // const originalAttackSpeed = this.attackSpeed
-        // const originalScale = this.scale
-        const duration = 4000
+    override reset(): void {
+        super.reset()
+        this.bonusAttackSpeed = this.attackSpeed
+        this.missingHealthPercent = 1
+    }
 
-        this.manaLocked = true
+    override update(time: number, delta: number): void {
+        super.update(time, delta)
 
-        this.scene.tweens.add({
-            targets: this,
-            scale: { from: this.scale, to: this.scale * 1.25 },
-            tint: { from: this.tint, to: 0xff0000 },
-            attackSpeed: { from: this.attackSpeed, to: this.attackSpeed * 2 },
-            yoyo: true,
-            repeat: 0,
-            duration: duration,
-            ease: "Sine.easeInOut",
-            onComplete: () => {
-                this.manaLocked = false
-            },
-        })
-
-        this.casting = false
+        if (this.active) {
+            this.scaleSpeedWithLife()
+        }
     }
 }

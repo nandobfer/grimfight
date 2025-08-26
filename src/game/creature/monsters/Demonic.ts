@@ -19,9 +19,12 @@ export class Demonic extends Monster {
         this.challengeRating = this.calculateCR()
     }
 
+    override getAttackingAnimation(): string {
+        return "attacking"
+    }
+
     override extractAttackingAnimation() {
-        this.extractAnimationsFromSpritesheet("attacking1", 208, 13)
-        this.extractAnimationsFromSpritesheet("attacking2", 208, 13)
+        this.extractAnimationsFromSpritesheet("attacking", 208, 13)
     }
 
     override landAttack(target = this.target) {
