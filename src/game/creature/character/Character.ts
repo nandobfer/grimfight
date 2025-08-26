@@ -11,20 +11,6 @@ export interface CharacterDto {
     level: number
     name: string
     id: string
-    baseMaxHealth: number
-    baseAttackSpeed: number
-    baseAttackDamage: number
-    baseAttackRange: number
-    baseAbilityPower: number
-    baseMaxMana: number
-    baseManaPerSecond: number
-    baseManaPerAttack: number
-    baseArmor: number
-    baseResistance: number
-    baseSpeed: number
-    baseCritChance: number
-    baseCritDamageMultiplier: number
-    baseLifesteal: number
     boardX: number
     boardY: number
     abilityDescription: string
@@ -64,11 +50,7 @@ export class Character extends Creature {
     }
 
     loadFromDto(dto: CharacterDto) {
-        for (const [key, value] of Object.entries(dto)) {
-            this[key as keyof this] = value
-        }
-
-        this.levelBadge.setValue(this.level)
+        this.levelUpTo(dto.level)
     }
 
     handleMouseEvents(): void {
@@ -190,20 +172,6 @@ export class Character extends Creature {
     getDto() {
         const data: CharacterDto = {
             level: this.level,
-            baseArmor: this.baseArmor,
-            baseAttackDamage: this.baseAttackDamage,
-            baseAttackRange: this.baseAttackRange,
-            baseAttackSpeed: this.baseAttackSpeed,
-            baseAbilityPower: this.baseAbilityPower,
-            baseCritChance: this.baseCritChance,
-            baseCritDamageMultiplier: this.baseCritDamageMultiplier,
-            baseLifesteal: this.baseLifesteal,
-            baseManaPerAttack: this.baseManaPerAttack,
-            baseManaPerSecond: this.baseManaPerSecond,
-            baseMaxHealth: this.baseMaxHealth,
-            baseMaxMana: this.baseMaxMana,
-            baseResistance: this.baseResistance,
-            baseSpeed: this.baseSpeed,
             boardX: this.x,
             boardY: this.y,
             id: this.id,
