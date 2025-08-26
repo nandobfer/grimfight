@@ -8,17 +8,42 @@ export class Lizwan extends Character {
     baseSpeed = 100
     baseAttackDamage = 15
     baseCritChance = 20
-    baseMaxMana: number = 50
+    baseMaxMana: number = 0
+    // baseMaxMana: number = 50
     baseAbilityPower: number = 25
+    manaLocked: boolean = true
 
-    abilityDescription: string = "Aplica um acúmulo de veneno no alvo"
+    abilityDescription: string = "Passivo: Ataques aplicam um acúmulo de veneno no alvo"
+    // abilityDescription: string = "Aplica um acúmulo de veneno no alvo"
 
     constructor(scene: Game, id: string) {
         super(scene, "lizwan", id)
     }
 
-    override castAbility(): void {
-        this.casting = true
+    // override castAbility(): void {
+    //     this.casting = true
+
+    //     if (!this.target) {
+    //         return
+    //     }
+
+    //     new PoisonAttack(this.scene, this.target.x, this.target.y)
+
+    //     const poison = new Dot({
+    //         damageType: "poison",
+    //         duration: 10000,
+    //         target: this.target,
+    //         tickDamage: this.abilityPower * 0.3,
+    //         tickRate: 1000,
+    //         user: this,
+    //     })
+    //     this.target.applyStatusEffect(poison)
+
+    //     this.casting = false
+    // }
+
+    override landAttack(): void {
+        super.landAttack()
 
         if (!this.target) {
             return
@@ -30,13 +55,11 @@ export class Lizwan extends Character {
             damageType: "poison",
             duration: 10000,
             target: this.target,
-            tickDamage: this.abilityPower * 0.3,
+            tickDamage: this.abilityPower * 0.1,
             tickRate: 1000,
             user: this,
         })
         this.target.applyStatusEffect(poison)
-
-        this.casting = false
     }
 
     override reset(): void {
