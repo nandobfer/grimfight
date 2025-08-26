@@ -67,12 +67,19 @@ export class Helyna extends Character {
     }
 
     makeBear() {
-        this.
+        this.maxHealth = this.bonusMaxHealth * 1.45
+        // this.armor = this.bonusArmor *
     }
 
     override reset(): void {
         super.reset()
         this.bonusSpeed = this.speed
+        this.bonusMaxHealth = this.maxHealth
+        this.bonusAD = this.attackDamage
+        this.bonusArmor = this.armor
+        this.bonusAttackSpeed = this.attackSpeed
+        this.bonusCriticalChance = this.critChance
+        this.bonusScale = this.scale
     }
 
     override update(time: number, delta: number): void {
