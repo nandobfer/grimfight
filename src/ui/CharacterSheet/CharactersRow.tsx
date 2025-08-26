@@ -15,14 +15,14 @@ interface CharactersRowProps {
 export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
     const [charactersLength, setCharactersLength] = useState(0)
     const [augments, setAugments] = useState(Array.from(props.charactersGroup.augments.values()))
-    const [open, setOpen] = React.useState<boolean>(false)
+    const [openTooltip, setOpenTooltip] = React.useState<boolean>(false)
 
-    const show = () => {
-        setOpen(true)
+    const showTooltip = () => {
+        setOpenTooltip(true)
     }
 
-    const hide = () => {
-        setOpen(false)
+    const hideTooltip = () => {
+        setOpenTooltip(false)
     }
 
     useEffect(() => {
@@ -59,10 +59,10 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
             <AugmentModal team={props.charactersGroup} />
             <Tooltip
                 disableHoverListener
-                onMouseEnter={() => show()}
-                onClick={() => show()}
-                onMouseLeave={() => hide()}
-                open={open || false}
+                onMouseEnter={() => showTooltip()}
+                onClick={() => showTooltip()}
+                onMouseLeave={() => hideTooltip()}
+                open={openTooltip || false}
                 title={
                     augments.length > 0 && (
                         <Box sx={{ gap: 1, flexWrap: "wrap", overflowY: "auto" }}>
