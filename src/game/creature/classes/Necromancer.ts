@@ -14,7 +14,7 @@ export class Necromancer extends Character {
     baseArmor: number = 5
     baseAbilityPower: number = 50
 
-    abilityDescription: string = "Sumona um esqueletinho para lutar ao seu lado até a morte"
+    abilityDescription: string = "Sumona um esqueletinho para lutar ao seu lado até a morte, ba dum ts"
 
     constructor(scene: Game, id: string) {
         super(scene, "necromancer", id)
@@ -44,7 +44,7 @@ export class Necromancer extends Character {
         const skeleton = MonsterRegistry.create("skeleton", this.scene)
         skeleton.master = this
         this.team.minions.add(skeleton)
-        const {x, y} = this.randomPointAround(true)
+        const { x, y } = this.randomPointAround(true)
         const fx = new MagicCircleFx(this.scene, x, y)
         skeleton.teleportTo(x, y)
         skeleton.baseScale = 0.7
@@ -56,28 +56,6 @@ export class Necromancer extends Character {
         skeleton.target = this.target
 
         this.casting = false
-    }
-
-    private summonFx(x: number, y: number): void {
-        const smokeParticles = this.scene.add.particles(x, y, "blood", {
-            lifespan: { min: 300, max: 600 },
-            speed: { min: 20, max: 60 },
-            scale: { start: 0.4, end: 0 },
-            alpha: { start: 0.8, end: 0 },
-            quantity: 8,
-            blendMode: "NORMAL",
-            tint: 0x00ff66,
-            angle: { min: 0, max: 360 },
-            gravityY: -20,
-        })
-
-        // Explode the particles (one-time burst)
-        smokeParticles.explode(15)
-
-        // Auto-destroy after particles finish
-        this.scene.time.delayedCall(600, () => {
-            smokeParticles.destroy()
-        })
     }
 
     override reset(): void {
