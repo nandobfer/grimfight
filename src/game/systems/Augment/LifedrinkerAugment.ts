@@ -8,6 +8,7 @@ export class LifedrinkerAugment extends Augment {
         this.values.boost = Phaser.Math.Between(5, 20)
         this.descriptionValues.boost = { value: this.values.boost, color: "primary.main" }
         this.description = `increases lifesteal by [boost:${this.descriptionValues.boost.value}%]`
+        this.color = "success"
     }
 
     override applyModifier(creature: Creature): void {

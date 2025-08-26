@@ -8,6 +8,7 @@ export class BonusHealthAugment extends Augment {
         this.values.boost = Phaser.Math.RND.weightedPick([1, 1, 2])
         this.descriptionValues.boost = { color: "error.main", value: this.values.boost }
         this.description = `you gain [bonus:1 health]`
+        this.color = "default"
     }
 
     override onPick(team: CreatureGroup): void {

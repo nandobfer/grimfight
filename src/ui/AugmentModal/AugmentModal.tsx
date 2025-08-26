@@ -52,7 +52,7 @@ export const AugmentModal: React.FC<AugmentModalProps> = (props) => {
     return (
         <>
             {augmentAvailable && (
-                <Button variant="outlined" sx={{ pointerEvents: "auto" }} onClick={() => setOpen(true)}>
+                <Button variant="outlined" sx={{ pointerEvents: "auto" }} onClick={() => setOpen(true)} color="success">
                     Aprimoramento disponível!
                 </Button>
             )}

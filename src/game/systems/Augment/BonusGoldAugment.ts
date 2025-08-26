@@ -7,6 +7,7 @@ export class BonusGoldAugment extends Augment {
         super(name)
         this.descriptionValues.gold = { value: "floor", color: "warning.main" }
         this.description = `you gain your floor in [gold:gold]`
+        this.color = "default"
     }
 
     override onPick(team: CreatureGroup): void {

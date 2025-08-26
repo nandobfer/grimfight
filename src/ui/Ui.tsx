@@ -11,6 +11,7 @@ import { Counters } from "./Counters/Counters"
 import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawer"
 import { AugmentModal } from "./AugmentModal/AugmentModal"
 import { GameState } from "../game/scenes/Game"
+import { CharacterDrawer } from "./CharacterSheet/CharacerDrawer"
 
 interface UiProps {}
 
@@ -53,6 +54,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                     right: 0,
                     bottom: 0,
                     padding: 5,
+                    paddingBottom: 10,
                     // border: "1px solid red",
                     pointerEvents: "none",
                     justifyContent: "space-between",
@@ -62,9 +64,9 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {game && (
                     <>
                         <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
-                            <AugmentModal team={game.playerTeam} />
                             <CharactersRow charactersGroup={game.playerTeam} />
                             <CharacterStoreDrawer game={game} />
+                            <CharacterDrawer store={game.playerTeam.store} />
                         </Box>
                         <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
                             <Counters />

@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
-import { EventBus } from "../../game/tools/EventBus"
+import { Badge, Box, Button, ClickAwayListener, Drawer, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
 import { CharacterAvatar } from "./CharacterAvatar"
 import { CharacterStore } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
@@ -97,8 +96,8 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
         () => [
             { title: "Health", value: `${snap.health} / ${snap.maxHealth}` },
             { title: "Mana", value: `${snap.mana} / ${snap.maxMana}` },
-            { title: "Mana Regen", value: `${charRef.current.manaPerSecond} /s` }, // rarely changes
-            { title: "Mana /hit", value: `${charRef.current.manaPerAttack}` },
+            { title: "Mana Regen", value: `${Math.round(charRef.current.manaPerSecond)} /s` }, // rarely changes
+            { title: "Mana /hit", value: `${Math.round(charRef.current.manaPerAttack)}` },
             { title: "Ability Power", value: `${snap.abilityPower}` },
             { title: "Attack Damage", value: `${snap.adMin} - ${snap.adMax}` },
             { title: "Attack Speed", value: `${snap.attackSpeed} /s` },
@@ -118,50 +117,38 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
 
     const sell = () => props.store.sell(character.id)
     return (
-        <Box sx={{ flexDirection: "column" }}>
-            <AbilityTooltip description={character.abilityDescription} placement="auto">
-                <Button
-                    variant="outlined"
-                    fullWidth
-                    sx={{
-                        justifyContent: "start",
-                        padding: 1,
-                        gap: 1,
-                        alignItems: "start",
-                        flexDirection: "column",
-                    }}
-                >
-                    <Box sx={{ width: 1, gap: 1 }}>
-                        <Badge
-                            badgeContent={`${character.level}`}
-                            slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
-                        >
-                            <CharacterAvatar name={character.name} size={30} />
-                        </Badge>
-                        <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
-                            <Box sx={{ justifyContent: "space-between", width: 1 }}>
-                                <Typography variant="subtitle2">{character.name}</Typography>
-                                <Tooltip title="click to sell character">
-                                    <Button color="warning" onClick={sell} size="small" sx={{ padding: 0, minWidth: 0 }}>
-                                        <GoldCoin quantity={props.store.getCost(character.level)} fontSize={10} size={10} />
-                                    </Button>
-                                </Tooltip>
-                            </Box>
-                            <LinearProgress
-                                variant="determinate"
-                                value={characterHealthPercent}
-                                sx={{ width: 1, height: 7 }}
-                                color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
-                            />
+        <AbilityTooltip description={character.abilityDescription} placement="auto">
+            <>
+                <Box sx={{ width: 1, gap: 1 }}>
+                    <Badge
+                        badgeContent={`${character.level}`}
+                        slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
+                    >
+                        <CharacterAvatar name={character.name} size={30} />
+                    </Badge>
+                    <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
+                        <Box sx={{ justifyContent: "space-between", width: 1 }}>
+                            <Typography variant="subtitle2">{character.name}</Typography>
+                            <Tooltip title="click to sell character">
+                                <Button color="warning" onClick={sell} size="small" sx={{ padding: 0, minWidth: 0 }}>
+                                    <GoldCoin quantity={props.store.getCost(character.level)} fontSize={10} size={10} />
+                                </Button>
+                            </Tooltip>
                         </Box>
+                        <LinearProgress
+                            variant="determinate"
+                            value={characterHealthPercent}
+                            sx={{ width: 1, height: 7 }}
+                            color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
+                        />
                     </Box>
-                    <Box sx={{ flexDirection: "column", width: 1, color: "secondary.main" }}>
-                        {attributes.map((data) => (
-                            <SheetData key={data.title} title={data.title} value={data.value} />
-                        ))}
-                    </Box>
-                </Button>
-            </AbilityTooltip>
-        </Box>
+                </Box>
+                <Box sx={{ flexDirection: "column", width: 1, color: "secondary.main" }}>
+                    {attributes.map((data) => (
+                        <SheetData key={data.title} title={data.title} value={data.value} />
+                    ))}
+                </Box>
+            </>
+        </AbilityTooltip>
     )
 }
