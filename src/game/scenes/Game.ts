@@ -151,6 +151,7 @@ export class Game extends Scene {
     changeState(state: GameState) {
         this.state = state
         EventBus.emit("gamestate", this.state)
+        EventBus.emit("select-char", null)
     }
 
     startRound() {

@@ -62,9 +62,9 @@ export class Character extends Creature {
         this.scene.input.setDraggable(this)
 
         this.on("pointerover", () => {
-            if (this.scene.state === "idle") {
-                this.animateGlow(5)
-            }
+            // if (this.scene.state === "idle") {
+            this.animateGlow(5)
+            // }
         })
 
         this.on("pointerout", () => {
@@ -102,11 +102,17 @@ export class Character extends Creature {
                 this.setPosition(this.preDrag.x, this.preDrag.y)
                 this.body?.reset(this.preDrag.x, this.preDrag.y)
             }
+
             this.scene.grid.hideHighlight()
             this.scene.grid.hideDropOverlay()
             this.preDrag = undefined
             this.updateDepth()
         })
+
+        this.on("pointerup", () => {
+            EventBus.emit("select-char", this)
+        })
+        
     }
 
     private animateGlow(targetStrength: number) {

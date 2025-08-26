@@ -15,6 +15,7 @@ interface CharactersRowProps {
 export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
     const [characters, setCharacters] = useState(props.charactersGroup.getChildren())
     const [augments, setAugments] = useState(Array.from(props.charactersGroup.augments.values()))
+    const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null)
 
     useEffect(() => {
         const charactersHandler = (characters: Character[]) => {
@@ -27,14 +28,21 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
         const addAgument = (augment: Augment) => {
             setAugments((augments) => [...augments, augment])
         }
+
+        const selectChar = (char: Character) => {
+            setSelectedCharacter(char)
+        }
+
         EventBus.on("characters-change", charactersHandler)
         EventBus.on("augments-add", addAgument)
         EventBus.on("augments-change", augmentsHandler)
+        EventBus.on("select-char", selectChar)
 
         return () => {
             EventBus.off("characters-change", charactersHandler)
             EventBus.off("augments-add", addAgument)
             EventBus.off("augments-change", augmentsHandler)
+            EventBus.off("select-char", selectChar)
         }
     }, [])
 
@@ -64,9 +72,10 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
             <Typography sx={{ fontWeight: "bold", marginBottom: 1, marginTop: 1 }}>
                 {characters.length} / {max_characters_in_board}
             </Typography>
-            {characters.map((char) => (
+            {/* {characters.map((char) => (
                 <CharacterSheet character={char} key={char.id} store={props.charactersGroup.store} />
-            ))}
+            ))} */}
+            {selectedCharacter && <CharacterSheet character={selectedCharacter} store={props.charactersGroup.store} />}
         </Box>
     )
 }

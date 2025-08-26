@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, LinearProgress, Typography, useMediaQuery } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
 import { EventBus } from "../../game/tools/EventBus"
 import { CharacterAvatar } from "./CharacterAvatar"
 import { CharacterStore } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
 import { AbilityTooltip } from "./AbilityTooltip"
 import { Character } from "../../game/creature/character/Character"
+import { GoldCoin } from "../components/GoldCoin"
 
 interface CharacterSheetProps {
     character: Character
@@ -117,10 +118,20 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
 
     const sell = () => props.store.sell(character.id)
     return (
-        <Accordion sx={{ flexDirection: "column" }} slots={{ root: Box }}>
-            <AccordionSummary sx={{ padding: 0, marginTop: -1.5, marginBottom: -0.5 }}>
-                <AbilityTooltip description={character.abilityDescription} placement="auto">
-                    <Button variant="outlined" fullWidth sx={{ justifyContent: "start", padding: 1, gap: 1, alignItems: "center" }}>
+        <Box sx={{ flexDirection: "column" }}>
+            <AbilityTooltip description={character.abilityDescription} placement="auto">
+                <Button
+                    variant="outlined"
+                    fullWidth
+                    sx={{
+                        justifyContent: "start",
+                        padding: 1,
+                        gap: 1,
+                        alignItems: "start",
+                        flexDirection: "column",
+                    }}
+                >
+                    <Box sx={{ width: 1, gap: 1 }}>
                         <Badge
                             badgeContent={`${character.level}`}
                             slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
@@ -128,7 +139,14 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                             <CharacterAvatar name={character.name} size={30} />
                         </Badge>
                         <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
-                            <Typography variant="subtitle2">{character.name}</Typography>
+                            <Box sx={{ justifyContent: "space-between", width: 1 }}>
+                                <Typography variant="subtitle2">{character.name}</Typography>
+                                <Tooltip title="click to sell character">
+                                    <Button color="warning" onClick={sell} size="small" sx={{ padding: 0, minWidth: 0 }}>
+                                        <GoldCoin quantity={props.store.getCost(character.level)} fontSize={10} size={10} />
+                                    </Button>
+                                </Tooltip>
+                            </Box>
                             <LinearProgress
                                 variant="determinate"
                                 value={characterHealthPercent}
@@ -136,19 +154,14 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                                 color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
                             />
                         </Box>
-                    </Button>
-                </AbilityTooltip>
-            </AccordionSummary>
-            <AccordionDetails sx={{ marginTop: -1.5, marginBottom: -0.5 }}>
-                <Box sx={{ flexDirection: "column" }}>
-                    {attributes.map((data) => (
-                        <SheetData key={data.title} title={data.title} value={data.value} />
-                    ))}
-                    <Button color="warning" onClick={sell}>
-                        Sell: {props.store.getCost(character.level)} g
-                    </Button>
-                </Box>
-            </AccordionDetails>
-        </Accordion>
+                    </Box>
+                    <Box sx={{ flexDirection: "column", width: 1, color: "secondary.main" }}>
+                        {attributes.map((data) => (
+                            <SheetData key={data.title} title={data.title} value={data.value} />
+                        ))}
+                    </Box>
+                </Button>
+            </AbilityTooltip>
+        </Box>
     )
 }

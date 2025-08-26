@@ -263,6 +263,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.off("pointerover")
         this.off("pointerout")
         this.off("drag")
+        this.off("pointerup")
+        this.off("pointerdown")
     }
 
     handleMouseEvents() {
