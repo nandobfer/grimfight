@@ -3,19 +3,19 @@ import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
 export class Statikk extends Character {
-    baseAttackSpeed = 1.25
+    baseAttackSpeed = 1.2
     baseSpeed = 80
     baseAttackDamage = 20
     baseMaxMana: number = 0
-    // baseMaxMana: number = 50
     baseAbilityPower: number = 20
     manaLocked: boolean = true
 
-    abilityDescription: string = "Passivo: Cada 3º ataque lança uma cadeia de raios no alvo, que se propaga e causa dano reduzido a cada propagação"
-    // abilityDescription: string = "Aplica um acúmulo de veneno no alvo"
+    abilityDescription: string =
+        "Passivo: Cada 3º ataque lança uma cadeia de raios no alvo, que se propaga e causa dano reduzido a cada propagação\nGanha velocidade de ataque bônus equivalente a porcentagem de vida perdida"
 
     attacksCount = 0
     bonusAttackSpeed = 0
+    bonusSpeed = 0
     missingHealthPercent = 1
     aura
 
@@ -24,12 +24,6 @@ export class Statikk extends Character {
 
         this.aura = this.postFX.addGlow(0xddaa00, 0)
     }
-
-    // override getAttackingAnimation(): string {
-    //     // this.attackAnimationImpactFrame = this.attacksCount === 2 ? 3 : 5
-    //     // return this.attacksCount === 2 ? "attacking-special" : `attacking`
-    //     return "attacking"
-    // }
 
     override extractAttackingAnimation() {
         this.attackAnimationImpactFrame = 3
@@ -65,16 +59,26 @@ export class Statikk extends Character {
     }
 
     scaleSpeedWithLife() {
-        this.missingHealthPercent = 2 - this.health / this.maxHealth
-        this.attackSpeed = this.baseAttackSpeed * this.bonusAttackSpeed * this.missingHealthPercent
-        this.aura.outerStrength = (this.missingHealthPercent - 1) * 1.5
+        this.missingHealthPercent = this.multFromHealth()
 
+        this.attackSpeed = this.bonusAttackSpeed * this.missingHealthPercent
+        this.speed = this.bonusSpeed * this.missingHealthPercent
+
+        this.aura.outerStrength = (this.missingHealthPercent - 1) * 1.5
+    }
+
+    private multFromHealth(): number {
+        if (this.maxHealth <= 0) return 1
+        // 1 at full HP → 2 at 0 HP
+        const m = 2 - this.health / this.maxHealth
+        return Phaser.Math.Clamp(m, 1, 2)
     }
 
     override reset(): void {
         super.reset()
         this.attacksCount = 0
         this.bonusAttackSpeed = this.attackSpeed
+        this.bonusSpeed = this.speed
         this.missingHealthPercent = 1
     }
 

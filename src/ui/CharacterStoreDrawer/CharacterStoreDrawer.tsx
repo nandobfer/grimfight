@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Drawer, IconButton } from "@mui/material"
+import { Box, Button, ClickAwayListener, Drawer, IconButton } from "@mui/material"
 import { Game, GameState } from "../../game/scenes/Game"
 import { StoreList } from "./StoreList"
 import { Close, Refresh } from "@mui/icons-material"
@@ -42,42 +42,48 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
     }, [])
 
     return (
-        <>
-            <Button variant="contained" onClick={toggleStore} sx={{ pointerEvents: "auto", marginTop: "auto" }} disabled={gamestate === "fighting"}>
-                Loja
-            </Button>
-
-            <Drawer
-                open={gamestate === "fighting" ? false : open}
-                onClose={closeStore}
-                anchor="bottom"
-                variant="persistent"
-                keepMounted
-                ModalProps={{ keepMounted: true }}
-                slotProps={{
-                    paper: {
-                        elevation: 1,
-                        sx: {
-                            width: "65vw",
-                            // height: "20vh",
-                            bgcolor: "background.default",
-                            overflow: "visible",
-                            margin: "0 auto",
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            flexDirection: "row",
-                            pointerEvents: "auto",
+        <ClickAwayListener onClickAway={closeStore}>
+            <Box sx={{ display: "contents" }}>
+                <Button
+                    variant="contained"
+                    onClick={toggleStore}
+                    sx={{ pointerEvents: "auto", marginTop: "auto" }}
+                    disabled={gamestate === "fighting"}
+                >
+                    Loja
+                </Button>
+                <Drawer
+                    open={gamestate === "fighting" ? false : open}
+                    onClose={closeStore}
+                    anchor="bottom"
+                    variant="persistent"
+                    keepMounted
+                    ModalProps={{ keepMounted: true }}
+                    slotProps={{
+                        paper: {
+                            elevation: 1,
+                            sx: {
+                                width: "65vw",
+                                // height: "20vh",
+                                bgcolor: "background.default",
+                                overflow: "visible",
+                                margin: "0 auto",
+                                borderTopLeftRadius: 10,
+                                borderTopRightRadius: 10,
+                                flexDirection: "row",
+                                pointerEvents: "auto",
+                            },
                         },
-                    },
-                }}
-            >
-                <StoreList game={game} />
-                <Box sx={{ flexDirection: "column", alignItems: "center" }}>
-                    <IconButton color="primary" onClick={closeStore}>
-                        <Close />
-                    </IconButton>
-                </Box>
-            </Drawer>
-        </>
+                    }}
+                >
+                    <StoreList game={game} />
+                    <Box sx={{ flexDirection: "column", alignItems: "center" }}>
+                        <IconButton color="primary" onClick={closeStore}>
+                            <Close />
+                        </IconButton>
+                    </Box>
+                </Drawer>
+            </Box>
+        </ClickAwayListener>
     )
 }
