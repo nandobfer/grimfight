@@ -26,14 +26,13 @@ export const GameStateButtons: React.FC<GameStateButtonsProps> = (props) => {
 
     return (
         <Box sx={{ pointerEvents: "auto", flexDirection: "column", gap: 1, height: "min-content" }}>
+            <DebugMenu game={props.game} />
+            <Divider />
             {gameState === "idle" && (
                 <Button variant="outlined" onClick={onPlayClick} color="error">
                     fight
                 </Button>
             )}
-
-            <Divider />
-            <DebugMenu game={props.game} />
         </Box>
     )
 }

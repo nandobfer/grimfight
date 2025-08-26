@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, ClickAwayListener, Drawer, IconButton } from "@mui/material"
+import { Box, Button, ClickAwayListener, Drawer, IconButton, useMediaQuery } from "@mui/material"
 import { Game, GameState } from "../../game/scenes/Game"
 import { StoreList } from "./StoreList"
 import { Close, Refresh } from "@mui/icons-material"
-import { GoldCoin } from "../components/GoldCoin"
 import { EventBus } from "../../game/tools/EventBus"
+import { usePlayerProgress } from "../hooks/usePlayerProgress"
+import { GoldCoin } from "../components/GoldCoin"
 
 interface CharacterStoreDrawerProps {
     game: Game
 }
 
 export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game }) => {
+    const { playerGold } = usePlayerProgress()
+    const isMobile = useMediaQuery("(orientation: portrait)")
+
     const [open, setOpen] = useState(true)
     const [gamestate, setGamestate] = useState<GameState>("idle")
 
     const closeStore = () => {
         setOpen(false)
+    }
+
+    const shuffle = () => {
+        game.playerTeam.store.shuffle(false)
     }
 
     const openStore = () => {
@@ -47,7 +55,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                 <Button
                     variant="contained"
                     onClick={toggleStore}
-                    sx={{ pointerEvents: "auto", marginTop: "auto" }}
+                    sx={{ pointerEvents: "auto", marginTop: "auto", width: 100 }}
                     disabled={gamestate === "fighting"}
                 >
                     Loja
@@ -63,7 +71,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                         paper: {
                             elevation: 1,
                             sx: {
-                                width: "65vw",
+                                width: isMobile ? "100vw" : "65vw",
                                 // height: "20vh",
                                 bgcolor: "background.default",
                                 overflow: "visible",
@@ -76,11 +84,17 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                         },
                     }}
                 >
-                    <StoreList game={game} />
+                    <StoreList game={game} playerGold={playerGold} />
                     <Box sx={{ flexDirection: "column", alignItems: "center" }}>
-                        <IconButton color="primary" onClick={closeStore}>
+                        {/* <IconButton color="primary" onClick={closeStore}>
                             <Close />
-                        </IconButton>
+                        </IconButton> */}
+                        <Box sx={{ flexDirection: "column", alignItems: "center", filter: playerGold < 2 ? "grayscale(100%)" : undefined, flex: 1 }}>
+                            <IconButton color="primary" onClick={shuffle} disabled={playerGold < 2} sx={{}}>
+                                <Refresh />
+                            </IconButton>
+                            <GoldCoin quantity={2} fontSize={10} size={6} />
+                        </Box>
                     </Box>
                 </Drawer>
             </Box>

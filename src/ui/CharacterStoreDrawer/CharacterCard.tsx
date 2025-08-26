@@ -46,10 +46,14 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                 >
                     <Badge
                         badgeContent={`Lv ${character.level}`}
-                        slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
+                        slotProps={{
+                            badge: {
+                                sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold", fontSize: isMobile ? 8 : undefined },
+                            },
+                        }}
                         overlap="circular"
                     >
-                        <CharacterAvatar name={character.name} size={((isMobile ? 10 : 4) / 100) * window.innerWidth} disabled={disabled} />
+                        <CharacterAvatar name={character.name} size={((isMobile ? 7 : 4) / 100) * window.innerWidth} disabled={disabled} />
                     </Badge>
 
                     <Box sx={{ width: 1, gap: 1, justifyContent: "center" }}>
