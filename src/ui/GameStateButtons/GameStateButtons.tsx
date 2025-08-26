@@ -33,7 +33,7 @@ export const GameStateButtons: React.FC<GameStateButtonsProps> = (props) => {
             )}
 
             <Divider />
-            {/* <DebugMenu game={props.game} /> */}
+            <DebugMenu game={props.game} />
         </Box>
     )
 }

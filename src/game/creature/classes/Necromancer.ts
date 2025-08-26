@@ -17,7 +17,7 @@ export class Necromancer extends Character {
     abilityDescription: string = "Sumona um esqueletinho para lutar ao seu lado até a morte, ba dum ts"
 
     constructor(scene: Game, id: string) {
-        super(scene, "necromancer", id)
+        super(scene, "zairon", id)
     }
 
     override getAttackingAnimation(): string {
