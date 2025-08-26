@@ -64,6 +64,9 @@ export class Character extends Creature {
 
         this.scene.input.setDraggable(this)
 
+        this.scene.input.dragDistanceThreshold = 12 // pixels before drag starts (default ~16)
+        this.scene.input.dragTimeThreshold = 50
+
         this.on("pointerover", () => {
             // if (this.scene.state === "idle") {
             this.animateGlow(5)
@@ -108,14 +111,17 @@ export class Character extends Creature {
 
             this.scene.grid.hideHighlight()
             this.scene.grid.hideDropOverlay()
-            this.preDrag = undefined
+
             this.updateDepth()
         })
 
         this.on("pointerup", () => {
+            if (this.preDrag) {
+                this.preDrag = undefined
+                return
+            }
             EventBus.emit("select-char", this)
         })
-        
     }
 
     private animateGlow(targetStrength: number) {
