@@ -49,7 +49,6 @@ export class Monster extends Creature {
 
         // Add dark, smoky boss effects
         this.addDarkAura()
-        this.addShadowParticles()
     }
 
     private addDarkAura() {
@@ -57,21 +56,6 @@ export class Monster extends Creature {
         this.addAura(0x330033, Math.min(2, this.challengeRating / 5))
     }
 
-    private addShadowParticles() {
-        // Shadow wisps that emanate from the boss
-        this.shadowParticles = this.scene.add.particles(this.x, this.y, "blood", {
-            lifespan: { min: 1000, max: 2000 },
-            speed: { min: 10, max: 30 },
-            scale: { start: 0.3, end: 0 },
-            alpha: { start: 0.6, end: 0 },
-            quantity: 10,
-            frequency: 100,
-            blendMode: "MULTIPLY",
-            tint: 0x000022,
-        })
-
-        this.shadowParticles.startFollow(this)
-    }
 
     private addSmokeEffect() {
         // Dark smoke effect

@@ -9,7 +9,6 @@ import { LoadingGame } from "./LoadingGame"
 import { Recount } from "./Recount/Recount"
 import { Counters } from "./Counters/Counters"
 import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawer"
-import { AugmentModal } from "./AugmentModal/AugmentModal"
 import { GameState } from "../game/scenes/Game"
 import { CharacterDrawer } from "./CharacterSheet/CharacerDrawer"
 
@@ -64,14 +63,15 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {game && (
                     <>
                         <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
-                            <CharactersRow charactersGroup={game.playerTeam} />
+                            <CharactersRow game={game} />
+                            <Recount />
+
                             <CharacterStoreDrawer game={game} />
                             <CharacterDrawer store={game.playerTeam.store} />
                         </Box>
                         <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
                             <Counters />
                             <Box sx={{ flexDirection: "column", marginTop: "auto" }}>
-                                <Recount />
                                 <GameStateButtons game={game} />
                             </Box>
                         </Box>

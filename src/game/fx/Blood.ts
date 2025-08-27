@@ -6,7 +6,7 @@ export const burstBlood = (scene: Game, x: number, y: number) => {
         speed: { min: 30, max: 80 },
         scale: { start: 0.15, end: 0 },
         quantity: 5,
-        blendMode: "NORMAL",
+        // blendMode: "NORMAL",
         frequency: -1,
     })
 

@@ -78,25 +78,26 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     private manaBar: ProgressBar
     aura?: Phaser.FX.Glow
 
-    constructor(scene: Game, name: string, id: string) {
+    constructor(scene: Game, name: string, id: string, dataOnly = false) {
         super(scene, -1000, -1000, name)
 
         this.id = id
         this.name = name
-        this.scene.add.existing(this)
-        this.scene.physics.add.existing(this)
-        this.setCollideWorldBounds(true)
-        this.body.pushable = false
-        this.setOrigin(0.5, 0.75)
 
-        this.createAnimations()
+        if (!dataOnly) {
+            this.scene.add.existing(this)
+            this.scene.physics.add.existing(this)
+            this.setCollideWorldBounds(true)
+            this.body.pushable = false
+            this.setOrigin(0.5, 0.75)
 
-        this.anims.play(`${this.name}-idle-down`)
+            this.createAnimations()
+            this.anims.play(`${this.name}-idle-down`)
+            this.healthBar = new ProgressBar(this, { color: 0x2ecc71, offsetY: -30, interpolateColor: true })
+            this.manaBar = new ProgressBar(this, { color: 0x3498db, offsetY: -25 })
 
-        this.healthBar = new ProgressBar(this, { color: 0x2ecc71, offsetY: -30, interpolateColor: true })
-        this.manaBar = new ProgressBar(this, { color: 0x3498db, offsetY: -25 })
-
-        this.setPipeline("Light2D")
+            this.setPipeline("Light2D")
+        }
     }
 
     reset() {

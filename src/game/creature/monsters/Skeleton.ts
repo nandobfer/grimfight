@@ -21,7 +21,7 @@ export class Skeleton extends Monster {
             speed: { min: 30, max: 80 },
             scale: { start: 0.15, end: 0 },
             quantity: 5,
-            blendMode: "NORMAL",
+            // blendMode: "NORMAL",
             frequency: -1,
             tint: 0xfff,
         })

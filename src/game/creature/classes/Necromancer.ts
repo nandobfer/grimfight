@@ -7,7 +7,7 @@ import { MonsterRegistry } from "../monsters/MonsterRegistry"
 export class Necromancer extends Character {
     baseAttackSpeed = 0.85
     baseAttackDamage = 15
-    baseAttackRange = 2
+    baseAttackRange = 3
     baseManaPerSecond = 10
     baseMaxMana = 150
     baseMaxHealth = 300
@@ -50,7 +50,7 @@ export class Necromancer extends Character {
         skeleton.baseScale = 0.7
         skeleton.addAura(0x00ff66, 1)
         skeleton.baseSpeed = this.baseSpeed
-        skeleton.baseAttackDamage += this.abilityPower * 0.07
+        skeleton.baseAttackDamage += this.abilityPower * 0.1
         skeleton.baseMaxHealth += this.abilityPower
         skeleton.reset()
         skeleton.target = this.target

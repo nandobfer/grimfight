@@ -40,6 +40,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                         justifyContent: "start",
                         filter: disabled ? "grayscale(100%)" : undefined,
                         visibility: item.sold ? "hidden" : undefined,
+                        maxWidth: isMobile ? "19vw" : "14vw",
                     }}
                     disabled={disabled || item.sold}
                     onClick={buyCharacter}

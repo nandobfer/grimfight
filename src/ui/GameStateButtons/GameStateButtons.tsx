@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Divider } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import { Game, GameState } from "../../game/scenes/Game"
 import { EventBus } from "../../game/tools/EventBus"
-import { DebugMenu } from "../DebugMenu/DebugMenu"
 
 interface GameStateButtonsProps {
     game: Game
@@ -26,8 +25,6 @@ export const GameStateButtons: React.FC<GameStateButtonsProps> = (props) => {
 
     return (
         <Box sx={{ pointerEvents: "auto", flexDirection: "column", gap: 1, height: "min-content" }}>
-            <DebugMenu game={props.game} />
-            <Divider />
             {gameState === "idle" && (
                 <Button variant="outlined" onClick={onPlayClick} color="error">
                     fight

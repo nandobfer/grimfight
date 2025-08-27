@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react"
 import { Box, Button, Chip, Tooltip, Typography } from "@mui/material"
 import { EventBus } from "../../game/tools/EventBus"
-import { CharacterGroup } from "../../game/creature/character/CharacterGroup"
-import { max_characters_in_board } from "../../game/scenes/Game"
+import { Game, max_characters_in_board } from "../../game/scenes/Game"
 import { Augment } from "../../game/systems/Augment/Augment"
 import { renderDescription } from "../../game/tools/TokenizedText"
 import { Character } from "../../game/creature/character/Character"
 import { AugmentModal } from "../AugmentModal/AugmentModal"
+import { DebugMenu } from "../DebugMenu/DebugMenu"
 
 interface CharactersRowProps {
-    charactersGroup: CharacterGroup
+    game: Game
 }
 
 export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
     const [charactersLength, setCharactersLength] = useState(0)
-    const [augments, setAugments] = useState(Array.from(props.charactersGroup.augments.values()))
+    const [augments, setAugments] = useState(Array.from(props.game.playerTeam.augments.values()))
     const [openTooltip, setOpenTooltip] = React.useState<boolean>(false)
 
     const showTooltip = () => {
@@ -56,7 +56,7 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
                 gap: 1,
             }}
         >
-            <AugmentModal team={props.charactersGroup} />
+            <AugmentModal team={props.game.playerTeam} />
             <Tooltip
                 disableHoverListener
                 onMouseEnter={() => showTooltip()}
@@ -82,9 +82,12 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
                 <Button variant="outlined">Aprimoramentos x{augments.length}</Button>
             </Tooltip>
 
-            <Typography sx={{ fontWeight: "bold", marginBottom: 1, marginTop: 1 }}>
-                {charactersLength} / {max_characters_in_board}
-            </Typography>
+            <Box sx={{ alignItems: "center", gap: 1 }}>
+                <Typography sx={{ fontWeight: "bold", marginBottom: 1, marginTop: 1 }}>
+                    {charactersLength} / {max_characters_in_board}
+                </Typography>
+                <DebugMenu game={props.game} />
+            </Box>
         </Box>
     )
 }

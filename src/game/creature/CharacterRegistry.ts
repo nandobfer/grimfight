@@ -13,18 +13,21 @@ import { Necromancer } from "./classes/Necromancer"
 
 // Create a character registry
 export class CharacterRegistry {
-    private static registry: Map<string, new (scene: Game, name: string, id: string, boardX?: number, boardY?: number) => Character> = new Map()
+    private static registry: Map<
+        string,
+        new (scene: Game, name: string, id: string, boardX?: number, boardY?: number, dataOnly?: boolean) => Character
+    > = new Map()
 
     static register(name: string, characterClass: new (scene: Game, name: string, id: string) => Character) {
         this.registry.set(name, characterClass)
     }
 
-    static create(name: string, scene: Game, id: string, boardX?: number, boardY?: number): Character {
+    static create(name: string, scene: Game, id: string, boardX?: number, boardY?: number, dataOnly?: boolean): Character {
         const CharacterClass = this.registry.get(name)
         if (!CharacterClass) {
             throw new Error(`Character class not found: ${name}`)
         }
-        const character = new CharacterClass(scene, id, id, boardX, boardY)
+        const character = new CharacterClass(scene, id, id, boardX, boardY, dataOnly)
         return character
     }
 
@@ -36,9 +39,9 @@ export class CharacterRegistry {
         return RNG.pick(this.getAllRegistered())
     }
 
-    static random(scene: Game) {
+    static random(scene: Game, dataOnly?: boolean) {
         const name = this.randomName()
-        const character = this.create(name, scene, RNG.uuid())
+        const character = this.create(name, scene, RNG.uuid(), undefined, undefined, dataOnly)
         return character
     }
 }

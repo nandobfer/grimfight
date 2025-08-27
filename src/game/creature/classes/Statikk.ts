@@ -53,7 +53,7 @@ export class Statikk extends Character {
         if (this.attacksCount === 3) {
             this.attacksCount = 0
 
-            const lightning = new LightningBolt(this, this.abilityPower)
+            const lightning = new LightningBolt(this, this.abilityPower * 1.2)
             lightning.fire(this.target)
         }
     }

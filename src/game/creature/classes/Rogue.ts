@@ -41,7 +41,7 @@ export class Rogue extends Character {
             scale: { start: 0.4, end: 0 },
             alpha: { start: 0.8, end: 0 },
             quantity: 8,
-            blendMode: "NORMAL",
+            // blendMode: "NORMAL",
             tint: 0xfff,
             angle: { min: 0, max: 360 },
             gravityY: -20,

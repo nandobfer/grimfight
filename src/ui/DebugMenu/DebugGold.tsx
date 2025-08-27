@@ -4,6 +4,7 @@ import { Game } from "../../game/scenes/Game"
 
 interface DebugFloorProps {
     game: Game
+    closeMenu: () => void
 }
 
 export const DebugGold: React.FC<DebugFloorProps> = (props) => {
@@ -18,6 +19,7 @@ export const DebugGold: React.FC<DebugFloorProps> = (props) => {
         event.preventDefault()
         setGold(Number(value))
         setValue('')
+        props.closeMenu()
     }
 
     return (
@@ -27,7 +29,6 @@ export const DebugGold: React.FC<DebugFloorProps> = (props) => {
             value={value}
             onChange={(ev) => setValue(ev.target.value.replace(/\D/g, ""))}
             size="small"
-            sx={{ width: "9vw" }}
             variant="standard"
         />
         </form>

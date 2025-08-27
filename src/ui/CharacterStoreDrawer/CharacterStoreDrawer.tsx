@@ -19,7 +19,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
     const [gamestate, setGamestate] = useState<GameState>("idle")
 
     const closeStore = () => {
-        setOpen(false)
+        // setOpen(false)
     }
 
     const shuffle = () => {
