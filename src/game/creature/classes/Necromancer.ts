@@ -47,6 +47,8 @@ export class Necromancer extends Character {
         const { x, y } = this.randomPointAround(true)
         const fx = new MagicCircleFx(this.scene, x, y)
         skeleton.teleportTo(x, y)
+        skeleton.boardX = this.boardX
+        skeleton.boardY = this.boardY
         skeleton.baseScale = 0.7
         skeleton.addAura(0x00ff66, 1)
         skeleton.baseSpeed = this.baseSpeed
