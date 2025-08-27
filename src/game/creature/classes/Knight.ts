@@ -15,9 +15,9 @@ export class Knight extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Ao longo de 2.5 segundos, ganha armadura progressivamente, atingindo um máximo de [warning.main:${
+        return `Ao longo de 2.5 segundos, ganha armadura progressivamente, atingindo um máximo de [warning.main:${Math.round(
             this.armor * 10
-        } (10x Armor)], que decai ao longo da mesma duração.`
+        )} (10x Armor)], que decai ao longo da mesma duração.`
     }
 
     castAbility(): void {

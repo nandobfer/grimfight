@@ -24,8 +24,8 @@ export class Necromancer extends Character {
         const skeleton = MonsterRegistry.getBaseStats("skeleton")
         return `Sumona um esqueletinho para lutar ao seu lado:
 Esqueleto:
-vida máxima: [success.main:${skeleton.baseMaxHealth + this.abilityPower}] (${skeleton.baseMaxHealth} + [info.main:100% AP]).
-dano de ataque: [error.main:${skeleton.baseAttackDamage + this.abilityPower * 0.1}] (${skeleton.baseAttackDamage} + [info.main:10% AP]).`
+vida máxima: [success.main:${Math.round(skeleton.baseMaxHealth + this.abilityPower)}] (${skeleton.baseMaxHealth} + [info.main:100% AP]).
+dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilityPower * 0.1)}] (${skeleton.baseAttackDamage} + [info.main:10% AP]).`
     }
 
     override getAttackingAnimation(): string {

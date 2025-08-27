@@ -25,9 +25,9 @@ export class Statikk extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Cada [primary.main:3º ataque] lança uma cadeia de raios no alvo, causando [info.main:${
+        return `Cada [primary.main:3º ataque] lança uma cadeia de raios no alvo, causando [info.main:${Math.round(
             this.abilityPower * 1.2
-        } (120% AP)] de dano e se propaga 5x, causando dano reduzido a cada propagação
+        )} (120% AP)] de dano e se propaga 5x, causando dano reduzido a cada propagação
 Além disso, ganha velocidade de ataque bônus equivalente a porcentagem de vida perdida.`
     }
 

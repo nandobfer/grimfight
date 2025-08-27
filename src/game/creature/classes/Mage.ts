@@ -18,9 +18,9 @@ export class Mage extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Explode o alvo atual, causando [info.main:${this.abilityPower * 2} (200% AP)] de dano, além de [info.main:${
+        return `Explode o alvo atual, causando [info.main:${Math.round(this.abilityPower * 2)} (200% AP)] de dano, além de [info.main:${Math.round(
             this.abilityPower * 0.5
-        } (50% AP)] aos inimigos adjacentes.`
+        )} (50% AP)] aos inimigos adjacentes.`
     }
 
     override getAttackingAnimation(): string {

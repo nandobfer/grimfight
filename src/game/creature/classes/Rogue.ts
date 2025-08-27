@@ -14,9 +14,9 @@ export class Rogue extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Se teleporta para trás do alvo mais [primary.main:distante] e executa um ataque duplo imediatamente, causando [error.main:${
+        return `Se teleporta para trás do alvo mais [primary.main:distante] e executa um ataque duplo imediatamente, causando [error.main:${Math.round(
             this.attackDamage * 2
-        } (2x AD)] de dano.`
+        )} (2x AD)] de dano.`
     }
 
     override castAbility(): void {

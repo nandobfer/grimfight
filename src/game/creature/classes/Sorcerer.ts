@@ -19,9 +19,9 @@ export class Sorcerer extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Inimigos atingidos pela nevasca recebem [info.main:${
+        return `Inimigos atingidos pela nevasca recebem [info.main:${Math.round(
             this.abilityPower * 0.5 * 5
-        } (250% AP)] de dano ao longo de 2 segundos e são [primary.main:congelados].`
+        )} (250% AP)] de dano ao longo de 2 segundos e são [primary.main:congelados].`
     }
 
     override getAttackingAnimation(): string {
