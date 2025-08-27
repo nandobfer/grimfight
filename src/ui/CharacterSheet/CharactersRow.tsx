@@ -3,7 +3,7 @@ import { Box, Button, Chip, Tooltip, Typography } from "@mui/material"
 import { EventBus } from "../../game/tools/EventBus"
 import { Game, max_characters_in_board } from "../../game/scenes/Game"
 import { Augment } from "../../game/systems/Augment/Augment"
-import { renderDescription } from "../../game/tools/TokenizedText"
+import { renderTokensDescription } from "../../game/tools/TokenizedText"
 import { Character } from "../../game/creature/character/Character"
 import { AugmentModal } from "../AugmentModal/AugmentModal"
 import { DebugMenu } from "../DebugMenu/DebugMenu"
@@ -69,7 +69,7 @@ export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
                             {augments.map((augment, index) => (
                                 <Tooltip
                                     placement="auto"
-                                    title={renderDescription(augment.descriptionValues, augment.description)}
+                                    title={renderTokensDescription(augment.descriptionValues, augment.description)}
                                     key={augment.name + index.toString()}
                                 >
                                     <Chip label={augment.name} size="small" onClick={() => null} color={augment.color} />

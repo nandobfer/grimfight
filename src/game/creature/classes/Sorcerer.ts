@@ -12,10 +12,16 @@ export class Sorcerer extends Character {
     baseMaxHealth = 300
     baseAbilityPower: number = 50
 
-    abilityDescription: string = "Lança uma nevasca no campo, causando dano e congelando os inimigos atingidos"
+    abilityName: string = "Nevasca"
 
     constructor(scene: Game, id: string) {
         super(scene, "sorcerer", id)
+    }
+
+    override getAbilityDescription(): string {
+        return `Inimigos atingidos pela nevasca recebem [info.main:${
+            this.abilityPower * 0.5 * 5
+        } (250% AP)] de dano ao longo de 2 segundos e são [primary.main:congelados].`
     }
 
     override getAttackingAnimation(): string {

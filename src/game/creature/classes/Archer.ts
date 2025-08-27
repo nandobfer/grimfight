@@ -10,11 +10,14 @@ export class Archer extends Character {
     baseAttackRange = 4
     baseMaxHealth = 200
 
-    abilityDescription: string = "Atira uma rajada de 10 flechas a sua frente"
+    abilityName: string = "Salva de flechas"
 
     constructor(scene: Game, id: string) {
         super(scene, "archer", id)
-        
+    }
+
+    override getAbilityDescription(): string {
+        return `Atira 10 flechas em um cone, cada uma causa [error.main:${Math.round(this.attackDamage * 0.5)} (0.5x AD)] de dano.`
     }
 
     override extractAttackingAnimation() {

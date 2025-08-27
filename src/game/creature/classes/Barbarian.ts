@@ -8,15 +8,23 @@ export class Barbarian extends Character {
     baseAttackSpeed: number = 1.15
     baseAbilityPower: number = 25
 
-    abilityDescription: string = "Cura uma porcentagem da vida faltante"
+    abilityName: string = "Vigor"
 
     constructor(scene: Game, id: string) {
         super(scene, "barbarian", id)
     }
 
+    override getAbilityDescription(): string {
+        return `Recupera [success.main:${Math.round(this.getHealValue())} (12% HP perdido)] [info.main:(200% AP)] pontos de vida.`
+    }
+
+    getHealValue() {
+        return (1 - this.health / this.maxHealth) * 0.12 * this.maxHealth + this.abilityPower * 2
+    }
+
     castAbility(): void {
         this.casting = true
-        const { value: healing, crit } = this.calculateDamage((1 - this.health / this.maxHealth) * 0.12 * this.maxHealth + this.abilityPower * 2)
+        const { value: healing, crit } = this.calculateDamage(this.getHealValue())
         this.heal(healing, crit)
 
         this.casting = false

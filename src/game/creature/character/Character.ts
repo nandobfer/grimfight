@@ -28,6 +28,7 @@ export class Character extends Creature {
     baseAbilityPower: number = 0
 
     abilityDescription: string = ""
+    abilityName: string = ""
 
     constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
         super(scene, name, id)
@@ -191,9 +192,14 @@ export class Character extends Creature {
             boardY: this.y,
             id: this.id,
             name: this.name,
-            abilityDescription: this.abilityDescription,
+            abilityDescription: this.getAbilityDescription(),
         }
         return data
+    }
+
+    // to be overriden
+    getAbilityDescription() {
+        return ""
     }
 
     override calculateAttackRange() {

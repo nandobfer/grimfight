@@ -39,6 +39,9 @@ export class CharacterStore {
             const targetLevel = RNG.characterLevel(highestPossibleLevel)
             character.levelUpTo(targetLevel)
 
+            if (character.level === 1) {
+                character.calculateStats()
+            }
             const dto = character.getDto()
             this.items.push({ character: dto, cost: this.getCost(dto.level), sold: false })
             character.destroy(true)

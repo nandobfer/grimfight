@@ -13,8 +13,7 @@ export class Lizwan extends Character {
     baseAbilityPower: number = 25
     manaLocked: boolean = true
 
-    abilityDescription: string = "Passivo: Ataques aplicam um acúmulo de veneno no alvo"
-    // abilityDescription: string = "Aplica um acúmulo de veneno no alvo"
+    abilityName = "Deadly Poison"
 
     constructor(scene: Game, id: string) {
         super(scene, "lizwan", id)
@@ -41,6 +40,13 @@ export class Lizwan extends Character {
 
     //     this.casting = false
     // }
+
+    override getAbilityDescription(): string {
+        return `Ataques aplicam um acúmulo de veneno mortal.
+O veneno causa [info.main:${Math.round(
+            this.abilityPower * 0.1
+        )} (0.1x AP)] de dano por segundo. Dura 10 segundos e [primary.main:acumula indefinidamente].`
+    }
 
     override landAttack(): void {
         super.landAttack()

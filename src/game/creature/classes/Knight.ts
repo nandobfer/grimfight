@@ -8,10 +8,16 @@ export class Knight extends Character {
     baseAttackDamage = 13
     baseMaxMana = 90
 
-    abilityDescription: string = "Multiplica sua armadura ao longo do tempo"
+    abilityName = "Levantar escudo"
 
     constructor(scene: Game, id: string) {
         super(scene, "knight", id)
+    }
+
+    override getAbilityDescription(): string {
+        return `Ao longo de 2.5 segundos, ganha armadura progressivamente, atingindo um máximo de [warning.main:${
+            this.armor * 10
+        } (10x Armor)], que decai ao longo da mesma duração.`
     }
 
     castAbility(): void {

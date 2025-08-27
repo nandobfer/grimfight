@@ -11,16 +11,22 @@ export class Mage extends Character {
     baseMaxHealth = 200
     baseAbilityPower: number = 50
 
-    abilityDescription: string = "Explode o alvo atual, causando dano a ele e aos inimigos em volta"
+    abilityName = "Explosão"
 
     constructor(scene: Game, id: string) {
         super(scene, "mage", id)
     }
-    
+
+    override getAbilityDescription(): string {
+        return `Explode o alvo atual, causando [info.main:${this.abilityPower * 2} (200% AP)] de dano, além de [info.main:${
+            this.abilityPower * 0.5
+        } (50% AP)] aos inimigos adjacentes.`
+    }
+
     override getAttackingAnimation(): string {
         return `attacking`
     }
-    
+
     override extractAttackingAnimation() {
         this.attackAnimationImpactFrame = 6
         this.extractAnimationsFromSpritesheet("attacking", 1, 6)

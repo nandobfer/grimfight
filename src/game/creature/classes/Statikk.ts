@@ -10,8 +10,7 @@ export class Statikk extends Character {
     baseAbilityPower: number = 20
     manaLocked: boolean = true
 
-    abilityDescription: string =
-        "Passivo: Cada 3º ataque lança uma cadeia de raios no alvo, que se propaga e causa dano reduzido a cada propagação\nGanha velocidade de ataque bônus equivalente a porcentagem de vida perdida"
+    abilityName: string = "Fúria de Guinsoo"
 
     attacksCount = 0
     bonusAttackSpeed = 0
@@ -23,6 +22,13 @@ export class Statikk extends Character {
         super(scene, "statikk", id)
 
         this.aura = this.postFX.addGlow(0xddaa00, 0)
+    }
+
+    override getAbilityDescription(): string {
+        return `Cada [primary.main:3º ataque] lança uma cadeia de raios no alvo, causando [info.main:${
+            this.abilityPower * 1.2
+        } (120% AP)] de dano e se propaga 5x, causando dano reduzido a cada propagação
+Além disso, ganha velocidade de ataque bônus equivalente a porcentagem de vida perdida.`
     }
 
     override extractAttackingAnimation() {

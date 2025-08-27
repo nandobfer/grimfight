@@ -6,6 +6,7 @@ import { GoldCoin } from "../components/GoldCoin"
 import { StoreItem } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString, RarityColors } from "../../game/tools/RarityColors"
 import { AbilityTooltip } from "../CharacterSheet/AbilityTooltip"
+import { renderDescription } from "../../game/tools/TokenizedText"
 
 interface CharacterCardProps {
     game: Game
@@ -29,7 +30,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
     return (
         <>
             {!isFirst && <Divider />}
-            <AbilityTooltip description={character.abilityDescription} placement="top">
+            <AbilityTooltip description={renderDescription(character.abilityDescription)} placement="top">
                 <Button
                     variant={highlight ? "outlined" : undefined}
                     fullWidth

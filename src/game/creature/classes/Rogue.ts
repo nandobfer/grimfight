@@ -7,10 +7,16 @@ export class Rogue extends Character {
     baseAttackDamage = 15
     baseCritChance = 20
 
-    abilityDescription: string = "Se teleporta para trás do inimigo mais longe, executando um ataque duplo imediatamente"
+    abilityName: string = "Passo sombrio"
 
     constructor(scene: Game, id: string) {
         super(scene, "rogue", id)
+    }
+
+    override getAbilityDescription(): string {
+        return `Se teleporta para trás do alvo mais [primary.main:distante] e executa um ataque duplo imediatamente, causando [error.main:${
+            this.attackDamage * 2
+        } (2x AD)] de dano.`
     }
 
     override castAbility(): void {

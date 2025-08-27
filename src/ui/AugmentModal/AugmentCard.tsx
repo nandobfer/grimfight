@@ -1,7 +1,7 @@
 import React from "react"
 import { Button, Paper, Typography } from "@mui/material"
 import { Augment } from "../../game/systems/Augment/Augment"
-import { renderDescription } from "../../game/tools/TokenizedText"
+import { renderTokensDescription } from "../../game/tools/TokenizedText"
 
 interface AugmentCardProps {
     augment: Augment
@@ -15,7 +15,7 @@ export const AugmentCard: React.FC<AugmentCardProps> = (props) => {
                 <Typography variant="body1" fontWeight={"bold"} color="primary">
                     {props.augment.name}
                 </Typography>
-                <Typography variant="body2">{renderDescription(props.augment.descriptionValues, props.augment.description)}</Typography>
+                <Typography variant="body2">{renderTokensDescription(props.augment.descriptionValues, props.augment.description)}</Typography>
             </Paper>
         </Button>
     )

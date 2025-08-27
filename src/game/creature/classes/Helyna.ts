@@ -14,10 +14,7 @@ export class Helyna extends Character {
     baseAttackRange = 2
     baseArmor = 0
 
-    abilityDescription: string = `Se transforma em um animal, baseado na posição inicial, concedendo atributos e habilidades específicas para cada um.\n
-    Urso (frente): Tamanho, armadura, vida e ataque aumentados. Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura e causando dano a atacantes.\n
-    Gato (meio): Velocidade, ataque, velocidade de ataque e chance de crítico aumentados. Ao lançar, aplica um sangramento no alvo.\n
-    Humano (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo.`
+    abilityName = "Druidismo"
 
     bonusMaxHealth = 0
     bonusArmor = 0
@@ -33,6 +30,27 @@ export class Helyna extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "statikk", id)
+    }
+
+    override getAbilityDescription(): string {
+        return `Se transforma em um animal, baseado na posição inicial, concedendo atributos e habilidades específicas para cada um.
+Urso (frente): Ganha [default:(1.5x)] tamanho, [warning.main: ${
+            this.bonusArmor + this.abilityPower * 0.15
+        }] [info.main:(15% AP)] armadura, [success.main: ${
+            this.bonusMaxHealth + this.abilityPower * 10
+        }] [info.main:(10x AP)] de vida máxima e [error.main: ${
+            this.bonusAD + this.abilityPower * 0.25
+        }] [info.main: (25% AP)] de ataque. Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [warning.main:${
+            this.armor * 5
+        } (5x)] e causando [warning.main:${this.armor * 5} (5x armor)] dano a atacantes.
+Gato (meio): Ganha velocidade, [error.main:${
+            this.bonusAD + this.abilityPower
+        }] [info.main:(100% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${
+            this.bonusCriticalChance + this.abilityPower / 100
+        }] [info.main:(1% AP)] chance de crítico. Ao lançar, aplica um sangramento no alvo, causando [error.main:${
+            this.attackDamage * 3
+        } (3x AD)] de dano.
+Humano (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${this.abilityPower * 5} (5x AP)].`
     }
 
     override extractAttackingAnimation() {

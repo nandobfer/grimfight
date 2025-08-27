@@ -6,6 +6,7 @@ import { colorFromLevel, convertColorToString } from "../../game/tools/RarityCol
 import { AbilityTooltip } from "./AbilityTooltip"
 import { Character } from "../../game/creature/character/Character"
 import { GoldCoin } from "../components/GoldCoin"
+import { renderDescription } from "../../game/tools/TokenizedText"
 
 interface CharacterSheetProps {
     character: Character
@@ -143,6 +144,16 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                         />
                     </Box>
                 </Box>
+
+                <Box sx={{ flexDirection: "column" }}>
+                    <Typography fontWeight={"bold"} variant="subtitle2" color="primary.main">
+                        {character.abilityName}:
+                    </Typography>
+                    <Typography variant="caption" sx={{ whiteSpace: "pre-wrap" }}>
+                        {renderDescription(character.getAbilityDescription())}
+                    </Typography>
+                </Box>
+
                 <Box sx={{ flexDirection: "column", width: 1, color: "secondary.main" }}>
                     {attributes.map((data) => (
                         <SheetData key={data.title} title={data.title} value={data.value} />
