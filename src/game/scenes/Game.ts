@@ -401,8 +401,8 @@ export class Game extends Scene {
         const y = target?.y || _y
 
         switch (damageType) {
-            case "block":
-                return spawnParrySpark(this, x, y)
+            // case "block":
+            //     return spawnParrySpark(this, x, y)
             case "cold":
                 return new ColdHit(this, x, y)
             case "fire":

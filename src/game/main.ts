@@ -8,8 +8,8 @@ function isMobileDevice() {
     const ua = navigator.userAgent || ""
     const uaMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(ua)
     const coarse = typeof window.matchMedia === "function" && window.matchMedia("(pointer: coarse)").matches
-    const touch = (navigator as any).maxTouchPoints > 1
-    return uaMobile || coarse || touch
+    // const touch = (navigator as any).maxTouchPoints > 1
+    return uaMobile || coarse
 }
 
 const USE_CANVAS_ON_MOBILE = true // tweak if you want a flag

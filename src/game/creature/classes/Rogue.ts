@@ -14,9 +14,9 @@ export class Rogue extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Se teleporta para trás do alvo mais [primary.main:distante] e executa um ataque duplo imediatamente, causando [error.main:${Math.round(
-            this.attackDamage * 2
-        )} (2x AD)] de dano.`
+        return `Se teleporta para trás do alvo mais [primary.main:distante] e ataca imediatamente, causando [error.main:${Math.round(
+            this.attackDamage * 4
+        )} (400% AD)] de dano.`
     }
 
     override castAbility(): void {
@@ -30,8 +30,8 @@ export class Rogue extends Character {
             const directionFactor = (target.avoidanceRange - 15) * (direction === "down" || direction === "right" ? 1 : -1)
             this.createTeleportSmoke()
             this.setPosition(target.x + directionFactor, target.y + directionFactor)
-            this.landAttack()
-            this.landAttack()
+            const damage = this.calculateDamage(this.attackDamage * 4)
+            target.takeDamage(damage.value, this, "normal", damage.crit)
             this.createTeleportSmoke()
         }
 

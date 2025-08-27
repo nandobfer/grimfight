@@ -56,5 +56,6 @@ export class Sorcerer extends Character {
 
     override reset(): void {
         super.reset()
+        this.manaLocked = false
     }
 }
