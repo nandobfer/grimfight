@@ -78,6 +78,7 @@ const shallowEqual = (a: Snap, b: Snap) => {
 
 export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     const character = props.character
+    const isMobile = useMediaQuery("(orientation: portrait)")
 
     const charRef = useRef(character)
     useEffect(() => {
@@ -146,10 +147,10 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                 </Box>
 
                 <Box sx={{ flexDirection: "column" }}>
-                    <Typography fontWeight={"bold"} variant="subtitle2" color="primary.main">
+                    <Typography fontWeight={"bold"} variant="subtitle2" color="primary.main" fontSize={isMobile ? 10 : undefined}>
                         {character.abilityName}:
                     </Typography>
-                    <Typography variant="caption" sx={{ whiteSpace: "pre-wrap" }}>
+                    <Typography variant="caption" sx={{ whiteSpace: "pre-wrap" }} fontSize={isMobile ? 8 : undefined}>
                         {renderDescription(character.getAbilityDescription())}
                     </Typography>
                 </Box>
