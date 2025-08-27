@@ -9,6 +9,7 @@ export class Helyna extends Character {
     baseMaxMana = 150
     baseAbilityPower = 20
     baseAttackRange = 2
+    baseArmor = 3
 
     abilityDescription: string = `Se transforma em um animal, baseado na posição inicial, concedendo atributos e habilidades específicas para cada um.\n
     Urso (frente): Tamanho, armadura, vida e ataque aumentados. Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura e causando dano a atacantes\n
@@ -22,6 +23,7 @@ export class Helyna extends Character {
     bonusSpeed = 0
     bonusAttackSpeed = 0
     bonusCriticalChance = 0
+    bonusAttackRange = 0
     aura
     druidForm: DruidForm = "human"
 
@@ -49,26 +51,49 @@ export class Helyna extends Character {
     }
 
     override castAbility(): void {
-        if (this.druidForm === "human") {
-            return
-        }
-    }
-
-    private shapeshift() {
         const placement = this.getPlacement()
 
-        if (placement === "front") {
-            this.druidForm = "bear"
+        if (this.druidForm === "human") {
+            if (placement === "back") {
+                // human normal cast
+            } else {
+                this.shapeshift(placement === "front" ? "bear" : "cat")
+            }
         }
 
-        if (placement === "middle") {
-            this.druidForm = "cat"
+        if (this.druidForm === "bear") {
+        }
+        if (this.druidForm === "cat") {
         }
     }
 
+    private shapeshift(form: DruidForm) {
+        switch (form) {
+            case "bear":
+                return this.makeBear()
+            case "cat":
+                return this.makeCat()
+        }
+    }
+
+    // multiplicar por AP!
+
     makeBear() {
-        this.maxHealth = this.bonusMaxHealth * 1.45
-        // this.armor = this.bonusArmor *
+        this.setTexture("bear")
+        this.attackRange = 1
+        this.maxHealth = this.bonusMaxHealth * ((2 * this.abilityPower) / 100 + 1)
+        this.setScale(this.bonusScale * 1.5)
+        this.attackDamage = this.bonusAD * 1.2
+        this.armor = this.bonusArmor * 2
+    }
+
+    makeCat() {
+        // todo trocar textura da sprite?
+
+        this.setTexture("cat")
+        this.attackRange = 1
+        this.attackDamage = this.bonusAD * 1.5
+        this.attackSpeed = this.bonusAttackSpeed + 2
     }
 
     override reset(): void {
@@ -80,6 +105,7 @@ export class Helyna extends Character {
         this.bonusAttackSpeed = this.attackSpeed
         this.bonusCriticalChance = this.critChance
         this.bonusScale = this.scale
+        this.bonusAttackRange = this.attackRange
     }
 
     override update(time: number, delta: number): void {

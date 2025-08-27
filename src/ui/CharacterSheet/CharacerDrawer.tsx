@@ -24,6 +24,11 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
         handleClose()
     }
 
+    const sellCharacter = (id: string) => {
+        props.store.sell(id)
+        handleClose()
+    }
+
     useEffect(() => {
         const selectChar = (char: Character) => {
             setSelectedCharacter(char)
@@ -69,7 +74,7 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
                         },
                     }}
                 >
-                    {selectedCharacter && <CharacterSheet character={selectedCharacter} store={props.store} />}
+                    {selectedCharacter && <CharacterSheet character={selectedCharacter} store={props.store} sell={sellCharacter} />}
                 </Drawer>
             </Box>
         </ClickAwayListener>

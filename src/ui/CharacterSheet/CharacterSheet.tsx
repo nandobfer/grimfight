@@ -10,6 +10,7 @@ import { GoldCoin } from "../components/GoldCoin"
 interface CharacterSheetProps {
     character: Character
     store: CharacterStore
+    sell: (id: string) => void
 }
 
 export interface SheetDataItem {
@@ -115,7 +116,6 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     const characterHealthPercent = useMemo(() => (snap.maxHealth > 0 ? (snap.health / snap.maxHealth) * 100 : 0), [snap.health, snap.maxHealth])
     const levelColor = useMemo(() => convertColorToString(colorFromLevel(snap.level)), [snap.level])
 
-    const sell = () => props.store.sell(character.id)
     return (
         <AbilityTooltip description={character.abilityDescription} placement="auto">
             <>
@@ -130,7 +130,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                         <Box sx={{ justifyContent: "space-between", width: 1 }}>
                             <Typography variant="subtitle2">{character.name}</Typography>
                             <Tooltip title="click to sell character">
-                                <Button color="warning" onClick={sell} size="small" sx={{ padding: 0, minWidth: 0 }}>
+                                <Button color="warning" onClick={() => props.sell(character.id)} size="small" sx={{ padding: 0, minWidth: 0 }}>
                                     <GoldCoin quantity={props.store.getCost(character.level)} fontSize={10} size={10} />
                                 </Button>
                             </Tooltip>
