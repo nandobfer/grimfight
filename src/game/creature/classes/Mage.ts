@@ -64,7 +64,7 @@ export class Mage extends Character {
         if (!this.target?.active) {
         }
 
-        const { damage, crit } = this.calculateDamage(this.abilityPower * 2)
+        const { value: damage, crit } = this.calculateDamage(this.abilityPower * 2)
 
         const onAnimationUpdate = (animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) => {
             if (animation.key !== "explosion") return

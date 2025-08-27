@@ -32,7 +32,7 @@ export class Explosion extends FxSprite {
             const enemy = enemyObj as Creature
             if (this.damagedEnemies.has(enemy)) return
 
-            const { damage, crit } = this.caster.calculateDamage(baseDamage)
+            const { value: damage, crit } = this.caster.calculateDamage(baseDamage)
             if (enemy.active) {
                 console.log(`dealing ${damage} to ${enemy.name}`)
                 enemy.takeDamage(damage, this.caster, "fire", crit)
@@ -43,7 +43,7 @@ export class Explosion extends FxSprite {
             const enemy = enemyObj as Creature
             if (this.damagedEnemies.has(enemy)) return
 
-            const { damage, crit } = this.caster.calculateDamage(baseDamage)
+            const { value: damage, crit } = this.caster.calculateDamage(baseDamage)
             if (enemy.active) {
                 console.log(`dealing ${damage} to ${enemy.name}`)
                 enemy.takeDamage(damage, this.caster, "fire", crit)

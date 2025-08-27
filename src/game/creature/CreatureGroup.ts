@@ -84,4 +84,18 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         this.reset()
         this.scene.saveProgress()
     }
+
+    getLowestHealth() {
+        const children = this.getChildren(true)
+        let lowestHealth = Infinity
+        let lowestCreature: Creature | null = null
+
+        for (const creature of children) {
+            if (creature.health < lowestHealth) {
+                lowestCreature = creature
+            }
+        }
+
+        return lowestCreature
+    }
 }

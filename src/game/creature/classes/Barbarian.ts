@@ -16,7 +16,7 @@ export class Barbarian extends Character {
 
     castAbility(): void {
         this.casting = true
-        const { damage: healing, crit } = this.calculateDamage((1 - this.health / this.maxHealth) * 0.12 * this.maxHealth + this.abilityPower * 2)
+        const { value: healing, crit } = this.calculateDamage((1 - this.health / this.maxHealth) * 0.12 * this.maxHealth + this.abilityPower * 2)
         this.heal(healing, crit)
 
         this.casting = false

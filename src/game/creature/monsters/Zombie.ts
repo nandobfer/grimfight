@@ -17,7 +17,7 @@ export class Zombie extends Monster {
         this.casting = true
 
         if (this.target) {
-            const { damage, crit } = this.calculateDamage(this.attackDamage * 2)
+            const { value: damage, crit } = this.calculateDamage(this.attackDamage * 2)
             this.target.takeDamage(damage, this, 'poison', crit)
             this.heal(damage, crit)
         }

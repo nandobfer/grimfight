@@ -586,23 +586,23 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return Phaser.Math.FloatBetween(0, 100) <= this.critChance
     }
 
-    calculateDamage(rawDamage: number) {
+    calculateDamage(rawValue: number) {
         const crit = this.tryCrit()
-        let damageMultiplier = 0
+        let multiplier = 0
 
         if (crit) {
-            damageMultiplier += this.critDamageMultiplier
+            multiplier += this.critDamageMultiplier
         }
 
-        const damage = rawDamage * Phaser.Math.FloatBetween(this.minDamageMultiplier, this.maxDamageMultiplier)
-        return { damage: damage * Math.max(1, damageMultiplier), crit }
+        const value = rawValue * Phaser.Math.FloatBetween(this.minDamageMultiplier, this.maxDamageMultiplier)
+        return { value: value * Math.max(1, multiplier), crit }
     }
 
     onAttackLand(damagetype: DamageType, target?: Creature) {
         const victim = target ?? this.target
         if (!victim?.active) return 0
 
-        const { damage, crit: isCrit } = this.calculateDamage(this.attackDamage)
+        const { value: damage, crit: isCrit } = this.calculateDamage(this.attackDamage)
 
         victim.takeDamage(damage, this, damagetype, isCrit)
         this.gainMana(this.manaPerAttack)
