@@ -83,6 +83,8 @@ export class Preloader extends Scene {
         this.load.spritesheet("lightning", "particles/lightning_hit.png", { frameWidth: 128 })
         this.load.spritesheet("magic_circle", "particles/magic_circle.png", { frameWidth: 192, endFrame: 16 })
         this.load.spritesheet("magic_circle2", "particles/magic_circle2.png", { frameWidth: 192, endFrame: 16 })
+        this.load.spritesheet("fog", "particles/fog.png", { frameWidth: 192 })
+        this.load.spritesheet("thunder", "particles/thunder.png", { frameWidth: 192 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

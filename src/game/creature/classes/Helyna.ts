@@ -1,3 +1,5 @@
+import { FxSprite } from "../../fx/FxSprite"
+import { ThornsFx } from "../../fx/ThornsFx"
 import { Arrow } from "../../objects/Arrow"
 import { Dot } from "../../objects/Dot"
 import { Game } from "../../scenes/Game"
@@ -29,6 +31,7 @@ export class Helyna extends Character {
     thornsArmor = false
 
     druidForm: DruidForm = "human"
+    thornsFx?: ThornsFx
 
     constructor(scene: Game, id: string) {
         super(scene, "helyna", id)
@@ -95,10 +98,13 @@ export class Helyna extends Character {
         this.druidForm = form
         switch (form) {
             case "bear":
-                return this.makeBear()
+                this.makeBear()
+                break
             case "cat":
-                return this.makeCat()
+                this.makeCat()
+                break
         }
+        const fx = new FxSprite(this.scene, this.x, this.y, "fog", this.scale / 2)
     }
 
     castHumanAbility() {
@@ -130,6 +136,7 @@ export class Helyna extends Character {
         this.manaLocked = true
         this.aura = this.postFX.addGlow(0x331111, 0)
         this.thornsArmor = true
+        this.thornsFx = new ThornsFx(this.scene, this.x, this.y, this.scale * 0.45)
 
         this.scene.tweens.add({
             targets: this.aura,
@@ -140,6 +147,8 @@ export class Helyna extends Character {
             hold: duration,
             onComplete: () => {
                 this.removeAura()
+                this.thornsFx?.destroy(true)
+                this.thornsFx = undefined
             },
         })
 
@@ -214,6 +223,11 @@ export class Helyna extends Character {
 
     override update(time: number, delta: number): void {
         super.update(time, delta)
+
+        if (this.thornsFx) {
+            this.thornsFx.x = this.x
+            this.thornsFx.y = this.y
+        }
     }
 
     override takeDamage(damage: number, attacker: Creature, type: DamageType, crit?: boolean): void {
