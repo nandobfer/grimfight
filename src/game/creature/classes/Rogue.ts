@@ -10,7 +10,7 @@ export class Rogue extends Character {
     abilityName: string = "Passo sombrio"
 
     constructor(scene: Game, id: string) {
-        super(scene, "rogue", id)
+        super(scene, "mordred", id)
     }
 
     override getAbilityDescription(): string {

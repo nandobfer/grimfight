@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react"
-import { Badge, Box, Button, Divider, Typography, useMediaQuery } from "@mui/material"
+import { Badge, Box, Button, capitalize, Divider, Typography, useMediaQuery } from "@mui/material"
 import { CharacterAvatar } from "../CharacterSheet/CharacterAvatar"
 import { Game } from "../../game/scenes/Game"
 import { GoldCoin } from "../components/GoldCoin"
@@ -60,7 +60,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
 
                     <Box sx={{ width: 1, gap: 1, justifyContent: "center" }}>
                         <Typography variant="subtitle2" fontSize={isMobile ? 8 : 13} color={highlight ? "primary" : "secondary"}>
-                            {character.name}
+                            {capitalize(character.name)}
                         </Typography>
 
                         <GoldCoin quantity={item.cost} size={isMobile ? 7 : 12} fontSize={isMobile ? 9 : 12} reverted />

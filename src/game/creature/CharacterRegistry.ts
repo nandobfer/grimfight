@@ -47,13 +47,13 @@ export class CharacterRegistry {
     }
 }
 
-CharacterRegistry.register("rogue", Rogue)
-CharacterRegistry.register("knight", Knight)
+CharacterRegistry.register("mordred", Rogue)
+CharacterRegistry.register("maximus", Knight)
 CharacterRegistry.register("laherce", Archer)
-CharacterRegistry.register("mage", Mage)
-CharacterRegistry.register("sorcerer", Sorcerer)
+CharacterRegistry.register("megumin", Mage)
+CharacterRegistry.register("jadis", Sorcerer)
 CharacterRegistry.register("lizwan", Lizwan)
 CharacterRegistry.register("zairon", Necromancer)
-CharacterRegistry.register("barbarian", Barbarian)
+CharacterRegistry.register("grok", Barbarian)
 CharacterRegistry.register("statikk", Statikk)
 CharacterRegistry.register("helyna", Helyna)

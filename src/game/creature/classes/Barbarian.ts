@@ -11,7 +11,7 @@ export class Barbarian extends Character {
     abilityName: string = "Vigor"
 
     constructor(scene: Game, id: string) {
-        super(scene, "barbarian", id)
+        super(scene, "grok", id)
     }
 
     override getAbilityDescription(): string {

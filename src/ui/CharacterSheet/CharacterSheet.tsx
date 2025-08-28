@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { Badge, Box, Button, ClickAwayListener, Divider, Drawer, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
+import { Badge, Box, Button, capitalize, ClickAwayListener, Divider, Drawer, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
 import { CharacterAvatar } from "./CharacterAvatar"
 import { CharacterStore } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
@@ -133,7 +133,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     </Badge>
                     <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
                         <Box sx={{ justifyContent: "space-between", width: 1 }}>
-                            <Typography variant="subtitle2">{character.name}</Typography>
+                            <Typography variant="subtitle2">{capitalize(character.name)}</Typography>
                         </Box>
                         <Box sx={{ width: 1, position: "relative", justifyContent: "center", alignItems: "center" }}>
                             <LinearProgress

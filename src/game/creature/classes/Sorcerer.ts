@@ -15,7 +15,7 @@ export class Sorcerer extends Character {
     abilityName: string = "Nevasca"
 
     constructor(scene: Game, id: string) {
-        super(scene, "sorcerer", id)
+        super(scene, "jadis", id)
     }
 
     override getAbilityDescription(): string {

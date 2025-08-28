@@ -14,7 +14,7 @@ export class Mage extends Character {
     abilityName = "Explosão"
 
     constructor(scene: Game, id: string) {
-        super(scene, "mage", id)
+        super(scene, "megumin", id)
     }
 
     override getAbilityDescription(): string {

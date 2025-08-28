@@ -11,7 +11,7 @@ export class Knight extends Character {
     abilityName = "Levantar escudo"
 
     constructor(scene: Game, id: string) {
-        super(scene, "knight", id)
+        super(scene, "maximus", id)
     }
 
     override getAbilityDescription(): string {
