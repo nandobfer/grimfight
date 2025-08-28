@@ -49,7 +49,7 @@ export class CharacterRegistry {
 
 CharacterRegistry.register("rogue", Rogue)
 CharacterRegistry.register("knight", Knight)
-CharacterRegistry.register("archer", Archer)
+CharacterRegistry.register("laherce", Archer)
 CharacterRegistry.register("mage", Mage)
 CharacterRegistry.register("sorcerer", Sorcerer)
 CharacterRegistry.register("lizwan", Lizwan)

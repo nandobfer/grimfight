@@ -13,7 +13,7 @@ export class Archer extends Character {
     abilityName: string = "Salva de flechas"
 
     constructor(scene: Game, id: string) {
-        super(scene, "archer", id)
+        super(scene, "laherce", id)
     }
 
     override getAbilityDescription(): string {
