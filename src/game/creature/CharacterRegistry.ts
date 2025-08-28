@@ -10,7 +10,7 @@ import { Rogue } from "./classes/Rogue"
 import { Sorcerer } from "./classes/Sorcerer"
 import { Statikk } from "./classes/Statikk"
 import { Necromancer } from "./classes/Necromancer"
-import { Helyna } from "./classes/Helyna"
+import { Helyna } from "./classes/Druid"
 
 // Create a character registry
 export class CharacterRegistry {

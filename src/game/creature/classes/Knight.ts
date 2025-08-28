@@ -5,7 +5,7 @@ export class Knight extends Character {
     baseMaxHealth = 425
     baseArmor = 7
     baseResistance = 10
-    baseAttackDamage = 13
+    baseAttackDamage = 15
     baseMaxMana = 90
 
     abilityName = "Levantar escudo"
