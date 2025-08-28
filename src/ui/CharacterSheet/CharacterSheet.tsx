@@ -1,5 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { Badge, Box, Button, capitalize, ClickAwayListener, Divider, Drawer, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
+import {
+    Badge,
+    Box,
+    Button,
+    capitalize,
+    ClickAwayListener,
+    Divider,
+    Drawer,
+    IconButton,
+    LinearProgress,
+    Tooltip,
+    Typography,
+    useMediaQuery,
+} from "@mui/material"
 import { CharacterAvatar } from "./CharacterAvatar"
 import { CharacterStore } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
@@ -9,6 +22,7 @@ import { GoldCoin } from "../components/GoldCoin"
 import { renderDescription } from "../../game/tools/TokenizedText"
 import { Game } from "../../game/scenes/Game"
 import { EventBus } from "../../game/tools/EventBus"
+import { Close } from "@mui/icons-material"
 
 interface CharacterSheetProps {
     character: Character
@@ -124,7 +138,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     return (
         <AbilityTooltip description={character.abilityDescription} placement="auto">
             <>
-                <Box sx={{ width: 1, gap: 2, alignItems: "center" }}>
+                <Box sx={{ width: 1, gap: 2, alignItems: "center", position: "relative" }}>
                     <Badge
                         badgeContent={`${character.level}`}
                         slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
@@ -161,6 +175,10 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                             </Typography>
                         </Box>
                     </Box>
+
+                    <IconButton sx={{ position: "absolute", top: -12, right: -12 }} onClick={() => EventBus.emit("select-char", null)} size="small">
+                        <Close />
+                    </IconButton>
                 </Box>
 
                 <Box sx={{ flexDirection: "column" }}>

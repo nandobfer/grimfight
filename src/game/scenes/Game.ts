@@ -188,9 +188,23 @@ export class Game extends Scene {
             this.enemyTeam.add(m)
         }
 
+        this.handleEnemiesAugments()
         this.resetFloor()
 
         this.handleAugmentsFloor()
+    }
+
+    handleEnemiesAugments() {
+        if (this.floor === 1 || (this.floor - 1) % 5 !== 0) {
+            return
+        }
+        const enemiesAugments = Array.from(this.enemyTeam.augments.values())
+        if (enemiesAugments.find((augment) => augment.chosenFloor === this.floor)) return
+
+        const excludeList = ["bonusgold", "bonushealth"]
+        const randomAugment = AugmentsRegistry.random(excludeList)
+        this.enemyTeam.addAugment(randomAugment)
+        console.log(this.enemyTeam.augments)
     }
 
     handleAugmentsFloor() {
@@ -351,6 +365,8 @@ export class Game extends Scene {
 
                 progress.playerAugments.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
+                console.log(this.playerTeam.augments)
+                console.log(this.enemyTeam.augments)
                 this.playerTeam.emitAugments()
             }
         } catch (error) {

@@ -42,8 +42,8 @@ export class AugmentsRegistry {
         return [...this.registry.entries()].map(([name, ctor]) => ({ name, ctor }))
     }
 
-    static random() {
-        const name = RNG.pick(this.names())
+    static random(exclude: string[] = []) {
+        const name = RNG.pick(this.names().filter((item) => !exclude.includes(item)))
         const augment = this.create(name)
         return augment
     }
