@@ -56,6 +56,7 @@ export class Game extends Scene {
     max_bench_size = max_bench_size
 
     private uiGhost?: Character
+    private dragFromBoard = new Map<string, Character>()
 
     constructor() {
         super("Game")
@@ -93,6 +94,7 @@ export class Game extends Scene {
         EventBus.on("get-progress", () => this.emitProgress())
         EventBus.on("ui-augment", () => this.handleAugmentsFloor())
         this.installUiDragBridge()
+        this.installBenchHoverBridge()
     }
 
     createLight() {
@@ -204,6 +206,49 @@ export class Game extends Scene {
             } else {
                 ghost.destroy(true) // cancel: didn’t drop in a valid tile
             }
+        })
+    }
+
+    private installBenchHoverBridge() {
+        // Keep track of which character is being dragged
+        EventBus.on("ph-drag-start", ({ id }: { id: string }) => {
+            const ch = this.playerTeam.getById(id)
+            if (ch) this.dragFromBoard.set(id, ch)
+        })
+
+        // React will tell us when pointer enters/leaves the bench area
+        EventBus.on("bench-hover-enter", ({ id }: { id: string }) => {
+            const ch = this.dragFromBoard.get(id)
+            if (!ch) return
+            ch.setVisible(false)
+            ch.body.enable = false
+            // (Optional) add a subtle marker in-world if you want
+        })
+
+        EventBus.on("bench-hover-leave", ({ id }: { id: string }) => {
+            const ch = this.dragFromBoard.get(id)
+            if (!ch) return
+            ch.setVisible(true)
+            ch.body.enable = true
+        })
+
+        // Commit: destroy in-world and add to bench
+        EventBus.on("bench-drop", ({ id, dto }: { id: string; dto: CharacterDto }) => {
+            const ch = this.dragFromBoard.get(id)
+            if (!ch) return
+            ch.dropToBench = true // tells dragend to skip snapping logic
+            ch.destroy(true)
+            this.playerTeam.bench.add(dto) // your Bench.add will emit to UI
+            this.dragFromBoard.delete(id)
+        })
+
+        // Cancel: not dropped on bench; restore and let the character's dragend do its normal snap/revert
+        EventBus.on("bench-cancel", ({ id }: { id: string }) => {
+            const ch = this.dragFromBoard.get(id)
+            if (!ch) return
+            ch.setVisible(true)
+            ch.body.enable = true
+            this.dragFromBoard.delete(id)
         })
     }
 

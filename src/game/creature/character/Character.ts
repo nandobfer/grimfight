@@ -30,6 +30,10 @@ export class Character extends Creature {
     abilityDescription: string = ""
     abilityName: string = ""
 
+    private draggingFromBoard = false
+    public dropToBench = false
+    private globalDragCtrl?: AbortController
+
     constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
         super(scene, name, id)
 
@@ -80,12 +84,72 @@ export class Character extends Creature {
 
         this.on("dragstart", (pointer: Phaser.Input.Pointer) => {
             if (this.scene.state !== "idle") return
+
             // remember original pos in case drop is invalid
             this.preDrag = { x: this.x, y: this.y }
             // show allowed tiles overlay immediately
             this.scene.grid.showDropOverlay()
             this.scene.grid.showHighlightAtWorld(pointer.worldX, pointer.worldY)
             this.setDepth(this.depth + 1000)
+
+            // sending to react
+            this.draggingFromBoard = true
+            this.dropToBench = false
+            // ---- NEW: forward to window so we still track when pointer leaves canvas
+            this.globalDragCtrl?.abort()
+            const ctrl = new AbortController()
+            this.globalDragCtrl = ctrl
+
+            // helper: client/page -> world
+            const toWorld = (ev: PointerEvent) => {
+                const pageX = ev.clientX + window.scrollX
+                const pageY = ev.clientY + window.scrollY
+                const gx = this.scene.scale.transformX(pageX)
+                const gy = this.scene.scale.transformY(pageY)
+                const p = this.scene.cameras.main.getWorldPoint(gx, gy)
+                return { x: p.x, y: p.y }
+            }
+
+            const onMove = (ev: PointerEvent) => {
+                const { x, y } = toWorld(ev)
+                // keep the sprite following even when over React DOM
+                this.setPosition(x, y)
+                this.scene.grid.showHighlightAtWorld(x, y)
+
+                EventBus.emit("ph-drag-move", { id: this.id, clientX: ev.clientX, clientY: ev.clientY })
+            }
+
+            const finish = (ev?: PointerEvent | Event) => {
+                // tell React we ended; it will decide bench-drop vs bench-cancel
+                const pe = ev as PointerEvent | undefined
+                EventBus.emit("ph-drag-end", {
+                    id: this.id,
+                    clientX: pe?.clientX ?? 0,
+                    clientY: pe?.clientY ?? 0,
+                })
+                ctrl.abort()
+            }
+
+            window.addEventListener("pointermove", onMove, { signal: ctrl.signal, passive: true })
+            window.addEventListener("pointerup", finish, { signal: ctrl.signal })
+            window.addEventListener("pointercancel", finish, { signal: ctrl.signal })
+            window.addEventListener("blur", finish, { signal: ctrl.signal })
+            document.addEventListener(
+                "visibilitychange",
+                () => {
+                    if (document.hidden) finish()
+                },
+                { signal: ctrl.signal }
+            )
+
+            // also emit start so React can show preview immediately
+            const ev = pointer.event as PointerEvent | undefined
+            EventBus.emit("ph-drag-start", {
+                id: this.id,
+                dto: this.getDto(),
+                clientX: ev?.clientX ?? 0,
+                clientY: ev?.clientY ?? 0,
+            })
         })
 
         this.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -96,6 +160,19 @@ export class Character extends Creature {
 
         this.on("dragend", (pointer: Phaser.Input.Pointer) => {
             if (this.scene.state !== "idle") return
+
+             // always cleanup window listeners
+            this.globalDragCtrl?.abort()
+            this.globalDragCtrl = undefined
+
+            // React will set `dropToBench = true` via bench-drop → skip snapping
+            if (this.dropToBench) {
+                this.preDrag = undefined
+                this.scene.grid.hideHighlight()
+                this.scene.grid.hideDropOverlay()
+                return
+            }
+
             // Snap to tile center at drop
             const snapped = this.scene.grid.snapCharacter(this, pointer.worldX, pointer.worldY)
             if (snapped) {
