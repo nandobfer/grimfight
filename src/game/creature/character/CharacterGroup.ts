@@ -24,8 +24,8 @@ export class CharacterGroup extends CreatureGroup {
         this.store = new CharacterStore(this)
     }
 
-    override getChildren(minions = false) {
-        return super.getChildren(minions) as Character[]
+    override getChildren(minions = false, activeOnly = false) {
+        return super.getChildren(minions, activeOnly) as Character[]
     }
 
     getById(id: string) {

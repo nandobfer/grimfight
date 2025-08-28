@@ -12,8 +12,8 @@ export class MonsterGroup extends CreatureGroup {
         super(scene, minions, children, config)
     }
 
-    override getChildren(minions = false) {
-        return super.getChildren(minions) as Monster[]
+    override getChildren(minions = false, activeOnly = false) {
+        return super.getChildren(minions, activeOnly) as Monster[]
     }
 
     reset() {

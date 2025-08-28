@@ -40,7 +40,7 @@ export class Demonic extends Monster {
         const originalAttackDamage = this.attackDamage
         this.attackDamage = originalAttackDamage * 0.5
         const targets = 5
-        const enemies = this.scene.playerTeam.getChildren().filter((item) => item.active)
+        const enemies = this.scene.playerTeam.getChildren(true, true)
 
         for (let i = 1; i <= targets; i++) {
             this.scene.time.delayedCall(i * 200, () => {

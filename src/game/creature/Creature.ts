@@ -295,7 +295,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     private findEnemyByDistance(closest = true): Creature | undefined {
         const enemyTeam = this.getEnemyTeam()
-        const enemies = enemyTeam.getChildren(true)
+        const enemies = enemyTeam.getChildren(true, true)
         let chosenEnemy: Creature | undefined = undefined
         let closestEnemyDistance = 0
         for (const enemy of enemies) {

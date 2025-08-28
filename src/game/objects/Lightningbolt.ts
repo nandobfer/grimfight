@@ -88,10 +88,7 @@ export class LightningBolt extends Projectile {
     }
 
     getRemainingTargets() {
-        const remainingEnemies = this.owner
-            .getEnemyTeam()
-            .getChildren(true)
-            .filter((enemy) => enemy.active)
+        const remainingEnemies = this.owner.getEnemyTeam().getChildren(true, true)
 
         if (remainingEnemies.every((enemy) => this.alreadyOverlaped.has(enemy))) {
             // this.alreadyOverlaped.clear()

@@ -25,11 +25,15 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         }
     }
 
-    override getChildren(minions = false) {
+    override getChildren(minions = false, activeOnly = false) {
         let list = super.getChildren() as Creature[]
 
         if (minions) {
             list = [...list, ...this.minions.getChildren()]
+        }
+
+        if (activeOnly) {
+            list = list.filter((item) => item.active)
         }
 
         return list
@@ -68,7 +72,7 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         return this
     }
 
-    getCharacterInPosition(x: number, y: number) {
+    getCreatureInPosition(x: number, y: number) {
         const creatures = this.getChildren()
         return creatures.find((char) => char.x === x && char.y === y)
     }
@@ -86,7 +90,7 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
     }
 
     getLowestHealth() {
-        const children = this.getChildren(true)
+        const children = this.getChildren(true, true)
         let lowestHealth = Infinity
         let lowestCreature: Creature | null = null
 
