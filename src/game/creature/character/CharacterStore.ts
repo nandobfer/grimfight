@@ -77,22 +77,39 @@ export class CharacterStore {
     buy(item: StoreItem, recurrentBuy = false) {
         const name = item.character.name
         const level = item.character.level
-        let shouldBuyNextItems = false
-        const { wouldLevelUp, matchingCharsInBench, matchingCharsInBoard } = this.team.bench.wouldLevelUp(name, level, item.character.id)
-        const matchingCharsInStore = this.getMatchingCharacter(item)
+        const { matchingCharsInBench, matchingCharsInBoard } = this.team.bench.wouldLevelUp(name, level, item.character.id)
 
-        if (this.team.bench.isFull() && !wouldLevelUp) {
-            const totalCharacters = matchingCharsInBench.length + matchingCharsInBoard.length + matchingCharsInStore.length + 1 // esse mesmo
-            console.log({
-                totalCharacters,
-                bench: matchingCharsInBench.length,
-                board: matchingCharsInBoard.length,
-                store: matchingCharsInStore.length,
-            })
-            if (totalCharacters > 2) {
-                shouldBuyNextItems = true
+        const already = matchingCharsInBench.length + matchingCharsInBoard.length
+        const withThis = already + 1
+
+        // other matching items available in the store (excluding this one and sold ones)
+        const matchingInStore: StoreItem[] = this.getMatchingCharacter(item)
+            .filter((i) => i !== item && !i.sold)
+            .sort((a, b) => a.cost - b.cost)
+
+        // Decide if we must chain-buy to make an immediate merge
+        let mustChain = false
+        let nextToBuy: StoreItem[] = []
+
+        if (this.team.bench.isFull()) {
+            if (withThis >= 3) {
+                // Buying this alone will complete a triplet → allowed
+                mustChain = false
             } else {
-                return
+                // Need extra copies from the store to reach 3 right now
+                const need = 3 - withThis
+                if (matchingInStore.length < need) {
+                    // Not enough matches in shop → block purchase
+                    return
+                }
+                nextToBuy = matchingInStore.slice(0, need)
+                const totalCost = item.cost + nextToBuy.reduce((s, it) => s + it.cost, 0)
+
+                if (this.scene.playerGold < totalCost) {
+                    // Can't afford the whole merge package → block purchase
+                    return
+                }
+                mustChain = true
             }
         }
 
@@ -100,16 +117,15 @@ export class CharacterStore {
         item.sold = true
         this.team.bench.add(item.character)
 
-        if (!recurrentBuy) {
-            console.log("shouldBuyNextItems")
-            if (shouldBuyNextItems && this.scene.playerGold >= matchingCharsInStore.reduce((total, charItem) => (total += charItem.cost), 0)) {
-                console.log(matchingCharsInStore)
-                for (const nextItem of matchingCharsInStore) {
-                    this.buy(nextItem, true)
-                }
+        if (!recurrentBuy && mustChain) {
+            for (const next of nextToBuy) {
+                // Each is guaranteed affordable and available by the pre-checks above
+                this.buy(next, true)
             }
-            this.save()
         }
+
+        // persist after the whole operation
+        if (!recurrentBuy) this.save()
     }
 
     getCost(level: number) {
