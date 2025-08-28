@@ -182,7 +182,14 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     // 7) 0 - 52: spellcasting
     // 8) 53 - 103: thrusting
     // 9) 286 - 158: walking
-    extractAnimationsFromSpritesheet(key: string, startingFrame: number, usedFramesPerRow: number, totalFramesPerRow = 13, texture = this.name) {
+    extractAnimationsFromSpritesheet(
+        key: string,
+        startingFrame: number,
+        usedFramesPerRow: number,
+        totalFramesPerRow = 13,
+        texture = this.name,
+        identifier = this.name
+    ) {
         const directions: Direction[] = ["up", "left", "down", "right"]
         let currentFrameCount = startingFrame
         const offsetFrames = totalFramesPerRow - usedFramesPerRow
@@ -190,7 +197,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         for (const direction of directions) {
             const animation = this.anims.create({
-                key: `${this.name}-${key}-${direction}`,
+                key: `${identifier}-${key}-${direction}`,
                 frames: this.anims.generateFrameNumbers(texture, { start: currentFrameCount, end: currentFrameCount + usedFramesPerRow - 1 }),
                 frameRate: usedFramesPerRow + 1,
                 repeat: -1,
@@ -335,7 +342,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     idle() {
-        this.play(`${this.name}-idle-${this.facing}`, true)
+        this.play(`${this.getAnimationTextureName()}-idle-${this.facing}`, true)
     }
 
     stopMoving() {
@@ -360,7 +367,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.updateFacingDirection()
 
         // Play appropriate walking animation
-        this.play(`${this.name}-walking-${this.facing}`, true)
+        this.play(`${this.getAnimationTextureName()}-walking-${this.facing}`, true)
     }
 
     getEnemyTeam() {
@@ -479,7 +486,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             const vel = fwd.scale(this.speed)
             this.setVelocity(vel.x, vel.y)
             this.updateFacingDirection()
-            this.play(`${this.name}-walking-${this.facing}`, true)
+            this.play(`${this.getAnimationTextureName()}-walking-${this.facing}`, true)
             return
         }
 
@@ -519,7 +526,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.setVelocity(steer.x, steer.y)
         this.updateFacingDirection()
-        this.play(`${this.name}-walking-${this.facing}`, true)
+        this.play(`${this.getAnimationTextureName()}-walking-${this.facing}`, true)
     }
 
     startCastingAbility() {
@@ -561,6 +568,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return `attacking${spriteVariant}`
     }
 
+    getAnimationTextureName() {
+        return this.name
+    }
+
     startAttack() {
         if (this.attacking || this.casting || !this.target?.active) {
             return
@@ -568,7 +579,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.updateFacingDirection()
         this.attacking = true
-        const animationKey = `${this.name}-${this.getAttackingAnimation()}-${this.facing}`
+        const animationKey = `${this.getAnimationTextureName()}-${this.getAttackingAnimation()}-${this.facing}`
 
         this.onAnimationFrame(
             animationKey,

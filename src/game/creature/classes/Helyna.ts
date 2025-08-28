@@ -1,3 +1,4 @@
+import { Arrow } from "../../objects/Arrow"
 import { Dot } from "../../objects/Dot"
 import { Game } from "../../scenes/Game"
 import { DamageType } from "../../ui/DamageNumbers"
@@ -9,10 +10,11 @@ export class Helyna extends Character {
     baseAttackSpeed = 1
     baseSpeed = 60
     baseAttackDamage = 20
-    baseMaxMana = 150
+    baseMaxMana = 120
     baseAbilityPower = 20
-    baseAttackRange = 2
-    baseArmor = 0
+    baseAttackRange = 3
+    baseArmor = 3
+    baseMaxHealth: number = 400
 
     abilityName = "Druidismo"
 
@@ -29,45 +31,40 @@ export class Helyna extends Character {
     druidForm: DruidForm = "human"
 
     constructor(scene: Game, id: string) {
-        super(scene, "statikk", id)
+        super(scene, "helyna", id)
+        this.createAnimations()
     }
 
     override getAbilityDescription(): string {
         return `Se transforma em um animal, baseado na posição inicial, concedendo atributos e habilidades específicas para cada um.
-Urso (frente): Ganha [default:(1.5x)] tamanho, [warning.main: ${
-            this.bonusArmor + this.abilityPower * 0.15
-        }] [info.main:(15% AP)] armadura, [success.main: ${
-            this.bonusMaxHealth + this.abilityPower * 10
-        }] [info.main:(10x AP)] de vida máxima e [error.main: ${
-            this.bonusAD + this.abilityPower * 0.25
+
+[primary.main:Urso] (frente): Ganha [default:(1.5x)] tamanho, [warning.main: ${
+            this.abilityPower * 0.15
+        }] [info.main:(15% AP)] armadura, [success.main: ${this.abilityPower * 10}] [info.main:(10x AP)] de vida máxima e [error.main: ${
+            this.abilityPower * 0.25
         }] [info.main: (25% AP)] de ataque. Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [warning.main:${
-            this.armor * 5
-        } (5x)] e causando [warning.main:${this.armor * 5} (5x armor)] dano a atacantes.
-Gato (meio): Ganha velocidade, [error.main:${
-            this.bonusAD + this.abilityPower
+            this.armor
+        } (5x)] e causando [warning.main:${this.armor} (100% armor)] dano a atacantes.
+
+[primary.main:Gato] (meio): Ganha velocidade, [error.main:${
+            this.abilityPower
         }] [info.main:(100% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${
-            this.bonusCriticalChance + this.abilityPower / 100
+            this.abilityPower / 100
         }] [info.main:(1% AP)] chance de crítico. Ao lançar, aplica um sangramento no alvo, causando [error.main:${
             this.attackDamage * 3
         } (3x AD)] de dano.
-Humano (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${this.abilityPower * 5} (5x AP)].`
+        
+[primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${
+            this.abilityPower * 5
+        } (5x AP)].`
     }
 
-    override extractAttackingAnimation() {
-        this.attackAnimationImpactFrame = 3
-        const attacking = this.extractAnimationsFromSpritesheet("attacking2", 1, 5, 13, "statikk_attacking")
-        const specialAttacking = this.extractAnimationsFromSpritesheet("attacking1", 52, 6, 13, "statikk_attacking")
+    override landAttack() {
+        if (!this.target) return
 
-        console.log(this.width / 2, this.height / 2)
-        const onUpdate = (animation: Phaser.Animations.Animation) => {
-            if ([...attacking, ...specialAttacking].find((anim) => anim.key === animation.key)) {
-                this.setOffset(this.width / 4, this.height / 4)
-            } else {
-                this.setOffset(0, 0)
-            }
-        }
-
-        this.on("animationstart", onUpdate)
+        const arrow = new Arrow(this)
+        arrow.setTint(0x00ff00)
+        arrow.fire(this.target)
     }
 
     override castAbility(): void {
@@ -95,6 +92,7 @@ Humano (atrás): Não se transforma em nada, mas sua habilidade cura o aliado co
     }
 
     private shapeshift(form: DruidForm) {
+        this.druidForm = form
         switch (form) {
             case "bear":
                 return this.makeBear()
@@ -117,28 +115,29 @@ Humano (atrás): Não se transforma em nada, mas sua habilidade cura o aliado co
         // todo animation
 
         const bleeding = new Dot({
-            damageType: "normal",
+            damageType: "poison",
             duration: 2000,
             target: this.target,
             tickDamage: this.attackDamage * 3,
-            tickRate: 1000,
+            tickRate: 900,
             user: this,
         })
         this.target.applyStatusEffect(bleeding)
     }
 
     castBearAbility() {
-        const duration = 3500
+        const duration = 5000
         this.manaLocked = true
         this.aura = this.postFX.addGlow(0x331111, 0)
         this.thornsArmor = true
 
         this.scene.tweens.add({
             targets: this.aura,
-            duration,
+            duration: 50,
             yoyo: true,
             repeat: 0,
             outerStrength: { from: 0, to: 2 },
+            hold: duration,
             onComplete: () => {
                 this.removeAura()
             },
@@ -159,7 +158,7 @@ Humano (atrás): Não se transforma em nada, mas sua habilidade cura o aliado co
     }
 
     makeBear() {
-        this.setTexture("bear")
+        this.setTexture("druid_bear")
         this.attackRange = 1
         this.maxHealth = this.bonusMaxHealth + this.abilityPower * 10
         this.setScale(this.bonusScale * 1.5)
@@ -168,21 +167,39 @@ Humano (atrás): Não se transforma em nada, mas sua habilidade cura o aliado co
     }
 
     makeCat() {
-        this.setTexture("cat")
+        this.setTexture("druid_cat")
         this.attackRange = 1
         this.attackDamage = this.bonusAD + this.abilityPower
         this.attackSpeed = this.bonusAttackSpeed * 1.25
-        this.speed = this.bonusSpeed * 1.5
+        this.speed = this.bonusSpeed * 2
         this.critChance = this.bonusCriticalChance + this.abilityPower / 100
     }
 
     dealThornsDamage(target: Creature) {
-        const { value, crit } = this.calculateDamage(this.armor * 5)
-        target.takeDamage(value, this, "normal", crit)
+        const { value, crit } = this.calculateDamage(this.armor)
+        target.takeDamage(value, this, "poison", crit)
+    }
+
+    override extractAnimationsFromSpritesheet(
+        key: string,
+        startingFrame: number,
+        usedFramesPerRow: number,
+        totalFramesPerRow?: number,
+        texture?: string
+    ): Phaser.Animations.Animation[] {
+        super.extractAnimationsFromSpritesheet(key, startingFrame, usedFramesPerRow, totalFramesPerRow, "druid_bear", "druid_bear")
+        super.extractAnimationsFromSpritesheet(key, startingFrame, usedFramesPerRow, totalFramesPerRow, "druid_cat", "druid_cat")
+        return super.extractAnimationsFromSpritesheet(key, startingFrame, usedFramesPerRow, totalFramesPerRow, texture)
+    }
+
+    override getAnimationTextureName(): string {
+        const key = this.druidForm === "human" ? this.name : `druid_${this.druidForm}`
+        return key
     }
 
     override reset(): void {
         super.reset()
+        this.setTexture(this.name)
         this.druidForm = "human"
         this.bonusSpeed = this.speed
         this.bonusMaxHealth = this.maxHealth

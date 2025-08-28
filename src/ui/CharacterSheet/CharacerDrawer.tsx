@@ -61,6 +61,7 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
                             elevation: 1,
                             sx: {
                                 height: "min-content",
+                                maxHeight: "50vh",
                                 overflow: "visible",
                                 pointerEvents: "auto",
                                 marginTop: isMobile ? "20vh" : "30vh",

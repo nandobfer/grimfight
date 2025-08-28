@@ -27,6 +27,7 @@ export class Preloader extends Scene {
 
         this.loadSpritesheets(CharacterRegistry.getAllRegistered(), "characters")
         this.loadSpritesheets(available_monsters, "monsters")
+        this.loadExtraSprites()
         this.loadRagnarokSprites()
         this.loadParticles()
     }
@@ -41,8 +42,12 @@ export class Preloader extends Scene {
                 frameWidth: 64,
             })
         }
+    }
 
-        this.load.spritesheet("statikk_attacking", `spritesheets/${dir}/statikk_attacking.png`, {
+    loadExtraSprites() {
+        this.loadSpritesheets(["druid_bear", "druid_cat"], "characters")
+
+        this.load.spritesheet("statikk_attacking", `spritesheets/characters/statikk_attacking.png`, {
             frameWidth: 128,
         })
     }

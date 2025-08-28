@@ -91,8 +91,9 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         let lowestCreature: Creature | null = null
 
         for (const creature of children) {
-            if (creature.health < lowestHealth) {
+            if (creature.health / creature.maxHealth < lowestHealth) {
                 lowestCreature = creature
+                lowestHealth = creature.health / creature.maxHealth
             }
         }
 
