@@ -1,11 +1,11 @@
 import { Creature } from "../../creature/Creature"
 import { Augment } from "./Augment"
 
-export class RangerAugment extends Augment {
+export class SniperAugment extends Augment {
     constructor() {
-        const name = "ranger"
+        const name = "sniper"
         super(name)
-        this.values.boost = Phaser.Math.Between(1, 3)
+        this.values.boost = Phaser.Math.Between(1, 2)
         this.descriptionValues.boost = { value: this.values.boost, color: "primary.main" }
         this.description = `characters that start the round in the last row has [boost:${this.descriptionValues.boost.value}] more attack range`
         this.color = "warning"

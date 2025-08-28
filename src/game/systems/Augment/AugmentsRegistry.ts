@@ -11,7 +11,7 @@ import { DevastatorAugment } from "./DevastatorAugment"
 import { DexterousAugment } from "./DexterousAugment"
 import { LifedrinkerAugment } from "./LifedrinkerAugment"
 import { PowerfulAugment } from "./PowerfulAugment"
-import { RangerAugment } from "./RangerAugment"
+import { SniperAugment } from "./SniperAugment"
 
 type Ctor = new () => Augment
 
@@ -57,13 +57,13 @@ export class AugmentsRegistry {
 
 AugmentsRegistry.register("colossus", ColossusAugment)
 // AugmentsRegistry.register("battlemage", BattlemageAugment)
-AugmentsRegistry.register("lifedrinker", LifedrinkerAugment)
+// AugmentsRegistry.register("lifedrinker", LifedrinkerAugment)
 AugmentsRegistry.register("attacker", AttackerAugment)
 AugmentsRegistry.register("bonusgold", BonusGoldAugment)
 AugmentsRegistry.register("bonushealth", BonusHealthAugment)
 AugmentsRegistry.register("caster", CasterAugment)
 AugmentsRegistry.register("powerful", PowerfulAugment)
-AugmentsRegistry.register("ranger", RangerAugment)
+AugmentsRegistry.register("sniper", SniperAugment)
 AugmentsRegistry.register("dexterous", DexterousAugment)
 AugmentsRegistry.register("critical", CriticalAugment)
 AugmentsRegistry.register("devastator", DevastatorAugment)
