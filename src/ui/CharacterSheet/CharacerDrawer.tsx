@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react"
 import { Box, Button, ClickAwayListener, Drawer, useMediaQuery } from "@mui/material"
 import { Character } from "../../game/creature/character/Character"
-import { CharacterStore } from "../../game/creature/character/CharacterStore"
 import { EventBus } from "../../game/tools/EventBus"
 import { CharacterSheet } from "./CharacterSheet"
+import { Game } from "../../game/scenes/Game"
 
 interface CharacterDrawerProps {
-    store: CharacterStore
+    game: Game
 }
 
 export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
+    const store = props.game.playerTeam.store
     const isMobile = useMediaQuery("(orientation: portrait)")
     const openingRef = React.useRef(false)
 
@@ -25,7 +26,7 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
     }
 
     const sellCharacter = (id: string) => {
-        props.store.sell(id)
+        store.sell(id)
         handleClose()
     }
 
@@ -59,7 +60,7 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
                         paper: {
                             elevation: 1,
                             sx: {
-                                height: "40vh",
+                                height: "min-content",
                                 overflow: "visible",
                                 pointerEvents: "auto",
                                 marginTop: isMobile ? "20vh" : "30vh",
@@ -74,7 +75,7 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
                         },
                     }}
                 >
-                    {selectedCharacter && <CharacterSheet character={selectedCharacter} store={props.store} sell={sellCharacter} />}
+                    {selectedCharacter && <CharacterSheet character={selectedCharacter} game={props.game} store={store} sell={sellCharacter} />}
                 </Drawer>
             </Box>
         </ClickAwayListener>

@@ -32,7 +32,7 @@ export class CharacterStore {
 
     shuffle(free = true) {
         this.items = []
-        const highestPossibleLevel = Math.max(1, this.team.getHighestLevelChar())
+        const highestPossibleLevel = Math.max(1, this.team.getHighestLevelChar(), this.team.bench.getHighestLevelChar())
 
         for (let index = 1; index <= MAX_ITEMS_IN_STORE; index++) {
             const character = CharacterRegistry.random(this.scene)
@@ -77,41 +77,33 @@ export class CharacterStore {
     buy(item: StoreItem, recurrentBuy = false) {
         const name = item.character.name
         const level = item.character.level
-        const matchingCharsInBoard = this.team.getMatchingCharacters(name, level)
-        const matchingCharsInStore: StoreItem[] = []
         let shouldBuyNextItems = false
+        const { wouldLevelUp, matchingCharsInBench, matchingCharsInBoard } = this.team.bench.wouldLevelUp(name, level, item.character.id)
+        const matchingCharsInStore = this.getMatchingCharacter(item)
 
-        const wouldLevelUp = () => matchingCharsInBoard.length + matchingCharsInStore.length >= 2
-
-        if (this.team.countActive() === this.scene.max_characters_in_board && !recurrentBuy) {
-            for (const potentialItem of this.items) {
-                if (potentialItem.sold || potentialItem === item) {
-                    continue
-                }
-
-                if (potentialItem.character.name === name && potentialItem.character.level === level) {
-                    matchingCharsInStore.push(potentialItem)
-                    if (wouldLevelUp()) {
-                        shouldBuyNextItems = true
-                        break
-                    }
-                }
-            }
-
-            if (!wouldLevelUp()) {
+        if (this.team.bench.isFull() && !wouldLevelUp) {
+            const totalCharacters = matchingCharsInBench.length + matchingCharsInBoard.length + matchingCharsInStore.length + 1 // esse mesmo
+            console.log({
+                totalCharacters,
+                bench: matchingCharsInBench.length,
+                board: matchingCharsInBoard.length,
+                store: matchingCharsInStore.length,
+            })
+            if (totalCharacters > 2) {
+                shouldBuyNextItems = true
+            } else {
                 return
             }
         }
 
-        const character = CharacterRegistry.create(name, this.scene, item.character.id)
-        character.id = RNG.uuid()
-        character.levelUpTo(item.character.level)
-        this.team.add(character)
         this.scene.changePlayerGold(this.scene.playerGold - item.cost)
         item.sold = true
+        this.team.bench.add(item.character)
 
         if (!recurrentBuy) {
+            console.log("shouldBuyNextItems")
             if (shouldBuyNextItems && this.scene.playerGold >= matchingCharsInStore.reduce((total, charItem) => (total += charItem.cost), 0)) {
+                console.log(matchingCharsInStore)
                 for (const nextItem of matchingCharsInStore) {
                     this.buy(nextItem, true)
                 }
@@ -133,5 +125,21 @@ export class CharacterStore {
             this.team.reset()
             this.scene.savePlayerCharacters(this.team.getChildren())
         }
+    }
+
+    getMatchingCharacter(item: StoreItem) {
+        const matchingCharsInStore: StoreItem[] = []
+
+        for (const potentialItem of this.items) {
+            if (potentialItem.sold || potentialItem === item) {
+                continue
+            }
+
+            if (potentialItem.character.name === item.character.name && potentialItem.character.level === item.character.level) {
+                matchingCharsInStore.push(potentialItem)
+            }
+        }
+
+        return matchingCharsInStore
     }
 }

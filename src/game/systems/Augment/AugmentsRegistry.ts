@@ -6,6 +6,8 @@ import { BonusGoldAugment } from "./BonusGoldAugment"
 import { BonusHealthAugment } from "./BonusHealthAugment"
 import { CasterAugment } from "./CasterAugment"
 import { ColossusAugment } from "./ColossusAugment"
+import { CriticalAugment } from "./CriticalAugment"
+import { DevastatorAugment } from "./DevastatorAugment"
 import { DexterousAugment } from "./DexterousAugment"
 import { LifedrinkerAugment } from "./LifedrinkerAugment"
 import { PowerfulAugment } from "./PowerfulAugment"
@@ -63,3 +65,5 @@ AugmentsRegistry.register("caster", CasterAugment)
 AugmentsRegistry.register("powerful", PowerfulAugment)
 AugmentsRegistry.register("ranger", RangerAugment)
 AugmentsRegistry.register("dexterous", DexterousAugment)
+AugmentsRegistry.register("critical", CriticalAugment)
+AugmentsRegistry.register("devastator", DevastatorAugment)

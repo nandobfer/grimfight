@@ -5,7 +5,7 @@ import { Character } from "../character/Character"
 
 export class Lizwan extends Character {
     baseAttackSpeed = 1.5
-    baseSpeed = 100
+    baseSpeed = 130
     baseAttackDamage = 15
     baseCritChance = 20
     baseMaxMana: number = 0
@@ -45,7 +45,7 @@ export class Lizwan extends Character {
         return `Ataques aplicam um acúmulo de veneno mortal.
 O veneno causa [info.main:${Math.round(
             this.abilityPower * 0.1
-        )} (0.1x AP)] de dano por segundo. Dura 10 segundos e [primary.main:acumula indefinidamente].`
+        )} (10% AP)] de dano por segundo. Dura 10 segundos e [primary.main:acumula indefinidamente].`
     }
 
     override landAttack(): void {

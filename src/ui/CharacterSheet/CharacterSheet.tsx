@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { Badge, Box, Button, ClickAwayListener, Drawer, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
+import { Badge, Box, Button, ClickAwayListener, Divider, Drawer, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
 import { CharacterAvatar } from "./CharacterAvatar"
 import { CharacterStore } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
@@ -7,29 +7,43 @@ import { AbilityTooltip } from "./AbilityTooltip"
 import { Character } from "../../game/creature/character/Character"
 import { GoldCoin } from "../components/GoldCoin"
 import { renderDescription } from "../../game/tools/TokenizedText"
+import { Game } from "../../game/scenes/Game"
+import { EventBus } from "../../game/tools/EventBus"
 
 interface CharacterSheetProps {
     character: Character
     store: CharacterStore
+    game: Game
     sell: (id: string) => void
 }
 
 export interface SheetDataItem {
     title: string
-    value: number | string
+    value: number
+    tooltip: string
+    fixed?: boolean
+    suffix?: string
 }
 
 export const SheetData: React.FC<SheetDataItem> = (props) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
     return (
-        <Box sx={{ gap: 1, alignItems: "center" }}>
-            <Typography fontWeight={"bold"} variant="caption" fontSize={isMobile ? 8 : undefined}>
-                {props.title}:
-            </Typography>
-            <Typography variant="caption">{props.value}</Typography>
-        </Box>
+        <Tooltip title={props.tooltip}>
+            <Box sx={{ gap: 1, alignItems: "center" }}>
+                <Typography fontWeight={"bold"} variant="caption" fontSize={isMobile ? 8 : undefined}>
+                    {props.title}:
+                </Typography>
+                <Typography variant="caption">
+                    {props.fixed ? props.value.toFixed(1) : Math.round(props.value)} {props.suffix}
+                </Typography>
+            </Box>
+        </Tooltip>
     )
 }
+
+export const StatGroup: React.FC<{ children: React.ReactNode; color: string }> = ({ children, color }) => (
+    <Box sx={{ flexDirection: "column", color: `${color}.main` }}>{children}</Box>
+)
 
 type Snap = {
     level: number
@@ -39,6 +53,7 @@ type Snap = {
     mana: number
     maxMana: number
     abilityPower: number
+    ad: number
     adMin: number
     adMax: number
     attackSpeed: number
@@ -59,6 +74,7 @@ const makeSnap = (c: Character): Snap => ({
     mana: Math.round(c.mana),
     maxMana: c.maxMana,
     abilityPower: Math.round(c.abilityPower),
+    ad: Math.round(c.attackDamage),
     adMin: Math.round(c.attackDamage * c.minDamageMultiplier),
     adMax: Math.round(c.attackDamage * c.maxDamageMultiplier),
     attackSpeed: +c.attackSpeed.toFixed(2),
@@ -95,54 +111,55 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
         return () => clearInterval(id)
     }, [])
 
-    const attributes: SheetDataItem[] = useMemo(
-        () => [
-            { title: "Health", value: `${snap.health} / ${snap.maxHealth}` },
-            { title: "Mana", value: `${snap.mana} / ${snap.maxMana}` },
-            { title: "Mana Regen", value: `${Math.round(charRef.current.manaPerSecond)} /s` }, // rarely changes
-            { title: "Mana /hit", value: `${Math.round(charRef.current.manaPerAttack)}` },
-            { title: "Ability Power", value: `${snap.abilityPower}` },
-            { title: "Attack Damage", value: `${snap.adMin} - ${snap.adMax}` },
-            { title: "Attack Speed", value: `${snap.attackSpeed} /s` },
-            { title: "Attack Range", value: `${snap.attackRange}` },
-            { title: "Crit Chance", value: `${snap.critChance} %` },
-            { title: "Crit Damage Multiplier", value: `x ${snap.critDamageMultiplier}` },
-            { title: "Life Steal", value: `${character.lifesteal} %` },
-            { title: "Armor", value: snap.armor },
-            { title: "Resistance", value: snap.resistance },
-            { title: "Movement Speed", value: snap.speed },
-        ],
-        [snap]
-    )
+    const benchCharacter = () => {
+        props.game.playerTeam.benchCharacter(charRef.current.id)
+        EventBus.emit("open-store")
+        EventBus.emit("select-char", null)
+    }
 
     const characterHealthPercent = useMemo(() => (snap.maxHealth > 0 ? (snap.health / snap.maxHealth) * 100 : 0), [snap.health, snap.maxHealth])
+    const characterManaPercent = useMemo(() => (snap.maxMana > 0 ? (snap.mana / snap.maxMana) * 100 : 0), [snap.mana, snap.maxMana])
     const levelColor = useMemo(() => convertColorToString(colorFromLevel(snap.level)), [snap.level])
 
     return (
         <AbilityTooltip description={character.abilityDescription} placement="auto">
             <>
-                <Box sx={{ width: 1, gap: 1 }}>
+                <Box sx={{ width: 1, gap: 2, alignItems: "center" }}>
                     <Badge
                         badgeContent={`${character.level}`}
                         slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
                     >
-                        <CharacterAvatar name={character.name} size={30} />
+                        <CharacterAvatar name={character.name} size={45} />
                     </Badge>
                     <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
                         <Box sx={{ justifyContent: "space-between", width: 1 }}>
                             <Typography variant="subtitle2">{character.name}</Typography>
-                            <Tooltip title="click to sell character">
-                                <Button color="warning" onClick={() => props.sell(character.id)} size="small" sx={{ padding: 0, minWidth: 0 }}>
-                                    <GoldCoin quantity={props.store.getCost(character.level)} fontSize={10} size={10} />
-                                </Button>
-                            </Tooltip>
                         </Box>
-                        <LinearProgress
-                            variant="determinate"
-                            value={characterHealthPercent}
-                            sx={{ width: 1, height: 7 }}
-                            color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
-                        />
+                        <Box sx={{ width: 1, position: "relative", justifyContent: "center", alignItems: "center" }}>
+                            <LinearProgress
+                                variant="determinate"
+                                value={characterHealthPercent}
+                                sx={{ width: 1, height: 14 }}
+                                color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
+                            />
+                            <Typography sx={{ position: "absolute", fontSize: 12, fontWeight: "bold" }}>
+                                {snap.health} / {snap.maxHealth}
+                            </Typography>
+                        </Box>
+                        <Box
+                            sx={{
+                                width: 1,
+                                position: "relative",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                visibility: snap.maxMana === 0 ? "hidden" : undefined,
+                            }}
+                        >
+                            <LinearProgress variant="determinate" value={characterManaPercent} sx={{ width: 1, height: 14 }} color={"info"} />
+                            <Typography sx={{ position: "absolute", fontSize: 12, fontWeight: "bold" }}>
+                                {snap.mana} / {snap.maxMana}
+                            </Typography>
+                        </Box>
                     </Box>
                 </Box>
 
@@ -155,10 +172,50 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     </Typography>
                 </Box>
 
-                <Box sx={{ flexDirection: "column", width: 1, color: "secondary.main" }}>
+                {/* <Box sx={{ flexDirection: "column", width: 1, color: "secondary.main" }}>
                     {attributes.map((data) => (
                         <SheetData key={data.title} title={data.title} value={data.value} />
                     ))}
+                </Box> */}
+                <Box sx={{ justifyContent: "space-between" }}>
+                    <StatGroup color="error">
+                        <SheetData title={"AD"} value={snap.ad} tooltip="Dano médio de cada ataque básico" />
+                        <SheetData title={"Crit"} value={snap.critChance} tooltip="Chance de acertar criticamente" suffix="%" />
+                        <SheetData title={"Crit Mult"} value={snap.critDamageMultiplier} tooltip="Multiplicador de dano crítico" suffix="x" fixed />
+                    </StatGroup>
+                    <Divider />
+                    <StatGroup color="info">
+                        <SheetData title={"AP"} value={snap.abilityPower} tooltip="Poder de habilidade com magias e feitiços" />
+                        <SheetData title={"Mana"} value={charRef.current.manaPerSecond} tooltip="Mana regenerada a cada segundo" suffix="/s" />
+                        <SheetData title={"MP /a"} value={charRef.current.manaPerAttack} tooltip="Mana ganha a cada ataque" />
+                    </StatGroup>
+                </Box>
+                <Box sx={{ justifyContent: "space-between" }}>
+                    <StatGroup color="warning">
+                        <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Velocidade de ataques a cada segundo" fixed suffix="/s" />
+                        <SheetData title={"Alcance"} value={snap.attackRange} tooltip="Alcance de ataque" />
+                        <SheetData title={"Vel"} value={snap.speed} tooltip="Velocidade de movimento" />
+                    </StatGroup>
+                    <Divider />
+                    <StatGroup color="success">
+                        <SheetData title={"Armadura"} value={snap.armor} tooltip="Quantidade de dano reduzido a cada ataque recebido" />
+                        <SheetData
+                            title={"Resistência"}
+                            value={snap.resistance}
+                            tooltip="Porcentagem do dano reduzido a cada ataque recebido"
+                            suffix="%"
+                        />
+                        <SheetData title={"Lifesteal"} value={snap.lifesteal} tooltip="Porcentagem do dano causado recuperado como vida" suffix="%" />
+                    </StatGroup>
+                </Box>
+
+                <Box>
+                    <Button size="small" fullWidth onClick={benchCharacter} sx={{ fontWeight: "bold" }}>
+                        Guardar
+                    </Button>
+                    <Button color="warning" onClick={() => props.sell(character.id)} size="small" fullWidth sx={{ gap: 1, fontWeight: "bold" }}>
+                        Vender <GoldCoin quantity={props.store.getCost(character.level)} fontSize={10} size={10} />
+                    </Button>
                 </Box>
             </>
         </AbilityTooltip>

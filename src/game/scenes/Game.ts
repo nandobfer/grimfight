@@ -33,6 +33,7 @@ export interface GameProgressDto {
 export const starting_player_lives = 3
 export const starting_player_gold = 1
 export const max_characters_in_board = 6
+export const max_bench_size = 9
 
 export class Game extends Scene {
     version = "v1.0.6"
@@ -50,6 +51,7 @@ export class Game extends Scene {
     playerGold = starting_player_gold
     playerLives = starting_player_lives
     max_characters_in_board = max_characters_in_board
+    max_bench_size = max_bench_size
 
     constructor() {
         super("Game")
@@ -246,6 +248,7 @@ export class Game extends Scene {
         this.resetProgress()
         this.clearFloor()
         this.buildFloor()
+        this.playerTeam.bench.clear()
         this.playerTeam.store.shuffle()
 
         EventBus.emit("gameover")

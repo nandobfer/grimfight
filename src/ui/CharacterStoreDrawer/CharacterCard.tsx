@@ -6,7 +6,6 @@ import { GoldCoin } from "../components/GoldCoin"
 import { StoreItem } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString, RarityColors } from "../../game/tools/RarityColors"
 import { AbilityTooltip } from "../CharacterSheet/AbilityTooltip"
-import { renderDescription } from "../../game/tools/TokenizedText"
 
 interface CharacterCardProps {
     game: Game
@@ -21,7 +20,9 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
     const character = item.character
 
     const levelColor = useMemo(() => convertColorToString(colorFromLevel(character.level)), [character.level])
-    const highlight = game.playerTeam.getChildren().find((char) => char.name === character.name)
+    const highlight =
+        game.playerTeam.getChildren().find((char) => char.name === character.name) ||
+        game.playerTeam.bench.characters.find((char) => char.name === character.name)
 
     const buyCharacter = () => {
         game.playerTeam.store.buy(item)
@@ -30,9 +31,8 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
     return (
         <>
             {!isFirst && <Divider />}
-            <AbilityTooltip description={renderDescription(character.abilityDescription)} placement="top">
+            <AbilityTooltip description={character.abilityDescription} placement="top">
                 <Button
-                    variant={highlight ? "outlined" : undefined}
                     fullWidth
                     sx={{
                         padding: 1,
@@ -47,23 +47,23 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                     onClick={buyCharacter}
                 >
                     <Badge
-                        badgeContent={`Lv ${character.level}`}
+                        overlap="circular"
+                        badgeContent={`${character.level}`}
                         slotProps={{
                             badge: {
                                 sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold", fontSize: isMobile ? 8 : undefined },
                             },
                         }}
-                        overlap="circular"
                     >
-                        <CharacterAvatar name={character.name} size={((isMobile ? 7 : 4) / 100) * window.innerWidth} disabled={disabled} />
+                        <CharacterAvatar name={character.name} size={((isMobile ? 7 : 2.5) / 100) * window.innerWidth} />
                     </Badge>
 
                     <Box sx={{ width: 1, gap: 1, justifyContent: "center" }}>
-                        <Typography variant="subtitle2" fontSize={isMobile ? 8 : "1vw"}>
+                        <Typography variant="subtitle2" fontSize={isMobile ? 8 : 13} color={highlight ? "primary" : "secondary"}>
                             {character.name}
                         </Typography>
 
-                        <GoldCoin quantity={item.cost} size={isMobile ? 7 : 15} fontSize={isMobile ? 9 : 16} reverted />
+                        <GoldCoin quantity={item.cost} size={isMobile ? 7 : 12} fontSize={isMobile ? 9 : 12} reverted />
                     </Box>
                 </Button>
             </AbilityTooltip>

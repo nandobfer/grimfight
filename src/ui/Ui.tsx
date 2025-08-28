@@ -67,7 +67,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                             <Recount />
 
                             <CharacterStoreDrawer game={game} />
-                            <CharacterDrawer store={game.playerTeam.store} />
+                            <CharacterDrawer game={game} />
                         </Box>
                         <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
                             <Counters />

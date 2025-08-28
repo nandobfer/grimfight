@@ -3,7 +3,7 @@ import { Character } from "../character/Character"
 
 export class Rogue extends Character {
     baseAttackSpeed = 1.5
-    baseSpeed = 100
+    baseSpeed = 130
     baseAttackDamage = 15
     baseCritChance = 20
 

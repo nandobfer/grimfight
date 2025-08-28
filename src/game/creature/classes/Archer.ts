@@ -6,7 +6,7 @@ import { Creature } from "../Creature"
 export class Archer extends Character {
     baseAttackSpeed = 1
     baseApeed = 80
-    baseAttackDamage = 20
+    baseAttackDamage = 25
     baseAttackRange = 4
     baseMaxHealth = 200
 
@@ -17,7 +17,7 @@ export class Archer extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Atira 10 flechas em um cone, cada uma causa [error.main:${Math.round(this.attackDamage * 0.5)} (0.5x AD)] de dano.`
+        return `Atira 10 flechas em um cone, cada uma causa [error.main:${Math.round(this.attackDamage * 0.5)} (50% AD)] de dano.`
     }
 
     override extractAttackingAnimation() {

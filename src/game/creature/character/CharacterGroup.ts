@@ -3,12 +3,14 @@ import { Augment } from "../../systems/Augment/Augment"
 import { DamageChart } from "../../tools/DamageChart"
 import { EventBus } from "../../tools/EventBus"
 import { CreatureGroup } from "../CreatureGroup"
+import { Bench } from "./Bench"
 import { Character } from "./Character"
 import { CharacterStore } from "./CharacterStore"
 
 export class CharacterGroup extends CreatureGroup {
     damageChart: DamageChart
     store: CharacterStore
+    bench: Bench
 
     constructor(
         scene: Game,
@@ -19,6 +21,7 @@ export class CharacterGroup extends CreatureGroup {
         super(scene, minions, children, config)
         this.damageChart = new DamageChart(this)
         this.store = new CharacterStore(this)
+        this.bench = new Bench(this)
     }
 
     override getChildren(minions = false) {
@@ -258,5 +261,14 @@ export class CharacterGroup extends CreatureGroup {
 
     emitAugments() {
         EventBus.emit("augments-change", Array.from(this.augments.values()))
+    }
+
+    benchCharacter(id: string) {
+        const character = this.getById(id)
+        if (character && !this.bench.isFull()) {
+            const dto = character.getDto()
+            character.destroy(true)
+            this.bench.add(dto)
+        }
     }
 }

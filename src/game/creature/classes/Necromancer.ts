@@ -25,7 +25,7 @@ export class Necromancer extends Character {
         return `Sumona um esqueletinho para lutar ao seu lado:
 Esqueleto:
 vida máxima: [success.main:${Math.round(skeleton.baseMaxHealth + this.abilityPower)}] (${skeleton.baseMaxHealth} + [info.main:100% AP]).
-dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilityPower * 0.1)}] (${skeleton.baseAttackDamage} + [info.main:10% AP]).`
+dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilityPower * 0.15)}] (${skeleton.baseAttackDamage} + [info.main:15% AP]).`
     }
 
     override getAttackingAnimation(): string {
@@ -59,8 +59,8 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         skeleton.boardY = this.boardY
         skeleton.baseScale = 0.7
         skeleton.addAura(0x00ff66, 1)
-        skeleton.baseSpeed = this.baseSpeed
-        skeleton.baseAttackDamage += this.abilityPower * 0.1
+        skeleton.baseSpeed = this.baseSpeed * 2
+        skeleton.baseAttackDamage += this.abilityPower * 0.15
         skeleton.baseMaxHealth += this.abilityPower
         skeleton.reset()
         skeleton.target = this.target
