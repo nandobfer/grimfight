@@ -1,4 +1,6 @@
 import { Game } from "../../scenes/Game"
+import { Augment } from "../../systems/Augment/Augment"
+import { EventBus } from "../../tools/EventBus"
 import { CreatureGroup } from "../CreatureGroup"
 import { Monster } from "./Monster"
 
@@ -76,5 +78,15 @@ export class MonsterGroup extends CreatureGroup {
                 currentRow--
             }
         }
+    }
+
+    override addAugment(augment: Augment): void {
+        super.addAugment(augment)
+        augment.onPick(this)
+        EventBus.emit("enemies-augments-add", augment)
+    }
+
+    emitAugments() {
+        EventBus.emit("enemies-augments-change", Array.from(this.augments.values()))
     }
 }

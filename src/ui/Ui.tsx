@@ -11,6 +11,7 @@ import { Counters } from "./Counters/Counters"
 import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawer"
 import { GameState } from "../game/scenes/Game"
 import { CharacterDrawer } from "./CharacterSheet/CharacerDrawer"
+import { EnemiesAugments } from "./AugmentModal/EnemiesAugments"
 
 interface UiProps {}
 
@@ -70,7 +71,10 @@ export const Ui: React.FC<UiProps> = (props) => {
                             <CharacterDrawer game={game} />
                         </Box>
                         <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
-                            <Counters />
+                            <Box sx={{ gap: 1 }}>
+                                <EnemiesAugments game={game} />
+                                <Counters />
+                            </Box>
                             <Box sx={{ flexDirection: "column", marginTop: "auto" }}>
                                 <GameStateButtons game={game} />
                             </Box>

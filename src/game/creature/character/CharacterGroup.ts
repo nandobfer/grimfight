@@ -101,8 +101,11 @@ export class CharacterGroup extends CreatureGroup {
         if (matches.length < 3) return
 
         // Keep the pivot; take any 2 others as donors
-        const keep = pivot
-        const donors = matches.filter((c) => c !== keep).slice(0, 2)
+        const keep = matches.find((c) => c !== pivot) ?? pivot
+
+        // Ensure the pivot is consumed if possible
+        const rest = matches.filter((c) => c !== keep)
+        const donors = [pivot, ...rest.filter((c) => c !== pivot)].slice(0, 2)
 
         // Basic merge animation, then destroy donors and level up the keeper
         this.mergeTriplet(keep, donors, () => {

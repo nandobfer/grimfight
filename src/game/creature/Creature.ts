@@ -77,6 +77,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     private healthBar: ProgressBar
     private manaBar: ProgressBar
     aura?: Phaser.FX.Glow
+    tempGlow?: Phaser.FX.Glow
 
     constructor(scene: Game, name: string, id: string, dataOnly = false) {
         super(scene, -1000, -1000, name)
@@ -246,6 +247,23 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             yoyo: true,
             repeat: -1,
             ease: "Sine.easeInOut",
+        })
+    }
+
+    glowTemporarily(color: number, intensity: number, duration: number) {
+        this.tempGlow = this.postFX.addGlow(color, 0)
+
+        this.scene.tweens.add({
+            targets: this.tempGlow,
+            duration: duration,
+            yoyo: true,
+            repeat: 0,
+            outerStrength: intensity,
+            ease: "Sine.easeInOut",
+            onComplete: () => {
+                this.tempGlow?.destroy()
+                this.tempGlow = undefined
+            },
         })
     }
 

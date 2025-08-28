@@ -2,6 +2,7 @@
 
 import { Game } from "../scenes/Game"
 import { Augment } from "../systems/Augment/Augment"
+import { convertMuiColorToPhaser } from "../tools/RarityColors"
 import { Creature } from "./Creature"
 
 export class CreatureGroup extends Phaser.GameObjects.Group {
@@ -85,6 +86,9 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
     addAugment(augment: Augment) {
         augment.chosenFloor = this.scene.floor
         this.augments.add(augment)
+        for (const creature of this.getChildren()) {
+            creature.glowTemporarily(convertMuiColorToPhaser(augment.color || "primary"), 5, 2000)
+        }
         this.reset()
         this.scene.saveProgress()
     }
