@@ -11,6 +11,8 @@ export class BonusGoldAugment extends Augment {
     }
 
     override onPick(team: CreatureGroup): void {
-        team.scene.changePlayerGold(team.scene.playerGold + team.scene.floor)
+        const gold = team.scene.playerGold + team.scene.floor
+        team.scene.changePlayerGold(gold)
+        team.scene.goldCoinFx.explodeCameraCenterToCounter(gold)
     }
 }

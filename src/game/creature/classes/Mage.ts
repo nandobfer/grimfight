@@ -7,7 +7,7 @@ export class Mage extends Character {
     baseAttackSpeed = 0.5
     baseAttackRange = 3
     baseManaPerSecond = 10
-    baseMaxMana = 50
+    baseMaxMana = 60
     baseMaxHealth = 200
     baseAbilityPower: number = 50
 
@@ -33,12 +33,6 @@ export class Mage extends Character {
         this.extractAnimationsFromSpritesheet("casting", 208, 13)
     }
 
-    // levelUp(): void {
-    //     super.levelUp()
-
-    //     this.baseAttackDamage += 10
-    // }
-
     override landAttack() {
         if (!this.target) return
 
@@ -47,48 +41,14 @@ export class Mage extends Character {
     }
 
     override castAbility(): void {
+        if (!this.target) return
+
         this.casting = true
-        this.anims.stop()
-
-        // deals 2x ability power to the target and 0.5x ability power to nearby enemies
-        this.explodeTarget()
-    }
-
-    explodeTarget() {
-        const finishSpell = () => {
-            if (!this.target?.active) this.newTarget()
-
-            this.target?.takeDamage(damage, this, "fire", crit)
-            this.casting = false
-        }
-
-        if (!this.target?.active) {
-            finishSpell()
-            return
-        }
-
-        if (!this.target?.active) {
-        }
-
         const { value: damage, crit } = this.calculateDamage(this.abilityPower * 2)
 
-        const onAnimationUpdate = (animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) => {
-            if (animation.key !== "explosion") return
+        this.target.takeDamage(damage, this, "fire", crit)
+        new Explosion(this, this.target, this.abilityPower / 2, 2.5)
 
-            if (frame.index === 3) {
-                finishSpell()
-            }
-        }
-
-        const cleanup = () => {
-            explosion.off("animationupdate", onAnimationUpdate)
-            explosion.cleanup()
-            this.casting = false
-        }
-
-        const explosion = new Explosion(this, this.target, this.abilityPower / 2, 2.5)
-        explosion.on("animationupdate", onAnimationUpdate)
-        explosion.once("animationcomplete", cleanup)
-        explosion.once("animationstop", cleanup)
+        this.casting = false
     }
 }

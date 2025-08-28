@@ -8,7 +8,7 @@ import { FireEffect } from "../fx/FireEffect"
 import { generateEncounter } from "../tools/Encounter"
 import { MonsterGroup } from "../creature/monsters/MonsterGroup"
 import { CharacterGroup } from "../creature/character/CharacterGroup"
-import { CharacterDto } from "../creature/character/Character"
+import { Character, CharacterDto } from "../creature/character/Character"
 import { DamageType } from "../ui/DamageNumbers"
 import { spawnParrySpark } from "../fx/Parry"
 import { ColdHit } from "../fx/ColdHit"
@@ -18,6 +18,7 @@ import { PoisonHit } from "../fx/PoisonHit"
 import { AugmentsRegistry } from "../systems/Augment/AugmentsRegistry"
 import { Augment } from "../systems/Augment/Augment"
 import { LightningHit } from "../fx/LightningHit"
+import { GoldCoinFx } from "../fx/GoldExplosion"
 
 export type GameState = "fighting" | "idle"
 
@@ -47,11 +48,14 @@ export class Game extends Scene {
     floor = 1
     grid: Grid
     private fireEffects: Phaser.GameObjects.Group
+    goldCoinFx: GoldCoinFx
 
     playerGold = starting_player_gold
     playerLives = starting_player_lives
     max_characters_in_board = max_characters_in_board
     max_bench_size = max_bench_size
+
+    private uiGhost?: Character
 
     constructor() {
         super("Game")
@@ -64,6 +68,7 @@ export class Game extends Scene {
 
         this.createBackground()
         this.grid = new Grid(this, this.background)
+        this.goldCoinFx = new GoldCoinFx(this)
 
         this.playerTeam = new CharacterGroup(this, true)
         this.enemyTeam = new MonsterGroup(this, true)
@@ -87,6 +92,7 @@ export class Game extends Scene {
         EventBus.emit("game-ready", this)
         EventBus.on("get-progress", () => this.emitProgress())
         EventBus.on("ui-augment", () => this.handleAugmentsFloor())
+        this.installUiDragBridge()
     }
 
     createLight() {
@@ -146,6 +152,76 @@ export class Game extends Scene {
         this.physics.add.collider(this.walls, this.enemyTeam)
     }
 
+    private installUiDragBridge() {
+        EventBus.on("ui-drag-start", (payload: { dto: CharacterDto; clientX: number; clientY: number }) => {
+            if (this.state === "fighting") return
+            const { dto, clientX, clientY } = payload
+
+            // Build a character instance WITHOUT adding to the team yet
+            const ghost = CharacterRegistry.create(dto.name, this, dto.id, 0, 0)
+            ghost.loadFromDto(dto) // level etc.
+            ghost.body.enable = false // no physics until we drop
+            ghost.setAlpha(0.95).setDepth(9999)
+            ghost.disableInteractive() // we control it manually
+            ghost.anims.play(`${ghost.name}-idle-down`, true)
+
+            // place at pointer
+            const { x, y } = this.clientToWorld(clientX, clientY)
+            ghost.setPosition(x, y)
+            ghost.body?.reset(x, y)
+
+            this.uiGhost = ghost
+            this.grid.showDropOverlay()
+        })
+
+        EventBus.on("ui-drag-move", ({ clientX, clientY }: { clientX: number; clientY: number }) => {
+            if (!this.uiGhost) return
+            const { x, y } = this.clientToWorld(clientX, clientY)
+            this.uiGhost.setPosition(x, y)
+            this.grid.showHighlightAtWorld(x, y)
+        })
+
+        EventBus.on("ui-drag-end", ({ clientX, clientY }: { clientX: number; clientY: number }) => {
+            if (!this.uiGhost) return
+            const ghost = this.uiGhost
+            this.uiGhost = undefined
+
+            const { x, y } = this.clientToWorld(clientX, clientY)
+
+            // Try to snap; if success, add to team (CharacterGroup.add will respect boardX/Y)
+            const snapped = this.grid.snapCharacter(ghost, x, y)
+            this.grid.hideHighlight()
+            this.grid.hideDropOverlay()
+
+            if (snapped && !this.playerTeam.isFull()) {
+                // snapCharacter already set boardX/boardY on the ghost
+                ghost.body.enable = true
+                this.playerTeam.add(ghost) // will NOT auto-reposition because boardX/boardY are set
+                ghost.resetMouseEvents()
+                this.playerTeam.saveCurrentCharacters()
+                this.playerTeam.emitArray()
+                this.playerTeam.bench.remove(ghost.id)
+            } else {
+                ghost.destroy(true) // cancel: didn’t drop in a valid tile
+            }
+        })
+    }
+
+    // Map browser client coords -> world coords under the camera, robust to CSS scaling + DPR
+    private clientToWorld(clientX: number, clientY: number) {
+        // ScaleManager expects *page* coords; add current scroll offset
+        const pageX = clientX + window.scrollX
+        const pageY = clientY + window.scrollY
+
+        // Transform into game-space coords (relative to the canvas)
+        const gx = this.scale.transformX(pageX)
+        const gy = this.scale.transformY(pageY)
+
+        // Finally, to world space via the active camera
+        const p = this.cameras.main.getWorldPoint(gx, gy)
+        return { x: p.x, y: p.y }
+    }
+
     changeScene() {
         this.scene.start("GameOver")
     }
@@ -168,7 +244,8 @@ export class Game extends Scene {
     }
 
     onFloorDefeated() {
-        this.playerTeam.grantFloorReward(this.floor)
+        const goldGained = this.playerTeam.grantFloorReward(this.floor)
+        this.goldCoinFx.explodeCameraCenterToCounter(goldGained)
         this.floor += 1
         this.clearFloor()
         this.buildFloor()

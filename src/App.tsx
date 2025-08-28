@@ -10,7 +10,7 @@ function App() {
     const currentScene = (scene: Phaser.Scene) => {}
 
     return (
-        <div id="app">
+        <div id="app" onDragOver={(e) => e.preventDefault()} onDrop={(e) => e.preventDefault()}>
             <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
             <Ui />
         </div>

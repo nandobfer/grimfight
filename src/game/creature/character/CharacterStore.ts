@@ -79,7 +79,7 @@ export class CharacterStore {
         const level = item.character.level
         const { matchingCharsInBench, matchingCharsInBoard } = this.team.bench.wouldLevelUp(name, level, item.character.id)
 
-        const already = matchingCharsInBench.length + matchingCharsInBoard.length
+        const already = matchingCharsInBench.length + (this.scene.state === "fighting" ? 0 : matchingCharsInBoard.length)
         const withThis = already + 1
 
         // other matching items available in the store (excluding this one and sold ones)

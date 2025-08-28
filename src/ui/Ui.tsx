@@ -4,7 +4,7 @@ import { EventBus } from "../game/tools/EventBus"
 import { useMuiTheme } from "./hooks/useMuiTheme"
 import { GameStateButtons } from "./GameStateButtons/GameStateButtons"
 import { useGameScene } from "./hooks/useGameScene"
-import { CharactersRow } from "./CharacterSheet/CharactersRow"
+import { PlayerAugments } from "./CharacterSheet/CharactersRow"
 import { LoadingGame } from "./LoadingGame"
 import { Recount } from "./Recount/Recount"
 import { Counters } from "./Counters/Counters"
@@ -64,18 +64,17 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {game && (
                     <>
                         <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
-                            <CharactersRow game={game} />
+                            <PlayerAugments game={game} />
                             <Recount />
 
                             <CharacterStoreDrawer game={game} />
                             <CharacterDrawer game={game} />
                         </Box>
-                        <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
+                        <Box sx={{ flexDirection: "column", marginLeft: "auto", justifyContent: "space-between" }}>
                             <Box sx={{ gap: 1 }}>
-                                <EnemiesAugments game={game} />
-                                <Counters />
+                                <Counters game={game} />
                             </Box>
-                            <Box sx={{ flexDirection: "column", marginTop: "auto" }}>
+                            <Box sx={{ flexDirection: "column" }}>
                                 <GameStateButtons game={game} />
                             </Box>
                         </Box>

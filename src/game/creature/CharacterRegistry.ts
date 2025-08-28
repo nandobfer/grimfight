@@ -1,6 +1,6 @@
 import { Game } from "../scenes/Game"
 import { RNG } from "../tools/RNG"
-import { Character } from "./character/Character"
+import { Character, CharacterDto } from "./character/Character"
 import { Archer } from "./classes/Archer"
 import { Barbarian } from "./classes/Barbarian"
 import { Knight } from "./classes/Knight"
@@ -29,6 +29,13 @@ export class CharacterRegistry {
             throw new Error(`Character class not found: ${name}`)
         }
         const character = new CharacterClass(scene, id, id, boardX, boardY, dataOnly)
+        return character
+    }
+
+    static load(dto: CharacterDto, scene: Game) {
+        const character = CharacterRegistry.create(dto.name, scene, dto.id)
+        character.id = dto.id
+        character.levelUpTo(dto.level)
         return character
     }
 

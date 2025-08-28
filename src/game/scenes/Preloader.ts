@@ -50,6 +50,7 @@ export class Preloader extends Scene {
         this.load.spritesheet("statikk_attacking", `spritesheets/characters/statikk_attacking.png`, {
             frameWidth: 128,
         })
+        this.load.spritesheet("goldcoin", `gold.png`, { frameWidth: 60, frameHeight: 64 })
     }
 
     loadRagnarokSprites() {

@@ -4,8 +4,11 @@ import { CounterItem } from "./CounterItem"
 import { GoldCoin } from "../components/GoldCoin"
 import { usePlayerProgress } from "../hooks/usePlayerProgress"
 import { Favorite } from "@mui/icons-material"
+import { Game } from "../../game/scenes/Game"
 
-interface CountersProps {}
+interface CountersProps {
+    game: Game
+}
 
 export const Counters: React.FC<CountersProps> = (props) => {
     const progress = usePlayerProgress()
@@ -25,7 +28,9 @@ export const Counters: React.FC<CountersProps> = (props) => {
                 </Box>
             </Tooltip>
             <Tooltip title="Gold Coins" placement="auto">
-                <GoldCoin quantity={progress.playerGold} size={20} />
+                <Box id="gold-coin-counter">
+                    <GoldCoin quantity={progress.playerGold} size={20} />
+                </Box>
             </Tooltip>
         </Box>
     )

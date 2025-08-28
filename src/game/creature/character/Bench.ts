@@ -69,7 +69,7 @@ export class Bench {
             const shouldSummon = matchingCharsInBoard.length > 0
 
             if (shouldSummon) {
-                matchingCharsInBench.forEach(item => this.summon(item.id, true))
+                matchingCharsInBench.forEach((item) => this.summon(item.id, true))
                 this.summon(dto.id, true)
             } else {
                 const donors = [...matchingCharsInBench, dto]
@@ -93,9 +93,7 @@ export class Bench {
     summon(id: string, force = false) {
         const dto = this.getCharacter(id)
         if (dto && (this.team.countActive() < this.scene.max_characters_in_board || force)) {
-            const character = CharacterRegistry.create(dto.name, this.scene, dto.id)
-            character.id = RNG.uuid()
-            character.levelUpTo(dto.level)
+            const character = CharacterRegistry.load(dto, this.scene)
             this.team.add(character)
             this.remove(id)
             EventBus.emit("select-char", character)
@@ -135,5 +133,9 @@ export class Bench {
 
     getHighestLevelChar() {
         return this.characters.reduce((level, char) => (level > char.level ? level : char.level), 0)
+    }
+
+    drag(dto: CharacterDto) {
+        const character = CharacterRegistry.load(dto, this.scene)
     }
 }

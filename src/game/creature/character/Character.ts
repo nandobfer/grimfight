@@ -65,7 +65,7 @@ export class Character extends Creature {
 
         this.scene.input.setDraggable(this)
 
-        this.scene.input.dragDistanceThreshold = 12 // pixels before drag starts (default ~16)
+        this.scene.input.dragDistanceThreshold = 32 // pixels before drag starts (default ~16)
         this.scene.input.dragTimeThreshold = 50
 
         this.on("pointerover", () => {

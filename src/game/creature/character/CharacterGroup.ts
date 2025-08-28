@@ -2,9 +2,10 @@ import { Game } from "../../scenes/Game"
 import { Augment } from "../../systems/Augment/Augment"
 import { DamageChart } from "../../tools/DamageChart"
 import { EventBus } from "../../tools/EventBus"
+import { CharacterRegistry } from "../CharacterRegistry"
 import { CreatureGroup } from "../CreatureGroup"
 import { Bench } from "./Bench"
-import { Character } from "./Character"
+import { Character, CharacterDto } from "./Character"
 import { CharacterStore } from "./CharacterStore"
 
 export class CharacterGroup extends CreatureGroup {
@@ -183,6 +184,8 @@ export class CharacterGroup extends CreatureGroup {
         const gold = 1 + Math.round(floor * 0.5)
         this.scene.changePlayerGold(this.scene.playerGold + gold)
         this.store.shuffle()
+
+        return gold
     }
 
     getHighestLevelChar() {
@@ -273,5 +276,9 @@ export class CharacterGroup extends CreatureGroup {
             character.destroy(true)
             this.bench.add(dto)
         }
+    }
+
+    override isFull(): boolean {
+        return this.countActive() >= this.scene.max_characters_in_board
     }
 }

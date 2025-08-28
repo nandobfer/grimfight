@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Collapse, MenuItem, Typography } from "@mui/material"
+import { Box, Button, Collapse, Typography } from "@mui/material"
 import { Game } from "../../game/scenes/Game"
 import { Augment } from "../../game/systems/Augment/Augment"
 import { EventBus } from "../../game/tools/EventBus"
-import { renderTokensDescription } from "../../game/tools/TokenizedText"
 import { ExpandMore } from "@mui/icons-material"
 
 interface EnemiesAugmentsProps {
@@ -15,19 +14,18 @@ export const EnemiesAugments: React.FC<EnemiesAugmentsProps> = (props) => {
     const [open, setOpen] = useState(false)
 
     const flatenedAugments = useMemo(() => {
-        const list: Augment[] = []
+        const counter = new Map<string, number>()
 
-        for (const augment of augments) {
-            const index = list.findIndex((item) => item.name === augment.name)
-            if (index > -1) {
-                for (const [key, value] of Object.entries(list[index].values)) {
-                    list[index].values[key] = value
-                }
+        for (const aug of augments) {
+            const quantity = counter.get(aug.name)
+            if (!quantity) {
+                counter.set(aug.name, 1)
             } else {
-                list.push(augment)
+                counter.set(aug.name, quantity + 1)
             }
         }
-        return list
+
+        return Array.from(counter.entries())
     }, [augments])
 
     useEffect(() => {
@@ -49,7 +47,7 @@ export const EnemiesAugments: React.FC<EnemiesAugmentsProps> = (props) => {
     }, [])
 
     return augments.length > 0 ? (
-        <Box sx={{ flexDirection: "column", color: "error.main", width: "min-content", }}>
+        <Box sx={{ flexDirection: "column", color: "error.main", width: "min-content", pointerEvents: "none" }}>
             <Button
                 color="error"
                 onClick={() => setOpen((value) => !value)}
@@ -59,7 +57,7 @@ export const EnemiesAugments: React.FC<EnemiesAugmentsProps> = (props) => {
                     whiteSpace: "normal",
                     pointerEvents: "auto",
                 }}
-                endIcon={<ExpandMore sx={{transform: open ? 'rotate(180deg)' : undefined, transition: '0.3s'}} />}
+                endIcon={<ExpandMore sx={{ transform: open ? "rotate(180deg)" : undefined, transition: "0.3s" }} />}
             >
                 <Typography variant="subtitle2" fontWeight={"bold"}>
                     Inimigos estão mais fortes:
@@ -67,11 +65,9 @@ export const EnemiesAugments: React.FC<EnemiesAugmentsProps> = (props) => {
             </Button>
             <Collapse in={open}>
                 {flatenedAugments.map((augment) => (
-                    <Box key={augment.name} sx={{ gap: 1 , width: 300}}>
-                        <Typography variant="subtitle2">{augment.name}:</Typography>
-                        <Typography variant="caption" >
-                            {renderTokensDescription(augment.descriptionValues, augment.description)}
-                        </Typography>
+                    <Box key={augment[0]} sx={{ gap: 1, width: 250, justifyContent: "end" }}>
+                        <Typography variant="caption">{augment[0]}:</Typography>
+                        <Typography variant="subtitle2">{augment[1]}x</Typography>
                     </Box>
                 ))}
             </Collapse>

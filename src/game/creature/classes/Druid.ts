@@ -41,25 +41,27 @@ export class Helyna extends Character {
     override getAbilityDescription(): string {
         return `Se transforma em um animal, baseado na posição inicial, concedendo atributos e habilidades específicas para cada um.
 
-[primary.main:Urso] (frente): Ganha [default:(1.5x)] tamanho, [warning.main: ${
+[primary.main:Urso] (frente): Ganha [default:(50%)] de tamanho, [warning.main: ${Math.round(
             this.abilityPower * 0.15
-        }] [info.main:(15% AP)] armadura, [success.main: ${this.abilityPower * 10}] [info.main:(10x AP)] de vida máxima e [error.main: ${
+        )}] [info.main:(15% AP)] armadura, [success.main: ${Math.round(
+            this.abilityPower * 10
+        )}] [info.main:(1000% AP)] de vida máxima e [error.main: ${Math.round(
             this.abilityPower * 0.25
-        }] [info.main: (25% AP)] de ataque. Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [warning.main:${
+        )}] [info.main: (25% AP)] de ataque. Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [warning.main:${Math.round(
             this.armor
-        } (5x)] e causando [warning.main:${this.armor} (100% armor)] dano a atacantes.
+        )} (5x)] e causando [warning.main:${Math.round(this.armor)} (100% armor)] dano a atacantes.
 
-[primary.main:Gato] (meio): Ganha velocidade, [error.main:${
+[primary.main:Gato] (meio): Ganha velocidade, [error.main:${Math.round(
             this.abilityPower
-        }] [info.main:(100% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${
+        )}] [info.main:(100% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${Math.round(
             this.abilityPower / 100
-        }] [info.main:(1% AP)] chance de crítico. Ao lançar, aplica um sangramento no alvo, causando [error.main:${
+        )}] [info.main:(1% AP)] chance de crítico. Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(
             this.attackDamage * 3
-        } (3x AD)] de dano.
+        )} (300% AD)] de dano.
         
-[primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${
+[primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${Math.round(
             this.abilityPower * 5
-        } (5x AP)].`
+        )} (500% AP)].`
     }
 
     override landAttack() {

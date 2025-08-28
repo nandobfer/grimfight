@@ -12,7 +12,7 @@ interface CharactersRowProps {
     game: Game
 }
 
-export const CharactersRow: React.FC<CharactersRowProps> = (props) => {
+export const PlayerAugments: React.FC<CharactersRowProps> = (props) => {
     const [charactersLength, setCharactersLength] = useState(0)
     const [augments, setAugments] = useState(Array.from(props.game.playerTeam.augments.values()))
     const [openTooltip, setOpenTooltip] = React.useState<boolean>(false)
