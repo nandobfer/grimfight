@@ -20,8 +20,8 @@ export class CharacterGroup extends CreatureGroup {
     ) {
         super(scene, minions, children, config)
         this.damageChart = new DamageChart(this)
-        this.store = new CharacterStore(this)
         this.bench = new Bench(this)
+        this.store = new CharacterStore(this)
     }
 
     override getChildren(minions = false) {
