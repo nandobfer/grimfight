@@ -23,14 +23,15 @@ export const DebugGold: React.FC<DebugFloorProps> = (props) => {
     }
 
     return (
-        <form onSubmit={(onSubmit)}>
+        <form onSubmit={onSubmit}>
             <TextField
-                label='gold'
-            value={value}
-            onChange={(ev) => setValue(ev.target.value.replace(/\D/g, ""))}
-            size="small"
-            variant="standard"
-        />
+                type="number"
+                label="gold"
+                value={value}
+                onChange={(ev) => setValue(ev.target.value.replace(/\D/g, ""))}
+                size="small"
+                variant="standard"
+            />
         </form>
     )
 }

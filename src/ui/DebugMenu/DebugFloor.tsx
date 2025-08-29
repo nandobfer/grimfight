@@ -25,7 +25,14 @@ export const DebugFloor: React.FC<DebugFloorProps> = (props) => {
 
     return (
         <form onSubmit={onSubmit}>
-            <TextField label="floor" value={value} onChange={(ev) => setValue(ev.target.value.replace(/\D/g, ""))} size="small" variant="standard" />
+            <TextField
+                type="number"
+                label="floor"
+                value={value}
+                onChange={(ev) => setValue(ev.target.value.replace(/\D/g, ""))}
+                size="small"
+                variant="standard"
+            />
         </form>
     )
 }

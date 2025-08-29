@@ -17,49 +17,64 @@ export function usePhaserDragBridge() {
     const ctrlRef = useRef<AbortController | null>(null)
     const [dragging, setDragging] = useState(false)
 
-    // unmount cleanup (covers mid-drag unmounts)
     useEffect(() => () => ctrlRef.current?.abort(), [])
 
-    const startDrag = (dto: CharacterDto, e: React.PointerEvent) => {
+    const startFromPoint = (dto: CharacterDto, clientX: number, clientY: number) => {
         setDragging(true)
-        e.preventDefault()
-        e.currentTarget.setPointerCapture?.(e.pointerId)
-
-        EventBus.emit("ui-drag-start", { dto, clientX: e.clientX, clientY: e.clientY })
+        EventBus.emit("ui-drag-start", { dto, clientX, clientY })
 
         const ctrl = new AbortController()
         ctrlRef.current = ctrl
         const { signal } = ctrl
 
-        const onMove = (ev: PointerEvent) => {
+        const onPointerMove = (ev: PointerEvent) => {
             EventBus.emit("ui-drag-move", { clientX: ev.clientX, clientY: ev.clientY })
         }
+        const onPointerUp = (ev: PointerEvent) => finish(ev.clientX, ev.clientY)
 
-        const finish = (ev?: Event) => {
-            // try to use last known coords if it's a PointerEvent
-            const pe = ev as PointerEvent | undefined
-            EventBus.emit("ui-drag-end", {
-                clientX: pe?.clientX ?? e.clientX,
-                clientY: pe?.clientY ?? e.clientY,
-            })
-            ctrl.abort() // removes all listeners bound with this signal
+        // IMPORTANT: non-passive touchmove so we can prevent scroll
+        const onTouchMove = (ev: TouchEvent) => {
+            if (!ev.touches.length) return
+            ev.preventDefault()
+            const t = ev.touches[0]
+            EventBus.emit("ui-drag-move", { clientX: t.clientX, clientY: t.clientY })
+        }
+        const onTouchEnd = (ev: TouchEvent) => {
+            const t = ev.changedTouches[0]
+            finish(t.clientX, t.clientY)
+        }
+
+        const finish = (cx: number, cy: number) => {
+            EventBus.emit("ui-drag-end", { clientX: cx, clientY: cy })
+            ctrl.abort()
             setDragging(false)
         }
 
-        window.addEventListener("pointermove", onMove, { signal, passive: true })
-        window.addEventListener("pointerup", finish, { signal })
-        window.addEventListener("pointercancel", finish, { signal })
-        window.addEventListener("blur", finish, { signal })
-        document.addEventListener(
-            "visibilitychange",
-            () => {
-                if (document.hidden) finish()
-            },
-            { signal }
-        )
+        // attach both streams; only one will fire on a given device
+        window.addEventListener("pointermove", onPointerMove, { signal, passive: true })
+        window.addEventListener("pointerup", onPointerUp, { signal })
+        window.addEventListener("pointercancel", onPointerUp, { signal })
+        window.addEventListener("touchmove", onTouchMove, { signal, passive: false })
+        window.addEventListener("touchend", onTouchEnd, { signal })
+        window.addEventListener("touchcancel", onTouchEnd, { signal })
+        window.addEventListener("blur", () => finish(clientX, clientY), { signal })
     }
 
-    return { startDrag, dragging }
+    const startDrag = (dto: CharacterDto, e: React.PointerEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
+        e.currentTarget.setPointerCapture?.(e.pointerId)
+        startFromPoint(dto, e.clientX, e.clientY)
+    }
+
+    const startDragTouch = (dto: CharacterDto, e: React.TouchEvent) => {
+        const t = e.touches[0]
+        e.preventDefault()
+        e.stopPropagation()
+        startFromPoint(dto, t.clientX, t.clientY)
+    }
+
+    return { startDrag, startDragTouch, dragging }
 }
 
 export const BenchItem: React.FC<BenchItemProps> = (props) => {
@@ -73,13 +88,16 @@ export const BenchItem: React.FC<BenchItemProps> = (props) => {
         team.bench.summon(character.id)
     }
 
-    const { startDrag, dragging } = usePhaserDragBridge()
+    const { startDrag, dragging, startDragTouch } = usePhaserDragBridge()
     const onPointerDown = (e: React.PointerEvent) => (character ? startDrag(character, e) : undefined)
 
     return (
         <Box sx={{ flexDirection: "column", flex: 1, pointerEvents: !character ? "none" : undefined }}>
             <Button
                 sx={{
+                    touchAction: "none",
+                    WebkitUserSelect: "none",
+                    userSelect: "none",
                     width: 1,
                     padding: 1,
                     filter: !character || dragging ? "grayscale(100%)" : undefined,
@@ -87,8 +105,10 @@ export const BenchItem: React.FC<BenchItemProps> = (props) => {
                 }}
                 onClick={isMobile ? summon : undefined}
                 disabled={!character}
-                onPointerDown={onPointerDown}
-                draggable
+                onPointerDown={(e) => character && startDrag(character, e)}
+                onTouchStart={(e) => character && startDragTouch(character, e)}
+                // HTML5 DnD off (breaks mobile)
+                draggable={false}
             >
                 <Badge
                     badgeContent={character ? `${character.level}` : ""}
