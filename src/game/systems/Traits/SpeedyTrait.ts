@@ -1,4 +1,5 @@
 import { Character } from "../../creature/character/Character"
+import { Statikk } from "../../creature/classes/Statikk"
 import { Trait } from "./Trait"
 
 type TraitBoosts = "attackSpeedMultiplier" | "maxStacks"
@@ -35,6 +36,10 @@ export class SpeedyTrait extends Trait {
 
             const multiplier = 1 + stacks * values.attackSpeedMultiplier
             character.attackSpeed = character.baseAttackSpeed * multiplier
+
+            if (character instanceof Statikk) {
+                character.bonusAttackSpeed = character.baseAttackSpeed * multiplier
+            }
         }
 
         this.handlers.set(character, handler)
