@@ -25,7 +25,11 @@ export const Traits: React.FC<TraitsProps> = (props) => {
         }
     }, [])
 
-    return <Box sx={{ flexDirection: 'column' }}>
-        {traits.map(trait => <TraitComponent key={trait.name} trait={trait} />)}
-    </Box>
+    return (
+        <Box sx={{ flexDirection: "column", gap: 1 }}>
+            {traits.map((trait) => (
+                <TraitComponent key={trait.name} trait={trait} />
+            ))}
+        </Box>
+    )
 }

@@ -104,7 +104,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     reset() {
         this.calculateStats()
         this.setScale(this.baseScale)
-        this.applyAugments()
+        
         this.health = this.maxHealth
         this.mana = 0
         this.active = true
@@ -119,7 +119,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.target = undefined
     }
 
-    private applyAugments() {
+    applyAugments() {
         const team = this.master?.team || this.team
         team?.augments?.forEach((augment) => augment.applyModifier(this))
     }

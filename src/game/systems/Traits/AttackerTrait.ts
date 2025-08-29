@@ -18,12 +18,10 @@ export class AttackerTrait extends Trait {
 
     override applyModifier(character: Character): void {
         const values = this.stages.get(this.activeStage)
-        console.log({ stage: this.activeStage, values })
         if (!values) return
 
         character.attackDamage *= 1 + values.attackDamageMultiplier
         character.lifesteal += values.lifesteal
-        character.glowTemporarily(0xff0000, 2, 1000)
     }
 }
 

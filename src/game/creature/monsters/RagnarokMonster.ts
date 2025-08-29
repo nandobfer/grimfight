@@ -8,14 +8,15 @@ export class RagnarokMonster extends Monster {
 
     override createAnimations() {}
 
-    extractAnimationsFromSpritesheet(
+    override extractAnimationsFromSpritesheet(
         key: string,
         startingFrame: number,
         usedFramesPerRow: number,
-        totalFramesPerRow = 13,
+        totalFramesPerRow: number,
         texture = this.name,
+        identifier = this.name,
         yoyo?: boolean
-    ) {
+    ): Phaser.Animations.Animation[] {
         const directions = ["down-right", "up-left"]
         let currentFrameCount = startingFrame - 1
         const animations: Phaser.Animations.Animation[] = []
@@ -24,7 +25,7 @@ export class RagnarokMonster extends Monster {
             const splitedDirections = duoDirection.split("-")
             for (const direction of splitedDirections) {
                 const animation = this.anims.create({
-                    key: `${this.name}-${key}-${direction}`,
+                    key: `${identifier}-${key}-${direction}`,
                     frames: this.anims.generateFrameNumbers(texture, { start: currentFrameCount, end: currentFrameCount + usedFramesPerRow - 1 }),
                     frameRate: usedFramesPerRow + 1,
                     repeat: -1,

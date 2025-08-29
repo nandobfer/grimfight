@@ -1,5 +1,6 @@
 import { RNG } from "../../tools/RNG"
 import { AttackerTrait } from "./AttackerTrait"
+import { ColossusTrait } from "./ColossusTrait"
 import { Trait } from "./Trait"
 
 type Ctor = new (comp: string[]) => Trait
@@ -58,3 +59,4 @@ export class TraitsRegistry {
 }
 
 TraitsRegistry.register("attacker", AttackerTrait, ["maximus", "statikk", "mordred", "arthas"])
+TraitsRegistry.register("colossus", ColossusTrait, ["maximus", "grok", "helyna"])

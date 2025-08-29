@@ -44,13 +44,30 @@ export class Character extends Creature {
         this.handleMouseEvents()
     }
 
+    refreshStats() {
+        // 1) restore *base* stats (no traits/augments here)
+        super.reset()
+
+        // 2) apply layers in desired order
+        this.reapplyTraits()
+        this.applyAugments()
+    }
+
     override reset() {
         super.reset()
-        this.levelBadge.reset()
 
+        this.levelBadge.reset()
         if (this.boardX && this.boardY) {
             this.x = this.boardX
             this.y = this.boardY
+        }
+    }
+
+    reapplyTraits() {
+        if (this.team) {
+            for (const trait of this.team.activeTraits) {
+                trait.tryApply(this)
+            }
         }
     }
 
@@ -190,6 +207,7 @@ export class Character extends Creature {
             if (snapped) {
                 this.boardX = this.x
                 this.boardY = this.y
+                this.refreshStats()
                 this.team.saveCurrentCharacters()
             }
 

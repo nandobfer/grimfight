@@ -17,7 +17,7 @@ export class EvilFanatic extends RagnarokMonster {
     }
 
     override createAnimations() {
-        this.extractAnimationsFromSpritesheet("idle", 1, 5, 7, this.name, true)
+        this.extractAnimationsFromSpritesheet("idle", 1, 5, 7, this.name, this.name, true)
         this.extractAnimationsFromSpritesheet("walking", 15, 6, 7)
         this.extractAnimationsFromSpritesheet("attacking1", 29, 6, 7)
         this.extractAnimationsFromSpritesheet("attacking2", 29, 6, 7)

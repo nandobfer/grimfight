@@ -56,7 +56,6 @@ export class Monster extends Creature {
         this.addAura(0x330033, Math.min(2, this.challengeRating / 5))
     }
 
-
     private addSmokeEffect() {
         // Dark smoke effect
         // ! preciso da sprite
@@ -128,5 +127,10 @@ export class Monster extends Creature {
         super.update(time, delta)
 
         this.updateFx()
+    }
+
+    override reset(): void {
+        super.reset()
+        this.applyAugments()
     }
 }

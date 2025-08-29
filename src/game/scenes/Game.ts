@@ -254,6 +254,7 @@ export class Game extends Scene {
             this.playerTeam.bench.add(dto) // your Bench.add will emit to UI
             this.dragFromBoard.delete(id)
             this.playerTeam.resetTraits()
+            // this.playerTeam.refreshAllStats()
             this.playerTeam.saveAndEmit()
         })
 

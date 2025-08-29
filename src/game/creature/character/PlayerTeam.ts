@@ -39,7 +39,12 @@ export class PlayerTeam extends CreatureGroup {
         super.reset()
         this.deleteFuckedUpCharacter()
         this.resetTraits()
+        this.refreshAllStats()
         this.emitArray()
+    }
+
+    private refreshAllStats() {
+        this.getChildren().forEach((c) => c.refreshStats())
     }
 
     add(child: Character, addToScene?: boolean): this {
@@ -48,6 +53,7 @@ export class PlayerTeam extends CreatureGroup {
         if (child.boardX !== 0 && child.boardY !== 0) {
             child.reset()
             this.resetTraits()
+            this.refreshAllStats()
             return this
         }
 
@@ -172,6 +178,8 @@ export class PlayerTeam extends CreatureGroup {
                     onComplete: () => {
                         keep.levelUp()
                         enable(keep)
+                        this.resetTraits()
+                        this.refreshAllStats()
                         this.saveAndEmit()
                         onComplete?.()
                     },
@@ -270,6 +278,7 @@ export class PlayerTeam extends CreatureGroup {
     override addAugment(augment: Augment): void {
         super.addAugment(augment)
         augment.onPick(this)
+        this.refreshAllStats()
         EventBus.emit("augments-add", augment)
     }
 
@@ -297,6 +306,7 @@ export class PlayerTeam extends CreatureGroup {
         this.activeTraits = TraitsRegistry.compTraits(Array.from(uniqueCharacters))
         this.activeTraits.forEach((trait) => trait.startApplying(characters))
 
+        this.refreshAllStats()
         EventBus.emit("active-traits", this.activeTraits)
     }
 }

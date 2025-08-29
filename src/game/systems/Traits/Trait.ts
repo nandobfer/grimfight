@@ -27,16 +27,17 @@ export class Trait {
     applyModifier(character: Character) {}
 
     startApplying(characters: Character[]) {
-        const compCharacters: Character[] = []
-        for (const character of characters) {
-            if (this.comp.includes(character.name)) {
-                this.charactersCount += 1
-                compCharacters.push(character)
-            }
-        }
+        const compCharacters = characters.filter((c) => this.comp.includes(c.name))
+        const uniqueCharacters = new Set(compCharacters.map((c) => c.name))
 
+        this.charactersCount = uniqueCharacters.size
         this.getActiveStage()
-        compCharacters.forEach((character) => this.applyModifier(character))
+    }
+
+    tryApply(character: Character) {
+        if (this.comp.includes(character.name)) {
+            this.applyModifier(character)
+        }
     }
 
     // each augment must override

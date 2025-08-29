@@ -23,7 +23,7 @@ export const TraitComponent: React.FC<TraitComponentProps> = (props) => {
                 </Box>
             }
         >
-            <Box sx={{ gap: 1, alignItems: "center", width: 'fit-content' }}>
+            <Box sx={{ gap: 1, alignItems: "center", width: "fit-content" }}>
                 <Button
                     sx={{ padding: 0, transform: "rotate(45deg)", pointerEvents: "auto", minWidth: 0 }}
                     color={active ? "success" : "primary"}
@@ -34,9 +34,12 @@ export const TraitComponent: React.FC<TraitComponentProps> = (props) => {
                         sx={{ transform: "rotate(-45deg)", aspectRatio: 1, height: "auto", width: 20, bgcolor: "transparent" }}
                     />
                 </Button>
-                <Typography variant="caption" fontWeight={"bold"}>
-                    {trait.charactersCount} / {trait.maxStage}
-                </Typography>
+                <Box sx={{ flexDirection: "column" }}>
+                    <Typography variant="subtitle2">{trait.name}</Typography>
+                    <Typography variant="caption" fontWeight={"bold"}>
+                        {trait.charactersCount} / {trait.maxStage}
+                    </Typography>
+                </Box>
             </Box>
         </Tooltip>
     )
