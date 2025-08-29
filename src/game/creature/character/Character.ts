@@ -289,6 +289,7 @@ export class Character extends Creature {
     override onAttackLand(damagetype: DamageType, victim: Creature): number {
         const damage = super.onAttackLand(damagetype, victim)
 
+        this.emit("afterAttack")
         return damage
     }
 

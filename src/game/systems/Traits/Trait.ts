@@ -36,12 +36,16 @@ export class Trait {
 
     tryApply(character: Character) {
         if (this.comp.includes(character.name)) {
+            this.cleanup(character)
             this.applyModifier(character)
         }
     }
 
     // each augment must override
     afterApplying(characters: Character[]) {}
+
+    // each augment must override
+    cleanup(character: Character) {}
 
     getActiveStage() {
         for (const [stage] of this.stages) {
