@@ -46,7 +46,7 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         deathbolt.fire(this.target)
     }
 
-    override castAbility(): void {
+    override castAbility(multiplier = 1): void {
         this.casting = true
 
         const skeleton = MonsterRegistry.create("skeleton", this.scene)
@@ -57,11 +57,11 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         skeleton.teleportTo(x, y)
         skeleton.boardX = this.boardX
         skeleton.boardY = this.boardY
-        skeleton.baseScale = 0.7
-        skeleton.addAura(0x00ff66, 1)
+        skeleton.baseScale = this.mapXtoY(this.abilityPower * multiplier)
+        skeleton.setTint(0x6645aa)
         skeleton.baseSpeed = this.baseSpeed * 2
-        skeleton.baseAttackDamage += this.abilityPower * 0.15
-        skeleton.baseMaxHealth += this.abilityPower
+        skeleton.baseAttackDamage += this.abilityPower * 0.15 * multiplier
+        skeleton.baseMaxHealth += this.abilityPower * multiplier
         skeleton.reset()
         skeleton.target = this.target
 
@@ -73,4 +73,13 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
 
         this.mana = this.maxMana * 0.65
     }
+
+    createLinearMapping(x1: number, y1: number, x2: number, y2: number) {
+        const slope = (y2 - y1) / (x2 - x1)
+        const intercept = y1 - slope * x1
+
+        return (x: number) => intercept + slope * x
+    }
+
+    mapXtoY = this.createLinearMapping(50, 0.7, 500, 1.4)
 }

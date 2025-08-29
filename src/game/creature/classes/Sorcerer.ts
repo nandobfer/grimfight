@@ -41,7 +41,7 @@ export class Sorcerer extends Character {
         iceshard.fire(this.target)
     }
 
-    override castAbility(): void {
+    override castAbility(multiplier = 1): void {
         if (!this.target) {
             return
         }
@@ -49,7 +49,7 @@ export class Sorcerer extends Character {
         this.casting = true
 
         this.manaLocked = true
-        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5, 2)
+        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5 * multiplier, 2)
 
         this.casting = false
     }

@@ -40,11 +40,11 @@ export class Mage extends Character {
         fireball.fire(this.target)
     }
 
-    override castAbility(): void {
+    override castAbility(multiplier = 1): void {
         if (!this.target) return
 
         this.casting = true
-        const { value: damage, crit } = this.calculateDamage(this.abilityPower * 2)
+        const { value: damage, crit } = this.calculateDamage(this.abilityPower * 2 * multiplier)
 
         this.target.takeDamage(damage, this, "fire", crit)
         new Explosion(this, this.target, this.abilityPower / 2, 2.5)

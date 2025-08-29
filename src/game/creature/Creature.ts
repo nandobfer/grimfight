@@ -587,7 +587,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.castAbility()
     }
 
-    castAbility() {
+    castAbility(rawMultiplier = 1) {
         // each character and monster will have it's own
     }
 
@@ -806,7 +806,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.updateDepth()
         this.regenMana(delta)
-        
+
         for (const effect of this.statusEffects) {
             effect.update(delta)
         }
