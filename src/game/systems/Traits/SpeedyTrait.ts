@@ -12,8 +12,9 @@ export class SpeedyTrait extends Trait {
         [3, { attackSpeedMultiplier: 0.02, maxStacks: 200, descriptionParams: ["2%", "200%"] }],
     ])
 
+    private baseline = new WeakMap<Character, number>()
+
     private stacks = new WeakMap<Character, number>()
-    private handlers = new WeakMap<Character, () => void>()
 
     constructor(comp: string[]) {
         super(comp)
@@ -22,11 +23,25 @@ export class SpeedyTrait extends Trait {
 
     override applyModifier(character: Character): void {
         if (!this.stacks.has(character)) this.stacks.set(character, 0)
-        if (this.handlers.has(character)) return // avoid duplicate listeners
+        const previousHandler = character.eventHandlers.speedyTrait
+
+        if (previousHandler) {
+            character.off("afterAttack", previousHandler)
+        }
 
         const handler = () => {
             const values = this.stages.get(this.activeStage)
             if (!values) return
+
+            // capture baseline once (includes augments!)
+            if (!this.baseline.has(character)) {
+                const base0 =
+                    character instanceof Statikk
+                        ? character.bonusAttackSpeed || character.attackSpeed // fallback safety
+                        : character.attackSpeed
+                this.baseline.set(character, base0)
+            }
+            const base = this.baseline.get(character)!
 
             let stacks = this.stacks.get(character) ?? 0
             if (stacks < values.maxStacks) {
@@ -35,24 +50,26 @@ export class SpeedyTrait extends Trait {
             }
 
             const multiplier = 1 + stacks * values.attackSpeedMultiplier
-            character.attackSpeed = character.baseAttackSpeed * multiplier
+            character.attackSpeed = base * multiplier
 
             if (character instanceof Statikk) {
-                character.bonusAttackSpeed = character.baseAttackSpeed * multiplier
+                character.bonusAttackSpeed = base * multiplier
             }
         }
 
-        this.handlers.set(character, handler)
+        character.eventHandlers.speedyTrait = handler
+
         character.on("afterAttack", handler)
         character.once("destroy", () => this.cleanup(character))
     }
 
     override cleanup(character: Character) {
-        const handlers = this.handlers.get(character)
-        if (handlers) {
-            character.off("afterAttack", handlers)
-            this.handlers.delete(character)
+        const handler = character.eventHandlers.speedyTrait
+        if (handler) {
+            character.off("afterAttack", handler)
+            delete character.eventHandlers.speedyTrait
         }
         this.stacks.delete(character)
+        this.baseline.delete(character)
     }
 }

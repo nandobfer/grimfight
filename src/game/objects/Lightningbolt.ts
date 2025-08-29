@@ -17,7 +17,17 @@ export class LightningBolt extends Projectile {
         this.rawDamage = rawDamage
         this.addLightEffect()
 
-        this.play("lightning_bolt")
+        if (!this.scene.anims.exists("lightning-bolt")) {
+            this.scene.anims.create({
+                key: `lightning-bolt`,
+                frames: this.anims.generateFrameNumbers("lightning_bolt"),
+                frameRate: 5,
+                repeat: 0,
+                hideOnComplete: false,
+            })
+        }
+
+        this.play("lightning-bolt")
     }
 
     private addLightEffect() {

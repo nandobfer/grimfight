@@ -95,4 +95,5 @@ Além disso, ganha velocidade de ataque bônus equivalente a porcentagem de vida
             this.scaleSpeedWithLife()
         }
     }
+
 }

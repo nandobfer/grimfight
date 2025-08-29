@@ -77,7 +77,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     private healthBar: ProgressBar
     private manaBar: ProgressBar
     aura?: Phaser.FX.Glow
-    tempGlow?: Phaser.FX.Glow
+    // tempGlow?: Phaser.FX.Glow
 
     constructor(scene: Game, name: string, id: string, dataOnly = false) {
         super(scene, -1000, -1000, name)
@@ -104,7 +104,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     reset() {
         this.calculateStats()
         this.setScale(this.baseScale)
-        
+
         this.health = this.maxHealth
         this.mana = 0
         this.active = true
@@ -251,22 +251,53 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
+    private tempGlow?: Phaser.FX.Glow
+    private glowTween?: Phaser.Tweens.Tween
+    private savedPipeline?: string
     glowTemporarily(color: number, intensity: number, duration: number) {
-        this.tempGlow = this.postFX.addGlow(color, 0)
+        // optional: avoid doing Lights + Glow at once
+        if (!this.savedPipeline) this.savedPipeline = this.getPipelineName() as any
+        this.resetPipeline() // drop Light2D for the flash to halve passes
 
-        this.scene.tweens.add({
+        if (!this.tempGlow) this.tempGlow = this.postFX.addGlow(color, 0)
+        try {
+            ;(this.tempGlow as any).color = color
+        } catch {}
+
+        this.glowTween?.remove()
+        this.tempGlow.outerStrength = 0
+        this.tempGlow.innerStrength = 0
+
+        this.glowTween = this.scene.tweens.add({
             targets: this.tempGlow,
-            duration: duration,
-            yoyo: true,
-            repeat: 0,
             outerStrength: intensity,
+            duration: duration * 0.5,
+            yoyo: true,
             ease: "Sine.easeInOut",
             onComplete: () => {
-                this.tempGlow?.destroy()
-                this.tempGlow = undefined
+                this.tempGlow!.outerStrength = 0
+                // restore Lights if you use them
+                if (this.savedPipeline) this.setPipeline(this.savedPipeline)
             },
         })
     }
+
+    // glowTemporarily(color: number, intensity: number, duration: number) {
+    //     this.tempGlow = this.postFX.addGlow(color, 0)
+
+    //     this.scene.tweens.add({
+    //         targets: this.tempGlow,
+    //         duration: duration,
+    //         yoyo: true,
+    //         repeat: 0,
+    //         outerStrength: intensity,
+    //         ease: "Sine.easeInOut",
+    //         onComplete: () => {
+    //             this.tempGlow?.destroy()
+    //             this.tempGlow = undefined
+    //         },
+    //     })
+    // }
 
     removeAura() {
         this.aura?.destroy()
