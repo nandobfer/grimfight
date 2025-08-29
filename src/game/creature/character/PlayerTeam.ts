@@ -101,9 +101,8 @@ export class PlayerTeam extends CreatureGroup {
         return this.getChildren().filter((character) => character.name === name && character.level === level)
     }
 
-    tryMerge(pivot: Character, guard = 0) {
-        // Prevent accidental infinite chains
-        if (guard > 8) return
+    tryMerge(pivot: Character) {
+        if (this.scene.state === "fighting") return
 
         const name = pivot.name
         const level = pivot.level
@@ -121,7 +120,7 @@ export class PlayerTeam extends CreatureGroup {
         // Basic merge animation, then destroy donors and level up the keeper
         this.mergeTriplet(keep, donors, () => {
             // After leveling up, try chaining (maybe we now have 3 of the next level)
-            this.tryMerge(keep, guard + 1)
+            this.tryMerge(keep)
         })
     }
 

@@ -39,10 +39,13 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     baseManaPerSecond = 10
     baseManaPerAttack = 10
     baseArmor = 0
+    /** incremental, base + x + y */
     baseResistance = 0
     baseSpeed = 50
+    /** incremental, base + x + y */
     baseCritChance = 10
     baseCritDamageMultiplier = 2
+    /** incremental, base + x + y */
     baseLifesteal = 0
 
     maxHealth = 0
@@ -54,10 +57,13 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     manaPerSecond = 0
     manaPerAttack = 0
     armor = 0
+    /** incremental, base + x + y */
     resistance = 0
     speed = 0
+    /** incremental, base + x + y */
     critChance = 0
     critDamageMultiplier = 0
+    /** incremental, base + x + y */
     lifesteal = 0
 
     manaLocked = false
@@ -701,6 +707,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         if (this.health <= 0) {
             this.die()
+            attacker.emit("kill", this)
             return
         }
     }

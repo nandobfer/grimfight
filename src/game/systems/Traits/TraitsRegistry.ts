@@ -1,4 +1,5 @@
 import { RNG } from "../../tools/RNG"
+import { AssassinTrait } from "./AssassinTrait"
 import { AttackerTrait } from "./AttackerTrait"
 import { ColossusTrait } from "./ColossusTrait"
 import { SpeedyTrait } from "./SpeedyTrait"
@@ -59,6 +60,7 @@ export class TraitsRegistry {
     }
 }
 
-TraitsRegistry.register("attacker", AttackerTrait, ["maximus", "statikk", "mordred", "arthas"])
-TraitsRegistry.register("colossus", ColossusTrait, ["maximus", "grok", "helyna"])
-TraitsRegistry.register("speedy", SpeedyTrait, ["lizwan", "statikk", "laherce"])
+TraitsRegistry.register("Atacante", AttackerTrait, ["maximus", "statikk", "mordred", "arthas"])
+TraitsRegistry.register("Colosso", ColossusTrait, ["maximus", "grok", "helyna"])
+TraitsRegistry.register("Ligeiro", SpeedyTrait, ["lizwan", "statikk", "laherce"])
+TraitsRegistry.register("Assassino", AssassinTrait, ["lizwan", "mordred"])

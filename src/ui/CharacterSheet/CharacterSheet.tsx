@@ -35,7 +35,7 @@ export interface SheetDataItem {
     title: string
     value: number
     tooltip: string
-    fixed?: boolean
+    fixed?: number
     suffix?: string
 }
 
@@ -48,7 +48,7 @@ export const SheetData: React.FC<SheetDataItem> = (props) => {
                     {props.title}:
                 </Typography>
                 <Typography variant="caption">
-                    {props.fixed ? props.value.toFixed(1) : Math.round(props.value)} {props.suffix}
+                    {props.fixed ? props.value.toFixed(props.fixed) : Math.round(props.value)} {props.suffix}
                 </Typography>
             </Box>
         </Tooltip>
@@ -199,7 +199,13 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     <StatGroup color="error">
                         <SheetData title={"AD"} value={snap.ad} tooltip="Dano médio de cada ataque básico" />
                         <SheetData title={"Crit"} value={snap.critChance} tooltip="Chance de acertar criticamente" suffix="%" />
-                        <SheetData title={"Crit Mult"} value={snap.critDamageMultiplier} tooltip="Multiplicador de dano crítico" suffix="x" fixed />
+                        <SheetData
+                            title={"Crit Mult"}
+                            value={snap.critDamageMultiplier}
+                            tooltip="Multiplicador de dano crítico"
+                            suffix="x"
+                            fixed={2}
+                        />
                     </StatGroup>
                     <Divider />
                     <StatGroup color="info">
@@ -210,7 +216,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                 </Box>
                 <Box sx={{ justifyContent: "space-between" }}>
                     <StatGroup color="warning">
-                        <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Velocidade de ataques a cada segundo" fixed suffix="/s" />
+                        <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Velocidade de ataques a cada segundo" fixed={1} suffix="/s" />
                         <SheetData title={"Alcance"} value={snap.attackRange} tooltip="Alcance de ataque" />
                         <SheetData title={"Vel"} value={snap.speed} tooltip="Velocidade de movimento" />
                     </StatGroup>
@@ -226,7 +232,6 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                         <SheetData title={"Lifesteal"} value={snap.lifesteal} tooltip="Porcentagem do dano causado recuperado como vida" suffix="%" />
                     </StatGroup>
                 </Box>
-
             </>
         </AbilityTooltip>
     )

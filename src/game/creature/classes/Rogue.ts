@@ -62,8 +62,8 @@ export class Rogue extends Character {
         })
     }
 
-    override reset(): void {
-        super.reset()
+    override refreshStats(): void {
+        super.refreshStats()
         this.mana = this.maxMana * 0.9
     }
 }
