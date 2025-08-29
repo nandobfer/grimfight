@@ -210,8 +210,8 @@ export class Helyna extends Character {
         return key
     }
 
-    override reset(): void {
-        super.reset()
+    override refreshStats(): void {
+        super.refreshStats()
         this.setTexture(this.name)
         this.druidForm = "human"
         this.bonusSpeed = this.speed

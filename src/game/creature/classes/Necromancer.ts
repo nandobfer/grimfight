@@ -68,8 +68,8 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         this.casting = false
     }
 
-    override reset(): void {
-        super.reset()
+    override refreshStats(): void {
+        super.refreshStats()
 
         this.mana = this.maxMana * 0.65
     }

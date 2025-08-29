@@ -68,8 +68,8 @@ O veneno causa [info.main:${Math.round(
         this.target.applyStatusEffect(poison)
     }
 
-    override reset(): void {
-        super.reset()
+    override refreshStats(): void {
+        super.refreshStats()
         // this.mana = this.maxMana * 0.9
     }
 }

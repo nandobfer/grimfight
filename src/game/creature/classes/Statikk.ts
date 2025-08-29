@@ -80,8 +80,8 @@ Além disso, ganha velocidade de ataque bônus equivalente a porcentagem de vida
         return Phaser.Math.Clamp(m, 1, 2)
     }
 
-    override reset(): void {
-        super.reset()
+    override refreshStats(): void {
+        super.refreshStats()
         this.attacksCount = 0
         this.bonusAttackSpeed = this.attackSpeed
         this.bonusSpeed = this.speed
@@ -95,5 +95,4 @@ Além disso, ganha velocidade de ataque bônus equivalente a porcentagem de vida
             this.scaleSpeedWithLife()
         }
     }
-
 }

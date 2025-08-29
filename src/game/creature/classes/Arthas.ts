@@ -84,8 +84,8 @@ export class Arthas extends Character {
         this.casting = false
     }
 
-    override reset(): void {
-        super.reset()
+    override refreshStats(): void {
+        super.refreshStats()
         this.castsCount = 0
     }
 

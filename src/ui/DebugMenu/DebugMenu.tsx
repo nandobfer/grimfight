@@ -41,7 +41,9 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
                 <Popper open={!!anchorEl} anchorEl={anchorEl} placement="auto">
                     <Paper sx={{ flexDirection: "column", gap: 1, padding: 1, width: 300 }}>
                         {/* <Button onClick={clearSavedChars}>clear characters</Button> */}
-                        <Button onClick={resetGame}>reset game</Button>
+                        <Button onClick={resetGame} color="error" variant="outlined">
+                            reset game
+                        </Button>
                         <DebugFloor game={game} closeMenu={closeMenu} />
                         <DebugGold game={game} closeMenu={closeMenu} />
                         <DebugCharacter game={game} closeMenu={closeMenu} />
