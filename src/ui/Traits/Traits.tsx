@@ -4,6 +4,7 @@ import { Game } from "../../game/scenes/Game"
 import { Trait } from "../../game/systems/Traits/Trait"
 import { EventBus } from "../../game/tools/EventBus"
 import { TraitComponent } from "./TraitComponent"
+import { TraitList } from "./TraitList"
 
 interface TraitsProps {
     game: Game
@@ -25,11 +26,5 @@ export const Traits: React.FC<TraitsProps> = (props) => {
         }
     }, [])
 
-    return (
-        <Box sx={{ flexDirection: "column", gap: 1 }}>
-            {traits.map((trait) => (
-                <TraitComponent key={trait.name} trait={trait} />
-            ))}
-        </Box>
-    )
+    return <TraitList traits={traits} />
 }

@@ -2,6 +2,7 @@ import React from "react"
 import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material"
 import { Trait } from "../../game/systems/Traits/Trait"
 import { renderTraitDescription } from "../../game/systems/Traits/TraitDescriptionHelpers"
+import { CharacterAvatar } from "../CharacterSheet/CharacterAvatar"
 
 interface TraitComponentProps {
     trait: Trait
@@ -20,6 +21,14 @@ export const TraitComponent: React.FC<TraitComponentProps> = (props) => {
                         {trait.name}
                     </Typography>
                     <Typography variant="caption">{renderTraitDescription(trait)}</Typography>
+
+                    <Box sx={{ marginTop: 1, gap: 1 }}>
+                        {trait.comp.map((characterName) => (
+                            <Box sx={{ filter: trait.activeComp.has(characterName) ? undefined : "grayscale(100%)" }}>
+                                <CharacterAvatar name={characterName} size={30} key={characterName} />
+                            </Box>
+                        ))}
+                    </Box>
                 </Box>
             }
         >
@@ -36,9 +45,11 @@ export const TraitComponent: React.FC<TraitComponentProps> = (props) => {
                 </Button>
                 <Box sx={{ flexDirection: "column" }}>
                     <Typography variant="subtitle2">{trait.name}</Typography>
-                    <Typography variant="caption" fontWeight={"bold"}>
-                        {trait.charactersCount} / {trait.maxStage}
-                    </Typography>
+                    {!!trait.activeComp.size && (
+                        <Typography variant="caption" fontWeight={"bold"}>
+                            {trait.activeComp.size} / {trait.maxStage}
+                        </Typography>
+                    )}
                 </Box>
             </Box>
         </Tooltip>

@@ -6,7 +6,7 @@ export class Trait {
 
     comp: string[]
     stages: Map<number, Record<string, any>> = new Map()
-    charactersCount = 0
+    activeComp = new Set<string>()
     activeStage = 0
     maxStage = 0
 
@@ -28,9 +28,8 @@ export class Trait {
 
     startApplying(characters: Character[]) {
         const compCharacters = characters.filter((c) => this.comp.includes(c.name))
-        const uniqueCharacters = new Set(compCharacters.map((c) => c.name))
+        this.activeComp = new Set(compCharacters.map((c) => c.name))
 
-        this.charactersCount = uniqueCharacters.size
         this.getActiveStage()
     }
 
@@ -49,7 +48,7 @@ export class Trait {
 
     getActiveStage() {
         for (const [stage] of this.stages) {
-            if (this.charactersCount >= stage) {
+            if (this.activeComp.size >= stage) {
                 this.activeStage = stage
             }
         }

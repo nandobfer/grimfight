@@ -492,11 +492,6 @@ export class Game extends Scene {
             if (data) {
                 const progress = JSON.parse(data) as GameProgressDto
 
-                if (this.version !== progress.version) {
-                    this.gameOver()
-                    return
-                }
-
                 this.floor = progress.floor
                 this.playerGold = progress.playerGold
                 this.playerLives = progress.playerLives

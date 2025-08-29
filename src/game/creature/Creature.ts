@@ -806,7 +806,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.updateDepth()
         this.regenMana(delta)
-        this.statusEffects.forEach((effect) => effect.update(delta))
+        
+        for (const effect of this.statusEffects) {
+            effect.update(delta)
+        }
     }
 
     withTargetUpdate() {

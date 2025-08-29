@@ -23,6 +23,8 @@ import { renderDescription } from "../../game/tools/TokenizedText"
 import { Game } from "../../game/scenes/Game"
 import { EventBus } from "../../game/tools/EventBus"
 import { Close } from "@mui/icons-material"
+import { TraitsRegistry } from "../../game/systems/Traits/TraitsRegistry"
+import { TraitList } from "../Traits/TraitList"
 
 interface CharacterSheetProps {
     character: Character
@@ -110,6 +112,8 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     const character = props.character
     const isMobile = useMediaQuery("(orientation: portrait)")
 
+    const traits = useMemo(() => TraitsRegistry.compTraits([character.name]), [character])
+
     const charRef = useRef(character)
     useEffect(() => {
         charRef.current = character
@@ -181,6 +185,8 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     </IconButton>
                 </Box>
 
+                <TraitList traits={traits} />
+
                 <Box sx={{ flexDirection: "column" }}>
                     <Typography fontWeight={"bold"} variant="subtitle2" color="primary.main" fontSize={isMobile ? 10 : undefined}>
                         {character.abilityName}:
@@ -216,7 +222,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                 </Box>
                 <Box sx={{ justifyContent: "space-between" }}>
                     <StatGroup color="warning">
-                        <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Velocidade de ataques a cada segundo" fixed={1} suffix="/s" />
+                        <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Velocidade de ataques a cada segundo" fixed={2} suffix="/s" />
                         <SheetData title={"Alcance"} value={snap.attackRange} tooltip="Alcance de ataque" />
                         <SheetData title={"Vel"} value={snap.speed} tooltip="Velocidade de movimento" />
                     </StatGroup>
