@@ -10,7 +10,7 @@ interface DamageBarProps {
 }
 
 export const DamageBar: React.FC<DamageBarProps> = (props) => {
-    const value = useMemo(() => (props.meter.damage / (props.highest_damage || 100)) * 100, [props.meter, props.highest_damage])
+    const value = useMemo(() => (props.meter.damage / (props.highest_damage || 100)) * 100, [props.meter.damage, props.highest_damage])
     const levelColor = useMemo(() => convertColorToString(colorFromLevel(props.meter.character.level)), [props.meter.character.level])
 
     return (
