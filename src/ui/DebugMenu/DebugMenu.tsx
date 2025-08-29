@@ -4,6 +4,7 @@ import { Game } from "../../game/scenes/Game"
 import { DebugFloor } from "./DebugFloor"
 import { DebugGold } from "./DebugGold"
 import { Code } from "@mui/icons-material"
+import { DebugCharacter } from "./DebugCharacter"
 
 interface DebugMenuProps {
     game: Game
@@ -38,11 +39,12 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
                 </IconButton>
 
                 <Popper open={!!anchorEl} anchorEl={anchorEl} placement="auto">
-                    <Paper sx={{ flexDirection: "column", gap: 1, padding: 1, width: 200 }}>
+                    <Paper sx={{ flexDirection: "column", gap: 1, padding: 1, width: 300 }}>
                         {/* <Button onClick={clearSavedChars}>clear characters</Button> */}
                         <Button onClick={resetGame}>reset game</Button>
                         <DebugFloor game={game} closeMenu={closeMenu} />
                         <DebugGold game={game} closeMenu={closeMenu} />
+                        <DebugCharacter game={game} closeMenu={closeMenu} />
                     </Paper>
                 </Popper>
             </Box>
