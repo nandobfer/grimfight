@@ -3,7 +3,7 @@ import { EventBus } from "../../tools/EventBus"
 import { RNG } from "../../tools/RNG"
 import { CharacterRegistry } from "../CharacterRegistry"
 import { Character, CharacterDto } from "./Character"
-import { CharacterGroup } from "./CharacterGroup"
+import { PlayerTeam } from "./PlayerTeam"
 
 const MAX_ITEMS_IN_STORE = 5
 
@@ -16,11 +16,11 @@ export interface StoreItem {
 const BASE_COST = 1
 
 export class CharacterStore {
-    team: CharacterGroup
+    team: PlayerTeam
     items: StoreItem[] = []
     scene: Game
 
-    constructor(team: CharacterGroup) {
+    constructor(team: PlayerTeam) {
         this.team = team
         this.scene = team.scene
         this.load()

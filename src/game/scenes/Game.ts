@@ -6,8 +6,7 @@ import { Grid } from "../tools/Grid"
 import { CharacterRegistry } from "../creature/CharacterRegistry"
 import { FireEffect } from "../fx/FireEffect"
 import { generateEncounter } from "../tools/Encounter"
-import { MonsterGroup } from "../creature/monsters/MonsterGroup"
-import { CharacterGroup } from "../creature/character/CharacterGroup"
+import { PlayerTeam } from "../creature/character/PlayerTeam"
 import { Character, CharacterDto } from "../creature/character/Character"
 import { DamageType } from "../ui/DamageNumbers"
 import { spawnParrySpark } from "../fx/Parry"
@@ -20,6 +19,7 @@ import { Augment } from "../systems/Augment/Augment"
 import { LightningHit } from "../fx/LightningHit"
 import { GoldCoinFx } from "../fx/GoldExplosion"
 import { Shopkeeper } from "../systems/Shopkeeper"
+import { EnemyTeam } from "../creature/monsters/EnemyTeam"
 
 export type GameState = "fighting" | "idle"
 
@@ -42,8 +42,8 @@ export class Game extends Scene {
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
-    playerTeam: CharacterGroup
-    enemyTeam: MonsterGroup
+    playerTeam: PlayerTeam
+    enemyTeam: EnemyTeam
     state: GameState = "idle"
     walls: Phaser.GameObjects.Group
     floor = 1
@@ -72,8 +72,8 @@ export class Game extends Scene {
         this.createBackground()
         this.grid = new Grid(this, this.background)
         this.goldCoinFx = new GoldCoinFx(this)
-        this.playerTeam = new CharacterGroup(this, true)
-        this.enemyTeam = new MonsterGroup(this, true)
+        this.playerTeam = new PlayerTeam(this, true)
+        this.enemyTeam = new EnemyTeam(this, true)
         this.shopkeeper = new Shopkeeper(this)
 
         this.configurePhysics()
@@ -254,6 +254,7 @@ export class Game extends Scene {
             ch.destroy(true)
             this.playerTeam.bench.add(dto) // your Bench.add will emit to UI
             this.dragFromBoard.delete(id)
+            this.playerTeam.saveCurrentCharacters()
         })
 
         // Cancel: not dropped on bench; restore and let the character's dragend do its normal snap/revert

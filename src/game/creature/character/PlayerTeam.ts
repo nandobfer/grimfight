@@ -1,17 +1,18 @@
 import { Game } from "../../scenes/Game"
 import { Augment } from "../../systems/Augment/Augment"
+import { TraitsRegistry } from "../../systems/Traits/TraitsRegistry"
 import { DamageChart } from "../../tools/DamageChart"
 import { EventBus } from "../../tools/EventBus"
-import { CharacterRegistry } from "../CharacterRegistry"
 import { CreatureGroup } from "../CreatureGroup"
 import { Bench } from "./Bench"
-import { Character, CharacterDto } from "./Character"
+import { Character } from "./Character"
 import { CharacterStore } from "./CharacterStore"
 
-export class CharacterGroup extends CreatureGroup {
+export class PlayerTeam extends CreatureGroup {
     damageChart: DamageChart
     store: CharacterStore
     bench: Bench
+    activeTraits: Map<string, number> = new Map()
 
     constructor(
         scene: Game,
@@ -36,6 +37,7 @@ export class CharacterGroup extends CreatureGroup {
     reset() {
         super.reset()
         this.deleteFuckedUpCharacter()
+        this.resetTraits()
         this.emitArray()
     }
 
@@ -44,6 +46,7 @@ export class CharacterGroup extends CreatureGroup {
 
         if (child.boardX !== 0 && child.boardY !== 0) {
             child.reset()
+            this.resetTraits()
             return this
         }
 
@@ -280,5 +283,18 @@ export class CharacterGroup extends CreatureGroup {
 
     isBoardFull(): boolean {
         return this.countActive() >= this.scene.max_characters_in_board
+    }
+
+    resetTraits() {
+        this.activeTraits.clear()
+        const characters = this.getChildren()
+        const uniqueCharacters = new Set<string>(characters.map(char => char.name))
+
+        const traits = TraitsRegistry.compTraits(Array.from(uniqueCharacters))
+        traits.forEach(trait => trait.startApplying(characters))
+
+        console.log({uniqueCharacters, traits})
+        
+
     }
 }

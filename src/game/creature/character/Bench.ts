@@ -3,14 +3,14 @@ import { EventBus } from "../../tools/EventBus"
 import { RNG } from "../../tools/RNG"
 import { CharacterRegistry } from "../CharacterRegistry"
 import { CharacterDto } from "./Character"
-import { CharacterGroup } from "./CharacterGroup"
+import { PlayerTeam } from "./PlayerTeam"
 
 export class Bench {
-    team: CharacterGroup
+    team: PlayerTeam
     characters: CharacterDto[] = []
     scene: Game
 
-    constructor(team: CharacterGroup) {
+    constructor(team: PlayerTeam) {
         this.team = team
         this.scene = team.scene
         this.load()

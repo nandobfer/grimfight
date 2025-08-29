@@ -5,7 +5,7 @@ import { EventBus } from "../../tools/EventBus"
 import { DamageType } from "../../ui/DamageNumbers"
 import { LevelBadge } from "../../ui/LevelBadge"
 import { Creature } from "../Creature"
-import { CharacterGroup } from "./CharacterGroup"
+import { PlayerTeam } from "./PlayerTeam"
 
 export interface CharacterDto {
     level: number
@@ -17,7 +17,7 @@ export interface CharacterDto {
 }
 
 export class Character extends Creature {
-    declare team: CharacterGroup
+    declare team: PlayerTeam
     private levelBadge!: LevelBadge
 
     private glowFx: Phaser.FX.Glow

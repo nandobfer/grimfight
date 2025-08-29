@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Box, Button, Dialog, Typography } from "@mui/material"
-import { CharacterGroup } from "../../game/creature/character/CharacterGroup"
+import { PlayerTeam } from "../../game/creature/character/PlayerTeam"
 import { Augment } from "../../game/systems/Augment/Augment"
 import { EventBus } from "../../game/tools/EventBus"
 import { AugmentCard } from "./AugmentCard"
@@ -8,7 +8,7 @@ import { AugmentsRegistry } from "../../game/systems/Augment/AugmentsRegistry"
 import { Refresh } from "@mui/icons-material"
 
 interface AugmentModalProps {
-    team: CharacterGroup
+    team: PlayerTeam
 }
 
 export const AugmentModal: React.FC<AugmentModalProps> = (props) => {

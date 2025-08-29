@@ -4,7 +4,7 @@ import { EventBus } from "../../tools/EventBus"
 import { CreatureGroup } from "../CreatureGroup"
 import { Monster } from "./Monster"
 
-export class MonsterGroup extends CreatureGroup {
+export class EnemyTeam extends CreatureGroup {
     constructor(
         scene: Game,
         minions?: boolean,
