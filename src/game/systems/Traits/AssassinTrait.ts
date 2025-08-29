@@ -29,7 +29,6 @@ export class AssassinTrait extends Trait {
             
 
             character.baseCritDamageMultiplier += values.bonusCritMultiplier
-            console.log('kill', character.baseCritDamageMultiplier)
             
 
         }
