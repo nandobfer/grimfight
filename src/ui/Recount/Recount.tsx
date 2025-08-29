@@ -24,7 +24,7 @@ export const Recount: React.FC<RecountProps> = (props) => {
     }, [])
 
     return (
-        <Paper sx={{ flexDirection: "column", bgcolor: "#ffffff05", padding: 1, gap: 1 }} elevation={1}>
+        <Paper sx={{ flexDirection: "column", bgcolor: "#ffffff05", padding: 1, gap: 1, width: 150 }} elevation={1}>
             {damageChart
                 .sort((a, b) => b.damage - a.damage)
                 .map((meter) => (

@@ -70,10 +70,10 @@ export const Ui: React.FC<UiProps> = (props) => {
                             <CharacterStoreDrawer game={game} />
                             <CharacterDrawer game={game} />
                         </Box>
-                        <Box sx={{ flexDirection: "column", marginLeft: "auto", justifyContent: "space-between" }}>
+                        <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
                             <Counters game={game} />
                             <Recount />
-                            <Box sx={{ flexDirection: "column" }}>
+                            <Box sx={{ flexDirection: "column", marginTop: "auto" }}>
                                 <GameStateButtons game={game} />
                             </Box>
                         </Box>
