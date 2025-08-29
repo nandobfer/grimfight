@@ -12,6 +12,7 @@ import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawe
 import { GameState } from "../game/scenes/Game"
 import { CharacterDrawer } from "./CharacterSheet/CharacerDrawer"
 import { EnemiesAugments } from "./AugmentModal/EnemiesAugments"
+import { Traits } from "./Traits/Traits"
 
 interface UiProps {}
 
@@ -65,15 +66,13 @@ export const Ui: React.FC<UiProps> = (props) => {
                     <>
                         <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
                             <PlayerAugments game={game} />
-                            <Recount />
-
+                            <Traits game={game} />
                             <CharacterStoreDrawer game={game} />
                             <CharacterDrawer game={game} />
                         </Box>
                         <Box sx={{ flexDirection: "column", marginLeft: "auto", justifyContent: "space-between" }}>
-                            <Box sx={{ gap: 1 }}>
-                                <Counters game={game} />
-                            </Box>
+                            <Counters game={game} />
+                            <Recount />
                             <Box sx={{ flexDirection: "column" }}>
                                 <GameStateButtons game={game} />
                             </Box>

@@ -5,19 +5,20 @@ type TraitBoosts = "attackDamageMultiplier" | "lifesteal"
 
 export class AttackerTrait extends Trait {
     name = "Atacante"
-    description = ""
+    description = "Atacantes ganham {0} dano de ataque e {1} roubo de vida."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { attackDamageMultiplier: 0.2, lifesteal: 10 }],
-        [4, { attackDamageMultiplier: 0.4, lifesteal: 20 }],
+        [2, { attackDamageMultiplier: 0.2, lifesteal: 10, descriptionParams: ["20%", "10%"] }],
+        [4, { attackDamageMultiplier: 0.4, lifesteal: 20, descriptionParams: ["40%", "20%"] }],
     ])
 
     constructor(comp: string[]) {
         super(comp)
+        this.setMaxStage()
     }
 
     override applyModifier(character: Character): void {
         const values = this.stages.get(this.activeStage)
-        console.log({stage: this.activeStage, values})
+        console.log({ stage: this.activeStage, values })
         if (!values) return
 
         character.attackDamage *= 1 + values.attackDamageMultiplier

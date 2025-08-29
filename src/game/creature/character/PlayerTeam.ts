@@ -1,5 +1,6 @@
 import { Game } from "../../scenes/Game"
 import { Augment } from "../../systems/Augment/Augment"
+import { Trait } from "../../systems/Traits/Trait"
 import { TraitsRegistry } from "../../systems/Traits/TraitsRegistry"
 import { DamageChart } from "../../tools/DamageChart"
 import { EventBus } from "../../tools/EventBus"
@@ -12,7 +13,7 @@ export class PlayerTeam extends CreatureGroup {
     damageChart: DamageChart
     store: CharacterStore
     bench: Bench
-    activeTraits: Map<string, number> = new Map()
+    activeTraits: Trait[] = []
 
     constructor(
         scene: Game,
@@ -85,7 +86,7 @@ export class PlayerTeam extends CreatureGroup {
 
         this.tryMerge(child)
         this.reset()
-        this.saveCurrentCharacters()
+        this.saveAndEmit()
 
         return this
     }
@@ -171,8 +172,7 @@ export class PlayerTeam extends CreatureGroup {
                     onComplete: () => {
                         keep.levelUp()
                         enable(keep)
-                        this.emitArray()
-                        this.saveCurrentCharacters()
+                        this.saveAndEmit()
                         onComplete?.()
                     },
                 })
@@ -254,12 +254,17 @@ export class PlayerTeam extends CreatureGroup {
             // remove & destroy extras/out-of-bounds without touching survivors
             for (const character of toDestroy) character.destroy(true)
             // persist only alive characters
-            this.saveCurrentCharacters()
+            this.saveAndEmit()
         }
     }
 
     emitArray() {
         EventBus.emit("characters-change", this.getChildren())
+    }
+
+    saveAndEmit() {
+        this.saveCurrentCharacters()
+        this.emitArray()
     }
 
     override addAugment(augment: Augment): void {
@@ -286,15 +291,12 @@ export class PlayerTeam extends CreatureGroup {
     }
 
     resetTraits() {
-        this.activeTraits.clear()
         const characters = this.getChildren()
-        const uniqueCharacters = new Set<string>(characters.map(char => char.name))
+        const uniqueCharacters = new Set<string>(characters.map((char) => char.name))
 
-        const traits = TraitsRegistry.compTraits(Array.from(uniqueCharacters))
-        traits.forEach(trait => trait.startApplying(characters))
+        this.activeTraits = TraitsRegistry.compTraits(Array.from(uniqueCharacters))
+        this.activeTraits.forEach((trait) => trait.startApplying(characters))
 
-        console.log({uniqueCharacters, traits})
-        
-
+        EventBus.emit("active-traits", this.activeTraits)
     }
 }

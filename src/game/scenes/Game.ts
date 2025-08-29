@@ -214,8 +214,7 @@ export class Game extends Scene {
                 ghost.body.enable = true
                 this.playerTeam.add(ghost) // will NOT auto-reposition because boardX/boardY are set
                 ghost.resetMouseEvents()
-                this.playerTeam.saveCurrentCharacters()
-                this.playerTeam.emitArray()
+                this.playerTeam.saveAndEmit()
                 this.playerTeam.bench.remove(ghost.id)
             } else {
                 ghost.destroy(true) // cancel: didn’t drop in a valid tile
@@ -254,7 +253,8 @@ export class Game extends Scene {
             ch.destroy(true)
             this.playerTeam.bench.add(dto) // your Bench.add will emit to UI
             this.dragFromBoard.delete(id)
-            this.playerTeam.saveCurrentCharacters()
+            this.playerTeam.resetTraits()
+            this.playerTeam.saveAndEmit()
         })
 
         // Cancel: not dropped on bench; restore and let the character's dragend do its normal snap/revert

@@ -8,9 +8,19 @@ export class Trait {
     stages: Map<number, Record<string, any>> = new Map()
     charactersCount = 0
     activeStage = 0
+    maxStage = 0
 
     constructor(comp: string[]) {
         this.comp = comp
+    }
+
+    // each augment must override
+    setMaxStage() {
+        for (const [stage] of this.stages) {
+            if (stage > this.maxStage) {
+                this.maxStage = stage
+            }
+        }
     }
 
     // each augment must override
@@ -30,8 +40,8 @@ export class Trait {
     }
 
     // each augment must override
-    afterApplying(characters: Character[]) { }
-    
+    afterApplying(characters: Character[]) {}
+
     getActiveStage() {
         for (const [stage] of this.stages) {
             if (this.charactersCount >= stage) {
