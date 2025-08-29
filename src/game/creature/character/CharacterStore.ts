@@ -2,7 +2,7 @@ import { Game } from "../../scenes/Game"
 import { EventBus } from "../../tools/EventBus"
 import { RNG } from "../../tools/RNG"
 import { CharacterRegistry } from "../CharacterRegistry"
-import { CharacterDto } from "./Character"
+import { Character, CharacterDto } from "./Character"
 import { CharacterGroup } from "./CharacterGroup"
 
 const MAX_ITEMS_IN_STORE = 5
@@ -132,15 +132,20 @@ export class CharacterStore {
         return Math.max(BASE_COST, Math.pow(3, level - 1))
     }
 
-    sell(id: string) {
+    sellFromId(id: string) {
         const character = this.team.getById(id)
         if (character) {
-            const refund = this.getCost(character.level)
-            this.scene.changePlayerGold(this.scene.playerGold + refund)
-            character.destroy(true)
-            this.team.reset()
-            this.scene.savePlayerCharacters(this.team.getChildren())
+            this.sell(character)
         }
+    }
+
+    sell(character: Character) {
+        const refund = this.getCost(character.level)
+        this.scene.changePlayerGold(this.scene.playerGold + refund)
+        character.destroy(true)
+        this.team.reset()
+        this.team.bench.remove(character.id)
+        this.scene.savePlayerCharacters(this.team.getChildren())
     }
 
     getMatchingCharacter(item: StoreItem) {

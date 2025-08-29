@@ -33,9 +33,8 @@ export class CharacterRegistry {
     }
 
     static load(dto: CharacterDto, scene: Game) {
-        const character = CharacterRegistry.create(dto.name, scene, dto.id)
-        character.id = dto.id
-        character.levelUpTo(dto.level)
+        const character = CharacterRegistry.create(dto.name, scene, RNG.uuid(), dto.boardX, dto.boardY)
+        character.loadFromDto(dto)
         return character
     }
 

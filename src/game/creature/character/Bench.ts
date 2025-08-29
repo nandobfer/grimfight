@@ -94,6 +94,8 @@ export class Bench {
         const dto = this.getCharacter(id)
         if (dto && (this.team.countActive() < this.scene.max_characters_in_board || force)) {
             const character = CharacterRegistry.load(dto, this.scene)
+            character.boardX = 0
+            character.boardY = 0
             this.team.add(character)
             this.remove(id)
             EventBus.emit("select-char", character)

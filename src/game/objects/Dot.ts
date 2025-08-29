@@ -18,7 +18,6 @@ export class Dot extends StatusEffect {
 
     override tick() {
         const { value: damage, crit } = this.user.calculateDamage(this.tickDamage)
-        console.log(damage)
         this.target.takeDamage(damage, this.user, this.damageType, crit)
     }
 }

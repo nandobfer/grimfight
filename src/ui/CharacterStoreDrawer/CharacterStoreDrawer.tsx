@@ -12,7 +12,7 @@ interface CharacterStoreDrawerProps {
     game: Game
 }
 
-const drawerBleeding = 80
+const drawerBleeding = 50
 
 export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game }) => {
     const { playerGold } = usePlayerProgress()
@@ -47,10 +47,12 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
 
         EventBus.on("gamestate", handler)
         EventBus.on("open-store", openStore)
+        EventBus.on("toggle-store", toggleStore)
 
         return () => {
             EventBus.off("gamestate", handler)
             EventBus.off("open-store", openStore)
+            EventBus.off("toggle-store", toggleStore)
         }
     }, [])
 
@@ -102,7 +104,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                         flexDirection: "column",
                     }}
                 >
-                    <MenuItem
+                    {/* <MenuItem
                         onClick={toggleStore}
                         sx={{
                             flex: 1,
@@ -116,8 +118,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                         }}
                     >
                         <ExpandMore fontSize="small" sx={{ transform: !open ? "rotate(180deg)" : undefined, transition: "0.3s" }} />
-                    </MenuItem>
-                    <Divider />
+                    </MenuItem> */}
                     <BenchList game={game} />
                 </Paper>
 

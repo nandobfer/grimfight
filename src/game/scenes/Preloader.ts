@@ -51,6 +51,7 @@ export class Preloader extends Scene {
             frameWidth: 128,
         })
         this.load.spritesheet("goldcoin", `gold.png`, { frameWidth: 60, frameHeight: 64 })
+        this.load.image("shopkeeper", "shopkeeper.webp")
     }
 
     loadRagnarokSprites() {

@@ -58,7 +58,6 @@ export class Character extends Creature {
         this.levelUpTo(dto.level)
         this.boardX = dto.boardX
         this.boardY = dto.boardY
-        this.id = dto.id
     }
 
     handleMouseEvents(): void {
@@ -89,6 +88,8 @@ export class Character extends Creature {
             this.preDrag = { x: this.x, y: this.y }
             // show allowed tiles overlay immediately
             this.scene.grid.showDropOverlay()
+            this.scene.shopkeeper.onCharacterDragGlow(true)
+            this.scene.shopkeeper.renderCharacterCost(this)
             this.scene.grid.showHighlightAtWorld(pointer.worldX, pointer.worldY)
             this.setDepth(this.depth + 1000)
 
@@ -159,17 +160,28 @@ export class Character extends Creature {
         })
 
         this.on("dragend", (pointer: Phaser.Input.Pointer) => {
-            if (this.scene.state !== "idle") return
+            if (this.scene?.state !== "idle") return
 
-             // always cleanup window listeners
+            // always cleanup window listeners
             this.globalDragCtrl?.abort()
             this.globalDragCtrl = undefined
+
+            this.scene.shopkeeper.onCharacterDragGlow(false)
+            this.scene.shopkeeper.hideCharacterCost()
+            const shopkeeperBounds = this.scene.shopkeeper.getBounds()
+            if (shopkeeperBounds.contains(pointer.worldX, pointer.worldY)) {
+                this.scene.grid.hideHighlight()
+                this.scene.grid.hideDropOverlay()
+                EventBus.emit("sell-character-shopkeeper", this)
+                return
+            }
 
             // React will set `dropToBench = true` via bench-drop → skip snapping
             if (this.dropToBench) {
                 this.preDrag = undefined
                 this.scene.grid.hideHighlight()
                 this.scene.grid.hideDropOverlay()
+
                 return
             }
 

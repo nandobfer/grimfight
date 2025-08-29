@@ -102,7 +102,7 @@ export const BenchList: React.FC<BenchListProps> = (props) => {
     }, [availableSlots])
 
     return (
-        <Box ref={wrapperRef} sx={{ marginTop: -1, position: "relative" }}>
+        <Box ref={wrapperRef} sx={{ position: "relative" }}>
             {characters.map((dto) => (
                 <BenchItem key={dto.id} character={dto} game={props.game} />
             ))}

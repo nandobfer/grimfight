@@ -69,7 +69,6 @@ export const BenchItem: React.FC<BenchItemProps> = (props) => {
     const levelColor = useMemo(() => (character ? convertColorToString(colorFromLevel(character.level)) : ""), [character?.level])
 
     const summon = () => {
-        console.log(character)
         if (!character) return
         team.bench.summon(character.id)
     }
@@ -82,11 +81,11 @@ export const BenchItem: React.FC<BenchItemProps> = (props) => {
             <Button
                 sx={{
                     width: 1,
-                    padding: 2,
+                    padding: 1,
                     filter: !character || dragging ? "grayscale(100%)" : undefined,
                     overflowX: "auto",
                 }}
-                // onClick={summon}
+                onClick={isMobile ? summon : undefined}
                 disabled={!character}
                 onPointerDown={onPointerDown}
                 draggable

@@ -35,7 +35,7 @@ export class Helyna extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "helyna", id)
-        this.createAnimations()
+        // this.createAnimations()
     }
 
     override getAbilityDescription(): string {
@@ -171,7 +171,9 @@ export class Helyna extends Character {
     makeBear() {
         this.setTexture("druid_bear")
         this.attackRange = 1
+        const healthRate = this.health / this.maxHealth
         this.maxHealth = this.bonusMaxHealth + this.abilityPower * 10
+        this.health = this.maxHealth * healthRate
         this.setScale(this.bonusScale * 1.5)
         this.attackDamage = this.bonusAD + this.abilityPower * 0.25
         this.armor = this.bonusArmor + this.abilityPower * 0.15

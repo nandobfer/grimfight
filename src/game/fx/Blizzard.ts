@@ -70,7 +70,7 @@ export class Blizzard extends FxSprite {
 
         target.scene.tweens.add({
             targets: target,
-            duration: Phaser.Math.FloatBetween(this.duration * 0.5, this.duration * 1.25),
+            duration: Phaser.Math.FloatBetween(this.duration * 0.25, this.duration * 0.75),
             attackSpeed: 0,
             speed: 0,
             repeat: 0,

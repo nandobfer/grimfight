@@ -19,6 +19,7 @@ import { AugmentsRegistry } from "../systems/Augment/AugmentsRegistry"
 import { Augment } from "../systems/Augment/Augment"
 import { LightningHit } from "../fx/LightningHit"
 import { GoldCoinFx } from "../fx/GoldExplosion"
+import { Shopkeeper } from "../systems/Shopkeeper"
 
 export type GameState = "fighting" | "idle"
 
@@ -49,6 +50,7 @@ export class Game extends Scene {
     grid: Grid
     private fireEffects: Phaser.GameObjects.Group
     goldCoinFx: GoldCoinFx
+    shopkeeper: Shopkeeper
 
     playerGold = starting_player_gold
     playerLives = starting_player_lives
@@ -70,9 +72,9 @@ export class Game extends Scene {
         this.createBackground()
         this.grid = new Grid(this, this.background)
         this.goldCoinFx = new GoldCoinFx(this)
-
         this.playerTeam = new CharacterGroup(this, true)
         this.enemyTeam = new MonsterGroup(this, true)
+        this.shopkeeper = new Shopkeeper(this)
 
         this.configurePhysics()
         this.createLight()
@@ -167,6 +169,9 @@ export class Game extends Scene {
             ghost.disableInteractive() // we control it manually
             ghost.anims.play(`${ghost.name}-idle-down`, true)
 
+            this.shopkeeper.onCharacterDragGlow(true)
+            this.shopkeeper.renderCharacterCost(ghost)
+
             // place at pointer
             const { x, y } = this.clientToWorld(clientX, clientY)
             ghost.setPosition(x, y)
@@ -194,8 +199,17 @@ export class Game extends Scene {
             const snapped = this.grid.snapCharacter(ghost, x, y)
             this.grid.hideHighlight()
             this.grid.hideDropOverlay()
+            this.shopkeeper.onCharacterDragGlow(false)
+            this.shopkeeper.hideCharacterCost()
 
-            if (snapped && !this.playerTeam.isFull()) {
+            const shopkeeperBounds = this.shopkeeper.getBounds()
+            if (shopkeeperBounds.contains(x, y)) {
+                EventBus.emit("sell-character-shopkeeper", ghost)
+                ghost.destroy(true)
+                return
+            }
+
+            if (snapped && !this.playerTeam.isBoardFull()) {
                 // snapCharacter already set boardX/boardY on the ghost
                 ghost.body.enable = true
                 this.playerTeam.add(ghost) // will NOT auto-reposition because boardX/boardY are set

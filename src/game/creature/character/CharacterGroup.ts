@@ -91,7 +91,7 @@ export class CharacterGroup extends CreatureGroup {
         return this.getChildren().filter((character) => character.name === name && character.level === level)
     }
 
-    private tryMerge(pivot: Character, guard = 0) {
+    tryMerge(pivot: Character, guard = 0) {
         // Prevent accidental infinite chains
         if (guard > 8) return
 
@@ -278,7 +278,7 @@ export class CharacterGroup extends CreatureGroup {
         }
     }
 
-    override isFull(): boolean {
+    isBoardFull(): boolean {
         return this.countActive() >= this.scene.max_characters_in_board
     }
 }

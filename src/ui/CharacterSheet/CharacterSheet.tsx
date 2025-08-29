@@ -227,14 +227,6 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     </StatGroup>
                 </Box>
 
-                <Box>
-                    <Button size="small" fullWidth onClick={benchCharacter} sx={{ fontWeight: "bold" }}>
-                        Guardar
-                    </Button>
-                    <Button color="warning" onClick={() => props.sell(character.id)} size="small" fullWidth sx={{ gap: 1, fontWeight: "bold" }}>
-                        Vender <GoldCoin quantity={props.store.getCost(character.level)} fontSize={10} size={10} />
-                    </Button>
-                </Box>
             </>
         </AbilityTooltip>
     )

@@ -109,6 +109,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.mana = 0
         this.active = true
         this.setRotation(0)
+        this.setAlpha(1)
         this.resetUi()
         this.updateFacingDirection()
         this.stopMoving()

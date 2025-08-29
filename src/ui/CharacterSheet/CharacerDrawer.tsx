@@ -26,7 +26,7 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
     }
 
     const sellCharacter = (id: string) => {
-        store.sell(id)
+        store.sellFromId(id)
         handleClose()
     }
 
