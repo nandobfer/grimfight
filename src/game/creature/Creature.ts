@@ -376,16 +376,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             return
         }
 
-        // Calculate direction vector
         const angle = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y)
 
         // Set velocity based on direction
         this.scene.physics.velocityFromAngle(Phaser.Math.RadToDeg(angle), this.speed, this.body?.velocity)
-
-        // Update facing direction based on movement
         this.updateFacingDirection()
-
-        // Play appropriate walking animation
         this.play(`${this.getAnimationTextureName()}-walking-${this.facing}`, true)
     }
 
@@ -451,7 +446,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         const SIDE_PROBE = 72 // how far we check for detour feelers (px)
         const SIDE_ANGLE = Phaser.Math.DegToRad(45) // feeler spread
         const CLEAR_PAD = 8 // extra safety radius (px)
-        const SEP_RANGE = 40 // start separating when closer than this (px)
+        const SEP_RANGE = 30 // start separating when closer than this (px)
         const SEP_WEIGHT = 0.6 // how strongly we apply separation (0..1)
         // -------------------------------------------
 
