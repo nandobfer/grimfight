@@ -47,9 +47,8 @@ export class Preloader extends Scene {
     loadExtraSprites() {
         this.loadSpritesheets(["druid_bear", "druid_cat"], "characters")
 
-        this.load.spritesheet("statikk_attacking", `spritesheets/characters/statikk_attacking.png`, {
-            frameWidth: 128,
-        })
+        this.load.spritesheet("statikk_attacking", `spritesheets/characters/statikk_attacking.png`, { frameWidth: 128 })
+        this.load.spritesheet("arthas_attacking", `spritesheets/characters/arthas_attacking.png`, { frameWidth: 192 })
         this.load.spritesheet("goldcoin", `gold.png`, { frameWidth: 60, frameHeight: 64 })
         this.load.image("shopkeeper", "shopkeeper.webp")
     }
@@ -88,6 +87,7 @@ export class Preloader extends Scene {
         this.load.spritesheet("fog", "particles/fog.png", { frameWidth: 192 })
         this.load.spritesheet("thunder", "particles/thunder.png", { frameWidth: 192 })
         this.load.spritesheet("magic_shield", "particles/magic_shield.png", { frameWidth: 192 })
+        this.load.spritesheet("ice_slash", "particles/ice_slash.png", { frameWidth: 192 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

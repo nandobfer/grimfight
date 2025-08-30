@@ -78,7 +78,7 @@ export class Character extends Creature {
         this.levelUpTo(dto.level)
         this.boardX = dto.boardX
         this.boardY = dto.boardY
-        this.baseCritDamageMultiplier = dto.baseCritDamageMultiplier
+        this.baseCritDamageMultiplier = dto.baseCritDamageMultiplier || this.baseCritDamageMultiplier
     }
 
     handleMouseEvents(): void {

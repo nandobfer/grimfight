@@ -1,11 +1,12 @@
 // src/game/FireHit.ts
 import { FxSprite } from "./FxSprite"
 import { Game } from "../scenes/Game"
+import { Creature } from "../creature/Creature"
 
 export class IceSpike extends FxSprite {
-    constructor(scene: Game, x: number, y: number, scale: number) {
-        super(scene, x, y, "ice1", scale)
-        this.setOrigin(0.5, 0.75)
+    constructor(scene: Game, target: Creature) {
+        super(scene, target.x, target.y, "ice1", 1)
+        // this.setOrigin(0.5, 0.75)
         this.setRotation(-Math.PI / 2)
         this.addLightEffect({
             color: 0x66ddff,
@@ -13,6 +14,17 @@ export class IceSpike extends FxSprite {
             radius: 45,
             duration: 300,
         })
+
+        const targetWidth = target.displayWidth * target.scaleX
+        const targetHeight = target.displayHeight * target.scaleY
+        const iceBlockWidth = this.width // Original ice block texture width
+        const iceBlockHeight = this.height // Original ice block texture height
+
+        // Calculate scale factors for width and height
+        const scaleX = targetWidth / iceBlockWidth
+        const scaleY = targetHeight / iceBlockHeight
+
+        this.setScale(scaleX * 1.05, scaleY * 1.15)
     }
 
     override initAnimation() {

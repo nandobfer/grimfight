@@ -11,6 +11,7 @@ import { Sorcerer } from "./classes/Sorcerer"
 import { Statikk } from "./classes/Statikk"
 import { Necromancer } from "./classes/Necromancer"
 import { Helyna } from "./classes/Druid"
+import { Arthas } from "./classes/Arthas"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -63,3 +64,4 @@ CharacterRegistry.register("zairon", Necromancer)
 CharacterRegistry.register("grok", Barbarian)
 CharacterRegistry.register("statikk", Statikk)
 CharacterRegistry.register("helyna", Helyna)
+CharacterRegistry.register("arthas", Arthas)

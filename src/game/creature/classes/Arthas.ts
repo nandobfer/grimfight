@@ -1,3 +1,4 @@
+import { FrostStrike } from "../../fx/FrostStrike"
 import { IceSpike } from "../../fx/IceSpike"
 import { Game } from "../../scenes/Game"
 import { RNG } from "../../tools/RNG"
@@ -6,10 +7,10 @@ import { Character } from "../character/Character"
 export class Arthas extends Character {
     baseAttackSpeed = 0.75
     baseSpeed = 80
-    baseAttackDamage = 35
-    baseMaxMana: number = 60
+    baseAttackDamage = 30
+    baseMaxMana: number = 80
     baseMaxHealth: number = 425
-    baseAbilityPower: number = 20
+    baseAbilityPower: number = 15
     baseLifesteal: number = 10
 
     abilityName: string = "Golpe Gélido"
@@ -33,22 +34,24 @@ export class Arthas extends Character {
         } (75% AD)] [info.main: (100% AP)] de dano a cada um.`
     }
 
-    // override extractAttackingAnimation() {
-    //     this.attackAnimationImpactFrame = 3
-    //     const attacking = this.extractAnimationsFromSpritesheet("attacking2", 1, 5, 13, "statikk_attacking")
-    //     const specialAttacking = this.extractAnimationsFromSpritesheet("attacking1", 52, 6, 13, "statikk_attacking")
+    override getAttackingAnimation(): string {
+        return `attacking`
+    }
 
-    //     console.log(this.width / 2, this.height / 2)
-    //     const onUpdate = (animation: Phaser.Animations.Animation) => {
-    //         if ([...attacking, ...specialAttacking].find((anim) => anim.key === animation.key)) {
-    //             this.setOffset(this.width / 4, this.height / 4)
-    //         } else {
-    //             this.setOffset(0, 0)
-    //         }
-    //     }
+    override extractAttackingAnimation() {
+        this.attackAnimationImpactFrame = 4
+        const attacking = this.extractAnimationsFromSpritesheet("attacking", 1, 5, 6, "arthas_attacking")
 
-    //     this.on("animationstart", onUpdate)
-    // }
+        const onUpdate = (animation: Phaser.Animations.Animation) => {
+            if (attacking.find((anim) => anim.key === animation.key)) {
+                this.setOffset(this.width / 4, this.height / 4)
+            } else {
+                this.setOffset(0, 0)
+            }
+        }
+
+        this.on("animationstart", onUpdate)
+    }
 
     override castAbility(): void {
         this.casting = true
@@ -58,23 +61,25 @@ export class Arthas extends Character {
             return
         }
 
-        let damage = this.calculateDamage(this.attackDamage * 2 + this.abilityPower)
         switch (this.castsCount) {
             case 1:
-                this.target.takeDamage(damage.value, this, "cold", damage.crit)
+                const damage = (this.attackDamage * 2 + this.abilityPower) / 2
+                new FrostStrike(this, this.target, damage, 0.5)
+                this.scene.time.delayedCall(500, () => {
+                    if (this.target) new FrostStrike(this, this.target, damage, 0.5)
+                })
                 break
             case 2:
-                damage = this.calculateDamage(this.attackDamage + this.abilityPower)
-                // todo: cold slash FX with overlap
+                new FrostStrike(this, this.target, this.attackDamage + this.abilityPower, 1.4)
                 break
             case 3:
                 const targets = 3
                 const enemies = this.target.team.getChildren(true, true)
                 for (let i = 1; i <= targets; i++) {
-                    damage = this.calculateDamage(this.attackDamage * 0.75 + this.abilityPower)
+                    const iceSpikesDamage = this.calculateDamage(this.attackDamage * 0.75 + this.abilityPower)
                     const target = RNG.pick(enemies)
-                    new IceSpike(this.scene || target.scene, target.x, target.y, target.scale * 0.5)
-                    target.takeDamage(damage.value, this, "cold", damage.crit)
+                    new IceSpike(this.scene || target.scene, target)
+                    target.takeDamage(iceSpikesDamage.value, this, "cold", iceSpikesDamage.crit)
                 }
 
                 this.castsCount = 0
