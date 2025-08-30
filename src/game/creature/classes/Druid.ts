@@ -65,6 +65,10 @@ export class Helyna extends Character {
     }
 
     override landAttack() {
+        this.fire()
+    }
+
+    fire() {
         if (!this.target) return
 
         const arrow = new Arrow(this)
@@ -92,7 +96,6 @@ export class Helyna extends Character {
                 }
                 break
         }
-
         this.casting = false
     }
 
@@ -107,6 +110,7 @@ export class Helyna extends Character {
                 break
         }
         const fx = new FxSprite(this.scene, this.x, this.y, "fog", this.scale / 2)
+        this.landAttack = super.landAttack
     }
 
     castHumanAbility() {
@@ -136,23 +140,8 @@ export class Helyna extends Character {
     castBearAbility() {
         const duration = 5000
         this.manaLocked = true
-        this.aura = this.postFX.addGlow(0x331111, 0)
         this.thornsArmor = true
         this.thornsFx = new ThornsFx(this.scene, this.x, this.y, this.scale * 0.45)
-
-        this.scene.tweens.add({
-            targets: this.aura,
-            duration: 50,
-            yoyo: true,
-            repeat: 0,
-            outerStrength: { from: 0, to: 2 },
-            hold: duration,
-            onComplete: () => {
-                this.removeAura()
-                this.thornsFx?.destroy(true)
-                this.thornsFx = undefined
-            },
-        })
 
         this.scene.tweens.add({
             targets: this,
@@ -164,6 +153,8 @@ export class Helyna extends Character {
             onComplete: () => {
                 this.manaLocked = false
                 this.thornsArmor = false
+                this.thornsFx?.destroy(true)
+                this.thornsFx = undefined
             },
         })
     }
@@ -214,6 +205,7 @@ export class Helyna extends Character {
         super.refreshStats()
         this.setTexture(this.name)
         this.druidForm = "human"
+        this.landAttack = this.fire
         this.bonusSpeed = this.speed
         this.bonusMaxHealth = this.maxHealth
         this.bonusAD = this.attackDamage

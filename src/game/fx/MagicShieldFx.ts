@@ -47,8 +47,8 @@ export class MagicShieldFx extends FxSprite {
             })
         }
 
+        const anim = this.play(`${this.sprite}-loop`)
         // não funcionou essa buceta
-        // const anim = this.play(`${this.sprite}-loop`)
         // anim.once("animationcomplete", () => {
         //     this.play(`${this.sprite}-loop`)
         // })

@@ -7,7 +7,7 @@ export class ArmoredSkeleton extends Skeleton {
     baseMaxHealth = 500
     baseAttackDamage = 30
     baseAttackSpeed = 1
-    baseArmor = 10
+    baseResistance: number = 20
 
     constructor(scene: Game) {
         super(scene, "armored_skeleton")
