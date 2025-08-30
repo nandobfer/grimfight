@@ -91,6 +91,11 @@ export class Game extends Scene {
             this.physics.world.debugGraphic.visible = !currentlyDebugging
             console.log(`Physics debug: ${!currentlyDebugging}`)
         })
+        this.input.keyboard?.on("keydown-SPACE", () => {
+            if (this.state === "idle") {
+                this.startRound()
+            }
+        })
 
         EventBus.emit("game-ready", this)
         EventBus.on("get-progress", () => this.emitProgress())

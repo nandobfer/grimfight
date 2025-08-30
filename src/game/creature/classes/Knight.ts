@@ -1,3 +1,4 @@
+import { MagicShieldFx } from "../../fx/MagicShieldFx"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
@@ -26,18 +27,7 @@ export class Knight extends Character {
         const duration = 2500
         this.manaLocked = true
 
-        this.aura = this.postFX.addGlow(0xffffff, 0)
-
-        this.scene.tweens.add({
-            targets: this.aura,
-            duration,
-            yoyo: true,
-            repeat: 0,
-            outerStrength: { from: 0, to: 2 },
-            onComplete: () => {
-                this.removeAura()
-            },
-        })
+        const animation = new MagicShieldFx(this.scene, this.x, this.y, 0.4)
 
         this.scene.tweens.add({
             targets: this,
@@ -45,8 +35,14 @@ export class Knight extends Character {
             armor: this.armor * 10,
             yoyo: true,
             repeat: 0,
+            onUpdate: () => {
+                if (animation && animation.active) {
+                    animation.setPosition(this.x, this.y)
+                }
+            },
             onComplete: () => {
                 this.manaLocked = false
+                animation.finish()
             },
         })
         this.casting = false
