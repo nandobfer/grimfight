@@ -5,7 +5,7 @@ type TraitBoosts = "apMultiplier"
 
 export class SorcererTrait extends Trait {
     name = "Feiticeiro"
-    description = "Ao lançar uma magia, feiticeiros lançam um feitiço adicional, com poder de habilidade reduzido em {0}."
+    description = "Ao lançar uma magia, feiticeiros lançam um feitiço adicional, com eficácia reduzida em {0}."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([[2, { apMultiplier: 0.5, descriptionParams: ["50%"] }]])
 
     constructor(comp: string[]) {
@@ -23,9 +23,9 @@ export class SorcererTrait extends Trait {
         }
 
         const castHandler = () => {
-            console.log('cast handler here')
+            console.log("cast handler here")
             character.scene?.time.delayedCall(500, () => {
-                console.log('casting again')
+                console.log("casting again")
                 character.castAbility(values.apMultiplier)
             })
         }
