@@ -55,9 +55,11 @@ export class MagicShieldFx extends FxSprite {
     }
 
     finish() {
-        const anim = this.play(`${this.sprite}-end`)
-        anim.once("animationcomplete", () => {
-            this.destroy(true)
-        })
+        if (this?.active) {
+            const anim = this.play(`${this.sprite}-end`)
+            anim.once("animationcomplete", () => {
+                this?.destroy(true)
+            })
+        }
     }
 }
