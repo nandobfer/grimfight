@@ -14,6 +14,7 @@ export interface CharacterDto {
     boardX: number
     boardY: number
     abilityDescription: string
+    baseCritDamageMultiplier: number
 }
 
 export class Character extends Creature {
@@ -77,6 +78,7 @@ export class Character extends Creature {
         this.levelUpTo(dto.level)
         this.boardX = dto.boardX
         this.boardY = dto.boardY
+        this.baseCritDamageMultiplier = dto.baseCritDamageMultiplier
     }
 
     handleMouseEvents(): void {
@@ -303,6 +305,7 @@ export class Character extends Creature {
             id: this.id,
             name: this.name,
             abilityDescription: this.getAbilityDescription(),
+            baseCritDamageMultiplier: this.baseCritDamageMultiplier,
         }
         return data
     }
