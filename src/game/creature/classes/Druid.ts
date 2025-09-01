@@ -7,6 +7,8 @@ import { DamageType } from "../../ui/DamageNumbers"
 import { Character } from "../character/Character"
 import { Creature } from "../Creature"
 
+const humanMultiplier = 2
+
 type DruidForm = "human" | "bear" | "cat"
 export class Helyna extends Character {
     baseAttackSpeed = 1
@@ -60,8 +62,8 @@ export class Helyna extends Character {
         )} (300% AD)] de dano.
         
 [primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${Math.round(
-            this.abilityPower * 5
-        )} (500% AP)].`
+            this.abilityPower * humanMultiplier
+        )} (200% AP)].`
     }
 
     override landAttack() {
@@ -116,7 +118,7 @@ export class Helyna extends Character {
     castHumanAbility() {
         const target = this.team.getLowestHealth()
         if (target) {
-            const { value, crit } = this.calculateDamage(this.abilityPower * 5)
+            const { value, crit } = this.calculateDamage(this.abilityPower * humanMultiplier)
             target.heal(value, crit)
         }
     }
