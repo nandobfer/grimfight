@@ -24,7 +24,7 @@ export class Knight extends Character {
     castAbility(): void {
         this.casting = true
 
-        const duration = 2500
+        const duration = 1500
         this.manaLocked = true
 
         const animation = new MagicShieldFx(this.scene, this.x, this.y, 0.4)

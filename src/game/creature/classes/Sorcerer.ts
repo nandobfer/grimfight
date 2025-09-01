@@ -20,8 +20,8 @@ export class Sorcerer extends Character {
 
     override getAbilityDescription(): string {
         return `Inimigos atingidos pela nevasca recebem [info.main:${Math.round(
-            this.abilityPower * 0.5 * 5
-        )} (250% AP)] de dano ao longo de 2 segundos e são [primary.main:congelados].`
+            this.abilityPower * 0.75 * 5
+        )} (375% AP)] de dano ao longo de 2 segundos e são [primary.main:congelados].`
     }
 
     override getAttackingAnimation(): string {
@@ -49,7 +49,7 @@ export class Sorcerer extends Character {
         this.casting = true
 
         this.manaLocked = true
-        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5 * multiplier, 2)
+        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.75 * multiplier, 2)
 
         this.casting = false
     }

@@ -7,7 +7,7 @@ export class Mage extends Character {
     baseAttackSpeed = 0.5
     baseAttackRange = 3
     baseManaPerSecond = 10
-    baseMaxMana = 60
+    baseMaxMana = 65
     baseMaxHealth = 200
     baseAbilityPower: number = 50
 

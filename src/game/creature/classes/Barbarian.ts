@@ -8,19 +8,21 @@ export class Barbarian extends Character {
     manaLocked: boolean = true
     baseAttackSpeed: number = 1.15
     baseAbilityPower: number = 25
+    baseResistance: number = 10
 
     abilityName: string = "Berserker"
 
     bonusAttackSpeed = 0
     bonusSpeed = 0
-    missingHealthPercent = 1
+    bonusResistance = 0
+    missingHealthMultiplier = 1
 
     constructor(scene: Game, id: string) {
         super(scene, "grok", id)
     }
 
     override getAbilityDescription(): string {
-        return `Ganha [warning.main:1%] velocidade de ataque bônus para cada porcentagem de vida perdida.`
+        return `Ganha [warning.main:1%] velocidade de ataque e resistência para cada porcentagem de vida perdida.`
     }
 
     getHealValue() {
@@ -36,24 +38,34 @@ export class Barbarian extends Character {
     // }
 
     scaleSpeedWithLife() {
-        this.missingHealthPercent = this.multFromHealth()
+        this.missingHealthMultiplier = this.multFromHealth()
 
-        this.attackSpeed = this.bonusAttackSpeed * this.missingHealthPercent
-        this.speed = this.bonusSpeed * this.missingHealthPercent
+        this.attackSpeed = this.bonusAttackSpeed * this.missingHealthMultiplier
+        this.speed = this.bonusSpeed * this.missingHealthMultiplier
+        this.resistance = this.bonusResistance * this.missingHealthMultiplier
     }
 
     private multFromHealth(): number {
         if (this.maxHealth <= 0) return 1
         // 1 at full HP → 2 at 0 HP
-        const m = 2 - this.health / this.maxHealth
-        return Phaser.Math.Clamp(m, 1, 2)
+        const missingHealthPercent = this.health / this.maxHealth
+        const multiplier = 2 - missingHealthPercent
+
+        if (missingHealthPercent <= 0.4) {
+            this.setTint(0xff0000)
+        } else {
+            this.clearTint()
+        }
+
+        return Phaser.Math.Clamp(multiplier, 1, 2)
     }
 
     override refreshStats(): void {
         super.refreshStats()
         this.bonusAttackSpeed = this.attackSpeed
         this.bonusSpeed = this.speed
-        this.missingHealthPercent = 1
+        this.bonusResistance = this.resistance
+        this.missingHealthMultiplier = 1
     }
 
     override update(time: number, delta: number): void {

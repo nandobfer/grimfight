@@ -7,7 +7,7 @@ import { DamageType } from "../../ui/DamageNumbers"
 import { Character } from "../character/Character"
 import { Creature } from "../Creature"
 
-const humanMultiplier = 2
+const humanMultiplier = 3
 
 type DruidForm = "human" | "bear" | "cat"
 export class Helyna extends Character {

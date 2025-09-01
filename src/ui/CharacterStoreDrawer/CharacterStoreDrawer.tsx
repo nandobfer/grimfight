@@ -58,14 +58,14 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
 
     return (
         <Box sx={{ display: "contents" }}>
-            {/* <Button
+            <Button
                 variant="contained"
                 onClick={toggleStore}
                 sx={{ pointerEvents: "auto", marginTop: "auto", width: 100 }}
                 disabled={gamestate === "fighting"}
             >
                 Loja
-            </Button> */}
+            </Button>
             <SwipeableDrawer
                 open={open}
                 onOpen={openStore}
