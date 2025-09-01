@@ -13,22 +13,15 @@ export class Statikk extends Character {
     abilityName: string = "Fúria de Guinsoo"
 
     attacksCount = 0
-    bonusAttackSpeed = 0
-    bonusSpeed = 0
-    missingHealthPercent = 1
-    aura
 
     constructor(scene: Game, id: string) {
         super(scene, "statikk", id)
-
-        this.aura = this.postFX.addGlow(0xddaa00, 0)
     }
 
     override getAbilityDescription(): string {
         return `Cada [primary.main:3º ataque] lança uma cadeia de raios no alvo, causando [info.main:${Math.round(
-            this.abilityPower * 1.2
-        )} (120% AP)] de dano e se propaga 5x, causando dano reduzido a cada propagação
-Além disso, ganha velocidade de ataque bônus equivalente a porcentagem de vida perdida.`
+            this.abilityPower * 1.5
+        )} (120% AP)] de dano e se propaga 5x, causando dano reduzido a cada propagação`
     }
 
     override extractAttackingAnimation() {
@@ -60,40 +53,13 @@ Além disso, ganha velocidade de ataque bônus equivalente a porcentagem de vida
         if (this.attacksCount === 3) {
             this.attacksCount = 0
 
-            const lightning = new LightningBolt(this, this.abilityPower * 1.2)
+            const lightning = new LightningBolt(this, this.abilityPower * 1.5, 5)
             lightning.fire(this.target)
         }
-    }
-
-    scaleSpeedWithLife() {
-        this.missingHealthPercent = this.multFromHealth()
-
-        this.attackSpeed = this.bonusAttackSpeed * this.missingHealthPercent
-        this.speed = this.bonusSpeed * this.missingHealthPercent
-
-        this.aura.outerStrength = (this.missingHealthPercent - 1) * 1.5
-    }
-
-    private multFromHealth(): number {
-        if (this.maxHealth <= 0) return 1
-        // 1 at full HP → 2 at 0 HP
-        const m = 2 - this.health / this.maxHealth
-        return Phaser.Math.Clamp(m, 1, 2)
     }
 
     override refreshStats(): void {
         super.refreshStats()
         this.attacksCount = 0
-        this.bonusAttackSpeed = this.attackSpeed
-        this.bonusSpeed = this.speed
-        this.missingHealthPercent = 1
-    }
-
-    override update(time: number, delta: number): void {
-        super.update(time, delta)
-
-        if (this.active) {
-            this.scaleSpeedWithLife()
-        }
     }
 }

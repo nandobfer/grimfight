@@ -4,17 +4,18 @@ import { Projectile } from "./Projectile"
 
 export class LightningBolt extends Projectile {
     speed = 1000
-    bounces = 5
+    bounces = 0
 
     rawDamage: number
 
-    constructor(owner: Creature, rawDamage: number) {
+    constructor(owner: Creature, rawDamage: number, bounces: number) {
         super(owner, "lightning_bolt", "lightning")
         this.setScale(0.35)
         this.setSize(this.width * 0.1, this.height * 0.1) // Adjust size as needed
         // this.setOffset(this.width * 0.25, this.height * 0.25) // Center the hitbox
 
         this.rawDamage = rawDamage
+        this.bounces = bounces
         this.addLightEffect()
 
         if (!this.scene.anims.exists("lightning-bolt")) {
@@ -115,11 +116,10 @@ export class LightningBolt extends Projectile {
 
     nextFire(target: Creature, from: Creature) {
         this.setPosition(from.x, from.y)
-        const angle = Phaser.Math.Angle.Between(from.x, from.y, target.x, target.y )
+        const angle = Phaser.Math.Angle.Between(from.x, from.y, target.x, target.y)
         this.setRotation(angle)
 
         this.scene?.physics.velocityFromRotation(angle, this.speed, this.body.velocity)
-
 
         return this
     }

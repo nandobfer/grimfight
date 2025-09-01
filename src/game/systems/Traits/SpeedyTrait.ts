@@ -1,5 +1,5 @@
 import { Character } from "../../creature/character/Character"
-import { Statikk } from "../../creature/classes/Statikk"
+import { Barbarian } from "../../creature/classes/Barbarian"
 import { Trait } from "./Trait"
 
 type TraitBoosts = "attackSpeedMultiplier" | "maxStacks"
@@ -36,7 +36,7 @@ export class SpeedyTrait extends Trait {
             // capture baseline once (includes augments!)
             if (!this.baseline.has(character)) {
                 const base0 =
-                    character instanceof Statikk
+                    character instanceof Barbarian
                         ? character.bonusAttackSpeed || character.attackSpeed // fallback safety
                         : character.attackSpeed
                 this.baseline.set(character, base0)
@@ -52,7 +52,7 @@ export class SpeedyTrait extends Trait {
             const multiplier = 1 + stacks * values.attackSpeedMultiplier
             character.attackSpeed = base * multiplier
 
-            if (character instanceof Statikk) {
+            if (character instanceof Barbarian) {
                 character.bonusAttackSpeed = base * multiplier
             }
         }

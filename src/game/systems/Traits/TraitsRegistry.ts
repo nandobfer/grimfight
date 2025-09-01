@@ -64,11 +64,11 @@ export class TraitsRegistry {
     }
 }
 
-TraitsRegistry.register("Atacante", AttackerTrait, ["maximus", "statikk", "mordred", "arthas"])
-TraitsRegistry.register("Colosso", ColossusTrait, ["maximus", "grok", "helyna"])
+TraitsRegistry.register("Atacante", AttackerTrait, ["grok", "statikk", "mordred", "arthas"])
+TraitsRegistry.register("Colosso", ColossusTrait, ["maximus", "grok"])
 TraitsRegistry.register("Ligeiro", SpeedyTrait, ["lizwan", "statikk", "laherce"])
 TraitsRegistry.register("Assassino", AssassinTrait, ["lizwan", "mordred"])
-TraitsRegistry.register("Feiticeiro", SorcererTrait, ["megumin", "jadis", "zairon"])
+TraitsRegistry.register("Feiticeiro", SorcererTrait, ["megumin", "jadis", "zairon", "helyna"])
 TraitsRegistry.register("Comensal da Morte", DeathEaterTrait, ["zairon", "arthas"])
 TraitsRegistry.register("Matilha", PackTrait, ["lizwan", "helyna", "laherce"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna"])
