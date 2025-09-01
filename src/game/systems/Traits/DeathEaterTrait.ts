@@ -5,9 +5,9 @@ import { Trait } from "./Trait"
 type TraitBoosts = "hpMultiplier" | 'statsMultiplier'
 
 export class DeathEaterTrait extends Trait {
-    name = "Comensal da Morte"
+    name = "Deatheater"
     description = "Ao morrer pela primeira vez, comensais da morte ressuscitam com {0} de vida e recebem {1} de AD e AP até morrer de novo."
-    stages: Map<number, Record<TraitBoosts, any>> = new Map([[2, { hpMultiplier: 0.3, statsMultiplier: 0.5, descriptionParams: ["30%", '50%'] }]])
+    stages: Map<number, Record<TraitBoosts, any>> = new Map([[2, { hpMultiplier: 0.3, statsMultiplier: 0.5, descriptionParams: ["30%", "50%"] }]])
 
     private dead = new Set<Character>()
 
@@ -33,12 +33,12 @@ export class DeathEaterTrait extends Trait {
             const deadY = character.y
             this.spawnRessurrectionFx(character.scene, deadX, deadY)
             character.scene?.time.delayedCall(1000, () => {
-                if (character.scene.state === 'fighting') {
+                if (character.scene.state === "fighting") {
                     this.spawnRessurrectionFx(character.scene, deadX, deadY)
                     character.reset()
                     character.health = character.maxHealth * values.hpMultiplier
-                    character.attackDamage *= (1 + values.statsMultiplier)
-                    character.abilityPower *= (1 + values.statsMultiplier)
+                    character.attackDamage *= 1 + values.statsMultiplier
+                    character.abilityPower *= 1 + values.statsMultiplier
                     character.teleportTo(deadX, deadY)
                 }
             })

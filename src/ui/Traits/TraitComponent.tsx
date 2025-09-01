@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material"
 import { Trait } from "../../game/systems/Traits/Trait"
 import { renderTraitDescription } from "../../game/systems/Traits/TraitDescriptionHelpers"
@@ -12,9 +12,23 @@ export const TraitComponent: React.FC<TraitComponentProps> = (props) => {
     const trait = props.trait
     const active = trait.activeStage > 0
 
+    const [showTooltip, setShowTooltip] = useState(false)
+
+    const openTooltip = () => {
+        setShowTooltip(true)
+    }
+
+    const hideTooltip = () => {
+        setShowTooltip(false)
+    }
+
     return (
         <Tooltip
             placement="auto"
+            open={showTooltip}
+            onMouseEnter={() => openTooltip()}
+            onClick={() => openTooltip()}
+            onMouseLeave={() => hideTooltip()}
             title={
                 <Box sx={{ flexDirection: "column" }}>
                     <Typography fontWeight={"bold"} variant="subtitle2">
@@ -32,7 +46,11 @@ export const TraitComponent: React.FC<TraitComponentProps> = (props) => {
                 </Box>
             }
         >
-            <Box sx={{ gap: 1, alignItems: "center", width: "fit-content" }}>
+            <Box
+                sx={{ gap: 1, alignItems: "center", width: "fit-content" }}
+                // onPointerEnter={() => setShowTooltip(true)}
+                // onPointerLeave={() => setShowTooltip(false)}
+            >
                 <Button
                     sx={{ padding: 0, transform: "rotate(45deg)", pointerEvents: "auto", minWidth: 0 }}
                     color={active ? "success" : "primary"}

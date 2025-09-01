@@ -55,7 +55,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                     right: 0,
                     bottom: 0,
                     padding: 5,
-                    paddingBottom: 10,
+                    paddingBottom: 15,
                     // border: "1px solid red",
                     pointerEvents: "none",
                     justifyContent: "space-between",

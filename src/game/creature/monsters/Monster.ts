@@ -27,9 +27,9 @@ export class Monster extends Creature {
         this.baseMaxHealth *= mult
         this.health = this.baseMaxHealth
         this.baseAttackDamage *= mult
-        this.baseResistance += 40
         this.challengeRating = this.calculateCR()
-        this.baseAttackSpeed = this.baseAttackSpeed * 0.75
+        // this.baseAttackSpeed = this.baseAttackSpeed * 0.75
+        this.baseMaxHealth *= 1.5
     }
 
     scaleSize(mult: number) {
@@ -42,6 +42,7 @@ export class Monster extends Creature {
         this.scaleStats(mult)
         this.scaleSize(mult)
         this.boss = true 
+        this.baseResistance += 40
 
         this.addDarkAura()
     }

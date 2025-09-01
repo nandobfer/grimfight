@@ -140,7 +140,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     const levelColor = useMemo(() => convertColorToString(colorFromLevel(snap.level)), [snap.level])
 
     return (
-        <AbilityTooltip description={character.abilityDescription} placement="auto">
+        <AbilityTooltip description={character.getAbilityDescription()} placement="auto">
             <>
                 <Box sx={{ width: 1, gap: 2, alignItems: "center", position: "relative" }}>
                     <Badge
