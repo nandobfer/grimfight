@@ -33,10 +33,15 @@ export class IceShard extends Projectile {
         if (this.scene.lights) {
             this.light = this.scene.lights.addLight(this.x, this.y, 45, 0x66ddff, 10)
 
-            this.scene.events.on("update", () => {
+            const handleUpdate = () => {
                 if (this.active && this.light) {
                     this.light.setPosition(this.x, this.y)
                 }
+            }
+            this.scene.events.on("update", handleUpdate)
+            this.once("destroy", () => {
+                this.scene.events.off("update", handleUpdate)
+                this.light = undefined
             })
         }
     }

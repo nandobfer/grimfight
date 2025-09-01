@@ -38,16 +38,21 @@ export class LightningBolt extends Projectile {
                 targets: this.light,
                 radius: { from: 20, to: 50 },
                 intensity: { from: 3, to: 20 },
-                duration: 50,
+                duration: 10,
                 yoyo: true,
                 repeat: -1,
                 ease: "Sine.easeInOut",
             })
 
-            this.scene.events.on("update", () => {
+            const handleUpdate = () => {
                 if (this.active && this.light) {
                     this.light.setPosition(this.x, this.y)
                 }
+            }
+            this.scene.events.on("update", handleUpdate)
+            this.once("destroy", () => {
+                this.scene.events.off("update", handleUpdate)
+                this.light = undefined
             })
         }
     }

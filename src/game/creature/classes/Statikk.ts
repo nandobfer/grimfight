@@ -39,13 +39,14 @@ Além disso, ganha velocidade de ataque bônus equivalente a porcentagem de vida
         console.log(this.width / 2, this.height / 2)
         const onUpdate = (animation: Phaser.Animations.Animation) => {
             if ([...attacking, ...specialAttacking].find((anim) => anim.key === animation.key)) {
-                this.setOffset(this.width / 4, this.height / 4)
+                this.setOrigin(0.5, 0.6)
             } else {
-                this.setOffset(0, 0)
+                this.setOrigin(0.5, 0.75)
             }
         }
 
         this.on("animationstart", onUpdate)
+        this.once("destroy", () => this.off("animationstart", onUpdate))
     }
 
     override landAttack(): void {

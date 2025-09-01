@@ -234,6 +234,15 @@ export class Character extends Creature {
             }
             EventBus.emit("select-char", this)
         })
+
+        this.once("destroy", () => {
+            this.off("pointerover")
+            this.off("pointerout")
+            this.off("dragstart")
+            this.off("drag")
+            this.off("dragend")
+            this.off("pointerup")
+        })
     }
 
     private animateGlow(targetStrength: number) {

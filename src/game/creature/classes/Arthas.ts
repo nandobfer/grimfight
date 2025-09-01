@@ -1,4 +1,5 @@
 import { FrostStrike } from "../../fx/FrostStrike"
+import { LightParams } from "../../fx/FxSprite"
 import { IceSpike } from "../../fx/IceSpike"
 import { Game } from "../../scenes/Game"
 import { RNG } from "../../tools/RNG"
@@ -17,8 +18,16 @@ export class Arthas extends Character {
 
     castsCount = 0
 
+    private light?: Phaser.GameObjects.Light
+
     constructor(scene: Game, id: string) {
         super(scene, "arthas", id)
+        this.addLightEffect({
+            color: 0x66ddff,
+            intensity: 1,
+            radius: 64,
+            duration: 300,
+        })
     }
 
     override getAbilityDescription(): string {
@@ -34,6 +43,33 @@ export class Arthas extends Character {
         } (75% AD)] [info.main: (100% AP)] de dano a cada um.`
     }
 
+    addLightEffect(lightParams: LightParams) {
+        if (this.scene.lights) {
+            this.light = this.scene.lights.addLight(this.x, this.y, lightParams.radius, lightParams.color, lightParams.intensity)
+
+            this.scene.tweens.add({
+                targets: this.light,
+                radius: { from: lightParams.minRadius, to: lightParams.maxRadius },
+                intensity: { from: lightParams.minIntensity, to: lightParams.maxIntensity },
+                duration: lightParams.duration,
+                yoyo: lightParams.yoyo ?? true,
+                repeat: lightParams.repeat ?? -1,
+                ease: "Sine.easeInOut",
+            })
+
+            const handleUpdate = () => {
+                if (this.active && this.light) {
+                    this.light.setPosition(this.x, this.y)
+                }
+            }
+            this.scene.events.on("update", handleUpdate)
+            this.once("destroy", () => {
+                this.scene.events.off("update", handleUpdate)
+                this.light = undefined
+            })
+        }
+    }
+
     override getAttackingAnimation(): string {
         return `attacking`
     }
@@ -44,13 +80,14 @@ export class Arthas extends Character {
 
         const onUpdate = (animation: Phaser.Animations.Animation) => {
             if (attacking.find((anim) => anim.key === animation.key)) {
-                this.setOffset(this.width / 4, this.height / 4)
+                this.setOrigin(0.5, 0.6)
             } else {
-                this.setOffset(0, 0)
+                this.setOrigin(0.5, 0.75)
             }
         }
 
         this.on("animationstart", onUpdate)
+        this.once("destroy", () => this.off("animationstart", onUpdate))
     }
 
     override castAbility(): void {

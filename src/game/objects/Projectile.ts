@@ -60,7 +60,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
             this.onHit(enemy)
         })
 
-        EventBus.on("gamestate", (state: string) => {
+        EventBus.once("gamestate", (state: string) => {
             this.destroy()
         })
     }

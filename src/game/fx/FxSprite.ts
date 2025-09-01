@@ -3,7 +3,7 @@ import Phaser from "phaser"
 import { Game, GameState } from "../scenes/Game"
 import { EventBus } from "../tools/EventBus"
 
-interface LightParams {
+export interface LightParams {
     color: number
     radius: number
     intensity: number
@@ -40,15 +40,17 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         this.setPipeline("Light2D")
 
         this.scene.events.on("update", this.followCharacter)
-        EventBus.on("gamestate", (state: GameState) => {
-            if (state === "idle") {
-                this.cleanup()
-            }
-        })
+        EventBus.on("gamestate", this.handleGameStateChange)
 
         this.once("animationcomplete", () => {
             this.onAnimationComplete()
         })
+    }
+
+    handleGameStateChange(state: GameState) {
+        if (state === "idle") {
+            this?.cleanup()
+        }
     }
 
     onAnimationComplete() {
@@ -77,7 +79,7 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     cleanup() {
         if (this.scene) {
             this.scene.events.off("update", this.followCharacter)
-            EventBus.off("changestate")
+            EventBus.off("gamestate", this.handleGameStateChange)
         }
         this.destroy()
     }
@@ -96,10 +98,15 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
                 ease: "Sine.easeInOut",
             })
 
-            this.scene.events.on("update", () => {
+            const handleUpdate = () => {
                 if (this.active && this.light) {
                     this.light.setPosition(this.x, this.y)
                 }
+            }
+            this.scene.events.on("update", handleUpdate)
+            this.once("destroy", () => {
+                this.scene.events.off("update", handleUpdate)
+                this.light = undefined
             })
         }
     }

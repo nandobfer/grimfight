@@ -765,6 +765,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
 
         EventBus.on("floor-change", removePool)
+        this.once("destroy", () => EventBus.off("floor-change", removePool))
     }
 
     gainMana(manaGained: number) {

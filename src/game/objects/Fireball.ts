@@ -52,10 +52,15 @@ export class Fireball extends Projectile {
                 ease: "Sine.easeInOut",
             })
 
-            this.scene.events.on("update", () => {
+            const handleUpdate = () => {
                 if (this.active && this.light) {
                     this.light.setPosition(this.x, this.y)
                 }
+            }
+            this.scene.events.on("update", handleUpdate)
+            this.once("destroy", () => {
+                this.scene.events.off("update", handleUpdate)
+                this.light = undefined
             })
         }
     }
