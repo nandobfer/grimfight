@@ -682,7 +682,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    takeDamage(damage: number, attacker: Creature, type: DamageType, crit = false) {
+    takeDamage(damage: number, attacker: Creature, type: DamageType, crit = false, emit = true) {
         const incomingDamage = damage - this.armor
         const resistanceMultiplier = 1 - this.resistance / 100
         const finalDamage = Math.max(0, incomingDamage * resistanceMultiplier)
@@ -703,6 +703,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         if (attacker?.lifesteal > 0 && finalDamage > 0) {
             attacker.heal(finalDamage * (attacker.lifesteal / 100), crit, false)
+        }
+
+        if (emit) {
+            attacker.emit("dealt-damage", this, finalDamage)
         }
 
         if (this.health <= 0) {

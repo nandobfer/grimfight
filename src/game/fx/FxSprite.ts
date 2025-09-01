@@ -49,7 +49,7 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
 
     handleGameStateChange(state: GameState) {
         if (state === "idle") {
-            this?.cleanup()
+            this?.cleanup?.()
         }
     }
 

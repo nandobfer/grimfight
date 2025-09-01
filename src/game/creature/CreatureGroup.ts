@@ -79,7 +79,7 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
     }
 
     isWiped() {
-        const creatures = this.getChildren()
+        const creatures = this.getChildren(true, true)
         return creatures.every((creature) => creature.health <= 0)
     }
 

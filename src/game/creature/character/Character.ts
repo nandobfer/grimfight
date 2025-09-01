@@ -260,6 +260,8 @@ export class Character extends Creature {
         super.die()
         this.levelBadge.fadeOut()
         this.emitSelf()
+
+        this.emit("died")
     }
 
     override destroyUi(): void {
