@@ -27,7 +27,7 @@ export class Monster extends Creature {
         this.baseMaxHealth *= mult
         this.health = this.baseMaxHealth
         this.baseAttackDamage *= mult
-        // this.baseResistance += mult * 0.05
+        this.baseResistance += 40
         this.challengeRating = this.calculateCR()
         this.baseAttackSpeed = this.baseAttackSpeed * 0.75
     }
@@ -41,12 +41,8 @@ export class Monster extends Creature {
         const mult = Math.max(1, targetCR / base)
         this.scaleStats(mult)
         this.scaleSize(mult)
-        this.boss = true
-        // optional: glow/aura
-        // const glow = this.postFX.addGlow(0xffd54f, 8, 0)
-        // glow.outerStrength = 4
+        this.boss = true 
 
-        // Add dark, smoky boss effects
         this.addDarkAura()
     }
 
