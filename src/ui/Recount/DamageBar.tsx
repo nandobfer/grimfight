@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { Box, LinearProgress } from "@mui/material"
+import { LinearProgress } from "@mui/material"
 import { MeterType } from "../../game/tools/DamageChart"
 
 interface DamageBarProps {
@@ -14,7 +14,7 @@ export const DamageBar: React.FC<DamageBarProps> = (props) => {
     return (
         <LinearProgress
             variant="determinate"
-            sx={{ width: value }}
+            sx={{ width: value, transition: "0.3s" }}
             value={100}
             color={props.type === "magical" ? "info" : props.type === "physical" ? "error" : "secondary"}
         />

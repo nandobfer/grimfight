@@ -1,34 +1,41 @@
-import React, { useEffect, useMemo, useState } from "react"
-import { Box, Paper } from "@mui/material"
+import React, { useEffect, useMemo, useRef, useState } from "react"
+import { Paper } from "@mui/material"
 import { DamageMeter } from "../../game/tools/DamageChart"
 import { EventBus } from "../../game/tools/EventBus"
 import { MeterComponent } from "./MeterComponent"
 
-interface RecountProps {}
+const makeSnap = (meters: DamageMeter[]): DamageMeter[] =>
+    meters.map((m) => ({ character: m.character, magical: m.magical, physical: m.physical, total: m.total, true: m.true }))
 
-export const Recount: React.FC<RecountProps> = (props) => {
-    const [damageChart, setDamageChart] = useState<DamageMeter[]>([])
+export const Recount: React.FC = () => {
+    // const metersRef = useRef<DamageMeter[]>([])
+    const [snap, setSnap] = useState<DamageMeter[]>([])
 
-    const highestDamage = useMemo(() => damageChart.reduce((highest, meter) => (highest >= meter.total ? highest : meter.total), 0), [damageChart])
+    // useEffect(() => {
+    //     const id = setInterval(() => setSnap(makeSnap(metersRef.current)), 500)
+    //     return () => clearInterval(id)
+    // }, [])
 
     useEffect(() => {
         const handler = (damages: DamageMeter[]) => {
-            setDamageChart([...damages])
+            setSnap(makeSnap(damages))
         }
         EventBus.on("damage-chart", handler)
         EventBus.emit("request-damage-chart")
-
         return () => {
             EventBus.off("damage-chart", handler)
         }
     }, [])
 
+    const highestDamage = useMemo(() => snap.reduce((h, m) => (m.total > h ? m.total : h), 0), [snap])
+
     return (
-        <Paper sx={{ flexDirection: "column", bgcolor: "#ffffff05", padding: 1, gap: 1, width: 150 }} elevation={1}>
-            {damageChart
+        <Paper sx={{ display: "flex", flexDirection: "column", bgcolor: "#ffffff05", p: 1, gap: 1, width: 150 }} elevation={1}>
+            {snap
+                .slice()
                 .sort((a, b) => b.total - a.total)
-                .map((meter) => (
-                    <MeterComponent highest_damage={highestDamage} meter={meter} key={meter.character.id} />
+                .map((m) => (
+                    <MeterComponent key={m.character.id} highest_damage={highestDamage} meter={m} />
                 ))}
         </Paper>
     )

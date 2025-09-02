@@ -32,9 +32,8 @@ export class DamageChart {
     plotDamage(character: Creature, damageDealt: number, damageType: DamageType) {
         const meter = this.damageMeter.get(character.id) || { character, magical: 0, physical: 0, true: 0, total: 0 }
         const meterType: MeterType = damageType === "true" ? "true" : damageType === "normal" ? "physical" : "magical"
-        const currentDamage = meter[meterType]
-        meter[meterType] += damageDealt + currentDamage
-        meter.total += meter[meterType]
+        meter[meterType] += damageDealt
+        meter.total = meter.magical + meter.physical + meter.true
 
         this.damageMeter.set(character.id, meter)
         this.updateMeterArray()
