@@ -32,15 +32,15 @@ export class Arthas extends Character {
 
     override getAbilityDescription(): string {
         return `Passivo: Rouba [primary.main:10%] de todo dano causado.
-1º lançamento: Atinge o alvo atual com um golpe gélido causando [error.main:${
+1º lançamento: Atinge o alvo atual com um golpe gélido causando [error.main:${Math.round(
             this.attackDamage * 2 + this.abilityPower
-        } (200% AD)] [info.main: (100% AP)] de dano.
-2º lançamento: Golpeia a área a sua frente causando [error.main:${
+        )} (200% AD)] [info.main: (100% AP)] de dano.
+2º lançamento: Golpeia a área a sua frente causando [error.main:${Math.round(
             this.attackDamage + this.abilityPower
-        } (100% AD)] [info.main: (100% AP)] de dano aos inimigos atingidos.
-3º lançamento: Invoca pilares de gelo embaixo de até 3 inimigos, causando [error.main:${
+        )} (100% AD)] [info.main: (100% AP)] de dano aos inimigos atingidos.
+3º lançamento: Invoca pilares de gelo embaixo de até 3 inimigos, causando [error.main:${Math.round(
             this.attackDamage * 0.75 + this.abilityPower
-        } (75% AD)] [info.main: (100% AP)] de dano a cada um.`
+        )} (75% AD)] [info.main: (100% AP)] de dano a cada um.`
     }
 
     addLightEffect(lightParams: LightParams) {
@@ -65,7 +65,7 @@ export class Arthas extends Character {
             this.scene.events.on("update", handleUpdate)
             this.once("destroy", () => {
                 this.scene.events.off("update", handleUpdate)
-                this.light = undefined
+                if (this.light) this.scene.lights?.removeLight(this.light)
             })
         }
     }

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { Box, useMediaQuery } from "@mui/material"
+import { Box } from "@mui/material"
 import { Game } from "../../game/scenes/Game"
 import { CharacterDto } from "../../game/creature/character/Character"
 import { EventBus } from "../../game/tools/EventBus"
@@ -10,8 +10,6 @@ interface BenchListProps {
 }
 
 export const BenchList: React.FC<BenchListProps> = (props) => {
-    const isMobile = useMediaQuery("(orientation: portrait)")
-
     const [characters, setCharacters] = useState<CharacterDto[]>(props.game.playerTeam.bench.characters)
     const availableSlots = useMemo(() => props.game.max_bench_size - characters.length, [characters.length])
 

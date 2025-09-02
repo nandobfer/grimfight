@@ -17,7 +17,7 @@ export class Helyna extends Character {
     baseMaxMana = 120
     baseAbilityPower = 20
     baseAttackRange = 3
-    baseArmor = 3
+    baseArmor = 4
     baseMaxHealth: number = 400
 
     abilityName = "Druidismo"
@@ -47,19 +47,17 @@ export class Helyna extends Character {
             this.abilityPower * 0.15
         )}] [info.main:(15% AP)] armadura, [success.main: ${Math.round(
             this.abilityPower * 10
-        )}] [info.main:(1000% AP)] de vida máxima e [error.main: ${Math.round(
-            this.abilityPower * 0.25
-        )}] [info.main: (25% AP)] de ataque. Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [warning.main:${Math.round(
+        )}] [info.main:(1000% AP)] de vida máxima e [error.main: ${Math.round(this.abilityPower * 0.25)}] [info.main: (25% AP)] de ataque. 
+Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [warning.main:${Math.round(
             this.armor
-        )} (5x)] e causando [warning.main:${Math.round(this.armor)} (100% armor)] dano a atacantes.`
+        )} (100% armor)] e causando o dobro desse valor a dano a atacantes.`
 
         const cat = `[primary.main:Gato] (meio): Ganha velocidade, [error.main:${Math.round(
             this.abilityPower
         )}] [info.main:(100% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${Math.round(
             this.abilityPower / 100
-        )}] [info.main:(1% AP)] chance de crítico. Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(
-            this.attackDamage * 3
-        )} (300% AD)] de dano.`
+        )}] [info.main:(1% AP)] chance de crítico. 
+Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(this.attackDamage * 3)} (300% AD)] de dano.`
 
         const human = `[primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${Math.round(
             this.abilityPower * humanMultiplier
@@ -162,7 +160,7 @@ ${human}`
         this.scene.tweens.add({
             targets: this,
             duration: 50,
-            armor: this.armor * 5,
+            armor: this.armor * 2,
             yoyo: true,
             hold: duration,
             repeat: 0,
@@ -184,6 +182,7 @@ ${human}`
         this.setScale(this.bonusScale * 1.5)
         this.attackDamage = this.bonusAD + this.abilityPower * 0.25
         this.armor = this.bonusArmor + this.abilityPower * 0.15
+        this.manaPerHit = 5
     }
 
     makeCat() {
@@ -196,7 +195,7 @@ ${human}`
     }
 
     dealThornsDamage(target: Creature) {
-        const { value, crit } = this.calculateDamage(this.armor)
+        const { value, crit } = this.calculateDamage(this.armor * 2)
         target.takeDamage(value, this, "poison", crit)
     }
 
@@ -231,6 +230,8 @@ ${human}`
         this.bonusScale = this.scale
         this.bonusAttackRange = this.attackRange
         this.thornsArmor = false
+
+        this.mana = this.maxMana * 0.35
     }
 
     override update(time: number, delta: number): void {

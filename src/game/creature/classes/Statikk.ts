@@ -3,6 +3,7 @@ import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
 export class Statikk extends Character {
+    baseMaxHealth: number = 400
     baseAttackSpeed = 1.2
     baseSpeed = 80
     baseAttackDamage = 20

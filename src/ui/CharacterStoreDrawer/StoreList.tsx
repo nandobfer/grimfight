@@ -15,12 +15,14 @@ export const StoreList: React.FC<StoreListProps> = (props) => {
 
     useEffect(() => {
         const handler = (items: StoreItem[]) => {
+            console.log("bateu aqui")
             setCharacters([...items])
         }
 
         EventBus.on("character-store", handler)
 
         return () => {
+            console.log("desmontou")
             EventBus.off("character-store", handler)
         }
     }, [])

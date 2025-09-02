@@ -2,7 +2,7 @@ import { Character } from "../../creature/character/Character"
 import { Game } from "../../scenes/Game"
 import { Trait } from "./Trait"
 
-type TraitBoosts = "hpMultiplier" | 'statsMultiplier'
+type TraitBoosts = "hpMultiplier" | "statsMultiplier"
 
 export class DeathEaterTrait extends Trait {
     name = "Deatheater"
@@ -27,16 +27,16 @@ export class DeathEaterTrait extends Trait {
 
         const diedHandler = () => {
             if (this.dead.has(character)) return
-
             this.dead.add(character)
+            console.log({ deads: this.dead })
             const deadX = character.x
             const deadY = character.y
             this.spawnRessurrectionFx(character.scene, deadX, deadY)
             character.scene?.time.delayedCall(1000, () => {
                 if (character.scene.state === "fighting") {
                     this.spawnRessurrectionFx(character.scene, deadX, deadY)
-                    character.reset()
-                    character.health = character.maxHealth * values.hpMultiplier
+                    character.health = 0
+                    character.revive(character.maxHealth * values.hpMultiplier)
                     character.attackDamage *= 1 + values.statsMultiplier
                     character.abilityPower *= 1 + values.statsMultiplier
                     character.teleportTo(deadX, deadY)

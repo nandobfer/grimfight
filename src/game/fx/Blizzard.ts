@@ -57,36 +57,64 @@ export class Blizzard extends FxSprite {
         if (remaining > 0 && target?.active) {
             remaining -= 1
             const { value: damage, crit } = this.caster.calculateDamage(this.baseDamage)
-            console.log(`dealing ${damage} to ${target.name}`)
             target.takeDamage(damage, this.caster, "cold", crit)
             this.target?.scene?.time.delayedCall(this.duration / this.damageInstances, () => this.dealDamage(target, remaining))
+        }
+
+        if (remaining === 0) {
+            this.unfreeze(target)
+        }
+    }
+
+    unfreeze(target: Creature) {
+        if (target) {
+            target.moveLocked = false
+            target.attackLocked = false
+            target.emit("unfrozen")
+            
+        }
+        if (this.caster) {
+            this.caster.manaLocked = false
         }
     }
 
     freeze(target: Creature) {
         // spawn ice
+        const cleanup = () => {
+            iceBlock?.destroy(true)
+
+            if (this.caster) {
+                this.caster.manaLocked = false
+            }
+        }
 
         const iceBlock = new Frozen(target)
+        target.once("unfrozen", cleanup)
+        target.once("destroy", cleanup)
+        target.once("die", cleanup)
 
-        target.scene.tweens.add({
-            targets: target,
-            duration: Phaser.Math.FloatBetween(this.duration * 0.25, this.duration * 0.75),
-            attackSpeed: 0,
-            speed: 0,
-            repeat: 0,
-            manaPerSecond: 0,
-            yoyo: true,
-            onUpdate: () => {
-                target?.anims?.stop()
-                target.attacking = false
-            },
-            onComplete: () => {
-                target.attacking = false
-                iceBlock.destroy()
-                if (this.caster) {
-                    this.caster.manaLocked = false
-                }
-            },
-        })
+        target.setVelocity(0)
+        target.moveLocked = true
+        target.attackLocked = true
+        // target.scene.tweens.add({
+        //     targets: target,
+        //     duration: Phaser.Math.FloatBetween(this.duration * 0.25, this.duration * 0.75),
+        //     attackSpeed: 0,
+        //     speed: 0,
+        //     repeat: 0,
+        //     manaPerSecond: 0,
+        //     yoyo: true,
+        //     onUpdate: () => {
+        //         target?.anims?.stop()
+        //         target.attacking = false
+        //     },
+        //     onComplete: () => {
+        //         target.attacking = false
+        //         iceBlock.destroy()
+        //         if (this.caster) {
+        //             this.caster.manaLocked = false
+        //         }
+        //     },
+        // })
     }
 }

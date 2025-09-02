@@ -40,21 +40,15 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         this.setPipeline("Light2D")
 
         this.scene.events.on("update", this.followCharacter)
-        EventBus.on("gamestate", this.handleGameStateChange)
+        EventBus.on("gamestate", (state: GameState) => {
+            if (state === "idle") {
+                this.cleanup()
+            }
+        })
 
         this.once("animationcomplete", () => {
             this.onAnimationComplete()
         })
-    }
-
-    handleGameStateChange(state: GameState) {
-        if (state === "idle") {
-            if (this.scene) {
-                this.scene.events.off("update", this.followCharacter)
-                EventBus.off("gamestate", this.handleGameStateChange)
-            }
-            this.destroy()
-        }
     }
 
     onAnimationComplete() {
@@ -83,7 +77,7 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     cleanup() {
         if (this.scene) {
             this.scene.events.off("update", this.followCharacter)
-            EventBus.off("gamestate", this.handleGameStateChange)
+            EventBus.off("changestate")
         }
         this.destroy()
     }

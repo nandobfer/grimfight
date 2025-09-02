@@ -38,6 +38,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     baseMaxMana = 100
     baseManaPerSecond = 10
     baseManaPerAttack = 10
+    baseManaPerHit = 2
     baseArmor = 0
     /** incremental, base + x + y */
     baseResistance = 0
@@ -65,8 +66,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     critDamageMultiplier = 0
     /** incremental, base + x + y */
     lifesteal = 0
+    manaPerHit = 0
 
     manaLocked = false
+    attackLocked = false
+    moveLocked = false
 
     boardX = 0
     boardY = 0
@@ -125,6 +129,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.target = undefined
     }
 
+    
+
     applyAugments() {
         const team = this.master?.team || this.team
         team?.augments?.forEach((augment) => augment.applyModifier(this))
@@ -148,6 +154,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.critChance = this.baseCritChance
         this.critDamageMultiplier = this.baseCritDamageMultiplier
         this.lifesteal = this.baseLifesteal
+        this.manaPerHit = this.baseManaPerHit
         this.calculateSpeeds()
     }
 
@@ -413,6 +420,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             return
         }
 
+        if (this.moveLocked) return
+
         const angle = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y)
 
         // Set velocity based on direction
@@ -476,7 +485,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     // - Chooses the side (left/right) with more clearance (shorter, safer detour)
     // - Small separation so units don’t stick together
     avoidOtherCharacters() {
-        if (!this.target) return
+        if (!this.target || this.moveLocked) return
 
         // ---------------- tuneables ----------------
         const FRONT_PROBE = 56 // how far ahead to check for direct path (px)
@@ -624,7 +633,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     startAttack() {
-        if (this.attacking || this.casting || !this.target?.active) {
+        if (this.attacking || this.casting || !this.target?.active || this.attackLocked) {
             return
         }
 
@@ -666,6 +675,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         const { value: damage, crit: isCrit } = this.calculateDamage(this.attackDamage)
 
+        victim.gainMana(victim.manaPerHit)
         victim.takeDamage(damage, this, damagetype, isCrit)
         this.gainMana(this.manaPerAttack)
 
@@ -705,19 +715,29 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             attacker.heal(finalDamage * (attacker.lifesteal / 100), crit, false)
         }
 
-        if (emit) {
-            attacker.emit("dealt-damage", this, finalDamage)
-        }
-
         if (this.health <= 0) {
             this.die()
             attacker.emit("kill", this)
             return
         }
+
+        if (emit) {
+            attacker.emit("dealt-damage", this, finalDamage)
+        }
     }
 
     onNormalHit() {
         burstBlood(this.scene, this.x, this.y)
+    }
+
+    revive(heal?: number) {
+        this.active = true
+        this.updateDepth()
+        this.setRotation(0)
+        this.resetUi()
+
+        if (heal) this.heal(heal, false, false)
+
     }
 
     die() {
@@ -827,7 +847,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             this.stopMoving()
             this.startAttack()
         } else {
-            if (!this.attacking) {
+            if (!this.attacking && !this.moveLocked) {
                 this.moveToTarget()
                 this.avoidOtherCharacters()
             }

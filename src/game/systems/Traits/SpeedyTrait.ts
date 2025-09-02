@@ -8,8 +8,8 @@ export class SpeedyTrait extends Trait {
     name = "Ligeiro"
     description = "ligeiros ganham {0} velocidade de ataque ao acertar, até um máximo de {1}."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { attackSpeedMultiplier: 0.01, maxStacks: 100, descriptionParams: ["1%", "100%"] }],
-        [3, { attackSpeedMultiplier: 0.02, maxStacks: 200, descriptionParams: ["2%", "200%"] }],
+        [2, { attackSpeedMultiplier: 0.02, maxStacks: 100, descriptionParams: ["2%", "100%"] }],
+        [3, { attackSpeedMultiplier: 0.04, maxStacks: 200, descriptionParams: ["4%", "200%"] }],
     ])
 
     private baseline = new WeakMap<Character, number>()

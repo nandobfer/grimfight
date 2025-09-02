@@ -30,6 +30,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
     }
 
     const openStore = () => {
+        console.log("abrindo a loja")
         setOpen(true)
     }
 
@@ -50,6 +51,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
         EventBus.on("toggle-store", toggleStore)
 
         return () => {
+            console.log("desmontou o drawer")
             EventBus.off("gamestate", handler)
             EventBus.off("open-store", openStore)
             EventBus.off("toggle-store", toggleStore)
