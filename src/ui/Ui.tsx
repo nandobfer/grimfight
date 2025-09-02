@@ -13,6 +13,7 @@ import { GameState } from "../game/scenes/Game"
 import { CharacterDrawer } from "./CharacterSheet/CharacerDrawer"
 import { EnemiesAugments } from "./AugmentModal/EnemiesAugments"
 import { Traits } from "./Traits/Traits"
+import { GameMenu } from "./GameMenu/GameMenu"
 
 interface UiProps {}
 
@@ -77,6 +78,8 @@ export const Ui: React.FC<UiProps> = (props) => {
                                 <GameStateButtons game={game} />
                             </Box>
                         </Box>
+
+                        <GameMenu game={game} />
                     </>
                 )}
             </Box>
