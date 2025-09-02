@@ -695,15 +695,15 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     takeDamage(damage: number, attacker: Creature, type: DamageType, crit = false, emit = true) {
         const incomingDamage = damage - this.armor
         const resistanceMultiplier = 1 - this.resistance / 100
-        const finalDamage = Math.max(0, incomingDamage * resistanceMultiplier)
+        const finalDamage = type === "true" ? damage : Math.max(0, incomingDamage * resistanceMultiplier)
 
         if (finalDamage <= 0) {
             type = "block"
         }
 
         showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit, type })
-        if (attacker.team === this.scene.playerTeam || attacker.team === this.scene.playerTeam.minions) {
-            this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage)
+        if (finalDamage > 0 && (attacker.team === this.scene.playerTeam || attacker.team === this.scene.playerTeam.minions)) {
+            this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage, type)
         }
 
         this.health -= finalDamage

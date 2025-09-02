@@ -1,10 +1,17 @@
 import { Creature } from "../creature/Creature"
 import { CreatureGroup } from "../creature/CreatureGroup"
+import { DamageType } from "../ui/DamageNumbers"
 import { EventBus } from "./EventBus"
+
+export type MeterType = "physical" | "magical" | "true"
 
 export interface DamageMeter {
     character: Creature
-    damage: number
+    // damage: number
+    physical: number
+    magical: number
+    true: number
+    total: number
 }
 
 export class DamageChart {
@@ -22,10 +29,14 @@ export class DamageChart {
         })
     }
 
-    plotDamage(character: Creature, damageDealt: number) {
-        const currentDamage = this.damageMeter.get(character.id)?.damage
-        const damage = damageDealt + (currentDamage || 0)
-        this.damageMeter.set(character.id, { character, damage })
+    plotDamage(character: Creature, damageDealt: number, damageType: DamageType) {
+        const meter = this.damageMeter.get(character.id) || { character, magical: 0, physical: 0, true: 0, total: 0 }
+        const meterType: MeterType = damageType === "true" ? "true" : damageType === "normal" ? "physical" : "magical"
+        const currentDamage = meter[meterType]
+        meter[meterType] += damageDealt + currentDamage
+        meter.total += meter[meterType]
+
+        this.damageMeter.set(character.id, meter)
         this.updateMeterArray()
         this.emitArray()
     }
@@ -42,7 +53,7 @@ export class DamageChart {
         this.damageMeter.clear()
         const characters = this.team.getChildren()
         for (const character of characters) {
-            this.damageMeter.set(character.id, { character, damage: 0 })
+            this.damageMeter.set(character.id, { character, magical: 0, physical: 0, true: 0, total: 0 })
         }
 
         this.updateMeterArray()
