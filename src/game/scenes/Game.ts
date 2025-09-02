@@ -9,7 +9,6 @@ import { generateEncounter } from "../tools/Encounter"
 import { PlayerTeam } from "../creature/character/PlayerTeam"
 import { Character, CharacterDto } from "../creature/character/Character"
 import { DamageType } from "../ui/DamageNumbers"
-import { spawnParrySpark } from "../fx/Parry"
 import { ColdHit } from "../fx/ColdHit"
 import { FireHit } from "../fx/FireHit"
 import { Creature } from "../creature/Creature"
@@ -20,6 +19,7 @@ import { LightningHit } from "../fx/LightningHit"
 import { GoldCoinFx } from "../fx/GoldExplosion"
 import { Shopkeeper } from "../systems/Shopkeeper"
 import { EnemyTeam } from "../creature/monsters/EnemyTeam"
+import { GameRecord } from "../systems/GameRecord"
 
 export type GameState = "fighting" | "idle"
 
@@ -30,6 +30,7 @@ export interface GameProgressDto {
     version?: string
     playerAugments: Augment[]
     enemyAugments: Augment[]
+    record?: GameRecord
 }
 
 export const starting_player_lives = 3
@@ -51,6 +52,7 @@ export class Game extends Scene {
     private fireEffects: Phaser.GameObjects.Group
     goldCoinFx: GoldCoinFx
     shopkeeper: Shopkeeper
+    currentRecord: GameRecord
 
     playerGold = starting_player_gold
     playerLives = starting_player_lives
@@ -402,6 +404,7 @@ export class Game extends Scene {
     }
 
     gameOver() {
+        this.saveRecord()
         this.resetProgress()
         this.clearFloor()
         this.buildFloor()
@@ -411,15 +414,41 @@ export class Game extends Scene {
         EventBus.emit("gameover")
     }
 
+    saveRecord() {
+        const progress = this.getProgress()
+        this.currentRecord = this.getCurrentRecord(progress)
+        this.currentRecord.finishedAt = Date.now()
+
+        const records = this.getSavedGameRecords()
+        records.push(this.currentRecord)
+        try {
+            localStorage.setItem("gamerecords", JSON.stringify(records))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    getSavedGameRecords() {
+        try {
+            const data = localStorage.getItem("gamerecords")
+            if (data) {
+                return JSON.parse(data) as GameRecord[]
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        return []
+    }
+
     resetProgress() {
         this.floor = 1
         this.playerLives = starting_player_lives
         this.playerGold = starting_player_gold
         this.resetAugments()
-        this.saveProgress()
-        this.emitProgress()
         this.savePlayerCharacters([])
         this.loadPlayerCharacters()
+        this.saveProgress()
+        this.emitProgress()
     }
 
     resetAugments() {
@@ -488,7 +517,19 @@ export class Game extends Scene {
             playerAugments: Array.from(this.playerTeam.augments.values()),
             enemyAugments: Array.from(this.enemyTeam.augments.values()),
         }
+        progress.record = this.getCurrentRecord(progress)
         return progress
+    }
+
+    getCurrentRecord(progress: GameProgressDto) {
+        const characters = this.getSavedCharacters()
+        const record: GameRecord = {
+            augments: progress.playerAugments,
+            comp: characters,
+            finishedAt: 0,
+            floor: progress.floor,
+        }
+        return record
     }
 
     loadProgress() {
@@ -500,7 +541,8 @@ export class Game extends Scene {
                 this.floor = progress.floor
                 this.playerGold = progress.playerGold
                 this.playerLives = progress.playerLives
-
+                this.currentRecord = progress.record || this.getCurrentRecord(progress)
+                console.log(this.currentRecord)
                 progress.playerAugments.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 console.log(this.playerTeam.augments)
@@ -523,25 +565,6 @@ export class Game extends Scene {
         this.saveProgress()
     }
 
-    // ! usada naquele modalzinho de selecionar boneco, não está sendo usado mais, mas por motivos de debug, deixei aqui
-    newPlayerCharacter(dto: CharacterDto) {
-        const characters = this.getSavedCharacters()
-
-        // Check if character with this ID already exists
-        const existingIndex = characters.findIndex((c) => c.id === dto.id)
-        if (existingIndex >= 0) {
-            // Update existing character
-            characters[existingIndex] = dto
-        } else {
-            // Add new character
-            characters.push(dto)
-        }
-
-        this.savePlayerCharacters(characters)
-        this.loadPlayerCharacters() // Reload to reflect changes
-    }
-
-    // Add this method to clear all characters
     clearAllCharacters() {
         this.savePlayerCharacters([])
         this.loadPlayerCharacters()

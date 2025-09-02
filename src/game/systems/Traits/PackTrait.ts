@@ -8,8 +8,8 @@ export class PackTrait extends Trait {
     name = "Matilha"
     description = "Inimigos recebem {0} de dano adicional ao serem atacados por um membro da matilha"
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { damageMultiplier: 0.05, descriptionParams: ["5%"] }],
-        [3, { damageMultiplier: 0.1, descriptionParams: ["10%"] }],
+        [2, { damageMultiplier: 0.1, descriptionParams: ["10%"] }],
+        [3, { damageMultiplier: 0.2, descriptionParams: ["20%"] }],
     ])
 
     constructor(comp: string[]) {
@@ -28,8 +28,7 @@ export class PackTrait extends Trait {
 
         const tickDamage = (target: Creature, damage: number) => {
             const extraDamage = damage * values.damageMultiplier
-            target.takeDamage(extraDamage, character, 'true', false, false)
-
+            target.takeDamage(extraDamage, character, "true", false, false)
         }
 
         character.eventHandlers.packTrait = tickDamage
