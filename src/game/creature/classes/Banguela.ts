@@ -12,16 +12,16 @@ export class Banguela extends Character {
     baseAbilityPower: number = 30
     baseAttackDamage: number = 25
 
-    abilityName = "Salva de fogo"
+    abilityName = "Orbes flamejantes"
 
     constructor(scene: Game, id: string) {
         super(scene, "banguela", id)
     }
 
     override getAbilityDescription(): string {
-        return `Lança [info.main:${Math.floor(this.abilityPower / 10)} (10% AP)] bolas de fogo no alvo, cada uma [error.main:${
+        return `Lança [info.main:${Math.floor(this.abilityPower / 10)} (10% AP)] bolas de fogo no alvo, cada uma [error.main:${Math.round(
             this.attackDamage * 1
-        } (100% AD)] de dano.`
+        )} (100% AD)] de dano.`
     }
 
     override getAttackingAnimation(): string {
@@ -51,7 +51,6 @@ export class Banguela extends Character {
             const orb = new FireEffect(this.scene, x, y)
             orb.setScale(0.075)
             orb.setOrigin(0.5, 0.5)
-
 
             this.scene.perRoundFx.add(orb)
             this.scene.tweens.add({ targets: orb, duration: 45, angle: 360, repeat: -1, yoyo: false })
