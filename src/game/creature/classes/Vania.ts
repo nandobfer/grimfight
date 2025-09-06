@@ -23,7 +23,7 @@ export class Vania extends Character {
     override getAbilityDescription(): string {
         return `Cada [primary.main:3º ataque] atira uma seta de prata no inimigo, causando [secondary.main:${Math.round(
             this.attackDamage + this.abilityPower
-        )} (100% AD)][info.main: (100% AP)] de dano verdadeiro.`
+        )}][error.main: (100% AD)][info.main: (100% AP)] de dano verdadeiro.`
     }
 
     override extractAttackingAnimation() {
