@@ -20,8 +20,8 @@ export class Banguela extends Character {
 
     override getAbilityDescription(): string {
         return `Lança [info.main:${Math.floor(this.abilityPower / 10)} (10% AP)] bolas de fogo no alvo, cada uma [error.main:${
-            this.attackDamage * 1.5
-        } (150% AD)] de dano.`
+            this.attackDamage * 1
+        } (100% AD)] de dano.`
     }
 
     override getAttackingAnimation(): string {
@@ -58,7 +58,7 @@ export class Banguela extends Character {
 
             fireball.onHit = (target) => {
                 fireball.destroy(true)
-                const { value, crit } = this.calculateDamage(this.attackDamage*1.5)
+                const { value, crit } = this.calculateDamage(this.attackDamage * 1)
                 target.takeDamage(value, this, "fire", crit)
             }
 
