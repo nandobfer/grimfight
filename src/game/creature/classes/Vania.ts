@@ -10,7 +10,7 @@ export class Vania extends Character {
     baseMaxHealth = 200
 
     baseMaxMana: number = 0
-    baseAbilityPower: number = 30
+    baseAbilityPower: number = 35
     manaLocked: boolean = true
     attacksCount = 0
 
@@ -66,7 +66,6 @@ export class Vania extends Character {
             target.takeDamage(value, this, "true", crit)
             arrow.destroy()
         }
-        
 
         const handleUpdate = () => {
             if (arrow.active && arrow.light) {

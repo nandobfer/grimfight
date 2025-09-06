@@ -5,7 +5,7 @@ export class AttackerAugment extends Augment {
     constructor() {
         const name = "attacker"
         super(name)
-        this.values.boost = Phaser.Math.FloatBetween(0.01, 0.1)
+        this.values.boost = Phaser.Math.FloatBetween(0.05, 0.1)
         this.descriptionValues = { boost: { value: Math.round(this.values.boost * 100), color: "error.main" } }
         this.description = `increases attack damage by [boost:${this.descriptionValues.boost.value}%]`
         this.color = "error"
