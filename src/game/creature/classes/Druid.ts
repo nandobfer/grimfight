@@ -90,21 +90,21 @@ ${human}`
         arrow.fire(this.target)
     }
 
-    override castAbility(): void {
+    override castAbility(multiplier?: number): void {
         this.casting = true
 
         switch (this.druidForm) {
             case "bear":
-                this.castBearAbility()
+                this.castBearAbility(multiplier)
                 break
             case "cat":
-                this.castCatAbility()
+                this.castCatAbility(multiplier)
                 break
             case "human":
                 const placement = this.getPlacement()
                 if (placement === "back") {
                     // human normal cast
-                    this.castHumanAbility()
+                    this.castHumanAbility(multiplier)
                 } else {
                     this.shapeshift(placement === "front" ? "bear" : "cat")
                 }
@@ -127,15 +127,15 @@ ${human}`
         this.landAttack = super.landAttack
     }
 
-    castHumanAbility() {
+    castHumanAbility(multiplier = 1) {
         const target = this.team.getLowestHealth()
         if (target) {
-            const { value, crit } = this.calculateDamage(this.abilityPower * humanMultiplier)
+            const { value, crit } = this.calculateDamage(this.abilityPower * humanMultiplier * multiplier)
             target.heal(value, crit)
         }
     }
 
-    castCatAbility() {
+    castCatAbility(multiplier = 1) {
         if (!this.target) return
 
         // todo animation
@@ -144,14 +144,14 @@ ${human}`
             damageType: "poison",
             duration: 2000,
             target: this.target,
-            tickDamage: this.attackDamage * 3,
+            tickDamage: this.attackDamage * 3 * multiplier,
             tickRate: 900,
             user: this,
         })
         this.target.applyStatusEffect(bleeding)
     }
 
-    castBearAbility() {
+    castBearAbility(multiplier = 1) {
         const duration = 5000
         this.manaLocked = true
         this.thornsArmor = true
@@ -160,7 +160,7 @@ ${human}`
         this.scene.tweens.add({
             targets: this,
             duration: 50,
-            armor: this.armor * 2,
+            armor: this.armor * 2 * multiplier,
             yoyo: true,
             hold: duration,
             repeat: 0,
@@ -169,8 +169,13 @@ ${human}`
                 this.thornsArmor = false
                 this.thornsFx?.destroy(true)
                 this.thornsFx = undefined
+                this.calcBearArmor()
             },
         })
+    }
+
+    calcBearArmor() {
+        this.armor = this.bonusArmor + this.abilityPower * 0.15
     }
 
     makeBear() {
@@ -181,7 +186,7 @@ ${human}`
         this.health = this.maxHealth * healthRate
         this.setScale(this.bonusScale * 1.5)
         this.attackDamage = this.bonusAD + this.abilityPower * 0.25
-        this.armor = this.bonusArmor + this.abilityPower * 0.15
+        this.calcBearArmor()
         this.manaPerHit = 5
     }
 
@@ -195,7 +200,7 @@ ${human}`
     }
 
     dealThornsDamage(target: Creature) {
-        const { value, crit } = this.calculateDamage(this.armor * 2)
+        const { value, crit } = this.calculateDamage(this.armor * 1.5)
         target.takeDamage(value, this, "poison", crit)
     }
 
