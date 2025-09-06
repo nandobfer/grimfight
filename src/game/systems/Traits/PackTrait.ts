@@ -10,6 +10,7 @@ export class PackTrait extends Trait {
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { damageMultiplier: 0.1, descriptionParams: ["10%"] }],
         [3, { damageMultiplier: 0.2, descriptionParams: ["20%"] }],
+        [4, { damageMultiplier: 0.3, descriptionParams: ["30%"] }],
     ])
 
     constructor(comp: string[]) {

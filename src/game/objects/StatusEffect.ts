@@ -26,15 +26,14 @@ export class StatusEffect {
         this.timeSinceLastTick += delta
         this.totalTimePassed += delta
 
+        if (this.timeSinceLastTick >= this.tickRate) {
+            this.tick()
+            this.timeSinceLastTick = 0
+        }
 
         if (this.totalTimePassed >= this.duration) {
             this.expire()
             return
-        }
-
-        if (this.timeSinceLastTick >= this.tickRate) {
-            this.tick()
-            this.timeSinceLastTick = 0
         }
     }
 

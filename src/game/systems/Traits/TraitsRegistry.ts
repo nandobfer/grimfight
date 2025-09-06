@@ -4,6 +4,7 @@ import { AttackerTrait } from "./AttackerTrait"
 import { ColossusTrait } from "./ColossusTrait"
 import { DeathEaterTrait } from "./DeathEaterTrait"
 import { DruidTrait } from "./DruidTrait"
+import { IncendiaryTrait } from "./IncendiaryTrait"
 import { PackTrait } from "./PackTrait"
 import { SorcererTrait } from "./SorcererTrait"
 import { SpeedyTrait } from "./SpeedyTrait"
@@ -70,5 +71,6 @@ TraitsRegistry.register("Ligeiro", SpeedyTrait, ["lizwan", "statikk", "vania"])
 TraitsRegistry.register("Assassino", AssassinTrait, ["lizwan", "mordred"])
 TraitsRegistry.register("Feiticeiro", SorcererTrait, ["megumin", "jadis", "zairon", "helyna"])
 TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas"])
-TraitsRegistry.register("Matilha", PackTrait, ["lizwan", "helyna", "laherce"])
+TraitsRegistry.register("Matilha", PackTrait, ["lizwan", "helyna", "laherce", "banguela"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna"])
+TraitsRegistry.register("Incendiário", IncendiaryTrait, ["banguela", "megumin"])
