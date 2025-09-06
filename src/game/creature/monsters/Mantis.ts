@@ -15,7 +15,7 @@ export class Mantis extends RagnarokMonster {
 
     constructor(scene: Game) {
         super(scene, "mantis")
-        this.preferredPosition = "front"
+        this.preferredPosition = "middle"
         this.challengeRating = this.calculateCR()
 
         this.setSize(this.width / 2, this.height / 2)

@@ -9,5 +9,6 @@ export class Arrow extends Projectile {
         this.setScale(0.05, 0.05)
         this.resetPipeline()
         this.setTint(0xffffff)
+        this.setOrigin(0, 0.5)
     }
 }

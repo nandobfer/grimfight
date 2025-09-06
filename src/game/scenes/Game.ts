@@ -62,6 +62,8 @@ export class Game extends Scene {
     private uiGhost?: Character
     private dragFromBoard = new Map<string, Character>()
 
+    perRoundFx: Phaser.GameObjects.Group
+
     constructor() {
         super("Game")
     }
@@ -72,6 +74,7 @@ export class Game extends Scene {
         this.camera = this.cameras.main
 
         this.createBackground()
+        this.perRoundFx = this.add.group()
         this.grid = new Grid(this, this.background)
         this.goldCoinFx = new GoldCoinFx(this)
         this.playerTeam = new PlayerTeam(this, true)
@@ -330,6 +333,7 @@ export class Game extends Scene {
 
     clearFloor() {
         this.enemyTeam.clear(true, true)
+        this.perRoundFx.clear(true, true)
     }
 
     buildFloor() {

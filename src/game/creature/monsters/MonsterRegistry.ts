@@ -8,6 +8,8 @@ import { StatsLike } from "../../tools/ChallengeRating"
 import { ArmoredSkeleton } from "./ArmoredSkeleton"
 import { EvilFanatic } from "./EvilFanatic"
 import { Mantis } from "./Mantis"
+import { IceDemonic } from "./IceDemonic"
+import { ArcherSkeleton } from "./ArcherSkeleton"
 // import { Ifrit } from "./Ifrit"
 
 const CR_1_MONSTER: Record<string, StatsLike> = {
@@ -53,7 +55,9 @@ export class MonsterRegistry {
 MonsterRegistry.register("skeleton", Skeleton)
 MonsterRegistry.register("zombie", Zombie)
 MonsterRegistry.register("demonic", Demonic)
+MonsterRegistry.register("ice_demonic", IceDemonic)
 MonsterRegistry.register("armored_skeleton", ArmoredSkeleton)
+MonsterRegistry.register("archer_skeleton", ArcherSkeleton)
 MonsterRegistry.register("evil_fanatic", EvilFanatic)
 // MonsterRegistry.register("ifrit", Ifrit)
 MonsterRegistry.register("mantis", Mantis)

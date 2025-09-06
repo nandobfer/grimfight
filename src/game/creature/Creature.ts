@@ -129,8 +129,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.target = undefined
     }
 
-    
-
     applyAugments() {
         const team = this.master?.team || this.team
         team?.augments?.forEach((augment) => augment.applyModifier(this))
@@ -737,7 +735,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.resetUi()
 
         if (heal) this.heal(heal, false, false)
-
     }
 
     die() {
@@ -765,8 +762,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     onDieFx() {
         const poolSize = Phaser.Math.FloatBetween(0.3, 0.8)
 
-        const bloodPool = this.scene.add
-            .image(this.x, this.y + 10, "blood")
+        const bloodPool = new Phaser.GameObjects.Image(this.scene, this.x, this.y + 10, "blood")
+        this.scene.perRoundFx.add(bloodPool, true)
+
+        bloodPool
             .setDepth(this.depth - 1)
             .setScale(poolSize)
             .setAlpha(0)
@@ -780,16 +779,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             duration: Phaser.Math.FloatBetween(500, 1000),
             ease: "Sine.easeIn",
         })
-
-        const removePool = (floor: number) => {
-            if (bloodPool.state !== floor) {
-                bloodPool.destroy(true)
-                EventBus.off("gameover", removePool)
-            }
-        }
-
-        EventBus.on("floor-change", removePool)
-        this.once("destroy", () => EventBus.off("floor-change", removePool))
     }
 
     gainMana(manaGained: number) {

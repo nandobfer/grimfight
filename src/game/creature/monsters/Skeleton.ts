@@ -10,7 +10,7 @@ export class Skeleton extends Monster {
 
     constructor(scene: Game, texture?: string) {
         super(scene, texture || "skeleton")
-        this.preferredPosition = "middle"
+        this.preferredPosition = "front"
         this.challengeRating = this.calculateCR()
     }
 

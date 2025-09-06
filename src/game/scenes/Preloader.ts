@@ -2,7 +2,7 @@ import { Scene } from "phaser"
 import { EventBus } from "../tools/EventBus"
 import { CharacterRegistry } from "../creature/CharacterRegistry"
 
-const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic"]
+const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic", "skeleton_archer"]
 
 export class Preloader extends Scene {
     constructor() {

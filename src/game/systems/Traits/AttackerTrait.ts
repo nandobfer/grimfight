@@ -9,6 +9,7 @@ export class AttackerTrait extends Trait {
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { attackDamageMultiplier: 0.2, lifesteal: 10, descriptionParams: ["20%", "10%"] }],
         [4, { attackDamageMultiplier: 0.4, lifesteal: 20, descriptionParams: ["40%", "20%"] }],
+        [6, { attackDamageMultiplier: 0.8, lifesteal: 30, descriptionParams: ["80%", "30%"] }],
     ])
 
     constructor(comp: string[]) {
