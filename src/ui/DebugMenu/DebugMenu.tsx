@@ -14,16 +14,8 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
     const game = props.game
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 
-    const clearSavedChars = () => {
-        game.clearAllCharacters()
-    }
-
-    const addChar = () => {
-        game.generateFirstCharacter()
-    }
-
     const resetGame = () => {
-        game.gameOver()
+        game.gameOver(false)
         closeMenu()
     }
 
@@ -40,7 +32,6 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
 
                 <Popper open={!!anchorEl} anchorEl={anchorEl} placement="auto">
                     <Paper sx={{ flexDirection: "column", gap: 1, padding: 1, width: 300 }}>
-                        {/* <Button onClick={clearSavedChars}>clear characters</Button> */}
                         <Button onClick={resetGame} color="error" variant="outlined">
                             reset game
                         </Button>

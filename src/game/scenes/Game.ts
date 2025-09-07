@@ -414,8 +414,11 @@ export class Game extends Scene {
         return false
     }
 
-    gameOver() {
-        this.saveRecord()
+    gameOver(saveRecord = true) {
+        if (saveRecord) {
+            this.saveRecord()
+        }
+
         this.resetProgress()
         this.clearFloor()
         this.buildFloor()
