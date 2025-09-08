@@ -2,12 +2,12 @@
 import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 import { ProgressBar } from "../ui/ProgressBar"
-import { EventBus } from "../tools/EventBus"
 import { DamageType, showDamageText } from "../ui/DamageNumbers"
 import { CreatureGroup } from "./CreatureGroup"
 import { Heal } from "../fx/Heal"
 import { burstBlood } from "../fx/Blood"
 import { StatusEffect } from "../objects/StatusEffect"
+import { Item } from "../systems/Items/Item"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -24,6 +24,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     minDamageMultiplier = 0.8
     maxDamageMultiplier = 1.2
     statusEffects = new Set<StatusEffect>()
+    items = new Set<Item>()
     master?: Creature
 
     level = 1
@@ -129,6 +130,17 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.updateDepth()
 
         this.target = undefined
+    }
+
+    refreshStats() {
+        this.reset()
+
+        this.applyItems()
+        this.applyAugments()
+    }
+
+    applyItems() {
+        this.items.forEach((item) => item.applyModifier(this))
     }
 
     applyAugments() {
@@ -804,6 +816,29 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.gainMana(manaGained)
     }
 
+    equipItem(item: Item) {
+        if (this.items.size === 3) return
+
+        if (item.user) {
+            item.user.unequipItem(item)
+        }
+
+        this.items.add(item)
+        item.user = this
+        this.refreshStats()
+        // Debug: log when adding the move listener
+        console.log("Adding move listener to character:", this.id)
+        this.on("move", item.syncPosition, item)
+    }
+
+    unequipItem(item: Item) {
+        this.items.delete(item)
+        item.user = undefined
+        this.refreshStats()
+        this.off("move", item.syncPosition, item)
+        this.items.forEach((item) => item.syncPosition(this))
+    }
+
     destroyUi() {
         this.healthBar.destroy()
         this.manaBar.destroy()
@@ -843,7 +878,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             if (!this.attacking && !this.moveLocked) {
                 this.moveToTarget()
                 this.avoidOtherCharacters()
-                this.emit("move", this.x, this.y)
+                this.emit("move", this)
             }
         }
     }

@@ -71,8 +71,8 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         this.play(this.texture)
     }
 
-    followCharacter(x: number, y: number) {
-        this.setPosition(x, y)
+    followCharacter(creature: Creature) {
+        this.setPosition(creature.x, creature.y)
         // this.body?.reset(x, y)
     }
 

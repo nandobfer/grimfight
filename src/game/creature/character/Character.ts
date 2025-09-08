@@ -1,6 +1,8 @@
 // src/game/creature/character/Character.ts
 
 import { Game } from "../../scenes/Game"
+import { Item } from "../../systems/Items/Item"
+import { ItemRegistry } from "../../systems/Items/ItemRegistry"
 import { EventBus } from "../../tools/EventBus"
 import { DamageType } from "../../ui/DamageNumbers"
 import { LevelBadge } from "../../ui/LevelBadge"
@@ -15,6 +17,7 @@ export interface CharacterDto {
     boardY: number
     abilityDescription: string
     baseCritDamageMultiplier: number
+    items: string[]
 }
 
 export class Character extends Creature {
@@ -45,11 +48,12 @@ export class Character extends Creature {
         this.handleMouseEvents()
     }
 
-    refreshStats() {
+    override refreshStats() {
         // 1) restore *base* stats (no traits/augments here)
         super.reset()
 
         // 2) apply layers in desired order
+        this.applyItems()
         this.reapplyTraits()
         this.applyAugments()
     }
@@ -77,6 +81,11 @@ export class Character extends Creature {
         this.boardX = dto.boardX
         this.boardY = dto.boardY
         this.baseCritDamageMultiplier = dto.baseCritDamageMultiplier || this.baseCritDamageMultiplier
+        for (const entry of dto.items) {
+            const item = ItemRegistry.create(entry, this.scene)
+            item.snapToCreature(this)
+            this.equipItem(item)
+        }
     }
 
     handleMouseEvents(): void {
@@ -102,6 +111,8 @@ export class Character extends Creature {
 
         this.on("dragstart", (pointer: Phaser.Input.Pointer) => {
             if (this.scene.state !== "idle") return
+
+            this.items.forEach((item) => item.sprite.setVisible(false))
 
             // remember original pos in case drop is invalid
             this.preDrag = { x: this.x, y: this.y }
@@ -176,10 +187,12 @@ export class Character extends Creature {
             if (this.scene.state !== "idle") return
             this.setPosition(dragX, dragY)
             this.scene.grid.showHighlightAtWorld(pointer.worldX, pointer.worldY)
+            // Debug: log when emitting the move event
         })
 
         this.on("dragend", (pointer: Phaser.Input.Pointer) => {
             if (this.scene?.state !== "idle") return
+            this.items.forEach((item) => item.sprite.setVisible(true))
 
             // always cleanup window listeners
             this.globalDragCtrl?.abort()
@@ -192,6 +205,8 @@ export class Character extends Creature {
                 this.scene.grid.hideHighlight()
                 this.scene.grid.hideDropOverlay()
                 EventBus.emit("sell-character-shopkeeper", this)
+
+                this.items.forEach((item) => item.drop())
                 return
             }
 
@@ -223,6 +238,7 @@ export class Character extends Creature {
             this.scene.grid.hideDropOverlay()
 
             this.updateDepth()
+            this.emit("move", this)
         })
 
         this.on("pointerup", () => {
@@ -313,6 +329,7 @@ export class Character extends Creature {
             name: this.name,
             abilityDescription: this.getAbilityDescription(),
             baseCritDamageMultiplier: this.baseCritDamageMultiplier,
+            items: Array.from(this.items.values()).map((item) => item.name),
         }
         return data
     }
@@ -331,6 +348,16 @@ export class Character extends Creature {
 
     override calculateAttackRange() {
         return super.calculateAttackRange() * Math.max(1, this.scale * 0.75)
+    }
+
+    override equipItem(item: Item): void {
+        super.equipItem(item)
+        this.team.saveCurrentCharacters()
+    }
+
+    override unequipItem(item: Item): void {
+        super.unequipItem(item)
+        this.team.saveCurrentCharacters()
     }
 
     override destroy(fromScene?: boolean): void {

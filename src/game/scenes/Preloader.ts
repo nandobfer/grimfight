@@ -1,6 +1,7 @@
 import { Scene } from "phaser"
 import { EventBus } from "../tools/EventBus"
 import { CharacterRegistry } from "../creature/CharacterRegistry"
+import { ItemRegistry } from "../systems/Items/ItemRegistry"
 
 const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic", "skeleton_archer"]
 
@@ -30,6 +31,7 @@ export class Preloader extends Scene {
         this.loadExtraSprites()
         this.loadRagnarokSprites()
         this.loadParticles()
+        this.loadItems()
     }
 
     create() {
@@ -67,6 +69,12 @@ export class Preloader extends Scene {
         this.load.spritesheet("heal2", "particles/heal.png", { frameWidth: 192, startFrame: 8, endFrame: 11 })
         this.load.spritesheet("heal3", "particles/heal.png", { frameWidth: 192, startFrame: 12, endFrame: 18 })
         this.load.spritesheet("heal4", "particles/heal.png", { frameWidth: 192, startFrame: 19, endFrame: 30 })
+    }
+
+    loadItems() {
+        for (const entry of ItemRegistry.entries()) {
+            this.load.image(`item-${entry}`, `items/${entry}.png`)
+        }
     }
 
     loadParticles() {

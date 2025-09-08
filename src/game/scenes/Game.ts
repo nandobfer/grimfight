@@ -20,6 +20,7 @@ import { GoldCoinFx } from "../fx/GoldExplosion"
 import { Shopkeeper } from "../systems/Shopkeeper"
 import { EnemyTeam } from "../creature/monsters/EnemyTeam"
 import { GameRecord } from "../systems/GameRecord"
+import { ItemRegistry } from "../systems/Items/ItemRegistry"
 
 export type GameState = "fighting" | "idle"
 
@@ -242,32 +243,33 @@ export class Game extends Scene {
     private installBenchHoverBridge() {
         // Keep track of which character is being dragged
         EventBus.on("ph-drag-start", ({ id }: { id: string }) => {
-            const ch = this.playerTeam.getById(id)
-            if (ch) this.dragFromBoard.set(id, ch)
+            const character = this.playerTeam.getById(id)
+            if (character) this.dragFromBoard.set(id, character)
         })
 
         // React will tell us when pointer enters/leaves the bench area
         EventBus.on("bench-hover-enter", ({ id }: { id: string }) => {
-            const ch = this.dragFromBoard.get(id)
-            if (!ch) return
-            ch.setVisible(false)
-            ch.body.enable = false
+            const character = this.dragFromBoard.get(id)
+            if (!character) return
+            character.setVisible(false)
+            character.body.enable = false
             // (Optional) add a subtle marker in-world if you want
         })
 
         EventBus.on("bench-hover-leave", ({ id }: { id: string }) => {
-            const ch = this.dragFromBoard.get(id)
-            if (!ch) return
-            ch.setVisible(true)
-            ch.body.enable = true
+            const character = this.dragFromBoard.get(id)
+            if (!character) return
+            character.setVisible(true)
+            character.body.enable = true
         })
 
         // Commit: destroy in-world and add to bench
         EventBus.on("bench-drop", ({ id, dto }: { id: string; dto: CharacterDto }) => {
-            const ch = this.dragFromBoard.get(id)
-            if (!ch) return
-            ch.dropToBench = true // tells dragend to skip snapping logic
-            ch.destroy(true)
+            const character = this.dragFromBoard.get(id)
+            if (!character) return
+            character.dropToBench = true // tells dragend to skip snapping logic
+            character.items.forEach((item) => item.dropOnBoard())
+            character.destroy(true)
             this.playerTeam.bench.add(dto) // your Bench.add will emit to UI
             this.dragFromBoard.delete(id)
             this.playerTeam.resetTraits()
@@ -321,9 +323,37 @@ export class Game extends Scene {
         this.playerTeam.reset()
     }
 
+    spawnItems(quantity: number) {
+        for (let count = 1; count <= quantity; count++) {
+            const item = ItemRegistry.random(this)
+            item.dropOnBoard()
+        }
+    }
+
+    handleLootReward() {
+        if (this.floor === 1) {
+            this.spawnItems(3)
+            return
+        }
+
+        if (this.floor % 10 === 0) {
+            this.spawnItems(2)
+        }
+
+        for (let count = 1; count <= 3; count++) {
+            const result = Phaser.Math.RND.between(1, 100)
+            if (result <= 5) {
+                this.spawnItems(1)
+            }
+        }
+    }
+
     onFloorDefeated() {
         const goldGained = this.playerTeam.grantFloorReward(this.floor)
         this.goldCoinFx.explodeCameraCenterToCounter(goldGained)
+
+        this.handleLootReward()
+
         this.floor += 1
         this.clearFloor()
         this.buildFloor()
@@ -426,6 +456,7 @@ export class Game extends Scene {
         this.playerTeam.store.shuffle()
 
         EventBus.emit("gameover")
+        this.events.emit("gameover")
     }
 
     saveRecord() {
@@ -490,8 +521,8 @@ export class Game extends Scene {
         for (const dto of characters) {
             try {
                 const character = CharacterRegistry.create(dto.name, this, dto.id, dto.boardX, dto.boardY)
-                character.loadFromDto(dto)
                 this.playerTeam.add(character)
+                character.loadFromDto(dto)
             } catch (error) {
                 console.error("Error creating character:", error)
             }
