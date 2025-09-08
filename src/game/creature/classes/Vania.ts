@@ -65,6 +65,7 @@ export class Vania extends Character {
             const { value, crit } = this.calculateDamage(this.attackDamage + this.abilityPower)
             target.takeDamage(value, this, "true", crit)
             arrow.destroy()
+            this.emit("afterAttack")
         }
 
         const handleUpdate = () => {

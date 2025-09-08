@@ -128,6 +128,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.stopMoving()
         this.idle()
         this.updateDepth()
+        this.items.forEach((item) => item.syncPosition(this))
 
         this.target = undefined
     }

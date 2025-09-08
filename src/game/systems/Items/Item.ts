@@ -61,14 +61,14 @@ export class Item {
         })
 
         this.sprite.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-            if (this.scene.state !== "idle") return
+            // if (this.scene.state !== "idle") return
             this.sprite.setPosition(dragX, dragY)
 
             this.handleCreatureOnPoint(dragX, dragY)
         })
 
         this.sprite.on("dragend", (pointer: Phaser.Input.Pointer) => {
-            if (this.scene?.state !== "idle") return
+            // if (this.scene?.state !== "idle") return
 
             console.log("dragend")
 

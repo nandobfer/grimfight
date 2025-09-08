@@ -11,6 +11,6 @@ export class Belt extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.1
+        creature.maxHealth *= 1 + 0.1
     }
 }
