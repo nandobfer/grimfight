@@ -89,6 +89,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     aura?: Phaser.FX.Glow
     // tempGlow?: Phaser.FX.Glow
 
+    eventHandlers: Record<string, Function> = {}
+
     constructor(scene: Game, name: string, id: string, dataOnly = false) {
         super(scene, -1000, -1000, name)
 
@@ -757,6 +759,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.onDieFx()
         this.healthBar.fadeOut()
         this.manaBar.fadeOut()
+
+        this.emit("died")
     }
 
     onDieFx() {
@@ -839,6 +843,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             if (!this.attacking && !this.moveLocked) {
                 this.moveToTarget()
                 this.avoidOtherCharacters()
+                this.emit("move", this.x, this.y)
             }
         }
     }

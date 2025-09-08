@@ -2,6 +2,7 @@
 import Phaser from "phaser"
 import { Game, GameState } from "../scenes/Game"
 import { EventBus } from "../tools/EventBus"
+import { Creature } from "../creature/Creature"
 
 export interface LightParams {
     color: number
@@ -21,10 +22,12 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     sprite: string
     frameRate = 15
     declare scene: Game
+    target?: Creature
 
-    constructor(scene: Game, x: number, y: number, sprite: string, scale: number) {
+    constructor(scene: Game, x: number, y: number, sprite: string, scale: number, target?: Creature) {
         super(scene, x, y, sprite)
 
+        this.target = target
         this.sprite = sprite
         this.scene.add.existing(this)
         this.scene.physics.add.existing(this)
@@ -39,8 +42,8 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
 
         this.setPipeline("Light2D")
 
-        this.scene.events.on("update", this.followCharacter)
-        EventBus.on("gamestate", (state: GameState) => {
+        this.target?.on("move", this.followCharacter)
+        EventBus.once("gamestate", (state: GameState) => {
             if (state === "idle") {
                 this.cleanup()
             }
@@ -68,16 +71,14 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         this.play(this.texture)
     }
 
-    followCharacter() {
-        if (this.active) {
-            this.setPosition(this.x, this.y)
-        }
+    followCharacter(x: number, y: number) {
+        this.setPosition(x, y)
+        // this.body?.reset(x, y)
     }
 
     cleanup() {
         if (this.scene) {
-            this.scene.events.off("update", this.followCharacter)
-            EventBus.off("changestate")
+            this.target?.off("move", this.followCharacter)
         }
         this.destroy()
     }

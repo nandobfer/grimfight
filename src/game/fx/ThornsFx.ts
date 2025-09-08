@@ -1,10 +1,11 @@
 // src/game/FireHit.ts
 import { FxSprite } from "./FxSprite"
 import { Game } from "../scenes/Game"
+import { Creature } from "../creature/Creature"
 
 export class ThornsFx extends FxSprite {
-    constructor(scene: Game, x: number, y: number, scale: number) {
-        super(scene, x, y, "thunder", scale)
+    constructor(scene: Game, x: number, y: number, scale: number, target: Creature) {
+        super(scene, x, y, "thunder", scale, target)
         this.setOrigin(0.5, 0.75)
         // this.toggleFlipY()
         this.setTint(0x00ff00)
@@ -20,7 +21,7 @@ export class ThornsFx extends FxSprite {
         if (!this.scene.anims.exists(this.sprite)) {
             this.scene.anims.create({
                 key: this.sprite,
-                frames: this.anims.generateFrameNumbers(this.sprite, { first: 1, end: 9 }),
+                frames: this.anims.generateFrameNumbers(this.sprite, { start: 1, end: 9 }),
                 frameRate: this.frameRate,
                 repeat: -1,
                 yoyo: true,

@@ -31,7 +31,7 @@ export class IceSpike extends FxSprite {
         if (!this.scene.anims.exists(this.sprite)) {
             this.scene.anims.create({
                 key: this.sprite,
-                frames: this.anims.generateFrameNumbers(this.sprite, { first: 6, end: 8 }),
+                frames: this.anims.generateFrameNumbers(this.sprite, { start: 6, end: 8 }),
                 frameRate: this.frameRate,
                 repeat: 0,
             })

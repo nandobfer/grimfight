@@ -35,8 +35,6 @@ export class Character extends Creature {
     public dropToBench = false
     private globalDragCtrl?: AbortController
 
-    eventHandlers: Record<string, Function> = {}
-
     constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
         super(scene, name, id)
 
@@ -260,8 +258,6 @@ export class Character extends Creature {
         super.die()
         this.levelBadge.fadeOut()
         this.emitSelf()
-
-        this.emit("died")
     }
 
     override destroyUi(): void {

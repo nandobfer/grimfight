@@ -155,7 +155,7 @@ ${human}`
         const duration = 5000
         this.manaLocked = true
         this.thornsArmor = true
-        this.thornsFx = new ThornsFx(this.scene, this.x, this.y, this.scale * 0.45)
+        this.thornsFx = new ThornsFx(this.scene, this.x, this.y, this.scale * 0.45, this)
 
         this.scene.tweens.add({
             targets: this,

@@ -88,6 +88,10 @@ export class Preloader extends Scene {
         this.load.spritesheet("thunder", "particles/thunder.png", { frameWidth: 192 })
         this.load.spritesheet("magic_shield", "particles/magic_shield.png", { frameWidth: 192 })
         this.load.spritesheet("ice_slash", "particles/ice_slash.png", { frameWidth: 192 })
+        this.load.spritesheet("death_particles", "particles/death_particles.png", { frameWidth: 192 })
+        this.load.spritesheet("levelup_fx", "particles/levelup_fx.png", { frameWidth: 192 })
+        this.load.spritesheet("dark_particles", "particles/dark_particles.png", { frameWidth: 192 })
+        this.load.spritesheet("dark_slash", "particles/dark_slash.png", { frameWidth: 192 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

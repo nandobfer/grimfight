@@ -1,4 +1,7 @@
 import { Character } from "../../creature/character/Character"
+import { Creature } from "../../creature/Creature"
+import { DeathSkullFx } from "../../fx/DeathSkullFx"
+import { Xfx } from "../../fx/Xfx"
 import { Trait } from "./Trait"
 
 type TraitBoosts = "bonusCritChance" | "bonusCritMultiplier"
@@ -25,8 +28,20 @@ export class AssassinTrait extends Trait {
             character.off("kill", previousHandler)
         }
 
-        const killHandler = () => {
+        const killHandler = (killed: Creature) => {
             character.baseCritDamageMultiplier += values.bonusCritMultiplier
+            new Xfx(character.scene, killed.x, killed.y)
+            const deathFx = new DeathSkullFx(character.scene, killed.x, killed.y, 0.3)
+            character.scene.tweens.add({
+                targets: deathFx,
+                x: character.x,
+                y: character.y,
+                duration: 400,
+                onUpdate: (tween) => {
+                    tween.updateTo("x", character.x)
+                    tween.updateTo("y", character.y)
+                },
+            })
         }
 
         character.eventHandlers.assassinTrait = killHandler

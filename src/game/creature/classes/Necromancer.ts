@@ -1,6 +1,8 @@
+import { DarkSlashFx } from "../../fx/DarkSlashFx"
 import { MagicCircleFx } from "../../fx/MagicCircleFx"
 import { Deathbolt } from "../../objects/Deathbolt"
 import { Game } from "../../scenes/Game"
+import { DeathEaterTrait } from "../../systems/Traits/DeathEaterTrait"
 import { Character } from "../character/Character"
 import { MonsterRegistry } from "../monsters/MonsterRegistry"
 
@@ -33,17 +35,15 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
     }
 
     override extractAttackingAnimation() {
-        this.attackAnimationImpactFrame = 9
-        this.extractAnimationsFromSpritesheet("attacking", 208, 13)
-        this.extractAnimationsFromSpritesheet("casting", 208, 13)
+        this.attackAnimationImpactFrame = 6
+        this.extractAnimationsFromSpritesheet("attacking", 1, 6)
     }
 
     override landAttack() {
         if (!this.target) return
 
-        const deathbolt = new Deathbolt(this)
-
-        deathbolt.fire(this.target)
+        const slash = new DarkSlashFx(this.target)
+        this.onAttackLand("dark", this.target)
     }
 
     override castAbility(multiplier = 1): void {
@@ -64,6 +64,11 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         skeleton.baseMaxHealth += this.abilityPower * multiplier
         skeleton.reset()
         skeleton.target = this.target
+
+        const deathEater = this.team.activeTraits.find((trait) => trait.name === "Deatheater") as DeathEaterTrait | undefined
+        if (deathEater) {
+            deathEater.applyModifier(skeleton)
+        }
 
         this.casting = false
     }

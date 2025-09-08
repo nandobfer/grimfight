@@ -19,7 +19,7 @@ export class MagicShieldFx extends FxSprite {
         if (!this.scene.anims.exists(`${this.sprite}-start`)) {
             this.scene.anims.create({
                 key: `${this.sprite}-start`,
-                frames: this.anims.generateFrameNumbers(this.sprite, { first: 1, end: 4 }),
+                frames: this.anims.generateFrameNumbers(this.sprite, { start: 1, end: 4 }),
                 frameRate: this.frameRate,
                 repeat: 0,
                 yoyo: false,
@@ -29,7 +29,7 @@ export class MagicShieldFx extends FxSprite {
         if (!this.scene.anims.exists(`${this.sprite}-loop`)) {
             this.scene.anims.create({
                 key: `${this.sprite}-loop`,
-                frames: this.anims.generateFrameNumbers(this.sprite, { first: 5, end: 10 }),
+                frames: this.anims.generateFrameNumbers(this.sprite, { start: 5, end: 10 }),
                 frameRate: this.frameRate,
                 repeat: -1,
                 yoyo: true,
@@ -39,7 +39,7 @@ export class MagicShieldFx extends FxSprite {
         if (!this.scene.anims.exists(`${this.sprite}-end`)) {
             this.scene.anims.create({
                 key: `${this.sprite}-end`,
-                frames: this.anims.generateFrameNumbers(this.sprite, { first: 11 }),
+                frames: this.anims.generateFrameNumbers(this.sprite, { start: 11 }),
                 frameRate: this.frameRate,
                 repeat: 0,
                 yoyo: false,
