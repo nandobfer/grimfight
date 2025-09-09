@@ -22,7 +22,7 @@ export class Protectorsvow extends Item {
 
         const previousHandler = creature.eventHandlers.protectorsvow
         if (previousHandler) {
-            this.scene.events.on("gamestate", previousHandler)
+            this.scene.events.off("gamestate", previousHandler)
         }
 
         const onStart = (state: GameState) => {
@@ -41,7 +41,7 @@ export class Protectorsvow extends Item {
     override cleanup(creature: Creature): void {
         const handler = creature.eventHandlers.protectorsvow
         if (handler) {
-            this.scene.events.on("gamestate", handler)
+            this.scene.events.off("gamestate", handler)
             delete creature.eventHandlers.protectorsvow
         }
     }
