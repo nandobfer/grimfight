@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Avatar, Box, Divider, Paper, Popper, Typography } from "@mui/material"
 import { Item, PointerPosition } from "../game/systems/Items/Item"
 import { EventBus } from "../game/tools/EventBus"
+import { ItemTooltipContent } from "./components/ItemTooltipContent"
 
 interface ItemTooltipProps {}
 
@@ -56,22 +57,7 @@ export const ItemTooltip: React.FC<ItemTooltipProps> = (props) => {
                 zIndex: 9999,
             }}
         >
-            {item && (
-                <Paper sx={{ padding: 1, flexDirection: "column", gap: 1 }}>
-                    <Box sx={{ alignItems: "center", gap: 1 }}>
-                        <Avatar variant="rounded" src={`/assets/items/${item.key}.png`} sx={{ width: 30, aspectRatio: 1, height: "auto" }} />
-                        <Typography fontWeight={"bold"} fontSize={14} color="primary.main">
-                            {item.name}
-                        </Typography>
-                    </Box>
-                    <Divider />
-                    {item.descriptionLines.map((line, index) => (
-                        <Typography key={line + index} fontSize={12} sx={{ maxWidth: 300 }}>
-                            {line}
-                        </Typography>
-                    ))}
-                </Paper>
-            )}
+            {item && <ItemTooltipContent item={item} />}
         </Popper>
     )
 }

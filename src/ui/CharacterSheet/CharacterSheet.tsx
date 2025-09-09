@@ -25,6 +25,7 @@ import { EventBus } from "../../game/tools/EventBus"
 import { Close } from "@mui/icons-material"
 import { TraitsRegistry } from "../../game/systems/Traits/TraitsRegistry"
 import { TraitList } from "../Traits/TraitList"
+import { CharacterItems } from "./CharacterItems"
 
 interface CharacterSheetProps {
     character: Character
@@ -113,6 +114,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
 
     const traits = useMemo(() => TraitsRegistry.compTraits([character.name]), [character])
+    const items = useMemo(() => Array.from(character.items.values()), [character.items])
 
     const charRef = useRef(character)
     useEffect(() => {
@@ -185,6 +187,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     </IconButton>
                 </Box>
 
+                <CharacterItems items={items} />
                 <TraitList traits={traits} />
 
                 <Box sx={{ flexDirection: "column" }}>
