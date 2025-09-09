@@ -9,6 +9,7 @@ import { ColossusAugment } from "./ColossusAugment"
 import { CriticalAugment } from "./CriticalAugment"
 import { DevastatorAugment } from "./DevastatorAugment"
 import { DexterousAugment } from "./DexterousAugment"
+import { ItemAugment } from "./ItemAugment"
 import { LifedrinkerAugment } from "./LifedrinkerAugment"
 import { PowerfulAugment } from "./PowerfulAugment"
 import { SniperAugment } from "./SniperAugment"
@@ -67,3 +68,4 @@ AugmentsRegistry.register("sniper", SniperAugment)
 AugmentsRegistry.register("dexterous", DexterousAugment)
 AugmentsRegistry.register("critical", CriticalAugment)
 AugmentsRegistry.register("devastator", DevastatorAugment)
+AugmentsRegistry.register("item", ItemAugment)
