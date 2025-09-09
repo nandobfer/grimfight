@@ -31,6 +31,8 @@ import { Bluebuff } from "./completed/Bluebuff"
 import { Archangelstaff } from "./completed/Archangelstaff"
 import { Bramblevest } from "./completed/Bramblevest"
 import { Rabadon } from "./completed/Rabadon"
+import { Voidstaff } from "./completed/Voidstaff"
+import { Nashor } from "./completed/Nashor"
 
 export interface Recipe {
     components: [string, string]
@@ -126,6 +128,8 @@ ItemRegistry.registerCompleted("redbuff", Redbuff, ["bow", "bow"])
 ItemRegistry.registerCompleted("titanresolve", Titanresolve, ["bow", "vest"])
 ItemRegistry.registerCompleted("titanresolve", Titanresolve, ["bow", "cloak"])
 ItemRegistry.registerCompleted("guinsoo", Guinsoo, ["bow", "rod"])
+ItemRegistry.registerCompleted("voidstaff", Voidstaff, ["bow", "tear"])
+ItemRegistry.registerCompleted("nashor", Nashor, ["bow", "belt"])
 
 ItemRegistry.registerCompleted("rabadon", Rabadon, ["rod", "rod"])
 ItemRegistry.registerCompleted("jeweledgauntlet", Jeweledgauntlet, ["gloves", "rod"])
