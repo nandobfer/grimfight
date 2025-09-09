@@ -1,17 +1,30 @@
-import React from 'react'
+import React from "react"
 import { Box, PopperProps, Tooltip } from "@mui/material"
 import { renderDescription } from "../../game/tools/TokenizedText"
+import { Trait } from "../../game/systems/Traits/Trait"
+import { TraitList } from "../Traits/TraitList"
 
 interface AbilityTooltipProps {
     description: string
     children: React.ReactElement<unknown, any>
     placement: PopperProps["placement"]
+    traits?: Trait[]
 }
 
 export const AbilityTooltip: React.FC<AbilityTooltipProps> = (props) => {
     return (
         <Tooltip
-            title={renderDescription(props.description)}
+            title={
+                <>
+                    {props.traits && (
+                        <Box sx={{ flexDirection: "column" }}>
+                            <TraitList traits={props.traits} row />
+                            <br />
+                        </Box>
+                    )}
+                    {renderDescription(props.description)}
+                </>
+            }
             placement={props.placement}
             slotProps={{ popper: { sx: { pointerEvents: "none" } }, tooltip: { sx: { whiteSpace: "pre-wrap" } } }}
         >
