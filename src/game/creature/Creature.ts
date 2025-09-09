@@ -713,6 +713,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return damage
     }
 
+    gainShield(value: number) {
+        this.shield += value
+        this.healthBar.setShield(this.shield, this.health, this.maxHealth)
+    }
+
     heal(value: number, crit?: boolean, fx = true) {
         this.health = Math.min(this.maxHealth, this.health + value)
         this.healthBar.setValue(this.health, this.maxHealth)

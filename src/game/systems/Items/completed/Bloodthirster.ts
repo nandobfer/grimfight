@@ -5,7 +5,12 @@ import { Item } from "../Item"
 export class Bloodthirster extends Item {
     key = "bloodthirster"
     name = "Sedenta por Sangue"
-    descriptionLines = ["+20% AD", "5% resistência", '20% roubo de vida', "Passiva: Ao ficar com 40% de vida pela primeira vez, se cura em 25% da vida máxima"]
+    descriptionLines = [
+        "+20% AD",
+        "5% resistência",
+        "20% roubo de vida",
+        "Passiva: Ao ficar com 40% de vida pela primeira vez, recebe um escudo de 25% da vida máxima",
+    ]
 
     constructor(scene: Game) {
         super(scene, "item-bloodthirster")
@@ -23,7 +28,7 @@ export class Bloodthirster extends Item {
 
         const watchLife = (damage: number) => {
             if (creature.health / creature.maxHealth <= 0.4) {
-                creature.heal(creature.maxHealth * 0.25)
+                creature.gainShield(creature.maxHealth * 0.25)
 
                 creature.off("damage-taken", watchLife)
             }

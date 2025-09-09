@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Sterak extends Item {
     key = "sterak"
     name = "Sedenta por Sangue"
-    descriptionLines = ["+20% AD", "20% vida máxima", "Passiva: Ao ficar com 50% de vida pela primeira vez, se cura em 40% da vida máxima"]
+    descriptionLines = ["+20% AD", "20% vida máxima", "Passiva: Ao ficar com 50% de vida pela primeira vez, recebe um escudo de 40% da vida máxima"]
 
     constructor(scene: Game) {
         super(scene, "item-sterak")
@@ -23,7 +23,7 @@ export class Sterak extends Item {
 
         const watchLife = (damage: number) => {
             if (creature.health / creature.maxHealth <= 0.5) {
-                creature.heal(creature.maxHealth * 0.4)
+                creature.gainShield(creature.maxHealth * 0.4)
 
                 creature.off("damage-taken", watchLife)
             }
