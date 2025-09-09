@@ -13,5 +13,6 @@ export class Warmog extends Item {
 
     override applyModifier(creature: Creature): void {
         creature.maxHealth *= 1 + 0.4
+        creature.health *= 1 + 0.4
     }
 }

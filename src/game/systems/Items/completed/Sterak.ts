@@ -14,6 +14,7 @@ export class Sterak extends Item {
     override applyModifier(creature: Creature): void {
         creature.attackDamage *= 1 + 0.2
         creature.maxHealth *= 1 + 0.2
+        creature.health *= 1 + 0.2
 
         const previousHandler = creature.eventHandlers.sterak
         if (previousHandler) {

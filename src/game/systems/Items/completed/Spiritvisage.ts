@@ -13,6 +13,7 @@ export class Spiritvisage extends Item {
 
     override applyModifier(creature: Creature): void {
         creature.maxHealth *= 1 + 0.1
+        creature.health *= 1 + 0.1
         creature.resistance += 5
         creature.manaPerSecond *= 1 + 0.2
 

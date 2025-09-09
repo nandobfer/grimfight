@@ -20,6 +20,7 @@ export class Morello extends Item {
     override applyModifier(creature: Creature): void {
         creature.abilityPower *= 1 + 0.2
         creature.maxHealth *= 1 + 0.1
+        creature.health *= 1 + 0.1
 
         const previousHandler = creature.eventHandlers.morello
         if (previousHandler) {
