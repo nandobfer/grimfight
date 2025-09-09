@@ -1,4 +1,4 @@
-// src/ui/HealthBar.ts
+// src/ui/ProgressBar.ts
 import Phaser from "phaser"
 import { Creature } from "../creature/Creature"
 import { UiElement } from "./UiElement"
@@ -12,6 +12,7 @@ export interface BarOptions {
 export class ProgressBar extends UiElement {
     private bg: Phaser.GameObjects.Graphics
     private bar: Phaser.GameObjects.Graphics
+    private shieldGfx: Phaser.GameObjects.Graphics // NEW
     private width: number
     private height: number
     private borderColor: number
@@ -25,9 +26,11 @@ export class ProgressBar extends UiElement {
 
         const bg = scene.add.graphics({ x: 0, y: 0 }).setDepth(target.depth + 10000)
         const bar = scene.add.graphics({ x: 0, y: 0 }).setDepth(target.depth + 10001)
-        super(target, options, [bg, bar])
+        const shield = scene.add.graphics({ x: 0, y: 0 }).setDepth(target.depth + 10002)
+        super(target, options, [bg, bar, shield])
         this.bg = bg
         this.bar = bar
+        this.shieldGfx = shield
 
         this.width = 30
         this.height = 4
@@ -66,5 +69,45 @@ export class ProgressBar extends UiElement {
         this.bar.clear()
         this.bar.fillStyle(fillColor, 1)
         this.bar.fillRect(0, 0, Math.max(0, Math.floor(this.width * ratio)), this.height)
+    }
+
+    /**
+     * Draws a white overlay representing `shield` HP.
+     * It starts at the end of the current HP segment and fills rightward;
+     * if the shield exceeds missing HP, it wraps backward over the filled part.
+     */
+    setShield(shield: number, current: number, max: number) {
+        this.shieldGfx.clear()
+        if (shield <= 0 || max <= 0) return
+
+        const w = this.width
+        const h = this.height
+
+        const curRatio = Phaser.Math.Clamp(current / max, 0, 1)
+        const curW = Math.floor(w * curRatio)
+
+        // Total shield width in bar-space
+        const shieldW = Math.floor(w * Phaser.Math.Clamp(shield / max, 0, 1))
+
+        // Space to the right until the end of the bar
+        const rightSpace = w - curW
+        const rightW = Math.min(shieldW, rightSpace)
+        const backW = Math.max(0, shieldW - rightW)
+
+        this.shieldGfx.fillStyle(0xffffff, 1)
+
+        // 1) forward segment (from currentHP to the right)
+        if (rightW > 0) {
+            this.shieldGfx.fillRect(curW, 0, rightW, h)
+        }
+
+        // 2) backward segment (wrap) from left edge up to (curW - backW)
+        if (backW > 0) {
+            const startX = Math.max(0, curW - backW)
+            const drawW = Math.min(backW, curW) // cap to available
+            if (drawW > 0) {
+                this.shieldGfx.fillRect(startX, 0, drawW, h)
+            }
+        }
     }
 }

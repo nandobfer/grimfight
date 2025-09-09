@@ -81,7 +81,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     boardX = 0
     boardY = 0
 
-    experience = 0
+    shield = 0
 
     declare scene: Game
     declare body: Phaser.Physics.Arcade.Body
@@ -177,12 +177,14 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.critDamageMultiplier = this.baseCritDamageMultiplier
         this.lifesteal = this.baseLifesteal
         this.manaPerHit = this.baseManaPerHit
+        this.shield = 0
         this.calculateSpeeds()
     }
 
     resetUi() {
         this.healthBar.reset()
         this.healthBar.setValue(this.maxHealth, this.maxHealth)
+        this.healthBar.setShield(this.shield, this.health, this.maxHealth)
         this.manaBar.reset()
         this.manaBar.setValue(0, this.maxMana)
     }
@@ -724,7 +726,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     takeDamage(damage: number, attacker: Creature, type: DamageType, crit = false, emit = true) {
         const incomingDamage = damage - this.armor
         const resistanceMultiplier = 1 - this.resistance / 100
-        const finalDamage = type === "true" ? damage : Math.max(0, incomingDamage * resistanceMultiplier)
+        let finalDamage = type === "true" ? damage : Math.max(0, incomingDamage * resistanceMultiplier)
 
         if (finalDamage <= 0) {
             type = "block"
@@ -735,8 +737,19 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage, type)
         }
 
-        this.health -= finalDamage
+        let hpDamage = Math.max(0, finalDamage)
+        let absorbed = 0
+
+        if (this.shield > 0 && hpDamage > 0) {
+            absorbed = Math.min(this.shield, hpDamage)
+            this.shield -= absorbed // consume shield
+            hpDamage -= absorbed // remainder hits HP
+        }
+
+        // HP update
+        this.health -= hpDamage
         this.healthBar.setValue(this.health, this.maxHealth)
+        this.healthBar.setShield(this.shield, this.health, this.maxHealth)
 
         this.scene.onHitFx(type, this.x, this.y, this)
 
