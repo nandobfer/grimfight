@@ -94,6 +94,19 @@ export class Grid {
         return { x, y }
     }
 
+    pointerToClient = (pointer: Phaser.Input.Pointer) => {
+        const ev = pointer.event as PointerEvent
+        return { x: ev.clientX, y: ev.clientY }
+    }
+
+    worldToReact(x: number, y: number) {
+        const rect = this.scene.game.canvas.getBoundingClientRect()
+        const cam = this.scene.cameras.main
+        const sx = (x - cam.scrollX) * cam.zoom
+        const sy = (y - cam.scrollY) * cam.zoom
+        return { x: rect.left + sx, y: rect.top + sy }
+    }
+
     worldToCell(wx: number, wy: number) {
         const col = Math.floor((wx - this.left) / this.cellW)
         const row = Math.floor((wy - this.top) / this.cellH)

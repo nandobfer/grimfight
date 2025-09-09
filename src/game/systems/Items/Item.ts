@@ -75,7 +75,7 @@ export class Item {
                 this.animateGlow(2)
             }
 
-            const pointerPosition: PointerPosition = { x: pointer.x, y: pointer.y }
+            const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
 
             EventBus.emit("item-tooltip", this, pointerPosition)
         })
@@ -100,7 +100,7 @@ export class Item {
             // if (this.scene.state !== "idle") return
             this.sprite.setPosition(dragX, dragY)
 
-            this.handleCreatureOnPoint(dragX, dragY)
+            this.handleCreatureOnPoint(pointer)
         })
 
         this.sprite.on("dragend", (pointer: Phaser.Input.Pointer) => {
@@ -108,7 +108,7 @@ export class Item {
 
             console.log("dragend")
 
-            const character = this.handleCreatureOnPoint(pointer.worldX, pointer.worldY)
+            const character = this.handleCreatureOnPoint(pointer)
             if (character) {
                 character.equipItem(this)
             } else {
@@ -158,22 +158,24 @@ export class Item {
         this.animateGlow(5)
     }
 
-    private emitMergeOutput(creature: Creature, x: number, y: number) {
+    private emitMergeOutput(creature: Creature, pointer: Phaser.Input.Pointer) {
         const mergeResult = creature.getMergeResult(this)?.result
         if (mergeResult) {
-            const pointerPosition: PointerPosition = { x: x, y: y }
+            const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
 
             EventBus.emit("item-tooltip", mergeResult, pointerPosition)
         }
     }
 
-    private handleCreatureOnPoint(x: number, y: number) {
+    private handleCreatureOnPoint(pointer: Phaser.Input.Pointer) {
+        const x = pointer.x
+        const y = pointer.y
         const cell = this.scene.grid.worldToCell(x, y)
         if (cell) {
             const character = this.scene.playerTeam.getCreatureInCell(cell.col, cell.row)
             if (character) {
                 this.snapToCreature(character)
-                this.emitMergeOutput(character, x, y)
+                this.emitMergeOutput(character, pointer)
                 return character
             } else {
                 this.resetSnap()
