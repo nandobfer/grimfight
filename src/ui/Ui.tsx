@@ -11,9 +11,9 @@ import { Counters } from "./Counters/Counters"
 import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawer"
 import { GameState } from "../game/scenes/Game"
 import { CharacterDrawer } from "./CharacterSheet/CharacerDrawer"
-import { EnemiesAugments } from "./AugmentModal/EnemiesAugments"
 import { Traits } from "./Traits/Traits"
 import { GameMenu } from "./GameMenu/GameMenu"
+import { ItemTooltip } from "./ItemTooltip"
 
 interface UiProps {}
 
@@ -80,6 +80,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                         </Box>
 
                         <GameMenu game={game} />
+                        <ItemTooltip />
                     </>
                 )}
             </Box>

@@ -323,9 +323,14 @@ export class Game extends Scene {
         this.playerTeam.reset()
     }
 
+    spawnItem(key: string) {
+        const item = ItemRegistry.create(key, this)
+        item.dropOnBoard()
+    }
+
     spawnItems(quantity: number) {
         for (let count = 1; count <= quantity; count++) {
-            const item = ItemRegistry.random(this)
+            const item = ItemRegistry.randomComponent(this)
             item.dropOnBoard()
         }
     }
@@ -337,12 +342,12 @@ export class Game extends Scene {
         }
 
         if (this.floor % 10 === 0) {
-            this.spawnItems(2)
+            this.spawnItems(1)
         }
 
         for (let count = 1; count <= 3; count++) {
             const result = Phaser.Math.RND.between(1, 100)
-            if (result <= 5) {
+            if (result <= 3) {
                 this.spawnItems(1)
             }
         }

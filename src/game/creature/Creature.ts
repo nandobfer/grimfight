@@ -8,6 +8,7 @@ import { Heal } from "../fx/Heal"
 import { burstBlood } from "../fx/Blood"
 import { StatusEffect } from "../objects/StatusEffect"
 import { Item } from "../systems/Items/Item"
+import { ItemRegistry } from "../systems/Items/ItemRegistry"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -26,6 +27,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     statusEffects = new Set<StatusEffect>()
     items = new Set<Item>()
     master?: Creature
+    canBeTargeted = true
 
     level = 1
     health = 0
@@ -69,6 +71,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     lifesteal = 0
     manaPerHit = 0
 
+    bonusAttackSpeed?: number
+    bonusAttackDamage?: number
+
     manaLocked = false
     attackLocked = false
     moveLocked = false
@@ -91,6 +96,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     // tempGlow?: Phaser.FX.Glow
 
     eventHandlers: Record<string, Function> = {}
+    timeEvents: Record<string, Phaser.Time.TimerEvent> = {}
 
     constructor(scene: Game, name: string, id: string, dataOnly = false) {
         super(scene, -1000, -1000, name)
@@ -141,7 +147,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     applyItems() {
-        this.items.forEach((item) => item.applyModifier(this))
+        this.items.forEach((item) => {
+            item.cleanup(this)
+            item.applyModifier(this)
+        })
     }
 
     applyAugments() {
@@ -375,7 +384,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         let chosenEnemy: Creature | undefined = undefined
         let closestEnemyDistance = 0
         for (const enemy of enemies) {
-            if (!enemy.active) {
+            if (!enemy.active || !enemy.canBeTargeted) {
                 continue
             }
             const distance = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y)
@@ -447,11 +456,18 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return this.scene.playerTeam.contains(this.master || this) ? this.scene.enemyTeam : this.scene.playerTeam
     }
 
-    removeFromEnemyTarget() {
+    removeFromEnemyTarget(untargetable?: number) {
         for (const enemy of this.getEnemyTeam().getChildren()) {
             if (enemy.target === this) {
                 enemy.target = undefined
             }
+        }
+
+        if (untargetable) {
+            this.canBeTargeted = false
+            this.scene.time.delayedCall(untargetable * 1000, () => {
+                if (this) this.canBeTargeted = true
+            })
         }
     }
 
@@ -736,6 +752,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         if (emit) {
             attacker.emit("dealt-damage", this, finalDamage)
+            this.emit("damage-taken", finalDamage, attacker)
         }
     }
 
@@ -817,7 +834,41 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.gainMana(manaGained)
     }
 
-    equipItem(item: Item) {
+    getMissingHealthFraction() {
+        if (this.maxHealth <= 0) return 1
+        // 1 at full HP → 2 at 0 HP
+        const missingHealthPercent = this.health / this.maxHealth
+        return missingHealthPercent
+    }
+
+    getMergeResult(item: Item) {
+        if (!ItemRegistry.isComponent(item)) return
+
+        for (const component of this.items) {
+            if (ItemRegistry.isComponent(component)) {
+                const mergeResult = Item.getMergeResult(this.scene, [item, component])
+                if (mergeResult) return { component, result: mergeResult }
+            }
+        }
+    }
+
+    tryMerge(item: Item) {
+        const result = this.getMergeResult(item)
+        if (result) {
+            const completedItem = ItemRegistry.create(result.result.key, this.scene)
+            this.unequipItem(result.component)
+            result.component.sprite.destroy(true)
+            item.sprite.destroy(true)
+            completedItem.snapToCreature(this)
+            Item.resetTooltip()
+            return completedItem
+        }
+
+        return item
+    }
+
+    equipItem(_item: Item) {
+        const item = this.tryMerge(_item)
         if (this.items.size === 3) return
 
         if (item.user) {
@@ -835,6 +886,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     unequipItem(item: Item) {
         this.items.delete(item)
         item.user = undefined
+        item.cleanup(this)
         this.refreshStats()
         this.off("move", item.syncPosition, item)
         this.items.forEach((item) => item.syncPosition(this))

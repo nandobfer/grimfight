@@ -1,12 +1,20 @@
 import { Creature } from "../../creature/Creature"
 import { Game } from "../../scenes/Game"
+import { EventBus } from "../../tools/EventBus"
+import { ItemRegistry } from "./ItemRegistry"
+
+export interface PointerPosition {
+    x: number
+    y: number
+}
 
 const big_scale = 0.34
 const equiped_scale = 0.17
 
 export class Item {
+    key: string
     name: string
-    description: string
+    descriptionLines: string[]
     sprite: Phaser.GameObjects.Image
     scene: Game
     user?: Creature
@@ -14,13 +22,32 @@ export class Item {
     private glowFx: Phaser.FX.Glow
     private preDrag?: { x: number; y: number }
 
-    constructor(scene: Game, texture: string) {
-        this.scene = scene
-        this.sprite = scene.add.image(10000, 10000, texture) // spawnin g outside game canvas
-        this.sprite.setScale(big_scale)
-        this.sprite.setDepth(1000)
-        this.handleMouseEvents()
-        scene.events.once('gameover', () => this.sprite.destroy(true))
+    private static mergeResultCache = new Map<string, Item>()
+
+    static resetTooltip() {
+        EventBus.emit("item-tooltip", null)
+    }
+
+    static getMergeResult(scene: Game, items: [Item, Item]) {
+        const result = ItemRegistry.getCombinationResult([items[0], items[1]])
+        if (result) {
+            if (!this.mergeResultCache.has(result)) {
+                this.mergeResultCache.set(result, ItemRegistry.create(result, scene))
+            }
+
+            return this.mergeResultCache.get(result)
+        }
+    }
+
+    constructor(scene: Game, texture: string, dataOnly = false) {
+        if (!dataOnly) {
+            this.scene = scene
+            this.sprite = scene.add.image(10000, 10000, texture) // spawnin g outside game canvas
+            this.sprite.setScale(big_scale)
+            this.sprite.setDepth(1000)
+            this.handleMouseEvents()
+            scene.events.once("gameover", () => this.sprite.destroy(true))
+        }
     }
 
     // each augment must override
@@ -43,14 +70,22 @@ export class Item {
         this.scene.input.dragDistanceThreshold = 32 // pixels before drag starts (default ~16)
         this.scene.input.dragTimeThreshold = 40
 
-        this.sprite.on("pointerover", () => {
-            // if (this.scene.state === "idle") {
-            // this.animateGlow(5)
-            // }
+        this.sprite.on("pointerover", (pointer: Phaser.Input.Pointer) => {
+            if (this.user) {
+                this.animateGlow(2)
+            }
+
+            const pointerPosition: PointerPosition = { x: pointer.x, y: pointer.y }
+
+            EventBus.emit("item-tooltip", this, pointerPosition)
         })
 
         this.sprite.on("pointerout", () => {
-            // this.animateGlow(0)
+            if (this.user) {
+                this.animateGlow(0)
+            }
+
+            Item.resetTooltip()
         })
 
         this.sprite.on("dragstart", (pointer: Phaser.Input.Pointer) => {
@@ -58,6 +93,7 @@ export class Item {
 
             console.log("dragstart")
             this.preDrag = { x: this.sprite.x, y: this.sprite.y }
+            Item.resetTooltip()
         })
 
         this.sprite.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -122,15 +158,26 @@ export class Item {
         this.animateGlow(5)
     }
 
+    private emitMergeOutput(creature: Creature, x: number, y: number) {
+        const mergeResult = creature.getMergeResult(this)?.result
+        if (mergeResult) {
+            const pointerPosition: PointerPosition = { x: x, y: y }
+
+            EventBus.emit("item-tooltip", mergeResult, pointerPosition)
+        }
+    }
+
     private handleCreatureOnPoint(x: number, y: number) {
         const cell = this.scene.grid.worldToCell(x, y)
         if (cell) {
             const character = this.scene.playerTeam.getCreatureInCell(cell.col, cell.row)
             if (character) {
                 this.snapToCreature(character)
+                this.emitMergeOutput(character, x, y)
                 return character
             } else {
                 this.resetSnap()
+                Item.resetTooltip()
             }
         }
     }
@@ -198,6 +245,6 @@ export class Item {
             offsetX = Array.from(creature.items.values()).indexOf(this)
         }
 
-        this.sprite.setPosition(x - 16 + 16 * offsetX, y - 36)
+        this.sprite.setPosition(x - 16 + 16 * offsetX, y - 40)
     }
 }

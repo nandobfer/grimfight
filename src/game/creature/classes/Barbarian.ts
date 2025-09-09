@@ -46,9 +46,7 @@ export class Barbarian extends Character {
     }
 
     private multFromHealth(): number {
-        if (this.maxHealth <= 0) return 1
-        // 1 at full HP → 2 at 0 HP
-        const missingHealthPercent = this.health / this.maxHealth
+        const missingHealthPercent = this.getMissingHealthFraction()
         const multiplier = 2 - missingHealthPercent
 
         if (missingHealthPercent <= 0.4) {

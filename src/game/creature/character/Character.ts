@@ -329,7 +329,7 @@ export class Character extends Creature {
             name: this.name,
             abilityDescription: this.getAbilityDescription(),
             baseCritDamageMultiplier: this.baseCritDamageMultiplier,
-            items: Array.from(this.items.values()).map((item) => item.name),
+            items: Array.from(this.items.values()).map((item) => item.key),
         }
         return data
     }

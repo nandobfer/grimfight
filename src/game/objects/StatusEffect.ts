@@ -37,9 +37,17 @@ export class StatusEffect {
         }
     }
 
-    tick() { }
-    
+    tick() {}
+
     expire() {
         this.target.statusEffects.delete(this)
+    }
+
+    resetDuration() {
+        this.totalTimePassed = 0
+
+        if (!this.target.statusEffects.has(this)) {
+            this.target.applyStatusEffect(this)
+        }
     }
 }
