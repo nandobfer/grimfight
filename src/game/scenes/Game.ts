@@ -308,6 +308,7 @@ export class Game extends Scene {
 
     changeState(state: GameState) {
         this.state = state
+        this.events.emit("gamestate", this.state)
         EventBus.emit("gamestate", this.state)
         EventBus.emit("select-char", null)
     }
@@ -315,8 +316,8 @@ export class Game extends Scene {
     startRound() {
         this.enemyTeam.reset()
         this.playerTeam.reset()
-        this.changeState("fighting")
         this.playerTeam.damageChart.reset()
+        this.changeState("fighting")
     }
 
     finishRound() {
@@ -412,9 +413,9 @@ export class Game extends Scene {
     }
 
     resetFloor() {
+        this.changeState("idle") // wait for player to start
         this.enemyTeam.reset()
         this.playerTeam.reset()
-        this.changeState("idle") // wait for player to start
     }
 
     onPlayerDefeated() {

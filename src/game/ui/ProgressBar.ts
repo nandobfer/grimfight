@@ -45,7 +45,7 @@ export class ProgressBar extends UiElement {
 
     setValue(current: number, max: number): void {
         const ratio = Phaser.Math.Clamp(max > 0 ? current / max : 0, 0, 1)
-        this.setVisible(this.target.active)
+        this.setVisible(!!this.target?.active)
         let fillColor = this.fillColor
 
         if (this.interpolateColor) {

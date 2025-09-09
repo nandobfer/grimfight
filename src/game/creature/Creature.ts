@@ -41,7 +41,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     baseMaxMana = 100
     baseManaPerSecond = 10
     baseManaPerAttack = 10
-    baseManaPerHit = 2
+    baseManaOnHit = 2
     baseArmor = 0
     /** incremental, base + x + y */
     baseResistance = 0
@@ -69,7 +69,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     critDamageMultiplier = 0
     /** incremental, base + x + y */
     lifesteal = 0
-    manaPerHit = 0
+    manaOnHit = 0
 
     bonusAttackSpeed?: number
     bonusAttackDamage?: number
@@ -77,6 +77,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     manaLocked = false
     attackLocked = false
     moveLocked = false
+    isRefreshing = false
 
     boardX = 0
     boardY = 0
@@ -140,10 +141,16 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     refreshStats() {
-        this.reset()
+        if (this.isRefreshing) return
+        this.isRefreshing = true
+        try {
+            this.reset()
 
-        this.applyItems()
-        this.applyAugments()
+            this.applyItems()
+            this.applyAugments()
+        } finally {
+            this.isRefreshing = false
+        }
     }
 
     applyItems() {
@@ -176,7 +183,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.critChance = this.baseCritChance
         this.critDamageMultiplier = this.baseCritDamageMultiplier
         this.lifesteal = this.baseLifesteal
-        this.manaPerHit = this.baseManaPerHit
+        this.manaOnHit = this.baseManaOnHit
         this.shield = 0
         this.calculateSpeeds()
     }
@@ -706,7 +713,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         const { value: damage, crit: isCrit } = this.calculateDamage(this.attackDamage)
 
-        victim.gainMana(victim.manaPerHit)
+        victim.gainMana(victim.manaOnHit)
         victim.takeDamage(damage, this, damagetype, isCrit)
         this.gainMana(this.manaPerAttack)
 
@@ -885,8 +892,29 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return item
     }
 
-    equipItem(_item: Item) {
+    hasThiefsGloves() {
+        for (const item of this.items) {
+            if (Item.isThiefsGloves(item)) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    equipItem(_item: Item, fromThiefsGloves = false) {
         const item = this.tryMerge(_item)
+
+        // thief's gloves conditions
+        if (this.hasThiefsGloves() && !fromThiefsGloves) {
+            item.drop()
+            return
+        }
+        if (Item.isThiefsGloves(item) && this.items.size > 0) {
+            item.drop()
+            return
+        }
+
         if (this.items.size === 3) return
 
         if (item.user) {
@@ -895,17 +923,20 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.items.add(item)
         item.user = this
-        this.refreshStats()
+        if (!fromThiefsGloves) {
+            this.refreshStats()
+        }
         // Debug: log when adding the move listener
-        console.log("Adding move listener to character:", this.id)
         this.on("move", item.syncPosition, item)
     }
 
-    unequipItem(item: Item) {
+    unequipItem(item: Item, silent = false) {
         this.items.delete(item)
         item.user = undefined
         item.cleanup(this)
-        this.refreshStats()
+
+        if (!silent && !this.isRefreshing) this.refreshStats()
+
         this.off("move", item.syncPosition, item)
         this.items.forEach((item) => item.syncPosition(this))
     }

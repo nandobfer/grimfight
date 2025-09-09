@@ -6,10 +6,7 @@ import { Item } from "../Item"
 export class Redbuff extends Item {
     key = "redbuff"
     name = "Buff vermelho"
-    descriptionLines = [
-        "+35% AS",
-        "Passiva: Ao atacar, aplica uma queimadura no inimigo que causa 1% de sua vida máxima por segundo, dura 5 segundos.",
-    ]
+    descriptionLines = ["+35% AS", "Passiva: Ao atacar, aplica uma queimadura que causa 1% da vida máxima do inimigo, por segundo, dura 5 segundos."]
     burns = new WeakMap<Creature, Dot>()
 
     constructor(scene: Game) {
@@ -55,5 +52,4 @@ export class Redbuff extends Item {
             delete creature.eventHandlers.redbuff
         }
     }
-
 }

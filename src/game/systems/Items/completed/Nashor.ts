@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Nashor extends Item {
     key = "nashor"
     name = "Dente de Nashor"
-    descriptionLines = ["+15% AS", "+20% AP", "Passiva: Causa 10% do AP ao atacar."]
+    descriptionLines = ["+15% AS", "+20% AP", "Passiva: Causa 20% do AP ao atacar."]
 
     constructor(scene: Game) {
         super(scene, "item-nashor")
@@ -21,8 +21,8 @@ export class Nashor extends Item {
         }
 
         const dealDamage = (victim: Creature, damage: number) => {
-            const {value, crit} = creature.calculateDamage(creature.abilityPower*0.1)
-            victim.takeDamage(value, creature, 'dark', crit, false)
+            const { value, crit } = creature.calculateDamage(creature.abilityPower * 0.2)
+            victim.takeDamage(value, creature, "dark", crit, false)
         }
 
         creature.eventHandlers.nashor = dealDamage

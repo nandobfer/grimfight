@@ -187,7 +187,7 @@ ${human}`
         this.setScale(this.bonusScale * 1.5)
         this.attackDamage = this.bonusAD + this.abilityPower * 0.25
         this.calcBearArmor()
-        this.manaPerHit = 5
+        this.manaOnHit = 5
     }
 
     makeCat() {

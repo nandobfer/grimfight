@@ -49,13 +49,19 @@ export class Character extends Creature {
     }
 
     override refreshStats() {
-        // 1) restore *base* stats (no traits/augments here)
-        super.reset()
+        if (this.isRefreshing) return
+        this.isRefreshing = true
+        try {
+            // 1) restore *base* stats (no traits/augments here)
+            super.reset()
 
-        // 2) apply layers in desired order
-        this.applyItems()
-        this.reapplyTraits()
-        this.applyAugments()
+            // 2) apply layers in desired order
+            this.applyItems()
+            this.reapplyTraits()
+            this.applyAugments()
+        } finally {
+            this.isRefreshing = false
+        }
     }
 
     override reset() {
@@ -286,7 +292,6 @@ export class Character extends Creature {
     }
 
     levelUp() {
-        this.experience = 0
         this.level += 1
         this.levelBadge.setValue(this.level)
 
@@ -350,8 +355,8 @@ export class Character extends Creature {
         return super.calculateAttackRange() * Math.max(1, this.scale * 0.75)
     }
 
-    override equipItem(item: Item): void {
-        super.equipItem(item)
+    override equipItem(item: Item, fromThiefsGloves = false): void {
+        super.equipItem(item, fromThiefsGloves)
         this.team.saveCurrentCharacters()
     }
 

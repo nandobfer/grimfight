@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Jeweledgauntlet extends Item {
     key = "jeweledgauntlet"
     name = "Manoplas Encrustradas"
-    descriptionLines = ["+30% AP", '25% chance de crítico']
+    descriptionLines = ["+30% AP", "+25% chance de crítico", "+35% multiplicador de dano crítico"]
 
     constructor(scene: Game) {
         super(scene, "item-jeweledgauntlet")
@@ -14,5 +14,6 @@ export class Jeweledgauntlet extends Item {
     override applyModifier(creature: Creature): void {
         creature.abilityPower *= 1 + 0.3
         creature.critChance += 25
+        creature.critDamageMultiplier += 0.35
     }
 }

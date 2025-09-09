@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Krakenslayer extends Item {
     key = "krakenslayer"
     name = "Mata Krakens"
-    descriptionLines = ["+10% AD", "15% AS", "Passiva: Recebe 1% AD ao atacar"]
+    descriptionLines = ["+10% AD", "+15% AS", "Passiva: Recebe 1% AD ao atacar"]
 
     constructor(scene: Game) {
         super(scene, "item-krakenslayer")

@@ -33,6 +33,18 @@ import { Bramblevest } from "./completed/Bramblevest"
 import { Rabadon } from "./completed/Rabadon"
 import { Voidstaff } from "./completed/Voidstaff"
 import { Nashor } from "./completed/Nashor"
+import { Lastwhisper } from "./completed/Lastwhisper"
+import { Gargoylestoneplate } from "./completed/Gargoylestoneplate"
+import { Crownguard } from "./completed/Crownguard"
+import { Adaptivehelm } from "./completed/Adaptivehelm"
+import { Evenshroud } from "./completed/Evenshroud"
+import { Ionicspark } from "./completed/Ionicspark"
+import { Protectorsvow } from "./completed/Protectorsvow"
+import { Quicksilver } from "./completed/Quicksilver"
+import { Steadfastheart } from "./completed/Steadfastheart"
+import { Strikersflail } from "./completed/Strikersflail"
+import { Sunfire } from "./completed/Sunfire"
+import { Thiefsgloves } from "./completed/Thiefsgloves"
 
 export interface Recipe {
     components: [string, string]
@@ -78,13 +90,13 @@ export class ItemRegistry {
         return Array.from(this.completedRegistry.keys())
     }
 
-    static randomComponent(scene: Game) {
-        const name = RNG.pick(this.components())
+    static randomComponent(scene: Game, exclude: string[] = []) {
+        const name = RNG.pick(this.components().filter((item) => !exclude.includes(item)))
         return this.create(name, scene)
     }
 
-    static randomCompleted(scene: Game) {
-        const name = RNG.pick(this.completed())
+    static randomCompleted(scene: Game, exclude: string[] = []) {
+        const name = RNG.pick(this.completed().filter((item) => !exclude.includes(item)))
         return this.create(name, scene)
     }
 
@@ -106,6 +118,7 @@ export class ItemRegistry {
     }
 }
 
+// components
 ItemRegistry.registerComponent("sword", Sword)
 ItemRegistry.registerComponent("bow", Bow)
 ItemRegistry.registerComponent("vest", Vest)
@@ -115,6 +128,8 @@ ItemRegistry.registerComponent("tear", Tear)
 ItemRegistry.registerComponent("belt", Belt)
 ItemRegistry.registerComponent("gloves", Gloves)
 
+// completed items (curiosidade, a quantidade de itens completados = n * (n + 1) / 2 onde n = quantidade total de componentes)
+// sword
 ItemRegistry.registerCompleted("shojin", Shojin, ["sword", "tear"])
 ItemRegistry.registerCompleted("deathblade", Deathblade, ["sword", "sword"])
 ItemRegistry.registerCompleted("krakenslayer", Krakenslayer, ["sword", "bow"])
@@ -124,21 +139,44 @@ ItemRegistry.registerCompleted("hextechgunblade", Hextechgunblade, ["sword", "ro
 ItemRegistry.registerCompleted("sterak", Sterak, ["sword", "belt"])
 ItemRegistry.registerCompleted("infinityedge", Infinityedge, ["sword", "gloves"])
 
+// bow
 ItemRegistry.registerCompleted("redbuff", Redbuff, ["bow", "bow"])
 ItemRegistry.registerCompleted("titanresolve", Titanresolve, ["bow", "vest"])
 ItemRegistry.registerCompleted("titanresolve", Titanresolve, ["bow", "cloak"])
 ItemRegistry.registerCompleted("guinsoo", Guinsoo, ["bow", "rod"])
 ItemRegistry.registerCompleted("voidstaff", Voidstaff, ["bow", "tear"])
 ItemRegistry.registerCompleted("nashor", Nashor, ["bow", "belt"])
+ItemRegistry.registerCompleted("lastwhisper", Lastwhisper, ["bow", "gloves"])
 
+// rod
 ItemRegistry.registerCompleted("rabadon", Rabadon, ["rod", "rod"])
-ItemRegistry.registerCompleted("jeweledgauntlet", Jeweledgauntlet, ["gloves", "rod"])
-ItemRegistry.registerCompleted("handofjustice", Handofjustice, ["gloves", "tear"])
-ItemRegistry.registerCompleted("bluebuff", Bluebuff, ["tear", "tear"])
-ItemRegistry.registerCompleted("archangelstaff", Archangelstaff, ["tear", "rod"])
+ItemRegistry.registerCompleted("jeweledgauntlet", Jeweledgauntlet, ["rod", "gloves"])
+ItemRegistry.registerCompleted("archangelstaff", Archangelstaff, ["rod", "tear"])
 ItemRegistry.registerCompleted("morello", Morello, ["rod", "belt"])
+ItemRegistry.registerCompleted("crownguard", Crownguard, ["rod", "vest"])
+ItemRegistry.registerCompleted("ionicspark", Ionicspark, ["rod", "cloak"])
 
-ItemRegistry.registerCompleted("dragonclaw", Dragonclaw, ["cloak", "cloak"])
-ItemRegistry.registerCompleted("bramblevest", Bramblevest, ["vest", "vest"])
+// tear
+ItemRegistry.registerCompleted("bluebuff", Bluebuff, ["tear", "tear"])
+ItemRegistry.registerCompleted("handofjustice", Handofjustice, ["tear", "gloves"])
+ItemRegistry.registerCompleted("spiritvisage", Spiritvisage, ["tear", "belt"])
+ItemRegistry.registerCompleted("adaptivehelm", Adaptivehelm, ["tear", "cloak"])
+ItemRegistry.registerCompleted("protectorsvow", Protectorsvow, ["tear", "vest"])
+
+// belt
 ItemRegistry.registerCompleted("warmog", Warmog, ["belt", "belt"])
-ItemRegistry.registerCompleted("spiritvisage", Spiritvisage, ["belt", "tear"])
+ItemRegistry.registerCompleted("evenshroud", Evenshroud, ["belt", "cloak"])
+ItemRegistry.registerCompleted("strikersflail", Strikersflail, ["belt", "gloves"])
+ItemRegistry.registerCompleted("sunfire", Sunfire, ["belt", "vest"])
+
+// vest
+ItemRegistry.registerCompleted("bramblevest", Bramblevest, ["vest", "vest"])
+ItemRegistry.registerCompleted("gargoylestoneplate", Gargoylestoneplate, ["vest", "cloak"])
+ItemRegistry.registerCompleted("steadfastheart", Steadfastheart, ["vest", "gloves"])
+
+// cloak
+ItemRegistry.registerCompleted("dragonclaw", Dragonclaw, ["cloak", "cloak"])
+ItemRegistry.registerCompleted("quicksilver", Quicksilver, ["cloak", "gloves"])
+
+// gloves
+ItemRegistry.registerCompleted("thiefsgloves", Thiefsgloves, ["gloves", "gloves"])

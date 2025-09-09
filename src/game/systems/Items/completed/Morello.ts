@@ -8,8 +8,8 @@ export class Morello extends Item {
     name = "Morellonomicon"
     descriptionLines = [
         "+10% vida máxima",
-        '+20% AP',
-        "Passiva: Ao atacar, aplica uma queimadura no inimigo que causa 1% de sua vida máxima por segundo, dura 5 segundos.",
+        "+20% AP",
+        "Passiva: Ao atacar, aplica uma queimadura que causa 1% da vida máxima do inimigo, por segundo, dura 5 segundos.",
     ]
     burns = new WeakMap<Creature, Dot>()
 
@@ -58,5 +58,4 @@ export class Morello extends Item {
             delete creature.eventHandlers.morello
         }
     }
-
 }

@@ -39,6 +39,10 @@ export class Item {
         }
     }
 
+    static isThiefsGloves(item: Item) {
+        return item.key === "thiefsgloves"
+    }
+
     constructor(scene: Game, texture: string, dataOnly = false) {
         if (!dataOnly) {
             this.scene = scene
@@ -131,6 +135,13 @@ export class Item {
             this.sprite.off("dragend")
             this.sprite.off("pointerup")
         })
+    }
+
+    removeDragHandlers() {
+        this.sprite.off("dragstart")
+        this.sprite.off("drag")
+        this.sprite.off("dragend")
+        this.sprite.off("pointerup")
     }
 
     private animateGlow(targetStrength: number) {

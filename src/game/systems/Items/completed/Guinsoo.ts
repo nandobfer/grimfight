@@ -5,9 +5,7 @@ import { Item } from "../Item"
 export class Guinsoo extends Item {
     key = "guinsoo"
     name = "Lâmina da Fúria de Guinsoo"
-    descriptionLines = ["+10% AP", "15% AS", "Passiva: Recebe 1% AS ao atacar"]
-
-    private baseline = new WeakMap<Creature, number>()
+    descriptionLines = ["+10% AP", "+15% AS", "Passiva: Recebe 1% AS ao atacar"]
 
     constructor(scene: Game) {
         super(scene, "item-guinsoo")

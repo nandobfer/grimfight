@@ -42,7 +42,7 @@ export class Monster extends Creature {
         this.scaleStats(mult)
         this.scaleSize(mult)
         this.boss = true
-        this.manaPerHit = 0.5
+        this.manaOnHit = 0.5
         // this.baseResistance += 20
 
         this.addDarkAura()
