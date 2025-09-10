@@ -29,7 +29,7 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
     override getChildren(minions = false, activeOnly = false) {
         let list = super.getChildren() as Creature[]
 
-        if (minions) {
+        if (minions && this.minions) {
             list = [...list, ...this.minions.getChildren()]
         }
 
