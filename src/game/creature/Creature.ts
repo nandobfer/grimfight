@@ -884,6 +884,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             const completedItem = ItemRegistry.create(result.result.key, this.scene)
             this.unequipItem(result.component)
             result.component.sprite.destroy(true)
+            this.scene.availableItems.delete(item)
+            this.scene.availableItems.delete(result.component)
             item.sprite.destroy(true)
             completedItem.snapToCreature(this)
             Item.resetTooltip()

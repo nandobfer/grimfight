@@ -21,8 +21,8 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
     }
 
     const handleClickAway = () => {
-        if (openingRef.current) return // ignore the click that opened it
-        handleClose()
+        // if (openingRef.current) return // ignore the click that opened it
+        // handleClose()
     }
 
     const sellCharacter = (id: string) => {

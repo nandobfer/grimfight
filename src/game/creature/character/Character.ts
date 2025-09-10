@@ -105,6 +105,12 @@ export class Character extends Creature {
         this.scene.input.dragDistanceThreshold = 32 // pixels before drag starts (default ~16)
         this.scene.input.dragTimeThreshold = 40
 
+        const os = this.scene.sys.game.device.os
+        if (os.android || os.iOS) {
+            this.scene.input.dragDistanceThreshold *= 2
+            this.scene.input.dragTimeThreshold *= 2
+        }
+
         this.on("pointerover", () => {
             // if (this.scene.state === "idle") {
             this.animateGlow(5)
@@ -356,12 +362,16 @@ export class Character extends Creature {
 
     override equipItem(item: Item, fromThiefsGloves = false): void {
         super.equipItem(item, fromThiefsGloves)
+        this.scene.availableItems.delete(item)
         this.team.saveCurrentCharacters()
+        this.scene.saveProgress()
     }
 
     override unequipItem(item: Item): void {
         super.unequipItem(item)
+        this.scene.availableItems.add(item)
         this.team.saveCurrentCharacters()
+        this.scene.saveProgress()
     }
 
     override destroy(fromScene?: boolean): void {

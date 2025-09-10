@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Box, PopperProps, Tooltip } from "@mui/material"
 import { renderDescription } from "../../game/tools/TokenizedText"
 import { Trait } from "../../game/systems/Traits/Trait"
@@ -12,6 +12,16 @@ interface AbilityTooltipProps {
 }
 
 export const AbilityTooltip: React.FC<AbilityTooltipProps> = (props) => {
+    const [showTooltip, setShowTooltip] = useState(false)
+
+    const openTooltip = () => {
+        setShowTooltip(true)
+    }
+
+    const hideTooltip = () => {
+        setShowTooltip(false)
+    }
+
     return (
         <Tooltip
             title={
@@ -27,6 +37,10 @@ export const AbilityTooltip: React.FC<AbilityTooltipProps> = (props) => {
             }
             placement={props.placement}
             slotProps={{ popper: { sx: { pointerEvents: "none" } }, tooltip: { sx: { whiteSpace: "pre-wrap" } } }}
+            open={showTooltip}
+            onMouseEnter={() => openTooltip()}
+            onClick={() => openTooltip()}
+            onMouseLeave={() => hideTooltip()}
         >
             {props.children}
         </Tooltip>

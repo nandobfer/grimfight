@@ -8,8 +8,6 @@ export interface PointerPosition {
     y: number
 }
 
-const big_scale = 0.34
-const equiped_scale = 0.17
 
 export class Item {
     key: string
@@ -21,6 +19,9 @@ export class Item {
 
     private glowFx: Phaser.FX.Glow
     private preDrag?: { x: number; y: number }
+
+    private big_scale = 0.34
+    private equiped_scale = 0.17
 
     private static mergeResultCache = new Map<string, Item>()
 
@@ -46,8 +47,13 @@ export class Item {
     constructor(scene: Game, texture: string, dataOnly = false) {
         if (!dataOnly) {
             this.scene = scene
+            const os = scene.sys.game.device.os
+            if (os.android || os.iOS) {
+                this.big_scale *= 2
+            }
+
             this.sprite = scene.add.image(10000, 10000, texture) // spawnin g outside game canvas
-            this.sprite.setScale(big_scale)
+            this.sprite.setScale(this.big_scale)
             this.sprite.setDepth(1000)
             this.handleMouseEvents()
             scene.events.once("gameover", () => this.sprite.destroy(true))
@@ -158,14 +164,14 @@ export class Item {
     snapToCreature(creature: Creature) {
         if (creature.items.size === 3 && this.user !== creature) return
 
-        this.sprite.setScale(equiped_scale)
+        this.sprite.setScale(this.equiped_scale)
         this.syncPosition(creature, creature.boardX, creature.boardY)
         this.animateGlow(0)
         this.sprite.setRotation(0)
     }
 
     private resetSnap() {
-        this.sprite.setScale(big_scale)
+        this.sprite.setScale(this.big_scale)
         this.animateGlow(5)
     }
 
@@ -230,7 +236,7 @@ export class Item {
                         // Second: slight bounce back
                         this.scene.tweens.add({
                             targets: this.sprite,
-                            scale: big_scale,
+                            scale: this.big_scale,
                             duration: 100,
                             ease: "Bounce.easeOut",
                         })

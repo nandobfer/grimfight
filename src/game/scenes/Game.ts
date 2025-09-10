@@ -21,6 +21,7 @@ import { Shopkeeper } from "../systems/Shopkeeper"
 import { EnemyTeam } from "../creature/monsters/EnemyTeam"
 import { GameRecord } from "../systems/GameRecord"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
+import { Item } from "../systems/Items/Item"
 
 export type GameState = "fighting" | "idle"
 
@@ -31,6 +32,7 @@ export interface GameProgressDto {
     version?: string
     playerAugments: Augment[]
     enemyAugments: Augment[]
+    availableItems: string[]
     record?: GameRecord
 }
 
@@ -54,6 +56,7 @@ export class Game extends Scene {
     goldCoinFx: GoldCoinFx
     shopkeeper: Shopkeeper
     currentRecord: GameRecord
+    availableItems = new Set<Item>()
 
     playerGold = starting_player_gold
     playerLives = starting_player_lives
@@ -87,8 +90,8 @@ export class Game extends Scene {
 
         this.enemyTeam.reset()
 
-        this.loadPlayerCharacters()
         this.loadProgress()
+        this.loadPlayerCharacters()
         this.createArenaTorches()
         this.buildFloor()
 
@@ -323,32 +326,42 @@ export class Game extends Scene {
         this.playerTeam.reset()
     }
 
-    spawnItem(key: string) {
+    spawnItem(key: string, silent = false) {
         const item = ItemRegistry.create(key, this)
+        this.availableItems.add(item)
         item.dropOnBoard()
+
+        if (!silent) {
+            this.saveProgress()
+        }
     }
 
-    spawnItems(quantity: number) {
+    spawnItems(quantity: number, silent = false) {
         for (let count = 1; count <= quantity; count++) {
             const item = ItemRegistry.randomComponent(this)
+            this.availableItems.add(item)
             item.dropOnBoard()
+
+            if (!silent) {
+                this.saveProgress()
+            }
         }
     }
 
     handleLootReward() {
         if (this.floor === 1) {
-            this.spawnItems(3)
+            this.spawnItems(3, true)
             return
         }
 
         if (this.floor % 10 === 0) {
-            this.spawnItems(1)
+            this.spawnItems(1, true)
         }
 
         for (let count = 1; count <= 3; count++) {
             const result = Phaser.Math.RND.between(1, 100)
             if (result <= 3) {
-                this.spawnItems(1)
+                this.spawnItems(1, true)
             }
         }
     }
@@ -494,10 +507,14 @@ export class Game extends Scene {
         this.floor = 1
         this.playerLives = starting_player_lives
         this.playerGold = starting_player_gold
+        for (const item of this.availableItems) {
+            item.sprite.destroy(true)
+        }
+        this.availableItems.clear()
         this.resetAugments()
+        this.saveProgress()
         this.savePlayerCharacters([])
         this.loadPlayerCharacters()
-        this.saveProgress()
         this.emitProgress()
     }
 
@@ -551,6 +568,7 @@ export class Game extends Scene {
 
     saveProgress() {
         const data = this.getProgress()
+        console.log(data)
         try {
             localStorage.setItem("progress", JSON.stringify(data))
         } catch (error) {
@@ -566,6 +584,7 @@ export class Game extends Scene {
             version: this.version,
             playerAugments: Array.from(this.playerTeam.augments.values()),
             enemyAugments: Array.from(this.enemyTeam.augments.values()),
+            availableItems: Array.from(this.availableItems.values()).map((item) => item.key),
         }
         progress.record = this.getCurrentRecord(progress)
         return progress
@@ -587,16 +606,17 @@ export class Game extends Scene {
             const data = localStorage.getItem("progress")
             if (data) {
                 const progress = JSON.parse(data) as GameProgressDto
+                console.log({ progress })
 
                 this.floor = progress.floor
                 this.playerGold = progress.playerGold
                 this.playerLives = progress.playerLives
                 this.currentRecord = progress.record || this.getCurrentRecord(progress)
-                console.log(this.currentRecord)
+                progress.availableItems.forEach((item) => this.availableItems.add(ItemRegistry.create(item, this)))
                 progress.playerAugments.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
-                console.log(this.playerTeam.augments)
-                console.log(this.enemyTeam.augments)
+                console.log(progress.availableItems)
+                this.availableItems.forEach((item) => item.dropOnBoard())
                 this.playerTeam.emitAugments()
             }
         } catch (error) {
