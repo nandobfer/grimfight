@@ -1,0 +1,1 @@
+{"version":3,"file":"preload.js","sources":["../../electron/preload.ts"],"sourcesContent":["import { contextBridge } from 'electron'\n// Expose minimal API if you want\ncontextBridge.exposeInMainWorld('versions', { node: process.versions.node })\n"],"names":["contextBridge"],"mappings":";;AAEAA,SAAAA,cAAc,kBAAkB,YAAY,EAAE,MAAM,QAAQ,SAAS,MAAM;"}

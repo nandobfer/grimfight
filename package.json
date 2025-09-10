@@ -6,6 +6,7 @@
         "type": "git",
         "url": "git+https://github.com/phaserjs/template-react-ts.git"
     },
+    "main": "./dist-electron/main/main.js",
     "author": "Phaser Studio <support@phaser.io> (https://phaser.io/)",
     "license": "MIT",
     "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
@@ -25,7 +26,10 @@
         "build": "node log.js build & vite build --config vite/config.prod.mjs",
         "dev-nolog": "vite --config vite/config.dev.mjs",
         "build-nolog": "vite build --config vite/config.prod.mjs",
-        "deploy": "yarn build && zip -r joguinho.nandoburgos.dev.zip dist && scp joguinho.nandoburgos.dev.zip boz:/var/www && ssh boz \"cd /var/www && rm -rf joguinho.nandoburgos.dev.bak && mv joguinho.nandoburgos.dev joguinho.nandoburgos.dev.bak && unzip joguinho.nandoburgos.dev.zip && mv dist joguinho.nandoburgos.dev && rm -rf joguinho.nandoburgos.dev.zip\" && rm -rf joguinho.nandoburgos.dev.zip"
+        "deploy": "yarn build && zip -r joguinho.nandoburgos.dev.zip dist && scp joguinho.nandoburgos.dev.zip boz:/var/www && ssh boz \"cd /var/www && rm -rf joguinho.nandoburgos.dev.bak && mv joguinho.nandoburgos.dev joguinho.nandoburgos.dev.bak && unzip joguinho.nandoburgos.dev.zip && mv dist joguinho.nandoburgos.dev && rm -rf joguinho.nandoburgos.dev.zip\" && rm -rf joguinho.nandoburgos.dev.zip",
+        "start:electron": "electron-vite preview",
+        "dev:electron": "electron-vite dev",
+        "build:electron": "electron-vite build"
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",
@@ -41,7 +45,9 @@
         "@eslint/js": "^9.22.0",
         "@types/react": "^19.0.10",
         "@types/react-dom": "^19.0.4",
-        "@vitejs/plugin-react": "^4.3.4",
+        "@vitejs/plugin-react": "^5.0.2",
+        "electron": "^38.0.0",
+        "electron-vite": "^4.0.0",
         "eslint": "^9.22.0",
         "eslint-plugin-react-hooks": "^5.2.0",
         "eslint-plugin-react-refresh": "^0.4.19",
