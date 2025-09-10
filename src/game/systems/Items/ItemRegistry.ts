@@ -90,14 +90,14 @@ export class ItemRegistry {
         return Array.from(this.completedRegistry.keys())
     }
 
-    static randomComponent(scene: Game, exclude: string[] = []) {
+    static randomComponent(scene: Game, exclude: string[] = [], dataOnly = false) {
         const name = RNG.pick(this.components().filter((item) => !exclude.includes(item)))
-        return this.create(name, scene)
+        return this.create(name, scene, dataOnly)
     }
 
-    static randomCompleted(scene: Game, exclude: string[] = []) {
+    static randomCompleted(scene: Game, exclude: string[] = [], dataOnly = false) {
         const name = RNG.pick(this.completed().filter((item) => !exclude.includes(item)))
-        return this.create(name, scene)
+        return this.create(name, scene, dataOnly)
     }
 
     static merge(scene: Game, items: [Item, Item], dataOnly?: boolean) {

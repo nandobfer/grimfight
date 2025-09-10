@@ -16,7 +16,11 @@ export class AnvilAugment extends Augment {
     override onPick(team: CreatureGroup): void {
         const items: Item[] = []
         for (let count = 1; count <= 3; count++) {
-            const item = ItemRegistry.randomComponent(team.scene, items.map(item => item.key))
+            const item = ItemRegistry.randomComponent(
+                team.scene,
+                items.map((item) => item.key),
+                true
+            )
             items.push(item)
         }
         EventBus.emit("choose-item-anvil", items)

@@ -4,6 +4,7 @@ import { EventBus } from "../../game/tools/EventBus"
 import { Item } from "../../game/systems/Items/Item"
 import { Game } from "../../game/scenes/Game"
 import { ItemTooltipContent } from "../components/ItemTooltipContent"
+import { ItemRegistry } from "../../game/systems/Items/ItemRegistry"
 
 interface ItemAnvilModalProps {
     game: Game
@@ -17,10 +18,12 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
 
     const handleClose = () => {
         setOpen(false)
+        setItems([])
     }
 
-    const onChoose = (item: Item) => {
+    const onChoose = (chosenItem: Item) => {
         handleClose()
+        const item = ItemRegistry.create(chosenItem.key, props.game)
         props.game.availableItems.add(item)
         item.dropOnBoard()
     }
@@ -58,7 +61,7 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
                     }}
                 >
                     {items.map((item, index) => (
-                        <Button sx={{padding: 0}} variant="outlined" onClick={() => onChoose(item)}>
+                        <Button sx={{ padding: 0 }} variant="outlined" onClick={() => onChoose(item)}>
                             <ItemTooltipContent item={item} key={item.key + index} />
                         </Button>
                     ))}
