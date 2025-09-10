@@ -65,6 +65,7 @@ export class Game extends Scene {
 
     private uiGhost?: Character
     private dragFromBoard = new Map<string, Character>()
+    private endingRound = false
 
     perRoundFx: Phaser.GameObjects.Group
 
@@ -322,10 +323,6 @@ export class Game extends Scene {
         this.changeState("fighting")
     }
 
-    finishRound() {
-        this.playerTeam.reset()
-    }
-
     spawnItem(key: string, silent = false) {
         const item = ItemRegistry.create(key, this)
         this.availableItems.add(item)
@@ -448,7 +445,7 @@ export class Game extends Scene {
         this.saveProgress()
     }
 
-    anyTeamWiped() {
+    handleTeamWiping() {
         if (this.enemyTeam.isWiped()) {
             this.onFloorDefeated()
             return true
@@ -705,12 +702,36 @@ export class Game extends Scene {
         this.fireEffects.add(new FireEffect(this, bottomRight.x, bottomRight.y))
     }
 
-    update(time: number, delta: number): void {
-        if (this.state === "fighting") {
-            if (this.anyTeamWiped()) {
-                this.changeState("idle")
-                this.finishRound()
-            }
+    /** schedule a round end once; verify team is still wiped when it runs */
+    endRoundSoon(reason: "player" | "enemy") {
+        if (this.endingRound || this.state !== "fighting") return
+        this.endingRound = true
+        // flip to idle immediately so actors stop doing combat logic
+        this.changeState("idle")
+
+        this.time.delayedCall(0, () => {
+            const stillWiped = reason === "enemy" ? this.enemyTeam.isWiped() : this.playerTeam.isWiped()
+            if (stillWiped) this.finishRoundNow()
+            this.endingRound = false
+        })
+    }
+
+    /** do the actual resolution (no state changes / scans inside actor updates) */
+    private finishRoundNow() {
+        // decide the outcome
+        if (this.enemyTeam.isWiped()) {
+            this.onFloorDefeated()
+        } else if (this.playerTeam.isWiped()) {
+            this.onPlayerDefeated()
         }
     }
+
+    // keep a public entry that is safe to call but just defers
+    finishRound() {
+        // infer reason cheaply; either side wiped gets handled correctly later
+        const reason = this.enemyTeam.isWiped() ? "enemy" : "player"
+        this.endRoundSoon(reason as any)
+    }
+
+    update(time: number, delta: number): void {}
 }

@@ -819,6 +819,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaBar.fadeOut()
 
         this.emit("died")
+
+        if (this.team.isWiped()) {
+            this.scene.finishRound()
+        }
     }
 
     onDieFx() {
