@@ -52,6 +52,14 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         this.team.minions.add(skeleton)
         const { x, y } = this.randomPointAround(true)
         const fx = new MagicCircleFx(this.scene, x, y)
+
+        // updating skeleton AP based on the caster AP
+        const originalUpdate = skeleton.update.bind(skeleton)
+        skeleton.update = (time, delta) => {
+            originalUpdate(time, delta)
+            skeleton.abilityPower = skeleton.baseAbilityPower + this.abilityPower * 0.15 * multiplier
+        }
+
         skeleton.teleportTo(x, y)
         skeleton.boardX = this.boardX
         skeleton.boardY = this.boardY
@@ -59,7 +67,6 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         skeleton.setTint(0x6645aa)
         skeleton.baseSpeed = this.baseSpeed * 2
         skeleton.baseAttackDamage += this.abilityPower * 0.15 * multiplier
-        skeleton.baseAbilityPower += this.abilityPower * 0.15 * multiplier
         skeleton.baseMaxHealth += this.abilityPower * multiplier
         skeleton.reset()
         skeleton.target = this.target
