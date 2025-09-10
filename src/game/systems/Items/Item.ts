@@ -149,7 +149,6 @@ export class Item {
             this.showHoverBorder()
 
             this.preDrag = { x: this.sprite.x, y: this.sprite.y }
-            Item.resetTooltip()
         })
 
         this.sprite.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -157,6 +156,10 @@ export class Item {
             this.sprite.setPosition(dragX, dragY)
             this.updateBorder()
             this.handleCreatureOnPoint(pointer)
+
+            const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
+
+            EventBus.emit("item-tooltip", this, pointerPosition)
         })
 
         this.sprite.on("dragend", (pointer: Phaser.Input.Pointer) => {
