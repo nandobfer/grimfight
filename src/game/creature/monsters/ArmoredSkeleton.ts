@@ -20,7 +20,7 @@ export class ArmoredSkeleton extends Skeleton {
         this.casting = true
 
         new MagicShieldFx(this.scene, this.x, this.y, this.scale * 0.4)
-        this.gainShield(this.abilityPower + this.maxHealth * 0.1)
+        this.gainShield(this.abilityPower * 2 + this.maxHealth * 0.1)
 
         this.casting = false
     }

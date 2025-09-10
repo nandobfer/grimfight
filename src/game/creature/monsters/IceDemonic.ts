@@ -4,9 +4,9 @@ import { Game } from "../../scenes/Game"
 import { Monster } from "./Monster"
 
 export class IceDemonic extends Monster {
-    baseMaxHealth = 2000
-    baseAttackDamage = 50
-    baseAttackSpeed = 0.75
+    baseMaxHealth = 2500
+    baseAttackDamage = 40
+    baseAttackSpeed = 1
     baseAttackRange = 3
     baseMaxMana = 150
     baseManaPerAttack = 0
@@ -17,7 +17,7 @@ export class IceDemonic extends Monster {
         this.preferredPosition = "back"
         this.attackAnimationImpactFrame = 9
         this.challengeRating = this.calculateCR()
-        this.setTint(0x0000ff)
+        this.setTint(0x6666ff)
     }
 
     override getAttackingAnimation(): string {
@@ -41,7 +41,7 @@ export class IceDemonic extends Monster {
         this.casting = true
 
         this.manaLocked = true
-        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5, 2, 1500)
+        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.25, 2, 1500)
 
         this.casting = false
     }

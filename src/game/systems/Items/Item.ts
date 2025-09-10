@@ -207,8 +207,11 @@ export class Item {
         }
     }
 
-    dropOnBoard() {
-        this.sprite.setPosition(this.scene.background.x, this.scene.background.y)
+    dropOnBoard(corner = false) {
+        let x = this.scene.background.x
+        if (corner) x += this.scene.background.x / 2
+
+        this.sprite.setPosition(x, this.scene.background.y)
         this.drop()
     }
 

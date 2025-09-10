@@ -59,6 +59,7 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         skeleton.setTint(0x6645aa)
         skeleton.baseSpeed = this.baseSpeed * 2
         skeleton.baseAttackDamage += this.abilityPower * 0.15 * multiplier
+        skeleton.baseAbilityPower += this.abilityPower * 0.15 * multiplier
         skeleton.baseMaxHealth += this.abilityPower * multiplier
         skeleton.reset()
         skeleton.target = this.target

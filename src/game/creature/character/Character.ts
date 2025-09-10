@@ -153,13 +153,13 @@ export class Character extends Creature {
                 return { x: p.x, y: p.y }
             }
 
+            let rafId: number | null = null
             const onMove = (ev: PointerEvent) => {
-                const { x, y } = toWorld(ev)
-                // keep the sprite following even when over React DOM
-                this.setPosition(x, y)
-                this.scene.grid.showHighlightAtWorld(x, y)
-
-                EventBus.emit("ph-drag-move", { id: this.id, clientX: ev.clientX, clientY: ev.clientY })
+                if (rafId != null) return
+                rafId = requestAnimationFrame(() => {
+                    rafId = null
+                    EventBus.emit("ph-drag-move", { clientX: ev.clientX, clientY: ev.clientY })
+                })
             }
 
             const finish = (ev?: PointerEvent | Event) => {

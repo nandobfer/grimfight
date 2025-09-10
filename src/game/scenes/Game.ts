@@ -616,7 +616,7 @@ export class Game extends Scene {
                 progress.playerAugments.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 console.log(progress.availableItems)
-                this.availableItems.forEach((item) => item.dropOnBoard())
+                this.availableItems.forEach((item) => item.dropOnBoard(true))
                 this.playerTeam.emitAugments()
             }
         } catch (error) {
