@@ -33,7 +33,7 @@ export class Item {
         const result = ItemRegistry.getCombinationResult([items[0], items[1]])
         if (result) {
             if (!this.mergeResultCache.has(result)) {
-                this.mergeResultCache.set(result, ItemRegistry.create(result, scene))
+                this.mergeResultCache.set(result, ItemRegistry.create(result, scene, true))
             }
 
             return this.mergeResultCache.get(result)

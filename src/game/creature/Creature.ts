@@ -191,9 +191,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     resetUi() {
         this.healthBar.reset()
+        this.healthBar.redrawBg()
         this.healthBar.setValue(this.maxHealth, this.maxHealth)
         this.healthBar.setShield(this.shield, this.health, this.maxHealth)
         this.manaBar.reset()
+        this.manaBar.redrawBg()
         this.manaBar.setValue(0, this.maxMana)
     }
 
@@ -989,9 +991,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     updateCharUi() {
-        if (this.health > 0 && this.scene.state === "idle") {
-            this.resetUi()
-        }
         this.healthBar.updatePosition()
         this.manaBar.updatePosition()
     }

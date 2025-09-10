@@ -268,6 +268,8 @@ export class Character extends Creature {
             this.off("drag")
             this.off("dragend")
             this.off("pointerup")
+            this.globalDragCtrl?.abort() // <---- add this
+            this.globalDragCtrl = undefined
         })
     }
 
@@ -380,7 +382,6 @@ export class Character extends Creature {
     }
 
     override update(time: number, delta: number): void {
-        this.emitSelf()
         super.update(time, delta)
     }
 }

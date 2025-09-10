@@ -23,6 +23,8 @@ export default defineConfig({
     },
     renderer: {
         root: __dirname,
+        base: "./",
+        publicDir: path.join(__dirname, "public"),
         plugins: [react()],
         build: {
             // 👇 Tell electron-vite where your renderer HTML lives
@@ -31,6 +33,9 @@ export default defineConfig({
             },
             // optional but keeps things tidy
             outDir: "dist",
+        },
+        server: {
+            port: 8080,
         },
     },
 })

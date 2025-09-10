@@ -568,7 +568,6 @@ export class Game extends Scene {
 
     saveProgress() {
         const data = this.getProgress()
-        console.log(data)
         try {
             localStorage.setItem("progress", JSON.stringify(data))
         } catch (error) {

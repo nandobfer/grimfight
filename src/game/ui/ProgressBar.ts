@@ -20,6 +20,7 @@ export class ProgressBar extends UiElement {
     private bgColor: number
     private fillColor: number
     private interpolateColor: boolean
+    private lastRatio = -1
 
     constructor(target: Creature, options: BarOptions) {
         const scene = target.scene
@@ -45,7 +46,11 @@ export class ProgressBar extends UiElement {
 
     setValue(current: number, max: number): void {
         const ratio = Phaser.Math.Clamp(max > 0 ? current / max : 0, 0, 1)
-        this.setVisible(!!this.target?.active)
+        this.setVisible(this.target.active)
+
+        if (ratio === this.lastRatio) return
+        this.lastRatio = ratio
+
         let fillColor = this.fillColor
 
         if (this.interpolateColor) {
@@ -59,16 +64,18 @@ export class ProgressBar extends UiElement {
             fillColor = Phaser.Display.Color.GetColor(fill.r, fill.g, fill.b)
         }
 
-        // Redraw
+        // DO NOT redraw bg every time; only the fill:
+        this.bar.clear()
+        this.bar.fillStyle(fillColor, 1)
+        this.bar.fillRect(0, 0, Math.max(0, Math.floor(this.width * ratio)), this.height)
+    }
+
+    redrawBg() {
         this.bg.clear()
         this.bg.lineStyle(this.borderWidth, this.borderColor, 1)
         this.bg.fillStyle(this.bgColor, 1)
         this.bg.fillRect(0, 0, this.width, this.height)
         this.bg.strokeRect(0, 0, this.width, this.height)
-
-        this.bar.clear()
-        this.bar.fillStyle(fillColor, 1)
-        this.bar.fillRect(0, 0, Math.max(0, Math.floor(this.width * ratio)), this.height)
     }
 
     /**

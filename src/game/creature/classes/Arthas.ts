@@ -96,32 +96,32 @@ export class Arthas extends Character {
             return
         }
 
-        switch (this.castsCount) {
-            case 1:
-                const damage = (this.attackDamage * 2 + this.abilityPower * 0.3) / 2
-                new FrostStrike(this, this.target, damage, 0.5)
-                this.scene.time.delayedCall(500, () => {
-                    if (this.target) new FrostStrike(this, this.target, damage, 0.5)
-                })
-                break
-            case 2:
-                new FrostStrike(this, this.target, this.attackDamage + this.abilityPower * 0.3, 1.4)
-                break
-            case 3:
-                const targets = 3
-                const enemies = this.target.team.getChildren(true, true)
-                for (let i = 1; i <= targets; i++) {
-                    const iceSpikesDamage = this.calculateDamage(this.attackDamage * 0.75 + this.abilityPower * 0.3)
-                    const target = RNG.pick(enemies)
-                    try {
+        try {
+            switch (this.castsCount) {
+                case 1:
+                    const damage = (this.attackDamage * 2 + this.abilityPower * 0.3) / 2
+                    new FrostStrike(this, this.target, damage, 0.5)
+                    this.scene.time.delayedCall(500, () => {
+                        if (this.target) new FrostStrike(this, this.target, damage, 0.5)
+                    })
+                    break
+                case 2:
+                    new FrostStrike(this, this.target, this.attackDamage + this.abilityPower * 0.3, 1.4)
+                    break
+                case 3:
+                    const targets = 3
+                    const enemies = this.target.team.getChildren(true, true)
+                    for (let i = 1; i <= targets; i++) {
+                        const iceSpikesDamage = this.calculateDamage(this.attackDamage * 0.75 + this.abilityPower * 0.3)
+                        const target = RNG.pick(enemies)
                         new IceSpike(this.scene || target.scene, target)
-                    } catch {}
-                    target.takeDamage(iceSpikesDamage.value, this, "cold", iceSpikesDamage.crit)
-                }
+                        target.takeDamage(iceSpikesDamage.value, this, "cold", iceSpikesDamage.crit)
+                    }
 
-                this.castsCount = 0
-                break
-        }
+                    this.castsCount = 0
+                    break
+            }
+        } catch (error) {}
 
         this.casting = false
     }

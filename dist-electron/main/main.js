@@ -1,6 +1,27 @@
 "use strict";
 const electron = require("electron");
 const path = require("node:path");
+const fs = require("node:fs");
+const node_url = require("node:url");
+const setupAssetRewrite = () => {
+  const distDir = path.join(electron.app.getAppPath(), "dist");
+  const assetsDir = path.join(distDir, "assets");
+  electron.session.defaultSession.webRequest.onBeforeRequest({ urls: ["file://*/*"] }, (details, cb) => {
+    try {
+      const url = new URL(details.url);
+      if (url.pathname.startsWith("/assets/")) {
+        const rel = url.pathname.slice("/assets/".length);
+        const filePath = path.join(assetsDir, rel);
+        if (fs.existsSync(filePath)) {
+          cb({ redirectURL: node_url.pathToFileURL(filePath).toString() });
+          return;
+        }
+      }
+    } catch {
+    }
+    cb({});
+  });
+};
 function createWindow() {
   const win = new electron.BrowserWindow({
     width: 768,
@@ -21,6 +42,8 @@ electron.app.commandLine.appendSwitch("ignore-gpu-blocklist");
 electron.app.commandLine.appendSwitch("enable-gpu-rasterization");
 electron.app.commandLine.appendSwitch("enable-zero-copy");
 electron.app.whenReady().then(() => {
+  const usingFileProtocol = !process.env.ELECTRON_RENDERER_URL;
+  if (usingFileProtocol) setupAssetRewrite();
   createWindow();
   electron.app.on("activate", () => {
     if (electron.BrowserWindow.getAllWindows().length === 0) createWindow();

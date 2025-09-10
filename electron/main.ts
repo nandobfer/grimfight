@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from "electron"
 import path from "node:path"
+import { setupAssetRewrite } from "./assetRewrite"
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -16,8 +17,7 @@ function createWindow() {
         win.loadURL(devUrl)
         win.webContents.openDevTools({ mode: "detach" })
     } else {
-        // dist-electron/main/main.js  -> __dirname is dist-electron/main
-        // renderer outDir is "dist"   -> ../../dist/index.html
+        // file:// protocol (preview or packaged)
         win.loadFile(path.join(__dirname, "../../dist/index.html"))
     }
 }
@@ -27,6 +27,9 @@ app.commandLine.appendSwitch("enable-gpu-rasterization")
 app.commandLine.appendSwitch("enable-zero-copy")
 
 app.whenReady().then(() => {
+    const usingFileProtocol = !process.env.ELECTRON_RENDERER_URL
+    if (usingFileProtocol) setupAssetRewrite()
+
     createWindow()
 
     app.on("activate", () => {
@@ -41,4 +44,3 @@ app.on("window-all-closed", () => {
 app.whenReady().then(() => {
     console.log("GPU:", app.getGPUFeatureStatus())
 })
-
