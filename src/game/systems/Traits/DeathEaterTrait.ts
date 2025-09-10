@@ -1,13 +1,12 @@
 import { Creature } from "../../creature/Creature"
 import { DeathSkullFx } from "../../fx/DeathSkullFx"
 import { SoulParticles } from "../../fx/SoulParticles"
-import { Game } from "../../scenes/Game"
 import { Trait } from "./Trait"
 
 type TraitBoosts = "hpMultiplier" | "statsMultiplier"
 
 export class DeathEaterTrait extends Trait {
-    name = "Deatheater"
+    name = "Comemorte"
     description = "Ao morrer pela primeira vez, comensais da morte ressuscitam com {0} de vida e recebem {1} de AD e AP até morrer de novo."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { hpMultiplier: 0.3, statsMultiplier: 0.5, descriptionParams: ["30%", "50%"] }],
@@ -42,9 +41,14 @@ export class DeathEaterTrait extends Trait {
                     new SoulParticles(creature.scene, deadX, deadY, 0.75)
                     creature.health = 0
                     creature.revive(creature.maxHealth * values.hpMultiplier)
+                    creature.canBeTargeted = false
                     creature.attackDamage *= 1 + values.statsMultiplier
                     creature.abilityPower *= 1 + values.statsMultiplier
                     creature.teleportTo(deadX, deadY)
+
+                    creature.scene?.time.delayedCall(1000, () => {
+                        if (creature) creature.canBeTargeted = true
+                    })
                 }
             })
         }
