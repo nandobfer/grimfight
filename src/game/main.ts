@@ -37,6 +37,8 @@ const config: Phaser.Types.Core.GameConfig = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
+    render: { powerPreference: "high-performance", antialias: true },
+    fps: { target: 60, smoothStep: true },
 }
 
 const StartGame = (parent: string) => {

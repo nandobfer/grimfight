@@ -3,8 +3,8 @@ import path from "node:path"
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 1280,
-        height: 720,
+        width: 768,
+        height: 768,
         webPreferences: {
             preload: path.join(__dirname, "../preload/preload.js"),
         },
@@ -22,6 +22,10 @@ function createWindow() {
     }
 }
 
+app.commandLine.appendSwitch("ignore-gpu-blocklist")
+app.commandLine.appendSwitch("enable-gpu-rasterization")
+app.commandLine.appendSwitch("enable-zero-copy")
+
 app.whenReady().then(() => {
     createWindow()
 
@@ -33,3 +37,8 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit()
 })
+
+app.whenReady().then(() => {
+    console.log("GPU:", app.getGPUFeatureStatus())
+})
+
