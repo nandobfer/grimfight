@@ -7,7 +7,7 @@ export class Mage extends Character {
     baseAttackSpeed = 0.5
     baseAttackRange = 3
     baseManaPerSecond = 10
-    baseMaxMana = 65
+    baseMaxMana = 120
     baseMaxHealth = 220
 
     abilityName = "Explosão"
@@ -17,9 +17,9 @@ export class Mage extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Explode o alvo atual, causando [info.main:${Math.round(this.abilityPower * 1.75)} (175% AP)] de dano, além de [info.main:${Math.round(
-            this.abilityPower * 0.5
-        )} (50% AP)] aos inimigos adjacentes.`
+        return `Explode o alvo atual, causando [info.main:${Math.round(this.abilityPower * 3.5)} (350% AP)] de dano, além de [info.main:${Math.round(
+            this.abilityPower
+        )} (100% AP)] aos inimigos adjacentes.`
     }
 
     override getAttackingAnimation(): string {
@@ -43,10 +43,10 @@ export class Mage extends Character {
         if (!this.target) return
 
         this.casting = true
-        const { value: damage, crit } = this.calculateDamage(this.abilityPower * 1.75 * multiplier)
+        const { value: damage, crit } = this.calculateDamage(this.abilityPower * 3.5 * multiplier)
 
         this.target.takeDamage(damage, this, "fire", crit)
-        new Explosion(this, this.target, this.abilityPower / 2, 2.5)
+        new Explosion(this, this.target, this.abilityPower, 2.5)
 
         this.casting = false
     }
