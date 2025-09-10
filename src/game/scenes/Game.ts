@@ -608,10 +608,9 @@ export class Game extends Scene {
                 this.playerGold = progress.playerGold
                 this.playerLives = progress.playerLives
                 this.currentRecord = progress.record || this.getCurrentRecord(progress)
-                progress.availableItems.forEach((item) => this.availableItems.add(ItemRegistry.create(item, this)))
-                progress.playerAugments.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
-                progress.enemyAugments.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
-                console.log(progress.availableItems)
+                progress.availableItems?.forEach((item) => this.availableItems.add(ItemRegistry.create(item, this)))
+                progress.playerAugments?.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
+                progress.enemyAugments?.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 this.availableItems.forEach((item) => item.dropOnBoard())
                 this.playerTeam.emitAugments()
             }
