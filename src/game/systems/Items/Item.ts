@@ -80,6 +80,12 @@ export class Item {
         this.scene.input.dragDistanceThreshold = 32 // pixels before drag starts (default ~16)
         this.scene.input.dragTimeThreshold = 40
 
+        // this.sprite.on("pointerup", (pointer: Phaser.Input.Pointer) => {
+        //     this.scene.availableItems.delete(this)
+        //     this.sprite.destroy(true)
+        //     this.scene.saveProgress()
+        // })
+
         this.sprite.on("pointerover", (pointer: Phaser.Input.Pointer) => {
             if (this.user) {
                 this.animateGlow(2)

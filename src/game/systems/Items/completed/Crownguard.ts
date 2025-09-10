@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Crownguard extends Item {
     key = "crownguard"
     name = "Coroa da guarda"
-    descriptionLines = ["+15% AP", "+10% resistência", "Passiva: Inicia o combate com um escudo de 100% AP"]
+    descriptionLines = ["+15% AP", "+10% armadura", "Passiva: Inicia o combate com um escudo de 200% AP"]
 
     constructor(scene: Game) {
         super(scene, "item-crownguard")
@@ -21,8 +21,8 @@ export class Crownguard extends Item {
         }
 
         const shieldOnStart = (state: GameState) => {
-            if (state === 'fighting') {
-                creature.gainShield(creature.abilityPower)
+            if (state === "fighting") {
+                creature.gainShield(creature.abilityPower * 2)
             }
         }
 

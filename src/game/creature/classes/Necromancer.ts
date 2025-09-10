@@ -1,6 +1,5 @@
 import { DarkSlashFx } from "../../fx/DarkSlashFx"
 import { MagicCircleFx } from "../../fx/MagicCircleFx"
-import { Deathbolt } from "../../objects/Deathbolt"
 import { Game } from "../../scenes/Game"
 import { DeathEaterTrait } from "../../systems/Traits/DeathEaterTrait"
 import { Character } from "../character/Character"
@@ -14,7 +13,6 @@ export class Necromancer extends Character {
     baseMaxMana = 150
     baseMaxHealth = 325
     baseArmor: number = 5
-    baseAbilityPower: number = 50
 
     abilityName = "Arise"
 

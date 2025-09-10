@@ -8,7 +8,7 @@ export class Sunfire extends Item {
     name = "Capa de Fogo Solar"
     descriptionLines = [
         "+10% vida máxima",
-        '+10% resistência',
+        "+10% armadura",
         "Passiva: Ao ser atacado, aplica uma queimadura no inimigo que causa 1% da vida máxima do atacante, por segundo, dura 5 segundos.",
     ]
     burns = new WeakMap<Creature, Dot>()
@@ -58,5 +58,4 @@ export class Sunfire extends Item {
             delete creature.eventHandlers.sunfire
         }
     }
-
 }

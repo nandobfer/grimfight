@@ -57,11 +57,11 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
                             },
                         }}
                     >
-                        <CharacterAvatar name={character.name} size={((isMobile ? 7 : 2.5) / 100) * window.innerWidth} />
+                        <CharacterAvatar name={character.name} size={((isMobile ? 7 : 2.5) / 100) * window.innerWidth} highlight={!!highlight} />
                     </Badge>
 
                     <Box sx={{ width: 1, gap: 1, justifyContent: "center" }}>
-                        <Typography variant="subtitle2" fontSize={isMobile ? 8 : 13} color={highlight ? "primary" : "secondary"}>
+                        <Typography variant="subtitle2" fontSize={isMobile ? 8 : 13} color={highlight ? "info" : "secondary"}>
                             {capitalize(character.name)}
                         </Typography>
 

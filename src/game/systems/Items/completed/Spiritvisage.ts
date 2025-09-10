@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Spiritvisage extends Item {
     key = "spiritvisage"
     name = "Semblante Espiritual"
-    descriptionLines = ['+10% vida máxima', "+5% resistência", "+20% mana/s", "Passiva: Cura 3% da vida faltante a cada segundo"]
+    descriptionLines = ["+10% vida máxima", "+5% armadura", "+20% mana/s", "Passiva: Cura 3% da vida faltante a cada segundo"]
 
     constructor(scene: Game) {
         super(scene, "item-spiritvisage")

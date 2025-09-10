@@ -14,7 +14,7 @@ export class Strikersflail extends Item {
     override applyModifier(creature: Creature): void {
         creature.maxHealth *= 1 + 0.1
         creature.health *= 1 + 0.1
-        creature.critChance += 1
+        creature.critChance += 10
 
         const multiplierFromCrit = creature.critChance / 100
         creature.maxHealth *= 1 + multiplierFromCrit

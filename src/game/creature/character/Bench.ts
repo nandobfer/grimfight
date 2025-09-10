@@ -82,12 +82,6 @@ export class Bench {
                 character.destroy(true)
                 this.save()
             }
-
-            return
-        }
-
-        if (this.team.getChildren(false, true).length < this.scene.max_characters_in_board) {
-            this.summon(dto.id)
         }
     }
 

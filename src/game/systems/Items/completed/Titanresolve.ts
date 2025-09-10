@@ -7,8 +7,8 @@ export class Titanresolve extends Item {
     name = "Resolução Titânica"
     descriptionLines = [
         "+10% AS",
-        "+5% resistência",
-        "Passiva: Ganha 1% AD e AP ao receber dano, acumulando até 25 vezes. Com máximo de acúmulos, ganha 10% resistência.",
+        "+5% armadura",
+        "Passiva: Ganha 1% AD e AP ao receber dano, acumulando até 25 vezes. Com máximo de acúmulos, ganha 10% armadura.",
     ]
     stacks = 0
 

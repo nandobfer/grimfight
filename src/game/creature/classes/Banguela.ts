@@ -9,7 +9,6 @@ export class Banguela extends Character {
     baseManaPerSecond = 10
     baseMaxMana = 125
     baseMaxHealth = 400
-    baseAbilityPower: number = 30
     baseAttackDamage: number = 25
 
     abilityName = "Orbes flamejantes"
@@ -19,7 +18,7 @@ export class Banguela extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Lança [info.main:${Math.floor(this.abilityPower / 10)} (10% AP)] bolas de fogo no alvo, cada uma [error.main:${Math.round(
+        return `Lança [info.main:${Math.floor(this.abilityPower * 0.05)} (5% AP)] bolas de fogo no alvo, cada uma [error.main:${Math.round(
             this.attackDamage * 1
         )} (100% AD)] de dano.`
     }
@@ -44,7 +43,7 @@ export class Banguela extends Character {
     override castAbility(multiplier = 1): void {
         this.casting = true
 
-        const fireballsCount = Math.floor(this.abilityPower / 10)
+        const fireballsCount = Math.floor(this.abilityPower * 0.05)
         for (let count = 1; count <= fireballsCount; count++) {
             const { x, y } = this.randomPointAround()
             const fireball = new Fireball(this)

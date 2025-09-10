@@ -868,7 +868,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     getMergeResult(item: Item) {
-        if (!ItemRegistry.isComponent(item)) return
+        if (!ItemRegistry.isComponent(item) || this.items.has(item)) return
 
         for (const component of this.items) {
             if (ItemRegistry.isComponent(component)) {

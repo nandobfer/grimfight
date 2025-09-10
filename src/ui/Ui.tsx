@@ -14,6 +14,7 @@ import { CharacterDrawer } from "./CharacterSheet/CharacerDrawer"
 import { Traits } from "./Traits/Traits"
 import { GameMenu } from "./GameMenu/GameMenu"
 import { ItemTooltip } from "./ItemTooltip"
+import { ItemAnvilModal } from "./ItemAnvilModal/ItemAnvilModal"
 
 interface UiProps {}
 
@@ -80,6 +81,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                         </Box>
 
                         <GameMenu game={game} />
+                        <ItemAnvilModal game={game} />
                         <ItemTooltip />
                     </>
                 )}

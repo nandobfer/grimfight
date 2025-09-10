@@ -5,11 +5,7 @@ import { Item } from "../Item"
 export class Quicksilver extends Item {
     key = "quicksilver"
     name = "Faixa de Mercúrio"
-    descriptionLines = [
-        "+10% resistência",
-        "+15% chance de crítico",
-        "Passiva: Recebe chance de acerto crítico equivalente a sua resistência",
-    ]
+    descriptionLines = ["+10% armadura", "+15% chance de crítico", "Passiva: Recebe chance de acerto crítico equivalente a sua armadura"]
 
     constructor(scene: Game) {
         super(scene, "item-quicksilver")
@@ -20,7 +16,5 @@ export class Quicksilver extends Item {
         creature.critChance += 15
 
         creature.critChance += creature.armor
-
     }
-
 }

@@ -4,13 +4,11 @@ import { Character } from "../character/Character"
 
 export class Vania extends Character {
     baseAttackSpeed = 1.35
-    baseApeed = 80
     baseAttackDamage = 15
     baseAttackRange = 4
     baseMaxHealth = 200
 
     baseMaxMana: number = 0
-    baseAbilityPower: number = 35
     manaLocked: boolean = true
     attacksCount = 0
 
@@ -22,8 +20,8 @@ export class Vania extends Character {
 
     override getAbilityDescription(): string {
         return `Cada [primary.main:3º ataque] atira uma seta de prata no inimigo, causando [secondary.main:${Math.round(
-            this.attackDamage + this.abilityPower
-        )}][error.main: (100% AD)][info.main: (100% AP)] de dano verdadeiro.`
+            this.attackDamage + this.abilityPower * 0.7
+        )}][error.main: (100% AD)][info.main: (70% AP)] de dano verdadeiro.`
     }
 
     override extractAttackingAnimation() {
@@ -62,7 +60,7 @@ export class Vania extends Character {
         arrow.light = this.scene.lights.addLight(this.x, this.y, 45, 0xffffff, 10)
         // arrow.setScale(0.15, 0.15)
         arrow.onHit = (target) => {
-            const { value, crit } = this.calculateDamage(this.attackDamage + this.abilityPower)
+            const { value, crit } = this.calculateDamage(this.attackDamage + this.abilityPower * 0.7)
             target.takeDamage(value, this, "true", crit)
             arrow.destroy()
             this.emit("afterAttack")

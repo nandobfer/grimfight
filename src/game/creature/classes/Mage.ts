@@ -9,7 +9,6 @@ export class Mage extends Character {
     baseManaPerSecond = 10
     baseMaxMana = 65
     baseMaxHealth = 220
-    baseAbilityPower: number = 50
 
     abilityName = "Explosão"
 

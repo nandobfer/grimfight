@@ -6,7 +6,7 @@ export class Steadfastheart extends Item {
     key = "steadfastheart"
     name = "Coração Inabalável"
     descriptionLines = [
-        "+10% resistência",
+        "+10% armadura",
         "+15% chance de crítico",
         "Passiva: Ao receber dano, tem uma chance equivalente a chance de acerto crítico de receber um escudo equivalente a metade do dano sofrido.",
     ]

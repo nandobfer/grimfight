@@ -7,15 +7,13 @@ import { DamageType } from "../../ui/DamageNumbers"
 import { Character } from "../character/Character"
 import { Creature } from "../Creature"
 
-const humanMultiplier = 3
+const humanMultiplier = 1
 
 type DruidForm = "human" | "bear" | "cat"
 export class Helyna extends Character {
     baseAttackSpeed = 1
-    baseSpeed = 60
     baseAttackDamage = 20
     baseMaxMana = 120
-    baseAbilityPower = 20
     baseAttackRange = 3
     baseMaxHealth: number = 400
 
@@ -42,22 +40,22 @@ export class Helyna extends Character {
         const placement = this.getPlacement()
 
         const bear = `[primary.main:Urso] (frente): Ganha [default:(50%)] de tamanho, [primary.main.main: 10%] armadura, [success.main: ${Math.round(
-            this.abilityPower * 10
-        )}] [info.main:(1000% AP)] de vida máxima e [error.main: ${Math.round(this.abilityPower * 0.25)}] [info.main: (25% AP)] de ataque. 
+            this.abilityPower * 3
+        )}] [info.main:(300% AP)] de vida máxima e [error.main: ${Math.round(this.abilityPower * 0.1)}] [info.main: (10% AP)] de ataque. 
 Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [primary.main:10%] e causando [info.main:${Math.round(
-            this.abilityPower * 0.3
-        )} (30% AP)] de dano a atacantes.`
+            this.abilityPower * 0.1
+        )} (10% AP)] de dano a atacantes.`
 
         const cat = `[primary.main:Gato] (meio): Ganha velocidade, [error.main:${Math.round(
-            this.abilityPower
-        )}] [info.main:(100% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${Math.round(
-            this.abilityPower / 100
+            this.abilityPower * 0.3
+        )}] [info.main:(30% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${Math.round(
+            this.abilityPower * 0.01
         )}] [info.main:(1% AP)] chance de crítico. 
 Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(this.attackDamage * 3)} (300% AD)] de dano.`
 
         const human = `[primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${Math.round(
             this.abilityPower * humanMultiplier
-        )} (200% AP)].`
+        )} (100% AP)].`
 
         return placement === "front"
             ? bear
@@ -173,10 +171,10 @@ ${human}`
         this.setTexture("druid_bear")
         this.attackRange = 1
         const healthRate = this.health / this.maxHealth
-        this.maxHealth = this.bonusMaxHealth + this.abilityPower * 10
+        this.maxHealth = this.bonusMaxHealth + this.abilityPower * 3
         this.health = this.maxHealth * healthRate
         this.setScale(this.bonusScale * 1.5)
-        this.attackDamage = this.bonusAD + this.abilityPower * 0.25
+        this.attackDamage = this.bonusAD + this.abilityPower * 0.1
         this.armor += 10
         this.manaOnHit += 3
     }
@@ -184,14 +182,14 @@ ${human}`
     makeCat() {
         this.setTexture("druid_cat")
         this.attackRange = 1
-        this.attackDamage = this.bonusAD + this.abilityPower
+        this.attackDamage = this.bonusAD + this.abilityPower * 0.3
         this.attackSpeed = this.bonusAttackSpeed * 1.25
         this.speed = this.bonusSpeed * 2
-        this.critChance = this.bonusCriticalChance + this.abilityPower / 100
+        this.critChance = this.bonusCriticalChance + this.abilityPower * 0.01
     }
 
     dealThornsDamage(target: Creature) {
-        const { value, crit } = this.calculateDamage(this.abilityPower * 0.3)
+        const { value, crit } = this.calculateDamage(this.abilityPower * 0.1)
         target.takeDamage(value, this, "poison", crit)
     }
 

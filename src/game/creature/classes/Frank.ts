@@ -4,14 +4,12 @@ import { Creature } from "../Creature"
 
 export class Frank extends Character {
     baseAttackSpeed = 1.25
-    baseApeed = 80
     baseAttackDamage = 13
     baseAttackRange = 1
     baseMaxHealth = 500
     baseArmor: number = 10
 
     baseMaxMana: number = 0
-    baseAbilityPower: number = 30
     manaLocked: boolean = true
     attacksCount = 0
 
@@ -22,7 +20,7 @@ export class Frank extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Cada [primary.main:3º ataque] drena [info.main:${Math.round(this.abilityPower * 0.3)} (30% AP)] de vida do alvo.`
+        return `Cada [primary.main:3º ataque] drena [info.main:${Math.round(this.abilityPower * 0.2)} (20% AP)] de vida do alvo.`
     }
 
     override extractAttackingAnimation() {
@@ -55,7 +53,7 @@ export class Frank extends Character {
     }
 
     drainLife(target: Creature) {
-        const damage = this.calculateDamage(this.abilityPower * 0.3)
+        const damage = this.calculateDamage(this.abilityPower * 0.2)
         target.takeDamage(damage.value, this, "poison", damage.crit)
         this.heal(damage.value, damage.crit)
     }

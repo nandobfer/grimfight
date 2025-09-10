@@ -1,6 +1,9 @@
 import React from "react"
 import { Avatar, Box, Divider, Paper, Typography } from "@mui/material"
 import { Item } from "../../game/systems/Items/Item"
+import { ItemRegistry } from "../../game/systems/Items/ItemRegistry"
+import { ItemIcon } from "./ItemIcon"
+import { ItemRecipe } from "./ItemRecipe"
 
 interface ItemTooltipContentProps {
     item: Item
@@ -8,6 +11,9 @@ interface ItemTooltipContentProps {
 }
 
 export const ItemTooltipContent: React.FC<ItemTooltipContentProps> = ({ item, hideBackground }) => {
+    const isComponent = ItemRegistry.isComponent(item)
+    const recipes = ItemRegistry.getComponentRecipes(item.key)
+
     return (
         <Paper
             elevation={hideBackground ? 0 : undefined}
@@ -20,7 +26,7 @@ export const ItemTooltipContent: React.FC<ItemTooltipContentProps> = ({ item, hi
             }}
         >
             <Box sx={{ alignItems: "center", gap: 1 }}>
-                <Avatar variant="rounded" src={`/assets/items/${item.key}.png`} sx={{ width: 30, aspectRatio: 1, height: "auto" }} />
+                <ItemIcon itemKey={item.key} />
                 <Typography fontWeight={"bold"} fontSize={14} color="primary.main">
                     {item.name}
                 </Typography>
@@ -31,6 +37,17 @@ export const ItemTooltipContent: React.FC<ItemTooltipContentProps> = ({ item, hi
                     {line}
                 </Typography>
             ))}
+
+            {isComponent && (
+                <>
+                    <Divider />
+                    <Box sx={{ flexDirection: "column", gap: 0.5 }}>
+                        {recipes.map((recipe, index) => (
+                            <ItemRecipe recipe={recipe} key={recipe.result + index} game={item.scene} />
+                        ))}
+                    </Box>
+                </>
+            )}
         </Paper>
     )
 }

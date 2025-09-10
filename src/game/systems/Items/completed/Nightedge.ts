@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Nightedge extends Item {
     key = "nightedge"
     name = "Lâmina da noite"
-    descriptionLines = ["+15% AD", "+5% resistência", "Passiva: Ao ficar com 60% de vida pela primeira vez, fica inalvejável momentaneamente"]
+    descriptionLines = ["+15% AD", "+5% armadura", "Passiva: Ao ficar com 60% de vida pela primeira vez, fica inalvejável momentaneamente"]
 
     constructor(scene: Game) {
         super(scene, "item-nightedge")

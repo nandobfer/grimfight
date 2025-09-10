@@ -10,7 +10,6 @@ export class Lizwan extends Character {
     baseCritChance = 20
     baseMaxMana: number = 0
     // baseMaxMana: number = 50
-    baseAbilityPower: number = 25
     manaLocked: boolean = true
 
     abilityName = "Deadly Poison"
@@ -44,8 +43,8 @@ export class Lizwan extends Character {
     override getAbilityDescription(): string {
         return `Ataques aplicam um acúmulo de veneno mortal.
 O veneno causa [info.main:${Math.round(
-            this.abilityPower * 0.1
-        )} (10% AP)] de dano por segundo. Dura 10 segundos e [primary.main:acumula indefinidamente].`
+            this.abilityPower * 0.05
+        )} (5% AP)] de dano por segundo. Dura 10 segundos e [primary.main:acumula indefinidamente].`
     }
 
     override landAttack(): void {
@@ -61,7 +60,7 @@ O veneno causa [info.main:${Math.round(
             damageType: "poison",
             duration: 10000,
             target: this.target,
-            tickDamage: this.abilityPower * 0.1,
+            tickDamage: this.abilityPower * 0.05,
             tickRate: 1000,
             user: this,
         })

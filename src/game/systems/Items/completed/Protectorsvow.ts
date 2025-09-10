@@ -6,7 +6,7 @@ export class Protectorsvow extends Item {
     key = "protectorsvow"
     name = "Juramento do Protetor"
     descriptionLines = [
-        "+10% resistência",
+        "+10% armadura",
         "+20% mana/s",
         "Passiva: Ganha 20 de mana no início do combate",
         "Passiva: Ganha um escudo de 15% da vida no início do combate",

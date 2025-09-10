@@ -27,9 +27,9 @@ export class Character extends Creature {
     private glowFx: Phaser.FX.Glow
     private preDrag?: { x: number; y: number }
 
-    baseSpeed = 70
+    baseSpeed = 100
     baseMaxHealth = 300
-    baseAbilityPower: number = 0
+    baseAbilityPower: number = 50
 
     abilityDescription: string = ""
     abilityName: string = ""
@@ -362,14 +362,14 @@ export class Character extends Creature {
 
     override equipItem(item: Item, fromThiefsGloves = false): void {
         super.equipItem(item, fromThiefsGloves)
-        this.scene.availableItems.delete(item)
+        if (!fromThiefsGloves) this.scene.availableItems.delete(item)
         this.team.saveCurrentCharacters()
         this.scene.saveProgress()
     }
 
-    override unequipItem(item: Item): void {
-        super.unequipItem(item)
-        this.scene.availableItems.add(item)
+    override unequipItem(item: Item, fromThiefsGloves = false): void {
+        super.unequipItem(item, fromThiefsGloves)
+        if (!fromThiefsGloves) this.scene.availableItems.add(item)
         this.team.saveCurrentCharacters()
         this.scene.saveProgress()
     }

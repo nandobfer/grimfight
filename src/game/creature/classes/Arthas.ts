@@ -7,11 +7,9 @@ import { Character } from "../character/Character"
 
 export class Arthas extends Character {
     baseAttackSpeed = 0.75
-    baseSpeed = 80
     baseAttackDamage = 30
     baseMaxMana: number = 80
     baseMaxHealth: number = 425
-    baseAbilityPower: number = 15
     baseLifesteal: number = 10
 
     abilityName: string = "Golpe Gélido"
@@ -33,14 +31,14 @@ export class Arthas extends Character {
     override getAbilityDescription(): string {
         return `Passivo: Rouba [primary.main:10%] de todo dano causado.
 1º lançamento: Atinge o alvo atual com um golpe gélido causando [error.main:${Math.round(
-            this.attackDamage * 2 + this.abilityPower
-        )} (200% AD)] [info.main: (100% AP)] de dano.
+            this.attackDamage * 2 + this.abilityPower * 0.3
+        )} (200% AD)] [info.main: (30% AP)] de dano.
 2º lançamento: Golpeia a área a sua frente causando [error.main:${Math.round(
-            this.attackDamage + this.abilityPower
-        )} (100% AD)] [info.main: (100% AP)] de dano aos inimigos atingidos.
+            this.attackDamage + this.abilityPower * 0.3
+        )} (100% AD)] [info.main: (30% AP)] de dano aos inimigos atingidos.
 3º lançamento: Invoca pilares de gelo embaixo de até 3 inimigos, causando [error.main:${Math.round(
-            this.attackDamage * 0.75 + this.abilityPower
-        )} (75% AD)] [info.main: (100% AP)] de dano a cada um.`
+            this.attackDamage * 0.75 + this.abilityPower * 0.3
+        )} (75% AD)] [info.main: (30% AP)] de dano a cada um.`
     }
 
     addLightEffect(lightParams: LightParams) {
@@ -100,22 +98,24 @@ export class Arthas extends Character {
 
         switch (this.castsCount) {
             case 1:
-                const damage = (this.attackDamage * 2 + this.abilityPower) / 2
+                const damage = (this.attackDamage * 2 + this.abilityPower * 0.3) / 2
                 new FrostStrike(this, this.target, damage, 0.5)
                 this.scene.time.delayedCall(500, () => {
                     if (this.target) new FrostStrike(this, this.target, damage, 0.5)
                 })
                 break
             case 2:
-                new FrostStrike(this, this.target, this.attackDamage + this.abilityPower, 1.4)
+                new FrostStrike(this, this.target, this.attackDamage + this.abilityPower * 0.3, 1.4)
                 break
             case 3:
                 const targets = 3
                 const enemies = this.target.team.getChildren(true, true)
                 for (let i = 1; i <= targets; i++) {
-                    const iceSpikesDamage = this.calculateDamage(this.attackDamage * 0.75 + this.abilityPower)
+                    const iceSpikesDamage = this.calculateDamage(this.attackDamage * 0.75 + this.abilityPower * 0.3)
                     const target = RNG.pick(enemies)
-                    new IceSpike(this.scene || target.scene, target)
+                    try {
+                        new IceSpike(this.scene || target.scene, target)
+                    } catch {}
                     target.takeDamage(iceSpikesDamage.value, this, "cold", iceSpikesDamage.crit)
                 }
 

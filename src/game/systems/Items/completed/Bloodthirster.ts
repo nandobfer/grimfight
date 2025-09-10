@@ -7,7 +7,7 @@ export class Bloodthirster extends Item {
     name = "Sedenta por Sangue"
     descriptionLines = [
         "+20% AD",
-        "+5% resistência",
+        "+5% armadura",
         "+20% roubo de vida",
         "Passiva: Ao ficar com 40% de vida pela primeira vez, recebe um escudo de 25% da vida máxima",
     ]

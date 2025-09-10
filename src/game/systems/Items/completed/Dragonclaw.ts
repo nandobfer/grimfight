@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Dragonclaw extends Item {
     key = "dragonclaw"
     name = "Garra do Dragão"
-    descriptionLines = ['+5% vida máxima', "+15% resistência", "Passiva: Cura 3% da vida máxima a cada 2 segundos"]
+    descriptionLines = ["+5% vida máxima", "+15% armadura", "Passiva: Cura 3% da vida máxima a cada 2 segundos"]
 
     constructor(scene: Game) {
         super(scene, "item-dragonclaw")

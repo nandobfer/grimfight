@@ -7,7 +7,6 @@ export class Barbarian extends Character {
     baseMaxMana = 0
     manaLocked: boolean = true
     baseAttackSpeed: number = 1.15
-    baseAbilityPower: number = 25
     baseArmor: number = 10
 
     abilityName: string = "Berserker"
@@ -22,12 +21,9 @@ export class Barbarian extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Ganha [warning.main:1%] velocidade de ataque e resistência para cada porcentagem de vida perdida.`
+        return `Ganha [warning.main:1%] velocidade de ataque e armadura para cada porcentagem de vida perdida.`
     }
 
-    getHealValue() {
-        return (1 - this.health / this.maxHealth) * 0.12 * this.maxHealth + this.abilityPower * 2
-    }
 
     // castAbility(): void {
     //     this.casting = true

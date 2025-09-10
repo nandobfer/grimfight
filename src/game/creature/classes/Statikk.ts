@@ -5,10 +5,8 @@ import { Character } from "../character/Character"
 export class Statikk extends Character {
     baseMaxHealth: number = 400
     baseAttackSpeed = 1.2
-    baseSpeed = 80
     baseAttackDamage = 20
     baseMaxMana: number = 0
-    baseAbilityPower: number = 20
     manaLocked: boolean = true
 
     abilityName: string = "Fúria de Guinsoo"
@@ -21,8 +19,8 @@ export class Statikk extends Character {
 
     override getAbilityDescription(): string {
         return `Cada [primary.main:3º ataque] lança uma cadeia de raios no alvo, causando [info.main:${Math.round(
-            this.abilityPower * 1.5
-        )} (120% AP)] de dano e se propaga 5x, causando dano reduzido a cada propagação`
+            this.abilityPower * 0.75
+        )} (75% AP)] de dano e se propaga 5x, causando dano reduzido a cada propagação`
     }
 
     override extractAttackingAnimation() {
@@ -54,7 +52,7 @@ export class Statikk extends Character {
         if (this.attacksCount === 3) {
             this.attacksCount = 0
 
-            const lightning = new LightningBolt(this, this.abilityPower * 1.5, 5)
+            const lightning = new LightningBolt(this, this.abilityPower * 0.75, 5)
             lightning.fire(this.target)
         }
     }

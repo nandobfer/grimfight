@@ -8,8 +8,8 @@ export class Adaptivehelm extends Item {
     descriptionLines = [
         "+25% mana/s",
         "Passiva: Ganha bônus baseado na posição inicial:",
-        "Frente: +10% resistência e +2 mana ao ser atacado",
-        "Meio: +5% AD e AP, +5% resistência e +1 de mana por ataque e ao ser atacado",
+        "Frente: +10% armadura e +2 mana ao ser atacado",
+        "Meio: +5% AD e AP, +5% armadura e +1 de mana por ataque e ao ser atacado",
         "Trás: +10% AD e AP e +2 de mana por ataque",
     ]
 

@@ -1,4 +1,5 @@
 import { RNG } from "../../tools/RNG"
+import { AnvilAugment } from "./AnvilAugment"
 import { AttackerAugment } from "./AttackerAugment"
 import { Augment } from "./Augment"
 import { BattlemageAugment } from "./BattlemageAugment"
@@ -69,3 +70,4 @@ AugmentsRegistry.register("dexterous", DexterousAugment)
 AugmentsRegistry.register("critical", CriticalAugment)
 AugmentsRegistry.register("devastator", DevastatorAugment)
 AugmentsRegistry.register("item", ItemAugment)
+AugmentsRegistry.register("anvil", AnvilAugment)

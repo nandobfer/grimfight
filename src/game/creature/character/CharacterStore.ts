@@ -117,6 +117,11 @@ export class CharacterStore {
         item.sold = true
         this.team.bench.add(item.character)
 
+        // auto summon if empty slot on the board
+        if (this.team.getChildren(false, true).length < this.scene.max_characters_in_board) {
+            this.team.bench.summon(item.character.id)
+        }
+
         if (!recurrentBuy && mustChain) {
             for (const next of nextToBuy) {
                 // Each is guaranteed affordable and available by the pre-checks above
