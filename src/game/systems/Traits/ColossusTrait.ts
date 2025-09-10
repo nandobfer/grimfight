@@ -1,14 +1,14 @@
 import { Character } from "../../creature/character/Character"
 import { Trait } from "./Trait"
 
-type TraitBoosts = "healthMultiplier" | "armor"| 'resistance'
+type TraitBoosts = "healthMultiplier" | "armor"
 
 export class ColossusTrait extends Trait {
     name = "Colosso"
-    description = "Colossos ganham {0} vida, {1} armadura e {2} de resistencia."
+    description = "Colossos ganham {0} vida e {1} armadura."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { healthMultiplier: 0.15, armor: 10, resistance: 10, descriptionParams: ["15%", "10", '10%'] }],
-        [3, { healthMultiplier: 0.30, armor: 15, resistance: 20, descriptionParams: ["30%", "15", '20%'] }],
+        [2, { healthMultiplier: 0.15, armor: 10, descriptionParams: ["15%", "10%"] }],
+        [3, { healthMultiplier: 0.3, armor: 20, descriptionParams: ["30%", "20%"] }],
     ])
 
     constructor(comp: string[]) {
@@ -23,7 +23,5 @@ export class ColossusTrait extends Trait {
         character.maxHealth *= 1 + values.healthMultiplier
         character.health *= 1 + values.healthMultiplier
         character.armor += values.armor
-        character.resistance += values.resistance
     }
 }
-

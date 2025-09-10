@@ -18,7 +18,7 @@ export class Sunfire extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.resistance += 10
+        creature.armor += 10
         creature.maxHealth *= 1 + 0.1
         creature.health *= 1 + 0.1
 

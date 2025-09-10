@@ -13,7 +13,7 @@ export class Crownguard extends Item {
 
     override applyModifier(creature: Creature): void {
         creature.abilityPower *= 1 + 0.15
-        creature.resistance += 10
+        creature.armor += 10
 
         const previousHandler = creature.eventHandlers.crownguard
         if (previousHandler) {

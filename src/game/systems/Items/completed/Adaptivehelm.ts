@@ -24,14 +24,14 @@ export class Adaptivehelm extends Item {
 
         switch (placement) {
             case "front": {
-                creature.resistance += 10
+                creature.armor += 10
                 creature.manaOnHit += 2
                 break
             }
             case "middle": {
                 creature.attackDamage += 1 + 0.05
                 creature.abilityPower += 1 + 0.05
-                creature.resistance += 5
+                creature.armor += 5
                 creature.manaOnHit += 1
                 creature.manaPerAttack += 1
                 break

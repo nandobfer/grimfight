@@ -8,13 +8,13 @@ export class Barbarian extends Character {
     manaLocked: boolean = true
     baseAttackSpeed: number = 1.15
     baseAbilityPower: number = 25
-    baseResistance: number = 10
+    baseArmor: number = 10
 
     abilityName: string = "Berserker"
 
     bonusAttackSpeed = 0
     bonusSpeed = 0
-    bonusResistance = 0
+    bonusArmor = 0
     missingHealthMultiplier = 1
 
     constructor(scene: Game, id: string) {
@@ -42,7 +42,7 @@ export class Barbarian extends Character {
 
         this.attackSpeed = this.bonusAttackSpeed * this.missingHealthMultiplier
         this.speed = this.bonusSpeed * this.missingHealthMultiplier
-        this.resistance = this.bonusResistance * this.missingHealthMultiplier
+        this.armor = this.bonusArmor * this.missingHealthMultiplier
     }
 
     private multFromHealth(): number {
@@ -62,7 +62,7 @@ export class Barbarian extends Character {
         super.refreshStats()
         this.bonusAttackSpeed = this.attackSpeed
         this.bonusSpeed = this.speed
-        this.bonusResistance = this.resistance
+        this.bonusArmor = this.armor
         this.missingHealthMultiplier = 1
     }
 

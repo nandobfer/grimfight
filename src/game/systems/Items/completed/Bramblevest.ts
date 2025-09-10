@@ -14,7 +14,7 @@ export class Bramblevest extends Item {
     override applyModifier(creature: Creature): void {
         creature.maxHealth *= 1 + 0.05
         creature.health *= 1 + 0.05
-        creature.resistance += 15
+        creature.armor += 15
 
         const previousHandler = creature.eventHandlers.bramblevest
         if (previousHandler) {

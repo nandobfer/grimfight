@@ -16,7 +16,7 @@ export class Steadfastheart extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.resistance += 10
+        creature.armor += 10
         creature.critChance += 15
 
         const previousHandler = creature.eventHandlers.steadfastheart

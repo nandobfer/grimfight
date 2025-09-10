@@ -18,7 +18,7 @@ export class Bloodthirster extends Item {
 
     override applyModifier(creature: Creature): void {
         creature.attackDamage *= 1 + 0.2
-        creature.resistance += 5
+        creature.armor += 5
         creature.lifesteal += 20
 
         const previousHandler = creature.eventHandlers.bloodthirster

@@ -16,10 +16,10 @@ export class Quicksilver extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.resistance += 10
+        creature.armor += 10
         creature.critChance += 15
 
-        creature.critChance += creature.resistance
+        creature.critChance += creature.armor
 
     }
 

@@ -18,7 +18,7 @@ export class Protectorsvow extends Item {
 
     override applyModifier(creature: Creature): void {
         creature.manaPerSecond *= 1 + 0.2
-        creature.resistance += 10
+        creature.armor += 10
 
         const previousHandler = creature.eventHandlers.protectorsvow
         if (previousHandler) {

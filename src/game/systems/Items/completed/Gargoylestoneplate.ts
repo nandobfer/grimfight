@@ -12,6 +12,6 @@ export class Gargoylestoneplate extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.resistance += 20
+        creature.armor += 20
     }
 }

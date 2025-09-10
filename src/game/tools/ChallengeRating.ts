@@ -5,7 +5,6 @@ import { MonsterRegistry } from "../creature/monsters/MonsterRegistry"
 export type StatsLike = {
     baseMaxHealth: number
     baseArmor: number
-    baseResistance: number
     baseAttackDamage: number
     baseAttackSpeed: number
     baseCritChance: number
@@ -36,7 +35,7 @@ function expectedPerHit(s: StatsLike) {
 }
 
 function rawCR(s: StatsLike, p: CRParams) {
-    const fracTaken = Math.max(p.minFractionTaken, (Math.max(1, p.refHit - s.baseArmor) / p.refHit) * (1 - s.baseResistance / 100))
+    const fracTaken = Math.max(p.minFractionTaken, (Math.max(1, p.refHit) / p.refHit) * (1 - s.baseArmor / 100))
     let ehp = s.baseMaxHealth / fracTaken
     if (s.baseAttackRange > p.baseRange) {
         ehp *= 1 + p.rangeEhpBonus * (s.baseAttackRange - p.baseRange)

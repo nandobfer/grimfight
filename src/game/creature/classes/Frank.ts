@@ -8,7 +8,7 @@ export class Frank extends Character {
     baseAttackDamage = 13
     baseAttackRange = 1
     baseMaxHealth = 500
-    baseResistance: number = 10
+    baseArmor: number = 10
 
     baseMaxMana: number = 0
     baseAbilityPower: number = 30

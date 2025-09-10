@@ -18,7 +18,7 @@ export class Titanresolve extends Item {
 
     override applyModifier(creature: Creature): void {
         creature.attackSpeed *= 1 + 0.1
-        creature.resistance += 5
+        creature.armor += 5
         this.stacks = 0
 
         const previousHandler = creature.eventHandlers.titanresolve
@@ -33,7 +33,7 @@ export class Titanresolve extends Item {
                 creature.abilityPower *= 1 + 0.01
             } else {
                 creature.setScale(creature.scale * 1.5)
-                creature.resistance += 10
+                creature.armor += 10
                 creature.off("damage-taken", onHit)
             }
         }

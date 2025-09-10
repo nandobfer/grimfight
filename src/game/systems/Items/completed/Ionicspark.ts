@@ -13,6 +13,6 @@ export class Ionicspark extends Item {
 
     override applyModifier(creature: Creature): void {
         creature.abilityPower *= 1 + 0.25
-        creature.resistance += 10
+        creature.armor += 10
     }
 }

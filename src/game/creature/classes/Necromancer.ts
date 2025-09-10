@@ -12,7 +12,7 @@ export class Necromancer extends Character {
     baseAttackRange = 3
     baseManaPerSecond = 10
     baseMaxMana = 150
-    baseMaxHealth = 300
+    baseMaxHealth = 325
     baseArmor: number = 5
     baseAbilityPower: number = 50
 

@@ -4,8 +4,7 @@ import { Character } from "../character/Character"
 
 export class Knight extends Character {
     baseMaxHealth = 425
-    baseArmor = 7
-    baseResistance = 10
+    baseArmor = 10
     baseAttackDamage = 15
     baseMaxMana = 90
 

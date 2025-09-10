@@ -42,9 +42,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     baseManaPerSecond = 10
     baseManaPerAttack = 10
     baseManaOnHit = 2
-    baseArmor = 0
     /** incremental, base + x + y */
-    baseResistance = 0
+    baseArmor = 0
     baseSpeed = 50
     /** incremental, base + x + y */
     baseCritChance = 10
@@ -60,9 +59,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     maxMana = 0
     manaPerSecond = 0
     manaPerAttack = 0
-    armor = 0
     /** incremental, base + x + y */
-    resistance = 0
+    armor = 0
     speed = 0
     /** incremental, base + x + y */
     critChance = 0
@@ -179,7 +177,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaPerSecond = this.baseManaPerSecond
         this.manaPerAttack = this.baseManaPerAttack
         this.armor = this.baseArmor
-        this.resistance = this.baseResistance
         this.critChance = this.baseCritChance
         this.critDamageMultiplier = this.baseCritDamageMultiplier
         this.lifesteal = this.baseLifesteal
@@ -740,8 +737,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     takeDamage(damage: number, attacker: Creature, type: DamageType, crit = false, emit = true) {
-        const incomingDamage = damage - this.armor
-        const resistanceMultiplier = 1 - this.resistance / 100
+        const incomingDamage = damage
+        const resistanceMultiplier = 1 - this.armor / 100
         let finalDamage = type === "true" ? damage : Math.max(0, incomingDamage * resistanceMultiplier)
 
         if (finalDamage <= 0) {

@@ -17,13 +17,11 @@ export class Helyna extends Character {
     baseMaxMana = 120
     baseAbilityPower = 20
     baseAttackRange = 3
-    baseArmor = 4
     baseMaxHealth: number = 400
 
     abilityName = "Druidismo"
 
     bonusMaxHealth = 0
-    bonusArmor = 0
     bonusScale = 0
     bonusAD = 0
     bonusSpeed = 0
@@ -43,14 +41,12 @@ export class Helyna extends Character {
     override getAbilityDescription(): string {
         const placement = this.getPlacement()
 
-        const bear = `[primary.main:Urso] (frente): Ganha [default:(50%)] de tamanho, [warning.main: ${Math.round(
-            this.abilityPower * 0.15
-        )}] [info.main:(15% AP)] armadura, [success.main: ${Math.round(
+        const bear = `[primary.main:Urso] (frente): Ganha [default:(50%)] de tamanho, [primary.main.main: 10%] armadura, [success.main: ${Math.round(
             this.abilityPower * 10
         )}] [info.main:(1000% AP)] de vida máxima e [error.main: ${Math.round(this.abilityPower * 0.25)}] [info.main: (25% AP)] de ataque. 
-Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [warning.main:${Math.round(
-            this.armor
-        )} (100% armor)] e causando o dobro desse valor a dano a atacantes.`
+Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [primary.main:10%] e causando [info.main:${Math.round(
+            this.abilityPower * 0.3
+        )} (30% AP)] de dano a atacantes.`
 
         const cat = `[primary.main:Gato] (meio): Ganha velocidade, [error.main:${Math.round(
             this.abilityPower
@@ -155,27 +151,22 @@ ${human}`
         const duration = 5000
         this.manaLocked = true
         this.thornsArmor = true
-        this.thornsFx = new ThornsFx(this.scene, this.x, this.y, this.scale * 0.45, this)
 
-        this.scene.tweens.add({
-            targets: this,
-            duration: 50,
-            armor: this.armor * 2 * multiplier,
-            yoyo: true,
-            hold: duration,
-            repeat: 0,
-            onComplete: () => {
-                this.manaLocked = false
-                this.thornsArmor = false
-                this.thornsFx?.destroy(true)
-                this.thornsFx = undefined
-                this.calcBearArmor()
-            },
+        if (!this.thornsFx) {
+            this.thornsFx = new ThornsFx(this.scene, this.x, this.y, this.scale * 0.45, this)
+        }
+
+        const bonusResistance = 10 * multiplier
+
+        this.armor += bonusResistance
+
+        this.scene.time.delayedCall(duration, () => {
+            this.manaLocked = false
+            this.thornsArmor = false
+            this.thornsFx?.destroy(true)
+            this.thornsFx = undefined
+            this.armor -= bonusResistance
         })
-    }
-
-    calcBearArmor() {
-        this.armor = this.bonusArmor + this.abilityPower * 0.15
     }
 
     makeBear() {
@@ -186,8 +177,8 @@ ${human}`
         this.health = this.maxHealth * healthRate
         this.setScale(this.bonusScale * 1.5)
         this.attackDamage = this.bonusAD + this.abilityPower * 0.25
-        this.calcBearArmor()
-        this.manaOnHit = 5
+        this.armor += 10
+        this.manaOnHit += 3
     }
 
     makeCat() {
@@ -200,7 +191,7 @@ ${human}`
     }
 
     dealThornsDamage(target: Creature) {
-        const { value, crit } = this.calculateDamage(this.armor * 1.5)
+        const { value, crit } = this.calculateDamage(this.abilityPower * 0.3)
         target.takeDamage(value, this, "poison", crit)
     }
 
@@ -229,7 +220,6 @@ ${human}`
         this.bonusSpeed = this.speed
         this.bonusMaxHealth = this.maxHealth
         this.bonusAD = this.attackDamage
-        this.bonusArmor = this.armor
         this.bonusAttackSpeed = this.attackSpeed
         this.bonusCriticalChance = this.critChance
         this.bonusScale = this.scale

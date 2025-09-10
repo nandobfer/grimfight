@@ -12,6 +12,6 @@ export class Cloak extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.resistance += 5
+        creature.armor += 5
     }
 }

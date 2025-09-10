@@ -16,7 +16,6 @@ const CR_1_MONSTER: Record<string, StatsLike> = {
     skeleton: {
         baseMaxHealth: 400,
         baseArmor: 0,
-        baseResistance: 0,
         baseAttackDamage: 15,
         baseAttackSpeed: 1,
         baseCritChance: 0,

@@ -78,7 +78,6 @@ type Snap = {
     critChance: number
     critDamageMultiplier: number
     armor: number
-    resistance: number
     speed: number
     lifesteal: number
 }
@@ -100,7 +99,6 @@ const makeSnap = (c: Character): Snap => ({
     critDamageMultiplier: c.critDamageMultiplier,
     lifesteal: c.lifesteal,
     armor: Math.round(c.armor),
-    resistance: Math.round(c.resistance),
     speed: Math.round(c.speed),
 })
 
@@ -231,13 +229,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                     </StatGroup>
                     <Divider />
                     <StatGroup color="success">
-                        <SheetData title={"Armadura"} value={snap.armor} tooltip="Quantidade de dano reduzido a cada ataque recebido" />
-                        <SheetData
-                            title={"Resistência"}
-                            value={snap.resistance}
-                            tooltip="Porcentagem do dano reduzido a cada ataque recebido"
-                            suffix="%"
-                        />
+                        <SheetData title={"Armadura"} value={snap.armor} tooltip="Porcentagem do dano reduzido a cada ataque recebido" suffix="%" />
                         <SheetData title={"Lifesteal"} value={snap.lifesteal} tooltip="Porcentagem do dano causado recuperado como vida" suffix="%" />
                     </StatGroup>
                 </Box>

@@ -31,7 +31,7 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
     }
 
     useEffect(() => {
-        const selectChar = (char: Character) => {
+        const selectChar = (char: Character | null) => {
             setSelectedCharacter(char)
             openingRef.current = true
             setTimeout(() => {

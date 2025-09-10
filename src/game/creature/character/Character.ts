@@ -298,7 +298,6 @@ export class Character extends Creature {
         this.baseMaxHealth *= 1.5
         this.baseAttackDamage *= 1.5
         this.baseAbilityPower *= 1.5
-        this.baseArmor *= 1.5
         this.reset()
         this.emitSelf()
     }
