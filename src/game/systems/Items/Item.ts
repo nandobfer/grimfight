@@ -8,7 +8,6 @@ export interface PointerPosition {
     y: number
 }
 
-
 export class Item {
     key: string
     name: string
@@ -17,7 +16,7 @@ export class Item {
     scene: Game
     user?: Creature
 
-    private glowFx: Phaser.FX.Glow
+    private border: Phaser.GameObjects.Rectangle
     private preDrag?: { x: number; y: number }
 
     private big_scale = 0.34
@@ -49,15 +48,61 @@ export class Item {
             this.scene = scene
             const os = scene.sys.game.device.os
             if (os.android || os.iOS) {
-                this.big_scale *= 2
+                this.big_scale *= 1.5
             }
 
             this.sprite = scene.add.image(10000, 10000, texture) // spawnin g outside game canvas
             this.sprite.setScale(this.big_scale)
             this.sprite.setDepth(1000)
+
+            this.border = scene.add
+                .rectangle(this.sprite.x, this.sprite.y, this.sprite.displayWidth + 6, this.sprite.displayHeight + 6)
+                .setOrigin(this.sprite.originX, this.sprite.originY)
+                .setStrokeStyle(3, 0xffffff, 1)
+                .setDepth(this.sprite.depth + 1)
+                .setVisible(false)
+                .setAlpha(0.9)
+
             this.handleMouseEvents()
+
+            this.sprite.once("destroy", () => this.border?.destroy(true))
             scene.events.once("gameover", () => this.sprite.destroy(true))
         }
+    }
+
+    private updateBorder() {
+        this.border
+            .setPosition(this.sprite.x, this.sprite.y)
+            .setRotation(this.sprite.rotation)
+            .setDisplaySize(this.sprite.displayWidth + 6, this.sprite.displayHeight + 6)
+    }
+
+    private showHoverBorder() {
+        this.updateBorder()
+        this.border.setVisible(true)
+        // tween to 1 and STAY there
+        this.scene.tweens.add({
+            targets: this.border,
+            alpha: 1,
+            duration: 160,
+            ease: "Sine.easeOut",
+        })
+    }
+
+    private showLooseBorder() {
+        this.updateBorder()
+        this.border.setVisible(true)
+        // tween to 0.6 for idle state
+        this.scene.tweens.add({
+            targets: this.border,
+            alpha: 0.6,
+            duration: 160,
+            ease: "Sine.easeOut",
+        })
+    }
+
+    private hideBorder() {
+        this.border.setVisible(false)
     }
 
     // each augment must override
@@ -72,9 +117,6 @@ export class Item {
     handleMouseEvents(): void {
         this.sprite.setInteractive({ useHandCursor: true })
 
-        this.glowFx = this.sprite.postFX.addGlow(0xffffff, 5, 0) // White glow
-        // this.glowFx.outerStrength = 0
-
         this.scene.input.setDraggable(this.sprite)
 
         this.scene.input.dragDistanceThreshold = 32 // pixels before drag starts (default ~16)
@@ -87,9 +129,7 @@ export class Item {
         // })
 
         this.sprite.on("pointerover", (pointer: Phaser.Input.Pointer) => {
-            if (this.user) {
-                this.animateGlow(2)
-            }
+            this.showHoverBorder()
 
             const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
 
@@ -97,9 +137,8 @@ export class Item {
         })
 
         this.sprite.on("pointerout", () => {
-            if (this.user) {
-                this.animateGlow(0)
-            }
+            if (!this.user) this.showLooseBorder() // back to 0.6 when loose
+            else this.hideBorder()
 
             Item.resetTooltip()
         })
@@ -107,7 +146,8 @@ export class Item {
         this.sprite.on("dragstart", (pointer: Phaser.Input.Pointer) => {
             if (this.scene.state !== "idle") return
 
-            console.log("dragstart")
+            this.showHoverBorder()
+
             this.preDrag = { x: this.sprite.x, y: this.sprite.y }
             Item.resetTooltip()
         })
@@ -115,20 +155,20 @@ export class Item {
         this.sprite.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
             // if (this.scene.state !== "idle") return
             this.sprite.setPosition(dragX, dragY)
-
+            this.updateBorder()
             this.handleCreatureOnPoint(pointer)
         })
 
         this.sprite.on("dragend", (pointer: Phaser.Input.Pointer) => {
             // if (this.scene?.state !== "idle") return
 
-            console.log("dragend")
-
             const character = this.handleCreatureOnPoint(pointer)
             if (character) {
                 character.equipItem(this)
+                this.hideBorder()
             } else {
                 this.user?.unequipItem(this)
+                this.showLooseBorder()
             }
         })
 
@@ -156,29 +196,20 @@ export class Item {
         this.sprite.off("pointerup")
     }
 
-    private animateGlow(targetStrength: number) {
-        if (!this.glowFx) return
-
-        this.scene.tweens.add({
-            targets: this.glowFx,
-            outerStrength: targetStrength,
-            duration: 250, // Animation duration (ms)
-            ease: "Sine.easeOut", // Smooth easing
-        })
-    }
-
     snapToCreature(creature: Creature) {
         if (creature.items.size === 3 && this.user !== creature) return
 
         this.sprite.setScale(this.equiped_scale)
         this.syncPosition(creature, creature.boardX, creature.boardY)
-        this.animateGlow(0)
+        this.hideBorder()
+        this.updateBorder()
         this.sprite.setRotation(0)
     }
 
     private resetSnap() {
         this.sprite.setScale(this.big_scale)
-        this.animateGlow(5)
+        this.showLooseBorder()
+        this.updateBorder()
     }
 
     private emitMergeOutput(creature: Creature, pointer: Phaser.Input.Pointer) {
@@ -248,6 +279,9 @@ export class Item {
                             scale: this.big_scale,
                             duration: 100,
                             ease: "Bounce.easeOut",
+                            onComplete: () => {
+                                this.showLooseBorder()
+                            },
                         })
                     },
                 },
@@ -261,9 +295,6 @@ export class Item {
             duration: 300,
             ease: "Sine.easeOut",
         })
-
-        // Reset glow
-        this.animateGlow(5)
     }
 
     syncPosition(creature: Creature, x = creature.x, y = creature.y) {
@@ -274,5 +305,6 @@ export class Item {
         }
 
         this.sprite.setPosition(x - 16 + 16 * offsetX, y - 40)
+        this.updateBorder()
     }
 }
