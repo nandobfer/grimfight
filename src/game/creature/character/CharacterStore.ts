@@ -145,7 +145,7 @@ export class CharacterStore {
         character.destroy(true)
         this.team.reset()
         this.team.bench.remove(character.id)
-        this.scene.savePlayerCharacters(this.team.getChildren())
+        this.scene.savePlayerCharacters(this.team.getChildren().map((char) => char.getDto()))
     }
 
     getMatchingCharacter(item: StoreItem) {

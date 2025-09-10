@@ -188,6 +188,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.calculateSpeeds()
     }
 
+    getLevelMultiplier(min: number, base: number) {
+        return Math.max(min, Math.pow(base, this.level - 1))
+    }
+
     resetUi() {
         this.healthBar.reset()
         this.healthBar.setValue(this.maxHealth, this.maxHealth)

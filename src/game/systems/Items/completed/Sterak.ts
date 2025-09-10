@@ -4,7 +4,7 @@ import { Item } from "../Item"
 
 export class Sterak extends Item {
     key = "sterak"
-    name = "Sedenta por Sangue"
+    name = "Amuleto de Sterak"
     descriptionLines = ["+20% AD", "+20% vida máxima", "Passiva: Ao ficar com 50% de vida pela primeira vez, recebe um escudo de 40% da vida máxima"]
 
     constructor(scene: Game) {

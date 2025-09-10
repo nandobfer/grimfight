@@ -16,35 +16,17 @@ export class Knight extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Ao longo de 2.5 segundos, ganha armadura progressivamente, atingindo um máximo de [warning.main:${Math.round(
-            this.armor * 10
-        )} (10x Armor)], que decai ao longo da mesma duração.`
+        return `Recebe um escudo que absorve [success.main:${Math.round(
+            this.level * 50 + this.maxHealth * 0.1
+        )}][primary.main: (50x level)] + [success.main:(10% HP)] de dano.`
     }
 
     castAbility(): void {
         this.casting = true
 
-        const duration = 1500
-        this.manaLocked = true
+        new MagicShieldFx(this.scene, this.x, this.y, 0.4)
+        this.gainShield(this.level * 50 + this.maxHealth * 0.1)
 
-        const animation = new MagicShieldFx(this.scene, this.x, this.y, 0.4)
-
-        this.scene.tweens.add({
-            targets: this,
-            duration,
-            armor: this.armor * 10,
-            yoyo: true,
-            repeat: 0,
-            onUpdate: () => {
-                if (animation && animation.active) {
-                    animation.setPosition(this.x, this.y)
-                }
-            },
-            onComplete: () => {
-                this.manaLocked = false
-                animation.finish()
-            },
-        })
         this.casting = false
     }
 }
