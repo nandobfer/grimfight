@@ -53,21 +53,25 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         const { x, y } = this.randomPointAround(true)
         const fx = new MagicCircleFx(this.scene, x, y)
 
-        // updating skeleton AP based on the caster AP
+        // updating skeleton stats based on the caster AP
         const originalUpdate = skeleton.update.bind(skeleton)
         skeleton.update = (time, delta) => {
             originalUpdate(time, delta)
             skeleton.abilityPower = skeleton.baseAbilityPower + this.abilityPower * 0.15 * multiplier
+            skeleton.attackDamage = skeleton.baseAttackDamage + this.attackDamage * 0.15 * multiplier
+
+            const currentHealthFraction = skeleton.health / skeleton.maxHealth
+            skeleton.maxHealth = skeleton.baseMaxHealth + this.abilityPower * multiplier
+            skeleton.health = skeleton.maxHealth * currentHealthFraction
+
+            skeleton.setScale(this.mapXtoY(this.abilityPower * multiplier))
         }
 
         skeleton.teleportTo(x, y)
         skeleton.boardX = this.boardX
         skeleton.boardY = this.boardY
-        skeleton.baseScale = this.mapXtoY(this.abilityPower * multiplier)
         skeleton.setTint(0x6645aa)
         skeleton.baseSpeed = this.baseSpeed * 2
-        skeleton.baseAttackDamage += this.abilityPower * 0.15 * multiplier
-        skeleton.baseMaxHealth += this.abilityPower * multiplier
         skeleton.reset()
         skeleton.target = this.target
 
