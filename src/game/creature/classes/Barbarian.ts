@@ -13,7 +13,6 @@ export class Barbarian extends Character {
 
     bonusAttackSpeed = 0
     bonusSpeed = 0
-    bonusArmor = 0
     missingHealthMultiplier = 1
 
     constructor(scene: Game, id: string) {
@@ -21,24 +20,14 @@ export class Barbarian extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Ganha [warning.main:1%] velocidade de ataque e armadura para cada porcentagem de vida perdida.`
+        return `Ganha [warning.main:1%] velocidade de ataque para cada porcentagem de vida perdida.`
     }
-
-
-    // castAbility(): void {
-    //     this.casting = true
-    //     const { value: healing, crit } = this.calculateDamage(this.getHealValue())
-    //     this.heal(healing, crit)
-
-    //     this.casting = false
-    // }
 
     scaleSpeedWithLife() {
         this.missingHealthMultiplier = this.multFromHealth()
 
         this.attackSpeed = this.bonusAttackSpeed * this.missingHealthMultiplier
         this.speed = this.bonusSpeed * this.missingHealthMultiplier
-        this.armor = this.bonusArmor * this.missingHealthMultiplier
     }
 
     private multFromHealth(): number {
@@ -58,7 +47,6 @@ export class Barbarian extends Character {
         super.refreshStats()
         this.bonusAttackSpeed = this.attackSpeed
         this.bonusSpeed = this.speed
-        this.bonusArmor = this.armor
         this.missingHealthMultiplier = 1
     }
 

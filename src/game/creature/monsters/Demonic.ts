@@ -37,19 +37,22 @@ export class Demonic extends Monster {
     override castAbility(): void {
         this.casting = true
 
-        const originalAttackDamage = this.attackDamage
-        this.attackDamage = originalAttackDamage * 0.5
         const targets = 5
         const enemies = this.scene.playerTeam.getChildren(true, true)
 
         for (let i = 1; i <= targets; i++) {
             this.scene.time.delayedCall(i * 200, () => {
                 const target = RNG.pick(enemies)
-                this.landAttack(target)
+                const fireball = new Fireball(this)
+                fireball.onHit = (target) => {
+                    const { value, crit } = this.calculateDamage(this.abilityPower * 0.5)
+                    target.takeDamage(value, this, "fire", crit)
+                    fireball.destroy()
+                }
+                fireball.fire(target)
             })
         }
 
-        this.attackDamage = originalAttackDamage
         this.casting = false
     }
 }

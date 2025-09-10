@@ -67,6 +67,9 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         const creatures = this.getChildren()
         for (const creature of creatures) {
             creature.destroyUi()
+            for (const item of creature.items) {
+                item.sprite.destroy(true)
+            }
         }
         super.clear(removeFromScene, destroyChild)
 

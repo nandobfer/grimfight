@@ -3,6 +3,7 @@ import { Game } from "../scenes/Game"
 import { RNG } from "./RNG"
 import { Monster } from "../creature/monsters/Monster"
 import { MonsterRegistry } from "../creature/monsters/MonsterRegistry"
+import { ItemRegistry } from "../systems/Items/ItemRegistry"
 
 export type Encounter = { monsters: Monster[]; isBoss: boolean }
 
@@ -41,6 +42,7 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
         const { ctor } = rng.pick(MonsterRegistry.entries())
         const boss = new ctor(scene)
         boss.makeBoss(targetCR)
+        equipMonsterWithCRItems(boss, rng)
         return { monsters: [boss], isBoss: true }
     }
 
@@ -131,5 +133,44 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
 
     console.log(CR_CACHE)
 
+    for (const monster of out) {
+        equipMonsterWithCRItems(monster, rng)
+    }
+
     return { monsters: out, isBoss: false }
+}
+
+/**
+ * Map CR → number of COMPLETED items, with soft ramp:
+ * - CR 100+ ⇒ guaranteed 3 completed items
+ * - Otherwise: each of 3 slots rolls with p = CR/100
+ *   (so expected items = 3 * CR/100).
+ *
+ */
+function completedItemsForCR(cr: number, rng: RNG): number {
+    if (cr >= 100) return 3
+    const p = Math.max(0, Math.min(1, cr / 100))
+    let items = 0
+    for (let i = 0; i < 3; i++) if (rng.next() < p) items++
+    return items
+}
+
+/**
+ * Equip items on monter based on it's CR.
+ */
+function equipMonsterWithCRItems(monster: Monster, rng: RNG) {
+    const targetCompleted = completedItemsForCR(monster.challengeRating, rng)
+
+    const exclude = new Set<string>(["thiefsgloves"]) // avoid recursion-y item on AI
+    let attempts = 0
+    const MAX_ATTEMPTS = 20
+
+    while (monster.items.size < Math.min(3, targetCompleted) && attempts++ < MAX_ATTEMPTS) {
+        const item = ItemRegistry.randomCompleted(monster.scene, [...exclude])
+        // keep duplicates out
+        if (exclude.has(item.key)) continue
+        exclude.add(item.key)
+
+        monster.equipItem(item, true)
+    }
 }

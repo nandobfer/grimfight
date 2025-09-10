@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Guinsoo extends Item {
     key = "guinsoo"
     name = "Lâmina da Fúria de Guinsoo"
-    descriptionLines = ["+10% AP", "+15% AS", "Passiva: Recebe 1% AS ao atacar"]
+    descriptionLines = ["+10% AP", "+15% AS", "Passiva: Recebe 3% AS ao atacar"]
 
     constructor(scene: Game) {
         super(scene, "item-guinsoo")
@@ -21,7 +21,7 @@ export class Guinsoo extends Item {
         }
 
         const onHit = (victim: Creature, damage: number) => {
-            creature.attackSpeed *= 1 + 0.01
+            creature.attackSpeed *= 1 + 0.03
         }
 
         creature.eventHandlers.guinsoo = onHit

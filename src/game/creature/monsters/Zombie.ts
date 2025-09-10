@@ -1,5 +1,5 @@
-import { Game } from "../../scenes/Game";
-import { Monster } from "./Monster";
+import { Game } from "../../scenes/Game"
+import { Monster } from "./Monster"
 
 export class Zombie extends Monster {
     baseMaxHealth = 750
@@ -17,8 +17,8 @@ export class Zombie extends Monster {
         this.casting = true
 
         if (this.target) {
-            const { value: damage, crit } = this.calculateDamage(this.attackDamage * 2)
-            this.target.takeDamage(damage, this, 'poison', crit)
+            const { value: damage, crit } = this.calculateDamage(this.abilityPower * 1.2)
+            this.target.takeDamage(damage, this, "poison", crit)
             this.heal(damage, crit)
         }
 

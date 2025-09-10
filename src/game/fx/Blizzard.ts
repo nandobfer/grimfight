@@ -7,14 +7,15 @@ export class Blizzard extends FxSprite {
     caster: Creature
     baseDamage: number
     damagedEnemies = new Set<Creature>()
-    duration = 2500
+    duration = 0
     damageInstances = 5
 
-    constructor(caster: Creature, target: Creature, baseDamage: number, scaleFactor: number) {
+    constructor(caster: Creature, target: Creature, baseDamage: number, scaleFactor: number, duration = 2500) {
         super(target.scene, target.x, target.y, "blizzard", scaleFactor)
         this.target = target
         this.caster = caster
         this.baseDamage = baseDamage
+        this.duration = duration
         // this.setSize(this.width * 0.2, this.height * 0.2) // Adjust size as needed
         // this.setOffset(this.width * 0.25, this.height * 0.25) // Center the hitbox
 

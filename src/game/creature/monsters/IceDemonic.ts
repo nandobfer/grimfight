@@ -1,13 +1,23 @@
+import { Blizzard } from "../../fx/Blizzard"
 import { IceShard } from "../../objects/IceShard"
 import { Game } from "../../scenes/Game"
-import { RNG } from "../../tools/RNG"
-import { Demonic } from "./Demonic"
+import { Monster } from "./Monster"
 
-export class IceDemonic extends Demonic {
+export class IceDemonic extends Monster {
+    baseMaxHealth = 2000
+    baseAttackDamage = 50
+    baseAttackSpeed = 0.75
+    baseAttackRange = 3
+    baseMaxMana = 150
+    baseManaPerAttack = 0
+    baseManaPerSecond = 20
 
     constructor(scene: Game) {
-        super(scene)
-        this.setTint(0x22ffff)
+        super(scene, "ice_demonic")
+        this.preferredPosition = "back"
+        this.attackAnimationImpactFrame = 9
+        this.challengeRating = this.calculateCR()
+        this.setTint(0x0000ff)
     }
 
     override getAttackingAnimation(): string {
@@ -21,26 +31,18 @@ export class IceDemonic extends Demonic {
     override landAttack(target = this.target) {
         if (!target || !this.active) return
 
-        const fireball = new IceShard(this)
-        fireball.fire(target)
+        const iceshard = new IceShard(this)
+        iceshard.fire(target)
     }
 
     override castAbility(): void {
+        if (!this.target) return
+
         this.casting = true
 
-        const originalAttackDamage = this.attackDamage
-        this.attackDamage = originalAttackDamage * 0.5
-        const targets = 5
-        const enemies = this.scene.playerTeam.getChildren(true, true)
+        this.manaLocked = true
+        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5, 2, 1500)
 
-        for (let i = 1; i <= targets; i++) {
-            this.scene.time.delayedCall(i * 200, () => {
-                const target = RNG.pick(enemies)
-                this.landAttack(target)
-            })
-        }
-
-        this.attackDamage = originalAttackDamage
         this.casting = false
     }
 }

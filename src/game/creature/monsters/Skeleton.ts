@@ -35,9 +35,8 @@ export class Skeleton extends Monster {
     override onDieFx(): void {}
 
     override castAbility(): void {
+        if (!this.target) return
         this.casting = true
-        const originalAD = this.attackDamage
-        this.attackDamage = originalAD * 3
 
         this.scene.tweens.add({
             targets: this,
@@ -48,8 +47,8 @@ export class Skeleton extends Monster {
             ease: "Sine.easeInOut",
         })
 
-        this.landAttack()
-        this.attackDamage = originalAD
+        const damage = this.calculateDamage(this.abilityPower - 10)
+        this.target.takeDamage(damage.value, this, "normal", damage.crit)
 
         this.casting = false
     }

@@ -16,15 +16,15 @@ export class Knight extends Character {
 
     override getAbilityDescription(): string {
         return `Recebe um escudo que absorve [success.main:${Math.round(
-            this.level * 50 + this.maxHealth * 0.1
-        )}][primary.main: (50x level)] + [success.main:(10% HP)] de dano.`
+            this.abilityPower + this.maxHealth * 0.1
+        )}][info.main: (100% AP)] + [success.main:(10% HP)] de dano.`
     }
 
     castAbility(): void {
         this.casting = true
 
         new MagicShieldFx(this.scene, this.x, this.y, 0.4)
-        this.gainShield(this.level * 50 + this.maxHealth * 0.1)
+        this.gainShield(this.abilityPower + this.maxHealth * 0.1)
 
         this.casting = false
     }

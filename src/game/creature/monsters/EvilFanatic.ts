@@ -36,7 +36,7 @@ export class EvilFanatic extends RagnarokMonster {
             targets: this,
             scale: { from: this.scale, to: this.scale * 1.25 },
             tint: { from: this.tint, to: 0xff0000 },
-            attackSpeed: { from: this.attackSpeed, to: this.attackSpeed * 2 },
+            attackSpeed: { from: this.attackSpeed, to: this.attackSpeed * this.abilityPower * 0.05 },
             yoyo: true,
             repeat: 0,
             duration: duration,

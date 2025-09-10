@@ -3,7 +3,7 @@ import { EventBus } from "../tools/EventBus"
 import { CharacterRegistry } from "../creature/CharacterRegistry"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 
-const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic", "skeleton_archer"]
+const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic", "skeleton_archer", "ice_demonic"]
 
 export class Preloader extends Scene {
     constructor() {

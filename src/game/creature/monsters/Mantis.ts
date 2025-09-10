@@ -35,7 +35,7 @@ export class Mantis extends RagnarokMonster {
 
     scaleSpeedWithLife() {
         this.missingHealthPercent = 2 - this.health / this.maxHealth
-        this.attackSpeed = this.baseAttackSpeed * this.bonusAttackSpeed * this.missingHealthPercent
+        this.attackSpeed = this.baseAttackSpeed * this.bonusAttackSpeed * (this.missingHealthPercent * this.abilityPower * 0.05)
         this.aura.outerStrength = (this.missingHealthPercent - 1) * 1.5
     }
 

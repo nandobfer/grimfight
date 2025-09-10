@@ -1,10 +1,10 @@
 // src/game/characters/monsters/Monster.ts
 
 import { Game } from "../../scenes/Game"
+import { Item } from "../../systems/Items/Item"
 import { computeCR } from "../../tools/ChallengeRating"
 import { PreferredPosition } from "../../tools/Grid"
 import { Creature } from "../Creature"
-
 
 export class Monster extends Creature {
     preferredPosition: PreferredPosition = "front"
@@ -27,6 +27,7 @@ export class Monster extends Creature {
         this.baseMaxHealth *= mult
         this.health = this.baseMaxHealth
         this.baseAttackDamage *= mult
+        this.baseAbilityPower *= mult
         this.challengeRating = this.calculateCR()
         // this.baseAttackSpeed = this.baseAttackSpeed * 0.75
         this.baseMaxHealth *= 1.5
@@ -112,6 +113,17 @@ export class Monster extends Creature {
         if (this.smokeParticles && this.smokeParticles.active) {
             this.smokeParticles.setPosition(this.x, this.y)
         }
+    }
+
+    override equipItem(item: Item, fromThiefsGloves?: boolean): void {
+        super.equipItem(item, fromThiefsGloves)
+        item.removeDragHandlers()
+        item.snapToCreature(this)
+    }
+
+    override unequipItem(item: Item, fromThiefsGloves = false): void {
+        super.unequipItem(item, fromThiefsGloves)
+        item.sprite.destroy(true)
     }
 
     // Clean up effects when monster is destroyed
