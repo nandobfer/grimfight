@@ -9,6 +9,7 @@ interface AbilityTooltipProps {
     children: React.ReactElement<unknown, any>
     placement: PopperProps["placement"]
     traits?: Trait[]
+    onHold?: boolean
 }
 
 export const AbilityTooltip: React.FC<AbilityTooltipProps> = (props) => {
@@ -37,10 +38,10 @@ export const AbilityTooltip: React.FC<AbilityTooltipProps> = (props) => {
             }
             placement={props.placement}
             slotProps={{ popper: { sx: { pointerEvents: "none" } }, tooltip: { sx: { whiteSpace: "pre-wrap" } } }}
-            open={showTooltip}
-            onMouseEnter={() => openTooltip()}
-            onClick={() => openTooltip()}
-            onMouseLeave={() => hideTooltip()}
+            open={props.onHold ? undefined : showTooltip}
+            onMouseEnter={props.onHold ? undefined : () => openTooltip()}
+            onClick={props.onHold ? undefined : () => openTooltip()}
+            onMouseLeave={props.onHold ? undefined : () => hideTooltip()}
         >
             {props.children}
         </Tooltip>

@@ -33,7 +33,7 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({ item, game, isFirs
     return (
         <>
             {!isFirst && <Divider />}
-            <AbilityTooltip description={character.abilityDescription} placement="top" traits={traits}>
+            <AbilityTooltip description={character.abilityDescription} placement="top" traits={traits} onHold={isMobile}>
                 <Button
                     fullWidth
                     sx={{
