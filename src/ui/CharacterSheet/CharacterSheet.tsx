@@ -1,24 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import {
-    Badge,
-    Box,
-    Button,
-    capitalize,
-    ClickAwayListener,
-    Divider,
-    Drawer,
-    IconButton,
-    LinearProgress,
-    Tooltip,
-    Typography,
-    useMediaQuery,
-} from "@mui/material"
+import { Badge, Box, Button, capitalize, Divider, IconButton, LinearProgress, Tooltip, Typography, useMediaQuery } from "@mui/material"
 import { CharacterAvatar } from "./CharacterAvatar"
 import { CharacterStore } from "../../game/creature/character/CharacterStore"
 import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
-import { AbilityTooltip } from "./AbilityTooltip"
 import { Character } from "../../game/creature/character/Character"
-import { GoldCoin } from "../components/GoldCoin"
 import { renderDescription } from "../../game/tools/TokenizedText"
 import { Game } from "../../game/scenes/Game"
 import { EventBus } from "../../game/tools/EventBus"
@@ -26,6 +11,8 @@ import { Close } from "@mui/icons-material"
 import { TraitsRegistry } from "../../game/systems/Traits/TraitsRegistry"
 import { TraitList } from "../Traits/TraitList"
 import { CharacterItems } from "./CharacterItems"
+import { AbilityTooltip } from "./AbilityTooltip"
+import { Item } from "../../game/systems/Items/Item"
 
 interface CharacterSheetProps {
     character: Character
@@ -80,26 +67,28 @@ type Snap = {
     armor: number
     speed: number
     lifesteal: number
+    items: Item[]
 }
 
-const makeSnap = (c: Character): Snap => ({
-    level: c.level,
-    name: c.name,
-    health: Math.round(c.health),
-    maxHealth: Math.round(c.maxHealth),
-    mana: Math.round(c.mana),
-    maxMana: c.maxMana,
-    abilityPower: Math.round(c.abilityPower),
-    ad: Math.round(c.attackDamage),
-    adMin: Math.round(c.attackDamage * c.minDamageMultiplier),
-    adMax: Math.round(c.attackDamage * c.maxDamageMultiplier),
-    attackSpeed: +c.attackSpeed.toFixed(2),
-    attackRange: c.attackRange,
-    critChance: c.critChance,
-    critDamageMultiplier: c.critDamageMultiplier,
-    lifesteal: c.lifesteal,
-    armor: Math.round(c.armor),
-    speed: Math.round(c.speed),
+const makeSnap = (character: Character): Snap => ({
+    level: character.level,
+    name: character.name,
+    health: Math.round(character.health),
+    maxHealth: Math.round(character.maxHealth),
+    mana: Math.round(character.mana),
+    maxMana: character.maxMana,
+    abilityPower: Math.round(character.abilityPower),
+    ad: Math.round(character.attackDamage),
+    adMin: Math.round(character.attackDamage * character.minDamageMultiplier),
+    adMax: Math.round(character.attackDamage * character.maxDamageMultiplier),
+    attackSpeed: +character.attackSpeed.toFixed(2),
+    attackRange: character.attackRange,
+    critChance: character.critChance,
+    critDamageMultiplier: character.critDamageMultiplier,
+    lifesteal: character.lifesteal,
+    armor: Math.round(character.armor),
+    speed: Math.round(character.speed),
+    items: Array.from(character.items.values()),
 })
 
 const shallowEqual = (a: Snap, b: Snap) => {
@@ -112,7 +101,6 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
     const isMobile = useMediaQuery("(orientation: portrait)")
 
     const traits = useMemo(() => TraitsRegistry.compTraits([character.name]), [character])
-    const items = useMemo(() => Array.from(character.items.values()), [character.items])
 
     const charRef = useRef(character)
     useEffect(() => {
@@ -129,111 +117,101 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
         return () => clearInterval(id)
     }, [])
 
-    const benchCharacter = () => {
-        props.game.playerTeam.benchCharacter(charRef.current.id)
-        EventBus.emit("open-store")
-        EventBus.emit("select-char", null)
-    }
-
     const characterHealthPercent = useMemo(() => (snap.maxHealth > 0 ? (snap.health / snap.maxHealth) * 100 : 0), [snap.health, snap.maxHealth])
     const characterManaPercent = useMemo(() => (snap.maxMana > 0 ? (snap.mana / snap.maxMana) * 100 : 0), [snap.mana, snap.maxMana])
     const levelColor = useMemo(() => convertColorToString(colorFromLevel(snap.level)), [snap.level])
 
     return (
-        <AbilityTooltip description={character.getAbilityDescription()} placement="auto">
-            <>
-                <Box sx={{ width: 1, gap: 2, alignItems: "center", position: "relative" }}>
-                    <Badge
-                        badgeContent={`${character.level}`}
-                        slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
-                    >
-                        <CharacterAvatar name={character.name} size={45} />
-                    </Badge>
-                    <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
-                        <Box sx={{ justifyContent: "space-between", width: 1 }}>
-                            <Typography variant="subtitle2">{capitalize(character.name)}</Typography>
-                        </Box>
-                        <Box sx={{ width: 1, position: "relative", justifyContent: "center", alignItems: "center" }}>
-                            <LinearProgress
-                                variant="determinate"
-                                value={characterHealthPercent}
-                                sx={{ width: 1, height: 14 }}
-                                color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
-                            />
-                            <Typography sx={{ position: "absolute", fontSize: 12, fontWeight: "bold" }}>
-                                {snap.health} / {snap.maxHealth}
-                            </Typography>
-                        </Box>
-                        <Box
-                            sx={{
-                                width: 1,
-                                position: "relative",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                visibility: snap.maxMana === 0 ? "hidden" : undefined,
-                            }}
-                        >
-                            <LinearProgress variant="determinate" value={characterManaPercent} sx={{ width: 1, height: 14 }} color={"info"} />
-                            <Typography sx={{ position: "absolute", fontSize: 12, fontWeight: "bold" }}>
-                                {snap.mana} / {snap.maxMana}
-                            </Typography>
-                        </Box>
+        <>
+            <Box sx={{ width: 1, gap: 2, alignItems: "center", position: "relative" }}>
+                <Badge
+                    badgeContent={`${character.level}`}
+                    slotProps={{ badge: { sx: { bgcolor: levelColor, color: "background.default", fontWeight: "bold" } } }}
+                >
+                    <CharacterAvatar name={character.name} size={45} />
+                </Badge>
+                <Box sx={{ flexDirection: "column", flex: 1, alignItems: "start" }}>
+                    <Box sx={{ justifyContent: "space-between", width: 1 }}>
+                        <Typography variant="subtitle2">{capitalize(character.name)}</Typography>
                     </Box>
-
-                    <IconButton sx={{ position: "absolute", top: -12, right: -12 }} onClick={() => EventBus.emit("select-char", null)} size="small">
-                        <Close />
-                    </IconButton>
+                    <Box sx={{ width: 1, position: "relative", justifyContent: "center", alignItems: "center" }}>
+                        <LinearProgress
+                            variant="determinate"
+                            value={characterHealthPercent}
+                            sx={{ width: 1, height: 14 }}
+                            color={characterHealthPercent > 45 ? "success" : characterHealthPercent > 20 ? "warning" : "error"}
+                        />
+                        <Typography sx={{ position: "absolute", fontSize: 12, fontWeight: "bold" }}>
+                            {snap.health} / {snap.maxHealth}
+                        </Typography>
+                    </Box>
+                    <Box
+                        sx={{
+                            width: 1,
+                            position: "relative",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            visibility: snap.maxMana === 0 ? "hidden" : undefined,
+                        }}
+                    >
+                        <LinearProgress variant="determinate" value={characterManaPercent} sx={{ width: 1, height: 14 }} color={"info"} />
+                        <Typography sx={{ position: "absolute", fontSize: 12, fontWeight: "bold" }}>
+                            {snap.mana} / {snap.maxMana}
+                        </Typography>
+                    </Box>
                 </Box>
 
-                <CharacterItems items={items} />
-                <TraitList traits={traits} />
+                <IconButton sx={{ position: "absolute", top: -12, right: -12 }} onClick={() => EventBus.emit("select-char", null)} size="small">
+                    <Close />
+                </IconButton>
+            </Box>
 
-                <Box sx={{ flexDirection: "column" }}>
-                    <Typography fontWeight={"bold"} variant="subtitle2" color="primary.main" fontSize={isMobile ? 10 : undefined}>
-                        {character.abilityName}:
-                    </Typography>
-                    <Typography variant="caption" sx={{ whiteSpace: "pre-wrap" }} fontSize={isMobile ? 8 : undefined}>
-                        {renderDescription(character.getAbilityDescription())}
-                    </Typography>
-                </Box>
+            <CharacterItems items={snap.items}  />
+            <TraitList traits={traits} />
 
-                {/* <Box sx={{ flexDirection: "column", width: 1, color: "secondary.main" }}>
+            <AbilityTooltip description={character.getAbilityDescription()} placement="auto">
+                <Button variant="outlined">{character.abilityName}</Button>
+            </AbilityTooltip>
+
+            {/* <Box sx={{ flexDirection: "column" }}>
+                <Typography fontWeight={"bold"} variant="subtitle2" color="primary.main" fontSize={isMobile ? 10 : undefined}>
+                    {character.abilityName}:
+                </Typography>
+                <Typography variant="caption" sx={{ whiteSpace: "pre-wrap" }} fontSize={isMobile ? 8 : undefined}>
+                    {renderDescription(character.getAbilityDescription())}
+                </Typography>
+            </Box> */}
+
+            {/* <Box sx={{ flexDirection: "column", width: 1, color: "secondary.main" }}>
                     {attributes.map((data) => (
                         <SheetData key={data.title} title={data.title} value={data.value} />
                     ))}
                 </Box> */}
-                <Box sx={{ justifyContent: "space-between" }}>
-                    <StatGroup color="error">
-                        <SheetData title={"AD"} value={snap.ad} tooltip="Dano médio de cada ataque básico" />
-                        <SheetData title={"Crit"} value={snap.critChance} tooltip="Chance de acertar criticamente" suffix="%" />
-                        <SheetData
-                            title={"Crit Mult"}
-                            value={snap.critDamageMultiplier}
-                            tooltip="Multiplicador de dano crítico"
-                            suffix="x"
-                            fixed={2}
-                        />
-                    </StatGroup>
-                    <Divider />
-                    <StatGroup color="info">
-                        <SheetData title={"AP"} value={snap.abilityPower} tooltip="Poder de habilidade com magias e feitiços" />
-                        <SheetData title={"Mana"} value={charRef.current.manaPerSecond} tooltip="Mana regenerada a cada segundo" suffix="/s" />
-                        <SheetData title={"MP /a"} value={charRef.current.manaPerAttack} tooltip="Mana ganha a cada ataque" />
-                    </StatGroup>
-                </Box>
-                <Box sx={{ justifyContent: "space-between" }}>
-                    <StatGroup color="warning">
-                        <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Velocidade de ataques a cada segundo" fixed={2} suffix="/s" />
-                        <SheetData title={"Alcance"} value={snap.attackRange} tooltip="Alcance de ataque" />
-                        <SheetData title={"Vel"} value={snap.speed} tooltip="Velocidade de movimento" />
-                    </StatGroup>
-                    <Divider />
-                    <StatGroup color="success">
-                        <SheetData title={"Armadura"} value={snap.armor} tooltip="Porcentagem do dano reduzido a cada ataque recebido" suffix="%" />
-                        <SheetData title={"Lifesteal"} value={snap.lifesteal} tooltip="Porcentagem do dano causado recuperado como vida" suffix="%" />
-                    </StatGroup>
-                </Box>
-            </>
-        </AbilityTooltip>
+            <Box sx={{ justifyContent: "space-between" }}>
+                <StatGroup color="error">
+                    <SheetData title={"AD"} value={snap.ad} tooltip="Dano médio de cada ataque básico" />
+                    <SheetData title={"Crit"} value={snap.critChance} tooltip="Chance de acertar criticamente" suffix="%" />
+                    <SheetData title={"Crit Mult"} value={snap.critDamageMultiplier} tooltip="Multiplicador de dano crítico" suffix="x" fixed={2} />
+                </StatGroup>
+                <Divider />
+                <StatGroup color="info">
+                    <SheetData title={"AP"} value={snap.abilityPower} tooltip="Poder de habilidade com magias e feitiços" />
+                    <SheetData title={"Mana"} value={charRef.current.manaPerSecond} tooltip="Mana regenerada a cada segundo" suffix="/s" />
+                    <SheetData title={"MP /a"} value={charRef.current.manaPerAttack} tooltip="Mana ganha a cada ataque" />
+                </StatGroup>
+            </Box>
+            <Box sx={{ justifyContent: "space-between" }}>
+                <StatGroup color="warning">
+                    <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Velocidade de ataques a cada segundo" fixed={2} suffix="/s" />
+                    <SheetData title={"Alcance"} value={snap.attackRange} tooltip="Alcance de ataque" />
+                    <SheetData title={"Vel"} value={snap.speed} tooltip="Velocidade de movimento" />
+                </StatGroup>
+                <Divider />
+                <StatGroup color="success">
+                    <SheetData title={"Armadura"} value={snap.armor} tooltip="Porcentagem do dano reduzido a cada ataque recebido" suffix="%" />
+                    <SheetData title={"Lifesteal"} value={snap.lifesteal} tooltip="Porcentagem do dano causado recuperado como vida" suffix="%" />
+                </StatGroup>
+            </Box>
+        </>
     )
 }

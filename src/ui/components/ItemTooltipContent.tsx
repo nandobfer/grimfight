@@ -4,11 +4,21 @@ import { Item } from "../../game/systems/Items/Item"
 
 interface ItemTooltipContentProps {
     item: Item
+    hideBackground?: boolean
 }
 
-export const ItemTooltipContent: React.FC<ItemTooltipContentProps> = ({ item }) => {
+export const ItemTooltipContent: React.FC<ItemTooltipContentProps> = ({ item, hideBackground }) => {
     return (
-        <Paper sx={{ padding: 1, flexDirection: "column", gap: 1,  }}>
+        <Paper
+            elevation={hideBackground ? 0 : undefined}
+            sx={{
+                padding: hideBackground ? 0 : 1,
+                flexDirection: "column",
+                gap: 1,
+                bgcolor: hideBackground ? "transparent" : undefined,
+                paddingTop: hideBackground ? 0.5 : undefined,
+            }}
+        >
             <Box sx={{ alignItems: "center", gap: 1 }}>
                 <Avatar variant="rounded" src={`/assets/items/${item.key}.png`} sx={{ width: 30, aspectRatio: 1, height: "auto" }} />
                 <Typography fontWeight={"bold"} fontSize={14} color="primary.main">

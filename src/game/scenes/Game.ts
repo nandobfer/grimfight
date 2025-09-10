@@ -310,7 +310,6 @@ export class Game extends Scene {
         this.state = state
         this.events.emit("gamestate", this.state)
         EventBus.emit("gamestate", this.state)
-        EventBus.emit("select-char", null)
     }
 
     startRound() {

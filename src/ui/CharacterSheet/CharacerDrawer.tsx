@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, ClickAwayListener, Drawer, useMediaQuery } from "@mui/material"
+import { Box, ClickAwayListener, Drawer, useMediaQuery } from "@mui/material"
 import { Character } from "../../game/creature/character/Character"
 import { EventBus } from "../../game/tools/EventBus"
 import { CharacterSheet } from "./CharacterSheet"
