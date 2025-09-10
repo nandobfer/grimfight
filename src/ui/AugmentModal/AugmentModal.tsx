@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Dialog, Typography } from "@mui/material"
+import { Box, Button, Dialog, useMediaQuery } from "@mui/material"
 import { PlayerTeam } from "../../game/creature/character/PlayerTeam"
 import { Augment } from "../../game/systems/Augment/Augment"
 import { EventBus } from "../../game/tools/EventBus"
 import { AugmentCard } from "./AugmentCard"
-import { AugmentsRegistry } from "../../game/systems/Augment/AugmentsRegistry"
-import { Refresh } from "@mui/icons-material"
 
 interface AugmentModalProps {
     team: PlayerTeam
 }
 
 export const AugmentModal: React.FC<AugmentModalProps> = (props) => {
+    const isMobile = useMediaQuery("(orientation: portrait)")
+
     const [open, setOpen] = useState(false)
     const [augments, setAugments] = useState<Augment[]>([])
     const [augmentAvailable, setAugmentAvailable] = useState(false)
-    const [refreshed, setRefreshed] = useState(false)
 
     const handleClose = () => {
         setOpen(false)
@@ -25,19 +24,11 @@ export const AugmentModal: React.FC<AugmentModalProps> = (props) => {
         props.team.addAugment(augment)
         handleClose()
         setAugmentAvailable(false)
-        setRefreshed(false)
-    }
-
-    const refreshAugments = () => {
-        const augments = AugmentsRegistry.randomList(3)
-        setAugments(augments)
-        setRefreshed(true)
     }
 
     useEffect(() => {
         const handler = (augments: Augment[]) => {
             setOpen(true)
-            setRefreshed(false)
             setAugmentAvailable(true)
             setAugments(augments)
         }
@@ -58,10 +49,17 @@ export const AugmentModal: React.FC<AugmentModalProps> = (props) => {
             )}
 
             <Dialog open={open} onClose={handleClose} slotProps={{ paper: { elevation: 0, style: { backgroundColor: "transparent" } } }}>
-                <Button variant="outlined" endIcon={<Refresh />} disabled={refreshed} onClick={refreshAugments}>
-                    Shuffle
-                </Button>
-                <Box sx={{ gap: 1, maxWidth: "75vw", overflow: "auto", margin: -2, padding: 2 }}>
+                <Box
+                    sx={{
+                        gap: 1,
+                        maxWidth: "75vw",
+                        maxHeight: "75vh",
+                        overflow: "auto",
+                        margin: -2,
+                        padding: 2,
+                        flexDirection: isMobile ? "column" : "row",
+                    }}
+                >
                     {augments.map((augment, index) => (
                         <AugmentCard augment={augment} key={augment.name + index.toString()} onChoose={onChoose} />
                     ))}
