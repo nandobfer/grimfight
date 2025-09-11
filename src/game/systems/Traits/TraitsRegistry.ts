@@ -7,6 +7,7 @@ import { DruidTrait } from "./DruidTrait"
 import { IncendiaryTrait } from "./IncendiaryTrait"
 import { NobleTrait } from "./NobleTrait"
 import { PackTrait } from "./PackTrait"
+import { PopsicleTrait } from "./PopsicleTrait"
 import { SorcererTrait } from "./SorcererTrait"
 import { SpeedyTrait } from "./SpeedyTrait"
 import { Trait } from "./Trait"
@@ -76,3 +77,4 @@ TraitsRegistry.register("Matilha", PackTrait, ["lizwan", "helyna", "laherce", "b
 TraitsRegistry.register("Druid", DruidTrait, ["helyna"])
 TraitsRegistry.register("Incendiário", IncendiaryTrait, ["banguela", "megumin"])
 TraitsRegistry.register("Nobre", NobleTrait, ["maximus", "jadis", "statikk"]) // falta vampiro
+TraitsRegistry.register("Picolé", PopsicleTrait, ["reno", "jadis"])

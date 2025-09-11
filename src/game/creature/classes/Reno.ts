@@ -18,15 +18,18 @@ export class Reno extends Character {
     lastAttackSpeed = 0
 
     constructor(scene: Game, id: string) {
-        super(scene, "jadis", id)
+        super(scene, "reno", id)
+        this.setTint(0x0000ff)
     }
 
     override getAbilityDescription(): string {
-        return `Passivo: Cada [primary.main:4º ataque] causa [info.main:${Math.round(this.abilityPower)} (100% AP)] dano adicional.
+        return `Passivo: Cada [primary.main:5º ataque] causa [info.main:${Math.round(this.abilityPower)} (100% AP)] dano adicional.
     
-    Passivo: Sua velocidade de ataque é travada, porém converte toda velocidade bônus em AD. Bônus atual: [error.main:${Math.round(
-        this.getAsMultiplier() * this.attackDamage
-    )}%] [warning.main:(${Math.round(this.getAsMultiplier() * 100)}% AS)]`
+Passivo: Sua velocidade de ataque é travada em [warning.main:${
+            this.baseAttackSpeed
+        }/s], porém converte toda velocidade bônus em AD. Bônus atual: [error.main:${Math.round(
+            this.getAsMultiplier() * this.attackDamage
+        )}%] [warning.main:(${Math.round(this.getAsMultiplier() * 100)}% AS bônus)]`
     }
 
     override getAttackingAnimation(): string {
@@ -44,17 +47,21 @@ export class Reno extends Character {
         this.attacksCount += 1
 
         const iceshard = new IceShard(this.scene, this.x, this.y, this, 500)
+        iceshard.damageType = "normal"
 
-        if (this.attacksCount === 4) {
+        if (this.attacksCount === 5) {
             this.attacksCount = 0
-            this.makeFourthShot(iceshard)
+            this.makeBigShot(iceshard)
         }
 
         iceshard.fire(this.target)
     }
 
-    makeFourthShot(projectile: IceShard) {
-        projectile.setScale(projectile.scale * 1.5)
+    // criar um tipo de lamina giratoria? glaive? pegar sprite?
+    makeBigShot(projectile: IceShard) {
+        projectile.scaleX = projectile.scale * 2
+        projectile.speed += 300
+        this.scene.tweens.add({ targets: projectile, duration: 30, angle: 360, repeat: -1, yoyo: false })
 
         projectile.onHit = (target) => {
             const { value: damage, crit: isCrit } = this.calculateDamage(this.attackDamage + this.abilityPower)
@@ -73,9 +80,8 @@ export class Reno extends Character {
     }
 
     getAsMultiplier() {
-        return this.attackSpeed / this.baseAttackSpeed
+        return 1 - this.attackSpeed / this.baseAttackSpeed
     }
-
 
     override getAttackingSpeed(): number {
         return this.baseAttackSpeed

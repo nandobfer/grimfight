@@ -2,6 +2,10 @@
 export class RNG {
     private s: number
 
+    static chance() {
+        return Phaser.Math.Between(1, 100)
+    }
+
     static pick<T>(array: T[]) {
         return Phaser.Math.RND.pick(array)
     }

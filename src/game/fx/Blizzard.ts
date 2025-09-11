@@ -81,8 +81,8 @@ export class Blizzard extends FxSprite {
         })
 
         const freeze = new Condition({
-            attributes: ["moveLocked", "attackLocked", "speed"],
-            values: [true, true, 0],
+            attributes: ["frozen"],
+            values: [true],
             duration: this.freezeDuration,
             target: target,
             user: this.caster,

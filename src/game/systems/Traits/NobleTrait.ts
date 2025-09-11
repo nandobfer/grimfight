@@ -2,6 +2,7 @@ import { Character } from "../../creature/character/Character"
 import { Creature } from "../../creature/Creature"
 import { DeathSkullFx } from "../../fx/DeathSkullFx"
 import { Xfx } from "../../fx/Xfx"
+import { RNG } from "../../tools/RNG"
 import { Trait } from "./Trait"
 
 type TraitBoosts = "goldDropChance"
@@ -29,7 +30,7 @@ export class NobleTrait extends Trait {
         }
 
         const killHandler = (killed: Creature) => {
-            const random = Phaser.Math.Between(1, 100)
+            const random = RNG.chance()
             if (random <= values.goldDropChance && character?.scene) {
                 character.scene.changePlayerGold(character.level)
                 character.scene.goldCoinFx.explodeCameraCenterToCounter(character.level)

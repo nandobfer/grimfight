@@ -9,6 +9,7 @@ import { burstBlood } from "../fx/Blood"
 import { StatusEffect } from "../objects/StatusEffect/StatusEffect"
 import { Item } from "../systems/Items/Item"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
+import { RNG } from "../tools/RNG"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -76,6 +77,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     manaLocked = false
     attackLocked = false
     moveLocked = false
+    frozen = false
     isRefreshing = false
 
     boardX = 0
@@ -127,6 +129,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.health = this.maxHealth
         this.moveLocked = false
         this.attackLocked = false
+        this.frozen = false
         this.mana = 0
         this.active = true
         this.setRotation(0)
@@ -467,7 +470,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             return
         }
 
-        if (this.moveLocked) return
+        if (this.moveLocked || this.frozen) return
 
         const angle = Phaser.Math.Angle.Between(this.x, this.y, this.target.x, this.target.y)
 
@@ -539,7 +542,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     // - Chooses the side (left/right) with more clearance (shorter, safer detour)
     // - Small separation so units don’t stick together
     avoidOtherCharacters() {
-        if (!this.target || this.moveLocked) return
+        if (!this.target || this.moveLocked || this.frozen) return
 
         // ---------------- tuneables ----------------
         const FRONT_PROBE = 56 // how far ahead to check for direct path (px)
@@ -712,8 +715,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.onAttackLand("normal")
     }
 
-    tryCrit() {
-        return Phaser.Math.FloatBetween(0, 100) <= this.critChance
+    tryCrit(bonus = 0) {
+        return RNG.chance() <= this.critChance + bonus
     }
 
     calculateDamage(rawValue: number) {
@@ -1010,7 +1013,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             this.stopMoving()
             this.startAttack()
         } else {
-            if (!this.attacking && !this.moveLocked) {
+            if (!this.attacking && !this.moveLocked && !this.frozen) {
                 this.moveToTarget()
                 this.avoidOtherCharacters()
                 this.emit("move", this)
