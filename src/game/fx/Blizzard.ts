@@ -92,7 +92,7 @@ export class Blizzard extends FxSprite {
         const iceBlock = new Frozen(target)
         target.once("unfrozen", cleanup)
         target.once("destroy", cleanup)
-        target.once("die", cleanup)
+        target.once("died", cleanup)
 
         target.setVelocity(0)
         target.moveLocked = true
