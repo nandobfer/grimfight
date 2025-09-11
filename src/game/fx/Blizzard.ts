@@ -1,6 +1,7 @@
 import { Creature } from "../creature/Creature"
 import { Condition } from "../objects/StatusEffect/Condition"
 import { Dot } from "../objects/StatusEffect/Dot"
+import { Freeze } from "../objects/StatusEffect/Freeze"
 import { Frozen } from "./Frozen"
 import { FxSprite } from "./FxSprite"
 
@@ -80,14 +81,16 @@ export class Blizzard extends FxSprite {
             },
         })
 
-        const freeze = new Condition({
-            attributes: ["frozen"],
-            values: [true],
-            duration: this.freezeDuration,
-            target: target,
-            user: this.caster,
-            renderFx: () => new Frozen(this.caster?.scene || target.scene, target.x, target.y, target),
-        })
+        const freeze = new Freeze(target, this.caster, this.freezeDuration)
+
+        // const freeze = new Condition({
+        //     attributes: ["frozen"],
+        //     values: [true],
+        //     duration: this.freezeDuration,
+        //     target: target,
+        //     user: this.caster,
+        //     renderFx: () => new Frozen(this.caster?.scene || target.scene, target.x, target.y, target),
+        // })
 
         dot.start()
         freeze.start()

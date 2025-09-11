@@ -3,7 +3,7 @@ import { RNG } from "../tools/RNG"
 import { Character, CharacterDto } from "./character/Character"
 import { Archer } from "./classes/Archer"
 import { Barbarian } from "./classes/Barbarian"
-import { Knight } from "./classes/Knight"
+import { Knight } from "./classes/Maximus"
 import { Lizwan } from "./classes/Lizwan"
 import { Mage } from "./classes/Mage"
 import { Rogue } from "./classes/Mordred"
@@ -18,6 +18,7 @@ import { Frank } from "./classes/Frank"
 import { Reno } from "./classes/Reno"
 import { Dracula } from "./classes/Dracula"
 import { Rukia } from "./classes/Rukia"
+import { Ymir } from "./classes/Ymir"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -77,3 +78,4 @@ CharacterRegistry.register("frank", Frank)
 CharacterRegistry.register("reno", Reno)
 CharacterRegistry.register("dracula", Dracula)
 CharacterRegistry.register("rukia", Rukia)
+CharacterRegistry.register("ymir", Ymir)

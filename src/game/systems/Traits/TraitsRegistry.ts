@@ -68,7 +68,7 @@ export class TraitsRegistry {
 }
 
 TraitsRegistry.register("Atacante", AttackerTrait, ["grok", "mordred", "arthas", "vania", "laherce", "reno"])
-TraitsRegistry.register("Colosso", ColossusTrait, ["maximus", "grok", "frank"])
+TraitsRegistry.register("Colosso", ColossusTrait, ["maximus", "grok", "frank", "ymir"])
 TraitsRegistry.register("Ligeiro", SpeedyTrait, ["lizwan", "statikk", "vania", "frank"])
 TraitsRegistry.register("Assassino", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia"])
 TraitsRegistry.register("Feiticeiro", SorcererTrait, ["megumin", "jadis", "zairon", "helyna"])
@@ -77,4 +77,4 @@ TraitsRegistry.register("Matilha", PackTrait, ["lizwan", "helyna", "laherce", "b
 TraitsRegistry.register("Druid", DruidTrait, ["helyna"])
 TraitsRegistry.register("Incendiário", IncendiaryTrait, ["banguela", "megumin"])
 TraitsRegistry.register("Nobre", NobleTrait, ["maximus", "jadis", "statikk", "dracula"])
-TraitsRegistry.register("Picolé", PopsicleTrait, ["reno", "jadis", "rukia"])
+TraitsRegistry.register("Picolé", PopsicleTrait, ["reno", "jadis", "rukia", "ymir"])

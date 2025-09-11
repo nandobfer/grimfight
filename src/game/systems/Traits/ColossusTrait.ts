@@ -7,8 +7,8 @@ export class ColossusTrait extends Trait {
     name = "Colosso"
     description = "Colossos ganham {0} vida e {1} armadura."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { healthMultiplier: 0.15, armor: 10, descriptionParams: ["15%", "10%"] }],
-        [3, { healthMultiplier: 0.3, armor: 20, descriptionParams: ["30%", "20%"] }],
+        [2, { healthMultiplier: 0.15, armor: 15, descriptionParams: ["15%", "15%"] }],
+        [4, { healthMultiplier: 0.35, armor: 25, descriptionParams: ["35%", "25%"] }],
     ])
 
     constructor(comp: string[]) {
