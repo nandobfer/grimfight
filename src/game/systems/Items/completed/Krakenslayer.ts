@@ -17,7 +17,7 @@ export class Krakenslayer extends Item {
 
         const previousHandler = creature.eventHandlers[`krakenslayer_${this.id}`]
         if (previousHandler) {
-            creature.off("dealt-damage", previousHandler)
+            creature.off("afterAttack", previousHandler)
         }
 
         const onHit = (victim: Creature, damage: number) => {
@@ -26,14 +26,14 @@ export class Krakenslayer extends Item {
 
         creature.eventHandlers[`krakenslayer_${this.id}`] = onHit
 
-        creature.on("dealt-damage", onHit)
+        creature.on("afterAttack", onHit)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
         const handler = creature.eventHandlers[`krakenslayer_${this.id}`]
         if (handler) {
-            creature.off("dealt-damage", handler)
+            creature.off("afterAttack", handler)
             delete creature.eventHandlers[`krakenslayer_${this.id}`]
         }
     }

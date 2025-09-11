@@ -17,7 +17,7 @@ export class Nashor extends Item {
 
         const previousHandler = creature.eventHandlers[`nashor_${this.id}`]
         if (previousHandler) {
-            creature.off("dealt-damage", previousHandler)
+            creature.off("afterAttack", previousHandler)
         }
 
         const dealDamage = (victim: Creature, damage: number) => {
@@ -27,14 +27,14 @@ export class Nashor extends Item {
 
         creature.eventHandlers[`nashor_${this.id}`] = dealDamage
 
-        creature.on("dealt-damage", dealDamage)
+        creature.on("afterAttack", dealDamage)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
         const handler = creature.eventHandlers[`nashor_${this.id}`]
         if (handler) {
-            creature.off("dealt-damage", handler)
+            creature.off("afterAttack", handler)
             delete creature.eventHandlers[`nashor_${this.id}`]
         }
     }
