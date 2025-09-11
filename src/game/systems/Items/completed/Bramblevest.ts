@@ -16,7 +16,7 @@ export class Bramblevest extends Item {
         creature.health *= 1 + 0.05
         creature.armor += 15
 
-        const previousHandler = creature.eventHandlers.bramblevest
+        const previousHandler = creature.eventHandlers[`bramblevest_${this.id}`]
         if (previousHandler) {
             creature.off("damage-taken", previousHandler)
         }
@@ -26,17 +26,17 @@ export class Bramblevest extends Item {
             attacker.takeDamage(thornsDamage.value, creature, "normal", thornsDamage.crit)
         }
 
-        creature.eventHandlers.bramblevest = dealThorns
+        creature.eventHandlers[`bramblevest_${this.id}`] = dealThorns
 
         creature.on("damage-taken", dealThorns)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.bramblevest
+        const handler = creature.eventHandlers[`bramblevest_${this.id}`]
         if (handler) {
             creature.off("damage-taken", handler)
-            delete creature.eventHandlers.bramblevest
+            delete creature.eventHandlers[`bramblevest_${this.id}`]
         }
     }
 }

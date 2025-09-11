@@ -1,5 +1,5 @@
 import { Blizzard } from "../../fx/Blizzard"
-import { IceShard } from "../../objects/IceShard"
+import { IceShard } from "../../objects/Projectile/IceShard"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 
@@ -47,8 +47,8 @@ export class Sorcerer extends Character {
 
         this.casting = true
 
-        this.manaLocked = true
-        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5 * multiplier, 2)
+        this.startChanneling()
+        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5 * multiplier, 2, 3500, 1500)
 
         this.casting = false
     }
@@ -56,5 +56,6 @@ export class Sorcerer extends Character {
     override refreshStats(): void {
         super.refreshStats()
         this.manaLocked = false
+        this.attackLocked = false
     }
 }

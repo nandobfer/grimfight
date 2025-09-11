@@ -17,7 +17,7 @@ export class Spiritvisage extends Item {
         creature.armor += 5
         creature.manaPerSecond *= 1 + 0.2
 
-        const previousHandler = creature.timeEvents.spiritvisage
+        const previousHandler = creature.timeEvents[`spiritvisage_${this.id}`]
         if (previousHandler) {
             this.scene.time.removeEvent(previousHandler)
         }
@@ -28,16 +28,16 @@ export class Spiritvisage extends Item {
             creature.heal(creature.maxHealth * 0.03 * multiplier, false, false)
         }
 
-        creature.timeEvents.spiritvisage = this.scene.time.addEvent({ callback: regenLife, loop: true, delay: 1000 })
+        creature.timeEvents[`spiritvisage_${this.id}`] = this.scene.time.addEvent({ callback: regenLife, loop: true, delay: 1000 })
 
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.timeEvents.spiritvisage
+        const handler = creature.timeEvents[`spiritvisage_${this.id}`]
         if (handler) {
             this.scene.time.removeEvent(handler)
-            delete creature.timeEvents.spiritvisage
+            delete creature.timeEvents[`spiritvisage_${this.id}`]
         }
     }
 }

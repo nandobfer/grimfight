@@ -697,15 +697,14 @@ export class Game extends Scene {
     }
 
     /** schedule a round end once; verify team is still wiped when it runs */
-    endRoundSoon(reason: "player" | "enemy") {
+    endRoundSoon() {
         if (this.endingRound || this.state !== "fighting") return
         this.endingRound = true
         // flip to idle immediately so actors stop doing combat logic
         this.changeState("idle")
 
         this.time.delayedCall(0, () => {
-            const stillWiped = reason === "enemy" ? this.enemyTeam.isWiped() : this.playerTeam.isWiped()
-            if (stillWiped) this.finishRoundNow()
+            this.finishRoundNow()
             this.endingRound = false
         })
     }
@@ -723,8 +722,7 @@ export class Game extends Scene {
     // keep a public entry that is safe to call but just defers
     finishRound() {
         // infer reason cheaply; either side wiped gets handled correctly later
-        const reason = this.enemyTeam.isWiped() ? "enemy" : "player"
-        this.endRoundSoon(reason as any)
+        this.endRoundSoon()
     }
 
     update(time: number, delta: number): void {}

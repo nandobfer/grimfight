@@ -15,7 +15,7 @@ export class Crownguard extends Item {
         creature.abilityPower *= 1 + 0.15
         creature.armor += 10
 
-        const previousHandler = creature.eventHandlers.crownguard
+        const previousHandler = creature.eventHandlers[`crownguard_${this.id}`]
         if (previousHandler) {
             this.scene.events.off("gamestate", previousHandler)
         }
@@ -26,17 +26,17 @@ export class Crownguard extends Item {
             }
         }
 
-        creature.eventHandlers.crownguard = shieldOnStart
+        creature.eventHandlers[`crownguard_${this.id}`] = shieldOnStart
 
         this.scene.events.on("gamestate", shieldOnStart)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.crownguard
+        const handler = creature.eventHandlers[`crownguard_${this.id}`]
         if (handler) {
             this.scene.events.off("gamestate", handler)
-            delete creature.eventHandlers.crownguard
+            delete creature.eventHandlers[`crownguard_${this.id}`]
         }
     }
 }

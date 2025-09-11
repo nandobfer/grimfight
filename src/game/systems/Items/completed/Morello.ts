@@ -1,5 +1,5 @@
 import { Creature } from "../../../creature/Creature"
-import { Dot } from "../../../objects/Dot"
+import { Dot } from "../../../objects/StatusEffect/Dot"
 import { Game } from "../../../scenes/Game"
 import { Item } from "../Item"
 
@@ -22,7 +22,7 @@ export class Morello extends Item {
         creature.maxHealth *= 1 + 0.1
         creature.health *= 1 + 0.1
 
-        const previousHandler = creature.eventHandlers.morello
+        const previousHandler = creature.eventHandlers[`morello_${this.id}`]
         if (previousHandler) {
             creature.off("dealt-damage", previousHandler)
         }
@@ -39,23 +39,23 @@ export class Morello extends Item {
                     user: creature,
                 })
                 this.burns.set(victim, burn)
-                victim.applyStatusEffect(burn)
+                burn.start()
             } else {
                 burn.resetDuration()
             }
         }
 
-        creature.eventHandlers.morello = applyBurn
+        creature.eventHandlers[`morello_${this.id}`] = applyBurn
 
         creature.on("dealt-damage", applyBurn)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.morello
+        const handler = creature.eventHandlers[`morello_${this.id}`]
         if (handler) {
             creature.off("dealt-damage", handler)
-            delete creature.eventHandlers.morello
+            delete creature.eventHandlers[`morello_${this.id}`]
         }
     }
 }

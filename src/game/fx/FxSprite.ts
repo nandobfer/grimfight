@@ -4,6 +4,7 @@ import { Game, GameState } from "../scenes/Game"
 import { EventBus } from "../tools/EventBus"
 import { Creature } from "../creature/Creature"
 
+
 export interface LightParams {
     color: number
     radius: number
@@ -42,7 +43,7 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
 
         this.setPipeline("Light2D")
 
-        this.target?.on("move", this.followCharacter)
+        this.target?.on("move", this.followCharacter, this)
         EventBus.once("gamestate", (state: GameState) => {
             if (state === "idle") {
                 this.cleanup()
@@ -78,9 +79,9 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
 
     cleanup() {
         if (this.scene) {
-            this.target?.off("move", this.followCharacter)
+            this.target?.off("move", this.followCharacter, this)
         }
-        this.destroy()
+        this.destroy(true)
     }
 
     addLightEffect(lightParams: LightParams) {

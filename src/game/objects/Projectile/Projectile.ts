@@ -1,9 +1,9 @@
 // src/objects/Arrow.ts
 import Phaser from "phaser"
-import { Game } from "../scenes/Game"
-import { Creature } from "../creature/Creature"
-import { DamageType } from "../ui/DamageNumbers"
-import { EventBus } from "../tools/EventBus"
+import { Game } from "../../scenes/Game"
+import { Creature } from "../../creature/Creature"
+import { DamageType } from "../../ui/DamageNumbers"
+import { EventBus } from "../../tools/EventBus"
 
 export class Projectile extends Phaser.Physics.Arcade.Sprite {
     owner: Creature

@@ -1,6 +1,7 @@
 import { Creature } from "../../creature/Creature"
 import { Game } from "../../scenes/Game"
 import { EventBus } from "../../tools/EventBus"
+import { RNG } from "../../tools/RNG"
 import { ItemRegistry } from "./ItemRegistry"
 
 export interface PointerPosition {
@@ -15,6 +16,8 @@ export class Item {
     sprite: Phaser.GameObjects.Image
     scene: Game
     user?: Creature
+
+    id = RNG.uuid()
 
     private border: Phaser.GameObjects.Rectangle
     private preDrag?: { x: number; y: number }

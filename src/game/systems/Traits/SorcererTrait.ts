@@ -26,9 +26,7 @@ export class SorcererTrait extends Trait {
         }
 
         const castHandler = () => {
-            console.log("cast handler here")
             character.scene?.time.delayedCall(500, () => {
-                console.log("casting again")
                 character.castAbility(values.apMultiplier)
             })
         }

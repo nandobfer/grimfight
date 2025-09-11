@@ -1,6 +1,6 @@
 // src/objects/Arrow.ts
-import { Creature } from "../creature/Creature"
-import { Game } from "../scenes/Game"
+import { Creature } from "../../creature/Creature"
+import { Game } from "../../scenes/Game"
 import { Fireball } from "./Fireball"
 
 export class Deathbolt extends Fireball {

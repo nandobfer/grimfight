@@ -1,5 +1,5 @@
 import { Blizzard } from "../../fx/Blizzard"
-import { IceShard } from "../../objects/IceShard"
+import { IceShard } from "../../objects/Projectile/IceShard"
 import { Game } from "../../scenes/Game"
 import { Monster } from "./Monster"
 
@@ -40,8 +40,10 @@ export class IceDemonic extends Monster {
 
         this.casting = true
 
+        this.attackLocked = true
         this.manaLocked = true
-        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.25, 2, 1500)
+        const blizzard = new Blizzard(this, this.target, this.abilityPower * 0.5, 1.5, 2000, 1000)
+        blizzard.setTint(this.tint)
 
         this.casting = false
     }

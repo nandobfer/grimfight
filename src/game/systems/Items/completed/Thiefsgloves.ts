@@ -56,7 +56,9 @@ export class Thiefsgloves extends Item {
             item.sprite.destroy(true)
         }
         this.items.clear()
-        if (!creature.isRefreshing) creature.refreshStats()
+        this.scene.time.delayedCall(100, () => {
+            if (creature?.active && !creature.isRefreshing) creature.refreshStats()
+        })
     }
 
     equipRandomItem(creature: Creature) {

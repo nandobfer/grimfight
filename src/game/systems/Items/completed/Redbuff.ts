@@ -1,5 +1,5 @@
 import { Creature } from "../../../creature/Creature"
-import { Dot } from "../../../objects/Dot"
+import { Dot } from "../../../objects/StatusEffect/Dot"
 import { Game } from "../../../scenes/Game"
 import { Item } from "../Item"
 
@@ -16,7 +16,7 @@ export class Redbuff extends Item {
     override applyModifier(creature: Creature): void {
         creature.attackSpeed *= 1 + 0.35
 
-        const previousHandler = creature.eventHandlers.redbuff
+        const previousHandler = creature.eventHandlers[`redbuff_${this.id}`]
         if (previousHandler) {
             creature.off("dealt-damage", previousHandler)
         }
@@ -33,23 +33,23 @@ export class Redbuff extends Item {
                     user: creature,
                 })
                 this.burns.set(victim, burn)
-                victim.applyStatusEffect(burn)
+                burn.start()
             } else {
                 burn.resetDuration()
             }
         }
 
-        creature.eventHandlers.redbuff = applyBurn
+        creature.eventHandlers[`redbuff_${this.id}`] = applyBurn
 
         creature.on("dealt-damage", applyBurn)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.redbuff
+        const handler = creature.eventHandlers[`redbuff_${this.id}`]
         if (handler) {
             creature.off("dealt-damage", handler)
-            delete creature.eventHandlers.redbuff
+            delete creature.eventHandlers[`redbuff_${this.id}`]
         }
     }
 }

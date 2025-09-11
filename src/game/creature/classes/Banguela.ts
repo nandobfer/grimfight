@@ -1,5 +1,5 @@
 import { FireEffect } from "../../fx/FireEffect"
-import { Fireball } from "../../objects/Fireball"
+import { Fireball } from "../../objects/Projectile/Fireball"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 

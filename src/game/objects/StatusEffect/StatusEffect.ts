@@ -1,53 +1,62 @@
-import { Creature } from "../creature/Creature"
+import { Creature } from "../../creature/Creature"
 
 export interface StatusEffectParams {
     target: Creature
     user: Creature
     duration: number
-    tickRate: number
+    onExpire?: Function
 }
 
 export class StatusEffect {
     target: Creature
     user: Creature
     duration: number
-    tickRate: number
-    timeSinceLastTick = 0
+    onAfterExpire?: Function
+
     totalTimePassed = 0
 
     constructor(params: StatusEffectParams) {
         this.target = params.target
         this.user = params.user
         this.duration = params.duration
-        this.tickRate = params.tickRate
+        this.onAfterExpire = params.onExpire
+    }
+
+    onApply() {}
+    onExpire() {
+        if (this.onAfterExpire) {
+            this.onAfterExpire()
+        }
     }
 
     update(delta: number) {
-        this.timeSinceLastTick += delta
         this.totalTimePassed += delta
-
-        if (this.timeSinceLastTick >= this.tickRate) {
-            this.tick()
-            this.timeSinceLastTick = 0
-        }
-
         if (this.totalTimePassed >= this.duration) {
             this.expire()
             return
         }
     }
 
-    tick() {}
-
     expire() {
         this.target.statusEffects.delete(this)
+        this.target.off("died", this.expire, this)
+        this.target.off("destroy", this.expire, this)
+        this.onExpire()
     }
 
     resetDuration() {
         this.totalTimePassed = 0
 
         if (!this.target.statusEffects.has(this)) {
-            this.target.applyStatusEffect(this)
+            this.start()
         }
+    }
+
+    start() {
+        this.target.statusEffects.add(this)
+        this.onApply()
+
+        this.target.once("died", this.expire, this)
+        this.target.once("destroy", this.expire, this)
     }
 }

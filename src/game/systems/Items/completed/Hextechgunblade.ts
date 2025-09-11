@@ -15,7 +15,7 @@ export class Hextechgunblade extends Item {
         creature.attackDamage *= 1 + 0.2
         creature.abilityPower *= 1 + 0.2
 
-        const previousHandler = creature.eventHandlers.hextechgunblade
+        const previousHandler = creature.eventHandlers[`hextechgunblade_${this.id}`]
         if (previousHandler) {
             creature.off("dealt-damage", previousHandler)
         }
@@ -25,17 +25,17 @@ export class Hextechgunblade extends Item {
             friend?.heal(damage * 0.2)
         }
 
-        creature.eventHandlers.hextechgunblade = healFriend
+        creature.eventHandlers[`hextechgunblade_${this.id}`] = healFriend
 
         creature.on("dealt-damage", healFriend)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.hextechgunblade
+        const handler = creature.eventHandlers[`hextechgunblade_${this.id}`]
         if (handler) {
             creature.off("dealt-damage", handler)
-            delete creature.eventHandlers.hextechgunblade
+            delete creature.eventHandlers[`hextechgunblade_${this.id}`]
         }
     }
 }

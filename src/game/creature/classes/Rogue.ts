@@ -21,7 +21,7 @@ export class Rogue extends Character {
 
     override castAbility(): void {
         this.casting = true
-        this.removeFromEnemyTarget(1)
+        this.removeFromEnemyTarget(1000)
         const target = this.getFartestEnemy()
 
         if (target) {

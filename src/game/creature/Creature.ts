@@ -6,7 +6,7 @@ import { DamageType, showDamageText } from "../ui/DamageNumbers"
 import { CreatureGroup } from "./CreatureGroup"
 import { Heal } from "../fx/Heal"
 import { burstBlood } from "../fx/Blood"
-import { StatusEffect } from "../objects/StatusEffect"
+import { StatusEffect } from "../objects/StatusEffect/StatusEffect"
 import { Item } from "../systems/Items/Item"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 
@@ -25,6 +25,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     minDamageMultiplier = 0.8
     maxDamageMultiplier = 1.2
     statusEffects = new Set<StatusEffect>()
+    conditionsValues = new Map<keyof Creature, any>()
     items = new Set<Item>()
     master?: Creature
     canBeTargeted = true
@@ -124,6 +125,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.setScale(this.baseScale)
 
         this.health = this.maxHealth
+        this.moveLocked = false
+        this.attackLocked = false
         this.mana = 0
         this.active = true
         this.setRotation(0)
@@ -134,6 +137,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.idle()
         this.updateDepth()
         this.items.forEach((item) => item.syncPosition(this))
+        this.statusEffects.clear()
+        this.conditionsValues.clear()
 
         this.target = undefined
     }
@@ -187,6 +192,18 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     getLevelMultiplier(min: number, base: number) {
         return Math.max(min, Math.pow(base, this.level - 1))
+    }
+
+    startChanneling() {
+        this.attackLocked = true
+        this.manaLocked = true
+        this.moveLocked = true
+    }
+
+    finishChanneling() {
+        this.attackLocked = false
+        this.manaLocked = false
+        this.moveLocked = false
     }
 
     resetUi() {
@@ -355,10 +372,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         const healEffect = new Heal(this)
     }
 
-    applyStatusEffect(statusEffect: StatusEffect) {
-        this.statusEffects.add(statusEffect)
-    }
-
     resetMouseEvents() {
         this.clearMouseEvents()
         this.handleMouseEvents()
@@ -469,7 +482,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     removeFromEnemyTarget(untargetable?: number) {
-        for (const enemy of this.getEnemyTeam().getChildren()) {
+        for (const enemy of this.getEnemyTeam().getChildren(true)) {
             if (enemy.target === this) {
                 enemy.target = undefined
             }
@@ -477,7 +490,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         if (untargetable) {
             this.canBeTargeted = false
-            this.scene.time.delayedCall(untargetable * 1000, () => {
+            this.scene.time.delayedCall(untargetable, () => {
                 if (this) this.canBeTargeted = true
             })
         }
@@ -724,7 +737,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     gainShield(value: number) {
-        this.shield += value
+        this.shield = Phaser.Math.Clamp(this.shield + value, 0, this.maxHealth)
         this.healthBar.setShield(this.shield, this.health, this.maxHealth)
     }
 

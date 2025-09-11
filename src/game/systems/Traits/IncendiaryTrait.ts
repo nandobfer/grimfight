@@ -1,5 +1,5 @@
 import { Character } from "../../creature/character/Character"
-import { Dot } from "../../objects/Dot"
+import { Dot } from "../../objects/StatusEffect/Dot"
 import { Trait } from "./Trait"
 
 type TraitBoosts = "baseDamage"
@@ -34,12 +34,12 @@ export class IncendiaryTrait extends Trait {
                 damageType: "fire",
                 duration: 5000,
                 target: character.target,
-                tickDamage: baseDamage/5,
+                tickDamage: baseDamage / 5,
                 tickRate: 1000,
                 user: character,
             })
 
-            character.target.applyStatusEffect(burn)
+            burn.start()
         }
 
         character.eventHandlers.incendiaryTrait = addBurn

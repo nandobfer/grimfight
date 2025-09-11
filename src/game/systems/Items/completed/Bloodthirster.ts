@@ -21,7 +21,7 @@ export class Bloodthirster extends Item {
         creature.armor += 5
         creature.lifesteal += 20
 
-        const previousHandler = creature.eventHandlers.bloodthirster
+        const previousHandler = creature.eventHandlers[`bloodthirster_${this.id}`]
         if (previousHandler) {
             creature.off("damage-taken", previousHandler)
         }
@@ -34,17 +34,17 @@ export class Bloodthirster extends Item {
             }
         }
 
-        creature.eventHandlers.bloodthirster = watchLife
+        creature.eventHandlers[`bloodthirster_${this.id}`] = watchLife
 
         creature.on("damage-taken", watchLife)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.bloodthirster
+        const handler = creature.eventHandlers[`bloodthirster_${this.id}`]
         if (handler) {
             creature.off("damage-taken", handler)
-            delete creature.eventHandlers.bloodthirster
+            delete creature.eventHandlers[`bloodthirster_${this.id}`]
         }
     }
 }

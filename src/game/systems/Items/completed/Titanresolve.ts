@@ -21,7 +21,7 @@ export class Titanresolve extends Item {
         creature.armor += 5
         this.stacks = 0
 
-        const previousHandler = creature.eventHandlers.titanresolve
+        const previousHandler = creature.eventHandlers[`titanresolve_${this.id}`]
         if (previousHandler) {
             creature.off("damage-taken", previousHandler)
         }
@@ -38,17 +38,17 @@ export class Titanresolve extends Item {
             }
         }
 
-        creature.eventHandlers.titanresolve = onHit
+        creature.eventHandlers[`titanresolve_${this.id}`] = onHit
 
         creature.on("damage-taken", onHit)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.titanresolve
+        const handler = creature.eventHandlers[`titanresolve_${this.id}`]
         if (handler) {
             creature.off("damage-taken", handler)
-            delete creature.eventHandlers.titanresolve
+            delete creature.eventHandlers[`titanresolve_${this.id}`]
         }
     }
 }

@@ -1,6 +1,8 @@
 // src/objects/Arrow.ts
-import { Creature } from "../creature/Creature"
-import { Game } from "../scenes/Game"
+import { Creature } from "../../creature/Creature"
+import { Frozen } from "../../fx/Frozen"
+import { Game } from "../../scenes/Game"
+import { Condition } from "../StatusEffect/Condition"
 import { Projectile } from "./Projectile"
 
 export class IceShard extends Projectile {
@@ -53,7 +55,24 @@ export class IceShard extends Projectile {
             return
         }
 
+        // const freeze = new Condition({
+        //     attributes: ["moveLocked", "attackLocked", "speed"],
+        //     values: [true, true, 0],
+        //     duration: 1000,
+        //     target: target,
+        //     user: this.owner,
+        //     renderFx: () => new Frozen(this.scene, target.x, target.y, target),
+        //     onExpire: () => {
+        //         if (!this.owner) return
+        //         this.owner.manaLocked = false
+        //         this.owner.attackLocked = false
+        //     },
+        // })
+
+        // freeze.start()
+
         super.onHit(target)
+
     }
     override onHitWall() {
         super.onHitWall()

@@ -16,7 +16,7 @@ export class Sterak extends Item {
         creature.maxHealth *= 1 + 0.2
         creature.health *= 1 + 0.2
 
-        const previousHandler = creature.eventHandlers.sterak
+        const previousHandler = creature.eventHandlers[`sterak_${this.id}`]
         if (previousHandler) {
             creature.off("damage-taken", previousHandler)
         }
@@ -29,17 +29,17 @@ export class Sterak extends Item {
             }
         }
 
-        creature.eventHandlers.sterak = watchLife
+        creature.eventHandlers[`sterak_${this.id}`] = watchLife
 
         creature.on("damage-taken", watchLife)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.sterak
+        const handler = creature.eventHandlers[`sterak_${this.id}`]
         if (handler) {
             creature.off("damage-taken", handler)
-            delete creature.eventHandlers.sterak
+            delete creature.eventHandlers[`sterak_${this.id}`]
         }
     }
 }

@@ -1,6 +1,6 @@
 // src/game/characters/monsters/Skeleton.ts
 
-import { Arrow } from "../../objects/Arrow"
+import { Arrow } from "../../objects/Projectile/Arrow"
 import { Game } from "../../scenes/Game"
 import { Skeleton } from "./Skeleton"
 
@@ -31,10 +31,10 @@ export class ArcherSkeleton extends Skeleton {
         const arrow = new Arrow(this.scene, this.x, this.y, this)
         arrow.fire(target)
     }
-    
+
     override castAbility(): void {
         if (!this.target || !this.active) return
-        
+
         this.casting = true
 
         const arrow = new Arrow(this.scene, this.x, this.y, this)

@@ -16,7 +16,7 @@ export class Dragonclaw extends Item {
         creature.health *= 1 + 0.05
         creature.armor += 15
 
-        const previousHandler = creature.timeEvents.dragonclaw
+        const previousHandler = creature.timeEvents[`dragonclaw_${this.id}`]
         if (previousHandler) {
             this.scene.time.removeEvent(previousHandler)
         }
@@ -25,16 +25,16 @@ export class Dragonclaw extends Item {
             creature.heal(creature.maxHealth * 0.03, false, false)
         }
 
-        creature.timeEvents.dragonclaw = this.scene.time.addEvent({ callback: regenLife, loop: true, delay: 2000 })
+        creature.timeEvents[`dragonclaw_${this.id}`] = this.scene.time.addEvent({ callback: regenLife, loop: true, delay: 2000 })
 
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.timeEvents.dragonclaw
+        const handler = creature.timeEvents[`dragonclaw_${this.id}`]
         if (handler) {
             this.scene.time.removeEvent(handler)
-            delete creature.timeEvents.dragonclaw
+            delete creature.timeEvents[`dragonclaw_${this.id}`]
         }
     }
 }

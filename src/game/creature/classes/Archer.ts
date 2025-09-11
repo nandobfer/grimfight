@@ -1,4 +1,4 @@
-import { Arrow } from "../../objects/Arrow"
+import { Arrow } from "../../objects/Projectile/Arrow"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 import { Creature } from "../Creature"

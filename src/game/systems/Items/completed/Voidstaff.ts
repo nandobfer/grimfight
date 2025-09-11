@@ -15,7 +15,7 @@ export class Voidstaff extends Item {
         creature.attackSpeed *= 1 + 0.1
         creature.manaPerSecond *= 1 + 0.2
 
-        const previousHandler = creature.eventHandlers.voidstaff
+        const previousHandler = creature.eventHandlers[`voidstaff_${this.id}`]
         if (previousHandler) {
             creature.off("dealt-damage", previousHandler)
         }
@@ -26,17 +26,17 @@ export class Voidstaff extends Item {
             creature.gainMana(manaToDrain)
         }
 
-        creature.eventHandlers.voidstaff = drainMana
+        creature.eventHandlers[`voidstaff_${this.id}`] = drainMana
 
         creature.on("dealt-damage", drainMana)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.voidstaff
+        const handler = creature.eventHandlers[`voidstaff_${this.id}`]
         if (handler) {
             creature.off("dealt-damage", handler)
-            delete creature.eventHandlers.voidstaff
+            delete creature.eventHandlers[`voidstaff_${this.id}`]
         }
     }
 }

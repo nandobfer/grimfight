@@ -1,21 +1,25 @@
 import { Creature } from "../creature/Creature"
+import { Condition } from "../objects/StatusEffect/Condition"
+import { Dot } from "../objects/StatusEffect/Dot"
 import { Frozen } from "./Frozen"
 import { FxSprite } from "./FxSprite"
 
 export class Blizzard extends FxSprite {
     target: Creature
     caster: Creature
-    baseDamage: number
+    tickDamage: number
     damagedEnemies = new Set<Creature>()
-    duration = 0
+    damageDuration = 0
+    freezeDuration = 0
     damageInstances = 5
 
-    constructor(caster: Creature, target: Creature, baseDamage: number, scaleFactor: number, duration = 2500) {
+    constructor(caster: Creature, target: Creature, tickDamage: number, scaleFactor: number, damageDuration = 2500, freezeDuration = 1000) {
         super(target.scene, target.x, target.y, "blizzard", scaleFactor)
         this.target = target
         this.caster = caster
-        this.baseDamage = baseDamage
-        this.duration = duration
+        this.tickDamage = tickDamage
+        this.damageDuration = damageDuration
+        this.freezeDuration = freezeDuration
         // this.setSize(this.width * 0.2, this.height * 0.2) // Adjust size as needed
         // this.setOffset(this.width * 0.25, this.height * 0.25) // Center the hitbox
 
@@ -23,7 +27,7 @@ export class Blizzard extends FxSprite {
             color: 0x66ddff,
             intensity: 1,
             radius: 500,
-            duration: this.duration,
+            duration: this.damageDuration,
             minIntensity: 1,
             maxIntensity: 2,
             repeat: 0,
@@ -35,87 +39,57 @@ export class Blizzard extends FxSprite {
             if (this.damagedEnemies.has(enemy) || !enemy.active) return
 
             this.damagedEnemies.add(enemy)
-            this.startDamageChain(enemy)
+            this.hit(enemy)
         })
         this.scene.physics.add.overlap(this, this.target.team.minions, (_explosion, enemyObj) => {
             const enemy = enemyObj as Creature
             if (this.damagedEnemies.has(enemy) || !enemy.active) return
 
             this.damagedEnemies.add(enemy)
-            this.startDamageChain(enemy)
+            this.hit(enemy)
+        })
+    }
+
+    override initAnimation() {
+        if (!this.scene.anims.exists(this.sprite)) {
+            this.scene.anims.create({
+                key: this.sprite,
+                frames: this.anims.generateFrameNumbers(this.sprite),
+                frameRate: this.frameRate,
+                repeat: -1,
+            })
+        }
+
+        this.play(this.texture)
+    }
+
+    override onAnimationComplete(): void {}
+
+    hit(target: Creature) {
+        const dot = new Dot({
+            damageType: "cold",
+            duration: this.damageDuration,
+            target: target,
+            tickDamage: this.tickDamage,
+            tickRate: 490,
+            user: this.caster,
+            onExpire: () => {
+                if (!this.caster) return
+                this.caster.finishChanneling()
+                this.cleanup()
+            },
         })
 
-        this.anims.stop()
-        this.anims.play({ key: "blizzard", frameRate: this.duration / (this.anims.getTotalFrames() * 2) / 100 })
-    }
+        const freeze = new Condition({
+            attributes: ["moveLocked", "attackLocked", "speed"],
+            values: [true, true, 0],
+            duration: this.freezeDuration,
+            target: target,
+            user: this.caster,
+            renderFx: () => new Frozen(this.caster?.scene || target.scene, target.x, target.y, target),
+        })
 
-    startDamageChain(target: Creature) {
-        this.dealDamage(target, this.damageInstances)
-        this.freeze(target)
-    }
-
-    dealDamage(target: Creature, remaining: number) {
-        if (remaining > 0 && target?.active) {
-            remaining -= 1
-            const { value: damage, crit } = this.caster.calculateDamage(this.baseDamage)
-            target.takeDamage(damage, this.caster, "cold", crit)
-            this.target?.scene?.time.delayedCall(this.duration / this.damageInstances, () => this.dealDamage(target, remaining))
-        }
-
-        if (remaining === 0) {
-            this.unfreeze(target)
-        }
-    }
-
-    unfreeze(target: Creature) {
-        if (target) {
-            target.moveLocked = false
-            target.attackLocked = false
-            target.emit("unfrozen")
-            
-        }
-        if (this.caster) {
-            this.caster.manaLocked = false
-        }
-    }
-
-    freeze(target: Creature) {
-        // spawn ice
-        const cleanup = () => {
-            iceBlock?.destroy(true)
-
-            if (this.caster) {
-                this.caster.manaLocked = false
-            }
-        }
-
-        const iceBlock = new Frozen(target)
-        target.once("unfrozen", cleanup)
-        target.once("destroy", cleanup)
-        target.once("died", cleanup)
-
-        target.setVelocity(0)
-        target.moveLocked = true
-        target.attackLocked = true
-        // target.scene.tweens.add({
-        //     targets: target,
-        //     duration: Phaser.Math.FloatBetween(this.duration * 0.25, this.duration * 0.75),
-        //     attackSpeed: 0,
-        //     speed: 0,
-        //     repeat: 0,
-        //     manaPerSecond: 0,
-        //     yoyo: true,
-        //     onUpdate: () => {
-        //         target?.anims?.stop()
-        //         target.attacking = false
-        //     },
-        //     onComplete: () => {
-        //         target.attacking = false
-        //         iceBlock.destroy()
-        //         if (this.caster) {
-        //             this.caster.manaLocked = false
-        //         }
-        //     },
-        // })
+        dot.start()
+        freeze.start()
     }
 }

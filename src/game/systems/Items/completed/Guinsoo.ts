@@ -20,7 +20,7 @@ export class Guinsoo extends Item {
         creature.attackDamage *= 1 + 0.1
         creature.attackSpeed *= 1 + 0.15
 
-        const previousHandler = creature.eventHandlers.guinsoo
+        const previousHandler = creature.eventHandlers[`guinsoo_${this.id}`]
         if (previousHandler) {
             creature.off("dealt-damage", previousHandler)
         }
@@ -44,17 +44,17 @@ export class Guinsoo extends Item {
             if (creature.bonusAttackSpeed) creature.bonusAttackSpeed = base * multiplier
         }
 
-        creature.eventHandlers.guinsoo = onHit
+        creature.eventHandlers[`guinsoo_${this.id}`] = onHit
 
         creature.on("dealt-damage", onHit)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.guinsoo
+        const handler = creature.eventHandlers[`guinsoo_${this.id}`]
         if (handler) {
             creature.off("dealt-damage", handler)
-            delete creature.eventHandlers.guinsoo
+            delete creature.eventHandlers[`guinsoo_${this.id}`]
         }
     }
 }

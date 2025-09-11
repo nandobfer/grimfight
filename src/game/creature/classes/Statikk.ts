@@ -1,4 +1,4 @@
-import { LightningBolt } from "../../objects/Lightningbolt"
+import { LightningBolt } from "../../objects/Projectile/Lightningbolt"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 

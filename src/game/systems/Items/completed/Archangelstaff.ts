@@ -15,27 +15,27 @@ export class Archangelstaff extends Item {
         creature.abilityPower *= 1 + 0.2
         creature.manaPerSecond *= 1 + 0.2
 
-        const previousHandler = creature.timeEvents.archangelstaff
+        const previousHandler = creature.timeEvents[`archangelstaff_${this.id}`]
         if (previousHandler) {
             this.scene.time.removeEvent(previousHandler)
         }
 
         const buff = () => {
-            if (this.scene.state === 'fighting') {
+            if (this.scene.state === "fighting") {
                 creature.abilityPower *= 1 + 0.05
             }
         }
 
-        creature.timeEvents.archangelstaff = this.scene.time.addEvent({ callback: buff, loop: true, delay: 5000 })
+        creature.timeEvents[`.archangelstaff_${this.id}`] = this.scene.time.addEvent({ callback: buff, loop: true, delay: 5000 })
 
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.timeEvents.archangelstaff
+        const handler = creature.timeEvents[`.archangelstaff_${this.id}`]
         if (handler) {
             this.scene.time.removeEvent(handler)
-            delete creature.timeEvents.archangelstaff
+            delete creature.timeEvents[`.archangelstaff_${this.id}`]
         }
     }
 }

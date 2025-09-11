@@ -20,7 +20,7 @@ export class Protectorsvow extends Item {
         creature.manaPerSecond *= 1 + 0.2
         creature.armor += 10
 
-        const previousHandler = creature.eventHandlers.protectorsvow
+        const previousHandler = creature.eventHandlers[`protectorsvow_${this.id}`]
         if (previousHandler) {
             this.scene.events.off("gamestate", previousHandler)
         }
@@ -32,17 +32,17 @@ export class Protectorsvow extends Item {
             }
         }
 
-        creature.eventHandlers.protectorsvow = onStart
+        creature.eventHandlers[`protectorsvow_${this.id}`] = onStart
 
         this.scene.events.on("gamestate", onStart)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.protectorsvow
+        const handler = creature.eventHandlers[`protectorsvow_${this.id}`]
         if (handler) {
             this.scene.events.off("gamestate", handler)
-            delete creature.eventHandlers.protectorsvow
+            delete creature.eventHandlers[`protectorsvow_${this.id}`]
         }
     }
 }

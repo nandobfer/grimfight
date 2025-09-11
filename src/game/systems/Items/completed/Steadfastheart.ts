@@ -19,7 +19,7 @@ export class Steadfastheart extends Item {
         creature.armor += 10
         creature.critChance += 15
 
-        const previousHandler = creature.eventHandlers.steadfastheart
+        const previousHandler = creature.eventHandlers[`steadfastheart_${this.id}`]
         if (previousHandler) {
             creature.off("damage-taken", previousHandler)
         }
@@ -31,17 +31,17 @@ export class Steadfastheart extends Item {
             }
         }
 
-        creature.eventHandlers.steadfastheart = critGuard
+        creature.eventHandlers[`steadfastheart_${this.id}`] = critGuard
 
         creature.on("damage-taken", critGuard)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.steadfastheart
+        const handler = creature.eventHandlers[`steadfastheart_${this.id}`]
         if (handler) {
             creature.off("damage-taken", handler)
-            delete creature.eventHandlers.steadfastheart
+            delete creature.eventHandlers[`steadfastheart_${this.id}`]
         }
     }
 }

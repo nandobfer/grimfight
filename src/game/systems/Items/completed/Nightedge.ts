@@ -15,14 +15,14 @@ export class Nightedge extends Item {
         creature.attackDamage *= 1 + 0.15
         creature.armor += 5
 
-        const previousHandler = creature.eventHandlers.nightedge
+        const previousHandler = creature.eventHandlers[`nightedge_${this.id}`]
         if (previousHandler) {
             creature.off("damage-taken", previousHandler)
         }
 
         const watchLife = (damage: number) => {
             if (creature.health / creature.maxHealth <= 0.6) {
-                creature.removeFromEnemyTarget(3)
+                creature.removeFromEnemyTarget(3000)
                 const smokeParticles = this.scene.add.particles(creature.x, creature.y, "blood", {
                     lifespan: { min: 300, max: 600 },
                     speed: { min: 20, max: 60 },
@@ -46,17 +46,17 @@ export class Nightedge extends Item {
             }
         }
 
-        creature.eventHandlers.nightedge = watchLife
+        creature.eventHandlers[`nightedge_${this.id}`] = watchLife
 
         creature.on("damage-taken", watchLife)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.nightedge
+        const handler = creature.eventHandlers[`nightedge_${this.id}`]
         if (handler) {
             creature.off("damage-taken", handler)
-            delete creature.eventHandlers.nightedge
+            delete creature.eventHandlers[`nightedge_${this.id}`]
         }
     }
 }

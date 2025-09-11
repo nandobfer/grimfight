@@ -1,11 +1,12 @@
 import { Creature } from "../creature/Creature"
+import { Game } from "../scenes/Game"
 import { FxSprite } from "./FxSprite"
 
 export class Frozen extends FxSprite {
     target: Creature
 
-    constructor(target: Creature) {
-        super(target.scene, target.x, target.y - 15, "frozen", 0.8)
+    constructor(scene: Game, x: number, y: number, target: Creature) {
+        super(scene, x, y - 15, "frozen", 0.8)
         this.target = target
 
         const targetWidth = target.displayWidth * target.scaleX

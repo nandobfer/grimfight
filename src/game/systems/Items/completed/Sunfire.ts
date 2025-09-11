@@ -1,5 +1,5 @@
 import { Creature } from "../../../creature/Creature"
-import { Dot } from "../../../objects/Dot"
+import { Dot } from "../../../objects/StatusEffect/Dot"
 import { Game } from "../../../scenes/Game"
 import { Item } from "../Item"
 
@@ -22,7 +22,7 @@ export class Sunfire extends Item {
         creature.maxHealth *= 1 + 0.1
         creature.health *= 1 + 0.1
 
-        const previousHandler = creature.eventHandlers.sunfire
+        const previousHandler = creature.eventHandlers[`sunfire_${this.id}`]
         if (previousHandler) {
             creature.off("damage-taken", previousHandler)
         }
@@ -39,23 +39,23 @@ export class Sunfire extends Item {
                     user: creature,
                 })
                 this.burns.set(attacker, burn)
-                attacker.applyStatusEffect(burn)
+                burn.start()
             } else {
                 burn.resetDuration()
             }
         }
 
-        creature.eventHandlers.sunfire = applyBurn
+        creature.eventHandlers[`sunfire_${this.id}`] = applyBurn
 
         creature.on("damage-taken", applyBurn)
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.eventHandlers.sunfire
+        const handler = creature.eventHandlers[`sunfire_${this.id}`]
         if (handler) {
             creature.off("damage-taken", handler)
-            delete creature.eventHandlers.sunfire
+            delete creature.eventHandlers[`sunfire_${this.id}`]
         }
     }
 }

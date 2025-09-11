@@ -1,7 +1,7 @@
 import { FxSprite } from "../../fx/FxSprite"
 import { ThornsFx } from "../../fx/ThornsFx"
-import { Arrow } from "../../objects/Arrow"
-import { Dot } from "../../objects/Dot"
+import { Arrow } from "../../objects/Projectile/Arrow"
+import { Dot } from "../../objects/StatusEffect/Dot"
 import { Game } from "../../scenes/Game"
 import { DamageType } from "../../ui/DamageNumbers"
 import { Character } from "../character/Character"
@@ -146,7 +146,7 @@ ${human}`
             tickRate: 900,
             user: this,
         })
-        this.target.applyStatusEffect(bleeding)
+        bleeding.start()
     }
 
     castBearAbility(multiplier = 1) {

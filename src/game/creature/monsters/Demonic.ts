@@ -1,4 +1,4 @@
-import { Fireball } from "../../objects/Fireball"
+import { Fireball } from "../../objects/Projectile/Fireball"
 import { Game } from "../../scenes/Game"
 import { RNG } from "../../tools/RNG"
 import { Monster } from "./Monster"
