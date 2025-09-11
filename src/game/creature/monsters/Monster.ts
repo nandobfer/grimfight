@@ -40,10 +40,9 @@ export class Monster extends Creature {
     makeBoss(targetCR: number) {
         const base = Math.max(0.1, this.calculateCR())
         const mult = Math.max(1, targetCR / base)
+        this.boss = true
         this.scaleStats(mult)
         this.scaleSize(mult)
-        this.boss = true
-        this.manaOnHit = 0.5
         // this.baseResistance += 20
 
         this.addDarkAura()
