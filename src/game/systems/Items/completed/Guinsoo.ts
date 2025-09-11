@@ -56,5 +56,7 @@ export class Guinsoo extends Item {
             creature.off("dealt-damage", handler)
             delete creature.eventHandlers[`guinsoo_${this.id}`]
         }
+        this.stacks.delete(creature)
+        this.baseline.delete(creature)
     }
 }
