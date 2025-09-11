@@ -2,6 +2,7 @@ import { Character } from "../../creature/character/Character"
 import { Creature } from "../../creature/Creature"
 import { Frozen } from "../../fx/Frozen"
 import { Condition } from "../../objects/StatusEffect/Condition"
+import { Freeze } from "../../objects/StatusEffect/Freeze"
 import { RNG } from "../../tools/RNG"
 import { Trait } from "./Trait"
 
@@ -34,16 +35,7 @@ export class PopsicleTrait extends Trait {
 
         const onAttack = (target: Creature, damage: number) => {
             if (RNG.chance() <= values.freezeChance) {
-                const freeze = new Condition({
-                    attributes: ["frozen"],
-                    values: [true],
-                    duration: 1000,
-                    target: target,
-                    user: character,
-                    renderFx: () => new Frozen(character?.scene || target.scene, target.x, target.y, target),
-                })
-
-                freeze.start()
+                new Freeze(target, character, 1000).start()
             }
         }
 

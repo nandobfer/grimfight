@@ -67,7 +67,7 @@ export class Blizzard extends FxSprite {
     override onAnimationComplete(): void {}
 
     hit(target: Creature) {
-        const dot = new Dot({
+        new Dot({
             damageType: "cold",
             duration: this.damageDuration,
             target: target,
@@ -79,20 +79,8 @@ export class Blizzard extends FxSprite {
                 this.caster.finishChanneling()
                 this.cleanup()
             },
-        })
+        }).start()
 
-        const freeze = new Freeze(target, this.caster, this.freezeDuration)
-
-        // const freeze = new Condition({
-        //     attributes: ["frozen"],
-        //     values: [true],
-        //     duration: this.freezeDuration,
-        //     target: target,
-        //     user: this.caster,
-        //     renderFx: () => new Frozen(this.caster?.scene || target.scene, target.x, target.y, target),
-        // })
-
-        dot.start()
-        freeze.start()
+        new Freeze(target, this.caster, this.freezeDuration).start()
     }
 }
