@@ -8,15 +8,14 @@ export class Guinsoo extends Item {
     descriptionLines = ["+10% AP", "+15% AS", "Passiva: Recebe 3% AS ao atacar"]
     attackSpeedMultiplier = 0.03
 
-    private baseline = new WeakMap<Creature, number>()
-    private stacks = new WeakMap<Creature, number>()
+    private baseline = 0
+    private stacks = 0
 
     constructor(scene: Game) {
         super(scene, "item-guinsoo")
     }
 
     override applyModifier(creature: Creature): void {
-        if (!this.stacks.has(creature)) this.stacks.set(creature, 0)
         creature.attackDamage *= 1 + 0.1
         creature.attackSpeed *= 1 + 0.15
 
@@ -26,22 +25,17 @@ export class Guinsoo extends Item {
         }
 
         const onHit = (victim: Creature, damage: number) => {
-            // capture baseline once (includes augments!)
-            if (!this.baseline.has(creature)) {
-                const base0 = creature.bonusAttackSpeed || creature.attackSpeed // fallback safety
-
-                this.baseline.set(creature, base0)
+            // capture baseline once
+            if (!this.baseline) {
+                this.baseline = creature.bonusAttackSpeed || creature.attackSpeed
             }
-            const base = this.baseline.get(creature)!
 
-            let stacks = this.stacks.get(creature) ?? 0
-            stacks += 1
-            this.stacks.set(creature, stacks)
+            this.stacks += 1
 
-            const multiplier = 1 + stacks * this.attackSpeedMultiplier
-            creature.attackSpeed = base * multiplier
+            const multiplier = 1 + this.stacks * this.attackSpeedMultiplier
+            creature.attackSpeed = this.baseline * multiplier
 
-            if (creature.bonusAttackSpeed) creature.bonusAttackSpeed = base * multiplier
+            if (creature.bonusAttackSpeed) creature.bonusAttackSpeed = this.baseline * multiplier
         }
 
         creature.eventHandlers[`guinsoo_${this.id}`] = onHit
@@ -56,7 +50,7 @@ export class Guinsoo extends Item {
             creature.off("dealt-damage", handler)
             delete creature.eventHandlers[`guinsoo_${this.id}`]
         }
-        this.stacks.delete(creature)
-        this.baseline.delete(creature)
+        this.stacks = 0
+        this.baseline = 0
     }
 }
