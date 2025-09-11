@@ -39,13 +39,9 @@ export class PlayerTeam extends CreatureGroup {
         super.reset()
         this.deleteFuckedUpCharacter()
         this.resetTraits()
-        this.refreshAllStats()
         this.emitArray()
     }
 
-    private refreshAllStats() {
-        this.getChildren().forEach((c) => c.refreshStats())
-    }
 
     add(child: Character, addToScene?: boolean): this {
         super.add(child, addToScene)

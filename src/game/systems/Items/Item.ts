@@ -18,6 +18,7 @@ export class Item {
 
     private border: Phaser.GameObjects.Rectangle
     private preDrag?: { x: number; y: number }
+    private emittingMerge = false
 
     private big_scale = 0.34
     private equiped_scale = 0.17
@@ -131,16 +132,14 @@ export class Item {
         this.sprite.on("pointerover", (pointer: Phaser.Input.Pointer) => {
             this.showHoverBorder()
 
-            const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
-
-            EventBus.emit("item-tooltip", this, pointerPosition)
+            this.emitTooltip(pointer)
         })
 
         this.sprite.on("pointerout", () => {
             if (!this.user) this.showLooseBorder() // back to 0.6 when loose
             else this.hideBorder()
 
-            Item.resetTooltip()
+            this.resetTooltip()
         })
 
         this.sprite.on("dragstart", (pointer: Phaser.Input.Pointer) => {
@@ -157,9 +156,7 @@ export class Item {
             this.updateBorder()
             this.handleCreatureOnPoint(pointer)
 
-            const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
-
-            EventBus.emit("item-tooltip", this, pointerPosition)
+            this.emitTooltip(pointer)
         })
 
         this.sprite.on("dragend", (pointer: Phaser.Input.Pointer) => {
@@ -192,6 +189,18 @@ export class Item {
         })
     }
 
+    emitTooltip(pointer: Phaser.Input.Pointer) {
+        if (!this.emittingMerge) {
+            const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
+            EventBus.emit("item-tooltip", this, pointerPosition)
+        }
+    }
+
+    resetTooltip() {
+        this.emittingMerge = false
+        Item.resetTooltip()
+    }
+
     removeDragHandlers() {
         this.sprite.off("dragstart")
         this.sprite.off("drag")
@@ -219,8 +228,8 @@ export class Item {
         const mergeResult = creature.getMergeResult(this)?.result
         if (mergeResult) {
             const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
-
             EventBus.emit("item-tooltip", mergeResult, pointerPosition)
+            this.emittingMerge = true
         }
     }
 
@@ -236,7 +245,7 @@ export class Item {
                 return character
             } else {
                 this.resetSnap()
-                Item.resetTooltip()
+                this.resetTooltip()
             }
         }
     }

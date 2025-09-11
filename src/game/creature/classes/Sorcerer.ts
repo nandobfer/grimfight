@@ -34,9 +34,9 @@ export class Sorcerer extends Character {
     }
 
     override landAttack() {
-        if (!this.target) return
+        if (!this.target || !this?.active) return
 
-        const iceshard = new IceShard(this)
+        const iceshard = new IceShard(this.scene, this.x, this.y, this)
         iceshard.fire(this.target)
     }
 

@@ -34,9 +34,9 @@ export class Banguela extends Character {
     }
 
     override landAttack() {
-        if (!this.target) return
+        if (!this.target || !this?.active) return
 
-        const fireball = new Fireball(this)
+        const fireball = new Fireball(this.scene, this.x, this.y, this)
         fireball.fire(this.target)
     }
 
@@ -46,7 +46,8 @@ export class Banguela extends Character {
         const fireballsCount = Math.floor(this.abilityPower * 0.05)
         for (let count = 1; count <= fireballsCount; count++) {
             const { x, y } = this.randomPointAround()
-            const fireball = new Fireball(this)
+            if (!this?.active) continue
+            const fireball = new Fireball(this.scene, this.x, this.y, this)
             const orb = new FireEffect(this.scene, x, y)
             orb.setScale(0.075)
             orb.setOrigin(0.5, 0.5)

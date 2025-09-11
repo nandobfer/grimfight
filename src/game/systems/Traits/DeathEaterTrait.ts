@@ -32,7 +32,6 @@ export class DeathEaterTrait extends Trait {
         const diedHandler = () => {
             if (this.dead.has(creature)) return
             this.dead.add(creature)
-            console.log({ deads: this.dead })
             const deadX = creature.x
             const deadY = creature.y
             new DeathSkullFx(creature.scene, deadX, deadY, 0.75)
@@ -41,14 +40,10 @@ export class DeathEaterTrait extends Trait {
                     new SoulParticles(creature.scene, deadX, deadY, 0.75)
                     creature.health = 0
                     creature.revive(creature.maxHealth * values.hpMultiplier)
-                    creature.canBeTargeted = false
+                    creature.removeFromEnemyTarget(1000)
                     creature.attackDamage *= 1 + values.statsMultiplier
                     creature.abilityPower *= 1 + values.statsMultiplier
                     creature.teleportTo(deadX, deadY)
-
-                    creature.scene?.time.delayedCall(1000, () => {
-                        if (creature) creature.canBeTargeted = true
-                    })
                 }
             })
         }

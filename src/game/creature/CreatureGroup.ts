@@ -60,7 +60,12 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
             creature.reset()
         }
 
+        this.refreshAllStats()
         this.minions.clear(true, true)
+    }
+
+    refreshAllStats() {
+        this.getChildren().forEach((c) => c.refreshStats())
     }
 
     override clear(removeFromScene?: boolean, destroyChild?: boolean) {

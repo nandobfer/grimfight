@@ -18,9 +18,9 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
     alreadyOverlaped = new Set<Creature>()
 
-    constructor(owner: Creature, texture: string, damageType: DamageType) {
-        super(owner.scene, owner.x, owner.y, texture)
-        this.scene = owner.scene
+    constructor(scene: Game, x: number, y: number, owner: Creature, texture: string, damageType: DamageType) {
+        super(scene, x, y, texture)
+        this.scene = scene
         this.scene?.add.existing(this)
         this.scene?.physics.add.existing(this)
         this.toggleFlipX()

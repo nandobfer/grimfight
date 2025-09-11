@@ -218,7 +218,7 @@ export class Game extends Scene {
             const { x, y } = this.clientToWorld(clientX, clientY)
 
             // Try to snap; if success, add to team (CharacterGroup.add will respect boardX/Y)
-            const snapped = this.grid.snapCharacter(ghost, x, y)
+            const snapped = this.grid.snapCharacter(ghost, x, y, true)
             this.grid.hideHighlight()
             this.grid.hideDropOverlay()
             this.shopkeeper.onCharacterDragGlow(false)
@@ -271,14 +271,9 @@ export class Game extends Scene {
         EventBus.on("bench-drop", ({ id, dto }: { id: string; dto: CharacterDto }) => {
             const character = this.dragFromBoard.get(id)
             if (!character) return
-            character.dropToBench = true // tells dragend to skip snapping logic
-            character.items.forEach((item) => item.dropOnBoard())
-            character.destroy(true)
+            character.onBenchDrop()
             this.playerTeam.bench.add(dto) // your Bench.add will emit to UI
             this.dragFromBoard.delete(id)
-            this.playerTeam.resetTraits()
-            // this.playerTeam.refreshAllStats()
-            this.playerTeam.saveAndEmit()
         })
 
         // Cancel: not dropped on bench; restore and let the character's dragend do its normal snap/revert

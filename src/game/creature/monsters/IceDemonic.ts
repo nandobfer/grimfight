@@ -31,7 +31,7 @@ export class IceDemonic extends Monster {
     override landAttack(target = this.target) {
         if (!target || !this.active) return
 
-        const iceshard = new IceShard(this)
+        const iceshard = new IceShard(this.scene, this.x, this.y, this)
         iceshard.fire(target)
     }
 

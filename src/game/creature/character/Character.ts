@@ -376,6 +376,14 @@ export class Character extends Creature {
         this.scene.saveProgress()
     }
 
+    onBenchDrop() {
+        this.dropToBench = true // tells dragend to skip snapping logic
+        this.items.forEach((item) => item.dropOnBoard())
+        this.destroy(true)
+        this.team.resetTraits()
+        this.team.saveAndEmit()
+    }
+
     override destroy(fromScene?: boolean): void {
         super.destroy(fromScene)
         this.destroyUi()

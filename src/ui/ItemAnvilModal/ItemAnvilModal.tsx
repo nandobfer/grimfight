@@ -61,7 +61,7 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
                     }}
                 >
                     {items.map((item, index) => (
-                        <Button sx={{ padding: 0 }} variant="outlined" onClick={() => onChoose(item)}>
+                        <Button sx={{ padding: 0, height: 1 }} variant="outlined" onClick={() => onChoose(item)}>
                             <ItemTooltipContent item={item} key={item.key + index} />
                         </Button>
                     ))}

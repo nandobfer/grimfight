@@ -28,24 +28,25 @@ export class ArcherSkeleton extends Skeleton {
     override landAttack(target = this.target) {
         if (!target || !this.active) return
 
-        const arrow = new Arrow(this)
+        const arrow = new Arrow(this.scene, this.x, this.y, this)
         arrow.fire(target)
     }
-
+    
     override castAbility(): void {
+        if (!this.target || !this.active) return
+        
         this.casting = true
 
-        const arrow = new Arrow(this)
+        const arrow = new Arrow(this.scene, this.x, this.y, this)
         arrow.setScale(0.15, 0.15)
+        arrow.fire(this.target)
 
         arrow.onHit = (target) => {
             const { value, crit } = this.calculateDamage(this.abilityPower * 2)
-            target.takeDamage(value, this, 'normal', crit)
+            target.takeDamage(value, this, "normal", crit)
             arrow.destroy()
         }
 
         this.casting = false
-        
-        
     }
 }

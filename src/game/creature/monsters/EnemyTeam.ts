@@ -21,6 +21,7 @@ export class EnemyTeam extends CreatureGroup {
     reset() {
         super.reset()
         this.replaceInBoard()
+        this.snapItems()
     }
 
     replaceInBoard() {
@@ -88,5 +89,11 @@ export class EnemyTeam extends CreatureGroup {
 
     emitAugments() {
         EventBus.emit("enemies-augments-change", Array.from(this.augments.values()))
+    }
+
+    snapItems() {
+        for (const monster of this.getChildren()) {
+            monster.items.forEach((item) => item.snapToCreature(monster))
+        }
     }
 }

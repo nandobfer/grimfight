@@ -1,5 +1,6 @@
 // src/objects/Arrow.ts
 import { Creature } from "../creature/Creature"
+import { Game } from "../scenes/Game"
 import { Projectile } from "./Projectile"
 
 export class LightningBolt extends Projectile {
@@ -8,8 +9,8 @@ export class LightningBolt extends Projectile {
 
     rawDamage: number
 
-    constructor(owner: Creature, rawDamage: number, bounces: number) {
-        super(owner, "lightning_bolt", "lightning")
+    constructor(scene: Game, x: number, y: number,owner: Creature, rawDamage: number, bounces: number) {
+        super(scene, x, y, owner, "lightning_bolt", "lightning")
         this.setScale(0.35)
         this.setSize(this.width * 0.1, this.height * 0.1) // Adjust size as needed
         // this.setOffset(this.width * 0.25, this.height * 0.25) // Center the hitbox

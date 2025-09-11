@@ -52,7 +52,7 @@ Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [primar
             )}] [info.main:(30% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${Math.round(
                 this.abilityPower * 0.01
             )}] [info.main:(1% AP)] chance de crítico. 
-Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(this.attackDamage * 3)} (300% AD)] de dano.`
+Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(this.attackDamage * 1.5)} (150% AD)] de dano.`
 
             const human = `[primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${Math.round(
                 this.abilityPower * humanMultiplier
@@ -81,9 +81,9 @@ ${human}`
     }
 
     fire() {
-        if (!this.target) return
+        if (!this.target || !this?.active) return
 
-        const arrow = new Arrow(this)
+        const arrow = new Arrow(this.scene, this.x, this.y, this)
         arrow.setTint(0x00ff00)
         arrow.fire(this.target)
     }
@@ -142,7 +142,7 @@ ${human}`
             damageType: "poison",
             duration: 2000,
             target: this.target,
-            tickDamage: this.attackDamage * 3 * multiplier,
+            tickDamage: this.attackDamage * 1.5 * multiplier,
             tickRate: 900,
             user: this,
         })

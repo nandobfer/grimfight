@@ -8,14 +8,18 @@ function createWindow() {
         height: 768,
         webPreferences: {
             preload: path.join(__dirname, "../preload/preload.js"),
+            webgl: true,
         },
+        darkTheme: true,
+        fullscreen: true,
+        title: "Grim Fight",
     })
 
     // Dev vs Prod
     const devUrl = process.env.ELECTRON_RENDERER_URL
     if (devUrl) {
         win.loadURL(devUrl)
-        win.webContents.openDevTools({ mode: "detach" })
+        // win.webContents.openDevTools({ mode: "detach" })
     } else {
         // file:// protocol (preview or packaged)
         win.loadFile(path.join(__dirname, "../../dist/index.html"))

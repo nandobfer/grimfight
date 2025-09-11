@@ -28,9 +28,9 @@ export class Demonic extends Monster {
     }
 
     override landAttack(target = this.target) {
-        if (!target || !this.active) return
+        if (!target || !this?.active) return
 
-        const fireball = new Fireball(this)
+        const fireball = new Fireball(this.scene, this.x, this.y, this)
         fireball.fire(target)
     }
 
@@ -43,7 +43,8 @@ export class Demonic extends Monster {
         for (let i = 1; i <= targets; i++) {
             this.scene.time.delayedCall(i * 200, () => {
                 const target = RNG.pick(enemies)
-                const fireball = new Fireball(this)
+                if (!target || !this?.active) return
+                const fireball = new Fireball(this.scene, this.x, this.y, this)
                 fireball.onHit = (target) => {
                     const { value, crit } = this.calculateDamage(this.abilityPower * 0.5)
                     target.takeDamage(value, this, "fire", crit)

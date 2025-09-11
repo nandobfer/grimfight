@@ -1,12 +1,13 @@
 // src/objects/Arrow.ts
 import { Creature } from "../creature/Creature"
+import { Game } from "../scenes/Game"
 import { Projectile } from "./Projectile"
 
 export class IceShard extends Projectile {
     speed = 300
 
-    constructor(owner: Creature) {
-        super(owner, "ice1", "cold")
+    constructor(scene: Game, x: number, y: number, owner: Creature) {
+        super(scene, x, y, owner, "ice1", "cold")
         this.setScale(0.15, 0.15)
         // this.toggleFlipY()
         this.toggleFlipX()

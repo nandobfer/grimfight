@@ -45,14 +45,14 @@ export class Statikk extends Character {
         super.landAttack()
         this.attacksCount += 1
 
-        if (!this.target) {
+        if (!this.target || !this?.active) {
             return
         }
 
         if (this.attacksCount === 3) {
             this.attacksCount = 0
 
-            const lightning = new LightningBolt(this, this.abilityPower * 0.75, 5)
+            const lightning = new LightningBolt(this.scene, this.x, this.y, this, this.abilityPower * 0.75, 5)
             lightning.fire(this.target)
         }
     }

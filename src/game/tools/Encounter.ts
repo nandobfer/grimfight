@@ -43,6 +43,7 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
         const boss = new ctor(scene)
         boss.makeBoss(targetCR)
         equipMonsterWithCRItems(boss, rng)
+        console.log({ boss })
         return { monsters: [boss], isBoss: true }
     }
 
@@ -159,11 +160,15 @@ function completedItemsForCR(cr: number, rng: RNG): number {
  * Equip items on monter based on it's CR.
  */
 function equipMonsterWithCRItems(monster: Monster, rng: RNG) {
-    const targetCompleted = completedItemsForCR(monster.challengeRating, rng)
+    let targetCompleted = completedItemsForCR(monster.challengeRating, rng)
 
     const exclude = new Set<string>(["thiefsgloves"]) // avoid recursion-y item on AI
     let attempts = 0
     const MAX_ATTEMPTS = 20
+
+    if (monster.boss) {
+        targetCompleted += 1
+    }
 
     while (monster.items.size < Math.min(3, targetCompleted) && attempts++ < MAX_ATTEMPTS) {
         const item = ItemRegistry.randomCompleted(monster.scene, [...exclude])
@@ -173,4 +178,5 @@ function equipMonsterWithCRItems(monster: Monster, rng: RNG) {
 
         monster.equipItem(item, true)
     }
+    monster.refreshStats()
 }

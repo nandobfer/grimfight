@@ -23,6 +23,8 @@ export const ItemTooltipContent: React.FC<ItemTooltipContentProps> = ({ item, hi
                 gap: 1,
                 bgcolor: hideBackground ? "transparent" : undefined,
                 paddingTop: hideBackground ? 0.5 : undefined,
+                maxWidth: 200,
+                height: 1,
             }}
         >
             <Box sx={{ alignItems: "center", gap: 1 }}>
@@ -33,7 +35,7 @@ export const ItemTooltipContent: React.FC<ItemTooltipContentProps> = ({ item, hi
             </Box>
             <Divider />
             {item.descriptionLines.map((line, index) => (
-                <Typography key={line + index} fontSize={12} sx={{ maxWidth: 300 }}>
+                <Typography key={line + index} fontSize={12}>
                     {line}
                 </Typography>
             ))}

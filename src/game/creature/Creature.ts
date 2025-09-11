@@ -821,7 +821,13 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.emit("died")
 
         if (this.team.isWiped()) {
-            this.scene.finishRound()
+            if (this.master) {
+                if (this.master.team.isWiped()) {
+                    this.scene.finishRound()
+                }
+            } else {
+                this.scene.finishRound()
+            }
         }
     }
 

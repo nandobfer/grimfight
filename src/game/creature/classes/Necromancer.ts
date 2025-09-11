@@ -75,8 +75,10 @@ dano de ataque: [error.main:${Math.round(skeleton.baseAttackDamage + this.abilit
         skeleton.reset()
         skeleton.target = this.target
 
-        const deathEater = this.team.activeTraits.find((trait) => trait.name === "Deatheater") as DeathEaterTrait | undefined
+        const deathEater = this.team.activeTraits.find((trait) => trait.name === "Comemorte") as DeathEaterTrait | undefined
+        console.log({ deathEater })
         if (deathEater) {
+            console.log("aplicando deatheater no esqueleto")
             deathEater.applyModifier(skeleton)
         }
 

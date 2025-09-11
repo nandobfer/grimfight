@@ -40,11 +40,11 @@ export class Vania extends Character {
     // }
 
     override landAttack() {
-        if (!this.target) return
+        if (!this.target || !this?.active) return
 
         this.attacksCount += 1
 
-        const arrow = new Arrow(this)
+        const arrow = new Arrow(this.scene, this.x, this.y, this)
 
         if (this.attacksCount === 3) {
             this.attacksCount = 0

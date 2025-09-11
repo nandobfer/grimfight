@@ -17,7 +17,7 @@ export class Mage extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Explode o alvo atual, causando [info.main:${Math.round(this.abilityPower * 3.5)} (350% AP)] de dano, além de [info.main:${Math.round(
+        return `Explode o alvo atual, causando [info.main:${Math.round(this.abilityPower * 3)} (300% AP)] de dano, além de [info.main:${Math.round(
             this.abilityPower
         )} (100% AP)] aos inimigos adjacentes.`
     }
@@ -33,9 +33,9 @@ export class Mage extends Character {
     }
 
     override landAttack() {
-        if (!this.target) return
+        if (!this.target || !this?.active) return
 
-        const fireball = new Fireball(this)
+        const fireball = new Fireball(this.scene, this.x, this.y, this)
         fireball.fire(this.target)
     }
 
@@ -43,16 +43,20 @@ export class Mage extends Character {
         if (!this.target) return
 
         this.casting = true
-        const { value: damage, crit } = this.calculateDamage(this.abilityPower * 3.5 * multiplier)
+        const { value: damage, crit } = this.calculateDamage(this.abilityPower * 3 * multiplier)
 
-        this.target.takeDamage(damage, this, "fire", crit)
-        new Explosion(this, this.target, this.abilityPower, 2.5)
+        try {
+            this.target.takeDamage(damage, this, "fire", crit)
+            new Explosion(this, this.target, this.abilityPower, 2.5)
+        } catch (error) {
+            console.log(error)
+        }
 
         this.casting = false
     }
 
     override refreshStats(): void {
         super.refreshStats()
-        this.mana = this.maxMana * 0.5
+        this.mana = this.maxMana * 0.65
     }
 }

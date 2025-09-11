@@ -2,6 +2,7 @@
 import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 import { Creature } from "../creature/Creature"
+import { Character } from "../creature/character/Character"
 
 type Insets = { left: number; right: number; top: number; bottom: number }
 export type PreferredPosition = "front" | "middle" | "back" // one of the 3 available rows. For enemies are the top 3, for player characters are the bottom 3
@@ -139,7 +140,7 @@ export class Grid {
         this.hi.setVisible(false)
     }
 
-    snapCharacter(character: Creature, wx: number, wy: number) {
+    snapCharacter(character: Creature, wx: number, wy: number, fromBench = false) {
         const cell = this.worldToCell(wx, wy)
         if (!cell || !this.isDroppableRow(cell.row)) return false
 
@@ -156,25 +157,29 @@ export class Grid {
         }
 
         // Find any existing character at the destination cell
-        const other =
-            (this.scene.playerTeam as any).getCharacterInPosition?.(x, y) ??
-            this.scene.playerTeam.getChildren().find((c: Creature) => c.boardX === x && c.boardY === y)
+        const other = this.scene.playerTeam.getCreatureInCell(cell.col, cell.row) as Character | undefined
 
         if (other && other !== character) {
-            // Swap positions if the dragged character had a valid previous cell
-            if (character.boardX > 0 && character.boardY > 0) {
-                const prevX = character.boardX
-                const prevY = character.boardY
-
-                // Move 'other' to our previous cell (update board + body)
-                other.boardX = prevX
-                other.boardY = prevY
-                other.setPosition(prevX, prevY)
-                other.body?.reset(prevX, prevY)
-                other.reset()
+            if (fromBench) {
+                // move other to bench
+                other.x = 0
+                other.y = 0
+                const dto = other.getDto()
+                other.onBenchDrop()
+                other.team.bench.add(dto)
             } else {
-                // No previous valid cell for 'character' → simple move (no swap target)
-                // (If you prefer to block the move in this case, return false here.)
+                // Swap positions if the dragged character had a valid previous cell
+                if (character.boardX > 0 && character.boardY > 0) {
+                    const prevX = character.boardX
+                    const prevY = character.boardY
+
+                    // Move 'other' to our previous cell (update board + body)
+                    other.boardX = prevX
+                    other.boardY = prevY
+                    other.setPosition(prevX, prevY)
+                    other.body?.reset(prevX, prevY)
+                    other.reset()
+                }
             }
         }
 

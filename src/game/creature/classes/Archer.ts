@@ -35,9 +35,9 @@ export class Archer extends Character {
     // }
 
     override landAttack() {
-        if (!this.target) return
+        if (!this.target || !this?.active) return
 
-        const arrow = new Arrow(this)
+        const arrow = new Arrow(this.scene, this.x, this.y, this)
         arrow.fire(this.target)
     }
 
@@ -76,7 +76,8 @@ export class Archer extends Character {
             // Calculate angle for this arrow (-30 to +30 degrees from base angle)
             const arrowAngle = baseAngle - spreadAngle / 2 + angleStep * i
 
-            const arrow = new Arrow(this)
+            if (!this?.active) continue
+            const arrow = new Arrow(this.scene, this.x, this.y, this)
 
             // Override the fire method temporarily to use our custom angle
             const originalFire = arrow.fire.bind(arrow)

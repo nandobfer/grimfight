@@ -1,12 +1,13 @@
 // src/objects/Arrow.ts
 import { Creature } from "../creature/Creature"
+import { Game } from "../scenes/Game"
 import { Projectile } from "./Projectile"
 
 export class Fireball extends Projectile {
     speed = 400
 
-    constructor(owner: Creature) {
-        super(owner, "fireball0", "fire")
+    constructor(scene: Game, x: number, y: number,owner: Creature) {
+        super(scene, x, y, owner, "fireball0", "fire")
         this.setScale(0.075, 0.075)
         this.toggleFlipY()
         this.toggleFlipX()
