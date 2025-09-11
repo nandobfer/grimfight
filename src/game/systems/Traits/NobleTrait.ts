@@ -1,7 +1,5 @@
 import { Character } from "../../creature/character/Character"
 import { Creature } from "../../creature/Creature"
-import { DeathSkullFx } from "../../fx/DeathSkullFx"
-import { Xfx } from "../../fx/Xfx"
 import { RNG } from "../../tools/RNG"
 import { Trait } from "./Trait"
 

@@ -7,10 +7,10 @@ type TraitBoosts = "hpMultiplier" | "statsMultiplier"
 
 export class DeathEaterTrait extends Trait {
     name = "Comemorte"
-    description = "Ao morrer pela primeira vez, comensais da morte ressuscitam com {0} de vida e recebem {1} de AD e AP até morrer de novo."
+    description = "Ao morrer pela primeira vez, comensais da morte ressuscitam com um escudo de {0} da sua vida e recebem {1} de AD e AP até morrer de novo."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { hpMultiplier: 0.3, statsMultiplier: 0.75, descriptionParams: ["30%", "75%"] }],
-        [3, { hpMultiplier: 0.45, statsMultiplier: 1.25, descriptionParams: ["45%", "125%"] }],
+        [4, { hpMultiplier: 0.45, statsMultiplier: 1.25, descriptionParams: ["45%", "125%"] }],
     ])
 
     private dead = new Set<Creature>()

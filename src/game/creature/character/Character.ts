@@ -325,8 +325,8 @@ export class Character extends Creature {
         this.levelBadge.updatePosition()
     }
 
-    override onAttackLand(damagetype: DamageType, victim: Creature): number {
-        const damage = super.onAttackLand(damagetype, victim)
+    override onAttackLand(damagetype: DamageType, victim: Creature, attackDamage?: number): number {
+        const damage = super.onAttackLand(damagetype, victim, attackDamage)
 
         this.emit("afterAttack")
         return damage

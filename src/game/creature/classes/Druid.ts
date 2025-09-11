@@ -240,11 +240,13 @@ ${human}`
         }
     }
 
-    override takeDamage(damage: number, attacker: Creature, type: DamageType, crit?: boolean): void {
-        super.takeDamage(damage, attacker, type, crit)
+    override takeDamage(damage: number, attacker: Creature, type: DamageType, crit?: boolean) {
+        const damageTaken = super.takeDamage(damage, attacker, type, crit)
 
         if (this.thornsArmor && attacker) {
             this.dealThornsDamage(attacker)
         }
+
+        return damageTaken
     }
 }

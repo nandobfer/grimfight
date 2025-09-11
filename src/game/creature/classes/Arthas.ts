@@ -30,6 +30,7 @@ export class Arthas extends Character {
 
     override getAbilityDescription(): string {
         return `Passivo: Rouba [primary.main:10%] de todo dano causado.
+
 1º lançamento: Atinge o alvo atual com um golpe gélido causando [error.main:${Math.round(
             this.attackDamage * 2 + this.abilityPower * 0.3
         )} (200% AD)] [info.main: (30% AP)] de dano.
@@ -89,12 +90,13 @@ export class Arthas extends Character {
     }
 
     override castAbility(): void {
-        this.casting = true
-        this.castsCount += 1
-
         if (!this.target) {
             return
         }
+
+        this.casting = true
+        this.castsCount += 1
+
 
         try {
             switch (this.castsCount) {

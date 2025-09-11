@@ -16,6 +16,7 @@ import { Vania } from "./classes/Vania"
 import { Banguela } from "./classes/Banguela"
 import { Frank } from "./classes/Frank"
 import { Reno } from "./classes/Reno"
+import { Dracula } from "./classes/Dracula"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -73,3 +74,4 @@ CharacterRegistry.register("vania", Vania)
 CharacterRegistry.register("banguela", Banguela)
 CharacterRegistry.register("frank", Frank)
 CharacterRegistry.register("reno", Reno)
+CharacterRegistry.register("dracula", Dracula)

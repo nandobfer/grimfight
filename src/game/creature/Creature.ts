@@ -731,11 +731,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return { value: value * Math.max(1, multiplier), crit }
     }
 
-    onAttackLand(damagetype: DamageType, target?: Creature) {
+    onAttackLand(damagetype: DamageType, target?: Creature, attackDamage?: number) {
         const victim = target ?? this.target
         if (!victim?.active) return 0
 
-        const { value: damage, crit: isCrit } = this.calculateDamage(this.attackDamage)
+        const { value: damage, crit: isCrit } = this.calculateDamage(attackDamage || this.attackDamage)
 
         victim.gainMana(victim.manaOnHit)
         victim.takeDamage(damage, this, damagetype, isCrit)
@@ -796,13 +796,15 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         if (this.health <= 0) {
             this.die()
             attacker.emit("kill", this)
-            return
+            return finalDamage
         }
 
         if (emit) {
             attacker.emit("dealt-damage", this, finalDamage)
             this.emit("damage-taken", finalDamage, attacker)
         }
+
+        return finalDamage
     }
 
     onNormalHit() {
