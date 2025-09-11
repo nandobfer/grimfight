@@ -6,7 +6,7 @@ import { Barbarian } from "./classes/Barbarian"
 import { Knight } from "./classes/Knight"
 import { Lizwan } from "./classes/Lizwan"
 import { Mage } from "./classes/Mage"
-import { Rogue } from "./classes/Rogue"
+import { Rogue } from "./classes/Mordred"
 import { Sorcerer } from "./classes/Sorcerer"
 import { Statikk } from "./classes/Statikk"
 import { Necromancer } from "./classes/Necromancer"
@@ -17,6 +17,7 @@ import { Banguela } from "./classes/Banguela"
 import { Frank } from "./classes/Frank"
 import { Reno } from "./classes/Reno"
 import { Dracula } from "./classes/Dracula"
+import { Rukia } from "./classes/Rukia"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -75,3 +76,4 @@ CharacterRegistry.register("banguela", Banguela)
 CharacterRegistry.register("frank", Frank)
 CharacterRegistry.register("reno", Reno)
 CharacterRegistry.register("dracula", Dracula)
+CharacterRegistry.register("rukia", Rukia)

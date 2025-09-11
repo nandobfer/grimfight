@@ -12,7 +12,7 @@ export class AssassinTrait extends Trait {
         "Assassinos ganham {0} chance de acerto crítico e cada assassinato bem sucedido concede {1} para seu multiplicador de dano crítico, permanentemente"
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { bonusCritChance: 20, bonusCritMultiplier: 0.01, descriptionParams: ["20%", "1%"] }],
-        [3, { bonusCritChance: 30, bonusCritMultiplier: 0.02, descriptionParams: ["20%", "2%"] }],
+        [4, { bonusCritChance: 40, bonusCritMultiplier: 0.04, descriptionParams: ["20%", "2%"] }],
     ])
 
     constructor(comp: string[]) {

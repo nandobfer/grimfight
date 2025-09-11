@@ -19,6 +19,7 @@ export class Dracula extends Character {
     constructor(scene: Game, id: string) {
         super(scene, "dracula", id)
         this.setTint(0xff0000)
+        this.once("destroy", () => this.clearTargetsObservers())
     }
 
     override getAbilityDescription(): string {
@@ -56,17 +57,12 @@ Ativo: Alveja o inimigo com menor porcentagem de vida e avança até ele, causan
         this.casting = true
 
         this.target = this.scene.enemyTeam.getLowestHealth() || this.target
+        const original = this.onAttackLand.bind(this)
 
         this.onAttackLand = () => {
-            if (!this.target)
-            {
-                this.onAttackLand = super.onAttackLand.bind(this)
-                return 0
-            }
+            this.onAttackLand = original
 
-            burstBlood(this.scene, this.target.x, this.target.y)
-            burstBlood(this.scene, this.target.x, this.target.y)
-
+            if (!this.target) return 0
             this.onAttackLand = super.onAttackLand.bind(this)
             return super.onAttackLand("dark", this.target, this.attackDamage + this.abilityPower)
         }
@@ -78,6 +74,7 @@ Ativo: Alveja o inimigo com menor porcentagem de vida e avança até ele, causan
         super.refreshStats()
 
         this.onAttackLand = super.onAttackLand.bind(this)
+        this.clearTargetsObservers()
     }
 
     override update(time: number, delta: number): void {
