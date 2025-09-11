@@ -12,6 +12,6 @@ export class Bow extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackSpeed *= 1 + 0.1
+        creature.attackSpeed += creature.baseAttackSpeed * 0.1
     }
 }

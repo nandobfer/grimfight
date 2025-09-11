@@ -12,7 +12,7 @@ export class Shojin extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.15
+        creature.attackDamage += creature.baseAttackDamage * 0.15
         creature.manaPerAttack += 5
     }
 }

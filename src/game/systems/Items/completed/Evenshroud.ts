@@ -12,8 +12,8 @@ export class Evenshroud extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.maxHealth *= 1 + 0.15
-        creature.health *= 1 + 0.15
+        creature.maxHealth += creature.baseMaxHealth * 0.15
+        creature.health += creature.baseMaxHealth * 0.15
         creature.armor += 10
     }
 }

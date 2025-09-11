@@ -12,7 +12,7 @@ export class Infinityedge extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.3
+        creature.attackDamage += creature.baseAttackDamage * 0.3
         creature.critChance += 25
         creature.critDamageMultiplier += 0.35
     }

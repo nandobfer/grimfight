@@ -12,8 +12,8 @@ export class Krakenslayer extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.1
-        creature.attackSpeed *= 1 + 0.15
+        creature.attackDamage += creature.baseAttackDamage * 0.1
+        creature.attackSpeed += creature.baseAttackSpeed * 0.15
 
         const previousHandler = creature.eventHandlers[`krakenslayer_${this.id}`]
         if (previousHandler) {
@@ -21,7 +21,7 @@ export class Krakenslayer extends Item {
         }
 
         const onHit = (victim: Creature, damage: number) => {
-            creature.attackDamage *= 1 + 0.01
+            creature.attackDamage += creature.baseAttackDamage * 0.01
         }
 
         creature.eventHandlers[`krakenslayer_${this.id}`] = onHit

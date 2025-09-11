@@ -5,13 +5,14 @@ import { Item } from "../Item"
 export class Bluebuff extends Item {
     key = "bluebuff"
     name = "Buff Azul"
-    descriptionLines = ["+50% mana/s"]
+    descriptionLines = ["+5 mana/s", "Passivo: Mana máximo reduzido em 15"]
 
     constructor(scene: Game) {
         super(scene, "item-bluebuff")
     }
 
     override applyModifier(creature: Creature): void {
-        creature.manaPerSecond *= 1 + 0.5
+        creature.manaPerSecond += 5
+        creature.maxMana -= 15
     }
 }

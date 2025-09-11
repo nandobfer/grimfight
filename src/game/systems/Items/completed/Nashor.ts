@@ -12,8 +12,8 @@ export class Nashor extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackSpeed *= 1 + 0.1
-        creature.abilityPower *= 1 + 0.2
+        creature.attackSpeed += creature.baseAttackSpeed * 0.1
+        creature.abilityPower += creature.baseAbilityPower * 0.2
 
         const previousHandler = creature.eventHandlers[`nashor_${this.id}`]
         if (previousHandler) {

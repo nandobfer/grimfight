@@ -5,13 +5,13 @@ import { Item } from "../Item"
 export class Tear extends Item {
     key = "tear"
     name = "Lágrima"
-    descriptionLines = ["+20% mana/s"]
+    descriptionLines = ["+2 mana/s"]
 
     constructor(scene: Game) {
         super(scene, "item-tear")
     }
 
     override applyModifier(creature: Creature): void {
-        creature.manaPerSecond *= 1 + 0.2
+        creature.manaPerSecond += 2
     }
 }

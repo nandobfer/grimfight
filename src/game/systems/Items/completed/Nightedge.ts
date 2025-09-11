@@ -12,7 +12,7 @@ export class Nightedge extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.15
+        creature.attackDamage += creature.baseAttackDamage * 0.15
         creature.armor += 5
 
         const previousHandler = creature.eventHandlers[`nightedge_${this.id}`]

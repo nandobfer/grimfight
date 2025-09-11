@@ -12,8 +12,8 @@ export class Dragonclaw extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.maxHealth *= 1 + 0.05
-        creature.health *= 1 + 0.05
+        creature.maxHealth += creature.baseMaxHealth * 0.05
+        creature.health += creature.baseMaxHealth * 0.05
         creature.armor += 15
 
         const previousHandler = creature.timeEvents[`dragonclaw_${this.id}`]

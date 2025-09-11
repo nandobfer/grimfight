@@ -12,8 +12,8 @@ export class Handofjustice extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.abilityPower *= 1 + 0.15
-        creature.attackDamage *= 1 + 0.15
+        creature.abilityPower += creature.baseAbilityPower * 0.15
+        creature.attackDamage += creature.baseAttackDamage * 0.15
         creature.critChance += 20
         creature.lifesteal += 10
     }

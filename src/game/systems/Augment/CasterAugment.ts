@@ -12,6 +12,6 @@ export class CasterAugment extends Augment {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.manaPerSecond *= 1 + this.values.boost
+        creature.manaPerSecond += creature.baseManaPerSecond * this.values.boost
     }
 }

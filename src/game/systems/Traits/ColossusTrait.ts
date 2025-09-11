@@ -20,8 +20,8 @@ export class ColossusTrait extends Trait {
         const values = this.stages.get(this.activeStage)
         if (!values) return
 
-        character.maxHealth *= 1 + values.healthMultiplier
-        character.health *= 1 + values.healthMultiplier
+        character.maxHealth += character.baseMaxHealth * values.healthMultiplier
+        character.health += character.baseMaxHealth * values.healthMultiplier
         character.armor += values.armor
     }
 }

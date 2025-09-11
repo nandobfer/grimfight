@@ -7,7 +7,8 @@ type TraitBoosts = "hpMultiplier" | "statsMultiplier"
 
 export class DeathEaterTrait extends Trait {
     name = "Comemorte"
-    description = "Ao morrer pela primeira vez, comensais da morte ressuscitam com um escudo de {0} da sua vida e recebem {1} de AD e AP até morrer de novo."
+    description =
+        "Ao morrer pela primeira vez, comensais da morte ressuscitam com um escudo de {0} da sua vida e recebem {1} de AD e AP até morrer de novo."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { hpMultiplier: 0.3, statsMultiplier: 0.75, descriptionParams: ["30%", "75%"] }],
         [4, { hpMultiplier: 0.45, statsMultiplier: 1.25, descriptionParams: ["45%", "125%"] }],
@@ -41,8 +42,8 @@ export class DeathEaterTrait extends Trait {
                     creature.health = 0
                     creature.revive(creature.maxHealth * values.hpMultiplier)
                     creature.removeFromEnemyTarget(1000)
-                    creature.attackDamage *= 1 + values.statsMultiplier
-                    creature.abilityPower *= 1 + values.statsMultiplier
+                    creature.attackDamage += creature.baseAttackDamage * values.statsMultiplier
+                    creature.abilityPower += creature.baseAbilityPower * values.statsMultiplier
                     creature.teleportTo(deadX, deadY)
                 }
             })

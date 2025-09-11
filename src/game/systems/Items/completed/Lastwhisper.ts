@@ -12,7 +12,7 @@ export class Lastwhisper extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackSpeed *= 1 + 0.15
+        creature.attackSpeed += creature.baseAttackSpeed * 0.15
         creature.critDamageMultiplier += 0.6
     }
 }

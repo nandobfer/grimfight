@@ -5,15 +5,15 @@ import { Item } from "../Item"
 export class Voidstaff extends Item {
     key = "voidstaff"
     name = "Cajado do Vazio"
-    descriptionLines = ["+10% AS", "+20% mana/s", "Passiva: Drena 2 mana do inimigo ao atacar."]
+    descriptionLines = ["+10% AS", "+3 mana/s", "Passiva: Drena 2 mana do inimigo ao atacar."]
 
     constructor(scene: Game) {
         super(scene, "item-voidstaff")
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackSpeed *= 1 + 0.1
-        creature.manaPerSecond *= 1 + 0.2
+        creature.attackSpeed += creature.baseAttackSpeed * 0.1
+        creature.manaPerSecond += 3
 
         const previousHandler = creature.eventHandlers[`voidstaff_${this.id}`]
         if (previousHandler) {

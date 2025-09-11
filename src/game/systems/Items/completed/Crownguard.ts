@@ -12,7 +12,7 @@ export class Crownguard extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.abilityPower *= 1 + 0.15
+        creature.abilityPower += creature.baseAbilityPower * 0.15
         creature.armor += 10
 
         const previousHandler = creature.eventHandlers[`crownguard_${this.id}`]

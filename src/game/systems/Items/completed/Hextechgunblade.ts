@@ -12,8 +12,8 @@ export class Hextechgunblade extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.2
-        creature.abilityPower *= 1 + 0.2
+        creature.attackDamage += creature.baseAttackDamage * 0.2
+        creature.abilityPower += creature.baseAbilityPower * 0.2
 
         const previousHandler = creature.eventHandlers[`hextechgunblade_${this.id}`]
         if (previousHandler) {

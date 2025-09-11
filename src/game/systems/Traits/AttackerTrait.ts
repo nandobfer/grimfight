@@ -21,7 +21,7 @@ export class AttackerTrait extends Trait {
         const values = this.stages.get(this.activeStage)
         if (!values) return
 
-        character.attackDamage *= 1 + values.attackDamageMultiplier
+        character.attackDamage += character.baseAttackDamage * values.attackDamageMultiplier
         character.lifesteal += values.lifesteal
     }
 }

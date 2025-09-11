@@ -12,6 +12,6 @@ export class Sword extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.1
+        creature.attackDamage += creature.baseAttackDamage * 0.1
     }
 }

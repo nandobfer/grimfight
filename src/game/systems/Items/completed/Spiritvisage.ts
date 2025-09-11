@@ -5,17 +5,17 @@ import { Item } from "../Item"
 export class Spiritvisage extends Item {
     key = "spiritvisage"
     name = "Semblante Espiritual"
-    descriptionLines = ["+10% vida máxima", "+5% armadura", "+20% mana/s", "Passiva: Cura 3% da vida faltante a cada segundo"]
+    descriptionLines = ["+10% vida máxima", "+5% armadura", "+3 mana/s", "Passiva: Cura 3% da vida faltante a cada segundo"]
 
     constructor(scene: Game) {
         super(scene, "item-spiritvisage")
     }
 
     override applyModifier(creature: Creature): void {
-        creature.maxHealth *= 1 + 0.1
-        creature.health *= 1 + 0.1
+        creature.maxHealth += creature.baseMaxHealth * 0.1
+        creature.health += creature.baseMaxHealth * 0.1
         creature.armor += 5
-        creature.manaPerSecond *= 1 + 0.2
+        creature.manaPerSecond += 3
 
         const previousHandler = creature.timeEvents[`spiritvisage_${this.id}`]
         if (previousHandler) {

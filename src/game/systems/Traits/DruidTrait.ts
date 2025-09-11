@@ -19,9 +19,9 @@ export class DruidTrait extends Trait {
         const values = this.stages.get(this.activeStage)
         if (!values) return
 
-        character.maxHealth *= 1 + values.healthMultiplier * this.druidsCount
-        character.health *= 1 + values.healthMultiplier * this.druidsCount
-        character.abilityPower *= 1 + values.apMultiplier * this.druidsCount
+        character.maxHealth += character.baseMaxHealth * values.healthMultiplier * this.druidsCount
+        character.health += character.baseMaxHealth * values.healthMultiplier * this.druidsCount
+        character.abilityPower += character.abilityPower * values.apMultiplier * this.druidsCount
     }
 
     override startApplying(characters: Character[]): void {

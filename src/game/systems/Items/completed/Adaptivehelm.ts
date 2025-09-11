@@ -6,7 +6,7 @@ export class Adaptivehelm extends Item {
     key = "adaptivehelm"
     name = "Elmo Adaptativo"
     descriptionLines = [
-        "+25% mana/s",
+        "+3 mana/s",
         "Passiva: Ganha bônus baseado na posição inicial:",
         "Frente: +10% armadura e +2 mana ao ser atacado",
         "Meio: +5% AD e AP, +5% armadura e +1 de mana por ataque e ao ser atacado",
@@ -18,7 +18,7 @@ export class Adaptivehelm extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.manaPerSecond *= 1 + 0.25
+        creature.manaPerSecond += 3
 
         const placement = creature.getPlacement()
 
@@ -29,16 +29,16 @@ export class Adaptivehelm extends Item {
                 break
             }
             case "middle": {
-                creature.attackDamage += 1 + 0.05
-                creature.abilityPower += 1 + 0.05
+                creature.attackDamage += 0.05 * creature.baseAttackDamage
+                creature.abilityPower += 0.05 * creature.baseAbilityPower
                 creature.armor += 5
                 creature.manaOnHit += 1
                 creature.manaPerAttack += 1
                 break
             }
             case "back": {
-                creature.attackDamage += 1 + 0.1
-                creature.abilityPower += 1 + 0.1
+                creature.attackDamage += 0.1 * creature.baseAttackDamage
+                creature.abilityPower += 0.1 * creature.baseAbilityPower
                 creature.manaPerAttack += 2
                 break
             }

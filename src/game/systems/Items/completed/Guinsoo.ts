@@ -8,16 +8,13 @@ export class Guinsoo extends Item {
     descriptionLines = ["+10% AP", "+15% AS", "Passiva: Recebe 3% AS ao atacar"]
     attackSpeedMultiplier = 0.03
 
-    private baseline = 0
-    private stacks = 0
-
     constructor(scene: Game) {
         super(scene, "item-guinsoo")
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.1
-        creature.attackSpeed *= 1 + 0.15
+        creature.abilityPower += creature.baseAbilityPower * 0.1
+        creature.attackSpeed += creature.baseAttackSpeed * 0.15
 
         const previousHandler = creature.eventHandlers[`guinsoo_${this.id}`]
         if (previousHandler) {
@@ -25,17 +22,9 @@ export class Guinsoo extends Item {
         }
 
         const onHit = (victim: Creature, damage: number) => {
-            // capture baseline once
-            if (!this.baseline) {
-                this.baseline = creature.bonusAttackSpeed || creature.attackSpeed
-            }
-
-            this.stacks += 1
-
-            const multiplier = 1 + this.stacks * this.attackSpeedMultiplier
-            creature.attackSpeed = this.baseline * multiplier
-
-            if (creature.bonusAttackSpeed) creature.bonusAttackSpeed = this.baseline * multiplier
+            const bonusValue = creature.baseAttackSpeed * this.attackSpeedMultiplier
+            creature.attackSpeed += bonusValue
+            if (creature.bonusAttackSpeed) creature.bonusAttackSpeed += bonusValue
         }
 
         creature.eventHandlers[`guinsoo_${this.id}`] = onHit
@@ -50,7 +39,5 @@ export class Guinsoo extends Item {
             creature.off("dealt-damage", handler)
             delete creature.eventHandlers[`guinsoo_${this.id}`]
         }
-        this.stacks = 0
-        this.baseline = 0
     }
 }

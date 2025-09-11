@@ -12,6 +12,6 @@ export class AttackerAugment extends Augment {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + this.values.boost
+        creature.attackDamage += creature.baseAttackDamage * this.values.boost
     }
 }

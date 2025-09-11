@@ -12,7 +12,7 @@ export class Jeweledgauntlet extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.abilityPower *= 1 + 0.3
+        creature.abilityPower += creature.baseAbilityPower * 0.3
         creature.critChance += 25
         creature.critDamageMultiplier += 0.35
     }

@@ -101,7 +101,7 @@ Ativo: Alveja o inimigo com menor porcentagem de vida e avança até ele, causan
 
         const onTargetDie = () => {
             this.heal(this.maxHealth * 0.2)
-            this.attackDamage += this.attackDamage * 0.2
+            this.attackDamage += this.baseAttackDamage * 0.2
             creature.off("died", onTargetDie, this)
             this.targetObserver.delete(creature)
         }

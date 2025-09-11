@@ -14,7 +14,7 @@ export class Redbuff extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackSpeed *= 1 + 0.35
+        creature.attackSpeed += creature.baseAttackSpeed * 0.35
 
         const previousHandler = creature.eventHandlers[`redbuff_${this.id}`]
         if (previousHandler) {

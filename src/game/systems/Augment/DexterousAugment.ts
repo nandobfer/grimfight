@@ -12,6 +12,6 @@ export class DexterousAugment extends Augment {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackSpeed *= 1.2
+        creature.attackSpeed += creature.baseAttackSpeed * this.values.boost
     }
 }

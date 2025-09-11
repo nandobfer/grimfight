@@ -7,7 +7,7 @@ export class Protectorsvow extends Item {
     name = "Juramento do Protetor"
     descriptionLines = [
         "+10% armadura",
-        "+20% mana/s",
+        "+3 mana/s",
         "Passiva: Ganha 20 de mana no início do combate",
         "Passiva: Ganha um escudo de 15% da vida no início do combate",
     ]
@@ -17,7 +17,7 @@ export class Protectorsvow extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.manaPerSecond *= 1 + 0.2
+        creature.manaPerSecond += 3
         creature.armor += 10
 
         const previousHandler = creature.eventHandlers[`protectorsvow_${this.id}`]

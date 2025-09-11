@@ -5,15 +5,15 @@ import { Item } from "../Item"
 export class Archangelstaff extends Item {
     key = "archangelstaff"
     name = "Cajado do Arcanjo"
-    descriptionLines = ["+20% AP", "+20% mana/s", "Passiva: Ganha 5% AP a cada 5 segundos"]
+    descriptionLines = ["+20% AP", "+3 mana/s", "Passiva: Ganha 5% AP a cada 5 segundos"]
 
     constructor(scene: Game) {
         super(scene, "item-archangelstaff")
     }
 
     override applyModifier(creature: Creature): void {
-        creature.abilityPower *= 1 + 0.2
-        creature.manaPerSecond *= 1 + 0.2
+        creature.abilityPower += 0.2 * creature.baseAbilityPower
+        creature.manaPerSecond += 0.2 * creature.baseManaPerSecond
 
         const previousHandler = creature.timeEvents[`archangelstaff_${this.id}`]
         if (previousHandler) {
@@ -22,7 +22,7 @@ export class Archangelstaff extends Item {
 
         const buff = () => {
             if (this.scene.state === "fighting") {
-                creature.abilityPower *= 1 + 0.05
+                creature.abilityPower += creature.baseAbilityPower * 0.05
             }
         }
 

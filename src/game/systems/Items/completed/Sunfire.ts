@@ -19,8 +19,8 @@ export class Sunfire extends Item {
 
     override applyModifier(creature: Creature): void {
         creature.armor += 10
-        creature.maxHealth *= 1 + 0.1
-        creature.health *= 1 + 0.1
+        creature.maxHealth += creature.baseMaxHealth * 0.1
+        creature.health += creature.baseMaxHealth * 0.1
 
         const previousHandler = creature.eventHandlers[`sunfire_${this.id}`]
         if (previousHandler) {

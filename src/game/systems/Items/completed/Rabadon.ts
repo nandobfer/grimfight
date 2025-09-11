@@ -5,13 +5,13 @@ import { Item } from "../Item"
 export class Rabadon extends Item {
     key = "rabadon"
     name = "Capuz da Morte de Rabadon"
-    descriptionLines = ["+40% AP"]
+    descriptionLines = ["+50% AP"]
 
     constructor(scene: Game) {
         super(scene, "item-rabadon")
     }
 
     override applyModifier(creature: Creature): void {
-        creature.abilityPower *= 1 + 0.4
+        creature.abilityPower += creature.baseAbilityPower * 0.5
     }
 }

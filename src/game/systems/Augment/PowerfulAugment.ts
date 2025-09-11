@@ -12,6 +12,6 @@ export class PowerfulAugment extends Augment {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.abilityPower *= 1 + this.values.boost
+        creature.abilityPower += creature.baseAbilityPower * this.values.boost
     }
 }

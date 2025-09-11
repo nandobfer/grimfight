@@ -12,6 +12,6 @@ export class Rod extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.abilityPower *= 1 + 0.1
+        creature.abilityPower += creature.baseAbilityPower * 0.1
     }
 }

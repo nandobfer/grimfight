@@ -17,7 +17,7 @@ export class Bloodthirster extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackDamage *= 1 + 0.2
+        creature.attackDamage += 0.2 * creature.baseAttackDamage
         creature.armor += 5
         creature.lifesteal += 20
 

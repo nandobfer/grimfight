@@ -20,6 +20,6 @@ export class SpeedyTrait extends Trait {
         const values = this.stages.get(this.activeStage)
         if (!values) return
 
-        character.attackSpeed *= 1 + values.attackSpeedMultiplier
+        character.attackSpeed += character.baseAttackSpeed * values.attackSpeedMultiplier
     }
 }
