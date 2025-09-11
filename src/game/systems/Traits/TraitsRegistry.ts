@@ -66,7 +66,7 @@ export class TraitsRegistry {
     }
 }
 
-TraitsRegistry.register("Atacante", AttackerTrait, ["grok", "mordred", "arthas", "vania", "laherce"])
+TraitsRegistry.register("Atacante", AttackerTrait, ["grok", "mordred", "arthas", "vania", "laherce", "reno"])
 TraitsRegistry.register("Colosso", ColossusTrait, ["maximus", "grok", "frank"])
 TraitsRegistry.register("Ligeiro", SpeedyTrait, ["lizwan", "statikk", "vania", "frank"])
 TraitsRegistry.register("Assassino", AssassinTrait, ["lizwan", "mordred"])

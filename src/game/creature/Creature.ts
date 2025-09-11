@@ -654,6 +654,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         // each character and monster will have it's own
     }
 
+    // current attack speed used in combat, can be overriden for "locked" attack speed characters
+    getAttackingSpeed() {
+        return this.attackSpeed
+    }
+
     onAnimationFrame(key: string, executeOnFrame: number, callback: Function, onCleanup?: Function, override?: boolean) {
         const anim = this.anims.get(key)
 
@@ -667,7 +672,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.on("animationupdate", onUpdate)
 
-        this.play({ key: key, frameRate: anim.frames.length * this.attackSpeed, repeat: 0 }, !override)
+        this.play({ key: key, frameRate: anim.frames.length * this.getAttackingSpeed(), repeat: 0 }, !override)
 
         const cleanup = () => {
             this.off("animationupdate", onUpdate)

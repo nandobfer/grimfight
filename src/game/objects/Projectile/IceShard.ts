@@ -6,10 +6,9 @@ import { Condition } from "../StatusEffect/Condition"
 import { Projectile } from "./Projectile"
 
 export class IceShard extends Projectile {
-    speed = 300
-
-    constructor(scene: Game, x: number, y: number, owner: Creature) {
+    constructor(scene: Game, x: number, y: number, owner: Creature, speed = 300) {
         super(scene, x, y, owner, "ice1", "cold")
+        this.speed = speed
         this.setScale(0.15, 0.15)
         // this.toggleFlipY()
         this.toggleFlipX()
