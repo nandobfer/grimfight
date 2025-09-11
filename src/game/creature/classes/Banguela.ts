@@ -37,6 +37,7 @@ export class Banguela extends Character {
         if (!this.target || !this?.active) return
 
         const fireball = new Fireball(this.scene, this.x, this.y, this)
+        fireball.damageType = "normal"
         fireball.fire(this.target)
     }
 
