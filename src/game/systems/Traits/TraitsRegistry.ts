@@ -5,6 +5,7 @@ import { ColossusTrait } from "./ColossusTrait"
 import { DeathEaterTrait } from "./DeathEaterTrait"
 import { DruidTrait } from "./DruidTrait"
 import { IncendiaryTrait } from "./IncendiaryTrait"
+import { NobleTrait } from "./NobleTrait"
 import { PackTrait } from "./PackTrait"
 import { SorcererTrait } from "./SorcererTrait"
 import { SpeedyTrait } from "./SpeedyTrait"
@@ -65,7 +66,7 @@ export class TraitsRegistry {
     }
 }
 
-TraitsRegistry.register("Atacante", AttackerTrait, ["grok", "statikk", "mordred", "arthas", "vania", "laherce"])
+TraitsRegistry.register("Atacante", AttackerTrait, ["grok", "mordred", "arthas", "vania", "laherce"])
 TraitsRegistry.register("Colosso", ColossusTrait, ["maximus", "grok", "frank"])
 TraitsRegistry.register("Ligeiro", SpeedyTrait, ["lizwan", "statikk", "vania", "frank"])
 TraitsRegistry.register("Assassino", AssassinTrait, ["lizwan", "mordred"])
@@ -74,3 +75,4 @@ TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "fra
 TraitsRegistry.register("Matilha", PackTrait, ["lizwan", "helyna", "laherce", "banguela"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna"])
 TraitsRegistry.register("Incendiário", IncendiaryTrait, ["banguela", "megumin"])
+TraitsRegistry.register("Nobre", NobleTrait, ["maximus", "jadis", "statikk"]) // falta vampiro
