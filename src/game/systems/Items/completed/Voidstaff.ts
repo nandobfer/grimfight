@@ -20,7 +20,7 @@ export class Voidstaff extends Item {
             creature.off("afterAttack", previousHandler)
         }
 
-        const drainMana = (victim: Creature, damage: number) => {
+        const drainMana = (victim: Creature) => {
             const manaToDrain = 2
             victim.gainMana(-manaToDrain)
             creature.gainMana(manaToDrain)

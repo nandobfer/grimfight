@@ -29,7 +29,7 @@ export class Rogue extends Character {
             const direction = target.getOppositeDirection()
             const directionFactor = (target.avoidanceRange - 15) * (direction === "down" || direction === "right" ? 1 : -1)
             this.createTeleportSmoke()
-            this.setPosition(target.x + directionFactor, target.y + directionFactor)
+            this.teleportTo(target.x + directionFactor, target.y + directionFactor)
             const damage = this.calculateDamage(this.attackDamage * 4)
             target.takeDamage(damage.value, this, "normal", damage.crit)
             this.createTeleportSmoke()

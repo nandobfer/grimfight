@@ -79,8 +79,6 @@ export class Archer extends Character {
             if (!this?.active) continue
             const arrow = new Arrow(this.scene, this.x, this.y, this)
 
-            // Override the fire method temporarily to use our custom angle
-            const originalFire = arrow.fire.bind(arrow)
             arrow.fire = () => {
                 if (!this.active) return arrow
 
@@ -105,11 +103,8 @@ export class Archer extends Character {
             }
 
             arrow.onHit = (victim: Creature) => {
-                this.attackDamage = originalAttackDamage / 2
-                this.manaLocked = true
-                this.onAttackLand(arrow.damageType, victim)
-                this.manaLocked = false
-                this.attackDamage = originalAttackDamage
+                const damage = this.calculateDamage(this.attackDamage * 0.5)
+                victim.takeDamage(damage.value, this, "normal", damage.crit)
                 arrow.destroy()
             }
 

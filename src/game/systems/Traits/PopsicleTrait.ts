@@ -1,7 +1,5 @@
 import { Character } from "../../creature/character/Character"
 import { Creature } from "../../creature/Creature"
-import { Frozen } from "../../fx/Frozen"
-import { Condition } from "../../objects/StatusEffect/Condition"
 import { Freeze } from "../../objects/StatusEffect/Freeze"
 import { RNG } from "../../tools/RNG"
 import { Trait } from "./Trait"
@@ -13,8 +11,8 @@ export class PopsicleTrait extends Trait {
     description =
         "Picolés têm {0} de chance de congelar o inimigo por 1 segundo, ao atacar. Além disso, seus ataques têm {1} mais chance de acertar criticamente alvos congelados."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { freezeChance: 20, critChanceBonus: 20, descriptionParams: ["20%", "20%"] }],
-        [4, { freezeChance: 30, critChanceBonus: 40, descriptionParams: ["30%", "40%"] }],
+        [2, { freezeChance: 5, critChanceBonus: 20, descriptionParams: ["5%", "20%"] }],
+        [4, { freezeChance: 10, critChanceBonus: 40, descriptionParams: ["10%", "40%"] }],
     ])
 
     originalTryCrits = new WeakMap<Character, (bonus?: number) => boolean>()

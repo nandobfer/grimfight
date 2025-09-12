@@ -1,6 +1,7 @@
 import { Game } from "../../scenes/Game"
 import { RNG } from "../../tools/RNG"
 import { Character } from "../character/Character"
+import { Creature } from "../Creature"
 
 export class Rukia extends Character {
     baseAttackSpeed = 1.5
@@ -14,15 +15,26 @@ export class Rukia extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "rukia", id)
-        this.setTint(0x6666ff)
+
+        this.on("afterAttack", this.frostBlades, this)
+        this.once("destroy", () => {
+            this.off("afterAttack", this.frostBlades, this)
+        })
+    }
+
+    frostBlades() {
+        if (!this.target) return
+
+        const damage = this.calculateDamage(this.abilityPower * 0.1)
+        this.target.takeDamage(damage.value, this, "cold", damage.crit)
     }
 
     override getAbilityDescription(): string {
-        return `Passivo: Ataques causam [info.main:${Math.round(this.abilityPower * 0.01)}]
+        return `Passivo: Ataques causam [info.main:${Math.round(this.abilityPower * 0.1)}] de dano adicional.
         
 Rapidamente avança atacando um inimigo aleatório [warning.main:${this.abilityAttacksCount} vezes], causando [error.main:${Math.round(
             this.attackDamage
-        )} (100%AD)] + [info.main:${Math.round(this.abilityPower * 0.01)} (10% AP)] a cada ataque.`
+        )} (100%AD)] + [info.main:${Math.round(this.abilityPower * 0.1)} (10% AP)] a cada ataque.`
     }
 
     override castAbility(): void {
@@ -39,6 +51,7 @@ Rapidamente avança atacando um inimigo aleatório [warning.main:${this.abilityA
 
         const returnToTarget = () => {
             this.casting = false
+            this.manaLocked = false
             const target = originalTarget?.randomPointAround()
             if (target) {
                 this.scene.tweens.add({
@@ -48,16 +61,22 @@ Rapidamente avança atacando um inimigo aleatório [warning.main:${this.abilityA
                     repeat: 0,
                     ease: "Sine.easeOut",
                     duration: dashDuration(target),
+                    onComplete: () => {
+                        this.emit("move", this, target.x, target.y)
+                    },
                 })
             }
         }
 
         const tweenChain = this.scene.tweens.chain({
             targets: this,
-            tweens: [],
+            tweens: [{}],
             paused: true,
             onComplete: () => returnToTarget(),
             onStop: () => returnToTarget(),
+            onStart: () => {
+                this.manaLocked = true
+            },
         })
 
         for (let count = 1; count <= this.abilityAttacksCount; count++) {
@@ -75,16 +94,22 @@ Rapidamente avança atacando um inimigo aleatório [warning.main:${this.abilityA
                     y: position.y,
                     ease: "Expo.easeOut",
                     onComplete: () => {
+                        this.emit("move", this, position.x, position.y)
                         const physicalDamage = this.calculateDamage(this.attackDamage)
                         const coldDamage = this.calculateDamage(this.abilityPower * 0.1)
                         target.takeDamage(physicalDamage.value, this, "normal", physicalDamage.crit)
                         target.takeDamage(coldDamage.value, this, "cold", physicalDamage.crit)
+                        this.onHit(target)
                     },
                 },
             ])
         }
 
         tweenChain.play()
+
+        this.scene.events.once("gamestate", () => {
+            tweenChain.stop()
+        })
     }
 
     override refreshStats(): void {

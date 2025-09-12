@@ -96,6 +96,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
     onHit(target: Creature) {
         this.owner?.onAttackLand(this.damageType, target)
+        this.owner?.onHit()
         this.destroy()
     }
 

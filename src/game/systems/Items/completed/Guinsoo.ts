@@ -21,7 +21,7 @@ export class Guinsoo extends Item {
             creature.off("afterAttack", previousHandler)
         }
 
-        const onHit = (victim: Creature, damage: number) => {
+        const onHit = (victim: Creature) => {
             const bonusValue = creature.baseAttackSpeed * this.attackSpeedMultiplier
             creature.attackSpeed += bonusValue
             if (creature.bonusAttackSpeed) creature.bonusAttackSpeed += bonusValue

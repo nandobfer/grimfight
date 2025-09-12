@@ -222,6 +222,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     teleportTo(x: number, y: number) {
         this.setPosition(x, y)
         this.body.reset(x, y) // hard-sync body to sprite
+        this.emit("move", this, x, y)
         // this.setVelocity(0, 0) // clear any residual velocity
         // this.body.setAcceleration(0) // clear acceleration if used
     }
@@ -695,7 +696,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     startAttack() {
-        if (this.attacking || this.casting || !this.target?.active || this.attackLocked) {
+        if (this.attacking || this.casting || !this.target?.active || this.attackLocked || this.frozen) {
             return
         }
 
@@ -737,11 +738,15 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         const { value: damage, crit: isCrit } = this.calculateDamage(attackDamage || this.attackDamage)
 
-        victim.gainMana(victim.manaOnHit)
         victim.takeDamage(damage, this, damagetype, isCrit)
-        this.gainMana(this.manaPerAttack)
-
+        this.onHit(victim)
         return damage
+    }
+
+    onHit(target = this.target) {
+        target?.gainMana(target.manaOnHit)
+        this.gainMana(this.manaPerAttack)
+        this.emit("afterAttack", target)
     }
 
     gainShield(value: number) {
@@ -768,10 +773,12 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             type = "block"
         }
 
-        showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit, type })
-        if (finalDamage > 0 && (attacker.team === this.scene.playerTeam || attacker.team === this.scene.playerTeam.minions)) {
-            this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage, type)
-        }
+        try {
+            showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit, type })
+            if (finalDamage > 0 && (attacker.team === this.scene.playerTeam || attacker.team === this.scene.playerTeam.minions)) {
+                this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage, type)
+            }
+        } catch (error) {}
 
         let hpDamage = Math.max(0, finalDamage)
         let absorbed = 0
@@ -882,7 +889,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.mana = Phaser.Math.Clamp(this.mana + manaGained, 0, this.maxMana)
         this.manaBar?.setValue(this.mana, this.maxMana)
 
-        if (this.mana === this.maxMana && !this.casting) {
+        if (this.mana === this.maxMana && !this.casting && !this.frozen) {
             this.startCastingAbility()
         }
     }

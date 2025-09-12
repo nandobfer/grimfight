@@ -4,7 +4,7 @@ import { Character } from "../character/Character"
 
 export class Reno extends Character {
     baseAttackSpeed = 0.75
-    baseAttackDamage = 35
+    baseAttackDamage = 50
     baseAttackRange = 5
     baseManaPerSecond = 0
     baseMaxHealth = 300
@@ -19,7 +19,6 @@ export class Reno extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "reno", id)
-        this.setTint(0x0000ff)
     }
 
     override getAbilityDescription(): string {
@@ -49,6 +48,10 @@ Passivo: Sua velocidade de ataque é travada em [warning.main:${
         const iceshard = new IceShard(this.scene, this.x, this.y, this, 500)
         iceshard.damageType = "normal"
 
+        if (this.attacksCount === 4) {
+            this.glowTemporarily(0x99ddff, 1, 1500)
+        }
+
         if (this.attacksCount === 5) {
             this.attacksCount = 0
             this.makeBigShot(iceshard)
@@ -59,17 +62,15 @@ Passivo: Sua velocidade de ataque é travada em [warning.main:${
 
     // criar um tipo de lamina giratoria? glaive? pegar sprite?
     makeBigShot(projectile: IceShard) {
-        projectile.scaleX = projectile.scale * 2
+        projectile.setScale(projectile.scale * 5)
         projectile.speed += 300
-        this.scene.tweens.add({ targets: projectile, duration: 30, angle: 360, repeat: -1, yoyo: false })
+        // this.scene.tweens.add({ targets: projectile, duration: 30, angle: 360, repeat: -1, yoyo: false })
 
         projectile.onHit = (target) => {
             const { value: damage, crit: isCrit } = this.calculateDamage(this.attackDamage + this.abilityPower)
 
-            target.gainMana(target.manaOnHit)
             target.takeDamage(damage, this, "cold", isCrit)
-            this.gainMana(this.manaPerAttack)
-            this.emit("afterAttack")
+            this.onHit(target)
         }
     }
 
@@ -80,7 +81,7 @@ Passivo: Sua velocidade de ataque é travada em [warning.main:${
     }
 
     getAsMultiplier() {
-        return 1 - this.attackSpeed / this.baseAttackSpeed
+        return this.attackSpeed / this.baseAttackSpeed - 1
     }
 
     override getAttackingSpeed(): number {

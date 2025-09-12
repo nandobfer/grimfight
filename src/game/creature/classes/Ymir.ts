@@ -16,7 +16,6 @@ export class Ymir extends Character {
     constructor(scene: Game, id: string) {
         super(scene, "ymir", id)
 
-        this.setTint(0x4444ff)
 
         this.on("damage-taken", this.tryFreezeAttacker, this)
         this.once("destroy", () => this.off("damage-taken", this.tryFreezeAttacker, this))

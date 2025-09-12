@@ -18,7 +18,6 @@ export class Dracula extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "dracula", id)
-        this.setTint(0xff0000)
         this.once("destroy", () => this.clearTargetsObservers())
     }
 
@@ -34,23 +33,7 @@ Ativo: Alveja o inimigo com menor porcentagem de vida e avança até ele, causan
     }
 
     override getAttackingAnimation(): string {
-        return `attacking`
-    }
-
-    override extractAttackingAnimation() {
-        this.attackAnimationImpactFrame = 4
-        const attacking = this.extractAnimationsFromSpritesheet("attacking", 1, 5, 6, "arthas_attacking")
-
-        const onUpdate = (animation: Phaser.Animations.Animation) => {
-            if (attacking.find((anim) => anim.key === animation.key)) {
-                this.setOrigin(0.5, 0.6)
-            } else {
-                this.setOrigin(0.5, 0.75)
-            }
-        }
-
-        this.on("animationstart", onUpdate)
-        this.once("destroy", () => this.off("animationstart", onUpdate))
+        return `attacking1`
     }
 
     override castAbility(): void {
@@ -63,7 +46,6 @@ Ativo: Alveja o inimigo com menor porcentagem de vida e avança até ele, causan
             this.onAttackLand = original
 
             if (!this.target) return 0
-            this.onAttackLand = super.onAttackLand.bind(this)
             return super.onAttackLand("dark", this.target, this.attackDamage + this.abilityPower)
         }
 

@@ -20,7 +20,7 @@ export class Krakenslayer extends Item {
             creature.off("afterAttack", previousHandler)
         }
 
-        const onHit = (victim: Creature, damage: number) => {
+        const onHit = (victim: Creature) => {
             creature.attackDamage += creature.baseAttackDamage * 0.01
         }
 
