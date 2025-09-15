@@ -7,9 +7,9 @@ export class Morello extends Item {
     key = "morello"
     name = "Morellonomicon"
     descriptionLines = [
-        "+10% vida máxima",
+        "+10% max health",
         "+20% AP",
-        "Passiva: Ao atacar, aplica uma queimadura que causa 1% da vida máxima do inimigo, por segundo, dura 5 segundos.",
+        "Passive: When attacking, applies a burn that deals 1% of the enemy's max health per second, lasts 5 seconds.",
     ]
     burns = new WeakMap<Creature, Dot>()
 

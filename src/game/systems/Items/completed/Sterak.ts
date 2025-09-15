@@ -4,8 +4,12 @@ import { Item } from "../Item"
 
 export class Sterak extends Item {
     key = "sterak"
-    name = "Amuleto de Sterak"
-    descriptionLines = ["+20% AD", "+20% vida máxima", "Passiva: Ao ficar com 50% de vida pela primeira vez, recebe um escudo de 40% da vida máxima"]
+    name = "Sterak's Gauge"
+    descriptionLines = [
+        "+20% AD",
+        "+20% max health",
+        "Passive: Upon falling to 50% health for the first time, receives a shield equal to 40% of max health",
+    ]
 
     constructor(scene: Game) {
         super(scene, "item-sterak")

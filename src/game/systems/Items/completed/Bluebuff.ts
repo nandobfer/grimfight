@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Bluebuff extends Item {
     key = "bluebuff"
-    name = "Buff Azul"
-    descriptionLines = ["+5 mana/s", "Passivo: Mana máximo reduzido em 15"]
+    name = "Blue Buff"
+    descriptionLines = ["+5 mana/s", "Passive: Maximum mana reduced by 15"]
 
     constructor(scene: Game) {
         super(scene, "item-bluebuff")

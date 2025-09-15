@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Lastwhisper extends Item {
     key = "lastwhisper"
-    name = "Último Sussurro"
-    descriptionLines = ["+15% AS", '+60% multiplicador de dano crítico']
+    name = "Lastwhisper"
+    descriptionLines = ["+15% AS", "+60% critical damage multiplier"]
 
     constructor(scene: Game) {
         super(scene, "item-lastwhisper")

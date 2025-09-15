@@ -4,13 +4,13 @@ import { Item } from "../Item"
 
 export class Adaptivehelm extends Item {
     key = "adaptivehelm"
-    name = "Elmo Adaptativo"
+    name = "Adaptive Elm"
     descriptionLines = [
         "+3 mana/s",
-        "Passiva: Ganha bônus baseado na posição inicial:",
-        "Frente: +10% armadura e +2 mana ao ser atacado",
-        "Meio: +5% AD e AP, +5% armadura e +1 de mana por ataque e ao ser atacado",
-        "Trás: +10% AD e AP e +2 de mana por ataque",
+        "Passive: Gains a bonus based on the starting position:",
+        "Front: +10% armor and +2 mana when attacked",
+        "Middle: +5% AD and AP, +5% armor and +1 mana per attack and when attacked",
+        "Back: +10% AD and AP and +2 mana per attack",
     ]
 
     constructor(scene: Game) {

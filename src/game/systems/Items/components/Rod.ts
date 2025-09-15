@@ -4,7 +4,7 @@ import { Item } from "../Item"
 
 export class Rod extends Item {
     key = "rod"
-    name = "Bastão desnecessariamente grande"
+    name = "Rod"
     descriptionLines = ["+10% AP"]
 
     constructor(scene: Game) {

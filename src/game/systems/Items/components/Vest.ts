@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Vest extends Item {
     key = "vest"
-    name = "Cota de malha"
-    descriptionLines = ["+5% armadura"]
+    name = "Vest"
+    descriptionLines = ["+5% armor"]
 
     constructor(scene: Game) {
         super(scene, "item-vest")

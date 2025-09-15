@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Evenshroud extends Item {
     key = "evenshroud"
-    name = "Mortalha sei lá o que"
-    descriptionLines = ["+15% vida máxima", "+10% armadura"]
+    name = "Evenshroud"
+    descriptionLines = ["+15% max health", "+10% armor"]
 
     constructor(scene: Game) {
         super(scene, "item-evenshroud")

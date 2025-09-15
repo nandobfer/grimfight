@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Infinityedge extends Item {
     key = "infinityedge"
-    name = "Mata Gigantes"
-    descriptionLines = ["+30% AD", "+25% chance de crítico", "+35% multiplicador de dano crítico"]
+    name = "Infinity Edge"
+    descriptionLines = ["+30% AD", "+25% critical chance", "+35% critical damage multiplier"]
 
     constructor(scene: Game) {
         super(scene, "item-infinityedge")

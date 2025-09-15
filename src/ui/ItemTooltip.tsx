@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Avatar, Box, Divider, Paper, Popper, Typography } from "@mui/material"
+import { Popper } from "@mui/material"
 import { Item, PointerPosition } from "../game/systems/Items/Item"
 import { EventBus } from "../game/tools/EventBus"
 import { ItemTooltipContent } from "./components/ItemTooltipContent"

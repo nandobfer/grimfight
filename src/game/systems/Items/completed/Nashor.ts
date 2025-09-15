@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Nashor extends Item {
     key = "nashor"
-    name = "Dente de Nashor"
-    descriptionLines = ["+15% AS", "+20% AP", "Passiva: Causa 20% do AP ao atacar."]
+    name = "Nashor's Tooth"
+    descriptionLines = ["+15% AS", "+20% AP", "Passive: Deals 20% of AP when attacking."]
 
     constructor(scene: Game) {
         super(scene, "item-nashor")

@@ -9,14 +9,14 @@ export class Archer extends Character {
     baseAttackRange = 4
     baseMaxHealth = 200
 
-    abilityName: string = "Salva de flechas"
+    abilityName: string = "Volley of arrows"
 
     constructor(scene: Game, id: string) {
         super(scene, "laherce", id)
     }
 
     override getAbilityDescription(): string {
-        return `Atira 10 flechas em um cone, cada uma causa [error.main:${Math.round(this.attackDamage * 0.5)} (50% AD)] de dano.`
+        return `Fires 10 arrows in a cone, each dealing [error.main:${Math.round(this.attackDamage * 0.5)} (50% AD)] damage.`
     }
 
     override extractAttackingAnimation() {

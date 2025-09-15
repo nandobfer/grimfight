@@ -11,16 +11,16 @@ export class Sorcerer extends Character {
     baseMaxMana = 150
     baseMaxHealth = 300
 
-    abilityName: string = "Nevasca"
+    abilityName: string = "Blizzard"
 
     constructor(scene: Game, id: string) {
         super(scene, "jadis", id)
     }
 
     override getAbilityDescription(): string {
-        return `Inimigos atingidos pela nevasca recebem [info.main:${Math.round(
+        return `Enemies hit by the blizzard receive [info.main:${Math.round(
             this.abilityPower * 0.75 * 5
-        )} (375% AP)] de dano ao longo de 2 segundos e são [primary.main:congelados].`
+        )} (375% AP)] damage over 2 seconds and are [primary.main:frozen].`
     }
 
     override getAttackingAnimation(): string {

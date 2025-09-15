@@ -79,7 +79,7 @@ export const PlayerAugments: React.FC<CharactersRowProps> = (props) => {
                     )
                 }
             >
-                <Button variant="outlined">Aprimoramentos x{augments.length}</Button>
+                <Button variant="outlined">Augments x{augments.length}</Button>
             </Tooltip>
 
             <Box sx={{ alignItems: "center", gap: 1 }}>

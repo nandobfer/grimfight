@@ -32,15 +32,17 @@ export const GameMenu:React.FC<GameMenuProps> = (props) => {
     }, [])
     
     return (
-        <Dialog open={showMenu} onClose={closeMenu} slotProps={{backdrop: {sx: { backdropFilter: "blur(2px)"}}, paper: {elevation: 0}}}>
+        <Dialog open={showMenu} onClose={closeMenu} slotProps={{ backdrop: { sx: { backdropFilter: "blur(2px)" } }, paper: { elevation: 0 } }}>
             <Logo />
-                <Box sx={{flexDirection: 'column', gap: 1}}>
-                    <Button disabled>carregar</Button>
-                    <Button disabled>salvar como</Button>
+            <Box sx={{ flexDirection: "column", gap: 1 }}>
+                <Button disabled>load</Button>
+                <Button disabled>save as</Button>
 
-                    <RecordHistory game={props.game} />
-                    <Button variant='outlined' onClick={closeMenu} >Voltar</Button>
-                </Box>
+                <RecordHistory game={props.game} />
+                <Button variant="outlined" onClick={closeMenu}>
+                    Back
+                </Button>
+            </Box>
         </Dialog>
     )
 }

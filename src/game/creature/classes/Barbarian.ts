@@ -20,7 +20,7 @@ export class Barbarian extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Ganha [warning.main:1%] velocidade de ataque para cada porcentagem de vida perdida.`
+        return `Gains [warning.main:1%] attack speed for each percentage of health missing.`
     }
 
     scaleSpeedWithLife() {

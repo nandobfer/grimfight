@@ -1,7 +1,6 @@
 import { Game } from "../../scenes/Game"
 import { RNG } from "../../tools/RNG"
 import { Character } from "../character/Character"
-import { Creature } from "../Creature"
 
 export class Rukia extends Character {
     baseAttackSpeed = 1.5
@@ -9,7 +8,7 @@ export class Rukia extends Character {
     baseAttackDamage = 15
     baseCritChance = 20
 
-    abilityName: string = "Lâminas Gélidas"
+    abilityName: string = "Frozen Blades"
 
     abilityAttacksCount = 5
 
@@ -30,11 +29,11 @@ export class Rukia extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Passivo: Ataques causam [info.main:${Math.round(this.abilityPower * 0.1)}] de dano adicional.
-        
-Rapidamente avança atacando um inimigo aleatório [warning.main:${this.abilityAttacksCount} vezes], causando [error.main:${Math.round(
+        return `Passive: Attacks deal [info.main:${Math.round(this.abilityPower * 0.1)}] additional damage.
+
+Quickly dashes attacking a random enemy [warning.main:${this.abilityAttacksCount} times], dealing [error.main:${Math.round(
             this.attackDamage
-        )} (100%AD)] + [info.main:${Math.round(this.abilityPower * 0.1)} (10% AP)] a cada ataque.`
+        )} (100%AD)] + [info.main:${Math.round(this.abilityPower * 0.1)} (10% AP)] with each attack.`
     }
 
     override castAbility(): void {

@@ -5,8 +5,8 @@ import { Trait } from "./Trait"
 type TraitBoosts = "damageMultiplier"
 
 export class PackTrait extends Trait {
-    name = "Matilha"
-    description = "Inimigos recebem {0} de dano adicional ao serem atacados por um membro da matilha"
+    name = "Pack"
+    description = "Enemies receive {0} additional damage when attacked by a pack member"
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { damageMultiplier: 0.1, descriptionParams: ["10%"] }],
         [3, { damageMultiplier: 0.2, descriptionParams: ["20%"] }],

@@ -10,16 +10,16 @@ export class Mage extends Character {
     baseMaxMana = 120
     baseMaxHealth = 220
 
-    abilityName = "Explosão"
+    abilityName = "Explosion"
 
     constructor(scene: Game, id: string) {
         super(scene, "megumin", id)
     }
 
     override getAbilityDescription(): string {
-        return `Explode o alvo atual, causando [info.main:${Math.round(this.abilityPower * 3)} (300% AP)] de dano, além de [info.main:${Math.round(
+        return `Explodes the current target, dealing [info.main:${Math.round(this.abilityPower * 3)} (300% AP)] damage, plus [info.main:${Math.round(
             this.abilityPower
-        )} (100% AP)] aos inimigos adjacentes.`
+        )} (100% AP)] to adjacent enemies.`
     }
 
     override getAttackingAnimation(): string {

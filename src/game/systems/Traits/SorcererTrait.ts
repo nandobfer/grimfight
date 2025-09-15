@@ -4,8 +4,8 @@ import { Trait } from "./Trait"
 type TraitBoosts = "apMultiplier"
 
 export class SorcererTrait extends Trait {
-    name = "Feiticeiro"
-    description = "Ao lançar uma magia, feiticeiros lançam um feitiço adicional, com eficácia reduzida em {0}."
+    name = "Sorcerer"
+    description = "When casting a spell, Sorcerers cast an additional spell, with effectiveness reduced by {0}."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { apMultiplier: 0.5, descriptionParams: ["50%"] }],
         [4, { apMultiplier: 0.75, descriptionParams: ["25%"] }],

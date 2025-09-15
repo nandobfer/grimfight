@@ -5,12 +5,12 @@ import { Item } from "../Item"
 
 export class Sunfire extends Item {
     key = "sunfire"
-    name = "Capa de Fogo Solar"
+    name = "Sunfire Cape"
     descriptionLines = [
-        "+10% vida máxima",
-        "+10% armadura",
-        "Passiva: Ao ser atacado, aplica uma queimadura no inimigo que causa 1% da vida máxima do atacante, por segundo, dura 5 segundos.",
-    ]
+    "+10% max health",
+    "+10% armor",
+    "Passive: When attacked, applies a burn on the enemy that deals 1% of the attacker's max health per second, lasts 5 seconds."
+]
     burns = new WeakMap<Creature, Dot>()
 
     constructor(scene: Game) {

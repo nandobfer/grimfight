@@ -4,12 +4,12 @@ import { Item } from "../Item"
 
 export class Bloodthirster extends Item {
     key = "bloodthirster"
-    name = "Sedenta por Sangue"
+    name = "Bloodthirster"
     descriptionLines = [
         "+20% AD",
-        "+5% armadura",
-        "+20% roubo de vida",
-        "Passiva: Ao ficar com 40% de vida pela primeira vez, recebe um escudo de 25% da vida máxima",
+        "+5% armor",
+        "+20% life steal",
+        "Passive: Upon falling to 40% health for the first time, receives a shield for 25% of max health",
     ]
 
     constructor(scene: Game) {

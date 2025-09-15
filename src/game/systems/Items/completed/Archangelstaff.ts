@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Archangelstaff extends Item {
     key = "archangelstaff"
-    name = "Cajado do Arcanjo"
-    descriptionLines = ["+20% AP", "+3 mana/s", "Passiva: Ganha 5% AP a cada 5 segundos"]
+    name = "Archangel's Staff"
+    descriptionLines = ["+20% AP", "+3 mana/s", "Passive: Gains 5% AP every 5 seconds"]
 
     constructor(scene: Game) {
         super(scene, "item-archangelstaff")

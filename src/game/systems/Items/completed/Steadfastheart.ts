@@ -4,11 +4,11 @@ import { Item } from "../Item"
 
 export class Steadfastheart extends Item {
     key = "steadfastheart"
-    name = "Coração Inabalável"
+    name = "Steadfast Heart"
     descriptionLines = [
-        "+10% armadura",
-        "+15% chance de crítico",
-        "Passiva: Ao receber dano, tem uma chance equivalente a chance de acerto crítico de receber um escudo equivalente a metade do dano sofrido.",
+        "+10% armor",
+        "+15% critical chance",
+        "Passive: When receiving damage, has a chance equivalent to critical hit chance to receive a shield equal to half the damage taken.",
     ]
 
     constructor(scene: Game) {

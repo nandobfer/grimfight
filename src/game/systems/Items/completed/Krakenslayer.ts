@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Krakenslayer extends Item {
     key = "krakenslayer"
-    name = "Mata Krakens"
-    descriptionLines = ["+10% AD", "+15% AS", "Passiva: Recebe 1% AD ao atacar"]
+    name = "Krakenslayer"
+    descriptionLines = ["+10% AD", "+15% AS", "Passive: Gains 2% AD when attacking"]
 
     constructor(scene: Game) {
         super(scene, "item-krakenslayer")
@@ -21,7 +21,7 @@ export class Krakenslayer extends Item {
         }
 
         const onHit = (victim: Creature) => {
-            creature.attackDamage += creature.baseAttackDamage * 0.01
+            creature.attackDamage += creature.baseAttackDamage * 0.02
         }
 
         creature.eventHandlers[`krakenslayer_${this.id}`] = onHit

@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Warmog extends Item {
     key = "warmog"
-    name = "Armadura de Warmog"
-    descriptionLines = ["+45% vida máxima"]
+    name = "Warmog's Armor"
+    descriptionLines = ["+45% max health"]
 
     constructor(scene: Game) {
         super(scene, "item-warmog")

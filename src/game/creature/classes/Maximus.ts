@@ -8,16 +8,16 @@ export class Knight extends Character {
     baseAttackDamage = 15
     baseMaxMana = 90
 
-    abilityName = "Levantar escudo"
+    abilityName = "Raise Shield"
 
     constructor(scene: Game, id: string) {
         super(scene, "maximus", id)
     }
 
     override getAbilityDescription(): string {
-        return `Recebe um escudo que absorve [success.main:${Math.round(
+        return `Gains a shield that absorbs [success.main:${Math.round(
             this.abilityPower + this.maxHealth * 0.1
-        )}][info.main: (100% AP)] + [success.main:(10% HP)] de dano.`
+        )}][info.main: (100% AP)] + [success.main:(10% HP)] damage.`
     }
 
     castAbility(): void {

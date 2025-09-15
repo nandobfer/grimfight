@@ -4,8 +4,8 @@ import { Trait } from "./Trait"
 type TraitBoosts = "attackDamageMultiplier" | "lifesteal"
 
 export class AttackerTrait extends Trait {
-    name = "Atacante"
-    description = "Atacantes ganham {0} dano de ataque e {1} roubo de vida."
+    name = "Attacker"
+    description = "Attackers gain {0} attack damage and {1} life steal."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { attackDamageMultiplier: 0.2, lifesteal: 10, descriptionParams: ["20%", "10%"] }],
         [4, { attackDamageMultiplier: 0.4, lifesteal: 20, descriptionParams: ["40%", "20%"] }],

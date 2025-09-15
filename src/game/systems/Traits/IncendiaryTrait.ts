@@ -5,9 +5,9 @@ import { Trait } from "./Trait"
 type TraitBoosts = "baseDamage"
 
 export class IncendiaryTrait extends Trait {
-    name = "Incendiário"
+    name = "Incendiary"
     description =
-        "Ao lançar sua habilidade, incendiários aplicam uma queimadura no alvo, causando {0} de dano médio ao longo de 5 segundos. O dano é baseado na mana máxima do lançador."
+        "When casting their ability, Pyromancers apply a burn to the target, dealing {0} average damage over 5 seconds. The damage is based on the caster's maximum mana."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { baseDamage: 100, descriptionParams: ["100 (+ 10 por andar)"] }],
         [4, { baseDamage: 200, descriptionParams: ["200 (+ 20 por andar)"] }],

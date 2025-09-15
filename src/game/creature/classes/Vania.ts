@@ -12,16 +12,16 @@ export class Vania extends Character {
     manaLocked: boolean = true
     attacksCount = 0
 
-    abilityName: string = "Flecha de Prata"
+    abilityName: string = "Silver Bolt"
 
     constructor(scene: Game, id: string) {
         super(scene, "vania", id)
     }
 
     override getAbilityDescription(): string {
-        return `Cada [primary.main:3º ataque] atira uma seta de prata no inimigo, causando [secondary.main:${Math.round(
+        return `Every [primary.main:3rd attack] shoots a silver arrow at the enemy, dealing [secondary.main:${Math.round(
             this.attackDamage + this.abilityPower * 0.7
-        )}][error.main: (100% AD)][info.main: (70% AP)] de dano verdadeiro.`
+        )}][error.main: (100% AD)][info.main: (70% AP)] true damage.`
     }
 
     override extractAttackingAnimation() {

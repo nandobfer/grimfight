@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Voidstaff extends Item {
     key = "voidstaff"
-    name = "Cajado do Vazio"
-    descriptionLines = ["+10% AS", "+3 mana/s", "Passiva: Drena 2 mana do inimigo ao atacar."]
+    name = "Void Staff"
+    descriptionLines = ["+10% AS", "+3 mana/s", "Passive: Drains 2 mana from the enemy when attacking."]
 
     constructor(scene: Game) {
         super(scene, "item-voidstaff")

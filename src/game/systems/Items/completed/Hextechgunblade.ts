@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Hextechgunblade extends Item {
     key = "hextechgunblade"
-    name = "Pistolar Laminar Hextech"
-    descriptionLines = ["+20% AD", "+20% AP", "Passiva: Cura o aliado com a menor porcentagem de vida em 20% do dano causado"]
+    name = "Hextech Gun Blade"
+    descriptionLines = ["+20% AD", "+20% AP", "Passive: Heals the ally with the lowest health percentage for 20% of damage dealt"]
 
     constructor(scene: Game) {
         super(scene, "item-hextechgunblade")

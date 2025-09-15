@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Crownguard extends Item {
     key = "crownguard"
-    name = "Coroa da guarda"
-    descriptionLines = ["+15% AP", "+10% armadura", "Passiva: Inicia o combate com um escudo de 200% AP"]
+    name = "Crown Guard"
+    descriptionLines = ["+15% AP", "+10% armor", "Passive: Starts combat with a shield equal to 200% AP"]
 
     constructor(scene: Game) {
         super(scene, "item-crownguard")

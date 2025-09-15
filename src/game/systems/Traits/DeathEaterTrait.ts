@@ -6,9 +6,9 @@ import { Trait } from "./Trait"
 type TraitBoosts = "hpMultiplier" | "statsMultiplier"
 
 export class DeathEaterTrait extends Trait {
-    name = "Comemorte"
+    name = "Deatheater"
     description =
-        "Ao morrer pela primeira vez, comensais da morte ressuscitam com um escudo de {0} da sua vida e recebem {1} de AD e AP até morrer de novo."
+        "When dying for the first time, Death's Feast champions revive with a shield of {0} of their health and gain {1} AD and AP until they die again."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { hpMultiplier: 0.3, statsMultiplier: 0.75, descriptionParams: ["30%", "75%"] }],
         [4, { hpMultiplier: 0.45, statsMultiplier: 1.25, descriptionParams: ["45%", "125%"] }],
@@ -40,7 +40,8 @@ export class DeathEaterTrait extends Trait {
                 if (creature?.scene?.state === "fighting") {
                     new SoulParticles(creature.scene, deadX, deadY, 0.75)
                     creature.health = 0
-                    creature.revive(creature.maxHealth * values.hpMultiplier)
+                    creature.gainShield(creature.maxHealth * values.hpMultiplier)
+                    creature.revive()
                     creature.removeFromEnemyTarget(1000)
                     creature.attackDamage += creature.baseAttackDamage * values.statsMultiplier
                     creature.abilityPower += creature.baseAbilityPower * values.statsMultiplier

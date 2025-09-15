@@ -4,7 +4,7 @@ import { Item } from "../Item"
 
 export class Tear extends Item {
     key = "tear"
-    name = "Lágrima"
+    name = "Tear"
     descriptionLines = ["+2 mana/s"]
 
     constructor(scene: Game) {

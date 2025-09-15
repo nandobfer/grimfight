@@ -4,12 +4,12 @@ import { Item } from "../Item"
 
 export class Titanresolve extends Item {
     key = "titanresolve"
-    name = "Resolução Titânica"
+    name = "Titan's Resolve"
     descriptionLines = [
-        "+10% AS",
-        "+5% armadura",
-        "Passiva: Ganha 1% AD e AP ao receber dano, acumulando até 25 vezes. Com máximo de acúmulos, ganha 10% armadura.",
-    ]
+    "+10% AS",
+    "+5% armor",
+    "Passive: Gains 1% AD and AP when receiving damage, stacking up to 25 times. At maximum stacks, gains 10% armor."
+]
     stacks = 0
 
     constructor(scene: Game) {

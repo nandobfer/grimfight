@@ -4,7 +4,7 @@ import { Item } from "../Item"
 
 export class Deathblade extends Item {
     key = "deathblade"
-    name = "Lâmina Mortal"
+    name = "Death Blade"
     descriptionLines = ["+50% AD"]
 
     constructor(scene: Game) {

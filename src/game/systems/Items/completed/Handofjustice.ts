@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Handofjustice extends Item {
     key = "handofjustice"
-    name = "Mão da Justiça"
-    descriptionLines = ["+15% AD", "+15% AP", '+20% chance de crítico', '+10% roubo de vida']
+    name = "Hand of Justice"
+    descriptionLines = ["+15% AD", "+15% AP", "+20% critical chance", "+10% life steal"]
 
     constructor(scene: Game) {
         super(scene, "item-handofjustice")

@@ -11,20 +11,19 @@ export class Ymir extends Character {
     baseAttackDamage = 15
     baseMaxMana = 120
 
-    abilityName = "Aura Congelante"
+    abilityName = "Freezing Nova"
 
     constructor(scene: Game, id: string) {
         super(scene, "ymir", id)
-
 
         this.on("damage-taken", this.tryFreezeAttacker, this)
         this.once("destroy", () => this.off("damage-taken", this.tryFreezeAttacker, this))
     }
 
     override getAbilityDescription(): string {
-        return `Passivo: Ao ser atacado, tem 10% de chance de congelar o atacante por 1 segundo.
+        return `Passive: When attacked, has a 10% chance to freeze the attacker for 1 second.
 
-Emite uma onda congelante que se expande ao seu redor. Para cada inimigo atingido e congelado, recebe um escudo que absorbe [success.main:${Math.round(
+Emits a freezing wave that expands around you. For each enemy hit and frozen, gains a shield that absorbs [success.main:${Math.round(
             this.abilityPower
         )}] [info.main:(100% AP)]`
     }
@@ -79,10 +78,10 @@ Emite uma onda congelante que se expande ao seu redor. Para cada inimigo atingid
                 }
             },
             onComplete: resolveShield,
-            onStop: resolveShield
+            onStop: resolveShield,
         })
 
-        this.scene.events.once('gamestate', () => {
+        this.scene.events.once("gamestate", () => {
             tween.stop()
         })
     }

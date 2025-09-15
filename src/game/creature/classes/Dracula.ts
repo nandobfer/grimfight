@@ -22,14 +22,14 @@ export class Dracula extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Passivo: Rouba [primary.main:15%] de todo dano causado.
-Passivo: Se cura em [success.main:${Math.round(this.maxHealth * 0.2)} (20% HP)] e recebe [error.main:${Math.round(
+        return `Passive: Steals [primary.main:15%] of all damage dealt.
+Passive: Heals for [success.main:${Math.round(this.maxHealth * 0.2)} (20% HP)] and gains [error.main:${Math.round(
             this.attackDamage * 0.2
-        )} (20% AD)] até o fim do combate, quando seu alvo morre.
+        )} (20% AD)] until the end of combat when its target dies.
 
-Ativo: Alveja o inimigo com menor porcentagem de vida e avança até ele, causando [info.main:${Math.round(
+Active: Targets the enemy with the lowest health percentage and dashes to them, dealing [info.main:${Math.round(
             this.abilityPower
-        )} (100% AP)] de dano extra no seu próximo ataque.`
+        )} (100% AP)] extra damage on your next attack.`
     }
 
     override getAttackingAnimation(): string {

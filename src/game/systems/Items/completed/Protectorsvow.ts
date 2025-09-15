@@ -4,12 +4,12 @@ import { Item } from "../Item"
 
 export class Protectorsvow extends Item {
     key = "protectorsvow"
-    name = "Juramento do Protetor"
+    name = "Protector's Vow"
     descriptionLines = [
-        "+10% armadura",
+        "+10% armor",
         "+3 mana/s",
-        "Passiva: Ganha 20 de mana no início do combate",
-        "Passiva: Ganha um escudo de 15% da vida no início do combate",
+        "Passive: Gains 20 mana at the start of combat",
+        "Passive: Gains a shield equal to 15% of health at the start of combat",
     ]
 
     constructor(scene: Game) {

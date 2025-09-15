@@ -9,13 +9,13 @@ export class AnvilAugment extends Augment {
         const name = "anvil"
         super(name)
         this.descriptionValues.items = { value: "", color: "warning.main" }
-        this.description = `Escolha um componente entre 3 opções aleatórias.`
+        this.description = `Choose a component from 5 random options.`
         this.color = "default"
     }
 
     override onPick(team: CreatureGroup): void {
         const items: Item[] = []
-        for (let count = 1; count <= 3; count++) {
+        for (let count = 1; count <= 5; count++) {
             const item = ItemRegistry.randomComponent(
                 team.scene,
                 items.map((item) => item.key),

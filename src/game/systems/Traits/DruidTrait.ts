@@ -5,7 +5,7 @@ type TraitBoosts = "healthMultiplier" | "apMultiplier"
 
 export class DruidTrait extends Trait {
     name = "Druid"
-    description = "Druidas recebem {0} de vida máxima e {1} de AP para cada druida em campo."
+    description = "Druids receive {0} maximum health and {1} AP for each druid on the field."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([[1, { healthMultiplier: 0.1, apMultiplier: 0.1, descriptionParams: ["10%", "10%"] }]])
 
     druidsCount = 0

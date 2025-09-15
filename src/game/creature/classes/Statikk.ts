@@ -9,7 +9,7 @@ export class Statikk extends Character {
     baseMaxMana: number = 0
     manaLocked: boolean = true
 
-    abilityName: string = "Fúria de Guinsoo"
+    abilityName: string = "Guinsoo's Rage"
 
     attacksCount = 0
 
@@ -18,9 +18,9 @@ export class Statikk extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Cada [primary.main:3º ataque] lança uma cadeia de raios no alvo, causando [info.main:${Math.round(
+        return `Passive: Every [primary.main:3rd attack] launches a chain lightning at the target, dealing [info.main:${Math.round(
             this.abilityPower * 0.75
-        )} (75% AP)] de dano e se propaga 5x, causando dano reduzido a cada propagação`
+        )} (75% AP)] damage and propagates 5 times, dealing reduced damage with each propagation`
     }
 
     override extractAttackingAnimation() {

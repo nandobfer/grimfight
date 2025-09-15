@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Strikersflail extends Item {
     key = "strikersflail"
-    name = "Mangual do Atacante"
-    descriptionLines = ["+10% vida máxima", "+10% chance de crítico", "Passiva: Recebe vida máxima bônus equivalente a chance de acerto crítico"]
+    name = "Striker's Flail"
+    descriptionLines = ["+10% max health", "+10% critical chance", "Passive: Gains bonus max health equivalent to critical hit chance"]
 
     constructor(scene: Game) {
         super(scene, "item-strikersflail")

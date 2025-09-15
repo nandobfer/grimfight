@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { Badge, Box, Button, Tooltip, useMediaQuery } from "@mui/material"
+import { Badge, Box, Button, useMediaQuery } from "@mui/material"
 import { CharacterDto } from "../../game/creature/character/Character"
 import { CharacterAvatar } from "../CharacterSheet/CharacterAvatar"
 import { colorFromLevel, convertColorToString } from "../../game/tools/RarityColors"
 import { Game } from "../../game/scenes/Game"
-import { GoldCoin } from "../components/GoldCoin"
-import { AbilityTooltip } from "../CharacterSheet/AbilityTooltip"
 import { EventBus } from "../../game/tools/EventBus"
 
 interface BenchItemProps {

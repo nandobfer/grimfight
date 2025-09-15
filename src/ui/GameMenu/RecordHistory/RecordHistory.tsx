@@ -43,11 +43,11 @@ export const RecordHistory: React.FC<RecordHistoryProps> = (props) => {
     return (
         <>
             <Button variant="text" onClick={openMenu}>
-                Histórico
+                History
             </Button>
             <Dialog open={open} onClose={closeMenu} slotProps={{ backdrop: { sx: { background: "transparent" } }, paper: { elevation: 1 } }}>
                 <Box sx={{ justifyContent: "space-between" }}>
-                    <Typography variant="h4">Histórico de partidas</Typography>
+                    <Typography variant="h4">Game Records</Typography>
                     <IconButton onClick={closeMenu}>
                         <Close />
                     </IconButton>

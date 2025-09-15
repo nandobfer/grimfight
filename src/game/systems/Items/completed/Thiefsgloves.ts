@@ -5,7 +5,7 @@ import { ItemRegistry } from "../ItemRegistry"
 
 export class Thiefsgloves extends Item {
     key = "thiefsgloves"
-    name = "Luvas do Ladrão"
+    name = "Thief's Gloves"
     descriptionLines = [
         "+30% chance de crítico",
         "Passiva: Equipa 2 itens completos aleatórios a cada rodada.",

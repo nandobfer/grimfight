@@ -17,7 +17,7 @@ export class Helyna extends Character {
     baseAttackRange = 3
     baseMaxHealth: number = 400
 
-    abilityName = "Druidismo"
+    abilityName = "Druidism"
 
     bonusMaxHealth = 0
     bonusScale = 0
@@ -40,21 +40,23 @@ export class Helyna extends Character {
         try {
             const placement = this.getPlacement()
 
-            const bear = `[primary.main:Urso] (frente): Ganha [default:(50%)] de tamanho, [primary.main.main: 10%] armadura, [success.main: ${Math.round(
+            const bear = `[primary.main:Bear] (front): Gains [default:(50%)] size, [primary.main.main: 10%] armor, [success.main: ${Math.round(
                 this.abilityPower * 3
-            )}] [info.main:(300% AP)] de vida máxima e [error.main: ${Math.round(this.abilityPower * 0.1)}] [info.main: (10% AP)] de ataque. 
-Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [primary.main:10%] e causando [info.main:${Math.round(
+            )}] [info.main:(300% AP)] maximum health and [error.main: ${Math.round(
                 this.abilityPower * 0.1
-            )} (10% AP)] de dano a atacantes.`
+            )}] [info.main: (10% AP)] attack. When cast, conjures a thorn armor, increasing armor by [primary.main:10%] and dealing [info.main:${Math.round(
+                this.abilityPower * 0.1
+            )} (10% AP)] damage to attackers.`
 
-            const cat = `[primary.main:Gato] (meio): Ganha velocidade, [error.main:${Math.round(
+            const cat = `[primary.main:Cat] (middle): Gains speed, [error.main:${Math.round(
                 this.abilityPower * 0.3
-            )}] [info.main:(30% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${Math.round(
+            )}] [info.main:(30% AP)] attack, [warning.main:25%] attack speed and [error.main:${Math.round(
                 this.abilityPower * 0.01
-            )}] [info.main:(1% AP)] chance de crítico. 
-Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(this.attackDamage * 1.5)} (150% AD)] de dano.`
+            )}] [info.main:(1% AP)] critical chance. When cast, applies a bleed on the target, dealing [error.main:${Math.round(
+                this.attackDamage * 1.5
+            )} (150% AD)] damage.`
 
-            const human = `[primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${Math.round(
+            const human = `[primary.main:Human] (back): Doesn't transform into anything, but your ability heals the ally with the least health on the field for [info.main:${Math.round(
                 this.abilityPower * humanMultiplier
             )} (100% AP)].`
 
@@ -64,7 +66,7 @@ Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(thi
                 ? cat
                 : placement === "back"
                 ? human
-                : `Se transforma em um animal, baseado na posição inicial, concedendo atributos e habilidades específicas para cada um.
+                : `Shapeshift into an animal, based on the starting position, granting specific attributes and abilities for each one.
 
 ${bear}
 
@@ -75,6 +77,45 @@ ${human}`
             return ""
         }
     }
+    //     override getAbilityDescription(): string {
+    //         try {
+    //             const placement = this.getPlacement()
+
+    //             const bear = `[primary.main:Urso] (frente): Ganha [default:(50%)] de tamanho, [primary.main.main: 10%] armadura, [success.main: ${Math.round(
+    //                 this.abilityPower * 3
+    //             )}] [info.main:(300% AP)] de vida máxima e [error.main: ${Math.round(this.abilityPower * 0.1)}] [info.main: (10% AP)] de ataque.
+    // Ao lançar, conjura uma armadura de espinhos, aumentando sua armadura em [primary.main:10%] e causando [info.main:${Math.round(
+    //                 this.abilityPower * 0.1
+    //             )} (10% AP)] de dano a atacantes.`
+
+    //             const cat = `[primary.main:Gato] (meio): Ganha velocidade, [error.main:${Math.round(
+    //                 this.abilityPower * 0.3
+    //             )}] [info.main:(30% AP)] de ataque, [warning.main:25%] de velocidade de ataque e [error.main:${Math.round(
+    //                 this.abilityPower * 0.01
+    //             )}] [info.main:(1% AP)] chance de crítico.
+    // Ao lançar, aplica um sangramento no alvo, causando [error.main:${Math.round(this.attackDamage * 1.5)} (150% AD)] de dano.`
+
+    //             const human = `[primary.main:Humano] (atrás): Não se transforma em nada, mas sua habilidade cura o aliado com menos vida no campo em [info.main:${Math.round(
+    //                 this.abilityPower * humanMultiplier
+    //             )} (100% AP)].`
+
+    //             return placement === "front"
+    //                 ? bear
+    //                 : placement === "middle"
+    //                 ? cat
+    //                 : placement === "back"
+    //                 ? human
+    //                 : `Se transforma em um animal, baseado na posição inicial, concedendo atributos e habilidades específicas para cada um.
+
+    // ${bear}
+
+    // ${cat}
+
+    // ${human}`
+    //         } catch (error) {
+    //             return ""
+    //         }
+    //     }
 
     override landAttack() {
         this.fire()

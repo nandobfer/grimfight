@@ -4,9 +4,9 @@ import { Item } from "../Item"
 
 export class Guinsoo extends Item {
     key = "guinsoo"
-    name = "Lâmina da Fúria de Guinsoo"
-    descriptionLines = ["+10% AP", "+15% AS", "Passiva: Recebe 3% AS ao atacar"]
-    attackSpeedMultiplier = 0.03
+    name = "Guinsoo's Rage Blade"
+    descriptionLines = ["+10% AP", "+15% AS", "Passive: Gains 2% AS when attacking"]
+    attackSpeedMultiplier = 0.02
 
     constructor(scene: Game) {
         super(scene, "item-guinsoo")

@@ -7,9 +7,9 @@ import { Trait } from "./Trait"
 type TraitBoosts = "freezeChance" | "critChanceBonus"
 
 export class PopsicleTrait extends Trait {
-    name = "Picolé"
+    name = "Popsicle"
     description =
-        "Picolés têm {0} de chance de congelar o inimigo por 1 segundo, ao atacar. Além disso, seus ataques têm {1} mais chance de acertar criticamente alvos congelados."
+        "Popsicle have a {0} chance to freeze the enemy for 1 second when attacking. Additionally, their attacks have {1} more chance to critically hit frozen targets."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { freezeChance: 5, critChanceBonus: 20, descriptionParams: ["5%", "20%"] }],
         [4, { freezeChance: 10, critChanceBonus: 40, descriptionParams: ["10%", "40%"] }],

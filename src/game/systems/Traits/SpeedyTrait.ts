@@ -4,8 +4,8 @@ import { Trait } from "./Trait"
 type TraitBoosts = "attackSpeedMultiplier"
 
 export class SpeedyTrait extends Trait {
-    name = "Ligeiro"
-    description = "ligeiros ganham {0} velocidade de ataque."
+    name = "Swift"
+    description = "Swift units gain {0} attack speed."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { attackSpeedMultiplier: 0.3, descriptionParams: ["30%"] }],
         [4, { attackSpeedMultiplier: 0.5, descriptionParams: ["50%"] }],

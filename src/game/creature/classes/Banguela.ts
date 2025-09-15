@@ -11,16 +11,16 @@ export class Banguela extends Character {
     baseMaxHealth = 400
     baseAttackDamage: number = 25
 
-    abilityName = "Orbes flamejantes"
+    abilityName = "Flaming Orbs"
 
     constructor(scene: Game, id: string) {
         super(scene, "banguela", id)
     }
 
     override getAbilityDescription(): string {
-        return `Lança [info.main:${Math.floor(this.abilityPower * 0.05)} (5% AP)] bolas de fogo no alvo, cada uma [error.main:${Math.round(
+        return `Launches [info.main:${Math.floor(this.abilityPower * 0.05)} (5% AP)] fireballs at the target, each dealing [error.main:${Math.round(
             this.attackDamage * 1
-        )} (100% AD)] de dano.`
+        )} (100% AD)] damage.`
     }
 
     override getAttackingAnimation(): string {

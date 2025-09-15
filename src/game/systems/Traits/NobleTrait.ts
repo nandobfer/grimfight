@@ -6,8 +6,8 @@ import { Trait } from "./Trait"
 type TraitBoosts = "goldDropChance"
 
 export class NobleTrait extends Trait {
-    name = "Nobre"
-    description = "Ao abater um inimigo, nobres tem {0} de chance de dropar ouro equivalente a seu nível."
+    name = "Noble"
+    description = "When defeating an enemy, Nobles have a {0} chance to drop gold equivalent to their level."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { goldDropChance: 15, descriptionParams: ["15%"] }],
         [4, { goldDropChance: 40, descriptionParams: ["40%"] }],

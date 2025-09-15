@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Belt extends Item {
     key = "belt"
-    name = "Cintão"
-    descriptionLines = ["+10% vida máxima"]
+    name = "Belt"
+    descriptionLines = ["+10% max health"]
 
     constructor(scene: Game) {
         super(scene, "item-belt")

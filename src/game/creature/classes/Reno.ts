@@ -12,7 +12,7 @@ export class Reno extends Character {
     baseMaxMana = 0
     manaLocked = true
 
-    abilityName: string = "Dedos Congelados"
+    abilityName: string = "Frozen Fingers"
 
     attacksCount = 0
     lastAttackSpeed = 0
@@ -22,13 +22,13 @@ export class Reno extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Passivo: Cada [primary.main:5º ataque] causa [info.main:${Math.round(this.abilityPower)} (100% AP)] dano adicional.
-    
-Passivo: Sua velocidade de ataque é travada em [warning.main:${
+        return `Passive: Every [primary.main:5th attack] deals [info.main:${Math.round(this.abilityPower)} (100% AP)] additional damage.
+
+Passive: Your attack speed is locked at [warning.main:${
             this.baseAttackSpeed
-        }/s], porém converte toda velocidade bônus em AD. Bônus atual: [error.main:${Math.round(
+        }/s], but converts all bonus speed into AD. Current bonus: [error.main:${Math.round(
             this.getAsMultiplier() * this.attackDamage
-        )}%] [warning.main:(${Math.round(this.getAsMultiplier() * 100)}% AS bônus)]`
+        )}%] [warning.main:(${Math.round(this.getAsMultiplier() * 100)}% bonus AS)]`
     }
 
     override getAttackingAnimation(): string {

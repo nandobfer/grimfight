@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Bow extends Item {
     key = "bow"
-    name = "Arco"
-    descriptionLines = ["+10% velocidade de ataque"]
+    name = "Bow"
+    descriptionLines = ["+10% AS"]
 
     constructor(scene: Game) {
         super(scene, "item-bow")

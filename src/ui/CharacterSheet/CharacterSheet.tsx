@@ -166,7 +166,7 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                 </IconButton>
             </Box>
 
-            <CharacterItems items={snap.items}  />
+            <CharacterItems items={snap.items} />
             <TraitList traits={traits} />
 
             <AbilityTooltip description={character.getAbilityDescription()} placement="auto">
@@ -189,27 +189,27 @@ export const CharacterSheet: React.FC<CharacterSheetProps> = (props) => {
                 </Box> */}
             <Box sx={{ justifyContent: "space-between" }}>
                 <StatGroup color="error">
-                    <SheetData title={"AD"} value={snap.ad} tooltip="Dano médio de cada ataque básico" />
-                    <SheetData title={"Crit"} value={snap.critChance} tooltip="Chance de acertar criticamente" suffix="%" />
-                    <SheetData title={"Crit Mult"} value={snap.critDamageMultiplier} tooltip="Multiplicador de dano crítico" suffix="x" fixed={2} />
+                    <SheetData title={"AD"} value={snap.ad} tooltip="Average damage of each basic attack" />
+                    <SheetData title={"Crit"} value={snap.critChance} tooltip="Chance to land a critical hit" suffix="%" />
+                    <SheetData title={"Crit Mult"} value={snap.critDamageMultiplier} tooltip="Critical damage multiplier" suffix="x" fixed={2} />
                 </StatGroup>
                 <Divider />
                 <StatGroup color="info">
-                    <SheetData title={"AP"} value={snap.abilityPower} tooltip="Poder de habilidade com magias e feitiços" />
-                    <SheetData title={"Mana"} value={charRef.current.manaPerSecond} tooltip="Mana regenerada a cada segundo" suffix="/s" />
-                    <SheetData title={"MP /a"} value={charRef.current.manaPerAttack} tooltip="Mana ganha a cada ataque" />
+                    <SheetData title={"AP"} value={snap.abilityPower} tooltip="Ability power for spells and magic" />
+                    <SheetData title={"Mana"} value={charRef.current.manaPerSecond} tooltip="Mana regenerated per second" suffix="/s" />
+                    <SheetData title={"MP /a"} value={charRef.current.manaPerAttack} tooltip="Mana gained per attack" />
                 </StatGroup>
             </Box>
             <Box sx={{ justifyContent: "space-between" }}>
                 <StatGroup color="warning">
-                    <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Velocidade de ataques a cada segundo" fixed={2} suffix="/s" />
-                    <SheetData title={"Alcance"} value={snap.attackRange} tooltip="Alcance de ataque" />
-                    <SheetData title={"Vel"} value={snap.speed} tooltip="Velocidade de movimento" />
+                    <SheetData title={"AS"} value={snap.attackSpeed} tooltip="Attacks per second" fixed={2} suffix="/s" />
+                    <SheetData title={"Range"} value={snap.attackRange} tooltip="Attack range" />
+                    {/* <SheetData title={"Spd"} value={snap.speed} tooltip="Movement speed" /> */}
                 </StatGroup>
                 <Divider />
                 <StatGroup color="success">
-                    <SheetData title={"Armadura"} value={snap.armor} tooltip="Porcentagem do dano reduzido a cada ataque recebido" suffix="%" />
-                    <SheetData title={"Lifesteal"} value={snap.lifesteal} tooltip="Porcentagem do dano causado recuperado como vida" suffix="%" />
+                    <SheetData title={"Armor"} value={snap.armor} tooltip="Percentage of damage reduced from each attack received" suffix="%" />
+                    <SheetData title={"Lifesteal"} value={snap.lifesteal} tooltip="Percentage of damage dealt recovered as health" suffix="%" />
                 </StatGroup>
             </Box>
         </>

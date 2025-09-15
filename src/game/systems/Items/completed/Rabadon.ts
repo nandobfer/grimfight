@@ -4,7 +4,7 @@ import { Item } from "../Item"
 
 export class Rabadon extends Item {
     key = "rabadon"
-    name = "Capuz da Morte de Rabadon"
+    name = "Rabadon's Death Cap"
     descriptionLines = ["+50% AP"]
 
     constructor(scene: Game) {

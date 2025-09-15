@@ -4,8 +4,8 @@ import { Item } from "../Item"
 
 export class Gloves extends Item {
     key = "gloves"
-    name = "Luvas da agilidade"
-    descriptionLines = ["+10% chance de acerto crítico"]
+    name = "Gloves"
+    descriptionLines = ["+10% critical chance"]
 
     constructor(scene: Game) {
         super(scene, "item-gloves")

@@ -4,7 +4,7 @@ import { Item } from "../Item"
 
 export class Giantslayer extends Item {
     key = "giantslayer"
-    name = "Mata Gigantes"
+    name = "Giantslayer"
     descriptionLines = ["+20 AD", "+20 AS"]
 
     constructor(scene: Game) {

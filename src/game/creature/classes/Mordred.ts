@@ -7,16 +7,16 @@ export class Rogue extends Character {
     baseAttackDamage = 15
     baseCritChance = 20
 
-    abilityName: string = "Passo sombrio"
+    abilityName: string = "Shadow Step"
 
     constructor(scene: Game, id: string) {
         super(scene, "mordred", id)
     }
 
     override getAbilityDescription(): string {
-        return `Se teleporta para trás do alvo mais [primary.main:distante] e ataca imediatamente, causando [error.main:${Math.round(
+        return `Teleports behind the [primary.main:most distant] target and immediately attacks, dealing [error.main:${Math.round(
             this.attackDamage * 4
-        )} (400% AD)] de dano.`
+        )} (400% AD)] damage.`
     }
 
     override castAbility(): void {

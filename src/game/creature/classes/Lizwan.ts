@@ -19,10 +19,9 @@ export class Lizwan extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Ataques aplicam um acúmulo de veneno mortal.
-O veneno causa [info.main:${Math.round(
+        return `Attacks apply a stack of deadly poison. The poison deals [info.main:${Math.round(
             this.abilityPower * 0.05
-        )} (5% AP)] de dano por segundo. Dura 10 segundos e [primary.main:acumula indefinidamente].`
+        )} (5% AP)] damage per second. Lasts 10 seconds and [primary.main:stacks indefinitely].`
     }
 
     override landAttack(): void {

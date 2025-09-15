@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { Box } from "@mui/material"
 import { Game } from "../../game/scenes/Game"
 import { Trait } from "../../game/systems/Traits/Trait"
 import { EventBus } from "../../game/tools/EventBus"
-import { TraitComponent } from "./TraitComponent"
 import { TraitList } from "./TraitList"
 
 interface TraitsProps {

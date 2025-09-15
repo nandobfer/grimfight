@@ -12,7 +12,7 @@ export class Arthas extends Character {
     baseMaxHealth: number = 425
     baseLifesteal: number = 10
 
-    abilityName: string = "Golpe Gélido"
+    abilityName: string = "Frost Strike"
 
     castsCount = 0
 
@@ -29,17 +29,17 @@ export class Arthas extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Passivo: Rouba [primary.main:10%] de todo dano causado.
+        return `Passive: Steals [primary.main:10%] of all damage dealt.
 
-1º lançamento: Atinge o alvo atual com um golpe gélido causando [error.main:${Math.round(
+1st cast: Strikes the current target with a frost strike, dealing [error.main:${Math.round(
             this.attackDamage * 2 + this.abilityPower * 0.3
-        )} (200% AD)] [info.main: (30% AP)] de dano.
-2º lançamento: Golpeia a área a sua frente causando [error.main:${Math.round(
+        )} (200% AD)] [info.main: (30% AP)] damage.
+2nd cast: Strikes the area in front of you, dealing [error.main:${Math.round(
             this.attackDamage + this.abilityPower * 0.3
-        )} (100% AD)] [info.main: (30% AP)] de dano aos inimigos atingidos.
-3º lançamento: Invoca pilares de gelo embaixo de até 3 inimigos, causando [error.main:${Math.round(
+        )} (100% AD)] [info.main: (30% AP)] damage to hit enemies.
+3rd cast: Summons pillars of ice under up to 3 enemies, dealing [error.main:${Math.round(
             this.attackDamage * 0.75 + this.abilityPower * 0.3
-        )} (75% AD)] [info.main: (30% AP)] de dano a cada um.`
+        )} (75% AD)] [info.main: (30% AP)] damage to each one.`
     }
 
     addLightEffect(lightParams: LightParams) {
@@ -96,7 +96,6 @@ export class Arthas extends Character {
 
         this.casting = true
         this.castsCount += 1
-
 
         try {
             switch (this.castsCount) {

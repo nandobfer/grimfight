@@ -13,14 +13,14 @@ export class Frank extends Character {
     manaLocked: boolean = true
     attacksCount = 0
 
-    abilityName: string = "Dreno"
+    abilityName: string = "Life Drain"
 
     constructor(scene: Game, id: string) {
         super(scene, "frank", id)
     }
 
     override getAbilityDescription(): string {
-        return `Cada [primary.main:3º ataque] drena [info.main:${Math.round(this.abilityPower * 0.2)} (20% AP)] de vida do alvo.`
+        return `Every [primary.main:3rd attack] drains [info.main:${Math.round(this.abilityPower * 0.2)} (20% AP)] health from the target.`
     }
 
     override extractAttackingAnimation() {
