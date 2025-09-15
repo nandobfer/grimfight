@@ -17,7 +17,7 @@ export const Counters: React.FC<CountersProps> = (props) => {
         <Box sx={{ gap: 1, alignItems: "flex-end", flexDirection: "column", pointerEvents: "auto" }}>
             <Tooltip title="Dungeon Floor" placement="auto">
                 <Box sx={{ gap: 1, alignItems: "center" }}>
-                    <Avatar src={"/assets/darkest_skull.webp"} sx={{ margin: -1 }} />
+                    <Avatar src={"assets/darkest_skull.webp"} sx={{ margin: -1 }} />
                     <CounterItem value={progress.gameFloor} />
                 </Box>
             </Tooltip>

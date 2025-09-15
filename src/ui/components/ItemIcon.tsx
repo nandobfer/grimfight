@@ -11,7 +11,7 @@ export const ItemIcon: React.FC<ItemIconProps> = ({ itemKey, size = 30, highligh
     return (
         <Avatar
             variant="rounded"
-            src={`/assets/items/${itemKey}.png`}
+            src={`assets/items/${itemKey}.png`}
             sx={{
                 width: size,
                 height: size,

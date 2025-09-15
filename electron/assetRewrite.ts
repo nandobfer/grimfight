@@ -19,8 +19,8 @@ export const setupAssetRewrite = () => {
         try {
             const url = new URL(details.url)
             // Requests like file:///assets/foo.png → pathname === "/assets/foo.png"
-            if (url.pathname.startsWith("/assets/")) {
-                const rel = url.pathname.slice("/assets/".length)
+            if (url.pathname.startsWith("assets/")) {
+                const rel = url.pathname.slice("assets/".length)
                 const filePath = path.join(assetsDir, rel)
                 if (fs.existsSync(filePath)) {
                     // Use pathToFileURL to avoid backslash issues on Windows

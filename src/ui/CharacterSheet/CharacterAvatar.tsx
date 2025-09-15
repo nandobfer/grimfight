@@ -12,7 +12,7 @@ export const CharacterAvatar: React.FC<CharacterAvatarProps> = (props) => {
     return (
         <Avatar
             variant={props.variant}
-            src={`/assets/portraits/${props.name}.webp`}
+            src={`assets/portraits/${props.name}.webp`}
             sx={{
                 bgcolor: props.highlight ? "info.main" : "primary.main",
                 width: props.size,

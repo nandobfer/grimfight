@@ -37,7 +37,7 @@ export const RecordItem: React.FC<RecordItemProps> = (props) => {
                     <Typography variant="caption">{new Date(props.record.finishedAt || Date.now()).toLocaleDateString("pt-br")}</Typography>
                     <Tooltip title={"Andar alcançado"}>
                         <Box sx={{ gap: 1, alignItems: "center" }}>
-                            <Avatar src={"/assets/darkest_skull.webp"} sx={{ margin: -1 }} />
+                            <Avatar src={"assets/darkest_skull.webp"} sx={{ margin: -1 }} />
                             <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
                                 {props.record.floor}
                             </Typography>
