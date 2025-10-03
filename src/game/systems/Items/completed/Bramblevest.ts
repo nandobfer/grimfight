@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class Bramblevest extends Item {
     key = "bramblevest"
     name = "Bramble Vest"
-    descriptionLines = ["+5% max health", "+15% armor", "Passive: When hit, deals damage to the attacker based on your max health"]
+    descriptionLines = ["+5% max health", "+15% armor", "Passive: When hit, deals damage equals to (10 + floor) to attacker."]
 
     constructor(scene: Game) {
         super(scene, "item-bramblevest")
@@ -22,8 +22,8 @@ export class Bramblevest extends Item {
         }
 
         const dealThorns = (damage: number, attacker: Creature) => {
-            const thornsDamage = creature.calculateDamage(creature.maxHealth * 0.01)
-            attacker.takeDamage(Math.max(thornsDamage.value, attacker.maxHealth * 0.01), creature, "normal", thornsDamage.crit, false)
+            const thornsDamage = creature.calculateDamage(10 + this.scene.floor)
+            attacker.takeDamage(thornsDamage.value, creature, "normal", thornsDamage.crit, false)
         }
 
         creature.eventHandlers[`bramblevest_${this.id}`] = dealThorns
