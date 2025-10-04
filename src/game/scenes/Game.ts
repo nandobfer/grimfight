@@ -665,6 +665,10 @@ export class Game extends Scene {
         EventBus.emit("load-progress", progress)
     }
 
+    addPlayerGold(gold: number) {
+        this.changePlayerGold(this.playerGold + gold)
+    }
+
     changePlayerGold(gold: number) {
         this.playerGold = gold
         EventBus.emit("gold-change", gold)

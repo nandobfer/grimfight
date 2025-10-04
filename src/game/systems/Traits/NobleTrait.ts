@@ -30,7 +30,7 @@ export class NobleTrait extends Trait {
         const killHandler = (killed: Creature) => {
             const random = RNG.chance()
             if (random <= values.goldDropChance && character?.scene) {
-                character.scene.changePlayerGold(character.level)
+                character.scene.addPlayerGold(character.level)
                 character.scene.goldCoinFx.explodeCameraCenterToCounter(character.level)
             }
         }
