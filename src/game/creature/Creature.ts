@@ -115,8 +115,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
             this.createAnimations()
             this.anims.play(`${this.name}-idle-down`)
-            this.healthBar = new ProgressBar(this, { color: 0x2ecc71, offsetY: -30, interpolateColor: true })
-            this.manaBar = new ProgressBar(this, { color: 0x3498db, offsetY: -25 })
+            this.healthBar = new ProgressBar(this, { color: 0x2ecc71, offsetY: -50, interpolateColor: true })
+            this.manaBar = new ProgressBar(this, { color: 0x3498db, offsetY: -45 })
 
             this.setPipeline("Light2D")
         }

@@ -33,10 +33,10 @@ export class ProgressBar extends UiElement {
         this.bar = bar
         this.shieldGfx = shield
 
-        this.width = 30
+        this.width = 30 * target.scale
         this.height = 4
         this.offsetX -= this.width / 2
-        this.offsetY = options.offsetY
+        this.offsetY = options.offsetY * target.scale
         this.borderColor = 0x000000
         this.borderWidth = 1
         this.bgColor = 0x222222

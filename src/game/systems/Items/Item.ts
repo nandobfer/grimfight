@@ -359,7 +359,7 @@ export class Item {
             offsetX = Array.from(creature.items.values()).indexOf(this)
         }
 
-        this.sprite.setPosition(x - 16 + 16 * offsetX, y - 40)
+        this.sprite.setPosition(x - 16 + 16 * offsetX, y - 60)
         this.updateBorder()
     }
 }
