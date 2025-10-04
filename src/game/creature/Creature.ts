@@ -753,7 +753,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     gainShield(value: number, plot?: { healer: Creature; source: string }) {
         if (!this.active) return
-        
+
         this.shield = Phaser.Math.Clamp(this.shield + value, 0, this.maxHealth)
         this.healthBar.setShield(this.shield, this.health, this.maxHealth)
 
@@ -794,7 +794,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         try {
             showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit, type })
             if (finalDamage > 0 && (attacker.team === this.scene.playerTeam || attacker.team === this.scene.playerTeam.minions)) {
-                this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage, type, source)
+                const sourceName = attacker.team === this.scene.playerTeam.minions ? `${attacker.name}: ${source}` : source
+                this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage, type, sourceName)
             }
         } catch (error) {}
 
@@ -838,6 +839,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     revive() {
         this.active = true
+        this.heal(1, false, false)
         this.updateDepth()
         this.setRotation(0)
         this.resetUi()

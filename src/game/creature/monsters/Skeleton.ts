@@ -8,6 +8,8 @@ export class Skeleton extends Monster {
     baseAttackDamage = 15
     baseAttackSpeed = 1
 
+    abilityName = "Slam"
+
     constructor(scene: Game, texture?: string) {
         super(scene, texture || "skeleton")
         this.preferredPosition = "front"
@@ -48,7 +50,7 @@ export class Skeleton extends Monster {
         })
 
         const damage = this.calculateDamage(this.abilityPower - 10)
-        this.target.takeDamage(damage.value, this, "normal", damage.crit)
+        this.target.takeDamage(damage.value, this, "normal", damage.crit, true, this.abilityName)
 
         this.casting = false
     }

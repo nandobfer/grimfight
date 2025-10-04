@@ -39,7 +39,6 @@ export class DeathEaterTrait extends Trait {
             creature.scene?.time.delayedCall(1000, () => {
                 if (creature?.scene?.state === "fighting") {
                     new SoulParticles(creature.scene, deadX, deadY, 0.75)
-                    creature.health = 1
                     creature.revive()
                     creature.removeFromEnemyTarget(1000)
                     creature.gainShield(creature.maxHealth * values.hpMultiplier, { healer: creature, source: "Death Eater Trait" })
