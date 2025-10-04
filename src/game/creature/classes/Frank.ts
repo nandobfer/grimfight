@@ -20,7 +20,7 @@ export class Frank extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Every [primary.main:3rd attack] drains [info.main:${Math.round(this.abilityPower * 0.2)} (20% AP)] health from the target.`
+        return `Every [primary.main:3rd attack] drains [info.main:${Math.round(this.abilityPower * 0.4)} (40% AP)] health from the target.`
     }
 
     override extractAttackingAnimation() {
@@ -53,7 +53,7 @@ export class Frank extends Character {
     }
 
     drainLife(target: Creature) {
-        const damage = this.calculateDamage(this.abilityPower * 0.3)
+        const damage = this.calculateDamage(this.abilityPower * 0.4)
         target.takeDamage(damage.value, this, "poison", damage.crit, true, this.abilityName)
         this.heal(damage.value, damage.crit, true, { healer: this, source: this.abilityName })
     }
