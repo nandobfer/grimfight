@@ -44,7 +44,7 @@ export class Helyna extends Character {
                 this.abilityPower * 3
             )}] [info.main:(300% AP)] maximum health and [error.main: ${Math.round(
                 this.abilityPower * 0.1
-            )}] [info.main: (10% AP)] attack. When cast, conjures a thorn armor, increasing armor by [primary.main:10%] and dealing [info.main:${Math.round(
+            )}] [info.main: (10% AP)] attack. When cast [warning.main:(Thorn Armor)], conjures a thorn armor, increasing armor by [primary.main:10%] and dealing [info.main:${Math.round(
                 this.abilityPower * 0.1
             )} (10% AP)] damage to attackers.`
 
@@ -52,11 +52,11 @@ export class Helyna extends Character {
                 this.abilityPower * 0.3
             )}] [info.main:(30% AP)] attack, [warning.main:25%] attack speed and [error.main:${Math.round(
                 this.abilityPower * 0.01
-            )}] [info.main:(1% AP)] critical chance. When cast, applies a bleed on the target, dealing [error.main:${Math.round(
+            )}] [info.main:(1% AP)] critical chance. When cast [error.main:(Rake)], applies a bleed on the target, dealing [error.main:${Math.round(
                 this.attackDamage * 1.5
             )} (150% AD)] damage.`
 
-            const human = `[primary.main:Human] (back): Doesn't transform into anything, but your ability heals the ally with the least health on the field for [info.main:${Math.round(
+            const human = `[primary.main:Human] (back): Doesn't transform into anything, but your ability [success.main:(Regrowth)] heals the ally with the least health on the field for [info.main:${Math.round(
                 this.abilityPower * humanMultiplier
             )} (100% AP)].`
 
@@ -186,6 +186,7 @@ ${human}`
             tickDamage: this.attackDamage * 1.5 * multiplier,
             tickRate: 900,
             user: this,
+            abilityName: 'Rake'
         })
         bleeding.start()
     }
@@ -235,7 +236,7 @@ ${human}`
 
     dealThornsDamage(target: Creature) {
         const { value, crit } = this.calculateDamage(this.abilityPower * 0.1)
-        target.takeDamage(value, this, "poison", crit, false)
+        target.takeDamage(value, this, "poison", crit, false, this.abilityName)
     }
 
     override extractAnimationsFromSpritesheet(
@@ -281,8 +282,8 @@ ${human}`
         }
     }
 
-    override takeDamage(damage: number, attacker: Creature, type: DamageType, crit?: boolean) {
-        const damageTaken = super.takeDamage(damage, attacker, type, crit)
+    override takeDamage(damage: number, attacker: Creature, type: DamageType, crit?: boolean, emit = true, source = "Attack") {
+        const damageTaken = super.takeDamage(damage, attacker, type, crit, emit, source)
 
         if (this.thornsArmor && attacker) {
             this.dealThornsDamage(attacker)

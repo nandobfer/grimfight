@@ -46,7 +46,7 @@ export class Mage extends Character {
         const { value: damage, crit } = this.calculateDamage(this.abilityPower * 3 * multiplier)
 
         try {
-            this.target.takeDamage(damage, this, "fire", crit)
+            this.target.takeDamage(damage, this, "fire", crit, true, this.abilityName)
             new Explosion(this, this.target, this.abilityPower, 2.5)
         } catch (error) {
             console.log(error)

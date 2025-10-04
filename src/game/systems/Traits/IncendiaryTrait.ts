@@ -37,6 +37,7 @@ export class IncendiaryTrait extends Trait {
                 tickDamage: baseDamage / 5,
                 tickRate: 1000,
                 user: character,
+                abilityName: this.name,
             })
 
             burn.start()

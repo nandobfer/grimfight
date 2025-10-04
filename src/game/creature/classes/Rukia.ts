@@ -25,7 +25,7 @@ export class Rukia extends Character {
         if (!this.target) return
 
         const damage = this.calculateDamage(this.abilityPower * 0.1)
-        this.target.takeDamage(damage.value, this, "cold", damage.crit)
+        this.target.takeDamage(damage.value, this, "cold", damage.crit, false, `${this.abilityName}: Passive`)
     }
 
     override getAbilityDescription(): string {
@@ -96,8 +96,8 @@ Quickly dashes attacking a random enemy [warning.main:${this.abilityAttacksCount
                         this.emit("move", this, position.x, position.y)
                         const physicalDamage = this.calculateDamage(this.attackDamage)
                         const coldDamage = this.calculateDamage(this.abilityPower * 0.1)
-                        target.takeDamage(physicalDamage.value, this, "normal", physicalDamage.crit)
-                        target.takeDamage(coldDamage.value, this, "cold", physicalDamage.crit)
+                        target.takeDamage(physicalDamage.value, this, "normal", physicalDamage.crit, true, this.abilityName)
+                        target.takeDamage(coldDamage.value, this, "cold", coldDamage.crit, true, this.abilityName)
                         this.onHit(target)
                     },
                 },

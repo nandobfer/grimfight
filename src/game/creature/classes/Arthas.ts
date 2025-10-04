@@ -116,7 +116,7 @@ export class Arthas extends Character {
                         const iceSpikesDamage = this.calculateDamage(this.attackDamage * 0.75 + this.abilityPower * 0.3)
                         const target = RNG.pick(enemies)
                         new IceSpike(this.scene || target.scene, target)
-                        target.takeDamage(iceSpikesDamage.value, this, "cold", iceSpikesDamage.crit)
+                        target.takeDamage(iceSpikesDamage.value, this, "cold", iceSpikesDamage.crit, true, this.abilityName)
                     }
 
                     this.castsCount = 0

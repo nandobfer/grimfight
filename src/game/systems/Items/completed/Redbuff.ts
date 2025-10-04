@@ -31,6 +31,7 @@ export class Redbuff extends Item {
                     tickDamage: victim.maxHealth * 0.01,
                     tickRate: 950,
                     user: creature,
+                    abilityName: this.name,
                 })
                 this.burns.set(victim, burn)
                 burn.start()

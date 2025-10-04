@@ -31,7 +31,7 @@ export class Rogue extends Character {
             this.createTeleportSmoke()
             this.teleportTo(target.x + directionFactor, target.y + directionFactor)
             const damage = this.calculateDamage(this.attackDamage * 4)
-            target.takeDamage(damage.value, this, "normal", damage.crit)
+            target.takeDamage(damage.value, this, "normal", damage.crit, true, this.abilityName)
             this.createTeleportSmoke()
         }
 

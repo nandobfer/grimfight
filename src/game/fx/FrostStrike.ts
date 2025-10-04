@@ -29,7 +29,7 @@ export class FrostStrike extends FxSprite {
 
             const { value: damage, crit } = this.caster.calculateDamage(baseDamage)
             if (enemy.active) {
-                enemy.takeDamage(damage, this.caster, "cold", crit)
+                enemy.takeDamage(damage, this.caster, "cold", crit, true, this.caster.abilityName)
                 this.damagedEnemies.add(enemy)
             }
         })
@@ -39,7 +39,7 @@ export class FrostStrike extends FxSprite {
 
             const { value: damage, crit } = this.caster.calculateDamage(baseDamage)
             if (enemy.active) {
-                enemy.takeDamage(damage, this.caster, "cold", crit)
+                enemy.takeDamage(damage, this.caster, "cold", crit, true, this.caster.abilityName)
                 this.damagedEnemies.add(enemy)
             }
         })

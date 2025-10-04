@@ -104,7 +104,7 @@ export class Archer extends Character {
 
             arrow.onHit = (victim: Creature) => {
                 const damage = this.calculateDamage(this.attackDamage * 0.5)
-                victim.takeDamage(damage.value, this, "normal", damage.crit)
+                victim.takeDamage(damage.value, this, "normal", damage.crit, true, this.abilityName)
                 arrow.destroy()
             }
 

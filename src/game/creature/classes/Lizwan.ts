@@ -40,6 +40,7 @@ export class Lizwan extends Character {
             tickDamage: this.abilityPower * 0.05,
             tickRate: 1000,
             user: this,
+            abilityName: this.abilityName,
         })
         poison.start()
     }

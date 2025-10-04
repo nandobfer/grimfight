@@ -79,6 +79,7 @@ export class Blizzard extends FxSprite {
                 this.caster.finishChanneling()
                 this.cleanup()
             },
+            abilityName: this.caster.abilityName,
         }).start()
 
         new Freeze(target, this.caster, this.freezeDuration).start()

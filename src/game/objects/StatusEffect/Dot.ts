@@ -5,6 +5,7 @@ export interface DotParams extends StatusEffectParams {
     tickDamage: number
     tickRate: number
     damageType: DamageType
+    abilityName: string
 }
 
 export class Dot extends StatusEffect {
@@ -12,17 +13,19 @@ export class Dot extends StatusEffect {
     damageType: DamageType
     tickRate: number
     timeSinceLastTick = 0
+    abilityName: string
 
     constructor(params: DotParams) {
         super(params)
         this.tickDamage = params.tickDamage
         this.damageType = params.damageType
         this.tickRate = params.tickRate
+        this.abilityName = params.abilityName
     }
 
     tick() {
         const { value: damage, crit } = this.user.calculateDamage(this.tickDamage)
-        this.target.takeDamage(damage, this.user, this.damageType, crit)
+        this.target.takeDamage(damage, this.user, this.damageType, crit, true, this.abilityName)
     }
 
     override update(delta: number): void {

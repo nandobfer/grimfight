@@ -23,7 +23,7 @@ export class Bramblevest extends Item {
 
         const dealThorns = (damage: number, attacker: Creature) => {
             const thornsDamage = creature.calculateDamage(10 + this.scene.floor)
-            attacker.takeDamage(thornsDamage.value, creature, "normal", thornsDamage.crit, false)
+            attacker.takeDamage(thornsDamage.value, creature, "normal", thornsDamage.crit, false, this.name)
         }
 
         creature.eventHandlers[`bramblevest_${this.id}`] = dealThorns

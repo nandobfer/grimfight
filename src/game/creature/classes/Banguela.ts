@@ -59,7 +59,7 @@ export class Banguela extends Character {
             fireball.onHit = (target) => {
                 fireball.destroy(true)
                 const { value, crit } = this.calculateDamage(this.attackDamage * 1)
-                target.takeDamage(value, this, "fire", crit)
+                target.takeDamage(value, this, "fire", crit, true, this.abilityName)
             }
 
             this.scene.time.delayedCall(Phaser.Math.FloatBetween(200, 1200), () => {

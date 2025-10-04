@@ -37,6 +37,7 @@ export class Sunfire extends Item {
                     tickDamage: attacker.maxHealth * 0.01,
                     tickRate: 950,
                     user: creature,
+                    abilityName: this.name,
                 })
                 this.burns.set(attacker, burn)
                 burn.start()

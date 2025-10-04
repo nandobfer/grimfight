@@ -66,7 +66,7 @@ export class LightningBolt extends Projectile {
         }
 
         const { value: damage, crit } = this.owner.calculateDamage(this.rawDamage)
-        target.takeDamage(damage, this.owner, this.damageType, crit)
+        target.takeDamage(damage, this.owner, this.damageType, crit, true, this.owner.abilityName)
         this.bounces -= 1
         this.rawDamage *= 0.5
 

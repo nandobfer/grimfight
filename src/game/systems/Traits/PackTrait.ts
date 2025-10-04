@@ -29,7 +29,7 @@ export class PackTrait extends Trait {
 
         const tickDamage = (target: Creature, damage: number) => {
             const extraDamage = damage * values.damageMultiplier
-            target.takeDamage(extraDamage, character, "true", false, false)
+            target.takeDamage(extraDamage, character, "true", false, false, `${this.name} Bonus`)
         }
 
         character.eventHandlers.packTrait = tickDamage

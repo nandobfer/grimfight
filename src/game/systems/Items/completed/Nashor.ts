@@ -22,7 +22,7 @@ export class Nashor extends Item {
 
         const afterAttack = (victim: Creature) => {
             const { value, crit } = creature.calculateDamage(creature.abilityPower * 0.2)
-            victim.takeDamage(value, creature, "dark", crit, false)
+            victim.takeDamage(value, creature, "dark", crit, false, this.name)
         }
 
         creature.eventHandlers[`nashor_${this.id}`] = afterAttack
