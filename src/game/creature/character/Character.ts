@@ -41,7 +41,7 @@ export class Character extends Creature {
     constructor(scene: Game, name: string, id: string, boardX?: number, boardY?: number) {
         super(scene, name, id)
 
-        this.levelBadge = new LevelBadge(this, { offsetX: 22, offsetY: -15 })
+        this.levelBadge = new LevelBadge(this, { offsetX: 22, offsetY: -30 })
         this.levelBadge.setValue(this.level)
         this.boardX = boardX || 0
         this.boardY = boardY || 0
