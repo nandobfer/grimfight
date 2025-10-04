@@ -397,7 +397,7 @@ export class Game extends Scene {
         const enemiesAugments = Array.from(this.enemyTeam.augments.values())
         if (enemiesAugments.find((augment) => augment.chosenFloor === this.floor)) return
 
-        const excludeList = ["bonusgold", "bonushealth"]
+        const excludeList = ["bonusgold", "bonushealth", "anvil", "item"]
         const randomAugment = AugmentsRegistry.random(excludeList)
         this.enemyTeam.addAugment(randomAugment)
         console.log(this.enemyTeam.augments)
