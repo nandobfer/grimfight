@@ -118,6 +118,40 @@ export class Item {
     // each augment must override
     cleanup(creature: Creature) {}
 
+    private handleItemOnPoint(pointer: Phaser.Input.Pointer) {
+        const x = Phaser.Math.Clamp(pointer.x, 0, this.scene.scale.width)
+        const y = Phaser.Math.Clamp(pointer.y, 0, this.scene.scale.height)
+
+        const targetItem = Array.from(this.scene.availableItems).find((item: Item) => {
+            const bounds = item.sprite.getBounds()
+            const adjustedBounds = {
+                x: Phaser.Math.Clamp(bounds.x, 0, this.scene.scale.width),
+                y: Phaser.Math.Clamp(bounds.y, 0, this.scene.scale.height),
+                right: Phaser.Math.Clamp(bounds.right, 0, this.scene.scale.width),
+                bottom: Phaser.Math.Clamp(bounds.bottom, 0, this.scene.scale.height),
+            }
+            const contains = adjustedBounds.x <= x && adjustedBounds.right >= x && adjustedBounds.y <= y && adjustedBounds.bottom >= y
+            return contains && item !== this
+        })
+
+        if (targetItem) {
+            const mergeResult = Item.getMergeResult(this.scene, [this, targetItem])
+            if (mergeResult) {
+                if (!this.emittingMerge) {
+                    const pointerPosition: PointerPosition = this.scene.grid.pointerToClient(pointer)
+                    EventBus.emit("item-tooltip", mergeResult, pointerPosition)
+                    this.emittingMerge = true
+                }
+            } else {
+                this.emittingMerge = false
+            }
+        } else {
+            if (this.emittingMerge) {
+                this.resetTooltip()
+            }
+        }
+    }
+
     handleMouseEvents(): void {
         this.sprite.setInteractive({ useHandCursor: true })
 
@@ -151,20 +185,22 @@ export class Item {
             this.showHoverBorder()
 
             this.preDrag = { x: this.sprite.x, y: this.sprite.y }
+
+            // Set a very high depth to ensure the item is always on top
+            this.sprite.setDepth(9999)
+            this.border.setDepth(10000)
         })
 
         this.sprite.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-            // if (this.scene.state !== "idle") return
             this.sprite.setPosition(dragX, dragY)
             this.updateBorder()
             this.handleCreatureOnPoint(pointer)
+            this.handleItemOnPoint(pointer)
 
             this.emitTooltip(pointer)
         })
 
         this.sprite.on("dragend", (pointer: Phaser.Input.Pointer) => {
-            // if (this.scene?.state !== "idle") return
-
             const character = this.handleCreatureOnPoint(pointer)
             if (character) {
                 character.equipItem(this)
@@ -173,6 +209,10 @@ export class Item {
                 this.user?.unequipItem(this)
                 this.showLooseBorder()
             }
+
+            // Reset depth after dragging ends
+            this.sprite.setDepth(1000)
+            this.border.setDepth(1001)
         })
 
         this.sprite.on("pointerup", () => {
