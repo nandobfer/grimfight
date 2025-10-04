@@ -15,7 +15,7 @@ export class ItemAugment extends Augment {
     }
 
     override onPick(team: CreatureGroup): void {
-        if (this.values.item === 3) {
+        if (this.values.items === 3) {
             team.scene.spawnItem(RNG.pick(ItemRegistry.completed()))
         } else {
             team.scene.spawnItems(this.values.items)
