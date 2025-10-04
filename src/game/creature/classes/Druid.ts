@@ -170,7 +170,7 @@ ${human}`
         const target = this.team.getLowestHealth()
         if (target) {
             const { value, crit } = this.calculateDamage(this.abilityPower * humanMultiplier * multiplier)
-            target.heal(value, crit, true, { healer: this, source: this.abilityName })
+            target.heal(value, crit, true, { healer: this, source: "Regrowth" })
         }
     }
 
