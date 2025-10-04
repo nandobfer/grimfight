@@ -8,11 +8,10 @@ type TraitBoosts = "bonusCritChance" | "bonusCritMultiplier"
 
 export class AssassinTrait extends Trait {
     name = "Assassin"
-    description =
-        "Assassins gain {0} critical hit chance and each successful kill grants {1} to their critical damage multiplier, permanently."
+    description = "Assassins gain {0} critical hit chance and each successful kill grants {1} to their critical damage multiplier, permanently."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { bonusCritChance: 20, bonusCritMultiplier: 0.01, descriptionParams: ["20%", "1%"] }],
-        [4, { bonusCritChance: 40, bonusCritMultiplier: 0.04, descriptionParams: ["20%", "2%"] }],
+        [2, { bonusCritChance: 20, bonusCritMultiplier: 0.02, descriptionParams: ["20%", "2%"] }],
+        [4, { bonusCritChance: 40, bonusCritMultiplier: 0.04, descriptionParams: ["40%", "4%"] }],
     ])
 
     constructor(comp: string[]) {
