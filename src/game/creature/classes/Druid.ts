@@ -236,7 +236,7 @@ ${human}`
 
     dealThornsDamage(target: Creature) {
         const { value, crit } = this.calculateDamage(this.abilityPower * 0.1)
-        target.takeDamage(value, this, "poison", crit, false, this.abilityName)
+        target.takeDamage(value, this, "poison", crit, false, "Thorn Armor")
     }
 
     override extractAnimationsFromSpritesheet(
