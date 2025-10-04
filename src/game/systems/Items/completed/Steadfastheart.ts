@@ -27,7 +27,7 @@ export class Steadfastheart extends Item {
         const critGuard = (damage: number) => {
             const crit = creature.tryCrit()
             if (crit) {
-                creature.gainShield(damage * 0.5)
+                creature.gainShield(damage * 0.5, { healer: creature, source: this.name })
             }
         }
 

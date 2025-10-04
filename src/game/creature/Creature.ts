@@ -751,18 +751,30 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.emit("afterAttack", target)
     }
 
-    gainShield(value: number) {
+    gainShield(value: number, plot?: { healer: Creature; source: string }) {
         this.shield = Phaser.Math.Clamp(this.shield + value, 0, this.maxHealth)
         this.healthBar.setShield(this.shield, this.health, this.maxHealth)
+
+        if (plot) {
+            if (plot.healer.team === this.scene.playerTeam || plot.healer.team === this.scene.playerTeam.minions) {
+                this.scene.playerTeam.damageChart.plotHealing(plot.healer, value, "shielded", plot.source)
+            }
+        }
     }
 
-    heal(value: number, crit?: boolean, fx = true) {
+    heal(value: number, crit?: boolean, fx = true, plot?: { healer: Creature; source: string }) {
         this.health = Math.min(this.maxHealth, this.health + value)
         this.healthBar.setValue(this.health, this.maxHealth)
 
         if (fx) {
             showDamageText(this.scene, this.x, this.y, Math.round(value), { type: "heal", crit })
             this.onHealFx()
+        }
+
+        if (plot) {
+            if (plot.healer.team === this.scene.playerTeam || plot.healer.team === this.scene.playerTeam.minions) {
+                this.scene.playerTeam.damageChart.plotHealing(plot.healer, value, "healed", plot.source)
+            }
         }
     }
 
@@ -799,7 +811,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.scene.onHitFx(type, this.x, this.y, this)
 
         if (attacker?.lifesteal > 0 && finalDamage > 0) {
-            attacker.heal(finalDamage * (attacker.lifesteal / 100), crit, false)
+            attacker.heal(finalDamage * (attacker.lifesteal / 100), crit, false, { healer: attacker, source: "Lifesteal" })
         }
 
         if (this.health <= 0) {
@@ -820,13 +832,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         burstBlood(this.scene, this.x, this.y)
     }
 
-    revive(heal?: number) {
+    revive() {
         this.active = true
         this.updateDepth()
         this.setRotation(0)
         this.resetUi()
-
-        if (heal) this.heal(heal, false, false)
     }
 
     die() {

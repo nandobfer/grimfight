@@ -1,11 +1,11 @@
 import React from "react"
 import { Badge, Box, capitalize, Divider, Typography } from "@mui/material"
-import { DamageMeter } from "../../game/tools/DamageChart"
+import { DamageMeter, HealingMeter } from "../../game/tools/DamageChart"
 import { CharacterAvatar } from "../CharacterSheet/CharacterAvatar"
 import { TftDamageBar } from "./RecountChart"
 
 interface DetailedChartProps {
-    meter: DamageMeter
+    meter: DamageMeter | HealingMeter
     highest_damage: number
     levelColor: string
 }
@@ -13,7 +13,12 @@ interface DetailedChartProps {
 export const DetailedChart: React.FC<DetailedChartProps> = (props) => {
     const character = props.meter.character
 
-    const details = Array.from(props.meter.details.values())
+    // @ts-expect-error
+    const details = Array.from(props.meter.details.values()).map((detail) => {
+        const { physical = 0, magical = 0, true: trueDmg = 0, healed = 0, shielded = 0, total, name } = detail as any
+        return { physical, magical, true: trueDmg, healed, shielded, total, name }
+    })
+
     const highestAbility = details.reduce((h, a) => (a.total > h ? a.total : h), 0) || 0
 
     return (
@@ -38,9 +43,11 @@ export const DetailedChart: React.FC<DetailedChartProps> = (props) => {
                         <Box sx={{ gap: 1, alignItems: "center", width: 1, whiteSpace: "normal" }}>
                             <Box sx={{ flex: 1 }}>
                                 <TftDamageBar
-                                    physical={ability.physical}
-                                    magical={ability.magical}
-                                    trueDmg={ability.true}
+                                    physical={"physical" in ability ? ability.physical : 0}
+                                    magical={"magical" in ability ? ability.magical : 0}
+                                    trueDmg={"true" in ability ? ability.true : 0}
+                                    healed={"healed" in ability ? ability.healed : 0}
+                                    shielded={"shielded" in ability ? ability.shielded : 0}
                                     highest={highestAbility}
                                     total={ability.total} // optional; keeps scaling consistent with your total
                                     // colors={{ physical: theme.palette.error.main, magical: theme.palette.info.main, trueDmg: theme.palette.secondary.main }}

@@ -27,7 +27,7 @@ export class Sterak extends Item {
 
         const watchLife = (damage: number) => {
             if (creature.health / creature.maxHealth <= 0.5) {
-                creature.gainShield(creature.maxHealth * 0.4)
+                creature.gainShield(creature.maxHealth * 0.4, { healer: creature, source: this.name })
 
                 creature.off("damage-taken", watchLife)
             }

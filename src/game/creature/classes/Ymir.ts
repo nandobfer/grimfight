@@ -50,7 +50,7 @@ Emits a freezing wave that expands around you. For each enemy hit and frozen, ga
             this.casting = false
 
             new MagicShieldFx(this.scene, this.x, this.y, 0.4)
-            this.gainShield(this.abilityPower * enemiesFrozen.size)
+            this.gainShield(this.abilityPower * enemiesFrozen.size, { healer: this, source: this.abilityName })
         }
 
         const tween = this.scene.tweens.addCounter({

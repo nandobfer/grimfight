@@ -22,7 +22,7 @@ export class Crownguard extends Item {
 
         const shieldOnStart = (state: GameState) => {
             if (state === "fighting") {
-                creature.gainShield(creature.abilityPower * 2)
+                creature.gainShield(creature.abilityPower * 2, { healer: creature, source: this.name })
             }
         }
 

@@ -24,7 +24,7 @@ export class Knight extends Character {
         this.casting = true
 
         new MagicShieldFx(this.scene, this.x, this.y, 0.4)
-        this.gainShield(this.abilityPower + this.maxHealth * 0.1)
+        this.gainShield(this.abilityPower + this.maxHealth * 0.1, { healer: this, source: this.abilityName })
 
         this.casting = false
     }

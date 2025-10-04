@@ -40,7 +40,7 @@ export class DeathEaterTrait extends Trait {
                 if (creature?.scene?.state === "fighting") {
                     new SoulParticles(creature.scene, deadX, deadY, 0.75)
                     creature.health = 0
-                    creature.gainShield(creature.maxHealth * values.hpMultiplier)
+                    creature.gainShield(creature.maxHealth * values.hpMultiplier, { healer: creature, source: "Death Eater Trait" })
                     creature.revive()
                     creature.removeFromEnemyTarget(1000)
                     creature.attackDamage += creature.baseAttackDamage * values.statsMultiplier

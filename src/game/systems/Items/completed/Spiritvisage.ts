@@ -25,7 +25,7 @@ export class Spiritvisage extends Item {
         const regenLife = () => {
             const missingHealthPercent = creature.getMissingHealthFraction()
             const multiplier = 1 - missingHealthPercent
-            creature.heal(creature.maxHealth * 0.03 * multiplier, false, false)
+            creature.heal(creature.maxHealth * 0.03 * multiplier, false, false, { healer: creature, source: this.name })
         }
 
         creature.timeEvents[`spiritvisage_${this.id}`] = this.scene.time.addEvent({ callback: regenLife, loop: true, delay: 1000 })

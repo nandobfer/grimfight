@@ -82,7 +82,7 @@ Active: Targets the enemy with the lowest health percentage and dashes to them, 
         this.clearTargetsObservers()
 
         const onTargetDie = () => {
-            this.heal(this.maxHealth * 0.2)
+            this.heal(this.maxHealth * 0.2, false, true, { healer: this, source: this.abilityName })
             this.attackDamage += this.baseAttackDamage * 0.2
             creature.off("died", onTargetDie, this)
             this.targetObserver.delete(creature)

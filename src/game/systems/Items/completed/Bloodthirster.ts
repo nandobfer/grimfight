@@ -28,7 +28,7 @@ export class Bloodthirster extends Item {
 
         const watchLife = (damage: number) => {
             if (creature.health / creature.maxHealth <= 0.4) {
-                creature.gainShield(creature.maxHealth * 0.25)
+                creature.gainShield(creature.maxHealth * 0.25, { healer: creature, source: this.name })
 
                 creature.off("damage-taken", watchLife)
             }

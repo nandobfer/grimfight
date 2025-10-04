@@ -543,7 +543,7 @@ export class Game extends Scene {
         }
 
         this.playerTeam.reset()
-        this.playerTeam.damageChart.emitArray()
+        this.playerTeam.damageChart.emitDamageArray()
 
         if (this.playerTeam.getLength() === 0) {
             // this.generateFirstCharacter()

@@ -3,9 +3,11 @@ import { Box } from "@mui/material"
 import type { SxProps, Theme } from "@mui/material/styles"
 
 interface TftDamageBarProps {
-    physical: number
-    magical: number
-    trueDmg: number
+    physical?: number
+    magical?: number
+    trueDmg?: number
+    healed?: number
+    shielded?: number
     highest: number // max total across all rows
     total?: number // optional; defaults to sum of segments
     sx?: SxProps<Theme>
@@ -13,8 +15,8 @@ interface TftDamageBarProps {
 }
 
 export const TftDamageBar = memo((props: TftDamageBarProps) => {
-    const { physical, magical, trueDmg, highest, colors, sx } = props
-    const sum = useMemo(() => physical + magical + trueDmg, [physical, magical, trueDmg])
+    const { physical = 0, magical = 0, trueDmg = 0, healed = 0, shielded = 0, highest, colors, sx } = props
+    const sum = useMemo(() => physical + magical + trueDmg + healed + shielded, [physical, magical, trueDmg, healed, shielded])
     const total = props.total ?? sum
     const widthPct = highest > 0 ? (100 * total) / highest : 0
 
@@ -25,9 +27,11 @@ export const TftDamageBar = memo((props: TftDamageBarProps) => {
                     { key: "physical", value: physical },
                     { key: "magical", value: magical },
                     { key: "trueDmg", value: trueDmg },
+                    { key: "healed", value: healed },
+                    { key: "shielded", value: shielded },
                 ] as const
-            ).filter((s) => s.value > 0),
-        [physical, magical, trueDmg]
+            ).filter((s) => (s.value ?? 0) > 0),
+        [physical, magical, trueDmg, healed, shielded]
     )
 
     return (
@@ -54,7 +58,11 @@ export const TftDamageBar = memo((props: TftDamageBarProps) => {
                                 ? colors?.physical ?? t.palette.error.main
                                 : s.key === "magical"
                                 ? colors?.magical ?? t.palette.info.main
-                                : colors?.trueDmg ?? t.palette.secondary.main,
+                                : s.key === "trueDmg"
+                                ? colors?.trueDmg ?? t.palette.secondary.main
+                                : s.key === "healed"
+                                ? t.palette.success.main
+                                : t.palette.secondary.main, // shielded
                         ...(i === 0 && { borderTopLeftRadius: 999, borderBottomLeftRadius: 999 }),
                         ...(i === segs.length - 1 && { borderTopRightRadius: 999, borderBottomRightRadius: 999 }),
                     })}

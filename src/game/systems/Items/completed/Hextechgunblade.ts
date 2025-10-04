@@ -22,7 +22,7 @@ export class Hextechgunblade extends Item {
 
         const healFriend = (victim: Creature, damage: number) => {
             const friend = creature.team.getLowestHealth()
-            friend?.heal(damage * 0.2)
+            friend?.heal(damage * 0.2, false, true, { healer: creature, source: this.name })
         }
 
         creature.eventHandlers[`hextechgunblade_${this.id}`] = healFriend

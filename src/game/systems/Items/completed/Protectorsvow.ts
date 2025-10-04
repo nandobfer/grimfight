@@ -27,7 +27,7 @@ export class Protectorsvow extends Item {
 
         const onStart = (state: GameState) => {
             if (state === "fighting") {
-                creature.gainShield(creature.maxHealth * 0.15)
+                creature.gainShield(creature.maxHealth * 0.15, { healer: creature, source: this.name })
                 creature.gainMana(20)
             }
         }
