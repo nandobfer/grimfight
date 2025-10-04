@@ -752,8 +752,6 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     gainShield(value: number, plot?: { healer: Creature; source: string }) {
-        if (!this.active) return
-
         this.shield = Phaser.Math.Clamp(this.shield + value, 0, this.maxHealth)
         this.healthBar.setShield(this.shield, this.health, this.maxHealth)
 
@@ -838,6 +836,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     revive() {
+        this.health = 1
         this.active = true
         this.heal(1, false, false)
         this.updateDepth()
