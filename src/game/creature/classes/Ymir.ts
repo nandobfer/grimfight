@@ -24,8 +24,8 @@ export class Ymir extends Character {
         return `Passive: When attacked, has a 10% chance to freeze the attacker for 1 second.
 
 Emits a freezing wave that expands around you. For each enemy hit and frozen, gains a shield that absorbs [success.main:${Math.round(
-            this.abilityPower
-        )}] [info.main:(100% AP)]`
+            this.abilityPower * 0.75
+        )}] [info.main:(75% AP)]`
     }
 
     castAbility(): void {
@@ -50,7 +50,7 @@ Emits a freezing wave that expands around you. For each enemy hit and frozen, ga
             this.casting = false
 
             new MagicShieldFx(this.scene, this.x, this.y, 0.4)
-            this.gainShield(this.abilityPower * enemiesFrozen.size, { healer: this, source: this.abilityName })
+            this.gainShield(this.abilityPower * 0.75 * enemiesFrozen.size, { healer: this, source: this.abilityName })
         }
 
         const tween = this.scene.tweens.addCounter({
