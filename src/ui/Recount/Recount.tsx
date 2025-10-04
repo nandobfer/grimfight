@@ -29,6 +29,7 @@ export const Recount: React.FC = () => {
     }, [])
 
     const highestDamage = useMemo(() => damageCharts.reduce((h, m) => (m.total > h ? m.total : h), 0), [damageCharts])
+    const highestHealing = useMemo(() => healingCharts.reduce((h, m) => (m.total > h ? m.total : h), 0), [healingCharts])
 
     return (
         <Paper sx={{ display: "flex", flexDirection: "column", bgcolor: "#ffffff05", width: 150, pointerEvents: "auto" }} elevation={1}>
@@ -46,7 +47,7 @@ export const Recount: React.FC = () => {
             </ToggleButtonGroup>
 
             {recountType === "damage" && <GroupChart charts={damageCharts} highestvalue={highestDamage} />}
-            {recountType === "heal" && <GroupChart charts={healingCharts} highestvalue={highestDamage} />}
+            {recountType === "heal" && <GroupChart charts={healingCharts} highestvalue={highestHealing} />}
         </Paper>
     )
 }
