@@ -36,7 +36,7 @@ export class LightningBolt extends Projectile {
         if (this.scene.lights) {
             this.light = this.scene.lights.addLight(this.x, this.y, 45, 0x2525ff, 10)
 
-            this.scene.tweens.add({
+            this.lightTween = this.scene.tweens.add({
                 targets: this.light,
                 radius: { from: 20, to: 50 },
                 intensity: { from: 3, to: 20 },

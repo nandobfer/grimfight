@@ -20,6 +20,8 @@ export interface LightParams {
 
 export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     private light?: Phaser.GameObjects.Light
+    private lightTween?: Phaser.Tweens.Tween
+    protected colliders: Phaser.Physics.Arcade.Collider[] = []
     sprite: string
     frameRate = 15
     declare scene: Game
@@ -87,8 +89,8 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     addLightEffect(lightParams: LightParams) {
         if (this.scene.lights) {
             this.light = this.scene.lights.addLight(this.x, this.y, lightParams.radius, lightParams.color, lightParams.intensity)
-
-            this.scene.tweens.add({
+            // store tween so we can stop/remove it on destroy to avoid leaks
+            this.lightTween = this.scene.tweens.add({
                 targets: this.light,
                 radius: { from: lightParams.minRadius, to: lightParams.maxRadius },
                 intensity: { from: lightParams.minIntensity, to: lightParams.maxIntensity },
@@ -106,14 +108,36 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
             this.scene.events.on("update", handleUpdate)
             this.once("destroy", () => {
                 this.scene.events.off("update", handleUpdate)
+                // stop tweening orphaned objects
+                if (this.lightTween) {
+                    this.lightTween.stop()
+                    this.scene.tweens.remove(this.lightTween)
+                    this.lightTween = undefined
+                }
                 this.light = undefined
             })
         }
     }
 
     override destroy(fromScene?: boolean): void {
+        // destroy any tracked colliders first
+        if (this.colliders.length) {
+            for (const c of this.colliders) {
+                try {
+                    c.destroy()
+                } catch {}
+            }
+            this.colliders.length = 0
+        }
+        // stop/remove tween first
+        if (this.lightTween) {
+            this.lightTween.stop()
+            this.scene?.tweens.remove(this.lightTween)
+            this.lightTween = undefined
+        }
         if (this.light) {
             this.scene?.lights.removeLight(this.light)
+            this.light = undefined
         }
         super.destroy(fromScene)
     }

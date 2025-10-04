@@ -13,6 +13,7 @@ export class Monster extends Creature {
 
     private shadowParticles?: Phaser.GameObjects.Particles.ParticleEmitter
     private smokeParticles?: Phaser.GameObjects.Particles.ParticleEmitter
+    private smokeTimer?: Phaser.Time.TimerEvent
     private darkAura?: Phaser.FX.Glow
 
     constructor(scene: Game, texture: string) {
@@ -78,15 +79,15 @@ export class Monster extends Creature {
         this.smokeParticles.startFollow(this)
 
         // Occasional smoke bursts
-        this.scene.time.addEvent({
-            delay: 3000,
-            callback: () => {
-                if (this.smokeParticles && this.active) {
-                    this.smokeParticles.explode(5)
-                }
-            },
-            loop: true,
-        })
+        this.smokeTimer = this.scene.time.addEvent({
+        delay: 3000,
+        callback: () => {
+            if (this.smokeParticles && this.active) {
+                this.smokeParticles.explode(5)
+            }
+        },
+        loop: true,
+    })
     }
 
     clearFX() {
@@ -107,6 +108,11 @@ export class Monster extends Creature {
             this.smokeParticles.stop()
             this.smokeParticles.destroy()
             this.smokeParticles = undefined
+        }
+
+        if (this.smokeTimer) {
+            this.smokeTimer.remove(false)
+            this.smokeTimer = undefined
         }
 
         return this

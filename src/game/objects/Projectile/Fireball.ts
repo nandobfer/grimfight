@@ -43,7 +43,7 @@ export class Fireball extends Projectile {
         if (this.scene.lights) {
             this.light = this.scene.lights.addLight(this.x, this.y, 150, 0xff6600, 1)
 
-            this.scene.tweens.add({
+            this.lightTween = this.scene.tweens.add({
                 targets: this.light,
                 radius: { from: 80, to: 120 },
                 intensity: { from: 3, to: 4 },

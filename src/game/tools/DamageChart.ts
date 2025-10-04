@@ -36,10 +36,7 @@ export class DamageChart {
         this.team = team
 
         this.reset()
-
-        EventBus.on("request-damage-chart", () => {
-            this.reset()
-        })
+        EventBus.on("request-damage-chart", this.reset, this)
     }
 
     plotHealing(character: Creature, amountHealed: number, healType: "healed" | "shielded", sourceName: string) {
@@ -95,5 +92,10 @@ export class DamageChart {
 
         this.updateMeterArray()
         this.emitDamageArray()
+    }
+
+    dispose() {
+        EventBus.off("request-damage-chart", this.reset, this)
+        // nothing else to remove; consumers subscribe on mount and clean themselves
     }
 }

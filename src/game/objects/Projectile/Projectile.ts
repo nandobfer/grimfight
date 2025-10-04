@@ -17,6 +17,9 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     declare body: Phaser.Physics.Arcade.Body
 
     alreadyOverlaped = new Set<Creature>()
+    private watchdog?: Phaser.Time.TimerEvent
+    protected lightTween?: Phaser.Tweens.Tween
+    protected colliders: Phaser.Physics.Arcade.Collider[] = []
 
     constructor(scene: Game, x: number, y: number, owner: Creature, texture: string, damageType: DamageType) {
         super(scene, x, y, texture)
@@ -36,12 +39,13 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.owner = owner
         this.setPipeline("Light2D")
 
-        this.scene?.physics.add.collider(this, this.scene?.walls, () => {
+        const wallCollider = this.scene?.physics.add.collider(this, this.scene?.walls, () => {
             this.onHitWall()
         })
+        if (wallCollider) this.colliders.push(wallCollider)
 
         const enemyTeam = this.scene?.playerTeam.contains(this.owner) ? this.scene?.enemyTeam : this.scene?.playerTeam
-        this.scene?.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
+        const overlapTeam = this.scene?.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
             if (!enemy.active) return
             if (this.alreadyOverlaped.has(enemy)) return
@@ -50,7 +54,8 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
             this.onHit(enemy)
         })
-        this.scene?.physics.add.overlap(this, enemyTeam.minions, (_arrow, enemyObj) => {
+        if (overlapTeam) this.colliders.push(overlapTeam)
+        const overlapMinions = this.scene?.physics.add.overlap(this, enemyTeam.minions, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
             if (!enemy.active) return
             if (this.alreadyOverlaped.has(enemy)) return
@@ -59,8 +64,9 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
             this.onHit(enemy)
         })
+        if (overlapMinions) this.colliders.push(overlapMinions)
 
-        EventBus.once("gamestate", (state: string) => {
+        EventBus.once("gamestate", () => {
             this.destroy()
         })
     }
@@ -81,7 +87,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.scene?.physics.velocityFromRotation(angle, this.speed, this.body.velocity)
 
         // clean up if it travels too far
-        this.scene?.time.addEvent({
+        this.watchdog = this.scene?.time.addEvent({
             delay: 16,
             loop: true,
             callback: () => {
@@ -106,6 +112,24 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     destroy(fromScene?: boolean): void {
+        // clear timers/colliders/tweens to avoid leaking references
+        if (this.watchdog) {
+            this.watchdog.remove(false)
+            this.watchdog = undefined
+        }
+        if (this.colliders.length) {
+            for (const c of this.colliders) {
+                try {
+                    c.destroy()
+                } catch {}
+            }
+            this.colliders.length = 0
+        }
+        if (this.lightTween) {
+            this.lightTween.stop()
+            this.scene?.tweens.remove(this.lightTween)
+            this.lightTween = undefined
+        }
         if (this.light) {
             const scene = this.owner?.scene || this.scene
             scene?.lights?.removeLight(this.light)

@@ -3,6 +3,7 @@ import Phaser from "phaser";
 
 export class FireEffect extends Phaser.GameObjects.Sprite {
     private light: Phaser.GameObjects.Light
+    private lightTween?: Phaser.Tweens.Tween
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, "fire0") // Use the first frame as default
@@ -38,7 +39,7 @@ export class FireEffect extends Phaser.GameObjects.Sprite {
         if (this.scene.lights) {
             this.light = this.scene.lights.addLight(this.x, this.y, 150, 0xff6600, 2)
 
-            this.scene.tweens.add({
+            this.lightTween = this.scene.tweens.add({
                 targets: this.light,
                 // radius: { from: 150, to: 300 },
                 intensity: { from: 1, to: 4 },
@@ -57,11 +58,21 @@ export class FireEffect extends Phaser.GameObjects.Sprite {
             this.scene.events.on("update", handleUpdate)
             this.once("destroy", () => {
                 this.scene.events.off("update", handleUpdate)
+                if (this.lightTween) {
+                    this.lightTween.stop()
+                    this.scene.tweens.remove(this.lightTween)
+                    this.lightTween = undefined
+                }
             })
         }
     }
 
     destroy(fromScene?: boolean): void {
+        if (this.lightTween) {
+            this.lightTween.stop()
+            this.scene?.tweens.remove(this.lightTween)
+            this.lightTween = undefined
+        }
         if (this.light) {
             const scene = this.scene
             scene?.lights?.removeLight(this.light)

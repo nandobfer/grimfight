@@ -55,10 +55,10 @@ export class Shopkeeper extends Phaser.GameObjects.Image {
     handleMouseEvents(): void {
         this.setInteractive({ useHandCursor: true, dropZone: true })
         // this.scene.input.enableDebug(this);
-
-        EventBus.on("sell-character-shopkeeper", (character: Character) => {
+        const onSell = (character: Character) => {
             this.store.sell(character)
-        })
+        }
+        EventBus.on("sell-character-shopkeeper", onSell)
 
         this.on("pointerover", () => {
             // if (this.scene.state === "idle") {
@@ -72,6 +72,10 @@ export class Shopkeeper extends Phaser.GameObjects.Image {
 
         this.on("pointerup", () => {
             EventBus.emit("toggle-store")
+        })
+        this.once("destroy", () => {
+            EventBus.off("sell-character-shopkeeper", onSell)
+            this.removeAllListeners()
         })
     }
 

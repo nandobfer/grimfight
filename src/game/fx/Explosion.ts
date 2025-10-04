@@ -28,6 +28,7 @@ export class Explosion extends FxSprite {
             yoyo: true,
         })
 
+    this.colliders.push(
         this.scene.physics.add.overlap(this, this.target.team, (_explosion, enemyObj) => {
             const enemy = enemyObj as Creature
             if (this.damagedEnemies.has(enemy)) return
@@ -38,6 +39,8 @@ export class Explosion extends FxSprite {
                 this.damagedEnemies.add(enemy)
             }
         })
+    )
+    this.colliders.push(
         this.scene.physics.add.overlap(this, this.target.team.minions, (_explosion, enemyObj) => {
             const enemy = enemyObj as Creature
             if (this.damagedEnemies.has(enemy)) return
@@ -48,5 +51,6 @@ export class Explosion extends FxSprite {
                 this.damagedEnemies.add(enemy)
             }
         })
+    )
     }
 }

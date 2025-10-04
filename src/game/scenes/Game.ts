@@ -67,6 +67,17 @@ export class Game extends Scene {
     private dragFromBoard = new Map<string, Character>()
     private endingRound = false
 
+    // keep handler refs to unsubscribe cleanly on shutdown
+    private onUiDragStart?: (payload: { dto: CharacterDto; clientX: number; clientY: number }) => void
+    private onUiDragMove?: ({ clientX, clientY }: { clientX: number; clientY: number }) => void
+    private onUiDragEnd?: ({ clientX, clientY }: { clientX: number; clientY: number }) => void
+
+    private onPhDragStart?: ({ id }: { id: string }) => void
+    private onBenchHoverEnter?: ({ id }: { id: string }) => void
+    private onBenchHoverLeave?: ({ id }: { id: string }) => void
+    private onBenchDrop?: ({ id, dto }: { id: string; dto: CharacterDto }) => void
+    private onBenchCancel?: ({ id }: { id: string }) => void
+
     perRoundFx: Phaser.GameObjects.Group
 
     constructor() {
@@ -96,29 +107,56 @@ export class Game extends Scene {
         this.createArenaTorches()
         this.buildFloor()
 
-        this.input.keyboard?.on("keydown-D", () => {
+        const onKeyD = () => {
             const currentlyDebugging = this.physics.world.debugGraphic.visible
             this.physics.world.debugGraphic.visible = !currentlyDebugging
             console.log(`Physics debug: ${!currentlyDebugging}`)
-        })
-
-        this.input.keyboard?.on("keydown-SPACE", () => {
+        }
+        const onKeySpace = () => {
             if (this.state === "idle") {
                 this.startRound()
             }
-        })
-
-        this.input.keyboard?.on("keydown-ESC", () => {
+        }
+        const onKeyEsc = () => {
             this.game.pause()
             EventBus.emit("open-menu")
-        })
+        }
+
+        this.input.keyboard?.on("keydown-D", onKeyD)
+        this.input.keyboard?.on("keydown-SPACE", onKeySpace)
+        this.input.keyboard?.on("keydown-ESC", onKeyEsc)
 
         EventBus.emit("game-ready", this)
-        EventBus.on("get-progress", () => this.emitProgress())
-        EventBus.on("ui-augment", () => this.handleAugmentsFloor())
-        EventBus.on("unpause", () => this.game.resume())
+        const onGetProgress = () => this.emitProgress()
+        const onUiAugment = () => this.handleAugmentsFloor()
+        const onUnpause = () => this.game.resume()
+        EventBus.on("get-progress", onGetProgress)
+        EventBus.on("ui-augment", onUiAugment)
+        EventBus.on("unpause", onUnpause)
         this.installUiDragBridge()
         this.installBenchHoverBridge()
+
+        // clean up listeners on shutdown so hot-reloads or scene restarts don't leak
+        this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+            this.input.keyboard?.off("keydown-D", onKeyD)
+            this.input.keyboard?.off("keydown-SPACE", onKeySpace)
+            this.input.keyboard?.off("keydown-ESC", onKeyEsc)
+            EventBus.off("get-progress", onGetProgress)
+            EventBus.off("ui-augment", onUiAugment)
+            EventBus.off("unpause", onUnpause)
+            // UI bridges
+            if (this.onUiDragStart) EventBus.off("ui-drag-start", this.onUiDragStart)
+            if (this.onUiDragMove) EventBus.off("ui-drag-move", this.onUiDragMove)
+            if (this.onUiDragEnd) EventBus.off("ui-drag-end", this.onUiDragEnd)
+            if (this.onPhDragStart) EventBus.off("ph-drag-start", this.onPhDragStart)
+            if (this.onBenchHoverEnter) EventBus.off("bench-hover-enter", this.onBenchHoverEnter)
+            if (this.onBenchHoverLeave) EventBus.off("bench-hover-leave", this.onBenchHoverLeave)
+            if (this.onBenchDrop) EventBus.off("bench-drop", this.onBenchDrop)
+            if (this.onBenchCancel) EventBus.off("bench-cancel", this.onBenchCancel)
+
+            // dispose charts/listeners bound to this scene
+            this.playerTeam?.damageChart?.dispose?.()
+        })
     }
 
     createLight() {
@@ -179,7 +217,7 @@ export class Game extends Scene {
     }
 
     private installUiDragBridge() {
-        EventBus.on("ui-drag-start", (payload: { dto: CharacterDto; clientX: number; clientY: number }) => {
+        this.onUiDragStart = (payload: { dto: CharacterDto; clientX: number; clientY: number }) => {
             if (this.state === "fighting") return
             const { dto, clientX, clientY } = payload
 
@@ -201,16 +239,18 @@ export class Game extends Scene {
 
             this.uiGhost = ghost
             this.grid.showDropOverlay()
-        })
+        }
+        EventBus.on("ui-drag-start", this.onUiDragStart)
 
-        EventBus.on("ui-drag-move", ({ clientX, clientY }: { clientX: number; clientY: number }) => {
+        this.onUiDragMove = ({ clientX, clientY }: { clientX: number; clientY: number }) => {
             if (!this.uiGhost) return
             const { x, y } = this.clientToWorld(clientX, clientY)
             this.uiGhost.setPosition(x, y)
             this.grid.showHighlightAtWorld(x, y)
-        })
+        }
+        EventBus.on("ui-drag-move", this.onUiDragMove)
 
-        EventBus.on("ui-drag-end", ({ clientX, clientY }: { clientX: number; clientY: number }) => {
+        this.onUiDragEnd = ({ clientX, clientY }: { clientX: number; clientY: number }) => {
             if (!this.uiGhost) return
             const ghost = this.uiGhost
             this.uiGhost = undefined
@@ -241,49 +281,55 @@ export class Game extends Scene {
             } else {
                 ghost.destroy(true) // cancel: didn’t drop in a valid tile
             }
-        })
+        }
+        EventBus.on("ui-drag-end", this.onUiDragEnd)
     }
 
     private installBenchHoverBridge() {
         // Keep track of which character is being dragged
-        EventBus.on("ph-drag-start", ({ id }: { id: string }) => {
+        this.onPhDragStart = ({ id }: { id: string }) => {
             const character = this.playerTeam.getById(id)
             if (character) this.dragFromBoard.set(id, character)
-        })
+        }
+        EventBus.on("ph-drag-start", this.onPhDragStart)
 
         // React will tell us when pointer enters/leaves the bench area
-        EventBus.on("bench-hover-enter", ({ id }: { id: string }) => {
+        this.onBenchHoverEnter = ({ id }: { id: string }) => {
             const character = this.dragFromBoard.get(id)
             if (!character) return
             character.setVisible(false)
             character.body.enable = false
             // (Optional) add a subtle marker in-world if you want
-        })
+        }
+        EventBus.on("bench-hover-enter", this.onBenchHoverEnter)
 
-        EventBus.on("bench-hover-leave", ({ id }: { id: string }) => {
+        this.onBenchHoverLeave = ({ id }: { id: string }) => {
             const character = this.dragFromBoard.get(id)
             if (!character) return
             character.setVisible(true)
             character.body.enable = true
-        })
+        }
+        EventBus.on("bench-hover-leave", this.onBenchHoverLeave)
 
         // Commit: destroy in-world and add to bench
-        EventBus.on("bench-drop", ({ id, dto }: { id: string; dto: CharacterDto }) => {
+        this.onBenchDrop = ({ id, dto }: { id: string; dto: CharacterDto }) => {
             const character = this.dragFromBoard.get(id)
             if (!character) return
             character.onBenchDrop()
             this.playerTeam.bench.add(dto) // your Bench.add will emit to UI
             this.dragFromBoard.delete(id)
-        })
+        }
+        EventBus.on("bench-drop", this.onBenchDrop)
 
         // Cancel: not dropped on bench; restore and let the character's dragend do its normal snap/revert
-        EventBus.on("bench-cancel", ({ id }: { id: string }) => {
+        this.onBenchCancel = ({ id }: { id: string }) => {
             const ch = this.dragFromBoard.get(id)
             if (!ch) return
             ch.setVisible(true)
             ch.body.enable = true
             this.dragFromBoard.delete(id)
-        })
+        }
+        EventBus.on("bench-cancel", this.onBenchCancel)
     }
 
     // Map browser client coords -> world coords under the camera, robust to CSS scaling + DPR
@@ -725,5 +771,5 @@ export class Game extends Scene {
         this.endRoundSoon()
     }
 
-    update(time: number, delta: number): void {}
+    update(_time: number, _delta: number): void {}
 }
