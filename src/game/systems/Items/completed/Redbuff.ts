@@ -6,7 +6,11 @@ import { Item } from "../Item"
 export class Redbuff extends Item {
     key = "redbuff"
     name = "Red Buff"
-    descriptionLines = ["+35% AS", "Passive: When attacking, applies a burn that deals 1% of the enemy's max health per second, lasts 5 seconds."]
+    descriptionLines = [
+        "+15% AS",
+        "+10% max health",
+        "Passive: When attacking, applies a burn that deals 1% of the enemy's max health per second, lasts 5 seconds.",
+    ]
     burns = new WeakMap<Creature, Dot>()
 
     constructor(scene: Game) {
@@ -14,7 +18,9 @@ export class Redbuff extends Item {
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackSpeed += creature.baseAttackSpeed * 0.35
+        creature.attackSpeed += creature.baseAttackSpeed * 0.15
+        creature.maxHealth += creature.baseMaxHealth * 0.1
+        creature.health += creature.baseMaxHealth * 0.1
 
         const previousHandler = creature.eventHandlers[`redbuff_${this.id}`]
         if (previousHandler) {

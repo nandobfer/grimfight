@@ -144,12 +144,12 @@ ItemRegistry.registerCompleted("sterak", Sterak, ["sword", "belt"])
 ItemRegistry.registerCompleted("infinityedge", Infinityedge, ["sword", "gloves"])
 
 // bow
-ItemRegistry.registerCompleted("redbuff", Redbuff, ["bow", "bow"])
+ItemRegistry.registerCompleted("guinsoo", Guinsoo, ["bow", "bow"])
 ItemRegistry.registerCompleted("titanresolve", Titanresolve, ["bow", "vest"])
 ItemRegistry.registerCompleted("titanresolve", Titanresolve, ["bow", "cloak"])
-ItemRegistry.registerCompleted("guinsoo", Guinsoo, ["bow", "rod"])
+ItemRegistry.registerCompleted("nashor", Nashor, ["bow", "rod"])
 ItemRegistry.registerCompleted("voidstaff", Voidstaff, ["bow", "tear"])
-ItemRegistry.registerCompleted("nashor", Nashor, ["bow", "belt"])
+ItemRegistry.registerCompleted("redbuff", Redbuff, ["bow", "belt"])
 ItemRegistry.registerCompleted("lastwhisper", Lastwhisper, ["bow", "gloves"])
 
 // rod
