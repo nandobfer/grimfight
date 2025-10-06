@@ -146,8 +146,15 @@ export class Item {
                 this.emittingMerge = false
             }
         } else {
-            if (this.emittingMerge) {
+            // Only reset tooltip if we're not over a character (to preserve character merge tooltips)
+            const cell = this.scene.grid.worldToCell(pointer.x, pointer.y)
+            const character = cell ? this.scene.playerTeam.getCreatureInCell(cell.col, cell.row) : null
+
+            if (this.emittingMerge && !character) {
                 this.resetTooltip()
+            } else if (!character) {
+                // Reset emittingMerge flag when not over any target
+                this.emittingMerge = false
             }
         }
     }
