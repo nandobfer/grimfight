@@ -32,8 +32,10 @@ export class Statikk extends Character {
         const onUpdate = (animation: Phaser.Animations.Animation) => {
             if ([...attacking, ...specialAttacking].find((anim) => anim.key === animation.key)) {
                 this.setOrigin(0.5, 0.6)
+                this.body.setOffset(64, 64) 
             } else {
                 this.setOrigin(0.5, 0.75)
+                this.body.setOffset(0, 0) 
             }
         }
 

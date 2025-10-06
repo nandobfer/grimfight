@@ -20,6 +20,7 @@ export class Arthas extends Character {
 
     constructor(scene: Game, id: string) {
         super(scene, "arthas", id)
+
         this.addLightEffect({
             color: 0x66ddff,
             intensity: 1,
@@ -80,8 +81,10 @@ export class Arthas extends Character {
         const onUpdate = (animation: Phaser.Animations.Animation) => {
             if (attacking.find((anim) => anim.key === animation.key)) {
                 this.setOrigin(0.5, 0.6)
+                this.body.setOffset(64, 64) 
             } else {
                 this.setOrigin(0.5, 0.75)
+                this.body.setOffset(0, 0) 
             }
         }
 
