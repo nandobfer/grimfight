@@ -42,7 +42,7 @@ export const max_characters_in_board = 6
 export const max_bench_size = 9
 
 export class Game extends Scene {
-    version = "v1.0.6"
+    version = "v1.0.7"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
@@ -773,6 +773,21 @@ export class Game extends Scene {
     finishRound() {
         // infer reason cheaply; either side wiped gets handled correctly later
         this.endRoundSoon()
+    }
+
+    setGameSpeed(factor: number) {
+        this.time.timeScale = factor
+        this.physics.world.timeScale = 1 / factor
+        this.tweens.timeScale = factor
+        this.children.list.forEach((child) => {
+            if (child.type === "ParticleEmitterManager") {
+                ;(child as Phaser.GameObjects.Particles.ParticleEmitter).timeScale = factor
+            }
+
+            if ((child as any).anims) {
+                ;(child as any).anims.timeScale = factor
+            }
+        })
     }
 
     update(_time: number, _delta: number): void {}

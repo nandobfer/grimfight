@@ -4,6 +4,7 @@ import { Game } from "../../../game/scenes/Game"
 import { GameRecord } from "../../../game/systems/GameRecord"
 import { Close } from "@mui/icons-material"
 import { RecordItem } from "./RecordItem"
+import { Statistics } from "./Statistics/Statistics"
 
 interface RecordHistoryProps {
     game: Game
@@ -53,10 +54,13 @@ export const RecordHistory: React.FC<RecordHistoryProps> = (props) => {
                     </IconButton>
                 </Box>
 
+                {/* Estatísticas */}
+                <Statistics records={records} />
+
                 {/* histórico */}
                 <Paper sx={{ flex: 1, flexDirection: "column", padding: 1, gap: 2 }} elevation={0}>
                     {records
-                        .sort((a, b) => b.finishedAt || Date.now() - a.finishedAt || Date.now())
+                        .sort((a, b) => (b.finishedAt || Date.now()) - (a.finishedAt || Date.now()))
                         .map((item) => (
                             <RecordItem record={item} key={item.finishedAt} />
                         ))}

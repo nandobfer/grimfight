@@ -20,6 +20,9 @@ export class TraitsRegistry {
     static register(name: string, ctor: Ctor, comp: string[] = []) {
         this.registry.set(name, { ctor, comp })
     }
+    static getAllRegistered(): string[] {
+        return Array.from(this.registry.keys())
+    }
     static create(name: string, data?: Trait): Trait {
         const entry = this.registry.get(name)
         if (!entry) throw new Error(`Trait not found: ${name}`)

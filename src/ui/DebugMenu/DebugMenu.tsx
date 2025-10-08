@@ -6,6 +6,7 @@ import { DebugGold } from "./DebugGold"
 import { Code } from "@mui/icons-material"
 import { DebugCharacter } from "./DebugCharacter"
 import { DebugItems } from "./DebugItems"
+import { DebugSpeed } from "./DebugSpeed"
 
 interface DebugMenuProps {
     game: Game
@@ -42,8 +43,12 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
                             reset game
                         </Button>
                         <Button onClick={resetRound}>reset round</Button>
-                        <DebugFloor game={game} closeMenu={closeMenu} />
-                        <DebugGold game={game} closeMenu={closeMenu} />
+                        <Box sx={{ gap: 1 }}>
+                            <DebugSpeed game={game} closeMenu={closeMenu} />
+
+                            <DebugFloor game={game} closeMenu={closeMenu} />
+                            <DebugGold game={game} closeMenu={closeMenu} />
+                        </Box>
                         <DebugCharacter game={game} closeMenu={closeMenu} />
                         <DebugItems game={game} closeMenu={closeMenu} />
                     </Paper>
