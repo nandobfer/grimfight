@@ -42,7 +42,7 @@ export const max_characters_in_board = 6
 export const max_bench_size = 9
 
 export class Game extends Scene {
-    version = "v1.0.7"
+    version = "v1.0.8"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text

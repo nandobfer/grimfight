@@ -25,7 +25,9 @@ export class Dragonclaw extends Item {
         }
 
         const regenLife = () => {
+            if (this.scene.state !== "fighting") return
             creature.heal(creature.maxHealth * factor, false, false, { healer: creature, source: this.name })
+            
         }
 
         creature.timeEvents[`dragonclaw_${this.id}`] = this.scene.time.addEvent({ callback: regenLife, loop: true, delay: 2000 })
