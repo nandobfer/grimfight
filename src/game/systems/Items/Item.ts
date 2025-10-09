@@ -74,6 +74,18 @@ export class Item {
         }
     }
 
+    smallImage() {
+        this.big_scale = 0.5
+        this.equiped_scale = 0.25
+
+        const os = this.scene.sys.game.device.os
+        if (os.android || os.iOS) {
+            this.big_scale *= 1.5
+        }
+
+        this.sprite.setScale(this.big_scale)
+    }
+
     private updateBorder() {
         this.border
             .setPosition(this.sprite.x, this.sprite.y)

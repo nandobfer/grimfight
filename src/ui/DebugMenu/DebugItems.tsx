@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Autocomplete, Box, Button, TextField } from "@mui/material"
 import { Game } from "../../game/scenes/Game"
-import { RNG } from "../../game/tools/RNG"
 import { ItemRegistry } from "../../game/systems/Items/ItemRegistry"
 
 interface DebugFloorProps {
@@ -16,10 +15,10 @@ export const DebugItems: React.FC<DebugFloorProps> = (props) => {
         event.preventDefault()
 
         try {
-
-        props.game.spawnItem(itemKey)
+            props.game.spawnItem(itemKey)
         } catch (error) {
-            console.log('trouxa')
+            console.log(error)
+            console.log("trouxa")
         }
     }
 

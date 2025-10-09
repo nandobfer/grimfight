@@ -75,6 +75,7 @@ export class Preloader extends Scene {
         for (const entry of ItemRegistry.entries()) {
             this.load.image(`item-${entry}`, `items/${entry}.png`)
         }
+
     }
 
     loadParticles() {

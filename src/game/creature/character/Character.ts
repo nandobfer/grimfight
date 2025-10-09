@@ -344,13 +344,6 @@ export class Character extends Creature {
         return ""
     }
 
-    override startCastingAbility(): void {
-        super.startCastingAbility()
-
-        console.log("emitting cast")
-        this.emit("cast")
-    }
-
     override calculateAttackRange() {
         return super.calculateAttackRange() * Math.max(1, this.scale * 0.75)
     }

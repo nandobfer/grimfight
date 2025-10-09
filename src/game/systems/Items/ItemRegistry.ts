@@ -45,6 +45,18 @@ import { Steadfastheart } from "./completed/Steadfastheart"
 import { Strikersflail } from "./completed/Strikersflail"
 import { Sunfire } from "./completed/Sunfire"
 import { Thiefsgloves } from "./completed/Thiefsgloves"
+import { TrinityForce } from "./artifact/TrinityForce"
+import { Dawncore } from "./artifact/Dawncore"
+import { GoldCollector } from "./artifact/GoldCollector"
+import { Hullcrusher } from "./artifact/Hullcrusher"
+import { InnervatingLocket } from "./artifact/InnervatingLocket"
+import { LichBane } from "./artifact/LichBane"
+import { LudensTempest } from "./artifact/LudensTempest"
+import { Manazane } from "./artifact/Manazane"
+import { ProwlersClaw } from "./artifact/ProwlersClaw"
+import { RapidFireCannon } from "./artifact/RapidFireCannon"
+import { SeekersArmGuard } from "./artifact/SeekersArmGuard"
+import { WitsEnd } from "./artifact/WitsEnd"
 
 export interface Recipe {
     components: [string, string]
@@ -55,9 +67,14 @@ export interface Recipe {
 export class ItemRegistry {
     private static componentRegistry: Map<string, new (scene: Game, texture: string, dataOnly?: boolean) => Item> = new Map()
     private static completedRegistry: Map<string, new (scene: Game, texture: string, dataOnly?: boolean) => Item> = new Map()
+    private static artifactRegistry: Map<string, new (scene: Game, texture: string, dataOnly?: boolean) => Item> = new Map()
     private static registry: Map<string, new (scene: Game, texture: string, dataOnly?: boolean) => Item> = new Map()
     private static recipes: Recipe[] = []
 
+    static registerArtifact(name: string, itemClass: new (scene: Game, texture: string) => Item) {
+        this.artifactRegistry.set(name, itemClass)
+        this.registry.set(name, itemClass)
+    }
     static registerComponent(name: string, itemClass: new (scene: Game, texture: string) => Item) {
         this.componentRegistry.set(name, itemClass)
         this.registry.set(name, itemClass)
@@ -90,6 +107,10 @@ export class ItemRegistry {
         return Array.from(this.completedRegistry.keys())
     }
 
+    static artifacts(): string[] {
+        return Array.from(this.artifactRegistry.keys())
+    }
+
     static randomComponent(scene: Game, exclude: string[] = [], dataOnly = false) {
         const name = RNG.pick(this.components().filter((item) => !exclude.includes(item)))
         return this.create(name, scene, dataOnly)
@@ -97,6 +118,11 @@ export class ItemRegistry {
 
     static randomCompleted(scene: Game, exclude: string[] = [], dataOnly = false) {
         const name = RNG.pick(this.completed().filter((item) => !exclude.includes(item)))
+        return this.create(name, scene, dataOnly)
+    }
+
+    static randomArtifact(scene: Game, exclude: string[] = [], dataOnly = false) {
+        const name = RNG.pick(this.artifacts().filter((item) => !exclude.includes(item)))
         return this.create(name, scene, dataOnly)
     }
 
@@ -184,3 +210,19 @@ ItemRegistry.registerCompleted("quicksilver", Quicksilver, ["cloak", "gloves"])
 
 // gloves
 ItemRegistry.registerCompleted("thiefsgloves", Thiefsgloves, ["gloves", "gloves"])
+
+// artifacts
+ItemRegistry.registerArtifact("trinityforce", TrinityForce)
+ItemRegistry.registerArtifact("dawncore", Dawncore)
+ItemRegistry.registerArtifact("goldcollector", GoldCollector)
+ItemRegistry.registerArtifact("hullcrusher", Hullcrusher)
+ItemRegistry.registerArtifact("innervatinglocket", InnervatingLocket)
+ItemRegistry.registerArtifact("lichbane", LichBane)
+ItemRegistry.registerArtifact("ludenstempest", LudensTempest)
+ItemRegistry.registerArtifact("manazane", Manazane)
+ItemRegistry.registerArtifact("prowlersclaw", ProwlersClaw)
+ItemRegistry.registerArtifact("rapidfirecannon", RapidFireCannon)
+ItemRegistry.registerArtifact("seekersarmguard", SeekersArmGuard)
+ItemRegistry.registerArtifact("witsend", WitsEnd)
+
+// falta unending despair e talisman of ascencion

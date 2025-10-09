@@ -38,7 +38,7 @@ export const TraitComponent: React.FC<TraitComponentProps> = (props) => {
 
                     <Box sx={{ marginTop: 1, gap: 1 }}>
                         {trait.comp.map((characterName) => (
-                            <Box sx={{ filter: trait.activeComp.has(characterName) ? undefined : "grayscale(100%)" }}>
+                            <Box key={characterName} sx={{ filter: trait.activeComp.has(characterName) ? undefined : "grayscale(100%)" }}>
                                 <CharacterAvatar name={characterName} size={30} key={characterName} />
                             </Box>
                         ))}

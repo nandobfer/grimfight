@@ -13,6 +13,23 @@ import { RNG } from "../tools/RNG"
 
 export type Direction = "left" | "up" | "down" | "right"
 
+export type AttributeStatus =
+    | "health"
+    | "maxHealth"
+    | "mana"
+    | "maxMana"
+    | "attackSpeed"
+    | "attackDamage"
+    | "abilityPower"
+    | "armor"
+    | "speed"
+    | "critChance"
+    | "critDamageMultiplier"
+    | "lifesteal"
+    | "manaPerSecond"
+    | "manaPerAttack"
+    | "manaOnHit"
+
 export class Creature extends Phaser.Physics.Arcade.Sprite {
     facing: Direction = "down"
     target?: Creature
@@ -101,6 +118,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     eventHandlers: Record<string, Function> = {}
     timeEvents: Record<string, Phaser.Time.TimerEvent> = {}
+    buffs: Set<string> = new Set()
 
     constructor(scene: Game, name: string, id: string, dataOnly = false) {
         super(scene, -1000, -1000, name)
@@ -654,6 +672,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaBar.setValue(this.mana, this.maxMana)
 
         this.castAbility()
+        this.emit("cast")
     }
 
     castAbility(rawMultiplier = 1) {
@@ -1001,6 +1020,76 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.off("move", item.syncPosition, item)
         this.items.forEach((item) => item.syncPosition(this))
+    }
+
+    addStatPercent(stat: AttributeStatus, percent: number) {
+        const baseValue = this[stat]
+        this[stat] += (baseValue * percent) / 100
+    }
+
+    addStatValue(stat: AttributeStatus, value: number) {
+        this[stat] += value
+    }
+
+    getAdjacentAllies() {
+        const grid = this.scene.grid
+        const cell = grid.worldToCell(this.x, this.y)
+        if (!cell) return []
+
+        const adjacentOffsets = [
+            { col: -1, row: 0 }, // left
+            { col: 1, row: 0 }, // right
+            { col: 0, row: -1 }, // up
+            { col: 0, row: 1 }, // down
+            { col: 1, row: 1 }, // top-right
+            { col: 1, row: -1 }, // top-left
+            { col: -1, row: -1 }, // bottom-left
+            { col: -1, row: 1 }, // bottom-right
+        ]
+
+        const adjacentAllies = []
+        for (const offset of adjacentOffsets) {
+            const adjacentCell = { col: cell.col + offset.col, row: cell.row + offset.row }
+            const ally = this.team.getCreatureInCell(adjacentCell.col, adjacentCell.row)
+            if (ally && ally !== this) {
+                adjacentAllies.push(ally)
+            }
+        }
+
+        return adjacentAllies
+    }
+
+    getEnemiesInRange(range: number) {
+        const enemyTeam = this.getEnemyTeam()
+        const enemies = enemyTeam.getChildren(true, true)
+        const inRange: Creature[] = []
+
+        for (const enemy of enemies) {
+            if (!enemy.active) continue
+
+            const distance = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y)
+            if (distance <= range) {
+                inRange.push(enemy)
+            }
+        }
+
+        return inRange
+    }
+
+    getAlliesInRange(range: number) {
+        const allies = this.team.getChildren(true, true)
+        const inRange: Creature[] = []
+
+        for (const ally of allies) {
+            if (!ally.active || ally === this) continue
+
+            const distance = Phaser.Math.Distance.Between(this.x, this.y, ally.x, ally.y)
+            if (distance <= range) {
+                inRange.push(ally)
+            }
+        }
+
+        return inRange
     }
 
     destroyUi() {

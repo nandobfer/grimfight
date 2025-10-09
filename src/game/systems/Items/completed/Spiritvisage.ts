@@ -10,6 +10,7 @@ export class Spiritvisage extends Item {
 
     constructor(scene: Game) {
         super(scene, "item-spiritvisage")
+        this.smallImage()
     }
 
     override applyModifier(creature: Creature): void {
