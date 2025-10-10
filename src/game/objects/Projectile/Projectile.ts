@@ -44,7 +44,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         })
         if (wallCollider) this.colliders.push(wallCollider)
 
-        const enemyTeam = this.scene?.playerTeam.contains(this.owner) ? this.scene?.enemyTeam : this.scene?.playerTeam
+        const enemyTeam = owner.getEnemyTeam()
         const overlapTeam = this.scene?.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
             if (!enemy.active) return

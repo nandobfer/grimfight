@@ -9,6 +9,7 @@ export class Krakenslayer extends Item {
 
     constructor(scene: Game) {
         super(scene, "item-krakenslayer")
+        this.smallImage()
     }
 
     override applyModifier(creature: Creature): void {

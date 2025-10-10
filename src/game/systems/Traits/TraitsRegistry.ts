@@ -70,9 +70,9 @@ export class TraitsRegistry {
     }
 }
 
-TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "arthas", "vania", "laherce", "reno"])
+TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "arthas", "vania", "laherce", "reno", "chichi"])
 TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir"])
-TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "frank"])
+TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "frank", "chichi"])
 TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia"])
 TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "helyna"])
 TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula"])

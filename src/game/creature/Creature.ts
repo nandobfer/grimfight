@@ -247,6 +247,22 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         // this.body.setAcceleration(0) // clear acceleration if used
     }
 
+    dashTo(x: number, y: number, onComplete?: Function, speed = 200) {
+        this.scene.tweens.add({
+            targets: this,
+            duration: speed,
+            repeat: 0,
+            yoyo: false,
+            x: x,
+            y: y,
+            ease: "Expo.easeOut",
+            onComplete: () => {
+                this.emit("move", this, x, y)
+                onComplete?.()
+            },
+        })
+    }
+
     getPlacement(): "front" | "middle" | "back" | null {
         const grid = this.scene.grid
         if (!grid) return null
@@ -363,8 +379,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             yoyo: true,
             ease: "Sine.easeInOut",
             onComplete: () => {
-                this.tempGlow!.outerStrength = 0
-                // restore Lights if you use them
+                if (this.tempGlow) this.tempGlow.outerStrength = 0
                 if (this.savedPipeline) this.setPipeline(this.savedPipeline)
             },
         })
@@ -891,7 +906,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaBar.fadeOut()
 
         this.emit("died")
+        this.wipeCheck()
+    }
 
+    wipeCheck() {
         if (this.team.isWiped()) {
             if (this.master) {
                 if (this.master.team.isWiped()) {

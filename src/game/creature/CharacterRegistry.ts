@@ -19,6 +19,7 @@ import { Reno } from "./classes/Reno"
 import { Dracula } from "./classes/Dracula"
 import { Rukia } from "./classes/Rukia"
 import { Ymir } from "./classes/Ymir"
+import { Chichi } from "./classes/Chichi"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -79,3 +80,4 @@ CharacterRegistry.register("reno", Reno)
 CharacterRegistry.register("dracula", Dracula)
 CharacterRegistry.register("rukia", Rukia)
 CharacterRegistry.register("ymir", Ymir)
+CharacterRegistry.register("chichi", Chichi)
