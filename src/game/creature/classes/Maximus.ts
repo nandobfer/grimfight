@@ -6,7 +6,7 @@ export class Knight extends Character {
     baseMaxHealth = 425
     baseArmor = 10
     baseAttackDamage = 15
-    baseMaxMana = 150
+    baseMaxMana = 120
 
     abilityName = "Raise Shield"
 

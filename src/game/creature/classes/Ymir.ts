@@ -9,7 +9,7 @@ export class Ymir extends Character {
     baseMaxHealth = 425
     baseArmor = 10
     baseAttackDamage = 15
-    baseMaxMana = 120
+    baseMaxMana = 100
 
     abilityName = "Freezing Nova"
 
