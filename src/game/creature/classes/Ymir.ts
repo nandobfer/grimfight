@@ -51,6 +51,10 @@ Emits a freezing wave that expands around you. For each enemy hit and frozen, ga
 
             new MagicShieldFx(this.scene, this.x, this.y, 0.4)
             this.gainShield(this.abilityPower * 0.75 * enemiesFrozen.size, { healer: this, source: this.abilityName })
+            this.manaLocked = true
+            this.once("shield-broken", () => {
+                this.manaLocked = false
+            })
         }
 
         const tween = this.scene.tweens.addCounter({

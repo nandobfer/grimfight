@@ -25,6 +25,10 @@ export class Knight extends Character {
 
         new MagicShieldFx(this.scene, this.x, this.y, 0.4)
         this.gainShield(this.abilityPower + this.maxHealth * 0.1, { healer: this, source: this.abilityName })
+        this.manaLocked = true
+        this.once("shield-broken", () => {
+            this.manaLocked = false
+        })
 
         this.casting = false
     }

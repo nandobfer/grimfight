@@ -23,5 +23,9 @@ export class ArmoredSkeleton extends Skeleton {
         this.gainShield(this.abilityPower * 2 + this.maxHealth * 0.1)
 
         this.casting = false
+        this.manaLocked = true
+        this.once("shield-broken", () => {
+            this.manaLocked = false
+        })
     }
 }
