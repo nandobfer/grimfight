@@ -779,6 +779,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
                 this.scene.playerTeam.damageChart.plotHealing(plot.healer, value, "shielded", plot.source)
             }
         }
+
+        this.emit("gain-shield", value)
     }
 
     heal(value: number, crit?: boolean, fx = true, plot?: { healer: Creature; source: string }) {
@@ -823,6 +825,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             absorbed = Math.min(this.shield, hpDamage)
             this.shield -= absorbed // consume shield
             hpDamage -= absorbed // remainder hits HP
+
+            if (this.shield === 0) {
+                this.emit("shield-broken")
+            }
         }
 
         // HP update

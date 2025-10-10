@@ -26,16 +26,16 @@ export class Archangelstaff extends Item {
             }
         }
 
-        creature.timeEvents[`.archangelstaff_${this.id}`] = this.scene.time.addEvent({ callback: buff, loop: true, delay: 5000 })
+        creature.timeEvents[`archangelstaff_${this.id}`] = this.scene.time.addEvent({ callback: buff, loop: true, delay: 5000 })
 
         creature.once("destroy", () => this.cleanup(creature))
     }
 
     override cleanup(creature: Creature): void {
-        const handler = creature.timeEvents[`.archangelstaff_${this.id}`]
+        const handler = creature.timeEvents[`archangelstaff_${this.id}`]
         if (handler) {
             this.scene.time.removeEvent(handler)
-            delete creature.timeEvents[`.archangelstaff_${this.id}`]
+            delete creature.timeEvents[`archangelstaff_${this.id}`]
         }
     }
 }

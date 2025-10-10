@@ -57,7 +57,8 @@ import { ProwlersClaw } from "./artifact/ProwlersClaw"
 import { RapidFireCannon } from "./artifact/RapidFireCannon"
 import { SeekersArmGuard } from "./artifact/SeekersArmGuard"
 import { WitsEnd } from "./artifact/WitsEnd"
-
+import { TalismanOfAscension } from "./artifact/TalismanOfAscension"
+import { UnendingDespair } from "./artifact/UnendingDespair"
 export interface Recipe {
     components: [string, string]
     result: string
@@ -224,5 +225,5 @@ ItemRegistry.registerArtifact("prowlersclaw", ProwlersClaw)
 ItemRegistry.registerArtifact("rapidfirecannon", RapidFireCannon)
 ItemRegistry.registerArtifact("seekersarmguard", SeekersArmGuard)
 ItemRegistry.registerArtifact("witsend", WitsEnd)
-
-// falta unending despair e talisman of ascencion
+ItemRegistry.registerArtifact("talismanofascension", TalismanOfAscension)
+ItemRegistry.registerArtifact("unendingdespair", UnendingDespair)
