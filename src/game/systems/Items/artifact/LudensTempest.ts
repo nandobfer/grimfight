@@ -1,12 +1,13 @@
 import { Creature } from "../../../creature/Creature"
 import { DarkSlashFx } from "../../../fx/DarkSlashFx"
+import { Deathbolt } from "../../../objects/Projectile/Deathbolt"
 import { Game } from "../../../scenes/Game"
 import { Item } from "../Item"
 
 export class LudensTempest extends Item {
     key = "ludenstempest"
     name = "Ludens Tempest"
-    descriptionLines = ["+30% AP", '+3 mana per second', "Passive: When cast, deal 100% AP as damage splitted your target and nearby enemies."]
+    descriptionLines = ["+30% AP", "+3 mana per second", "Passive: When cast, deal 100% AP as damage splitted your target and nearby enemies."]
 
     constructor(scene: Game) {
         super(scene, "item-ludenstempest")
@@ -25,9 +26,15 @@ export class LudensTempest extends Item {
         const onCast = () => {
             const targets = creature.target?.getAlliesInRange(128) || []
             for (const target of targets) {
-                const { value, crit } = creature.calculateDamage(creature.abilityPower / targets.length)
-                target.takeDamage(value, creature, 'dark', crit, false, this.name)
-                new DarkSlashFx(target)
+                const projectile = new Deathbolt(this.scene, creature.x, creature.y, creature)
+                projectile.onHit = () => {
+                    if (!target.active) return
+                    const { value, crit } = creature.calculateDamage(creature.abilityPower / targets.length)
+                    target.takeDamage(value, creature, "dark", crit, false, this.name)
+                    new DarkSlashFx(target)
+                    projectile.destroy()
+                }
+                projectile.fire(target)
             }
         }
 
