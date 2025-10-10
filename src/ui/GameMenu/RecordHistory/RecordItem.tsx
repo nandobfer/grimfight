@@ -70,7 +70,7 @@ export const RecordItem: React.FC<RecordItemProps> = (props) => {
                             </AbilityTooltip>
 
                             <Box sx={{ position: "absolute", bottom: -10, left: 0, gap: 0.5 }}>
-                                {char.items.map((item, index) => (
+                                {char.items?.map((item, index) => (
                                     <ItemIcon key={item + index} itemKey={item} size={15} />
                                 ))}
                             </Box>
