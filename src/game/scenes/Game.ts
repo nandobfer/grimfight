@@ -436,7 +436,7 @@ export class Game extends Scene {
     }
 
     handleEnemiesAugments() {
-        if (this.floor === 1 || (this.floor - 1) % 5 !== 0) {
+        if (this.floor === 1 || (this.floor - 1) % 10 !== 0) {
             return
         }
         const enemiesAugments = Array.from(this.enemyTeam.augments.values())
@@ -449,7 +449,7 @@ export class Game extends Scene {
     }
 
     handleAugmentsFloor() {
-        if (this.floor % 5 !== 0) {
+        if (this.floor % 10 !== 0) {
             return
         }
 
