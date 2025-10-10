@@ -9,7 +9,7 @@ export class AnvilAugment extends Augment {
     constructor() {
         const name = "anvil"
         super(name)
-        this.values.items = RNG.weightedPick([1, 1, 1, 1, 2, 2, 3])
+        this.values.items = RNG.weightedPick([1, 1, 1, 2, 3])
         const value = this.values.items
         this.descriptionValues.items = { value: value, color: "warning.main" }
         const object = value === 1 ? "component" : value === 2 ? "completed item" : "special artifact"
