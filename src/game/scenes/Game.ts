@@ -405,8 +405,7 @@ export class Game extends Scene {
     }
 
     onFloorDefeated() {
-        const goldGained = this.playerTeam.grantFloorReward(this.floor)
-        this.goldCoinFx.explodeCameraCenterToCounter(goldGained)
+        this.playerTeam.grantFloorReward(this.floor)
 
         this.handleLootReward()
 
@@ -476,6 +475,7 @@ export class Game extends Scene {
             return
         }
 
+        this.playerTeam.grantDefeatConsolation(this.floor)
         this.resetFloor()
         this.saveProgress()
     }
@@ -667,6 +667,7 @@ export class Game extends Scene {
 
     addPlayerGold(gold: number) {
         this.changePlayerGold(this.playerGold + gold)
+        this.goldCoinFx.explodeCameraCenterToCounter(gold)
     }
 
     changePlayerGold(gold: number) {

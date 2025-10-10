@@ -42,7 +42,6 @@ export class PlayerTeam extends CreatureGroup {
         this.emitArray()
     }
 
-
     add(child: Character, addToScene?: boolean): this {
         super.add(child, addToScene)
 
@@ -192,10 +191,15 @@ export class PlayerTeam extends CreatureGroup {
 
     grantFloorReward(floor: number) {
         const gold = 1 + Math.round(floor * 0.5)
-        this.scene.changePlayerGold(this.scene.playerGold + gold)
+        this.scene.addPlayerGold(gold)
         this.store.shuffle()
 
-        return gold
+    }
+
+    grantDefeatConsolation(floor: number) {
+        const gold = Math.round(floor * 0.3)
+        this.scene.addPlayerGold(gold)
+        this.store.shuffle()
     }
 
     getHighestLevelChar() {

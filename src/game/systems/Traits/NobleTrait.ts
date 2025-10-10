@@ -31,7 +31,6 @@ export class NobleTrait extends Trait {
             const random = RNG.chance()
             if (random <= values.goldDropChance && character?.scene) {
                 character.scene.addPlayerGold(character.level)
-                character.scene.goldCoinFx.explodeCameraCenterToCounter(character.level)
             }
         }
 
