@@ -1,7 +1,9 @@
 import { FxSprite } from "../../fx/FxSprite"
+import { Heal } from "../../fx/Heal"
 import { ThornsFx } from "../../fx/ThornsFx"
 import { Arrow } from "../../objects/Projectile/Arrow"
 import { Dot } from "../../objects/StatusEffect/Dot"
+import { Hot } from "../../objects/StatusEffect/Hot"
 import { Game } from "../../scenes/Game"
 import { DamageType } from "../../ui/DamageNumbers"
 import { Character } from "../character/Character"
@@ -56,9 +58,9 @@ export class Helyna extends Character {
                 this.attackDamage * 1.5
             )} (150% AD)] damage.`
 
-            const human = `[primary.main:Human] (back): Doesn't transform into anything, but your ability [success.main:(Regrowth)] heals the ally with the least health on the field for [info.main:${Math.round(
+            const human = `[primary.main:Human] (back): Doesn't transform into anything, but your ability [success.main:(Rejuvenation)] heals the ally with the least health on the field for [info.main:${Math.round(
                 this.abilityPower * humanMultiplier
-            )} (100% AP)].`
+            )} (100% AP)] over 3 seconds.`
 
             return placement === "front"
                 ? bear
@@ -169,8 +171,9 @@ ${human}`
     castHumanAbility(multiplier = 1) {
         const target = this.team.getLowestHealth()
         if (target) {
-            const { value, crit } = this.calculateDamage(this.abilityPower * humanMultiplier * multiplier)
-            target.heal(value, crit, true, { healer: this, source: "Regrowth" })
+            new Heal(target)
+            const value = this.abilityPower * humanMultiplier * multiplier
+            new Hot({ abilityName: "Rejuvenation", duration: 3000, target, tickRate: 500, user: this, value, valueType: "total" }).start()
         }
     }
 
@@ -180,13 +183,13 @@ ${human}`
         // todo animation
 
         const bleeding = new Dot({
-            damageType: "poison",
+            damageType: "normal",
             duration: 2000,
             target: this.target,
             tickDamage: this.attackDamage * 1.5 * multiplier,
             tickRate: 900,
             user: this,
-            abilityName: 'Rake'
+            abilityName: "Rake",
         })
         bleeding.start()
     }
@@ -236,7 +239,7 @@ ${human}`
 
     dealThornsDamage(target: Creature) {
         const { value, crit } = this.calculateDamage(this.abilityPower * 0.1)
-        target.takeDamage(value, this, "poison", crit, false, "Thorn Armor")
+        target.takeDamage(value, this, "normal", crit, false, "Thorn Armor")
     }
 
     override extractAnimationsFromSpritesheet(

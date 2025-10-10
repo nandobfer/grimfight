@@ -21,6 +21,7 @@ export class Dot extends StatusEffect {
         this.damageType = params.damageType
         this.tickRate = params.tickRate
         this.abilityName = params.abilityName
+        this.timeSinceLastTick = this.tickRate
     }
 
     tick() {
