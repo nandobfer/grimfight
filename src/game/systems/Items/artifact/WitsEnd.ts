@@ -9,6 +9,7 @@ export class WitsEnd extends Item {
 
     constructor(scene: Game) {
         super(scene, "item-witsend")
+        this.smallImage()
     }
 
     override applyModifier(creature: Creature): void {

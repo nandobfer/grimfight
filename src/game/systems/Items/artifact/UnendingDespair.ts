@@ -1,6 +1,5 @@
 import { Creature } from "../../../creature/Creature"
 import { DarkSlashFx } from "../../../fx/DarkSlashFx"
-import { Deathbolt } from "../../../objects/Projectile/Deathbolt"
 import { Game } from "../../../scenes/Game"
 import { Item } from "../Item"
 
