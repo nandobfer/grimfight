@@ -24,6 +24,7 @@ export const DebugCharacter: React.FC<DebugFloorProps> = (props) => {
 
         props.game.playerTeam.add(character)
         } catch (error) {
+            console.log(error)
             console.log('trouxa')
         }
     }

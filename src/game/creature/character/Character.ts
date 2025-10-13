@@ -59,6 +59,7 @@ export class Character extends Creature {
             this.applyItems()
             this.reapplyTraits()
             this.applyAugments()
+            this.applyAuras()
         } finally {
             this.isRefreshing = false
         }
@@ -92,6 +93,7 @@ export class Character extends Creature {
             item.snapToCreature(this)
             this.equipItem(item)
         }
+        this.onPlacementChange()
     }
 
     handleMouseEvents(): void {
@@ -236,6 +238,7 @@ export class Character extends Creature {
             if (snapped) {
                 this.boardX = this.x
                 this.boardY = this.y
+                this.onPlacementChange()
                 this.refreshStats()
                 this.team.saveCurrentCharacters()
             }

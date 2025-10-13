@@ -2,6 +2,7 @@
 
 import { Game } from "../scenes/Game"
 import { Augment } from "../systems/Augment/Augment"
+import { Aura } from "../systems/Aura/Aura"
 import { convertMuiColorToPhaser } from "../tools/RarityColors"
 import { Creature } from "./Creature"
 
@@ -9,6 +10,7 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
     declare scene: Game
     minions: CreatureGroup
     augments: Set<Augment>
+    auras: Set<Aura> = new Set()
 
     constructor(
         scene: Game,
@@ -121,5 +123,20 @@ export class CreatureGroup extends Phaser.GameObjects.Group {
         }
 
         return lowestCreature
+    }
+
+    addAura(aura: Aura) {
+        this.auras.add(aura)
+    }
+
+    removeAura(aura: Aura) {
+        if (this.auras.has(aura)) {
+            // Clean up aura effects from all creatures before removing
+            const creatures = this.getChildren(true, true)
+            for (const creature of creatures) {
+                aura.cleanup(creature)
+            }
+            this.auras.delete(aura)
+        }
     }
 }

@@ -11,7 +11,7 @@ export class Mantis extends RagnarokMonster {
 
     bonusAttackSpeed = 0
     missingHealthPercent = 1
-    aura
+    auraGlow
 
     constructor(scene: Game) {
         super(scene, "mantis")
@@ -20,7 +20,7 @@ export class Mantis extends RagnarokMonster {
 
         this.setSize(this.width / 2, this.height / 2)
 
-        this.aura = this.postFX.addGlow(0xff5555, 0)
+        this.auraGlow = this.postFX.addGlow(0xff5555, 0)
     }
 
     override getAttackingAnimation(): string {
@@ -36,7 +36,7 @@ export class Mantis extends RagnarokMonster {
     scaleSpeedWithLife() {
         this.missingHealthPercent = 2 - this.health / this.maxHealth
         this.attackSpeed = this.baseAttackSpeed * this.bonusAttackSpeed * (this.missingHealthPercent * this.abilityPower * 0.05)
-        this.aura.outerStrength = (this.missingHealthPercent - 1) * 1.5
+        this.auraGlow.outerStrength = (this.missingHealthPercent - 1) * 1.5
     }
 
     override reset(): void {

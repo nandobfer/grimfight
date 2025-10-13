@@ -58,7 +58,7 @@ export class Monster extends Creature {
 
     private addDarkAura() {
         // Deep purple/black aura with shimmer effect
-        this.addAura(0x330033, Math.min(2, this.challengeRating / 5))
+        this.addGlow(0x330033, Math.min(2, this.challengeRating / 5))
     }
 
     private addSmokeEffect() {

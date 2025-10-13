@@ -10,6 +10,7 @@ import { StatusEffect } from "../objects/StatusEffect/StatusEffect"
 import { Item } from "../systems/Items/Item"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { RNG } from "../tools/RNG"
+import { Aura } from "../systems/Aura/Aura"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -113,12 +114,13 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     private healthBar: ProgressBar
     private manaBar: ProgressBar
-    aura?: Phaser.FX.Glow
+    auraGlow?: Phaser.FX.Glow
     // tempGlow?: Phaser.FX.Glow
 
     eventHandlers: Record<string, Function> = {}
     timeEvents: Record<string, Phaser.Time.TimerEvent> = {}
     buffs: Set<string> = new Set()
+    auras = new Set<Aura>()
 
     constructor(scene: Game, name: string, id: string, dataOnly = false) {
         super(scene, -1000, -1000, name)
@@ -174,6 +176,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
             this.applyItems()
             this.applyAugments()
+            this.applyAuras()
         } finally {
             this.isRefreshing = false
         }
@@ -184,6 +187,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             item.cleanup(this)
             item.applyModifier(this)
         })
+    }
+
+    applyAuras() {
+        this.auras?.forEach((aura) => aura.tryApply(this))
+        this.team?.auras?.forEach((aura) => aura.tryApply(this))
     }
 
     applyAugments() {
@@ -279,6 +287,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return grid.getBandForRow(cell.row, onPlayerSide ? "player" : "enemy")
     }
 
+    // to be overriden by characters with placement-based systems
+    onPlacementChange() {}
+
     createAnimations() {
         this.extractAnimationsFromSpritesheet("walking", 104, 9)
         this.extractAnimationsFromSpritesheet("idle", 286, 2)
@@ -339,13 +350,13 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return { x: this.x + Math.cos(ang) * r, y: this.y + Math.sin(ang) * r }
     }
 
-    addAura(color: number, maxIntensity: number) {
-        this.aura = this.postFX.addGlow(color, 1, 0)
-        this.aura.outerStrength = 6
-        this.aura.innerStrength = 2
+    addGlow(color: number, maxIntensity: number) {
+        this.auraGlow = this.postFX.addGlow(color, 1, 0)
+        this.auraGlow.outerStrength = 6
+        this.auraGlow.innerStrength = 2
 
         this.scene.tweens.add({
-            targets: this.aura,
+            targets: this.auraGlow,
             outerStrength: { from: 1, to: maxIntensity },
             innerStrength: { from: 1, to: maxIntensity },
             duration: 1500,
@@ -403,9 +414,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     //     })
     // }
 
-    removeAura() {
-        this.aura?.destroy()
-        this.aura = undefined
+    removeAuraGlow() {
+        this.auraGlow?.destroy()
+        this.auraGlow = undefined
     }
 
     onHealFx() {
@@ -796,7 +807,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
-        this.emit("gain-shield", value)
+        this.emit("gain-shield", value, plot?.healer)
     }
 
     heal(value: number, plot?: { healer: Creature; source: string }) {
@@ -811,6 +822,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             if (plot.healer.team === this.scene.playerTeam || plot.healer.team === this.scene.playerTeam.minions) {
                 this.scene.playerTeam.damageChart.plotHealing(plot.healer, healedValue, "healed", plot.source)
             }
+
+            this.emit("healed", healedValue, plot.healer)
         }
     }
 
@@ -864,6 +877,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         if (emit) {
             attacker.emit("dealt-damage", this, finalDamage)
             this.emit("damage-taken", finalDamage, attacker)
+
+            if (crit) {
+                attacker.emit("dealt-damage-crit", this, finalDamage)
+            }
         }
 
         return finalDamage
@@ -1112,6 +1129,16 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
 
         return inRange
+    }
+
+    addAura(aura: Aura) {
+        this.auras.add(aura)
+        aura.tryApply(this)
+    }
+
+    removeAura(aura: Aura) {
+        aura.cleanup(this)
+        this.auras.delete(aura)
     }
 
     destroyUi() {
