@@ -8,8 +8,9 @@ export class LightningBolt extends Projectile {
     bounces = 0
 
     rawDamage: number
+    destroyOnWallHit: boolean = true
 
-    constructor(scene: Game, x: number, y: number,owner: Creature, rawDamage: number, bounces: number) {
+    constructor(scene: Game, x: number, y: number, owner: Creature, rawDamage: number, bounces: number) {
         super(scene, x, y, owner, "lightning_bolt", "lightning")
         this.setScale(0.35)
         this.setSize(this.width * 0.1, this.height * 0.1) // Adjust size as needed
@@ -17,7 +18,18 @@ export class LightningBolt extends Projectile {
 
         this.rawDamage = rawDamage
         this.bounces = bounces
-        this.addLightEffect()
+        this.addLightEffect({
+            color: 0x2525ff,
+            intensity: 10,
+            radius: 45,
+            duration: 10,
+            minRadius: 20,
+            maxRadius: 50,
+            minIntensity: 3,
+            maxIntensity: 20,
+            yoyo: true,
+            repeat: -1,
+        })
 
         if (!this.scene.anims.exists("lightning-bolt")) {
             this.scene.anims.create({
@@ -32,32 +44,32 @@ export class LightningBolt extends Projectile {
         this.play("lightning-bolt")
     }
 
-    private addLightEffect() {
-        if (this.scene.lights) {
-            this.light = this.scene.lights.addLight(this.x, this.y, 45, 0x2525ff, 10)
+    // private addLightEffect() {
+    //     if (this.scene.lights) {
+    //         this.light = this.scene.lights.addLight(this.x, this.y, 45, 0x2525ff, 10)
 
-            this.lightTween = this.scene.tweens.add({
-                targets: this.light,
-                radius: { from: 20, to: 50 },
-                intensity: { from: 3, to: 20 },
-                duration: 10,
-                yoyo: true,
-                repeat: -1,
-                ease: "Sine.easeInOut",
-            })
+    //         this.lightTween = this.scene.tweens.add({
+    //             targets: this.light,
+    //             radius: { from: 20, to: 50 },
+    //             intensity: { from: 3, to: 20 },
+    //             duration: 10,
+    //             yoyo: true,
+    //             repeat: -1,
+    //             ease: "Sine.easeInOut",
+    //         })
 
-            const handleUpdate = () => {
-                if (this.active && this.light) {
-                    this.light.setPosition(this.x, this.y)
-                }
-            }
-            this.scene.events.on("update", handleUpdate)
-            this.once("destroy", () => {
-                this.scene.events.off("update", handleUpdate)
-                this.light = undefined
-            })
-        }
-    }
+    //         const handleUpdate = () => {
+    //             if (this.active && this.light) {
+    //                 this.light.setPosition(this.x, this.y)
+    //             }
+    //         }
+    //         this.scene.events.on("update", handleUpdate)
+    //         this.once("destroy", () => {
+    //             this.scene.events.off("update", handleUpdate)
+    //             this.light = undefined
+    //         })
+    //     }
+    // }
 
     override onHit(target: Creature) {
         if (!target || !this.owner) {
@@ -125,8 +137,4 @@ export class LightningBolt extends Projectile {
         return this
     }
 
-    override onHitWall() {
-        super.onHitWall()
-        this.destroy()
-    }
 }

@@ -1,8 +1,7 @@
-import { FrostStrike } from "../../fx/FrostStrike"
-import { LightParams } from "../../fx/FxSprite"
-import { IceSpike } from "../../fx/IceSpike"
+import { HolyHeal } from "../../fx/HolyHeal"
+import { MagicShieldFx } from "../../fx/MagicShieldFx"
+import { HolyShield } from "../../objects/Projectile/HolyShield"
 import { Game } from "../../scenes/Game"
-import { RNG } from "../../tools/RNG"
 import { Character } from "../character/Character"
 
 export class Lalatina extends Character {
@@ -11,31 +10,33 @@ export class Lalatina extends Character {
     baseMaxMana: number = 80
     baseMaxHealth: number = 500
 
-    abilityName: string = "Holy Shield"
-
-    castsCount = 0
-
-    private light?: Phaser.GameObjects.Light
+    abilityName: string = "Avenging Shield"
 
     constructor(scene: Game, id: string) {
         super(scene, "lalatina", id)
-
     }
 
     override getAbilityDescription(): string {
-        return `Passive: Steals [primary.main:10%] of all damage dealt.
+        return `Lalatina hurls her shield at the target, dealing [info.main:${Math.round(
+            this.attackDamage * 0.5 + this.abilityPower * 0.5
+        )} (50% AP)] [error.main:(50% AD)] holy damage. Bounces 2 times. Also trigger her aura's vow.
 
-1st cast: Strikes the current target with a frost strike, dealing [error.main:${Math.round(
-            this.attackDamage * 2 + this.abilityPower * 0.3
-        )} (200% AD)] [info.main: (30% AP)] damage.
-2nd cast: Strikes the area in front of you, dealing [error.main:${Math.round(
-            this.attackDamage + this.abilityPower * 0.3
-        )} (100% AD)] [info.main: (30% AP)] damage to hit enemies.
-3rd cast: Summons pillars of ice under up to 3 enemies, dealing [error.main:${Math.round(
-            this.attackDamage * 0.75 + this.abilityPower * 0.3
-        )} (75% AD)] [info.main: (30% AP)] damage to each one.`
+Passive: Lalatina grants the team a different aura, based on her starting position.
+
+Front - Protection Aura: Grant 10% armor to all allies. Vow: Grants a shield to nearby allies, absorbing [info.main:${Math.round(
+            this.abilityPower * 0.3
+        )} (30% AP)].
+
+Middle - Smite Aura: When an ally deals critical damage, they smite, dealing [success.main:${Math.round(
+            this.abilityPower * 0.5
+        )} (50% AP)] additional holy damage. Vow: Enemies hit by Avenging Shield burns for [error.main:${Math.round(
+            this.attackDamage * 0.5
+        )} (50% AD)] over 5 seconds.
+
+Back - Guardian Aura: When an ally is healed, they gain a shield equal to part of the amount healed [info.main: (30% AP * healing value)]. Vow: Heal the lowest health ally for [success.main:${Math.round(
+            this.abilityPower * 1.25
+        )} (125% AP)].`
     }
-
 
     override getAttackingAnimation(): string {
         return `attacking`
@@ -48,10 +49,10 @@ export class Lalatina extends Character {
         const onUpdate = (animation: Phaser.Animations.Animation) => {
             if (attacking.find((anim) => anim.key === animation.key)) {
                 this.setOrigin(0.5, 0.6)
-                this.body.setOffset(64, 64) 
+                this.body.setOffset(64, 64)
             } else {
                 this.setOrigin(0.5, 0.75)
-                this.body.setOffset(0, 0) 
+                this.body.setOffset(0, 0)
             }
         }
 
@@ -65,31 +66,29 @@ export class Lalatina extends Character {
         }
 
         this.casting = true
-        this.castsCount += 1
 
         try {
-            switch (this.castsCount) {
-                case 1:
-                    const damage = (this.attackDamage * 2 + this.abilityPower * 0.3) / 2
-                    new FrostStrike(this, this.target, damage, 0.5)
-                    this.scene.time.delayedCall(500, () => {
-                        if (this.target) new FrostStrike(this, this.target, damage, 0.5)
+            const shield = new HolyShield(this.scene, this.x, this.y, this).fire(this.target)
+            const placement = this.getPlacement()
+
+            switch (placement) {
+                case "front":
+                    const allies = this.getAlliesInRange(100)
+                    allies.push(this)
+                    allies.forEach((ally) => {
+                        new MagicShieldFx(this.scene, ally.x, ally.y, 0.4)
+                        ally.gainShield(this.abilityPower * 0.3, { healer: this, source: this.abilityName })
                     })
                     break
-                case 2:
-                    new FrostStrike(this, this.target, this.attackDamage + this.abilityPower * 0.3, 1.4)
+                case "middle":
+                    shield.applyBurn = true
                     break
-                case 3:
-                    const targets = 3
-                    const enemies = this.target.team.getChildren(true, true)
-                    for (let i = 1; i <= targets; i++) {
-                        const iceSpikesDamage = this.calculateDamage(this.attackDamage * 0.75 + this.abilityPower * 0.3)
-                        const target = RNG.pick(enemies)
-                        new IceSpike(this.scene || target.scene, target)
-                        target.takeDamage(iceSpikesDamage.value, this, "cold", iceSpikesDamage.crit, true, this.abilityName)
+                case "back":
+                    const ally = this.team.getLowestHealth()
+                    if (ally) {
+                        new HolyHeal(this.scene, ally.x, ally.y)
+                        ally.heal(this.abilityPower * 1.25, { healer: this, source: this.abilityName })
                     }
-
-                    this.castsCount = 0
                     break
             }
         } catch (error) {}
@@ -99,7 +98,6 @@ export class Lalatina extends Character {
 
     override refreshStats(): void {
         super.refreshStats()
-        this.castsCount = 0
     }
 
     override update(time: number, delta: number): void {

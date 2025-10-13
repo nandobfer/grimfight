@@ -8,6 +8,7 @@ const sprite = "wind2"
 
 export class WindRazor extends Projectile {
     animKey = animKey
+    destroyOnWallHit: boolean = true
 
     constructor(scene: Game, x: number, y: number, owner: Creature) {
         super(scene, x, y, owner, sprite, "normal")
@@ -15,6 +16,11 @@ export class WindRazor extends Projectile {
         this.setScale(0.5)
 
         this.initAnimation()
+        this.addLightEffect({
+            color: 0x00ff88,
+            intensity: 1,
+            radius: 30,
+        })
     }
 
     initAnimation() {
@@ -30,5 +36,6 @@ export class WindRazor extends Projectile {
 
         this.play(animKey)
     }
+
     override onHit(target: Creature) {}
 }

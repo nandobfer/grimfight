@@ -4,6 +4,7 @@ import { Game } from "../../scenes/Game"
 import { Creature } from "../../creature/Creature"
 import { DamageType } from "../../ui/DamageNumbers"
 import { EventBus } from "../../tools/EventBus"
+import { LightParams } from "../../fx/FxSprite"
 
 export class Projectile extends Phaser.Physics.Arcade.Sprite {
     owner: Creature
@@ -11,6 +12,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     startY = 0
     speed = 500
     damageType: DamageType
+    destroyOnWallHit = false
     light?: Phaser.GameObjects.Light
 
     declare scene: Game
@@ -109,6 +111,42 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     onHitWall() {
         this.scene?.onHitFx(this.damageType, this.x, this.y)
         this.setVelocity(0)
+        if (this.destroyOnWallHit) {
+            this.destroy(true)
+        }
+    }
+
+    addLightEffect(lightParams: LightParams) {
+        if (this.scene.lights) {
+            this.light = this.scene.lights.addLight(this.x, this.y, lightParams.radius, lightParams.color, lightParams.intensity)
+            // store tween so we can stop/remove it on destroy to avoid leaks
+            this.lightTween = this.scene.tweens.add({
+                targets: this.light,
+                radius: { from: lightParams.minRadius, to: lightParams.maxRadius },
+                intensity: { from: lightParams.minIntensity, to: lightParams.maxIntensity },
+                duration: lightParams.duration,
+                yoyo: lightParams.yoyo ?? true,
+                repeat: lightParams.repeat ?? -1,
+                ease: "Sine.easeInOut",
+            })
+
+            const handleUpdate = () => {
+                if (this.active && this.light) {
+                    this.light.setPosition(this.x, this.y)
+                }
+            }
+            this.scene.events.on("update", handleUpdate)
+            this.once("destroy", () => {
+                this.scene.events.off("update", handleUpdate)
+                // stop tweening orphaned objects
+                if (this.lightTween) {
+                    this.lightTween.stop()
+                    this.scene.tweens.remove(this.lightTween)
+                    this.lightTween = undefined
+                }
+                this.light = undefined
+            })
+        }
     }
 
     destroy(fromScene?: boolean): void {

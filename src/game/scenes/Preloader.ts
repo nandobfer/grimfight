@@ -51,6 +51,7 @@ export class Preloader extends Scene {
 
         this.load.spritesheet("statikk_attacking", `spritesheets/characters/statikk_attacking.png`, { frameWidth: 128 })
         this.load.spritesheet("arthas_attacking", `spritesheets/characters/arthas_attacking.png`, { frameWidth: 192 })
+        this.load.spritesheet("lalatina_attacking", `spritesheets/characters/lalatina_attacking.png`, { frameWidth: 192 })
         this.load.spritesheet("goldcoin", `gold.png`, { frameWidth: 60, frameHeight: 64 })
         this.load.image("shopkeeper", "shopkeeper.webp")
     }

@@ -9,6 +9,7 @@ const sprite = "deathbolt"
 export class Deathbolt extends Projectile {
     animKey = animKey
     speed = 400
+    destroyOnWallHit: boolean = true
 
     constructor(scene: Game, x: number, y: number, owner: Creature) {
         super(scene, x, y, owner, sprite, "dark")

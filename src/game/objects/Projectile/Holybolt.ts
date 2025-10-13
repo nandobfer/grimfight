@@ -9,12 +9,13 @@ const sprite = "holybolt"
 export class Holybolt extends Projectile {
     animKey = animKey
     speed = 400
+    destroyOnWallHit: boolean = true
 
     constructor(scene: Game, x: number, y: number, owner: Creature) {
         super(scene, x, y, owner, sprite, "holy")
         this.toggleFlipY()
         this.toggleFlipX()
-        this.setScale(0.5)
+        this.setScale(0.35)
         this.initAnimation()
     }
 

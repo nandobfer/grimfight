@@ -10,6 +10,7 @@ export class HolyHeal extends FxSprite {
 
     constructor(scene: Game, x: number, y: number, scale = 0.5) {
         super(scene, x, y, sprite, scale)
+        this.addLightEffect({color: 0xfff176, intensity: 3, radius: 100})
     }
 
     override initAnimation() {
@@ -25,4 +26,6 @@ export class HolyHeal extends FxSprite {
 
         this.play(animKey)
     }
+
+    
 }

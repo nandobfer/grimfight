@@ -5,8 +5,9 @@ import { Projectile } from "./Projectile"
 
 export class Fireball extends Projectile {
     speed = 400
+    destroyOnWallHit: boolean = true
 
-    constructor(scene: Game, x: number, y: number,owner: Creature) {
+    constructor(scene: Game, x: number, y: number, owner: Creature) {
         super(scene, x, y, owner, "fireball0", "fire")
         this.setScale(0.075, 0.075)
         this.toggleFlipY()
@@ -73,9 +74,5 @@ export class Fireball extends Projectile {
         }
 
         super.onHit(target)
-    }
-    override onHitWall() {
-        super.onHitWall()
-        this.destroy()
     }
 }
