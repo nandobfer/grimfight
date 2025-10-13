@@ -20,6 +20,8 @@ import { Dracula } from "./classes/Dracula"
 import { Rukia } from "./classes/Rukia"
 import { Ymir } from "./classes/Ymir"
 import { Chichi } from "./classes/Chichi"
+import { Lalatina } from "./classes/Lalatina"
+import { Melo } from "./classes/Melo"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -81,3 +83,6 @@ CharacterRegistry.register("dracula", Dracula)
 CharacterRegistry.register("rukia", Rukia)
 CharacterRegistry.register("ymir", Ymir)
 CharacterRegistry.register("chichi", Chichi)
+CharacterRegistry.register("lalatina", Lalatina)
+CharacterRegistry.register("melo", Melo)
+
