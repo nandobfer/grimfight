@@ -1,6 +1,7 @@
 import { RNG } from "../../tools/RNG"
 import { AssassinTrait } from "./AssassinTrait"
 import { AttackerTrait } from "./AttackerTrait"
+import { ClericTrait } from "./ClericTrait"
 import { ColossusTrait } from "./ColossusTrait"
 import { DeathEaterTrait } from "./DeathEaterTrait"
 import { DruidTrait } from "./DruidTrait"
@@ -83,3 +84,4 @@ TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin"])
 TraitsRegistry.register("Noble", NobleTrait, ["maximus", "jadis", "statikk", "dracula"])
 TraitsRegistry.register("Popsicle", PopsicleTrait, ["reno", "jadis", "rukia", "ymir"])
 TraitsRegistry.register("Holy", HolyTrait, ["lalatina", "melo"])
+TraitsRegistry.register("Cleric", ClericTrait, ["melo"])

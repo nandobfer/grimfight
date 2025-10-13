@@ -920,6 +920,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.healthBar.fadeOut()
         this.manaBar.fadeOut()
 
+        this.team.emit("died", this)
         this.emit("died")
         this.wipeCheck()
     }
