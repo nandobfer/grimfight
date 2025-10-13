@@ -1,7 +1,6 @@
 // src/game/FireHit.ts
 import { Creature } from "../creature/Creature"
 import { FxSprite } from "./FxSprite"
-import { WindBreeze } from "./WindBreezeFx"
 
 const animKey = "soothing_mist"
 const sprite = "wind"
@@ -9,7 +8,6 @@ const sprite = "wind"
 export class SoothingMist extends FxSprite {
     declare target: Creature
     caster: Creature
-    targetFx: FxSprite
 
     constructor(target: Creature, caster: Creature) {
         super(target.scene, target.x, target.y, sprite, 0.5)
@@ -30,8 +28,6 @@ export class SoothingMist extends FxSprite {
         })
 
         this.updateBeamPosition()
-        this.targetFx = new WindBreeze(this.scene, this.target.x, this.target.y)
-        this.targetFx.setDepth(this.depth + 1)
     }
 
     updateBeamPosition() {
@@ -75,12 +71,5 @@ export class SoothingMist extends FxSprite {
         }
 
         this.play(animKey)
-    }
-
-    override destroy(fromScene?: boolean): void {
-        super.destroy(fromScene)
-        if (this.targetFx) {
-            this.targetFx.destroy()
-        }
     }
 }

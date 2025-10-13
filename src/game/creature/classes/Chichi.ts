@@ -7,6 +7,7 @@ import { Character } from "../character/Character"
 import { Creature } from "../Creature"
 import { LeavesFx } from "../../fx/LeavesFx"
 import { WindRazor } from "../../objects/Projectile/WindRazor"
+import { WindBreeze } from "../../fx/WindBreezeFx"
 
 export class Chichi extends Character {
     baseAttackSpeed = 1
@@ -49,6 +50,13 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
         this.soothingMist = new SoothingMist(target, this)
         this.scene.perRoundFx.add(this.soothingMist)
 
+        const sceneRef = this.scene
+        class RenewingMistBreezeFx extends WindBreeze {
+            constructor(target: Creature) {
+                super(sceneRef, target.x, target.y)
+            }
+        }
+
         this.renewingMist = new Hot({
             abilityName: "Renewing Mist",
             duration: 5000,
@@ -57,6 +65,7 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
             target: target,
             user: this.master || this,
             valueType: "total",
+            fx: RenewingMistBreezeFx,
         })
         this.renewingMist.start()
     }

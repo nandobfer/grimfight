@@ -18,8 +18,8 @@ export class WindBreeze extends FxSprite {
                 key: animKey,
                 frames: this.anims.generateFrameNumbers(this.sprite, { start: 0, end: 8 }),
                 frameRate: this.frameRate,
-                repeat: -1,
-                yoyo: true,
+                repeat: 0,
+                // yoyo: true,
             })
         }
 

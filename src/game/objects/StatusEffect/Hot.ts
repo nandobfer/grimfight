@@ -1,3 +1,5 @@
+import { Creature } from "../../creature/Creature"
+import { FxSprite } from "../../fx/FxSprite"
 import { StatusEffect, StatusEffectParams } from "./StatusEffect"
 
 export interface HotParams extends StatusEffectParams {
@@ -5,6 +7,7 @@ export interface HotParams extends StatusEffectParams {
     tickRate: number
     abilityName: string
     valueType: "total" | "perTick"
+    fx?: new (target: Creature) => FxSprite
 }
 
 export class Hot extends StatusEffect {
@@ -13,6 +16,7 @@ export class Hot extends StatusEffect {
     valueType: "total" | "perTick"
     timeSinceLastTick = 0
     abilityName: string
+    fx?: new (target: Creature) => FxSprite
 
     constructor(params: HotParams) {
         super(params)
@@ -22,11 +26,16 @@ export class Hot extends StatusEffect {
         this.abilityName = params.abilityName
         this.valueType = params.valueType
         this.timeSinceLastTick = this.tickRate
+        this.fx = params.fx
     }
 
     tick() {
         const { value, crit } = this.user.calculateDamage(this.valueType === "perTick" ? this.value : this.value / (this.duration / this.tickRate))
         this.target.heal(value, crit, false, { healer: this.user, source: this.abilityName })
+
+        if (this.fx) {
+            new this.fx(this.target)
+        }
     }
 
     override update(delta: number): void {
