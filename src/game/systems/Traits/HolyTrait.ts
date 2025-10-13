@@ -2,14 +2,15 @@ import { Character } from "../../creature/character/Character"
 import { HolyHeal } from "../../fx/HolyHeal"
 import { Trait } from "./Trait"
 
-type TraitBoosts = "healingFactor"
+type TraitBoosts = "healingFactor" | "manaPerSecond"
 
 export class HolyTrait extends Trait {
     name = "Holy"
-    description = "When casting a spell, holy characters heal the lowest health holy ally for {0} of his missing health."
+    description =
+        "Holy characters have {0} bonus mana per second. When casting a spell, holy characters heal the lowest health holy ally for {1} of his missing health."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { healingFactor: 0.1, descriptionParams: ["10%"] }],
-        // [4, { healingFactor: 0.75, descriptionParams: ["25%"] }],
+        [2, { healingFactor: 0.1, manaPerSecond: 3, descriptionParams: ["3", "10%"] }],
+        [4, { healingFactor: 0.15, manaPerSecond: 5, descriptionParams: ["5", "15%"] }],
     ])
 
     constructor(comp: string[]) {
@@ -20,6 +21,8 @@ export class HolyTrait extends Trait {
     override applyModifier(character: Character): void {
         const values = this.stages.get(this.activeStage)
         if (!values) return
+
+        character.addStatValue("manaPerSecond", values.manaPerSecond)
 
         const previousHandler = character.eventHandlers.holyTrait
         if (previousHandler) {
