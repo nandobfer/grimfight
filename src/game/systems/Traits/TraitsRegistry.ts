@@ -4,6 +4,7 @@ import { AttackerTrait } from "./AttackerTrait"
 import { ColossusTrait } from "./ColossusTrait"
 import { DeathEaterTrait } from "./DeathEaterTrait"
 import { DruidTrait } from "./DruidTrait"
+import { HolyTrait } from "./HolyTrait"
 import { IncendiaryTrait } from "./IncendiaryTrait"
 import { NobleTrait } from "./NobleTrait"
 import { PackTrait } from "./PackTrait"
@@ -81,3 +82,4 @@ TraitsRegistry.register("Druid", DruidTrait, ["helyna"])
 TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin"])
 TraitsRegistry.register("Noble", NobleTrait, ["maximus", "jadis", "statikk", "dracula"])
 TraitsRegistry.register("Popsicle", PopsicleTrait, ["reno", "jadis", "rukia", "ymir"])
+TraitsRegistry.register("Holy", HolyTrait, ["lalatina", "melo"])

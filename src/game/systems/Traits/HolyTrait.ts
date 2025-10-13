@@ -21,7 +21,7 @@ export class HolyTrait extends Trait {
         const values = this.stages.get(this.activeStage)
         if (!values) return
 
-        const previousHandler = character.eventHandlers.sorcererTrait
+        const previousHandler = character.eventHandlers.holyTrait
         if (previousHandler) {
             character.off("cast", previousHandler)
         }
@@ -32,22 +32,22 @@ export class HolyTrait extends Trait {
             if (target) {
                 const missingHealthPercent = target.health / target.maxHealth
                 const healAmount = target.maxHealth * values.healingFactor * (1 - missingHealthPercent)
-                target.heal(healAmount, { healer: character, source: this.name })
+                target.heal(healAmount, { healer: character, source: `Trait: ${this.name}` })
                 new HolyHeal(character.scene, target.x, target.y)
             }
         }
 
-        character.eventHandlers.sorcererTrait = castHandler
+        character.eventHandlers.holyTrait = castHandler
 
         character.on("cast", castHandler)
         character.once("destroy", () => this.cleanup(character))
     }
 
     override cleanup(character: Character) {
-        const handler = character.eventHandlers.sorcererTrait
+        const handler = character.eventHandlers.holyTrait
         if (handler) {
             character.off("cast", handler)
-            delete character.eventHandlers.sorcererTrait
+            delete character.eventHandlers.holyTrait
         }
     }
 }
