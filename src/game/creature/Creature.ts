@@ -379,6 +379,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             yoyo: true,
             ease: "Sine.easeInOut",
             onComplete: () => {
+                if (!this.active) return
                 if (this.tempGlow) this.tempGlow.outerStrength = 0
                 if (this.savedPipeline) this.setPipeline(this.savedPipeline)
             },

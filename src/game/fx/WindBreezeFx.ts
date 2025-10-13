@@ -1,0 +1,28 @@
+// src/game/FireHit.ts
+import { FxSprite } from "./FxSprite"
+import { Game } from "../scenes/Game"
+
+const animKey = "wind_breeze"
+const sprite = "wind"
+
+export class WindBreeze extends FxSprite {
+    animKey = animKey
+
+    constructor(scene: Game, x: number, y: number, scale = 0.5) {
+        super(scene, x, y - 16, sprite, scale)
+    }
+
+    override initAnimation() {
+        if (!this.scene.anims.exists(animKey)) {
+            this.scene.anims.create({
+                key: animKey,
+                frames: this.anims.generateFrameNumbers(this.sprite, { start: 0, end: 8 }),
+                frameRate: this.frameRate,
+                repeat: -1,
+                yoyo: true,
+            })
+        }
+
+        this.play(animKey)
+    }
+}

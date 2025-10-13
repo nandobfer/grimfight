@@ -1,9 +1,12 @@
 import { FireEffect } from "../../fx/FireEffect"
 import { Fireball } from "../../objects/Projectile/Fireball"
 import { Hot } from "../../objects/StatusEffect/Hot"
+import { SoothingMist } from "../../fx/SoothingMist"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 import { Creature } from "../Creature"
+import { LeavesFx } from "../../fx/LeavesFx"
+import { WindRazor } from "../../objects/Projectile/WindRazor"
 
 export class Chichi extends Character {
     baseAttackSpeed = 1
@@ -14,7 +17,7 @@ export class Chichi extends Character {
 
     abilityName = "Ki Clone"
     clone: Chichi | undefined = undefined
-    healingBeam?: Phaser.GameObjects.Graphics
+    soothingMist?: SoothingMist
     renewingMist: Hot | undefined = undefined
 
     constructor(scene: Game, id: string) {
@@ -39,24 +42,12 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
     }
 
     createHealingBeam(target: Creature) {
-        if (this.healingBeam) {
-            this.healingBeam.destroy()
+        if (this.soothingMist) {
+            this.soothingMist.destroy()
         }
 
-        this.healingBeam = this.scene.add.graphics()
-        this.healingBeam.setDepth(this.depth + 1)
-        this.healingBeam.setBlendMode(Phaser.BlendModes.ADD)
-        this.scene.perRoundFx.add(this.healingBeam)
-
-        // Animate the beam with a pulsing effect
-        this.scene.tweens.add({
-            targets: this.healingBeam,
-            alpha: { from: 0.8, to: 0.3 },
-            duration: 800,
-            yoyo: true,
-            repeat: -1,
-            ease: "Sine.easeInOut",
-        })
+        this.soothingMist = new SoothingMist(target, this)
+        this.scene.perRoundFx.add(this.soothingMist)
 
         this.renewingMist = new Hot({
             abilityName: "Renewing Mist",
@@ -71,33 +62,17 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
     }
 
     updateHealingBeam(target: Creature) {
-        if (!this.healingBeam || !target.active) return
+        if (!this.soothingMist || !target.active) return
 
-        this.healingBeam.clear()
-
-        // Draw a soft green healing beam
-        const startX = this.x
-        const startY = this.y - 20
-        const endX = target.x
-        const endY = target.y - 20
-
-        // Main beam
-        this.healingBeam.lineStyle(9, 0x00ff88, 0.8)
-        this.healingBeam.lineBetween(startX, startY, endX, endY)
-
-        // Inner bright core
-        this.healingBeam.lineStyle(6, 0x88ffaa, 1)
-        this.healingBeam.lineBetween(startX, startY, endX, endY)
-
-        // Outer glow
-        this.healingBeam.lineStyle(15, 0x00ff44, 0.3)
-        this.healingBeam.lineBetween(startX, startY, endX, endY)
+        // Update the beam position to stretch from caster to target
+        this.soothingMist.target = target
+        this.soothingMist.updateBeamPosition()
     }
 
     destroyHealingBeam() {
-        if (this.healingBeam) {
-            this.healingBeam.destroy()
-            this.healingBeam = undefined
+        if (this.soothingMist) {
+            this.soothingMist.destroy()
+            this.soothingMist = undefined
         }
 
         this.renewingMist?.expire()
@@ -110,18 +85,7 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
         this.clone = this.makeClone()
         this.manaLocked = true
 
-        this.scene.time.delayedCall(5000, () => {
-            if (this.clone) {
-                this.clone.destroyHealingBeam()
-                this.clone.destroy(true)
-                this.clone = undefined
-
-                this.wipeCheck()
-            }
-
-            this.manaLocked = false
-            this.landAttack = super.landAttack.bind(this)
-        })
+        this.scene.time.delayedCall(5000, () => this.destroyClone())
 
         const placement = this.getPlacement()
 
@@ -151,13 +115,14 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
 
                 this.clone.startChanneling()
                 this.clone.teleportTo(this.boardX, this.boardY)
-                this.clone.glowTemporarily(0x00ff88, 5, 4500)
-                
+                // this.clone.glowTemporarily(0x00ff88, 5, 4500)
+
                 // Set initial target for healing
                 this.clone.target = this.clone.newHealerTarget()
 
                 break
         }
+        new LeavesFx(this.scene, this.clone.x, this.clone.y)
 
         this.casting = false
     }
@@ -176,26 +141,29 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
 
         if (this.clone) {
             const { x, y } = this.clone.randomPointAround()
-            const fireball = new Fireball(this.scene, this.clone.x, this.clone.y, this.clone)
-            const orb = new FireEffect(this.scene, x, y)
-            orb.setScale(0.075)
-            orb.setOrigin(0.5, 0.5)
-            orb.setTint(0x00ff88)
-            fireball.setTint(0x00ff88)
+            const razor = new WindRazor(this.scene, this.clone.x, this.clone.y, this.clone)
+            razor.active = false
+            razor.setTint(0x00ff88)
 
-            this.scene.perRoundFx.add(orb)
-            this.scene.tweens.add({ targets: orb, duration: 45, angle: 360, repeat: -1, yoyo: false })
-
-            fireball.onHit = (target) => {
-                fireball.destroy(true)
-                const { value, crit } = this.calculateDamage(this.abilityPower * 0.5 + this.attackDamage * 1)
-                target.takeDamage(value, this, "normal", crit, true, "Ki Orb")
-            }
+            this.scene.perRoundFx.add(razor)
+            // const tween = this.scene.tweens.add({ targets: razor, duration: 45, angle: 360, repeat: -1, yoyo: false })
 
             this.scene.time.delayedCall(Phaser.Math.FloatBetween(200, 800), () => {
-                if (!this.target) return
-                orb.destroy(true)
-                fireball.fire(this.target, x, y)
+                if (!this.clone?.target) {
+                    razor.destroy(true)
+                    return
+                }
+
+                // razor.alreadyOverlaped.clear()
+                razor.onHit = (target) => {
+                    razor.destroy(true)
+                    const { value, crit } = this.calculateDamage(this.abilityPower * 0.5 + this.attackDamage * 1)
+                    target.takeDamage(value, this, "normal", crit, true, "Ki Orb")
+                }
+                razor.active = true
+                // tween.stop()
+                // tween.reset()
+                razor.fire(this.clone.target, x, y)
             })
         }
     }
@@ -215,7 +183,7 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
 
     healerUpdate() {
         if (this.target && this.target.active && this.target.health < this.target.maxHealth) {
-            if (!this.healingBeam) {
+            if (!this.soothingMist) {
                 this.createHealingBeam(this.target)
             }
             this.updateHealingBeam(this.target)
@@ -253,6 +221,20 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
         clone.mana = 0
 
         return clone
+    }
+
+    destroyClone() {
+        if (this.clone) {
+            new LeavesFx(this.scene, this.clone.x, this.clone.y)
+            this.clone.destroyHealingBeam()
+            this.clone.destroy(true)
+            this.clone = undefined
+
+            this.wipeCheck()
+        }
+
+        this.manaLocked = false
+        this.landAttack = super.landAttack.bind(this)
     }
 
     override refreshStats(): void {

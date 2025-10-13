@@ -101,6 +101,8 @@ export class Preloader extends Scene {
         this.load.spritesheet("levelup_fx", "particles/levelup_fx.png", { frameWidth: 192 })
         this.load.spritesheet("dark_particles", "particles/dark_particles.png", { frameWidth: 192 })
         this.load.spritesheet("dark_slash", "particles/dark_slash.png", { frameWidth: 192 })
+        this.load.spritesheet("wind", "particles/windFx.png", { frameWidth: 192 })
+        this.load.spritesheet("wind2", "particles/windFx2.png", { frameWidth: 192 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

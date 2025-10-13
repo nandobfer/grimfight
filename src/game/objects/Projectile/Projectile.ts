@@ -47,7 +47,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         const enemyTeam = owner.getEnemyTeam()
         const overlapTeam = this.scene?.physics.add.overlap(this, enemyTeam, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
-            if (!enemy.active) return
+            if (!enemy.active || !this.active) return
             if (this.alreadyOverlaped.has(enemy)) return
 
             this.alreadyOverlaped.add(enemy)
@@ -57,7 +57,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         if (overlapTeam) this.colliders.push(overlapTeam)
         const overlapMinions = this.scene?.physics.add.overlap(this, enemyTeam.minions, (_arrow, enemyObj) => {
             const enemy = enemyObj as Creature
-            if (!enemy.active) return
+            if (!enemy.active || !this.active) return
             if (this.alreadyOverlaped.has(enemy)) return
 
             this.alreadyOverlaped.add(enemy)
