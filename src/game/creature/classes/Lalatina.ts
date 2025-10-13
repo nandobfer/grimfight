@@ -11,7 +11,7 @@ import { Character } from "../character/Character"
 export class Lalatina extends Character {
     baseAttackSpeed = 0.75
     baseAttackDamage = 30
-    baseMaxMana: number = 80
+    baseMaxMana: number = 135
     baseMaxHealth: number = 500
 
     abilityName: string = "Avenging Shield"
