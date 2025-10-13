@@ -1,17 +1,34 @@
-// src/objects/Arrow.ts
+// src/game/FireHit.ts
 import { Creature } from "../../creature/Creature"
 import { Game } from "../../scenes/Game"
-import { Fireball } from "./Fireball"
+import { Projectile } from "./Projectile"
 
-export class Deathbolt extends Fireball {
+const animKey = "deathbolt"
+const sprite = "deathbolt"
+
+export class Deathbolt extends Projectile {
+    animKey = animKey
     speed = 400
 
     constructor(scene: Game, x: number, y: number, owner: Creature) {
-        super(scene, x, y, owner)
-
-        this.setTint(0x0000ff)
-        this.damageType = "true"
+        super(scene, x, y, owner, sprite, "dark")
+        this.toggleFlipY()
+        this.toggleFlipX()
+        this.setScale(0.5)
+        this.initAnimation()
     }
 
-    override addLightEffect(): void {}
+    initAnimation() {
+        if (!this.scene.anims.exists(animKey)) {
+            this.scene.anims.create({
+                key: animKey,
+                frames: this.anims.generateFrameNumbers(sprite, { start: 0, end: 7 }),
+                frameRate: 15,
+                repeat: -1,
+                yoyo: true,
+            })
+        }
+
+        this.play(animKey)
+    }
 }
