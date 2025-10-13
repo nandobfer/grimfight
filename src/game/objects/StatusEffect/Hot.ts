@@ -30,8 +30,8 @@ export class Hot extends StatusEffect {
     }
 
     tick() {
-        const { value, crit } = this.user.calculateDamage(this.valueType === "perTick" ? this.value : this.value / (this.duration / this.tickRate))
-        this.target.heal(value, crit, false, { healer: this.user, source: this.abilityName })
+        const { value } = this.user.calculateDamage(this.valueType === "perTick" ? this.value : this.value / (this.duration / this.tickRate))
+        this.target.heal(value, { healer: this.user, source: this.abilityName })
 
         if (this.fx) {
             new this.fx(this.target)

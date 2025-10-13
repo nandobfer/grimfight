@@ -30,7 +30,7 @@ export class Spiritvisage extends Item {
             if (this.scene.state !== "fighting") return
             const missingHealthPercent = creature.getMissingHealthFraction()
             const multiplier = 1 - missingHealthPercent
-            creature.heal(creature.maxHealth * factor * multiplier, false, false, { healer: creature, source: this.name })
+            creature.heal(creature.maxHealth * factor * multiplier, { healer: creature, source: this.name })
         }
 
         creature.timeEvents[`spiritvisage_${this.id}`] = this.scene.time.addEvent({ callback: regenLife, loop: true, delay: 1000 })

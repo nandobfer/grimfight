@@ -26,7 +26,7 @@ export class Dragonclaw extends Item {
 
         const regenLife = () => {
             if (this.scene.state !== "fighting") return
-            creature.heal(creature.maxHealth * factor, false, false, { healer: creature, source: this.name })
+            creature.heal(creature.maxHealth * factor, { healer: creature, source: this.name })
             
         }
 

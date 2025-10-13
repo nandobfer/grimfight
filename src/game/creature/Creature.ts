@@ -799,20 +799,17 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.emit("gain-shield", value)
     }
 
-    heal(value: number, crit?: boolean, fx = true, plot?: { healer: Creature; source: string }) {
+    heal(value: number, plot?: { healer: Creature; source: string }) {
         if (!this.active) return
 
+        const beforeHealingHealth = this.health
         this.health = Math.min(this.maxHealth, this.health + value)
         this.healthBar.setValue(this.health, this.maxHealth)
-
-        if (fx) {
-            showDamageText(this.scene, this.x, this.y, Math.round(value), { type: "heal", crit })
-            this.onHealFx()
-        }
+        const healedValue = this.health - beforeHealingHealth
 
         if (plot) {
             if (plot.healer.team === this.scene.playerTeam || plot.healer.team === this.scene.playerTeam.minions) {
-                this.scene.playerTeam.damageChart.plotHealing(plot.healer, value, "healed", plot.source)
+                this.scene.playerTeam.damageChart.plotHealing(plot.healer, healedValue, "healed", plot.source)
             }
         }
     }
@@ -855,7 +852,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.scene.onHitFx(type, this.x, this.y, this)
 
         if (attacker?.lifesteal > 0 && finalDamage > 0) {
-            attacker.heal(finalDamage * (attacker.lifesteal / 100), crit, false, { healer: attacker, source: "Lifesteal" })
+            attacker.heal(finalDamage * (attacker.lifesteal / 100), { healer: attacker, source: "Lifesteal" })
         }
 
         if (this.health <= 0) {
@@ -879,7 +876,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     revive() {
         this.health = 1
         this.active = true
-        this.heal(1, false, false)
+        this.heal(1)
         this.updateDepth()
         this.setRotation(0)
         this.resetUi()

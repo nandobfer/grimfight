@@ -140,8 +140,8 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
         super.landAttack()
 
         if (this.clone) {
-            const { value, crit } = this.calculateDamage(this.abilityPower * 0.1)
-            this.clone.heal(value, crit, false, { healer: this, source: "Enveloping Mist" })
+            const { value } = this.calculateDamage(this.abilityPower * 0.1)
+            this.clone.heal(value, { healer: this, source: "Enveloping Mist" })
         }
     }
 
@@ -182,7 +182,7 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
 
         if (this.clone?.target) {
             const { value, crit } = this.calculateDamage(this.abilityPower * 0.15)
-            this.clone.target.heal(value, crit, false, { healer: this, source: "Vivify" })
+            this.clone.target.heal(value, { healer: this, source: "Vivify" })
         }
     }
 
@@ -249,6 +249,6 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
     override refreshStats(): void {
         super.refreshStats()
 
-        this.mana = this.maxMana * 0.35
+        this.mana = this.maxMana * 0.45
     }
 }

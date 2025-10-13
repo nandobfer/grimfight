@@ -55,7 +55,7 @@ export class Frank extends Character {
     drainLife(target: Creature) {
         const damage = this.calculateDamage(this.abilityPower * 0.4)
         target.takeDamage(damage.value, this, "poison", damage.crit, true, this.abilityName)
-        this.heal(damage.value, damage.crit, true, { healer: this, source: this.abilityName })
+        this.heal(damage.value, { healer: this, source: this.abilityName })
     }
 
     override refreshStats(): void {

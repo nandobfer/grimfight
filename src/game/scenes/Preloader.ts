@@ -103,6 +103,13 @@ export class Preloader extends Scene {
         this.load.spritesheet("dark_slash", "particles/dark_slash.png", { frameWidth: 192 })
         this.load.spritesheet("wind", "particles/windFx.png", { frameWidth: 192 })
         this.load.spritesheet("wind2", "particles/windFx2.png", { frameWidth: 192 })
+        this.load.spritesheet("deathbolt", "particles/deathbolt.png", { frameWidth: 128 })
+        this.load.spritesheet("holy_cross", "particles/holy_cross.png", { frameWidth: 128 })
+        this.load.spritesheet("holy_shield", "particles/holy_shield.png", { frameWidth: 128 })
+        this.load.spritesheet("holy_swords", "particles/holy_swords.png", { frameWidth: 128 })
+        this.load.spritesheet("holy_beam", "particles/holy_beam.png", { frameWidth: 128 })
+        this.load.spritesheet("holybolt", "particles/holybolt.png", { frameWidth: 128 })
+        this.load.spritesheet("purple_channeling", "particles/purple_channeling.png", { frameWidth: 128 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

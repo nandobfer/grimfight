@@ -24,7 +24,7 @@ export class WitsEnd extends Item {
         const afterAttack = (victim: Creature) => {
             const { value, crit } = creature.calculateDamage(creature.abilityPower * 0.2)
             victim.takeDamage(value, creature, "dark", crit, false, this.name)
-            creature.heal(value, crit, true, {healer: creature, source: this.name})
+            creature.heal(value, { healer: creature, source: this.name })
         }
 
         creature.eventHandlers[`witsend_${this.id}`] = afterAttack

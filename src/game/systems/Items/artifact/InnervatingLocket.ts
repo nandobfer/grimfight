@@ -23,7 +23,7 @@ export class InnervatingLocket extends Item {
         }
 
         const onCast = () => {
-            creature.heal(creature.maxHealth * 0.2, false, true, {healer: creature, source: this.name})
+            creature.heal(creature.maxHealth * 0.2, { healer: creature, source: this.name })
         }
 
         creature.eventHandlers[`innervatinglocket_${this.id}`] = onCast
