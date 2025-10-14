@@ -47,8 +47,8 @@ Middle - Smite Aura: When an ally deals critical damage, they smite, dealing [in
         )} (50% AD)] over 5 seconds.
 
 Back - Guardian Aura: When an ally is healed, they gain a shield equal to part of the amount healed [info.main: (30% AP * healing value)]. Vow: Heal the lowest health ally for [info.main:${Math.round(
-            this.abilityPower * 1.5
-        )} (150% AP)].`
+            this.abilityPower * 1.75
+        )} (175% AP)].`
     }
 
     override getAttackingAnimation(): string {
@@ -100,7 +100,7 @@ Back - Guardian Aura: When an ally is healed, they gain a shield equal to part o
                     const ally = this.team.getLowestHealth()
                     if (ally) {
                         new HolyHeal(this.scene, ally.x, ally.y)
-                        ally.heal(this.abilityPower * 1.5, { healer: this, source: this.abilityName })
+                        ally.heal(this.abilityPower * 1.75, { healer: this, source: this.abilityName })
                     }
                     break
             }
@@ -150,6 +150,8 @@ Back - Guardian Aura: When an ally is healed, they gain a shield equal to part o
         if (!this.previousPlacement) {
             this.onPlacementChange()
         }
+
+        this.mana *= this.maxMana * 0.65
     }
 
     override update(time: number, delta: number): void {

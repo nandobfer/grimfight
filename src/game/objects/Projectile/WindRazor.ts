@@ -18,8 +18,8 @@ export class WindRazor extends Projectile {
         this.initAnimation()
         this.addLightEffect({
             color: 0x00ff88,
-            intensity: 1,
-            radius: 30,
+            intensity: 2,
+            radius: 50,
         })
     }
 

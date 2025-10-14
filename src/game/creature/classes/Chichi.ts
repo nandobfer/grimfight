@@ -36,10 +36,10 @@ Middle: The clone dashes towards the fartest enemy, targeting it. Your attacks m
         )} (100% AD)] [info.main:(50% AP)] damage.
 
 Back: The clone channels [success.main:Renewing Mist] at the ally with the lowest health, healing them for [success.main:${Math.round(
-            this.abilityPower * 1.5
-        )}] [info.main:(150% AP)] over 5 seconds. Your attacks triggers [success.main:Vivify] on that ally, instantly healing them for [success.main:${Math.round(
-            this.abilityPower * 0.15
-        )}] [info.main:(15% AP)].`
+            this.abilityPower * 1.75
+        )}] [info.main:(175% AP)] over 5 seconds. Your attacks triggers [success.main:Vivify] on that ally, instantly healing them for [success.main:${Math.round(
+            this.abilityPower * 0.25
+        )}] [info.main:(25% AP)].`
     }
 
     createHealingBeam(target: Creature) {
@@ -60,7 +60,7 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
         this.renewingMist = new Hot({
             abilityName: "Renewing Mist",
             duration: 5000,
-            value: this.abilityPower * 1.5,
+            value: this.abilityPower * 1.75,
             tickRate: 200,
             target: target,
             user: this.master || this,
@@ -181,7 +181,7 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
         super.landAttack()
 
         if (this.clone?.target) {
-            const { value, crit } = this.calculateDamage(this.abilityPower * 0.15)
+            const { value } = this.calculateDamage(this.abilityPower * 0.25)
             this.clone.target.heal(value, { healer: this, source: "Vivify" })
         }
     }

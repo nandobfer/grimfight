@@ -28,9 +28,12 @@ export const TavernDrawer: React.FC<TavernDrawerProps> = (props) => {
         for (const char of characters) {
             const list = map.get(char.name) || []
             list.push(char)
-            map.set(char.name, list)
+            map.set(
+                char.name,
+                list.sort((a, b) => b.level - a.level)
+            )
         }
-        return Array.from(map.entries())
+        return Array.from(map.entries()).sort(([_, a], [__, b]) => b[0].level - a[0].level)
     }, [characters])
 
     const summonedCharsLengthHandler = (characters: Character[]) => {
@@ -120,18 +123,16 @@ export const TavernDrawer: React.FC<TavernDrawerProps> = (props) => {
                             overflowY: "auto",
                         }}
                     >
-                        {uniqueCharacters
-                            .sort(([_, a], [__, b]) => b.reduce((acc, char) => acc + char.level, 0) - a.reduce((acc, char) => acc + char.level, 0))
-                            .map(([key, chars]) => (
-                                <CharacterGroup
-                                    key={key}
-                                    name={key}
-                                    characters={chars}
-                                    tavern={tavern}
-                                    store={store}
-                                    summonedCharactersLength={summonedCharactersLength}
-                                />
-                            ))}
+                        {uniqueCharacters.map(([key, chars]) => (
+                            <CharacterGroup
+                                key={key}
+                                name={key}
+                                characters={chars}
+                                tavern={tavern}
+                                store={store}
+                                summonedCharactersLength={summonedCharactersLength}
+                            />
+                        ))}
                     </Box>
                     {benchBridge.preview && (
                         <Paper sx={{ position: "absolute", top: 0, left: 0, justifyContent: "center", alignItems: "center", width: 1, height: 1 }}>
