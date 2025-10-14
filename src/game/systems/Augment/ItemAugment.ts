@@ -10,7 +10,7 @@ export class ItemAugment extends Augment {
         this.values.items = RNG.weightedPick([1, 1, 1, 2, 3, 5])
         const value = this.values.items
         this.descriptionValues.items = { value: value, color: "warning.main" }
-        this.description = `Gains [items:${value === 3 ? 1 : value}] ${value === 3 ? "completed item" : "components"}`
+        this.description = `Gains [items:${value >= 3 ? 1 : value}] ${value === 3 ? "completed item" : value === 5 ? "artifact" : "components"}`
         this.color = "default"
     }
 
