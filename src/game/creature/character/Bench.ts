@@ -137,7 +137,4 @@ export class Bench {
         return this.characters.reduce((level, char) => (level > char.level ? level : char.level), 0)
     }
 
-    drag(dto: CharacterDto) {
-        const character = CharacterRegistry.load(dto, this.scene)
-    }
 }

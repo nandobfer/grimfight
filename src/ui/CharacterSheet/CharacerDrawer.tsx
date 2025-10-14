@@ -21,8 +21,8 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
     }
 
     const handleClickAway = () => {
-        // if (openingRef.current) return // ignore the click that opened it
-        // handleClose()
+        if (openingRef.current) return // ignore the click that opened it
+        handleClose()
     }
 
     const sellCharacter = (id: string) => {
@@ -54,7 +54,7 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
                 <Drawer
                     open={!!selectedCharacter}
                     onClose={handleClose}
-                    anchor="left"
+                    anchor="right"
                     variant="persistent"
                     slotProps={{
                         paper: {
@@ -63,15 +63,15 @@ export const CharacterDrawer: React.FC<CharacterDrawerProps> = (props) => {
                                 height: "min-content",
                                 maxHeight: "50vh",
                                 overflow: "visible",
-                                pointerEvents: "auto",
+                                pointerEvents: !!selectedCharacter ? "auto" : "none",
                                 marginTop: isMobile ? "20vh" : "30vh",
                                 padding: 2,
                                 gap: 1,
                                 flexDirection: "column",
                                 width: isMobile ? 150 : 200,
                                 overflowY: "auto",
-                                borderTopRightRadius: 10,
-                                borderBottomRightRadius: 10,
+                                borderTopLeftRadius: 10,
+                                borderBottomLeftRadius: 10,
                             },
                         },
                     }}

@@ -15,6 +15,7 @@ import { Traits } from "./Traits/Traits"
 import { GameMenu } from "./GameMenu/GameMenu"
 import { ItemTooltip } from "./ItemTooltip"
 import { ItemAnvilModal } from "./ItemAnvilModal/ItemAnvilModal"
+import { TavernDrawer } from "./Tavern/TavernDrawer"
 
 interface UiProps {}
 
@@ -71,6 +72,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                             <Traits game={game} />
                             <CharacterStoreDrawer game={game} />
                             <CharacterDrawer game={game} />
+                            <TavernDrawer game={game} />
                         </Box>
                         <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
                             <Counters game={game} />

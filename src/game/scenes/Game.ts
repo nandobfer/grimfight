@@ -22,6 +22,7 @@ import { EnemyTeam } from "../creature/monsters/EnemyTeam"
 import { GameRecord } from "../systems/GameRecord"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { Item } from "../systems/Items/Item"
+import { Tavern } from "../systems/Tavern"
 
 export type GameState = "fighting" | "idle"
 
@@ -39,7 +40,7 @@ export interface GameProgressDto {
 export const starting_player_lives = 3
 export const starting_player_gold = 1
 export const max_characters_in_board = 6
-export const max_bench_size = 9
+export const max_bench_size = Infinity
 
 export class Game extends Scene {
     version = "v1.0.8"
@@ -55,6 +56,7 @@ export class Game extends Scene {
     private fireEffects: Phaser.GameObjects.Group
     goldCoinFx: GoldCoinFx
     shopkeeper: Shopkeeper
+    tavern: Tavern
     currentRecord: GameRecord
     availableItems = new Set<Item>()
 
@@ -96,6 +98,7 @@ export class Game extends Scene {
         this.playerTeam = new PlayerTeam(this, true)
         this.enemyTeam = new EnemyTeam(this, true)
         this.shopkeeper = new Shopkeeper(this)
+        this.tavern = new Tavern(this)
 
         this.configurePhysics()
         this.createLight()

@@ -100,7 +100,7 @@ export class Shopkeeper extends Phaser.GameObjects.Image {
 
     renderCharacterCost(character: Character) {
         const cost = this.scene.playerTeam.store.getCost(character.level)
-        this.costText.setText(`VENDER POR  ${cost}`)
+        this.costText.setText(`SELL FOR  ${cost}`)
         this.costText.setVisible(true)
 
         // Position coin to the right of text
@@ -110,7 +110,7 @@ export class Shopkeeper extends Phaser.GameObjects.Image {
     }
 
     hideCharacterCost() {
-        this.costText.setText(`LOJA`)
+        this.costText.setText(`SHOP`)
         this.coinSprite.setVisible(false)
     }
 }

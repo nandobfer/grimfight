@@ -93,7 +93,7 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                     },
                 }}
             >
-                <Paper
+                {/* <Paper
                     sx={{
                         position: "absolute",
                         visibility: "visible",
@@ -106,25 +106,10 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
                         flexDirection: "column",
                     }}
                 >
-                    {/* <MenuItem
-                        onClick={toggleStore}
-                        sx={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderTopLeftRadius: 10,
-                            borderTopRightRadius: 10,
-                            padding: 0,
-                            whiteSpace: "normal",
-                            marginBottom: -1,
-                        }}
-                    >
-                        <ExpandMore fontSize="small" sx={{ transform: !open ? "rotate(180deg)" : undefined, transition: "0.3s" }} />
-                    </MenuItem> */}
                     <BenchList game={game} />
                 </Paper>
 
-                <Divider />
+                <Divider /> */}
                 <Box sx={{ width: 1 }}>
                     <StoreList game={game} playerGold={playerGold} />
                     <Box sx={{ flexDirection: "column", alignItems: "center" }}>

@@ -93,7 +93,7 @@ export class PlayerTeam extends CreatureGroup {
     }
 
     getMatchingCharacters(name: string, level: number) {
-        return this.getChildren().filter((character) => character.name === name && character.level === level)
+        return this.getChildren(false, true).filter((character) => character.name === name && character.level === level)
     }
 
     tryMerge(pivot: Character) {

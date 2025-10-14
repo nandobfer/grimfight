@@ -134,6 +134,8 @@ export class Character extends Creature {
             this.scene.grid.showDropOverlay()
             this.scene.shopkeeper.onCharacterDragGlow(true)
             this.scene.shopkeeper.renderCharacterCost(this)
+            this.scene.tavern.onCharacterDragGlow(true)
+            this.scene.tavern.renderStoreLabel()
             this.scene.grid.showHighlightAtWorld(pointer.worldX, pointer.worldY)
             this.setDepth(this.depth + 1000)
 
@@ -221,6 +223,17 @@ export class Character extends Creature {
                 EventBus.emit("sell-character-shopkeeper", this)
 
                 this.items.forEach((item) => item.drop())
+                return
+            }
+
+            this.scene.tavern.onCharacterDragGlow(false)
+            this.scene.tavern.hideStoreLabel()
+            const tavernBounds = this.scene.tavern.getBounds()
+            if (tavernBounds.contains(pointer.worldX, pointer.worldY)) {
+                this.scene.grid.hideHighlight()
+                this.scene.grid.hideDropOverlay()
+                EventBus.emit("bench-character-tavern", this)
+
                 return
             }
 
