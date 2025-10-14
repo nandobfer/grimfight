@@ -22,7 +22,7 @@ export class GuardianAura extends PaladinAura {
             creature.off("healed", previousHandler)
         }
         const onHealed = (healedValue: number, healer: Creature) => {
-            creature.gainShield(healedValue * 0.3, { healer: this.caster, source: this.name })
+            creature.gainShield(healedValue * 0.3, { healer, source: this.name })
         }
 
         creature.eventHandlers[this.id] = onHealed
