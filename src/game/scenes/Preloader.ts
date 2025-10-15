@@ -109,6 +109,7 @@ export class Preloader extends Scene {
         this.load.spritesheet("holy_beam", "particles/holy_beam.png", { frameWidth: 128 })
         this.load.spritesheet("holybolt", "particles/holybolt.png", { frameWidth: 128 })
         this.load.spritesheet("purple_channeling", "particles/purple_channeling.png", { frameWidth: 128 })
+        this.load.spritesheet("explosive_pumpkin", "particles/explosive_pumpkin.png", { frameWidth: 256, frameHeight: 128 })
         this.loadHealFx()
 
         for (let i = 0; i <= 52; i++) {

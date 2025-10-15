@@ -4,7 +4,6 @@ import { Game, GameState } from "../scenes/Game"
 import { EventBus } from "../tools/EventBus"
 import { Creature } from "../creature/Creature"
 
-
 export interface LightParams {
     color: number
     radius: number
@@ -19,13 +18,14 @@ export interface LightParams {
 }
 
 export class FxSprite extends Phaser.Physics.Arcade.Sprite {
-    private light?: Phaser.GameObjects.Light
-    private lightTween?: Phaser.Tweens.Tween
+    light?: Phaser.GameObjects.Light
+    lightTween?: Phaser.Tweens.Tween
     protected colliders: Phaser.Physics.Arcade.Collider[] = []
     sprite: string
     frameRate = 15
     declare scene: Game
     target?: Creature
+    frameIndexCallback?: number
 
     constructor(scene: Game, x: number, y: number, sprite: string, scale: number, target?: Creature) {
         super(scene, x, y, sprite)
@@ -55,11 +55,26 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         this.once("animationcomplete", () => {
             this.onAnimationComplete()
         })
+
+        this.on("animationupdate", this.onAnimationUpdate, this)
     }
 
     onAnimationComplete() {
         this.cleanup()
     }
+
+    onAnimationUpdate(animation: Phaser.Animations.Animation, frame: Phaser.Animations.AnimationFrame) {
+        try {
+            if (frame.index === this.frameIndexCallback) {
+                this.scene.time.delayedCall(0, () => {
+                    this.executeFrameCallback()
+                })
+            }
+        } catch (error) {}
+    }
+
+    // to be overriden by subclasses
+    executeFrameCallback() {}
 
     initAnimation() {
         if (!this.scene.anims.exists(this.sprite)) {
@@ -82,6 +97,7 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     cleanup() {
         if (this.scene) {
             this.target?.off("move", this.followCharacter, this)
+            this.off("animationupdate", this.onAnimationUpdate, this)
         }
         this.destroy(true)
     }
@@ -119,7 +135,7 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    override destroy(fromScene?: boolean): void {
+    override destroy(fromScene = true): void {
         // destroy any tracked colliders first
         if (this.colliders.length) {
             for (const c of this.colliders) {

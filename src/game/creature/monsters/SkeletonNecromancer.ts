@@ -7,7 +7,7 @@ import { RNG } from "../../tools/RNG"
 import { Skeleton } from "./Skeleton"
 
 export class SkeletonNecromancer extends Skeleton {
-    baseMaxHealth = 300
+    baseMaxHealth = 325
     baseAttackDamage = 30
     baseAttackSpeed = 0.5
     baseAttackRange = 3

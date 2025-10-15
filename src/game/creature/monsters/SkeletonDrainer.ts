@@ -5,14 +5,12 @@ import { SoulParticles } from "../../fx/SoulParticles"
 import { Deathbolt } from "../../objects/Projectile/Deathbolt"
 import { Dot } from "../../objects/StatusEffect/Dot"
 import { Game } from "../../scenes/Game"
-import { Summon } from "../../systems/Summon"
-import { RNG } from "../../tools/RNG"
 import { Skeleton } from "./Skeleton"
 
 export class SkeletonDrainer extends Skeleton {
-    baseMaxHealth = 300
-    baseAttackDamage = 30
-    baseAttackSpeed = 0.5
+    baseMaxHealth = 350
+    baseAttackDamage = 25
+    baseAttackSpeed = 0.75
     baseAttackRange = 3
 
     constructor(scene: Game) {
