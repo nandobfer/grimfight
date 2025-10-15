@@ -333,7 +333,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.extractAnimationsFromSpritesheet("attacking2", 156, 6)
     }
 
-    randomPointAround(frontOnly = false) {
+    randomPointAround(frontOnly = false, backOnly = false) {
         // pick a radius in [min, max]
         const min = 40
         const max = 90
@@ -345,6 +345,11 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             const facingAngle = this.facing === "right" ? 0 : this.facing === "down" ? Math.PI / 2 : this.facing === "left" ? Math.PI : -Math.PI / 2
             const spread = Math.PI / 3 // ±60°
             ang = Phaser.Math.FloatBetween(facingAngle - spread, facingAngle + spread)
+        } else if (backOnly) {
+            const facingAngle = this.facing === "right" ? 0 : this.facing === "down" ? Math.PI / 2 : this.facing === "left" ? Math.PI : -Math.PI / 2
+            const backAngle = facingAngle + Math.PI // opposite direction
+            const spread = Math.PI / 3 // ±60°
+            ang = Phaser.Math.FloatBetween(backAngle - spread, backAngle + spread)
         } else {
             ang = Phaser.Math.FloatBetween(0, Math.PI * 2)
         }

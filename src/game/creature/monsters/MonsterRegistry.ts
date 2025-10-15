@@ -14,6 +14,7 @@ import { SkeletonAssassin } from "./SkeletonAssassin"
 import { SkeletonNecromancer } from "./SkeletonNecromancer"
 import { SkeletonDrainer } from "./SkeletonDrainer"
 import { SkeletonPyromancer } from "./SkeletonPyromancer"
+import { SkeletonCryomancer } from "./SkeletonCryomancer"
 // import { Ifrit } from "./Ifrit"
 
 const CR_1_MONSTER: Record<string, StatsLike> = {
@@ -72,5 +73,6 @@ MonsterRegistry.register("skeleton_assassin", SkeletonAssassin)
 MonsterRegistry.register("skeleton_necromancer", SkeletonNecromancer)
 MonsterRegistry.register("skeleton_drainer", SkeletonDrainer)
 MonsterRegistry.register("skeleton_pyromancer", SkeletonPyromancer)
+MonsterRegistry.register("skeleton_cryomancer", SkeletonCryomancer)
 MonsterRegistry.register("evil_fanatic", EvilFanatic, false)
 MonsterRegistry.register("mantis", Mantis, false)

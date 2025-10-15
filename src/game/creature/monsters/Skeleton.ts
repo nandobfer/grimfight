@@ -18,6 +18,7 @@ export class Skeleton extends Monster {
         "armored_skeleton",
         "skeleton_assassin",
         "skeleton_pyromancer",
+        "skeleton_cryomancer",
         // "skeleton_necromancer"
     ]
 

@@ -19,8 +19,7 @@ export class IceShard extends Projectile {
                 key: `ice-shard`,
                 frames: this.anims.generateFrameNumbers("ice1", { start: 5, end: 7 }),
                 frameRate: 5,
-                repeat: 0,
-                hideOnComplete: false,
+                repeat: -1,
             })
         }
 

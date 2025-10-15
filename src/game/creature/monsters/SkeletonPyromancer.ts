@@ -3,7 +3,6 @@
 import { ExplosivePumpkinFx } from "../../fx/ExplosivePumpkinFx"
 import { Fireball } from "../../objects/Projectile/Fireball"
 import { Game } from "../../scenes/Game"
-import { Creature } from "../Creature"
 import { Skeleton } from "./Skeleton"
 
 export class SkeletonPyromancer extends Skeleton {
