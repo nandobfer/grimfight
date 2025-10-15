@@ -149,9 +149,8 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
         super.landAttack()
 
         if (this.clone) {
-            const { x, y } = this.clone.randomPointAround()
-            const razor = new WindRazor(this.scene, this.clone.x, this.clone.y, this.clone)
-            razor.active = false
+            const { x, y } = this.clone.randomPointAround(false, true)
+            const razor = new WindRazor(this.scene, this.clone.x, this.clone.y, this.clone).setActive(false).setVisible(true)
             razor.setTint(0x00ff88)
 
             this.scene.perRoundFx.add(razor)
