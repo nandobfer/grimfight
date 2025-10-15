@@ -2,8 +2,7 @@ import { Scene } from "phaser"
 import { EventBus } from "../tools/EventBus"
 import { CharacterRegistry } from "../creature/CharacterRegistry"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
-
-const available_monsters = ["skeleton", "armored_skeleton", "zombie", "demonic", "skeleton_archer", "ice_demonic"]
+import { MonsterRegistry } from "../creature/monsters/MonsterRegistry"
 
 export class Preloader extends Scene {
     constructor() {
@@ -27,7 +26,7 @@ export class Preloader extends Scene {
         this.load.image("arena", "dark_arena_2.png")
 
         this.loadSpritesheets(CharacterRegistry.getAllRegistered(), "characters")
-        this.loadSpritesheets(available_monsters, "monsters")
+        this.loadSpritesheets(MonsterRegistry.normalMonstersNames(), "monsters")
         this.loadExtraSprites()
         this.loadRagnarokSprites()
         this.loadParticles()
@@ -76,7 +75,6 @@ export class Preloader extends Scene {
         for (const entry of ItemRegistry.entries()) {
             this.load.image(`item-${entry}`, `items/${entry}.png`)
         }
-
     }
 
     loadParticles() {

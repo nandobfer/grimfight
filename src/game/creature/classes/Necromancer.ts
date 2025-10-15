@@ -1,9 +1,12 @@
 import { DarkSlashFx } from "../../fx/DarkSlashFx"
 import { MagicCircleFx } from "../../fx/MagicCircleFx"
 import { Game } from "../../scenes/Game"
+import { Summon } from "../../systems/Summon"
 import { DeathEaterTrait } from "../../systems/Traits/DeathEaterTrait"
+import { RNG } from "../../tools/RNG"
 import { Character } from "../character/Character"
 import { MonsterRegistry } from "../monsters/MonsterRegistry"
+import { Skeleton } from "../monsters/Skeleton"
 
 export class Necromancer extends Character {
     baseAttackSpeed = 0.85
@@ -49,25 +52,15 @@ Skeleton: Max health: [success.main:${Math.round(skeleton.baseMaxHealth + this.a
     override castAbility(multiplier = 1): void {
         this.casting = true
 
-        const skeleton = MonsterRegistry.create("skeleton", this.scene)
-        skeleton.master = this
-        this.team.minions.add(skeleton)
-        const { x, y } = this.randomPointAround(true)
-        const fx = new MagicCircleFx(this.scene, x, y)
+        const skeleton = Summon.summon(RNG.weightedPick(Skeleton.weightedList), this, {
+            abilityPower: this.abilityPower * 0.15 * multiplier,
+            attackPower: this.abilityPower * 0.15 * multiplier,
+            maxHealth: this.abilityPower * multiplier,
+            scale: this.mapXtoY(Math.min(this.abilityPower, 6000) * multiplier),
+            speed: this.baseSpeed * 2,
+        })
 
-        skeleton.teleportTo(x, y)
-        skeleton.boardX = this.boardX
-        skeleton.boardY = this.boardY
         skeleton.setTint(0x6645aa)
-
-        skeleton.baseAbilityPower += this.abilityPower * 0.15 * multiplier
-        skeleton.baseAttackDamage += this.abilityPower * 0.15 * multiplier
-        skeleton.baseMaxHealth += this.abilityPower * multiplier
-        skeleton.baseScale = this.mapXtoY(Math.min(this.abilityPower, 6000) * multiplier)
-
-        skeleton.baseSpeed = this.baseSpeed * 2
-        skeleton.reset()
-        skeleton.target = this.target
 
         const deathEater = this.team.activeTraits.find((trait) => trait.name === "Deatheater") as DeathEaterTrait | undefined
         if (deathEater) {

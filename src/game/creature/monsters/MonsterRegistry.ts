@@ -9,7 +9,10 @@ import { ArmoredSkeleton } from "./ArmoredSkeleton"
 import { EvilFanatic } from "./EvilFanatic"
 import { Mantis } from "./Mantis"
 import { IceDemonic } from "./IceDemonic"
-import { ArcherSkeleton } from "./ArcherSkeleton"
+import { SkeletonArcher } from "./SkeletonArcher"
+import { SkeletonAssassin } from "./SkeletonAssassin"
+import { SkeletonNecromancer } from "./SkeletonNecromancer"
+import { SkeletonDrainer } from "./SkeletonDrainer"
 // import { Ifrit } from "./Ifrit"
 
 const CR_1_MONSTER: Record<string, StatsLike> = {
@@ -29,9 +32,11 @@ type Ctor = new (scene: Game) => Monster
 
 export class MonsterRegistry {
     private static registry: Map<string, Ctor> = new Map()
+    private static normalRegistry: Map<string, Ctor> = new Map()
 
-    static register(name: string, cls: Ctor) {
+    static register(name: string, cls: Ctor, normal = true) {
         this.registry.set(name, cls)
+        if (normal) this.normalRegistry.set(name, cls)
     }
     static create(name: string, scene: Game): Monster {
         const C = this.registry.get(name)
@@ -41,6 +46,11 @@ export class MonsterRegistry {
     static names(): string[] {
         return [...this.registry.keys()]
     }
+
+    static normalMonstersNames(): string[] {
+        return [...this.normalRegistry.keys()]
+    }
+
     static entries(): Array<{ name: string; ctor: Ctor }> {
         return [...this.registry.entries()].map(([name, ctor]) => ({ name, ctor }))
     }
@@ -56,7 +66,9 @@ MonsterRegistry.register("zombie", Zombie)
 MonsterRegistry.register("demonic", Demonic)
 MonsterRegistry.register("ice_demonic", IceDemonic)
 MonsterRegistry.register("armored_skeleton", ArmoredSkeleton)
-MonsterRegistry.register("archer_skeleton", ArcherSkeleton)
-MonsterRegistry.register("evil_fanatic", EvilFanatic)
-// MonsterRegistry.register("ifrit", Ifrit)
-MonsterRegistry.register("mantis", Mantis)
+MonsterRegistry.register("skeleton_archer", SkeletonArcher)
+MonsterRegistry.register("skeleton_assassin", SkeletonAssassin)
+MonsterRegistry.register("skeleton_necromancer", SkeletonNecromancer)
+MonsterRegistry.register("skeleton_drainer", SkeletonDrainer)
+MonsterRegistry.register("evil_fanatic", EvilFanatic, false)
+MonsterRegistry.register("mantis", Mantis, false)

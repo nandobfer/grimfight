@@ -231,7 +231,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.moveLocked = true
     }
 
-    finishChanneling() {
+    stopChanneling() {
         this.attackLocked = false
         this.manaLocked = false
         this.moveLocked = false
@@ -266,7 +266,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             ease: "Expo.easeOut",
             onComplete: () => {
                 this.emit("move", this, x, y)
-                onComplete?.()
+                try {
+                    onComplete?.()
+                } catch (error) {}
             },
         })
     }
@@ -839,7 +841,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         try {
             showDamageText(this.scene, this.x, this.y, Math.round(finalDamage), { crit, type })
             if (finalDamage > 0 && (attacker.team === this.scene.playerTeam || attacker.team === this.scene.playerTeam.minions)) {
-                const sourceName = attacker.team === this.scene.playerTeam.minions ? `${attacker.name}: ${source}` : source
+                const sourceName = attacker.team === this.scene.playerTeam.minions ? `${attacker.name.replace("_", " ")}: ${source}` : source
                 this.scene.playerTeam.damageChart.plotDamage(attacker.master || attacker, finalDamage, type, sourceName)
             }
         } catch (error) {}

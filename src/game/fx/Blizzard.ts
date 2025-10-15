@@ -76,7 +76,7 @@ export class Blizzard extends FxSprite {
             user: this.caster,
             onExpire: () => {
                 if (!this.caster) return
-                this.caster.finishChanneling()
+                this.caster.stopChanneling()
                 this.cleanup()
             },
             abilityName: this.caster.abilityName,

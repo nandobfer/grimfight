@@ -4,7 +4,7 @@ import { Arrow } from "../../objects/Projectile/Arrow"
 import { Game } from "../../scenes/Game"
 import { Skeleton } from "./Skeleton"
 
-export class ArcherSkeleton extends Skeleton {
+export class SkeletonArcher extends Skeleton {
     baseMaxHealth = 300
     baseAttackDamage = 30
     baseAttackSpeed = 0.75

@@ -10,6 +10,16 @@ export class Skeleton extends Monster {
 
     abilityName = "Slam"
 
+    static weightedList = [
+        "skeleton",
+        "skeleton",
+        "skeleton",
+        "skeleton_archer",
+        "armored_skeleton",
+        "skeleton_assassin",
+        // "skeleton_necromancer"
+    ]
+
     constructor(scene: Game, texture?: string) {
         super(scene, texture || "skeleton")
         this.preferredPosition = "front"

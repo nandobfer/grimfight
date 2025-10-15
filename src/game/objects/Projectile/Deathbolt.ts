@@ -17,6 +17,7 @@ export class Deathbolt extends Projectile {
         this.toggleFlipX()
         this.setScale(0.5)
         this.initAnimation()
+        this.addLightEffect({ color: 0x530083, intensity: 3, radius: 50 })
     }
 
     initAnimation() {
