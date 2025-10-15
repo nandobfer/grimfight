@@ -74,63 +74,17 @@ export class CharacterStore {
         }
     }
 
-    buy(item: StoreItem, recurrentBuy = false) {
-        const name = item.character.name
-        const level = item.character.level
-        const { matchingCharsInBench, matchingCharsInBoard } = this.team.bench.wouldLevelUp(name, level, item.character.id)
-
-        const already = matchingCharsInBench.length + (this.scene.state === "fighting" ? 0 : matchingCharsInBoard.length)
-        const withThis = already + 1
-
-        // other matching items available in the store (excluding this one and sold ones)
-        const matchingInStore: StoreItem[] = this.getMatchingCharacter(item)
-            .filter((i) => i !== item && !i.sold)
-            .sort((a, b) => a.cost - b.cost)
-
-        // Decide if we must chain-buy to make an immediate merge
-        let mustChain = false
-        let nextToBuy: StoreItem[] = []
-
-        if (this.team.bench.isFull()) {
-            if (withThis >= 3) {
-                // Buying this alone will complete a triplet → allowed
-                mustChain = false
-            } else {
-                // Need extra copies from the store to reach 3 right now
-                const need = 3 - withThis
-                if (matchingInStore.length < need) {
-                    // Not enough matches in shop → block purchase
-                    return
-                }
-                nextToBuy = matchingInStore.slice(0, need)
-                const totalCost = item.cost + nextToBuy.reduce((s, it) => s + it.cost, 0)
-
-                if (this.scene.playerGold < totalCost) {
-                    // Can't afford the whole merge package → block purchase
-                    return
-                }
-                mustChain = true
-            }
-        }
+    buy(item: StoreItem) {
+        if (item.sold) return
 
         this.scene.changePlayerGold(this.scene.playerGold - item.cost)
         item.sold = true
         this.team.bench.add(item.character)
 
         // auto summon if empty slot on the board
-        if (this.team.getChildren(false, true).length < this.scene.max_characters_in_board) {
+        if (this.team.getChildren(false, true).length < this.scene.max_characters_in_board && this.scene.state === "idle") {
             this.team.bench.summon(item.character.id)
         }
-
-        if (!recurrentBuy && mustChain) {
-            for (const next of nextToBuy) {
-                // Each is guaranteed affordable and available by the pre-checks above
-                this.buy(next, true)
-            }
-        }
-
-        // persist after the whole operation
-        if (!recurrentBuy) this.save()
     }
 
     getCost(level: number) {
