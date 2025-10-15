@@ -13,10 +13,10 @@ export class Skeleton extends Monster {
     static weightedList = [
         "skeleton",
         "skeleton",
-        "skeleton",
         "skeleton_archer",
         "armored_skeleton",
         "skeleton_assassin",
+        "skeleton_drainer",
         "skeleton_pyromancer",
         "skeleton_cryomancer",
         // "skeleton_necromancer"
