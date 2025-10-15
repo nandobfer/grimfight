@@ -42,7 +42,7 @@ Front - Protection Aura: Grant 15% armor to all allies. Vow: Grants a shield to 
 
 Middle - Smite Aura: When an ally deals critical damage, they smite, dealing [info.main:${Math.round(
             this.abilityPower * 0.5
-        )} (50% AP)] additional holy damage. Vow: Enemies hit by Avenging Shield burns for [error.main:${Math.round(
+        )} (50% AP)] additional holy damage. Vow: Avenging Shield always hits critically and enemies hit burn for [error.main:${Math.round(
             this.attackDamage * 0.5
         )} (50% AD)] over 5 seconds.
 
@@ -95,6 +95,7 @@ Back - Guardian Aura: When an ally is healed, they gain a shield equal to part o
                     break
                 case "middle":
                     shield.applyBurn = true
+                    shield.critGuaranteed = true
                     break
                 case "back":
                     const ally = this.team.getLowestHealth()

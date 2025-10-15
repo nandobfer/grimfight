@@ -12,6 +12,7 @@ export class HolyShield extends Projectile {
     speed = 350
     bounces = 3
     applyBurn = false
+    critGuaranteed = false
     destroyOnWallHit: boolean = true
 
     constructor(scene: Game, x: number, y: number, owner: Creature) {
@@ -20,19 +21,18 @@ export class HolyShield extends Projectile {
         this.setScale(0.85)
         this.initAnimation()
         this.setSize(this.width * 0.05, this.height * 0.05)
-        this.addLightEffect({color: 0xfff176, intensity: 3, radius: 50})
-        
+        this.addLightEffect({ color: 0xfff176, intensity: 3, radius: 50 })
     }
 
     override fire(target: Creature, startX?: number, startY?: number) {
         // Call parent fire method first
         super.fire(target, startX, startY)
-        
+
         // Adjust rotation so the bottom of the shield points toward the enemy
         // Add 90 degrees (π/2 radians) to make the bottom edge the "head" of the projectile
         const currentRotation = this.rotation
         this.setRotation(currentRotation - Math.PI / 2)
-        
+
         return this
     }
 
@@ -52,7 +52,7 @@ export class HolyShield extends Projectile {
 
     onHit(target: Creature): void {
         const { value, crit } = this.owner.calculateDamage(this.owner.attackDamage * 0.5 + this.owner.abilityPower * 0.5)
-        target.takeDamage(value, this.owner, "holy", crit, true, this.owner.abilityName)
+        target.takeDamage(value, this.owner, "holy", this.critGuaranteed || crit, true, this.owner.abilityName)
 
         if (this.applyBurn) this.burn(target)
 
@@ -115,5 +115,4 @@ export class HolyShield extends Projectile {
             user: this.owner,
         }).start()
     }
-
 }
