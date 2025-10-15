@@ -29,6 +29,7 @@ export class Summon {
         summon.baseSpeed = opts?.speed || master.baseSpeed
 
         summon.reset()
+        summon.applyAuras()
         summon.target = master.target
 
         return summon

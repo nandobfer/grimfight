@@ -192,6 +192,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     applyAuras() {
         this.auras?.forEach((aura) => aura.tryApply(this))
         this.team?.auras?.forEach((aura) => aura.tryApply(this))
+        this.master?.team.auras?.forEach((aura) => aura.tryApply(this))
     }
 
     applyAugments() {
