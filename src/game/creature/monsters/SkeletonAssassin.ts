@@ -7,6 +7,7 @@ export class SkeletonAssassin extends Skeleton {
     baseMaxHealth = 200
     baseAttackDamage = 50
     baseAttackSpeed = 1.25
+    baseSpeed: number = 120
 
     baseMaxMana: number = 60
 
