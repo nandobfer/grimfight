@@ -60,6 +60,7 @@ import { WitsEnd } from "./artifact/WitsEnd"
 import { TalismanOfAscension } from "./artifact/TalismanOfAscension"
 import { UnendingDespair } from "./artifact/UnendingDespair"
 import { TitanicHydra } from "./artifact/TitanicHydra"
+import { FlickerBlade } from "./artifact/FlickerBlade"
 export interface Recipe {
     components: [string, string]
     result: string
@@ -229,3 +230,4 @@ ItemRegistry.registerArtifact("witsend", WitsEnd)
 ItemRegistry.registerArtifact("talismanofascension", TalismanOfAscension)
 ItemRegistry.registerArtifact("unendingdespair", UnendingDespair)
 ItemRegistry.registerArtifact("titanichydra", TitanicHydra)
+ItemRegistry.registerArtifact("flickerblade", FlickerBlade)
