@@ -95,14 +95,44 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
 
     // ---- instantiate monsters for each share, scale up to share (mini-boss), adjust last to close gap ----
     const out: Monster[] = []
+    const usedCtors = new Set<RegistryEntry["ctor"]>() // track diversity in this encounter
     let sum = 0
 
     for (let i = 0; i < count; i++) {
         const share = shares[i]
-        // prefer the largest monster that fits the share
-        const fit = pool.filter((p) => p.cr <= share)
-        const pick = (fit.length ? fit : pool.slice(0, 1))[Math.max(0, fit.length - 1)] // largest ≤ share, else smallest
+        // Weighted random selection: prefer monsters closer to share CR, but allow variety
+        let fit = pool.filter((p) => p.cr <= share)
+
+        // Diversity boost: if we have unused monsters, prefer those (unless we're down to last slot)
+        if (usedCtors.size > 0 && i < count - 1) {
+            const unused = fit.filter((p) => !usedCtors.has(p.ctor))
+            if (unused.length > 0) fit = unused
+        }
+
+        let pick: (typeof pool)[0]
+
+        if (!fit.length) {
+            // fallback: use smallest if no one fits
+            pick = pool[0]
+        } else {
+            // Weight by how close to share CR (closer = higher weight)
+            const weights = fit.map((p) => {
+                const ratio = p.cr / Math.max(1e-6, share)
+                // Quadratic weight: monsters at 80-100% of share get highest weight
+                return Math.pow(ratio, 2)
+            })
+            const totalWeight = weights.reduce((a, b) => a + b, 0)
+            let r = rng.next() * totalWeight
+            let idx = 0
+            for (; idx < fit.length; idx++) {
+                r -= weights[idx]
+                if (r <= 0) break
+            }
+            pick = fit[Math.min(idx, fit.length - 1)]
+        }
+
         const m = new pick.ctor(scene)
+        usedCtors.add(pick.ctor)
 
         const base = m.challengeRating
         if (base + 1e-3 < share) scaleToCR(m, share) // mini-boss up to share
