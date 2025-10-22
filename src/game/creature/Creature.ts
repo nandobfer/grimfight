@@ -1163,7 +1163,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     selfUpdate(delta: number) {
-        if (this.health <= 0) {
+        if (this.health <= 0 && this.active) {
             this.die()
             return
         }
