@@ -4,7 +4,7 @@ import { RNG } from "../../tools/RNG"
 import { Monster } from "./Monster"
 
 export class Demonic extends Monster {
-    baseMaxHealth = 2000
+    baseMaxHealth = 300
     baseAttackDamage = 50
     baseAttackSpeed = 0.75
     baseAttackRange = 3
