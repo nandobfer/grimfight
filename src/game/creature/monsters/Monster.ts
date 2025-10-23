@@ -28,9 +28,9 @@ export class Monster extends Creature {
         this.baseMaxHealth *= mult
         this.health = this.baseMaxHealth
 
-        if (this.boss) {
-            mult *= 0.75
-        }
+        // if (this.boss) {
+        //     mult *= 0.75
+        // }
 
         this.baseAttackDamage *= mult
         this.baseAbilityPower *= mult

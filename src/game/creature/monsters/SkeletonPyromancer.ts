@@ -11,6 +11,8 @@ export class SkeletonPyromancer extends Skeleton {
     baseAttackSpeed = 0.75
     baseAttackRange = 2
 
+    abilityName = "Explosive Pumpkin"
+
     constructor(scene: Game) {
         super(scene, "skeleton_pyromancer")
         this.preferredPosition = "middle"
@@ -52,7 +54,7 @@ export class SkeletonPyromancer extends Skeleton {
                     // inside the explosion radius
 
                     const damage = this.calculateDamage(this.abilityPower * 2)
-                    enemy.takeDamage(damage.value, this, "fire", damage.crit)
+                    enemy.takeDamage(damage.value, this, "fire", damage.crit, true, this.abilityName)
                 }
             }
         }

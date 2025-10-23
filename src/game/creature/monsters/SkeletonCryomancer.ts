@@ -10,6 +10,8 @@ export class SkeletonCryomancer extends Skeleton {
     baseAttackSpeed = 0.8
     baseAttackRange = 3
 
+    abilityName = "Frost Barrage"
+
     constructor(scene: Game) {
         super(scene, "skeleton_cryomancer")
         this.preferredPosition = "middle"
@@ -47,7 +49,7 @@ export class SkeletonCryomancer extends Skeleton {
             shard.onHit = (target) => {
                 if (target) {
                     const damage = this.calculateDamage(this.abilityPower * 0.1)
-                    target.takeDamage(damage.value, this, "cold", damage.crit)
+                    target.takeDamage(damage.value, this, "cold", damage.crit, true, this.abilityName)
                 }
 
                 shard.destroy(true)

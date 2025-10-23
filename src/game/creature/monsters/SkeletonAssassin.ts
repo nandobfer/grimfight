@@ -11,6 +11,8 @@ export class SkeletonAssassin extends Skeleton {
 
     baseMaxMana: number = 60
 
+    abilityName = "Shadow Strike"
+
     constructor(scene: Game) {
         super(scene, "skeleton_assassin")
         this.preferredPosition = "middle"
@@ -25,7 +27,7 @@ export class SkeletonAssassin extends Skeleton {
             const position = target.randomPointAround()
             this.dashTo(position.x, position.y, () => {
                 const damage = this.calculateDamage(this.abilityPower)
-                target?.takeDamage(damage.value, this, "normal", damage.crit)
+                target?.takeDamage(damage.value, this, "normal", damage.crit, true, this.abilityName)
             })
             this.target = target
         }

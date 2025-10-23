@@ -13,6 +13,8 @@ export class SkeletonDrainer extends Skeleton {
     baseAttackSpeed = 0.75
     baseAttackRange = 3
 
+    abilityName = "Life Drain"
+
     constructor(scene: Game) {
         super(scene, "skeleton_drainer")
         this.preferredPosition = "back"
@@ -43,7 +45,7 @@ export class SkeletonDrainer extends Skeleton {
         const lifeDrain = new LifeDrain(this.target, this)
 
         const dot = new Dot({
-            abilityName: "Life Drain",
+            abilityName: this.abilityName,
             damageType: "dark",
             duration: 5000,
             target: this.target,

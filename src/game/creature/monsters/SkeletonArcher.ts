@@ -10,6 +10,8 @@ export class SkeletonArcher extends Skeleton {
     baseAttackSpeed = 0.75
     baseAttackRange = 4
 
+    abilityName = "Piercing Shot"
+
     constructor(scene: Game) {
         super(scene, "skeleton_archer")
         this.preferredPosition = "back"
@@ -43,7 +45,7 @@ export class SkeletonArcher extends Skeleton {
 
         arrow.onHit = (target) => {
             const { value, crit } = this.calculateDamage(this.abilityPower * 2)
-            target.takeDamage(value, this, "normal", crit)
+            target.takeDamage(value, this, "normal", crit, true, this.abilityName)
             arrow.destroy()
         }
 
