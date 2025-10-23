@@ -25,7 +25,7 @@ export class Monster extends Creature {
     }
 
     scaleStats(mult: number) {
-        this.baseMaxHealth *= mult
+        this.baseMaxHealth *= mult * 1.25
         this.health = this.baseMaxHealth
 
         // if (this.boss) {
