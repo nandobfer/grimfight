@@ -33,9 +33,9 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
     return (
         <ClickAwayListener onClickAway={closeMenu}>
             <Box sx={{ pointerEvents: "auto" }}>
-                <IconButton onClick={(ev) => setAnchorEl(ev.currentTarget)} sx={{ alignSelf: "end" }} size="small">
-                    <Code />
-                </IconButton>
+                <Button color="inherit" startIcon={<Code />} onClick={(ev) => setAnchorEl(ev.currentTarget)} sx={{ alignSelf: "end" }} size="small">
+                    debug menu
+                </Button>
 
                 <Popper open={!!anchorEl} anchorEl={anchorEl} placement="auto">
                     <Paper sx={{ flexDirection: "column", gap: 1, padding: 1, width: 300 }}>

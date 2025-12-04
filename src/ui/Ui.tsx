@@ -17,6 +17,7 @@ import { ItemTooltip } from "./ItemTooltip"
 import { ItemAnvilModal } from "./ItemAnvilModal/ItemAnvilModal"
 import { TavernDrawer } from "./Tavern/TavernDrawer"
 import { Logo } from "./components/Logo"
+import { DebugMenu } from "./DebugMenu/DebugMenu"
 
 interface UiProps {}
 
@@ -68,9 +69,10 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {loading && <LoadingGame />}
                 {game && (
                     <>
-                        <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
+                        <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none", gap: 1 }}>
                             <ItemAnvilModal game={game} />
                             <PlayerAugments game={game} />
+                            <DebugMenu game={game} />
                             <Traits game={game} />
                             <CharacterStoreDrawer game={game} />
                             <CharacterDrawer game={game} />

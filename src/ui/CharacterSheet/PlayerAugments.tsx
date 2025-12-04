@@ -81,13 +81,6 @@ export const PlayerAugments: React.FC<CharactersRowProps> = (props) => {
             >
                 <Button variant="outlined">Augments x{augments.length}</Button>
             </Tooltip>
-
-            <Box sx={{ alignItems: "center", gap: 1 }}>
-                <Typography sx={{ fontWeight: "bold", marginBottom: 1, marginTop: 1 }}>
-                    {charactersLength} / {max_characters_in_board}
-                </Typography>
-                <DebugMenu game={props.game} />
-            </Box>
         </Box>
     )
 }
