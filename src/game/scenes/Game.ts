@@ -23,7 +23,7 @@ import { GameRecord } from "../systems/GameRecord"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { Item } from "../systems/Items/Item"
 import { Tavern } from "../systems/Tavern"
-import { AnvilAugment } from "../systems/Augment/AnvilAugment"
+import { ArtifactAndCompletedAnvilAugment } from "../systems/Augment/ArtifactAndCompletedAnvilAugment"
 
 export type GameState = "fighting" | "idle"
 
@@ -488,7 +488,7 @@ export class Game extends Scene {
         const playerAugments = Array.from(this.playerTeam.augments.values())
         if (playerAugments.find((augment) => augment.chosenFloor === this.floor)) return
 
-        new AnvilAugment("artifact").onPick(this.playerTeam)
+        new ArtifactAndCompletedAnvilAugment().onPick(this.playerTeam)
     }
 
     resetFloor() {

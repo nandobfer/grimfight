@@ -85,7 +85,13 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
                     }}
                 >
                     {items.map((item) => (
-                        <Button key={item.id} sx={{ padding: 0, height: 1 }} variant="outlined" onClick={() => onChoose(item)}>
+                        <Button
+                            key={item.id}
+                            color={ItemRegistry.isArtifact(item) ? "error" : "info"}
+                            sx={{ padding: 0, height: 1 }}
+                            variant="outlined"
+                            onClick={() => onChoose(item)}
+                        >
                             <ItemTooltipContent item={item} />
                         </Button>
                     ))}

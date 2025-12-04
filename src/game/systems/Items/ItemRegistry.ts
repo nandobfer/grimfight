@@ -146,6 +146,10 @@ export class ItemRegistry {
         return this.componentRegistry.has(item.key)
     }
 
+    static isArtifact(item: Item) {
+        return this.artifactRegistry.has(item.key)
+    }
+
     static getComponentRecipes(key: string) {
         return this.recipes.filter((recipe) => recipe.components.includes(key))
     }
