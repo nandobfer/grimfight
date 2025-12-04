@@ -37,6 +37,6 @@ export class SkeletonAssassin extends Skeleton {
 
     override refreshStats(): void {
         super.refreshStats()
-        this.mana *= this.maxMana * 0.8
+        this.mana *= this.maxMana * 0.9
     }
 }

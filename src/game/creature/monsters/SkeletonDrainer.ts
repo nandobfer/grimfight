@@ -49,7 +49,7 @@ export class SkeletonDrainer extends Skeleton {
             damageType: "dark",
             duration: 5000,
             target: this.target,
-            tickDamage: this.abilityPower * 0.1,
+            tickDamage: this.abilityPower * 0.2,
             tickRate: 750,
             user: this,
             onExpire: () => {

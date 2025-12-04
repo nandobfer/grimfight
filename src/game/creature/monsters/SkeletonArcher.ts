@@ -44,7 +44,7 @@ export class SkeletonArcher extends Skeleton {
         arrow.fire(this.target)
 
         arrow.onHit = (target) => {
-            const { value, crit } = this.calculateDamage(this.abilityPower * 2)
+            const { value, crit } = this.calculateDamage(this.abilityPower * 2.5)
             target.takeDamage(value, this, "normal", crit, true, this.abilityName)
             arrow.destroy()
         }
