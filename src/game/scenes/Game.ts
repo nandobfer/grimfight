@@ -63,7 +63,7 @@ export class Game extends Scene {
 
     playerGold = starting_player_gold
     playerLives = starting_player_lives
-    max_characters_in_board = max_characters_in_board
+    max_characters_in_board = 1
     max_bench_size = max_bench_size
 
     private uiGhost?: Character
@@ -289,8 +289,9 @@ export class Game extends Scene {
                 ghost.resetMouseEvents()
                 this.playerTeam.saveAndEmit()
                 this.playerTeam.bench.remove(ghost.id)
+                this.grid.updateCharacterCount()
             } else {
-                ghost.destroy(true) // cancel: didn’t drop in a valid tile
+                ghost.destroy(true) // cancel: didn't drop in a valid tile
             }
         }
         EventBus.on("ui-drag-end", this.onUiDragEnd)
@@ -329,6 +330,7 @@ export class Game extends Scene {
             character.onBenchDrop()
             this.playerTeam.bench.add(dto) // your Bench.add will emit to UI
             this.dragFromBoard.delete(id)
+            this.grid.updateCharacterCount()
         }
         EventBus.on("bench-drop", this.onBenchDrop)
 
@@ -366,6 +368,11 @@ export class Game extends Scene {
         this.state = state
         this.events.emit("gamestate", this.state)
         EventBus.emit("gamestate", this.state)
+
+        // Update character count display when entering idle state
+        if (state === "idle") {
+            this.grid.updateCharacterCount()
+        }
     }
 
     startRound() {
@@ -485,6 +492,7 @@ export class Game extends Scene {
     }
 
     resetFloor() {
+        this.max_characters_in_board = Math.min(max_characters_in_board, this.floor)
         this.changeState("idle") // wait for player to start
         this.enemyTeam.reset()
         this.playerTeam.reset()
@@ -529,6 +537,7 @@ export class Game extends Scene {
         }
 
         this.resetProgress()
+        this.max_characters_in_board = 1
         this.clearFloor()
         this.buildFloor()
         this.playerTeam.bench.clear()
@@ -814,5 +823,10 @@ export class Game extends Scene {
         })
     }
 
-    update(_time: number, _delta: number): void {}
+    update(_time: number, _delta: number): void {
+        // Update character count display when in idle state
+        if (this.state === "idle") {
+            this.grid.updateCharacterCount()
+        }
+    }
 }

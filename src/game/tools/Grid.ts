@@ -3,6 +3,7 @@ import Phaser from "phaser"
 import { Game } from "../scenes/Game"
 import { Creature } from "../creature/Creature"
 import { Character } from "../creature/character/Character"
+import { convertColorToString, RarityColors } from "./RarityColors"
 
 type Insets = { left: number; right: number; top: number; bottom: number }
 export type PreferredPosition = "front" | "middle" | "back" // one of the 3 available rows. For enemies are the top 3, for player characters are the bottom 3
@@ -24,6 +25,7 @@ export class Grid {
 
     private overlay!: Phaser.GameObjects.Graphics
     private allowedRowStart!: number
+    private characterCountText!: Phaser.GameObjects.Text
 
     constructor(scene: Game, arena: Phaser.GameObjects.Image) {
         this.scene = scene
@@ -67,6 +69,21 @@ export class Grid {
         // bottom 3 rows are valid
         this.allowedRowStart = Math.max(0, this.rows - 3)
         this.redrawOverlay()
+
+        // Character count text - positioned at arena center
+        const centerX = this.left + this.width / 2
+        const centerY = this.top + this.height / 2
+        this.characterCountText = scene.add
+            .text(centerX, centerY, "", {
+                fontSize: "64px",
+                fontFamily: "Arial",
+                color: "#00ff00",
+                stroke: "#000000",
+                strokeThickness: 4,
+            })
+            .setOrigin(0.5)
+            .setDepth(arena.depth + this.depthOverArena + 1)
+            .setVisible(false)
     }
 
     private redrawOverlay() {
@@ -194,10 +211,37 @@ export class Grid {
 
     hideDropOverlay() {
         this.overlay.setVisible(false)
+        this.hideCharacterCount()
     }
 
     showDropOverlay() {
         this.overlay.setVisible(true)
+        this.updateCharacterCount()
+    }
+
+    updateCharacterCount() {
+        const current = this.scene.playerTeam.countActive()
+        const max = this.scene.max_characters_in_board
+        const text = `${current} / ${max}`
+
+        // Show in center with green color when idle and not at max
+        if (this.scene.state === "idle" && current < max) {
+            this.characterCountText.setText(text)
+            this.characterCountText.setColor(convertColorToString(RarityColors.uncommon))
+            this.characterCountText.setVisible(true)
+        }
+        // Show white when grid overlay is visible
+        else if (this.overlay.visible) {
+            this.characterCountText.setText(text)
+            this.characterCountText.setColor(current === max ? "#ffffff" : convertColorToString(RarityColors.uncommon))
+            this.characterCountText.setVisible(true)
+        } else {
+            this.characterCountText.setVisible(false)
+        }
+    }
+
+    hideCharacterCount() {
+        this.characterCountText.setVisible(false)
     }
 
     getBandForRow(row: number, side: "player" | "enemy"): PreferredPosition | null {
