@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class FlickerBlade extends Item {
     key = "flickerblade"
     name = "Flicker Blade"
-    descriptionLines = ["+30% AD", "+30% AP", "+40% AS", "Passive: Gain 1.5% AS, 2% AD and 2% AP when attacking."]
+    descriptionLines = ["+30% AD", "+30% AP", "+40% AS", "Passive: Gain 1% AS, 1% AD and 1% AP when attacking."]
 
     constructor(scene: Game) {
         super(scene, "item-flickerblade")
@@ -23,11 +23,11 @@ export class FlickerBlade extends Item {
         }
 
         const onHit = (victim: Creature) => {
-            creature.addStatPercent("attackSpeed", 1.5)
-            creature.addStatPercent("attackDamage", 2)
-            creature.addStatPercent("abilityPower", 2)
+            creature.addStatPercent("attackSpeed", 1)
+            creature.addStatPercent("attackDamage", 1)
+            creature.addStatPercent("abilityPower", 1)
 
-            if (creature.bonusAttackSpeed) creature.bonusAttackSpeed += creature.baseAttackSpeed * 0.015
+            if (creature.bonusAttackSpeed) creature.bonusAttackSpeed += creature.baseAttackSpeed * 0.01
         }
 
         creature.eventHandlers[`flickerblade_${this.id}`] = onHit

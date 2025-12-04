@@ -5,15 +5,15 @@ import { Item } from "../Item"
 export class Guinsoo extends Item {
     key = "guinsoo"
     name = "Guinsoo's Rage Blade"
-    descriptionLines = ["+35% AS", "Passive: Gains 1.5% AS when attacking"]
-    attackSpeedMultiplier = 0.015
+    descriptionLines = ["+35% AS", "Passive: Gains 1% AS when attacking"]
+    attackSpeedMultiplier = 0.01
 
     constructor(scene: Game) {
         super(scene, "item-guinsoo")
     }
 
     override applyModifier(creature: Creature): void {
-        creature.attackSpeed += creature.baseAttackSpeed * 0.35
+        creature.addStatPercent("attackSpeed", 35)
 
         const previousHandler = creature.eventHandlers[`guinsoo_${this.id}`]
         if (previousHandler) {
@@ -21,9 +21,9 @@ export class Guinsoo extends Item {
         }
 
         const onHit = (victim: Creature) => {
-            const bonusValue = creature.baseAttackSpeed * this.attackSpeedMultiplier
-            creature.attackSpeed += bonusValue
-            if (creature.bonusAttackSpeed) creature.bonusAttackSpeed += bonusValue
+            creature.addStatPercent("attackSpeed", 1)
+
+            if (creature.bonusAttackSpeed) creature.bonusAttackSpeed += creature.baseAttackSpeed * 0.01
         }
 
         creature.eventHandlers[`guinsoo_${this.id}`] = onHit
