@@ -23,6 +23,7 @@ import { GameRecord } from "../systems/GameRecord"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { Item } from "../systems/Items/Item"
 import { Tavern } from "../systems/Tavern"
+import { AnvilAugment } from "../systems/Augment/AnvilAugment"
 
 export type GameState = "fighting" | "idle"
 
@@ -43,7 +44,7 @@ export const max_characters_in_board = 6
 export const max_bench_size = Infinity
 
 export class Game extends Scene {
-    version = "v1.0.8"
+    version = "v1.1.0"
     camera: Phaser.Cameras.Scene2D.Camera
     background: Phaser.GameObjects.Image
     gameText: Phaser.GameObjects.Text
@@ -132,9 +133,11 @@ export class Game extends Scene {
         EventBus.emit("game-ready", this)
         const onGetProgress = () => this.emitProgress()
         const onUiAugment = () => this.handleAugmentsFloor()
+        const onUiAnvil = () => this.handleArtifactsFloor()
         const onUnpause = () => this.game.resume()
         EventBus.on("get-progress", onGetProgress)
         EventBus.on("ui-augment", onUiAugment)
+        EventBus.on("ui-anvil", onUiAnvil)
         EventBus.on("unpause", onUnpause)
         this.installUiDragBridge()
         this.installBenchHoverBridge()
@@ -146,6 +149,7 @@ export class Game extends Scene {
             this.input.keyboard?.off("keydown-ESC", onKeyEsc)
             EventBus.off("get-progress", onGetProgress)
             EventBus.off("ui-augment", onUiAugment)
+            EventBus.off("ui-anvil", onUiAnvil)
             EventBus.off("unpause", onUnpause)
             // UI bridges
             if (this.onUiDragStart) EventBus.off("ui-drag-start", this.onUiDragStart)
@@ -436,10 +440,11 @@ export class Game extends Scene {
         this.resetFloor()
 
         this.handleAugmentsFloor()
+        this.handleArtifactsFloor()
     }
 
     handleEnemiesAugments() {
-        if (this.floor === 1 || (this.floor - 1) % 10 !== 0) {
+        if (this.floor === 1 || (this.floor - 1) % 5 !== 0) {
             return
         }
         const enemiesAugments = Array.from(this.enemyTeam.augments.values())
@@ -452,6 +457,19 @@ export class Game extends Scene {
     }
 
     handleAugmentsFloor() {
+        if (this.floor % 5 !== 0 || this.floor % 10 === 0) {
+            return
+        }
+
+        const playerAugments = Array.from(this.playerTeam.augments.values())
+        if (playerAugments.find((augment) => augment.chosenFloor === this.floor)) return
+
+        const augments = AugmentsRegistry.randomList(3, ["anvil", "item"])
+
+        EventBus.emit("choose-augment", augments)
+    }
+
+    handleArtifactsFloor() {
         if (this.floor % 10 !== 0) {
             return
         }
@@ -459,9 +477,7 @@ export class Game extends Scene {
         const playerAugments = Array.from(this.playerTeam.augments.values())
         if (playerAugments.find((augment) => augment.chosenFloor === this.floor)) return
 
-        const augments = AugmentsRegistry.randomList(3)
-
-        EventBus.emit("choose-augment", augments)
+        new AnvilAugment("artifact").onPick(this.playerTeam)
     }
 
     resetFloor() {

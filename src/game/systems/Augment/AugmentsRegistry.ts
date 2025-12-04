@@ -50,8 +50,8 @@ export class AugmentsRegistry {
         return augment
     }
 
-    static randomList(quantity: number) {
-        return Phaser.Utils.Array.Shuffle(AugmentsRegistry.names())
+    static randomList(quantity: number, exclude: string[] = []) {
+        return Phaser.Utils.Array.Shuffle(AugmentsRegistry.names().filter((item) => !exclude.includes(item)))
             .slice(0, quantity)
             .map((aug) => AugmentsRegistry.create(aug))
     }

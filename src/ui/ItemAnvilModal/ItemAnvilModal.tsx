@@ -15,10 +15,10 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
 
     const [open, setOpen] = useState(false)
     const [items, setItems] = useState<Item[]>([])
+    const [anvilAvailable, setAnvilAvailable] = useState(false)
 
     const handleClose = () => {
         setOpen(false)
-        setItems([])
     }
 
     const onChoose = (chosenItem: Item) => {
@@ -26,15 +26,18 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
         const item = ItemRegistry.create(chosenItem.key, props.game)
         props.game.availableItems.add(item)
         item.dropOnBoard()
+        setAnvilAvailable(false)
     }
 
     useEffect(() => {
         const handler = (items: Item[]) => {
             setOpen(true)
+            setAnvilAvailable(true)
             setItems(items)
         }
 
         EventBus.on("choose-item-anvil", handler)
+        EventBus.emit("ui-anvil")
         return () => {
             EventBus.off("choose-item-anvil", handler)
         }
@@ -42,11 +45,32 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
 
     return (
         <>
-            {/* {augmentAvailable && (
-                <Button variant="outlined" sx={{ pointerEvents: "auto" }} onClick={() => setOpen(true)} color="success">
-                    Aprimoramento disponível!
+            {anvilAvailable && (
+                <Button
+                    variant="outlined"
+                    sx={{
+                        pointerEvents: "auto",
+                        animation: "shinyPulse 2s ease-in-out infinite",
+                        boxShadow: "0 0 15px rgba(76, 175, 80, 0.6)",
+                        "@keyframes shinyPulse": {
+                            "0%, 100%": {
+                                boxShadow: "0 0 15px rgba(76, 175, 80, 0.6), 0 0 25px rgba(76, 175, 80, 0.4)",
+                            },
+                            "50%": {
+                                boxShadow: "0 0 25px rgba(76, 175, 80, 0.9), 0 0 40px rgba(76, 175, 80, 0.6), 0 0 60px rgba(76, 175, 80, 0.3)",
+                            },
+                        },
+                        "&:hover": {
+                            animation: "none",
+                            boxShadow: "0 0 20px rgba(76, 175, 80, 0.8)",
+                        },
+                    }}
+                    onClick={() => setOpen(true)}
+                    color="success"
+                >
+                    Choose an item!
                 </Button>
-            )} */}
+            )}
 
             <Dialog open={open} onClose={handleClose} slotProps={{ paper: { elevation: 0, style: { backgroundColor: "transparent" } } }}>
                 <Box
@@ -60,9 +84,9 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
                         flexDirection: isMobile ? "column" : "row",
                     }}
                 >
-                    {items.map((item, index) => (
-                        <Button sx={{ padding: 0, height: 1 }} variant="outlined" onClick={() => onChoose(item)}>
-                            <ItemTooltipContent item={item} key={item.key + index} />
+                    {items.map((item) => (
+                        <Button key={item.id} sx={{ padding: 0, height: 1 }} variant="outlined" onClick={() => onChoose(item)}>
+                            <ItemTooltipContent item={item} />
                         </Button>
                     ))}
                 </Box>

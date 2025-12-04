@@ -6,10 +6,10 @@ import { ItemRegistry } from "../Items/ItemRegistry"
 import { Augment } from "./Augment"
 
 export class AnvilAugment extends Augment {
-    constructor() {
+    constructor(type?: "component" | "completed" | "artifact") {
         const name = "anvil"
         super(name)
-        this.values.items = RNG.weightedPick([1, 2, 3])
+        this.values.items = type ? (type === "component" ? 1 : type === "completed" ? 2 : 3) : RNG.weightedPick([1, 2, 3])
         const value = this.values.items
         this.descriptionValues.items = { value: value, color: "warning.main" }
         const object = value === 1 ? "component" : value === 2 ? "completed item" : "special artifact"

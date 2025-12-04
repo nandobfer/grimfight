@@ -43,7 +43,28 @@ export const AugmentModal: React.FC<AugmentModalProps> = (props) => {
     return (
         <>
             {augmentAvailable && (
-                <Button variant="outlined" sx={{ pointerEvents: "auto" }} onClick={() => setOpen(true)} color="success">
+                <Button
+                    variant="outlined"
+                    sx={{
+                        pointerEvents: "auto",
+                        animation: "shinyPulse 2s ease-in-out infinite",
+                        boxShadow: "0 0 15px rgba(76, 175, 80, 0.6)",
+                        "@keyframes shinyPulse": {
+                            "0%, 100%": {
+                                boxShadow: "0 0 15px rgba(76, 175, 80, 0.6), 0 0 25px rgba(76, 175, 80, 0.4)",
+                            },
+                            "50%": {
+                                boxShadow: "0 0 25px rgba(76, 175, 80, 0.9), 0 0 40px rgba(76, 175, 80, 0.6), 0 0 60px rgba(76, 175, 80, 0.3)",
+                            },
+                        },
+                        "&:hover": {
+                            animation: "none",
+                            boxShadow: "0 0 20px rgba(76, 175, 80, 0.8)",
+                        },
+                    }}
+                    onClick={() => setOpen(true)}
+                    color="success"
+                >
                     Available Augment!
                 </Button>
             )}

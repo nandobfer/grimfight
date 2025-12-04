@@ -68,6 +68,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                 {game && (
                     <>
                         <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none" }}>
+                            <ItemAnvilModal game={game} />
                             <PlayerAugments game={game} />
                             <Traits game={game} />
                             <CharacterStoreDrawer game={game} />
@@ -83,7 +84,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                         </Box>
 
                         <GameMenu game={game} />
-                        <ItemAnvilModal game={game} />
+
                         <ItemTooltip />
                     </>
                 )}
