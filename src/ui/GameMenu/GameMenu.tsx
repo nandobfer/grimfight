@@ -40,7 +40,7 @@ export const GameMenu:React.FC<GameMenuProps> = (props) => {
 
                 <RecordHistory game={props.game} />
                 <Button variant="outlined" onClick={closeMenu}>
-                    Back
+                    close menu
                 </Button>
             </Box>
         </Dialog>
