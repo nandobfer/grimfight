@@ -122,8 +122,7 @@ export class Game extends Scene {
             }
         }
         const onKeyEsc = () => {
-            this.game.pause()
-            EventBus.emit("open-menu")
+            this.onPause()
         }
 
         this.input.keyboard?.on("keydown-D", onKeyD)
@@ -164,6 +163,11 @@ export class Game extends Scene {
             // dispose charts/listeners bound to this scene
             this.playerTeam?.damageChart?.dispose?.()
         })
+    }
+
+    onPause() {
+        this.game.pause()
+        EventBus.emit("open-menu")
     }
 
     createLight() {

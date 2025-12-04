@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Box, ThemeProvider } from "@mui/material"
+import { Box, Button, ThemeProvider } from "@mui/material"
 import { EventBus } from "../game/tools/EventBus"
 import { useMuiTheme } from "./hooks/useMuiTheme"
 import { GameStateButtons } from "./GameStateButtons/GameStateButtons"
@@ -16,6 +16,7 @@ import { GameMenu } from "./GameMenu/GameMenu"
 import { ItemTooltip } from "./ItemTooltip"
 import { ItemAnvilModal } from "./ItemAnvilModal/ItemAnvilModal"
 import { TavernDrawer } from "./Tavern/TavernDrawer"
+import { Logo } from "./components/Logo"
 
 interface UiProps {}
 
@@ -76,6 +77,14 @@ export const Ui: React.FC<UiProps> = (props) => {
                             <TavernDrawer game={game} />
                         </Box>
                         <Box sx={{ flexDirection: "column", marginLeft: "auto" }}>
+                            <Logo size={150} />
+                            <Button
+                                sx={{ pointerEvents: "auto", width: "min-content", alignSelf: "flex-end", marginTop: 1 }}
+                                variant="outlined"
+                                onClick={() => game.onPause()}
+                            >
+                                Menu
+                            </Button>
                             <Counters game={game} />
                             <Recount />
                             <Box sx={{ flexDirection: "column", marginTop: "auto" }}>
