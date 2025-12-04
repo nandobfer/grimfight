@@ -26,7 +26,7 @@
         "build": "node log.js build & vite build --config vite/config.prod.mjs",
         "dev-nolog": "vite --config vite/config.dev.mjs",
         "build-nolog": "vite build --config vite/config.prod.mjs",
-        "deploy": "yarn build && zip -r joguinho.nandoburgos.dev.zip dist && scp joguinho.nandoburgos.dev.zip boz:/var/www && ssh boz \"cd /var/www && rm -rf joguinho.nandoburgos.dev.bak && mv joguinho.nandoburgos.dev joguinho.nandoburgos.dev.bak && unzip joguinho.nandoburgos.dev.zip && mv dist joguinho.nandoburgos.dev && rm -rf joguinho.nandoburgos.dev.zip\" && rm -rf joguinho.nandoburgos.dev.zip",
+        "deploy": "yarn build && zip -r grimfight.nandoburgos.dev.zip dist && scp grimfight.nandoburgos.dev.zip boz:/var/www && ssh boz \"cd /var/www && rm -rf grimfight.nandoburgos.dev.bak && mv grimfight.nandoburgos.dev grimfight.nandoburgos.dev.bak && unzip grimfight.nandoburgos.dev.zip && mv dist grimfight.nandoburgos.dev && rm -rf grimfight.nandoburgos.dev.zip\" && rm -rf grimfight.nandoburgos.dev.zip",
         "start:electron": "electron-vite preview",
         "dev:electron": "electron-vite dev",
         "build:electron": "electron-vite build"
