@@ -5,7 +5,7 @@ import { Item } from "../Item"
 export class LichBane extends Item {
     key = "lichbane"
     name = "Lich Bane"
-    descriptionLines = ["+40% AP", "Passive: When cast, your next basic attack deals an additional 100% AP as damage."]
+    descriptionLines = ["+40% AP", "Passive: When cast, your next basic attack deals an additional 200% AP as damage."]
 
     constructor(scene: Game) {
         super(scene, "item-lichbane")
@@ -25,9 +25,9 @@ export class LichBane extends Item {
 
             creature.onAttackLand = () => {
                 creature.onAttackLand = original
-                const { value, crit } = creature.calculateDamage(creature.abilityPower)
-                creature.target?.takeDamage(value, creature, 'dark', crit, false, this.name)
-                const normalDamage = creature.onAttackLand('normal')
+                const { value, crit } = creature.calculateDamage(creature.abilityPower * 2)
+                creature.target?.takeDamage(value, creature, "dark", crit, false, this.name)
+                const normalDamage = creature.onAttackLand("normal")
                 return normalDamage + value
             }
         }

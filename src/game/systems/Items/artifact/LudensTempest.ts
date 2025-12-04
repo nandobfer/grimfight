@@ -7,7 +7,7 @@ import { Item } from "../Item"
 export class LudensTempest extends Item {
     key = "ludenstempest"
     name = "Ludens Tempest"
-    descriptionLines = ["+30% AP", "+3 mana per second", "Passive: When cast, deal 100% AP as damage splitted your target and nearby enemies."]
+    descriptionLines = ["+30% AP", "+3 mana per second", "Passive: When cast, deal 200% AP as damage splitted your target and nearby enemies."]
 
     constructor(scene: Game) {
         super(scene, "item-ludenstempest")
@@ -29,7 +29,7 @@ export class LudensTempest extends Item {
                 const projectile = new Deathbolt(this.scene, creature.x, creature.y, creature)
                 projectile.onHit = () => {
                     if (!target.active) return
-                    const { value, crit } = creature.calculateDamage(creature.abilityPower / targets.length)
+                    const { value, crit } = creature.calculateDamage((creature.abilityPower * 2) / targets.length)
                     target.takeDamage(value, creature, "dark", crit, false, this.name)
                     new DarkSlashFx(target)
                     projectile.destroy()
