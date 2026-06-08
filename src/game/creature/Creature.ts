@@ -151,6 +151,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.health = this.maxHealth
         this.moveLocked = false
         this.attackLocked = false
+				this.manaLocked = false
         this.frozen = false
         this.mana = 0
         this.active = true

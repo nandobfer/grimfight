@@ -16,6 +16,7 @@ export class Reno extends Character {
 
     attacksCount = 0
     lastAttackSpeed = 0
+    convertedAttackDamage = 0
 
     constructor(scene: Game, id: string) {
         super(scene, "reno", id)
@@ -26,9 +27,9 @@ export class Reno extends Character {
 
 Passive: Your attack speed is locked at [warning.main:${
             this.baseAttackSpeed
-        }/s], but converts all bonus speed into AD. Current bonus: [error.main:${Math.round(
-            this.getAsMultiplier() * this.attackDamage
-        )}%] [warning.main:(${Math.round(this.getAsMultiplier() * 100)}% bonus AS)]`
+        }/s], but converts all bonus speed into AD. Current bonus: [error.main:+${Math.round(
+            this.convertedAttackDamage
+        )} AD] [warning.main:(${Math.round(this.getAsMultiplier() * 100)}% bonus AS)]`
     }
 
     override getAttackingAnimation(): string {
@@ -63,6 +64,8 @@ Passive: Your attack speed is locked at [warning.main:${
     // criar um tipo de lamina giratoria? glaive? pegar sprite?
     makeBigShot(projectile: IceShard) {
         projectile.setScale(projectile.scale * 5)
+        projectile.setSize(projectile.width * 0.25, projectile.height * 0.25, true)
+        projectile.destroyOnWallHit = true
         projectile.speed += 300
         // this.scene.tweens.add({ targets: projectile, duration: 30, angle: 360, repeat: -1, yoyo: false })
 
@@ -76,7 +79,9 @@ Passive: Your attack speed is locked at [warning.main:${
 
     scaleAdFromAs() {
         const multiplier = this.getAsMultiplier()
-        this.attackDamage *= 1 + multiplier
+        const attackDamageBeforeConversion = this.attackDamage - this.convertedAttackDamage
+        this.convertedAttackDamage = attackDamageBeforeConversion * multiplier
+        this.attackDamage = attackDamageBeforeConversion + this.convertedAttackDamage
         this.lastAttackSpeed = this.attackSpeed
     }
 
@@ -90,6 +95,8 @@ Passive: Your attack speed is locked at [warning.main:${
 
     override refreshStats(): void {
         super.refreshStats()
+        this.convertedAttackDamage = 0
+        this.scaleAdFromAs()
         this.manaLocked = true
         this.attacksCount = 0
     }
