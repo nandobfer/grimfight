@@ -30,7 +30,8 @@
         "deploy": "pnpm build && zip -r grimfight.com.br.zip dist && scp grimfight.com.br.zip burgos@nandoburgos.dev:/var/www && ssh burgos@nandoburgos.dev \"cd /var/www && rm -rf grimfight.com.br.bak && mv grimfight.com.br grimfight.com.br.bak && unzip grimfight.com.br.zip && mv dist grimfight.com.br && rm -rf grimfight.com.br.zip\" && rm -rf grimfight.com.br.zip",
         "start:electron": "electron-vite preview",
         "dev:electron": "electron-vite dev",
-        "build:electron": "electron-vite build"
+        "build:electron": "electron-vite build",
+        "test": "vitest run"
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",
@@ -57,6 +58,7 @@
         "terser": "^5.28.1",
         "typescript": "~5.7.2",
         "typescript-eslint": "^8.26.1",
-        "vite": "^6.3.1"
+        "vite": "^6.3.1",
+        "vitest": "^4.1.8"
     }
 }

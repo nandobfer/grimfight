@@ -23,6 +23,9 @@ import { Chichi } from "./classes/Chichi"
 import { Lalatina } from "./classes/Lalatina"
 import { Melo } from "./classes/Melo"
 import { Freud } from "./classes/Freud"
+import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
+import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
+import { SpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -31,8 +34,13 @@ export class CharacterRegistry {
         new (scene: Game, name: string, id: string, boardX?: number, boardY?: number, dataOnly?: boolean) => Character
     > = new Map()
 
-    static register(name: string, characterClass: new (scene: Game, name: string, id: string) => Character) {
+    static register(name: string, characterClass: new (scene: Game, name: string, id: string) => Character, visual?: CreatureVisualDefinition) {
         this.registry.set(name, characterClass)
+        CreatureVisualRegistry.register(name, visual ?? SpritesheetCreatureVisualDefinition.character(name))
+    }
+
+    static preloadVisuals(scene: Phaser.Scene): void {
+        CreatureVisualRegistry.preload(this.getAllRegistered(), scene)
     }
 
     static create(name: string, scene: Game, id: string, boardX?: number, boardY?: number, dataOnly?: boolean): Character {
