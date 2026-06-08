@@ -1,4 +1,4 @@
-import { Character } from "../../creature/character/Character"
+import type { Character } from "../../creature/character/Character"
 
 export class Trait {
     name: string

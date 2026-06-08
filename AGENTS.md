@@ -136,8 +136,6 @@ Antes de implementar, leia nesta ordem:
 - Atualmente não há suíte de testes configurada no repositório.
 - Quando criar testes, prefira cobrir regras de negócio de jogo: combate, itens, receitas, augments, traits, CR, persistência e estados de round.
 - Foque em comportamento e casos-limite, não em detalhes internos frágeis.
-- Para mudanças sem testes automatizados, valide com build e, quando possível, teste manual no jogo.
-- Verificação mínima recomendada para mudanças em TypeScript: `pnpm build-nolog`.
 - Para mudanças Electron, também valide com `pnpm build:electron` ou `pnpm dev:electron`, conforme aplicável.
 
 ## 12. Checklist mínimo antes de encerrar
@@ -153,5 +151,4 @@ Antes de implementar, leia nesta ordem:
 9. Limpei listeners, timers, tweens, colliders, lights, particles e sprites criados.
 10. Evitei trabalho pesado em `update` e callbacks de alta frequência.
 11. Mantive persistência local consistente e considerei saves existentes.
-12. Rodei `pnpm build-nolog` quando aplicável ou expliquei por que não rodei.
-13. Atualizei documentação quando a mudança alterou comportamento, fluxo, contrato ou regra de jogo.
+12. Atualizei documentação quando a mudança alterou comportamento, fluxo, contrato ou regra de jogo.
