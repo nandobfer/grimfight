@@ -40,7 +40,7 @@ export interface GameProgressDto {
 
 export const starting_player_lives = 3
 export const starting_player_gold = 1
-export const max_characters_in_board = 6
+export const max_characters_in_board = 7
 export const max_bench_size = Infinity
 
 export class Game extends Scene {
