@@ -9,7 +9,7 @@ export class SkeletonAssassin extends Skeleton {
     baseAttackSpeed = 1.25
     baseSpeed: number = 120
 
-    baseMaxMana: number = 60
+    baseMaxMana: number = 90
 
     abilityName = "Shadow Strike"
 
@@ -37,6 +37,6 @@ export class SkeletonAssassin extends Skeleton {
 
     override refreshStats(): void {
         super.refreshStats()
-        this.mana *= this.maxMana * 0.9
+        this.mana *= this.maxMana * 0.5
     }
 }

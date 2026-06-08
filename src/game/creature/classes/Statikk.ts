@@ -19,7 +19,7 @@ export class Statikk extends Character {
 
     override getAbilityDescription(): string {
         return `Passive: Every [primary.main:3rd attack] launches a chain lightning at the target, dealing [info.main:${Math.round(
-            this.abilityPower * 0.75
+            this.abilityPower * 1
         )} (75% AP)] damage and propagates 5 times, dealing reduced damage with each propagation`
     }
 
@@ -54,7 +54,7 @@ export class Statikk extends Character {
         if (this.attacksCount === 3) {
             this.attacksCount = 0
 
-            const lightning = new LightningBolt(this.scene, this.x, this.y, this, this.abilityPower * 0.75, 5)
+            const lightning = new LightningBolt(this.scene, this.x, this.y, this, this.abilityPower * 1, 5)
             lightning.fire(this.target)
         }
     }

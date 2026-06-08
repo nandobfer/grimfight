@@ -56,9 +56,9 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
         .sort((a, b) => a.cr - b.cr)
     const minCR = pool[0]?.cr ?? 1
 
-    // ---- choose enemy count in [2..6], respecting CR (never 1 except very early floors) ----
+    // ---- choose enemy count in [2..7], respecting CR (never 1 except very early floors) ----
     const tol = 0.35
-    const hardMax = 6
+    const hardMax = 7
     // must satisfy: count * minCR <= targetCR + tol  (we can scale UP, not down)
     let maxByCR = Math.floor((targetCR + tol) / Math.max(1e-6, minCR))
     maxByCR = Math.max(1, Math.min(hardMax, maxByCR))
@@ -159,7 +159,7 @@ export function generateEncounter(scene: Game, floor: number, seedBase = 1337): 
         }
     }
 
-    // cap at 6 defensively (should already be)
+    // cap at 7 defensively (should already be)
     while (out.length > hardMax) out.pop()?.destroy()
 
     console.log(CR_CACHE)
