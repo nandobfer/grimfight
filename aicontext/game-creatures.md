@@ -9,4 +9,9 @@ Durante o combate, Rokmora navega em ciclo pelas constelações `archer`, `drago
 
 As fórmulas puras da passiva ficam em `src/game/creature/classes/RokmoraConstellations.ts` para manter a regra testável sem instanciar Phaser.
 
+### Yue
+Yue é uma personagem jogável registrada como `yue`, com os traits `Arcanist` e `Incendiary`. Ela usa os assets duplicados de Megumin como base visual, tem 50 de mana máxima e mantém um ataque básico à distância com `Fireball`.
+
+A habilidade `Fire Ray` escolhe um inimigo ativo e alvejável aleatório, desenha uma linha de fogo reta de Yue até esse alvo por 500ms e aplica dano de fogo ao final da animação. O dano base é `50%` do AP de Yue e passa pelo cálculo padrão de dano/crit do `Creature`. O raio é apenas visual, sem colisão física, e cria uma luz laranja pulsante equivalente ao perfil visual do `Fireball` enquanto cresce.
+
 ## Fixes

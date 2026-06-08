@@ -24,6 +24,7 @@ import { Lalatina } from "./classes/Lalatina"
 import { Melo } from "./classes/Melo"
 import { Freud } from "./classes/Freud"
 import { Rokmora } from "./classes/Rokmora"
+import { Yue } from "./classes/Yue"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -89,3 +90,4 @@ CharacterRegistry.register("lalatina", Lalatina)
 CharacterRegistry.register("melo", Melo)
 CharacterRegistry.register("freud", Freud)
 CharacterRegistry.register("rokmora", Rokmora)
+CharacterRegistry.register("yue", Yue)
