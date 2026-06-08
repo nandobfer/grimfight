@@ -777,8 +777,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return RNG.chance() <= this.critChance + bonus
     }
 
-    calculateDamage(rawValue: number) {
-        const crit = this.tryCrit()
+    calculateDamage(rawValue: number, forceCrit = false) {
+        const crit = forceCrit || this.tryCrit()
         let multiplier = 0
 
         if (crit) {
@@ -1080,32 +1080,35 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this[stat] += value
     }
 
-    getAdjacentAllies() {
+    private getCreaturesInNeighborCells(group: CreatureGroup, includeCurrentCell = false) {
         const grid = this.scene.grid
         const cell = grid.worldToCell(this.x, this.y)
         if (!cell) return []
 
-        const adjacentOffsets = [
-            { col: -1, row: 0 }, // left
-            { col: 1, row: 0 }, // right
-            { col: 0, row: -1 }, // up
-            { col: 0, row: 1 }, // down
-            { col: 1, row: 1 }, // top-right
-            { col: 1, row: -1 }, // top-left
-            { col: -1, row: -1 }, // bottom-left
-            { col: -1, row: 1 }, // bottom-right
-        ]
+        const creatures: Creature[] = []
+        for (const creature of group.getChildren(true, true)) {
+            if (creature === this) continue
 
-        const adjacentAllies = []
-        for (const offset of adjacentOffsets) {
-            const adjacentCell = { col: cell.col + offset.col, row: cell.row + offset.row }
-            const ally = this.team.getCreatureInCell(adjacentCell.col, adjacentCell.row)
-            if (ally && ally !== this) {
-                adjacentAllies.push(ally)
-            }
+            const creatureCell = grid.worldToCell(creature.x, creature.y)
+            if (!creatureCell) continue
+
+            const colDistance = Math.abs(creatureCell.col - cell.col)
+            const rowDistance = Math.abs(creatureCell.row - cell.row)
+            if (colDistance > 1 || rowDistance > 1) continue
+            if (!includeCurrentCell && colDistance === 0 && rowDistance === 0) continue
+
+            creatures.push(creature)
         }
 
-        return adjacentAllies
+        return creatures
+    }
+
+    getAdjacentAllies() {
+        return this.getCreaturesInNeighborCells(this.team)
+    }
+
+    getAdjacentEnemies(includeCurrentCell = false) {
+        return this.getCreaturesInNeighborCells(this.getEnemyTeam(), includeCurrentCell)
     }
 
     getEnemiesInRange(range: number) {
