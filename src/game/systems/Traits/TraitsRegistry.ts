@@ -1,4 +1,5 @@
 import { RNG } from "../../tools/RNG"
+import { ArcanistTrait } from "./ArcanistTrait"
 import { AssassinTrait } from "./AssassinTrait"
 import { AttackerTrait } from "./AttackerTrait"
 import { ClericTrait } from "./ClericTrait"
@@ -73,6 +74,7 @@ export class TraitsRegistry {
 }
 
 TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "arthas", "vania", "laherce", "reno", "chichi"])
+TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud"])
 TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora"])
 TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "frank", "chichi"])
 TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia", "freud"])
@@ -83,5 +85,5 @@ TraitsRegistry.register("Druid", DruidTrait, ["helyna", "rokmora"])
 TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin"])
 TraitsRegistry.register("Noble", NobleTrait, ["maximus", "jadis", "statikk", "dracula"])
 TraitsRegistry.register("Popsicle", PopsicleTrait, ["reno", "jadis", "rukia", "ymir"])
-TraitsRegistry.register("Holy", HolyTrait, ["lalatina", "melo", "freud"])
+TraitsRegistry.register("Holy", HolyTrait, ["lalatina", "melo"])
 TraitsRegistry.register("Cleric", ClericTrait, ["melo"])
