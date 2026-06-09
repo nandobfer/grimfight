@@ -15,6 +15,21 @@ import {
 
 const archerJumpRange = 180
 
+const constellationColors: Record<RokmoraConstellation, number> = {
+    archer: 0x8a6cff,
+    dragon: 0xcd7f32,
+    chalice: 0x88ffbb,
+}
+
+const constellationStars = [
+    { angle: 0, radiusX: 28, radiusY: 10, size: 4.5 },
+    { angle: 0.86, radiusX: 40, radiusY: 15, size: 3.5 },
+    { angle: 1.92, radiusX: 32, radiusY: 12, size: 5 },
+    { angle: 2.74, radiusX: 46, radiusY: 18, size: 3 },
+    { angle: 3.88, radiusX: 34, radiusY: 13, size: 4 },
+    { angle: 4.86, radiusX: 43, radiusY: 16, size: 3.5 },
+]
+
 export class Rokmora extends Character {
     baseAttackSpeed = 0.75
     baseAttackDamage = 30
@@ -27,9 +42,14 @@ export class Rokmora extends Character {
     private activeConstellation: RokmoraConstellation = "archer"
     private constellationElapsed = 0
     private chaliceElapsed = 0
+    private constellationGraphic?: Phaser.GameObjects.Graphics
+    private constellationOrbitTween?: Phaser.Tweens.Tween
+    private constellationPulseTween?: Phaser.Tweens.Tween
+    private constellationFx = { orbit: 0, pulse: 0 }
 
     constructor(scene: Game, id: string) {
         super(scene, "rokmora", id)
+        this.createConstellationFx()
     }
 
     override getAbilityDescription(): string {
@@ -37,7 +57,7 @@ export class Rokmora extends Character {
 
 Passiva: Rokmora navega por constelações durante o combate. Cada constelação dura [primary.main:2 segundos].
 
-[primary.main:Constelação do Arqueiro]: cada ataque dispara uma flecha estelar a partir do alvo atual contra um inimigo próximo, causando [info.main:${Math.round(
+[primary.main:Constelação do Arqueiro]: cada ataque dispara uma flecha estelar a partir de Rokmora contra um inimigo próximo do alvo atual, causando [info.main:${Math.round(
             calculateRokmoraArcherDamage(this.maxHealth, this.abilityPower)
         )} (10% vida máxima + 50% AP)] de dano radiante.
 
@@ -64,7 +84,7 @@ Passiva: Rokmora navega por constelações durante o combate. Cada constelação
         const target = this.getStarArrowTarget(originTarget)
         if (!target) return
 
-        const arrow = new Arrow(this.scene, originTarget.x, originTarget.y, this)
+        const arrow = new Arrow(this.scene, this.x, this.y, this)
         arrow.setTint(0x9f7bff)
         arrow.setScale(0.065, 0.065)
         arrow.addLightEffect({
@@ -84,7 +104,7 @@ Passiva: Rokmora navega por constelações durante o combate. Cada constelação
             this.onHit(enemy)
             arrow.destroy()
         }
-        arrow.fire(target, originTarget.x, originTarget.y)
+        arrow.fire(target, this.x, this.y)
     }
 
     private getStarArrowTarget(originTarget: Creature) {
@@ -122,6 +142,7 @@ Passiva: Rokmora navega por constelações durante o combate. Cada constelação
 
     override update(time: number, delta: number): void {
         super.update(time, delta)
+        this.drawConstellationFx()
 
         if (this.scene.state !== "fighting" || !this.active) return
 
@@ -138,8 +159,95 @@ Passiva: Rokmora navega por constelações durante o combate. Cada constelação
             this.constellationElapsed -= ROKMORA_CONSTELLATION_DURATION_MS
             this.activeConstellation = getNextRokmoraConstellation(this.activeConstellation)
             this.chaliceElapsed = 0
-            this.glowForConstellation()
         }
+    }
+
+    private createConstellationFx() {
+        this.constellationGraphic = this.scene.add.graphics().setDepth(this.depth + 8).setBlendMode(Phaser.BlendModes.ADD)
+
+        this.constellationOrbitTween = this.scene.tweens.add({
+            targets: this.constellationFx,
+            orbit: Math.PI * 2,
+            duration: 5200,
+            repeat: -1,
+            ease: "Linear",
+        })
+
+        this.constellationPulseTween = this.scene.tweens.add({
+            targets: this.constellationFx,
+            pulse: 1,
+            duration: 850,
+            yoyo: true,
+            repeat: -1,
+            ease: "Sine.easeInOut",
+        })
+
+        this.drawConstellationFx()
+    }
+
+    private drawConstellationFx() {
+        if (!this.constellationGraphic?.active) return
+
+        this.constellationGraphic.clear()
+
+        if (!this.active) return
+
+        const color = constellationColors[this.activeConstellation]
+        const centerX = this.x
+        const centerY = this.y - 58
+        const pulse = this.constellationFx.pulse
+        const alpha = 0.45 + pulse * 0.45
+        const lineAlpha = 0.12 + pulse * 0.16
+
+        this.constellationGraphic.setDepth(this.depth + 8)
+        this.constellationGraphic.lineStyle(1, color, lineAlpha)
+
+        let previousX = 0
+        let previousY = 0
+
+        for (let index = 0; index < constellationStars.length; index++) {
+            const star = constellationStars[index]
+            const angle = star.angle + this.constellationFx.orbit
+            const x = centerX + Math.cos(angle) * star.radiusX
+            const y = centerY + Math.sin(angle) * star.radiusY
+            const size = star.size + pulse * 1.7
+
+            if (index > 0) {
+                this.constellationGraphic.lineBetween(previousX, previousY, x, y)
+            }
+
+            this.constellationGraphic.fillStyle(color, alpha * 0.22)
+            this.constellationGraphic.fillCircle(x, y, size * 2.25)
+            this.constellationGraphic.fillStyle(0xffffff, alpha)
+            this.constellationGraphic.fillCircle(x, y, size * 0.42)
+            this.constellationGraphic.lineStyle(1.5, color, alpha)
+            this.constellationGraphic.beginPath()
+            this.constellationGraphic.moveTo(x - size, y)
+            this.constellationGraphic.lineTo(x + size, y)
+            this.constellationGraphic.moveTo(x, y - size)
+            this.constellationGraphic.lineTo(x, y + size)
+            this.constellationGraphic.strokePath()
+
+            previousX = x
+            previousY = y
+        }
+    }
+
+    private cleanupConstellationFx() {
+        if (this.constellationOrbitTween) {
+            this.constellationOrbitTween.stop()
+            this.scene.tweens.remove(this.constellationOrbitTween)
+            this.constellationOrbitTween = undefined
+        }
+
+        if (this.constellationPulseTween) {
+            this.constellationPulseTween.stop()
+            this.scene.tweens.remove(this.constellationPulseTween)
+            this.constellationPulseTween = undefined
+        }
+
+        this.constellationGraphic?.destroy(true)
+        this.constellationGraphic = undefined
     }
 
     private emitChaliceAura() {
@@ -192,8 +300,8 @@ Passiva: Rokmora navega por constelações durante o combate. Cada constelação
         this.scene.events.once("gamestate", stopAura)
     }
 
-    private glowForConstellation() {
-        const color = this.activeConstellation === "archer" ? 0x8a6cff : this.activeConstellation === "dragon" ? 0xcd7f32 : 0x88ffbb
-        this.glowTemporarily(color, 6, 650)
+    override destroy(fromScene?: boolean): void {
+        this.cleanupConstellationFx()
+        super.destroy(fromScene)
     }
 }
