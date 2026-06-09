@@ -20,12 +20,12 @@ Componentes documentados: Belt, Bow, Cloak, Gloves, Rod, Sword, Tear, Vest.
 ### Completed Items
 Itens completos são registrados por `registerCompleted` junto de sua receita. Eles podem aplicar stats diretos, listeners de combate, status effects, timers, efeitos defensivos, efeitos ofensivos ou restrições de equipamento.
 
-Itens completos documentados: Adaptivehelm, Archangelstaff, Bloodthirster, Bluebuff, Bramblevest, Crownguard, Deathblade, Dragonclaw, Evenshroud, Gargoylestoneplate, Giantslayer, Guinsoo, Handofjustice, Hextechgunblade, Infinityedge, Ionicspark, Jeweledgauntlet, Krakenslayer, Lastwhisper, Morello, Nashor, Nightedge, Protectorsvow, Quicksilver, Rabadon, Redbuff, Shojin, Spiritvisage, Steadfastheart, Sterak, Strikersflail, Sunfire, Thiefsgloves, Titanresolve, Voidstaff, Warmog.
+Consulte `aicontext/game-items-completed.md` para o detalhamento individual de cada item completo e a obrigatoriedade de suas remoções de eventos em `cleanup`.
 
 ### Artifacts
 Artifacts são registrados por `registerArtifact` e usam a mesma base `Item`. Eles podem ser entregues por regras especiais, anvils ou encounters e devem seguir o mesmo contrato de modifier e cleanup dos demais itens.
 
-Artifacts documentados: Dawncore, FlickerBlade, GoldCollector, Hullcrusher, InnervatingLocket, LichBane, LudensTempest, Manazane, ProwlersClaw, RapidFireCannon, SeekersArmGuard, TalismanOfAscension, TitanicHydra, TrinityForce, UnendingDespair, WitsEnd.
+Consulte `aicontext/game-items-artifacts.md` para o detalhamento aprofundado das mecânicas únicas exclusivas destes itens raros.
 
 ### Drag Tooltip And Snap
 O drag de item só deve alterar regra de jogo por intenção explícita do usuário. Durante drag, o item mostra tooltip próprio ou tooltip de resultado de merge, detecta criaturas em células do grid e reposiciona o sprite para preview de equipamento.

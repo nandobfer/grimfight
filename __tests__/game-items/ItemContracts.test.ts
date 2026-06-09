@@ -7,6 +7,8 @@ const itemsDir = join(root, "src/game/systems/Items")
 const itemPath = join(itemsDir, "Item.ts")
 const itemRegistryPath = join(itemsDir, "ItemRegistry.ts")
 const contextPath = join(root, "aicontext/game-items.md")
+const completedContextPath = join(root, "aicontext/game-items-completed.md")
+const artifactsContextPath = join(root, "aicontext/game-items-artifacts.md")
 
 type ItemCategory = "components" | "completed" | "artifact"
 
@@ -36,12 +38,22 @@ describe("Item aicontext", () => {
             expect(context).toContain(heading)
         }
 
-        for (const file of [...itemFiles("components"), ...itemFiles("completed"), ...itemFiles("artifact")]) {
-            expect(context).toContain(className(file))
-        }
-
         expect(context).not.toMatch(/[0-9]/)
         expect(context).not.toContain("%")
+    })
+
+    it("documents completed items without numeric balance values", () => {
+        const completedContext = readSource(completedContextPath)
+
+        expect(completedContext).not.toMatch(/[0-9]/)
+        expect(completedContext).not.toContain("%")
+    })
+
+    it("documents artifact items without numeric balance values", () => {
+        const artifactsContext = readSource(artifactsContextPath)
+
+        expect(artifactsContext).not.toMatch(/[0-9]/)
+        expect(artifactsContext).not.toContain("%")
     })
 })
 
@@ -171,5 +183,28 @@ describe("individual item file contracts", () => {
 
         expect(source).toContain("cleanup")
         expect(source).toMatch(/\.off\(|scene\.events\.off/)
+    })
+
+    it.each([
+        ...itemFiles("completed").map((file) => ["completed", file] as const),
+        ...itemFiles("artifact").map((file) => ["artifact", file] as const),
+    ])("%s/%s must call cleanup for any registered event listeners", (category, file) => {
+        const source = readSource(join(itemsDir, category, file))
+        const registersCreatureEvents = source.includes("creature.on(") || source.includes("creature.once(")
+        const registersSceneEvents = source.includes("scene.events.on(") || source.includes("scene.events.once(")
+
+        if (!registersCreatureEvents && !registersSceneEvents) {
+            expect(source).toBeTruthy()
+            return
+        }
+
+        expect(source).toContain("cleanup(creature: Creature)")
+
+        if (registersCreatureEvents) {
+            expect(source).toMatch(/creature\.off\(|creature\.once\("destroy"/)
+        }
+        if (registersSceneEvents) {
+            expect(source).toContain("scene.events.off(")
+        }
     })
 })
