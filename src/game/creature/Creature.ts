@@ -11,6 +11,7 @@ import { Item } from "../systems/Items/Item"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { RNG } from "../tools/RNG"
 import { Aura } from "../systems/Aura/Aura"
+import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
 
 export type Direction = "left" | "up" | "down" | "right"
 
@@ -123,7 +124,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     auras = new Set<Aura>()
 
     constructor(scene: Game, name: string, id: string, dataOnly = false) {
-        super(scene, -1000, -1000, name)
+        const visual = CreatureVisualRegistry.get(name)
+        super(scene, -1000, -1000, visual?.textureKey ?? name, visual?.initialFrame)
 
         this.id = id
         this.name = name
@@ -295,6 +297,12 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     onPlacementChange() {}
 
     createAnimations() {
+        const visual = CreatureVisualRegistry.get(this.name)
+        if (visual) {
+            visual.createAnimations(this)
+            return
+        }
+
         this.extractAnimationsFromSpritesheet("walking", 104, 9)
         this.extractAnimationsFromSpritesheet("idle", 286, 2)
         this.extractAttackingAnimation()

@@ -57,7 +57,7 @@ export class Rokmora extends Character {
 
 Passiva: Rokmora navega por constelações durante o combate. Cada constelação dura [primary.main:2 segundos].
 
-[primary.main:Constelação do Arqueiro]: cada ataque dispara uma flecha estelar a partir de Rokmora contra um inimigo próximo do alvo atual, causando [info.main:${Math.round(
+        [primary.main:Constelação do Arqueiro]: cada ataque dispara uma flecha estelar a partir de Rokmora contra um inimigo próximo do alvo atual, causando [info.main:${Math.round(
             calculateRokmoraArcherDamage(this.maxHealth, this.abilityPower)
         )} (10% vida máxima + 50% AP)] de dano radiante.
 
@@ -65,7 +65,7 @@ Passiva: Rokmora navega por constelações durante o combate. Cada constelação
             this.armor
         )}%] de armadura, cada golpe recebido gera [success.main:${Math.round(Math.max(0, this.armor))}%] do dano como escudo.
 
-[primary.main:Constelação da Taça]: a cada segundo, uma aura verde suave emana de Rokmora. Ela distribui [success.main:${Math.round(
+        [primary.main:Constelação da Taça]: a cada segundo, uma aura verde suave emana de Rokmora. Ela distribui [success.main:${Math.round(
             this.maxHealth * 0.1
         )} (20% da vida máxima)] de cura entre todos os aliados feridos, incluindo Rokmora.`
     }

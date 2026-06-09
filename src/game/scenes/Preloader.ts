@@ -25,7 +25,7 @@ export class Preloader extends Scene {
 
         this.load.image("arena", "dark_arena_2.png")
 
-        this.loadSpritesheets(CharacterRegistry.getAllRegistered(), "characters")
+        CharacterRegistry.preloadVisuals(this)
         this.loadSpritesheets(MonsterRegistry.normalMonstersNames(), "monsters")
         this.loadExtraSprites()
         this.loadRagnarokSprites()
