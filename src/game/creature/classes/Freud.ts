@@ -4,10 +4,10 @@ import { Character } from "../character/Character"
 import { Creature } from "../Creature"
 
 export class Freud extends Character {
-    baseAttackSpeed = 1.35
-    baseAttackDamage = 15
+    baseAttackSpeed = 1
+    baseAttackDamage = 30
     baseAttackRange = 4
-    baseMaxHealth = 200
+    baseMaxHealth = 250
     baseMaxMana: number = 0
     manaLocked: boolean = true
 
@@ -29,17 +29,27 @@ export class Freud extends Character {
         return `Passiva - [primary.main:Mente Ágil]: quando um inimigo entra no alcance corpo a corpo de Freud, ele muda para esse alvo e tenta atacá-lo imediatamente.
 
 Passiva - [primary.main:Mente Afiada]: acertos críticos causam [info.main:${Math.round(
-            this.abilityPower
-        )} (100% AP)] de dano mágico adicional com crítico garantido. Freud recebe um escudo equivalente ao dano adicional causado.`
+            this.abilityPower * 0.75
+        )} (75% AP)] de dano mágico adicional com crítico garantido. Freud recebe um escudo equivalente ao dano adicional causado.`
     }
 
     override extractAttackingAnimation() {
-        this.attackAnimationImpactFrame = 6
-        this.extractAnimationsFromSpritesheet("attacking", 52, 8)
-    }
+        this.attackAnimationImpactFrame = 3
+        const attacking = this.extractAnimationsFromSpritesheet("attacking2", 1, 5, 13, "freud_attacking")
+        const specialAttacking = this.extractAnimationsFromSpritesheet("attacking1", 52, 6, 13, "freud_attacking")
 
-    override getAttackingAnimation(): string {
-        return "attacking"
+        const onUpdate = (animation: Phaser.Animations.Animation) => {
+            if ([...attacking, ...specialAttacking].find((anim) => anim.key === animation.key)) {
+                this.setOrigin(0.5, 0.6)
+                this.body.setOffset(64, 64)
+            } else {
+                this.setOrigin(0.5, 0.75)
+                this.body.setOffset(0, 0)
+            }
+        }
+
+        this.on("animationstart", onUpdate)
+        this.once("destroy", () => this.off("animationstart", onUpdate))
     }
 
     override landAttack() {
@@ -51,7 +61,7 @@ Passiva - [primary.main:Mente Afiada]: acertos críticos causam [info.main:${Mat
             target.takeDamage(value, this, "normal", crit, true)
 
             if (crit && target.active) {
-                const additionalDamage = this.calculateDamage(this.abilityPower, true)
+                const additionalDamage = this.calculateDamage(this.abilityPower * 0.75, true)
                 const damageDealt = target.takeDamage(additionalDamage.value, this, "dark", true, true, "Mente Afiada")
                 if (damageDealt > 0) {
                     this.gainShield(damageDealt, { healer: this, source: "Mente Afiada" })

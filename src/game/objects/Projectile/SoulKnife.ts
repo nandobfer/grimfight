@@ -6,8 +6,8 @@ export class SoulKnife extends Projectile {
     constructor(scene: Game, x: number, y: number, owner: Creature) {
         super(scene, x, y, owner, "arrow", "dark")
         this.setScale(0.05, 0.05)
-        this.setTint(0xff55dd)
+        this.setTint(0xff66ff)
         this.setOrigin(0, 0.5)
-        this.addLightEffect({ color: 0xd946ef, intensity: 4, radius: 45 })
+        this.addLightEffect({ color: 0xff33ff, intensity: 7, radius: 70 })
     }
 }
