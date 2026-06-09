@@ -50,39 +50,55 @@ function timedCharacter(state: "fighting" | "idle" = "fighting") {
 describe("Arcanist trait", () => {
     it("defines AP gain stages and description parameters", () => {
         const trait = new ArcanistTrait(["freud"])
+        const stageKeys = Array.from(trait.stages.keys())
 
         expect(trait.name).toBe("Arcanist")
         expect(trait.description).toBe("Arcanists gain {0} AP every {1} seconds during combat.")
-        expect(trait.maxStage).toBe(4)
-        expect(trait.stages.get(2)).toMatchObject({ apMultiplier: 0.05, delay: 5000, descriptionParams: ["5%", "5"] })
-        expect(trait.stages.get(4)).toMatchObject({ apMultiplier: 0.05, delay: 2000, descriptionParams: ["5%", "2"] })
+        expect(trait.maxStage).toBe(Math.max(...stageKeys))
+
+        for (const stage of trait.stages.values()) {
+            expect(Number.isFinite(stage.apMultiplier)).toBe(true)
+            expect(stage.apMultiplier).toBeGreaterThanOrEqual(0)
+            expect(Number.isFinite(stage.delay)).toBe(true)
+            expect(stage.delay).toBeGreaterThan(0)
+            expect(stage.descriptionParams).toHaveLength(2)
+        }
     })
 
-    it("activates stage 2 and stage 4 from matching composition counts", () => {
+    it("activates stages from matching composition counts", () => {
         const trait = new ArcanistTrait(["freud", "second", "third", "fourth"])
+        const stages = Array.from(trait.stages.keys()).sort((a, b) => a - b)
+        const firstStage = stages[0]
+        const finalStage = stages[stages.length - 1]
 
-        trait.startApplying([namedCharacter("freud"), namedCharacter("second")])
-        expect(trait.activeComp).toEqual(new Set(["freud", "second"]))
-        expect(trait.activeStage).toBe(2)
+        const firstStageCharacters = trait.comp.slice(0, firstStage)
+        trait.startApplying(firstStageCharacters.map(namedCharacter))
+        expect(trait.activeComp).toEqual(new Set(firstStageCharacters))
+        expect(trait.activeStage).toBe(firstStage)
 
-        trait.startApplying([namedCharacter("freud"), namedCharacter("second"), namedCharacter("third"), namedCharacter("fourth")])
-        expect(trait.activeComp).toEqual(new Set(["freud", "second", "third", "fourth"]))
-        expect(trait.activeStage).toBe(4)
+        const finalStageCharacters = trait.comp.slice(0, finalStage)
+        trait.startApplying(finalStageCharacters.map(namedCharacter))
+        expect(trait.activeComp).toEqual(new Set(finalStageCharacters))
+        expect(trait.activeStage).toBe(finalStage)
     })
 
-    it("adds 5 percent base AP while fighting and removes the timer on cleanup", () => {
+    it("adds configured base AP while fighting and removes the timer on cleanup", () => {
         const trait = new ArcanistTrait(["freud", "second"])
-        trait.activeStage = 2
+        const activeStage = Array.from(trait.stages.keys()).sort((a, b) => a - b)[0]
+        const stage = trait.stages.get(activeStage)
+        if (!stage) throw new Error("Expected Arcanist stage to exist")
+
+        trait.activeStage = activeStage
         const context = timedCharacter("fighting")
 
         trait.applyModifier(context.character)
 
-        expect(context.addedConfig.delay).toBe(5000)
+        expect(context.addedConfig.delay).toBe(stage.delay)
         expect(context.addedConfig.loop).toBe(true)
         expect(context.character.timeEvents.arcanistTrait).toBe(context.timerEvent)
 
         context.addedConfig.callback()
-        expect(context.character.abilityPower).toBe(105)
+        expect(context.character.abilityPower).toBe(100 + 100 * stage.apMultiplier)
 
         trait.cleanup(context.character)
         expect(context.removedEvents).toEqual([context.timerEvent])
@@ -91,12 +107,16 @@ describe("Arcanist trait", () => {
 
     it("does not add AP outside combat", () => {
         const trait = new ArcanistTrait(["freud", "second", "third", "fourth"])
-        trait.activeStage = 4
+        const activeStage = Math.max(...trait.stages.keys())
+        const stage = trait.stages.get(activeStage)
+        if (!stage) throw new Error("Expected Arcanist stage to exist")
+
+        trait.activeStage = activeStage
         const context = timedCharacter("idle")
 
         trait.applyModifier(context.character)
 
-        expect(context.addedConfig.delay).toBe(2000)
+        expect(context.addedConfig.delay).toBe(stage.delay)
         context.addedConfig.callback()
         expect(context.character.abilityPower).toBe(100)
     })

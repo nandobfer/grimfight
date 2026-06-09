@@ -96,6 +96,9 @@ Antes de implementar, leia nesta ordem:
 - Traits, auras, augments e itens devem aplicar e limpar modificadores de forma previsível para não acumular bônus indevidos entre rounds.
 - Ao mexer em stats, considere impacto em CR, escalonamento infinito, boss floors, itens inimigos e power spikes do jogador.
 - Ao criar habilidade, priorize clareza de telegraph, feedback visual, cleanup e comportamento consistente com alvo, range, mana e estado da unidade.
+- Defina fórmulas e valores de balanceamento no código de regra apropriado, preferencialmente em funções puras ou constantes nomeadas próximas da classe/sistema que as usa.
+- Ao documentar fórmulas em `aicontext/`, descreva o comportamento de forma generalizada e evite registrar percentuais, durações, thresholds, ratios, valores de stats ou fórmulas exatas que possam mudar por balanceamento.
+- Use `aicontext/` para registrar contratos estáveis: quem aplica o efeito, quando acontece, qual tipo de efeito ocorre, qual sistema calcula o resultado e quais integrações/cleanup existem.
 
 ## 8. UI React e ponte com Phaser
 
@@ -133,9 +136,11 @@ Antes de implementar, leia nesta ordem:
 
 ## 11. Padrão de testes e verificação
 
-- Atualmente não há suíte de testes configurada no repositório.
 - Quando criar testes, prefira cobrir regras de negócio de jogo: combate, itens, receitas, augments, traits, CR, persistência e estados de round.
 - Foque em comportamento e casos-limite, não em detalhes internos frágeis.
+- Testes de gameplay não devem fixar números de balanceamento mutáveis como percentuais, durações, thresholds, ratios, valores de stats ou fórmulas exatas, salvo quando o objetivo explícito for travar um contrato de balanceamento pedido pelo usuário.
+- Para fórmulas de dano, cura, escudo, ganho de atributo e timers, prefira testar invariantes estáveis: resultado finito, não negativo quando aplicável, proporcionalidade entre entrada e multiplicador, split/distribuição correta, cleanup, estado `idle`/`fighting`, registro de timers e valores derivados da própria configuração atual.
+- Quando um teste precisar interagir com stages, delays ou multiplicadores, derive a expectativa das estruturas registradas no sistema sob teste, em vez de duplicar números literais no teste.
 - Não rode build automaticamente após toda edição. Use `pnpm build-nolog` apenas quando o usuário pedir, quando a mudança afetar configuração/bundling/tipos amplos, ou quando houver risco concreto que justifique a validação completa.
 - Para mudanças Electron, também valide com `pnpm build:electron` ou `pnpm dev:electron`, conforme aplicável.
 
@@ -153,3 +158,5 @@ Antes de implementar, leia nesta ordem:
 10. Evitei trabalho pesado em `update` e callbacks de alta frequência.
 11. Mantive persistência local consistente e considerei saves existentes.
 12. Atualizei documentação quando a mudança alterou comportamento, fluxo, contrato ou regra de jogo.
+13. Documentei fórmulas e efeitos em `aicontext/` de forma generalizada, sem cristalizar valores de balanceamento mutáveis.
+14. Mantive testes de gameplay desacoplados de números de balanceamento, salvo quando o usuário pediu explicitamente para travar esses valores.
