@@ -7,10 +7,10 @@ import { calculateYueFireRayDamage, YUE_FIRE_RAY_DURATION_MS } from "./YueFireRa
 
 export class Yue extends Character {
     baseAttackSpeed = 0.5
-    baseAttackRange = 3
+    baseAttackRange = 5
     baseManaPerSecond = 10
-    baseMaxMana = 50
-    baseMaxHealth = 220
+    baseMaxMana = 30
+    baseMaxHealth = 200
 
     abilityName = "Fire Ray"
 
@@ -21,7 +21,7 @@ export class Yue extends Character {
     override getAbilityDescription(): string {
         return `Draws a fire ray to a random enemy over [warning.main:${YUE_FIRE_RAY_DURATION_MS}ms], then deals [info.main:${Math.round(
             calculateYueFireRayDamage(this.abilityPower)
-        )} (50% AP)] fire damage.`
+        )} (125% AP)] fire damage.`
     }
 
     override getAttackingAnimation(): string {

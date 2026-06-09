@@ -136,6 +136,7 @@ Antes de implementar, leia nesta ordem:
 - Atualmente não há suíte de testes configurada no repositório.
 - Quando criar testes, prefira cobrir regras de negócio de jogo: combate, itens, receitas, augments, traits, CR, persistência e estados de round.
 - Foque em comportamento e casos-limite, não em detalhes internos frágeis.
+- Não rode build automaticamente após toda edição. Use `pnpm build-nolog` apenas quando o usuário pedir, quando a mudança afetar configuração/bundling/tipos amplos, ou quando houver risco concreto que justifique a validação completa.
 - Para mudanças Electron, também valide com `pnpm build:electron` ou `pnpm dev:electron`, conforme aplicável.
 
 ## 12. Checklist mínimo antes de encerrar

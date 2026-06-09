@@ -1,7 +1,7 @@
 export type RokmoraConstellation = "archer" | "dragon" | "chalice"
 
 export const ROKMORA_CONSTELLATIONS: RokmoraConstellation[] = ["archer", "dragon", "chalice"]
-export const ROKMORA_CONSTELLATION_DURATION_MS = 5000
+export const ROKMORA_CONSTELLATION_DURATION_MS = 2000
 export const ROKMORA_CHALICE_TICK_MS = 1000
 
 export function getNextRokmoraConstellation(current: RokmoraConstellation): RokmoraConstellation {
@@ -10,7 +10,7 @@ export function getNextRokmoraConstellation(current: RokmoraConstellation): Rokm
 }
 
 export function calculateRokmoraArcherDamage(maxHealth: number, abilityPower: number) {
-    return maxHealth * 0.1 + abilityPower * 2
+    return maxHealth * 0.1 + abilityPower * 0.5
 }
 
 export function calculateRokmoraDragonShield(damageTaken: number, armor: number) {
@@ -18,7 +18,7 @@ export function calculateRokmoraDragonShield(damageTaken: number, armor: number)
 }
 
 export function calculateRokmoraChaliceHealingPool(maxHealth: number) {
-    return maxHealth * 0.2
+    return maxHealth * 0.1
 }
 
 export function calculateRokmoraChaliceHealingPerAlly(maxHealth: number, woundedAllies: number) {

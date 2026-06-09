@@ -35,18 +35,18 @@ export class Rokmora extends Character {
     override getAbilityDescription(): string {
         return `Rokmora é um golias de pedra, andarilho e eremita, que lê o céu para manter o equilíbrio da natureza. Sob suas mãos antigas, os pequenos e indefesos encontram abrigo.
 
-Passiva: Rokmora navega por constelações durante o combate. Cada constelação dura [primary.main:5 segundos].
+Passiva: Rokmora navega por constelações durante o combate. Cada constelação dura [primary.main:2 segundos].
 
 [primary.main:Constelação do Arqueiro]: cada ataque dispara uma flecha estelar a partir do alvo atual contra um inimigo próximo, causando [info.main:${Math.round(
             calculateRokmoraArcherDamage(this.maxHealth, this.abilityPower)
-        )} (10% vida máxima + 200% AP)] de dano radiante.
+        )} (10% vida máxima + 50% AP)] de dano radiante.
 
 [primary.main:Constelação do Dragão]: ao receber dano, ganha escudo equivalente ao dano recebido multiplicado por sua armadura atual. Com [primary.main:${Math.round(
             this.armor
         )}%] de armadura, cada golpe recebido gera [success.main:${Math.round(Math.max(0, this.armor))}%] do dano como escudo.
 
 [primary.main:Constelação da Taça]: a cada segundo, uma aura verde suave emana de Rokmora. Ela distribui [success.main:${Math.round(
-            this.maxHealth * 0.2
+            this.maxHealth * 0.1
         )} (20% da vida máxima)] de cura entre todos os aliados feridos, incluindo Rokmora.`
     }
 
