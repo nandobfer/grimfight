@@ -5,91 +5,91 @@
     <g id="staff-vertical">
       <path d="M0 18 C2 9 -1 1 1 -8" fill="none" stroke="#7c3f14" stroke-width="4" stroke-linecap="round" />
       <path d="M0 18 C2 9 -1 1 1 -8" fill="none" stroke="#a16207" stroke-width="1.4" stroke-linecap="round" opacity="0.8" />
-      <circle cx="1" cy="-10" r="3" fill="#84cc16" />
-      <circle cx="1" cy="-10" r="1.2" fill="#dcfce7" opacity="0.9" />
+      <circle cx="1" cy="-10" r="3" fill="#ec4899" />
+      <circle cx="1" cy="-10" r="1.2" fill="#fbcfe8" opacity="0.9" />
     </g>
     <g id="staff-horizontal">
       <path d="M-15 1 C-5 -2 8 2 17 -2" fill="none" stroke="#7c3f14" stroke-width="4" stroke-linecap="round" />
       <path d="M-15 1 C-5 -2 8 2 17 -2" fill="none" stroke="#a16207" stroke-width="1.4" stroke-linecap="round" opacity="0.8" />
-      <circle cx="18" cy="-2" r="3" fill="#84cc16" />
+      <circle cx="18" cy="-2" r="3" fill="#ec4899" />
     </g>
 
     <g id="robe-down">
       <path d="M23 26 Q32 21 41 26 L45 50 Q32 55 19 50 Z" fill="#16a34a" />
       <path d="M32 25 L32 52" stroke="#14532d" stroke-width="2" stroke-linecap="round" />
       <path d="M25 30 Q32 34 39 30" fill="none" stroke="#86efac" stroke-width="2" stroke-linecap="round" opacity="0.65" />
-    </g>
+    <rect x="22" y="36" width="6" height="5" rx="1.5" fill="#92400e" /><rect x="22" y="36" width="6" height="2" fill="#78350f" /><rect x="36" y="36" width="6" height="5" rx="1.5" fill="#92400e" /><rect x="36" y="36" width="6" height="2" fill="#78350f" /></g>
     <g id="robe-up">
       <path d="M23 26 Q32 21 41 26 L45 50 Q32 55 19 50 Z" fill="#15803d" />
       <path d="M22 39 Q32 44 42 39" fill="none" stroke="#14532d" stroke-width="2" stroke-linecap="round" />
       <path d="M27 27 Q32 30 37 27" fill="none" stroke="#86efac" stroke-width="2" stroke-linecap="round" opacity="0.45" />
-    </g>
+    <rect x="22" y="36" width="5" height="5" rx="1.5" fill="#78350f" /><rect x="37" y="36" width="5" height="5" rx="1.5" fill="#78350f" /></g>
     <g id="robe-left">
       <path d="M23 27 Q30 22 38 26 L42 49 Q32 54 21 50 Z" fill="#16a34a" />
       <path d="M24 31 Q31 35 39 31" fill="none" stroke="#86efac" stroke-width="2" stroke-linecap="round" opacity="0.6" />
       <path d="M26 27 L24 50" stroke="#14532d" stroke-width="1.8" stroke-linecap="round" />
-    </g>
+    <rect x="25" y="36" width="5" height="6" rx="1.5" fill="#92400e" /><rect x="25" y="36" width="5" height="2" fill="#78350f" /></g>
     <g id="robe-right">
       <path d="M26 26 Q34 22 41 27 L43 50 Q32 54 22 49 Z" fill="#16a34a" />
       <path d="M25 31 Q33 35 40 31" fill="none" stroke="#86efac" stroke-width="2" stroke-linecap="round" opacity="0.6" />
       <path d="M38 27 L40 50" stroke="#14532d" stroke-width="1.8" stroke-linecap="round" />
-    </g>
+    <rect x="34" y="36" width="5" height="6" rx="1.5" fill="#92400e" /><rect x="34" y="36" width="5" height="2" fill="#78350f" /></g>
 
     <g id="head-down">
       <circle cx="32" cy="20" r="8" fill="#7c4a2d" />
-      <path d="M24 19 Q32 9 40 19 Q36 14 32 14 Q28 14 24 19" fill="#6b21a8" />
-      <circle cx="21" cy="18" r="5" fill="#7e22ce" />
-      <circle cx="43" cy="18" r="5" fill="#7e22ce" />
+      <path d="M24 19 Q32 9 40 19 Q36 14 32 14 Q28 14 24 19" fill="#db2777" />
+      <circle cx="21" cy="18" r="5" fill="#ec4899" /><circle cx="18" cy="16" r="3" fill="#ec4899" /><circle cx="24" cy="15" r="3" fill="#ec4899" />
+      <circle cx="43" cy="18" r="5" fill="#ec4899" /><circle cx="40" cy="15" r="3" fill="#ec4899" /><circle cx="46" cy="16" r="3" fill="#ec4899" />
       <circle cx="29" cy="20" r="1.2" fill="#1c120b" />
       <circle cx="35" cy="20" r="1.2" fill="#1c120b" />
       <path d="M29 24 Q32 26 35 24" fill="none" stroke="#3b2114" stroke-width="1.3" stroke-linecap="round" />
     </g>
     <g id="head-up">
       <circle cx="32" cy="20" r="8" fill="#6b4226" />
-      <path d="M24 21 Q32 9 40 21 Q32 17 24 21" fill="#5b1895" />
-      <circle cx="21" cy="18" r="5" fill="#6b21a8" />
-      <circle cx="43" cy="18" r="5" fill="#6b21a8" />
-      <path d="M28 24 Q32 27 36 24" fill="none" stroke="#4c1d95" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M24 21 Q32 9 40 21 Q32 17 24 21" fill="#be185d" />
+      <circle cx="21" cy="18" r="5" fill="#db2777" />
+      <circle cx="43" cy="18" r="5" fill="#db2777" />
+      <path d="M28 24 Q32 27 36 24" fill="none" stroke="#9d174d" stroke-width="1.6" stroke-linecap="round" />
     </g>
     <g id="head-left">
       <circle cx="31" cy="20" r="8" fill="#7c4a2d" />
-      <path d="M24 19 Q31 10 39 19 Q32 15 24 19" fill="#6b21a8" />
-      <circle cx="21" cy="18" r="5" fill="#7e22ce" />
-      <circle cx="39" cy="17" r="4" fill="#6b21a8" />
+      <path d="M24 19 Q31 10 39 19 Q32 15 24 19" fill="#db2777" />
+      <circle cx="21" cy="18" r="5" fill="#ec4899" /><circle cx="18" cy="16" r="3" fill="#ec4899" /><circle cx="24" cy="15" r="3" fill="#ec4899" />
+      <circle cx="39" cy="17" r="4" fill="#db2777" />
       <circle cx="27" cy="20" r="1.2" fill="#1c120b" />
       <path d="M25 24 Q28 25 31 23" fill="none" stroke="#3b2114" stroke-width="1.3" stroke-linecap="round" />
     </g>
     <g id="head-right">
       <circle cx="33" cy="20" r="8" fill="#7c4a2d" />
-      <path d="M25 19 Q33 10 40 19 Q32 15 25 19" fill="#6b21a8" />
-      <circle cx="25" cy="17" r="4" fill="#6b21a8" />
-      <circle cx="43" cy="18" r="5" fill="#7e22ce" />
+      <path d="M25 19 Q33 10 40 19 Q32 15 25 19" fill="#db2777" />
+      <circle cx="25" cy="17" r="4" fill="#db2777" />
+      <circle cx="43" cy="18" r="5" fill="#ec4899" /><circle cx="40" cy="15" r="3" fill="#ec4899" /><circle cx="46" cy="16" r="3" fill="#ec4899" />
       <circle cx="37" cy="20" r="1.2" fill="#1c120b" />
       <path d="M33 23 Q36 25 39 24" fill="none" stroke="#3b2114" stroke-width="1.3" stroke-linecap="round" />
     </g>
 
     <g id="legs-neutral">
-      <rect x="26" y="48" width="4" height="6" rx="2" fill="#52321c" />
-      <rect x="35" y="48" width="4" height="6" rx="2" fill="#52321c" />
+      <rect x="26" y="48" width="4" height="6" rx="2" fill="#6c4127" />
+      <rect x="35" y="48" width="4" height="6" rx="2" fill="#6c4127" />
     </g>
     <g id="legs-step-a">
-      <rect x="24" y="47" width="4" height="7" rx="2" fill="#52321c" transform="rotate(-9 26 50)" />
-      <rect x="36" y="48" width="4" height="6" rx="2" fill="#52321c" transform="rotate(8 38 51)" />
+      <rect x="24" y="47" width="4" height="7" rx="2" fill="#6c4127" transform="rotate(-9 26 50)" />
+      <rect x="36" y="48" width="4" height="6" rx="2" fill="#6c4127" transform="rotate(8 38 51)" />
     </g>
     <g id="legs-step-b">
-      <rect x="26" y="48" width="4" height="6" rx="2" fill="#52321c" transform="rotate(8 28 51)" />
-      <rect x="37" y="47" width="4" height="7" rx="2" fill="#52321c" transform="rotate(-9 39 50)" />
+      <rect x="26" y="48" width="4" height="6" rx="2" fill="#6c4127" transform="rotate(8 28 51)" />
+      <rect x="37" y="47" width="4" height="7" rx="2" fill="#6c4127" transform="rotate(-9 39 50)" />
     </g>
     <g id="arm-left"><rect x="19" y="31" width="5" height="13" rx="2.5" fill="#15803d" /></g>
     <g id="arm-right"><rect x="40" y="31" width="5" height="13" rx="2.5" fill="#15803d" /></g>
     <g id="magic-ring">
-      <circle cx="32" cy="28" r="9" fill="none" stroke="#a3e635" stroke-width="2" opacity="0.65" />
-      <circle cx="32" cy="28" r="3" fill="#d9f99d" opacity="0.8" />
-      <path d="M32 16 L34 23 L41 24 L35 29 L37 36 L32 32 L27 36 L29 29 L23 24 L30 23 Z" fill="#84cc16" opacity="0.35" />
+      <circle cx="32" cy="28" r="9" fill="none" stroke="#f472b6" stroke-width="2" opacity="0.65" />
+      <circle cx="32" cy="28" r="3" fill="#fce7f3" opacity="0.8" />
+      <path d="M32 16 L34 23 L41 24 L35 29 L37 36 L32 32 L27 36 L29 29 L23 24 L30 23 Z" fill="#ec4899" opacity="0.35" />
     </g>
     <g id="attack-spark">
-      <path d="M24 40 L33 36 L41 43" fill="none" stroke="#bbf7d0" stroke-width="3" stroke-linecap="round" opacity="0.75" />
-      <circle cx="41" cy="43" r="3" fill="#84cc16" opacity="0.65" />
+      <path d="M24 40 L33 36 L41 43" fill="none" stroke="#fbcfe8" stroke-width="3" stroke-linecap="round" opacity="0.75" />
+      <circle cx="41" cy="43" r="3" fill="#ec4899" opacity="0.65" />
     </g>
 
     <g id="child-down-idle-a"><use href="#shadow" /><use href="#legs-neutral" /><use href="#robe-down" /><use href="#arm-left" /><use href="#arm-right" /><use href="#head-down" /><use href="#staff-vertical" transform="translate(47 37) rotate(8)" /></g>
