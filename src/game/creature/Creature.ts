@@ -42,6 +42,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     id: string
     team: CreatureGroup
     attackAnimationImpactFrame = 5
+    private readonly attackAnimationImpactFrames = new Map<string, number>()
     minDamageMultiplier = 0.8
     maxDamageMultiplier = 1.2
     statusEffects = new Set<StatusEffect>()
@@ -756,6 +757,14 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return `attacking${spriteVariant}`
     }
 
+    setAttackAnimationImpactFrame(animation: string, frame: number): void {
+        this.attackAnimationImpactFrames.set(animation, frame)
+    }
+
+    getAttackAnimationImpactFrame(animation: string): number {
+        return this.attackAnimationImpactFrames.get(animation) ?? this.attackAnimationImpactFrame
+    }
+
     getAnimationTextureName() {
         return this.name
     }
@@ -767,11 +776,12 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.updateFacingDirection()
         this.attacking = true
-        const animationKey = `${this.getAnimationTextureName()}-${this.getAttackingAnimation()}-${this.facing}`
+        const attackingAnimation = this.getAttackingAnimation()
+        const animationKey = `${this.getAnimationTextureName()}-${attackingAnimation}-${this.facing}`
 
         this.onAnimationFrame(
             animationKey,
-            this.attackAnimationImpactFrame,
+            this.getAttackAnimationImpactFrame(attackingAnimation),
             () => this.landAttack(),
             () => (this.attacking = false)
         )

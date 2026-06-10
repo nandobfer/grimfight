@@ -24,16 +24,6 @@ export class Yue extends Character {
         )} (125% AP)] fire damage.`
     }
 
-    override getAttackingAnimation(): string {
-        return "attacking"
-    }
-
-    override extractAttackingAnimation() {
-        this.attackAnimationImpactFrame = 6
-        this.extractAnimationsFromSpritesheet("attacking", 1, 6)
-        this.extractAnimationsFromSpritesheet("casting", 208, 13)
-    }
-
     override landAttack() {
         if (!this.target || !this.active) return
 

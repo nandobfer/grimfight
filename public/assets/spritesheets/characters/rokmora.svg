@@ -1,0 +1,285 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <ellipse id="rokmora-shadow" cx="32" cy="56" rx="15" ry="4.5" fill="#000000" opacity="0.26" />
+
+    <g id="rokmora-staff-vertical">
+      <path d="M0 23 C2 12 -2 3 1 -8 C2 -15 -1 -19 2 -24" fill="none" stroke="#5b371f" stroke-width="5" stroke-linecap="round" />
+      <path d="M0 23 C2 12 -2 3 1 -8 C2 -15 -1 -19 2 -24" fill="none" stroke="#9a6a3a" stroke-width="1.5" stroke-linecap="round" opacity="0.8" />
+      <path d="M-5 -21 L2 -27 L9 -21" fill="none" stroke="#6f4527" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M-4 -4 L5 -8 M-4 8 L4 5 M-3 17 L4 14" stroke="#2f1d12" stroke-width="1.5" stroke-linecap="round" opacity="0.85" />
+      <circle cx="2" cy="-25" r="2.8" fill="#a78bfa" opacity="0.9" />
+      <circle cx="2" cy="-25" r="1.1" fill="#f5f3ff" opacity="0.9" />
+    </g>
+    <g id="rokmora-staff-horizontal">
+      <path d="M-23 2 C-13 -2 -5 4 5 0 C13 -4 19 -1 24 -4" fill="none" stroke="#5b371f" stroke-width="5" stroke-linecap="round" />
+      <path d="M-23 2 C-13 -2 -5 4 5 0 C13 -4 19 -1 24 -4" fill="none" stroke="#9a6a3a" stroke-width="1.5" stroke-linecap="round" opacity="0.8" />
+      <path d="M18 -9 L25 -4 L18 2" fill="none" stroke="#6f4527" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M-13 -2 L-8 4 M1 -2 L7 3 M13 -6 L18 -1" stroke="#2f1d12" stroke-width="1.4" stroke-linecap="round" opacity="0.85" />
+      <circle cx="25" cy="-4" r="2.6" fill="#a78bfa" opacity="0.9" />
+    </g>
+
+    <g id="rokmora-pants-neutral">
+      <path d="M22 39 L30 38 L31 54 L24 54 Q21 49 22 39" fill="#4f463a" />
+      <path d="M34 38 L43 40 Q43 49 39 54 L32 54 Z" fill="#5c5042" />
+      <path d="M24 47 L30 45 M38 43 L42 41 M34 51 L39 53" stroke="#2f2a24" stroke-width="1.4" stroke-linecap="round" opacity="0.75" />
+      <path d="M28 53 L22 55 M37 53 L43 55" stroke="#31251c" stroke-width="2.5" stroke-linecap="round" />
+    </g>
+    <g id="rokmora-pants-step-a">
+      <path d="M21 39 L30 38 L29 54 L22 53 Q19 47 21 39" fill="#4f463a" transform="rotate(-7 26 47)" />
+      <path d="M35 38 L43 41 Q44 49 39 54 L33 53 Z" fill="#5c5042" transform="rotate(8 38 47)" />
+      <path d="M25 46 L31 44 M39 43 L43 42" stroke="#2f2a24" stroke-width="1.4" stroke-linecap="round" opacity="0.75" />
+    </g>
+    <g id="rokmora-pants-step-b">
+      <path d="M22 38 L31 39 L31 54 L24 55 Q21 49 22 38" fill="#4f463a" transform="rotate(8 27 47)" />
+      <path d="M34 39 L42 39 Q43 48 38 54 L32 53 Z" fill="#5c5042" transform="rotate(-7 38 47)" />
+      <path d="M25 47 L30 46 M37 43 L42 41" stroke="#2f2a24" stroke-width="1.4" stroke-linecap="round" opacity="0.75" />
+    </g>
+
+    <g id="rokmora-torso-down">
+      <path d="M22 25 Q32 19 42 25 L43 41 Q32 47 21 41 Z" fill="#8f9490" />
+      <path d="M25 25 L31 31 L29 39 M38 27 L34 33 L40 38 M25 35 L19 37" fill="none" stroke="#5f6663" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M26 28 Q32 31 39 28" fill="none" stroke="#c5cac5" stroke-width="1.4" stroke-linecap="round" opacity="0.65" />
+    </g>
+    <g id="rokmora-torso-up">
+      <path d="M22 25 Q32 20 42 25 L43 41 Q32 47 21 41 Z" fill="#7d8581" />
+      <path d="M28 25 L35 32 L31 40 M39 34 L44 36 M24 36 L30 39" fill="none" stroke="#56605c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M25 29 Q32 26 39 29" fill="none" stroke="#aeb5b0" stroke-width="1.3" stroke-linecap="round" opacity="0.5" />
+    </g>
+    <g id="rokmora-torso-left">
+      <path d="M24 25 Q31 20 40 26 L42 41 Q33 47 22 41 Z" fill="#878d89" />
+      <path d="M28 26 L34 31 L31 38 M24 35 L30 36" fill="none" stroke="#5a625f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <g id="rokmora-torso-right">
+      <path d="M24 26 Q33 20 40 25 L42 41 Q31 47 22 41 Z" fill="#878d89" />
+      <path d="M36 26 L30 31 L33 38 M40 35 L34 36" fill="none" stroke="#5a625f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+
+    <g id="rokmora-arm-left"><path d="M21 28 Q17 34 18 43" fill="none" stroke="#838a86" stroke-width="5" stroke-linecap="round" /><path d="M19 34 L15 38" stroke="#555d59" stroke-width="1.3" stroke-linecap="round" /></g>
+    <g id="rokmora-arm-right"><path d="M43 28 Q47 34 46 43" fill="none" stroke="#838a86" stroke-width="5" stroke-linecap="round" /><path d="M45 34 L49 38" stroke="#555d59" stroke-width="1.3" stroke-linecap="round" /></g>
+
+    <g id="rokmora-head-down">
+      <circle cx="32" cy="18" r="8.2" fill="#8f9490" />
+      <path d="M28 12 L33 16 L31 22 M36 14 L39 18 M25 20 L29 23" fill="none" stroke="#59615d" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="29" cy="18" r="1" fill="#1d2220" />
+      <circle cx="35" cy="18" r="1" fill="#1d2220" />
+      <path d="M26 22 Q32 25 38 22 L36 43 Q32 49 28 43 Z" fill="#b4531f" />
+      <path d="M29 25 L27 39 M33 25 L32 46 M36 25 L38 38" stroke="#6f2d12" stroke-width="1.6" stroke-linecap="round" opacity="0.8" />
+      <path d="M27 35 L31 33 M34 40 L39 37" stroke="#31241d" stroke-width="1.2" stroke-linecap="round" opacity="0.65" />
+    </g>
+    <g id="rokmora-head-up">
+      <circle cx="32" cy="18" r="8.3" fill="#7f8783" />
+      <path d="M27 13 L34 16 L30 22 M36 21 L40 18" fill="none" stroke="#555f5a" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M27 23 Q32 26 38 23 L36 38 Q32 43 28 38 Z" fill="#8f3d19" opacity="0.85" />
+      <path d="M31 25 L30 39 M35 25 L37 36" stroke="#5c2510" stroke-width="1.4" stroke-linecap="round" opacity="0.75" />
+    </g>
+    <g id="rokmora-head-left">
+      <circle cx="31" cy="18" r="8.1" fill="#8b918d" />
+      <path d="M28 13 L33 17 L29 22 M24 19 L28 22" fill="none" stroke="#59615d" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="27" cy="18" r="1" fill="#1d2220" />
+      <path d="M25 22 Q30 25 35 22 L33 43 Q29 48 26 42 Z" fill="#b4531f" />
+      <path d="M27 25 L26 39 M31 25 L33 41" stroke="#6f2d12" stroke-width="1.5" stroke-linecap="round" opacity="0.8" />
+      <path d="M25 35 L29 33" stroke="#31241d" stroke-width="1.2" stroke-linecap="round" opacity="0.65" />
+    </g>
+    <g id="rokmora-head-right">
+      <circle cx="33" cy="18" r="8.1" fill="#8b918d" />
+      <path d="M36 13 L31 17 L35 22 M40 19 L36 22" fill="none" stroke="#59615d" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="37" cy="18" r="1" fill="#1d2220" />
+      <path d="M29 22 Q34 25 39 22 L38 42 Q35 48 31 43 Z" fill="#b4531f" />
+      <path d="M33 25 L31 41 M37 25 L38 39" stroke="#6f2d12" stroke-width="1.5" stroke-linecap="round" opacity="0.8" />
+      <path d="M35 35 L39 33" stroke="#31241d" stroke-width="1.2" stroke-linecap="round" opacity="0.65" />
+    </g>
+
+    <g id="rokmora-star-ring">
+      <circle cx="32" cy="27" r="11" fill="none" stroke="#a78bfa" stroke-width="1.7" opacity="0.55" />
+      <path d="M32 13 L34 20 L41 20 L35 25 L38 32 L32 28 L26 32 L29 25 L23 20 L30 20 Z" fill="#ddd6fe" opacity="0.35" />
+      <circle cx="23" cy="31" r="2" fill="#c4b5fd" opacity="0.75" />
+      <circle cx="42" cy="25" r="1.7" fill="#f5f3ff" opacity="0.85" />
+    </g>
+    <g id="rokmora-impact-dust">
+      <path d="M24 45 L33 38 L43 45" fill="none" stroke="#d6d3d1" stroke-width="3" stroke-linecap="round" opacity="0.7" />
+      <circle cx="22" cy="47" r="2.5" fill="#9ca3af" opacity="0.45" />
+      <circle cx="44" cy="47" r="2.8" fill="#9ca3af" opacity="0.45" />
+    </g>
+
+    <g id="rokmora-down-idle-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-down" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-down" /><use href="#rokmora-staff-vertical" transform="translate(48 34) rotate(6)" /></g>
+    <g id="rokmora-down-idle-b"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" transform="translate(0 -1)" /><use href="#rokmora-torso-down" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="translate(0 -1)" /><use href="#rokmora-arm-right" transform="translate(0 -1)" /><use href="#rokmora-head-down" transform="translate(0 -1)" /><use href="#rokmora-staff-vertical" transform="translate(48 33) rotate(3)" /></g>
+    <g id="rokmora-down-walk-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-down" /><use href="#rokmora-arm-left" transform="rotate(7 20 32)" /><use href="#rokmora-arm-right" transform="rotate(-9 45 32)" /><use href="#rokmora-head-down" /><use href="#rokmora-staff-vertical" transform="translate(48 35) rotate(10)" /></g>
+    <g id="rokmora-down-walk-b"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-b" /><use href="#rokmora-torso-down" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="rotate(-7 20 32)" /><use href="#rokmora-arm-right" transform="rotate(9 45 32)" /><use href="#rokmora-head-down" transform="translate(0 -1)" /><use href="#rokmora-staff-vertical" transform="translate(48 33) rotate(-2)" /></g>
+    <g id="rokmora-down-attack-prep"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-down" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(-32 45 32)" /><use href="#rokmora-head-down" /><use href="#rokmora-staff-vertical" transform="translate(43 26) rotate(-38)" /></g>
+    <g id="rokmora-down-attack-swing"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-down" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(24 45 32)" /><use href="#rokmora-head-down" /><use href="#rokmora-staff-vertical" transform="translate(44 42) rotate(48)" /></g>
+    <g id="rokmora-down-attack-impact"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-b" /><use href="#rokmora-torso-down" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(34 45 32)" /><use href="#rokmora-head-down" /><use href="#rokmora-staff-vertical" transform="translate(42 45) rotate(66)" /><use href="#rokmora-impact-dust" /></g>
+    <g id="rokmora-down-thrust"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-down" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-down" /><use href="#rokmora-staff-vertical" transform="translate(44 42) rotate(82)" /></g>
+    <g id="rokmora-down-cast-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-down" /><use href="#rokmora-arm-left" transform="rotate(-16 20 32)" /><use href="#rokmora-arm-right" transform="rotate(16 45 32)" /><use href="#rokmora-head-down" /><use href="#rokmora-staff-vertical" transform="translate(32 31)" /></g>
+    <g id="rokmora-down-cast-b"><use href="#rokmora-shadow" /><use href="#rokmora-star-ring" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-down" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="rotate(-28 20 32)" /><use href="#rokmora-arm-right" transform="rotate(28 45 32)" /><use href="#rokmora-head-down" transform="translate(0 -1)" /><use href="#rokmora-staff-vertical" transform="translate(32 25)" /></g>
+    <g id="rokmora-down-cast-c"><use href="#rokmora-shadow" /><use href="#rokmora-star-ring" transform="translate(0 -5) scale(1.15)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-down" /><use href="#rokmora-arm-left" transform="rotate(-20 20 32)" /><use href="#rokmora-arm-right" transform="rotate(20 45 32)" /><use href="#rokmora-head-down" /><use href="#rokmora-staff-vertical" transform="translate(32 23)" /></g>
+
+    <g id="rokmora-up-idle-a"><use href="#rokmora-shadow" /><use href="#rokmora-staff-vertical" transform="translate(46 34) rotate(-7)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-up" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-up" /></g>
+    <g id="rokmora-up-idle-b"><use href="#rokmora-shadow" /><use href="#rokmora-staff-vertical" transform="translate(46 33) rotate(-3)" /><use href="#rokmora-pants-neutral" transform="translate(0 -1)" /><use href="#rokmora-torso-up" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="translate(0 -1)" /><use href="#rokmora-arm-right" transform="translate(0 -1)" /><use href="#rokmora-head-up" transform="translate(0 -1)" /></g>
+    <g id="rokmora-up-walk-a"><use href="#rokmora-shadow" /><use href="#rokmora-staff-vertical" transform="translate(46 35) rotate(-11)" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-up" /><use href="#rokmora-arm-left" transform="rotate(7 20 32)" /><use href="#rokmora-arm-right" transform="rotate(-9 45 32)" /><use href="#rokmora-head-up" /></g>
+    <g id="rokmora-up-walk-b"><use href="#rokmora-shadow" /><use href="#rokmora-staff-vertical" transform="translate(46 33) rotate(2)" /><use href="#rokmora-pants-step-b" /><use href="#rokmora-torso-up" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="rotate(-7 20 32)" /><use href="#rokmora-arm-right" transform="rotate(9 45 32)" /><use href="#rokmora-head-up" transform="translate(0 -1)" /></g>
+    <g id="rokmora-up-attack-prep"><use href="#rokmora-shadow" /><use href="#rokmora-staff-vertical" transform="translate(43 26) rotate(38)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-up" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(-32 45 32)" /><use href="#rokmora-head-up" /></g>
+    <g id="rokmora-up-attack-swing"><use href="#rokmora-shadow" /><use href="#rokmora-staff-vertical" transform="translate(43 24) rotate(-48)" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-up" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(24 45 32)" /><use href="#rokmora-head-up" /></g>
+    <g id="rokmora-up-attack-impact"><use href="#rokmora-shadow" /><use href="#rokmora-impact-dust" transform="translate(0 -18) rotate(180 32 42)" /><use href="#rokmora-staff-vertical" transform="translate(42 21) rotate(-66)" /><use href="#rokmora-pants-step-b" /><use href="#rokmora-torso-up" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(34 45 32)" /><use href="#rokmora-head-up" /></g>
+    <g id="rokmora-up-thrust"><use href="#rokmora-shadow" /><use href="#rokmora-staff-vertical" transform="translate(43 21) rotate(-82)" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-up" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-up" /></g>
+    <g id="rokmora-up-cast-a"><use href="#rokmora-shadow" /><use href="#rokmora-staff-vertical" transform="translate(32 30)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-up" /><use href="#rokmora-arm-left" transform="rotate(-16 20 32)" /><use href="#rokmora-arm-right" transform="rotate(16 45 32)" /><use href="#rokmora-head-up" /></g>
+    <g id="rokmora-up-cast-b"><use href="#rokmora-shadow" /><use href="#rokmora-star-ring" transform="translate(0 -5)" /><use href="#rokmora-staff-vertical" transform="translate(32 24)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-up" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="rotate(-28 20 32)" /><use href="#rokmora-arm-right" transform="rotate(28 45 32)" /><use href="#rokmora-head-up" transform="translate(0 -1)" /></g>
+    <g id="rokmora-up-cast-c"><use href="#rokmora-shadow" /><use href="#rokmora-star-ring" transform="translate(0 -9) scale(1.15)" /><use href="#rokmora-staff-vertical" transform="translate(32 22)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-up" /><use href="#rokmora-arm-left" transform="rotate(-20 20 32)" /><use href="#rokmora-arm-right" transform="rotate(20 45 32)" /><use href="#rokmora-head-up" /></g>
+
+    <g id="rokmora-left-idle-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-left" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-left" /><use href="#rokmora-staff-horizontal" transform="translate(24 35) rotate(-8)" /></g>
+    <g id="rokmora-left-idle-b"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" transform="translate(0 -1)" /><use href="#rokmora-torso-left" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="translate(0 -1)" /><use href="#rokmora-arm-right" transform="translate(0 -1)" /><use href="#rokmora-head-left" transform="translate(0 -1)" /><use href="#rokmora-staff-horizontal" transform="translate(24 34) rotate(-4)" /></g>
+    <g id="rokmora-left-walk-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-left" /><use href="#rokmora-arm-left" transform="rotate(-9 20 32)" /><use href="#rokmora-arm-right" transform="rotate(8 45 32)" /><use href="#rokmora-head-left" /><use href="#rokmora-staff-horizontal" transform="translate(24 36) rotate(-13)" /></g>
+    <g id="rokmora-left-walk-b"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-b" /><use href="#rokmora-torso-left" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="rotate(9 20 32)" /><use href="#rokmora-arm-right" transform="rotate(-8 45 32)" /><use href="#rokmora-head-left" transform="translate(0 -1)" /><use href="#rokmora-staff-horizontal" transform="translate(25 33) rotate(4)" /></g>
+    <g id="rokmora-left-attack-prep"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-left" /><use href="#rokmora-arm-left" transform="rotate(-34 20 32)" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-left" /><use href="#rokmora-staff-horizontal" transform="translate(34 29) rotate(42)" /></g>
+    <g id="rokmora-left-attack-swing"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-left" /><use href="#rokmora-arm-left" transform="rotate(22 20 32)" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-left" /><use href="#rokmora-staff-horizontal" transform="translate(21 39) rotate(-38)" /></g>
+    <g id="rokmora-left-attack-impact"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-b" /><use href="#rokmora-torso-left" /><use href="#rokmora-arm-left" transform="rotate(34 20 32)" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-left" /><use href="#rokmora-staff-horizontal" transform="translate(19 43) rotate(-55)" /><use href="#rokmora-impact-dust" transform="translate(-13 0)" /></g>
+    <g id="rokmora-left-thrust"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-left" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-left" /><use href="#rokmora-staff-horizontal" transform="translate(18 36)" /></g>
+    <g id="rokmora-left-cast-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-left" /><use href="#rokmora-arm-left" transform="rotate(-16 20 32)" /><use href="#rokmora-arm-right" transform="rotate(16 45 32)" /><use href="#rokmora-head-left" /><use href="#rokmora-staff-vertical" transform="translate(27 31) rotate(-18)" /></g>
+    <g id="rokmora-left-cast-b"><use href="#rokmora-shadow" /><use href="#rokmora-star-ring" transform="translate(-5 -2)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-left" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="rotate(-28 20 32)" /><use href="#rokmora-arm-right" transform="rotate(28 45 32)" /><use href="#rokmora-head-left" transform="translate(0 -1)" /><use href="#rokmora-staff-vertical" transform="translate(27 25) rotate(-8)" /></g>
+    <g id="rokmora-left-cast-c"><use href="#rokmora-shadow" /><use href="#rokmora-star-ring" transform="translate(-8 -5) scale(1.15)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-left" /><use href="#rokmora-arm-left" transform="rotate(-20 20 32)" /><use href="#rokmora-arm-right" transform="rotate(20 45 32)" /><use href="#rokmora-head-left" /><use href="#rokmora-staff-vertical" transform="translate(27 22) rotate(-4)" /></g>
+
+    <g id="rokmora-right-idle-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-right" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-right" /><use href="#rokmora-staff-horizontal" transform="translate(40 35) rotate(188)" /></g>
+    <g id="rokmora-right-idle-b"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" transform="translate(0 -1)" /><use href="#rokmora-torso-right" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="translate(0 -1)" /><use href="#rokmora-arm-right" transform="translate(0 -1)" /><use href="#rokmora-head-right" transform="translate(0 -1)" /><use href="#rokmora-staff-horizontal" transform="translate(40 34) rotate(184)" /></g>
+    <g id="rokmora-right-walk-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-right" /><use href="#rokmora-arm-left" transform="rotate(8 20 32)" /><use href="#rokmora-arm-right" transform="rotate(-9 45 32)" /><use href="#rokmora-head-right" /><use href="#rokmora-staff-horizontal" transform="translate(40 36) rotate(193)" /></g>
+    <g id="rokmora-right-walk-b"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-b" /><use href="#rokmora-torso-right" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="rotate(-8 20 32)" /><use href="#rokmora-arm-right" transform="rotate(9 45 32)" /><use href="#rokmora-head-right" transform="translate(0 -1)" /><use href="#rokmora-staff-horizontal" transform="translate(39 33) rotate(176)" /></g>
+    <g id="rokmora-right-attack-prep"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-right" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(34 45 32)" /><use href="#rokmora-head-right" /><use href="#rokmora-staff-horizontal" transform="translate(30 29) rotate(138)" /></g>
+    <g id="rokmora-right-attack-swing"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-right" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(-22 45 32)" /><use href="#rokmora-head-right" /><use href="#rokmora-staff-horizontal" transform="translate(43 39) rotate(218)" /></g>
+    <g id="rokmora-right-attack-impact"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-b" /><use href="#rokmora-torso-right" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" transform="rotate(-34 45 32)" /><use href="#rokmora-head-right" /><use href="#rokmora-staff-horizontal" transform="translate(45 43) rotate(235)" /><use href="#rokmora-impact-dust" transform="translate(13 0)" /></g>
+    <g id="rokmora-right-thrust"><use href="#rokmora-shadow" /><use href="#rokmora-pants-step-a" /><use href="#rokmora-torso-right" /><use href="#rokmora-arm-left" /><use href="#rokmora-arm-right" /><use href="#rokmora-head-right" /><use href="#rokmora-staff-horizontal" transform="translate(46 36) rotate(180)" /></g>
+    <g id="rokmora-right-cast-a"><use href="#rokmora-shadow" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-right" /><use href="#rokmora-arm-left" transform="rotate(-16 20 32)" /><use href="#rokmora-arm-right" transform="rotate(16 45 32)" /><use href="#rokmora-head-right" /><use href="#rokmora-staff-vertical" transform="translate(37 31) rotate(18)" /></g>
+    <g id="rokmora-right-cast-b"><use href="#rokmora-shadow" /><use href="#rokmora-star-ring" transform="translate(5 -2)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-right" transform="translate(0 -1)" /><use href="#rokmora-arm-left" transform="rotate(-28 20 32)" /><use href="#rokmora-arm-right" transform="rotate(28 45 32)" /><use href="#rokmora-head-right" transform="translate(0 -1)" /><use href="#rokmora-staff-vertical" transform="translate(37 25) rotate(8)" /></g>
+    <g id="rokmora-right-cast-c"><use href="#rokmora-shadow" /><use href="#rokmora-star-ring" transform="translate(8 -5) scale(1.15)" /><use href="#rokmora-pants-neutral" /><use href="#rokmora-torso-right" /><use href="#rokmora-arm-left" transform="rotate(-20 20 32)" /><use href="#rokmora-arm-right" transform="rotate(20 45 32)" /><use href="#rokmora-head-right" /><use href="#rokmora-staff-vertical" transform="translate(37 22) rotate(4)" /></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-a" /></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-b" /></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-a" /></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-b" /></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-a" /></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-b" /></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-a" /></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-b" /></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-walk-a" /></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-a" /></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-walk-b" /></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-b" /></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-a" /></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-b" /></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-walk-a" /></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-walk-a" /></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-a" /></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-walk-b" /></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-b" /></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-a" /></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-b" /></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-walk-a" /></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-walk-a" /></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-a" /></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-walk-b" /></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-b" /></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-a" /></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-b" /></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-walk-a" /></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-walk-a" /></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-a" /></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-walk-b" /></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-b" /></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-a" /></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-b" /></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-walk-a" /></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-attack-swing" /></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-attack-impact" /></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-attack-swing" /></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-a" /></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-b" /></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-attack-swing" /></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-attack-impact" /></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-attack-swing" /></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-a" /></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-b" /></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-attack-swing" /></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-attack-impact" /></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-attack-swing" /></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-a" /></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-b" /></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-attack-swing" /></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-attack-impact" /></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-attack-swing" /></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-a" /></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-b" /></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-attack-prep" /></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-thrust" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-thrust" /></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-attack-impact" /></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-a" /></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-b" /></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-attack-prep" /></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-thrust" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-thrust" /></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-attack-impact" /></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-a" /></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-b" /></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-attack-prep" /></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-thrust" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-thrust" /></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-attack-impact" /></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-a" /></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-b" /></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-attack-prep" /></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-thrust" transform="translate(1 -1)" /></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-thrust" /></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-attack-impact" /></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-a" /></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-b" /></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-cast-a" /></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-cast-b" /></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-cast-c" /></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-cast-c" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-cast-b" /></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-cast-a" /></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-up-idle-a" /></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-cast-a" /></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-cast-b" /></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-cast-c" /></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-cast-c" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-cast-b" /></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-cast-a" /></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-left-idle-a" /></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-cast-a" /></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-cast-b" /></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-cast-c" /></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-cast-c" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-cast-b" /></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-cast-a" /></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-down-idle-a" /></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-cast-a" /></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-cast-b" /></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-cast-c" /></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-cast-c" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-cast-b" /></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-cast-a" /></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rokmora-right-idle-a" /></svg>
+</svg>

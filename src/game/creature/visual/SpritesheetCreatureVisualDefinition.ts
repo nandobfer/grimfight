@@ -49,3 +49,46 @@ export class SpritesheetCreatureVisualDefinition extends CreatureVisualDefinitio
         creature.extractAttackingAnimation()
     }
 }
+
+const svgSpritesheetTotalFramesPerRow = 9
+const svgSpritesheetAttacking1ImpactFrame = 5
+const svgSpritesheetAttacking2ImpactFrame = 4
+
+const svgSpritesheetAnimations = [
+    { key: "idle", startingFrame: 0, usedFramesPerRow: 2 },
+    { key: "walking", startingFrame: 36, usedFramesPerRow: 9 },
+    { key: "attacking1", startingFrame: 72, usedFramesPerRow: 8 },
+    { key: "attacking2", startingFrame: 108, usedFramesPerRow: 6 },
+    { key: "casting", startingFrame: 144, usedFramesPerRow: 7 },
+] as const
+
+export class SvgSpritesheetCreatureVisualDefinition extends SpritesheetCreatureVisualDefinition {
+    constructor(textureKey: string, path: string) {
+        super({
+            textureKey,
+            path,
+            frameWidth: 64,
+            frameHeight: 64,
+        })
+    }
+
+    static character(name: string): SvgSpritesheetCreatureVisualDefinition {
+        return new SvgSpritesheetCreatureVisualDefinition(name, `spritesheets/characters/${name}.svg`)
+    }
+
+    override createAnimations(creature: Creature): void {
+        for (const animation of svgSpritesheetAnimations) {
+            creature.extractAnimationsFromSpritesheet(
+                animation.key,
+                animation.startingFrame,
+                animation.usedFramesPerRow,
+                svgSpritesheetTotalFramesPerRow,
+                this.textureKey,
+                creature.name
+            )
+        }
+
+        creature.setAttackAnimationImpactFrame("attacking1", svgSpritesheetAttacking1ImpactFrame)
+        creature.setAttackAnimationImpactFrame("attacking2", svgSpritesheetAttacking2ImpactFrame)
+    }
+}

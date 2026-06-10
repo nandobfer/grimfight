@@ -19,6 +19,7 @@ Antes de implementar, leia nesta ordem:
 5. O contexto específico da tarefa:
    - Personagens jogáveis: `src/game/creature/Creature.ts`, `src/game/creature/character/Character.ts`, `src/game/creature/character/PlayerTeam.ts`, `src/game/creature/CharacterRegistry.ts` e `src/game/creature/classes/`
    - Monstros e encontros: `src/game/creature/monsters/Monster.ts`, `src/game/creature/monsters/EnemyTeam.ts`, `src/game/creature/monsters/MonsterRegistry.ts` e `src/game/tools/Encounter.ts`
+   - Spritesheets e assets visuais de criaturas gerados por IA: `docs/svg-spritesheets.md`, `src/game/creature/visual/SpritesheetCreatureVisualDefinition.ts`, `src/game/creature/visual/CreatureVisualDefinition.ts` e `src/game/creature/Creature.ts`
    - Itens e receitas: `src/game/systems/Items/Item.ts`, `src/game/systems/Items/ItemRegistry.ts` e `src/game/systems/Items/`
    - Augments: `src/game/systems/Augment/Augment.ts`, `src/game/systems/Augment/AugmentsRegistry.ts` e `src/game/systems/Augment/`
    - Traits e auras: `src/game/systems/Traits/` e `src/game/systems/Aura/`
@@ -133,6 +134,21 @@ Antes de implementar, leia nesta ordem:
 - Build Electron: `pnpm build:electron`.
 - Não use `npm install`, `npm run`, `yarn` ou `yarn.lock` como fonte de verdade.
 - Arquivos `package-lock.json` e `yarn.lock`, se presentes, devem ser tratados como legado até a migração completa para `pnpm-lock.yaml`.
+
+### Spritesheets SVG geradas por IA
+
+- Se o usuário solicitar criação, alteração ou integração de spritesheet, asset visual de criatura, personagem ou monstro usando IA, leia obrigatoriamente `docs/svg-spritesheets.md` antes de escrever qualquer SVG ou código relacionado.
+- Para spritesheets SVG de criaturas, use exclusivamente o padrão documentado em `docs/svg-spritesheets.md`: frames `64x64`, grid `9x20`, `viewBox="0 0 576 1280"`, fundo transparente e estilo geométrico minimalista.
+- Toda spritesheet SVG padrão deve conter `idle`, `walking`, `attacking1`, `attacking2` e `casting`, sempre nas quatro direções `up`, `left`, `down`, `right`.
+- Não gere pixel art literal com milhares de retângulos `1x1`; use partes modulares em `<defs>` e instâncias por frame com `<use>` e `transform`.
+- Preserve a compatibilidade futura com `SpritesheetCreatureVisualDefinition`: o SVG deve permitir extração por frame indexado, com `frameWidth: 64`, `frameHeight: 64` e `totalFramesPerRow: 9`.
+
+### Portraits SVG gerados por IA
+
+- Se o usuário solicitar a criação de um portrait, leia obrigatoriamente `docs/svg-portraits.md` antes de gerar o retrato.
+- Portraits devem seguir o padrão geométrico de `docs/svg-portraits.md`, focando do torso para cima e ocupando bem o quadro com o mínimo possível de espaço vazio.
+- A dimensão do retrato SVG deve ser estritamente `64x64` (`viewBox="0 0 64 64"`).
+- É responsabilidade da IA gerar o SVG, convertê-lo automaticamente para o formato `.webp` (via `ffmpeg`, utilitário Node, etc.) e colocar o arquivo final em `public/assets/portraits/`, garantindo que o SVG temporário seja removido após o processo.
 
 ## 11. Padrão de testes e verificação
 

@@ -5,6 +5,7 @@ import {
     calculateRokmoraChaliceHealingPool,
     calculateRokmoraDragonShield,
     getNextRokmoraConstellation,
+    ROKMORA_ARCHER_STAR_DELAY_MS,
 } from "../../src/game/creature/classes/RokmoraConstellations"
 
 describe("Rokmora constellations", () => {
@@ -21,9 +22,14 @@ describe("Rokmora constellations", () => {
         expect(damage).toBeGreaterThanOrEqual(0)
     })
 
-    it("calculates dragon shield from damage taken and armor", () => {
-        const damageTaken = 200
-        const shield = calculateRokmoraDragonShield(damageTaken, 50)
+    it("exposes a finite archer star launch delay", () => {
+        expect(Number.isFinite(ROKMORA_ARCHER_STAR_DELAY_MS)).toBe(true)
+        expect(ROKMORA_ARCHER_STAR_DELAY_MS).toBeGreaterThan(0)
+    })
+
+    it("calculates dragon shield from incoming pre-mitigation damage and armor", () => {
+        const incomingDamage = 200
+        const shield = calculateRokmoraDragonShield(incomingDamage, 50)
 
         expect(Number.isFinite(shield)).toBe(true)
         expect(shield).toBeGreaterThanOrEqual(0)

@@ -27,7 +27,7 @@ import { Rokmora } from "./classes/Rokmora"
 import { Yue } from "./classes/Yue"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
-import { SpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
+import { SpritesheetCreatureVisualDefinition, SvgSpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
 
 // Create a character registry
 export class CharacterRegistry {
@@ -97,5 +97,5 @@ CharacterRegistry.register("chichi", Chichi)
 CharacterRegistry.register("lalatina", Lalatina)
 CharacterRegistry.register("melo", Melo)
 CharacterRegistry.register("freud", Freud)
-CharacterRegistry.register("rokmora", Rokmora)
-CharacterRegistry.register("yue", Yue)
+CharacterRegistry.register("rokmora", Rokmora, SvgSpritesheetCreatureVisualDefinition.character("rokmora"))
+CharacterRegistry.register("yue", Yue, SvgSpritesheetCreatureVisualDefinition.character("yue"))
