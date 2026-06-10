@@ -24,15 +24,19 @@ export class LudensTempest extends Item {
         }
 
         const onCast = () => {
-            const targets = creature.target?.getAlliesInRange(128) || []
+            const primaryTarget = creature.target
+            if (!primaryTarget?.active) return
+
+            const targets = [primaryTarget, ...primaryTarget.getAlliesInRange(128)]
             for (const target of targets) {
                 const projectile = new Deathbolt(this.scene, creature.x, creature.y, creature)
                 projectile.onHit = () => {
+                    projectile.destroy()
                     if (!target.active) return
+
                     const { value, crit } = creature.calculateDamage((creature.abilityPower * 2) / targets.length)
                     target.takeDamage(value, creature, "dark", crit, false, this.name)
                     new DarkSlashFx(target)
-                    projectile.destroy()
                 }
                 projectile.fire(target)
             }

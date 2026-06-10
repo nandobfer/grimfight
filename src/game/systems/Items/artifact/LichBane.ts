@@ -7,6 +7,9 @@ export class LichBane extends Item {
     name = "Lich Bane"
     descriptionLines = ["+40% AP", "Passive: When cast, your next basic attack deals an additional 200% AP as damage."]
 
+    private readonly pendingAttackLandOriginals = new WeakMap<Creature, Creature["onAttackLand"]>()
+    private readonly pendingAttackLandHandlers = new WeakMap<Creature, Creature["onAttackLand"]>()
+
     constructor(scene: Game) {
         super(scene, "item-lichbane")
         this.smallImage()
@@ -21,15 +24,28 @@ export class LichBane extends Item {
         }
 
         const onCast = () => {
-            const original = creature.onAttackLand.bind(creature)
+            if (this.pendingAttackLandOriginals.has(creature)) return
 
-            creature.onAttackLand = () => {
-                creature.onAttackLand = original
-                const { value, crit } = creature.calculateDamage(creature.abilityPower * 2)
-                creature.target?.takeDamage(value, creature, "dark", crit, false, this.name)
-                const normalDamage = creature.onAttackLand("normal")
-                return normalDamage + value
+            const original = creature.onAttackLand
+            const empoweredAttack: Creature["onAttackLand"] = (damagetype, target, attackDamage) => {
+                this.restoreAttackLand(creature)
+
+                const victim = target ?? creature.target
+                let lichBaneDamage = 0
+
+                if (victim?.active) {
+                    const { value, crit } = creature.calculateDamage(creature.abilityPower * 2)
+                    lichBaneDamage = victim.takeDamage(value, creature, "dark", crit, false, this.name)
+                }
+
+                const normalDamage = original.call(creature, damagetype, target, attackDamage)
+
+                return normalDamage + lichBaneDamage
             }
+
+            this.pendingAttackLandOriginals.set(creature, original)
+            this.pendingAttackLandHandlers.set(creature, empoweredAttack)
+            creature.onAttackLand = empoweredAttack
         }
 
         creature.eventHandlers[`lichbane_${this.id}`] = onCast
@@ -44,5 +60,20 @@ export class LichBane extends Item {
             creature.off("cast", handler)
             delete creature.eventHandlers[`lichbane_${this.id}`]
         }
+
+        this.restoreAttackLand(creature)
+    }
+
+    private restoreAttackLand(creature: Creature): void {
+        const original = this.pendingAttackLandOriginals.get(creature)
+        if (!original) return
+
+        const handler = this.pendingAttackLandHandlers.get(creature)
+        if (handler && creature.onAttackLand === handler) {
+            creature.onAttackLand = original
+        }
+
+        this.pendingAttackLandOriginals.delete(creature)
+        this.pendingAttackLandHandlers.delete(creature)
     }
 }
