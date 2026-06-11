@@ -143,6 +143,12 @@ Antes de implementar, leia nesta ordem:
 - Não gere pixel art literal com milhares de retângulos `1x1`; use partes modulares em `<defs>` e instâncias por frame com `<use>` e `transform`.
 - Preserve a compatibilidade futura com `SpritesheetCreatureVisualDefinition`: o SVG deve permitir extração por frame indexado, com `frameWidth: 64`, `frameHeight: 64` e `totalFramesPerRow: 9`.
 
+### Spritesheets SVG de FX e Projéteis gerados por IA
+
+- Se o usuário solicitar criação, alteração ou integração de spritesheet para projéteis (classes estendendo `Projectile`) ou efeitos visuais (classes estendendo `FxSprite`), leia obrigatoriamente `docs/svg-fx.md`.
+- Para FX e projéteis, use o padrão linear documentado: uma única linha com 10 frames de `64x64`, totalizando `640x64` (`viewBox="0 0 640 64"`).
+- Projéteis e efeitos com direção devem SEMPRE ser desenhados apontando para a direita (0 graus no Phaser).
+
 ### Portraits SVG gerados por IA
 
 - Se o usuário solicitar a criação de um portrait, leia obrigatoriamente `docs/svg-portraits.md` antes de gerar o retrato.

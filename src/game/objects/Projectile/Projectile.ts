@@ -5,9 +5,18 @@ import { Creature } from "../../creature/Creature"
 import { DamageType } from "../../ui/DamageNumbers"
 import { EventBus } from "../../tools/EventBus"
 import { LightParams } from "../../fx/FxSprite"
+import type { EffectAnimationConfig } from "../../fx/visual/EffectVisualDefinition"
+import { EffectVisualRegistry } from "../../fx/visual/EffectVisualRegistry"
+
+export interface ProjectileVisualOptions {
+    flipX?: boolean
+    autoPlayVisual?: boolean
+    animation?: EffectAnimationConfig
+}
 
 export class Projectile extends Phaser.Physics.Arcade.Sprite {
     owner: Creature
+    readonly sprite: string
     startX = 0
     startY = 0
     speed = 500
@@ -23,12 +32,15 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     protected lightTween?: Phaser.Tweens.Tween
     protected colliders: Phaser.Physics.Arcade.Collider[] = []
 
-    constructor(scene: Game, x: number, y: number, owner: Creature, texture: string, damageType: DamageType) {
+    constructor(scene: Game, x: number, y: number, owner: Creature, texture: string, damageType: DamageType, visualOptions: ProjectileVisualOptions = {}) {
         super(scene, x, y, texture)
+        this.sprite = texture
         this.scene = scene
         this.scene?.add.existing(this)
         this.scene?.physics.add.existing(this)
-        this.toggleFlipX()
+        if (visualOptions.flipX ?? true) {
+            this.toggleFlipX()
+        }
         this.setScale(0.1, 0.1)
 
         this.damageType = damageType
@@ -71,6 +83,19 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         EventBus.once("gamestate", () => {
             this.destroy()
         })
+
+        if (visualOptions.autoPlayVisual) {
+            this.playRegisteredVisual(visualOptions.animation)
+        }
+    }
+
+    protected playRegisteredVisual(config?: EffectAnimationConfig): string | undefined {
+        const visual = EffectVisualRegistry.get(this.sprite)
+        if (!visual) return undefined
+
+        const animationKey = visual.createAnimation(this, config)
+        this.play(animationKey)
+        return animationKey
     }
 
     fire(target: Creature, startX?: number, startY?: number) {

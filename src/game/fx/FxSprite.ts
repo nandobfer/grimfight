@@ -3,6 +3,7 @@ import Phaser from "phaser"
 import { Game, GameState } from "../scenes/Game"
 import { EventBus } from "../tools/EventBus"
 import { Creature } from "../creature/Creature"
+import { EffectVisualRegistry } from "./visual/EffectVisualRegistry"
 
 export interface LightParams {
     color: number
@@ -77,6 +78,12 @@ export class FxSprite extends Phaser.Physics.Arcade.Sprite {
     executeFrameCallback() {}
 
     initAnimation() {
+        const visual = EffectVisualRegistry.get(this.sprite)
+        if (visual) {
+            this.play(visual.createAnimation(this, { frameRate: this.frameRate }))
+            return
+        }
+
         if (!this.scene.anims.exists(this.sprite)) {
             this.scene.anims.create({
                 key: this.sprite,

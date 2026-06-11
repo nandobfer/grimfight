@@ -17,3 +17,8 @@ The SVG adapter keeps the document layout rules centralized in the visual layer.
 The SVG adapter also sets per-action attack impact frames for the standard attack variants. This lets `attacking1` and `attacking2` land on different visual beats while preserving the existing single-frame fallback for PNG spritesheets and custom class overrides.
 
 Characters using the standard SVG adapter should use the base attack animation selection unless they intentionally need a custom alias. If a class returns an attack action such as `attacking`, that alias must be created explicitly by its visual definition.
+
+### SVG Effect And Projectile Visuals
+FX and projectile SVG spritesheets use a separate visual registry from creatures because their animation layout is linear rather than directional. `EffectVisualRegistry` owns preload for registered effect assets, and `SvgSpritesheetEffectVisualDefinition` centralizes the `docs/svg-fx.md` contract.
+
+Registered FX sprites are picked up by `FxSprite.initAnimation()` through the sprite texture key. Registered projectile sprites can be played by `Projectile` through its optional visual settings, while existing PNG and image-sequence particles continue to use their legacy manual animation paths.
