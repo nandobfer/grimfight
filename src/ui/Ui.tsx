@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Box, Button, ThemeProvider } from "@mui/material"
-import { EventBus } from "../game/tools/EventBus"
 import { useMuiTheme } from "./hooks/useMuiTheme"
 import { GameStateButtons } from "./GameStateButtons/GameStateButtons"
 import { useGameScene } from "./hooks/useGameScene"
 import { PlayerAugments } from "./CharacterSheet/PlayerAugments"
-import { LoadingGame } from "./LoadingGame"
 import { Recount } from "./Recount/Recount"
 import { Counters } from "./Counters/Counters"
 import { CharacterStoreDrawer } from "./CharacterStoreDrawer/CharacterStoreDrawer"
-import { GameState } from "../game/scenes/Game"
 import { CharacterDrawer } from "./CharacterSheet/CharacerDrawer"
 import { Traits } from "./Traits/Traits"
 import { GameMenu } from "./GameMenu/GameMenu"
@@ -19,36 +16,9 @@ import { TavernDrawer } from "./Tavern/TavernDrawer"
 import { Logo } from "./components/Logo"
 import { DebugMenu } from "./DebugMenu/DebugMenu"
 
-interface UiProps {}
-
-export const Ui: React.FC<UiProps> = (props) => {
+export const Ui: React.FC = () => {
     const theme = useMuiTheme()
     const game = useGameScene()
-    const [loading, setLoading] = useState(true)
-    const [gameState, setGameState] = useState<GameState>(game?.state || "idle")
-
-    const finishLoading = () => {
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        // EventBus.on("choose-character", handleFirstCharacterEmitted)
-        EventBus.on("load-complete", finishLoading)
-
-        return () => {
-            // EventBus.off("choose-character", handleFirstCharacterEmitted)
-            EventBus.off("load-complete", finishLoading)
-        }
-    }, [])
-
-    useEffect(() => {
-        const handler = (state: GameState) => setGameState(state)
-        EventBus.on("gamestate", handler)
-
-        return () => {
-            EventBus.off("gamestate", handler)
-        }
-    }, [])
 
     return (
         <ThemeProvider theme={theme}>
@@ -66,7 +36,6 @@ export const Ui: React.FC<UiProps> = (props) => {
                     justifyContent: "space-between",
                 }}
             >
-                {loading && <LoadingGame />}
                 {game && (
                     <>
                         <Box sx={{ flexDirection: "column", height: 1, pointerEvents: "none", gap: 1 }}>
@@ -88,7 +57,7 @@ export const Ui: React.FC<UiProps> = (props) => {
                                 Menu
                             </Button>
                             <Counters game={game} />
-                            <Recount />
+                            <Recount game={game} />
                             <Box sx={{ flexDirection: "column", marginTop: "auto" }}>
                                 <GameStateButtons game={game} />
                             </Box>

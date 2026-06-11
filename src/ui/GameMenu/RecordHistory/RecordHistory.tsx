@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Box, Button, Dialog, IconButton, Paper, Typography } from "@mui/material"
+import { ButtonProps } from "@mui/material/Button"
 import { Game } from "../../../game/scenes/Game"
 import { GameRecord } from "../../../game/systems/GameRecord"
 import { Close } from "@mui/icons-material"
@@ -7,7 +8,22 @@ import { RecordItem } from "./RecordItem"
 import { Statistics } from "./Statistics/Statistics"
 
 interface RecordHistoryProps {
-    game: Game
+    game?: Game
+    buttonLabel?: string
+    buttonVariant?: ButtonProps["variant"]
+    disabled?: boolean
+}
+
+const getSavedGameRecords = () => {
+    try {
+        const data = localStorage.getItem("gamerecords")
+        if (data) {
+            return JSON.parse(data) as GameRecord[]
+        }
+    } catch (error) {
+        console.log(error)
+    }
+    return []
 }
 
 export const RecordHistory: React.FC<RecordHistoryProps> = (props) => {
@@ -20,15 +36,11 @@ export const RecordHistory: React.FC<RecordHistoryProps> = (props) => {
 
     const closeMenu = () => {
         setOpen(false)
-        // EventBus.emit('unpause')
-        props.game.game.resume()
+        props.game?.game.resume()
     }
 
-    const toggleMenu = () => setOpen((value) => !value)
-
     const getRecords = () => {
-        const records = props.game.getSavedGameRecords()
-        console.log(records)
+        const records = props.game?.getSavedGameRecords() ?? getSavedGameRecords()
         setRecords(records)
     }
 
@@ -43,8 +55,8 @@ export const RecordHistory: React.FC<RecordHistoryProps> = (props) => {
 
     return (
         <>
-            <Button variant="text" onClick={openMenu}>
-                History
+            <Button variant={props.buttonVariant ?? "text"} disabled={props.disabled} onClick={openMenu}>
+                {props.buttonLabel ?? "History"}
             </Button>
             <Dialog open={open} onClose={closeMenu} slotProps={{ backdrop: { sx: { background: "transparent" } }, paper: { elevation: 1 } }}>
                 <Box sx={{ justifyContent: "space-between" }}>
@@ -59,10 +71,11 @@ export const RecordHistory: React.FC<RecordHistoryProps> = (props) => {
 
                 {/* histórico */}
                 <Paper sx={{ flex: 1, flexDirection: "column", padding: 1, gap: 2 }} elevation={0}>
-                    {records
+                    {records.length === 0 && <Typography variant="body2">Nenhum histórico encontrado.</Typography>}
+                    {[...records]
                         .sort((a, b) => (b.finishedAt || Date.now()) - (a.finishedAt || Date.now()))
-                        .map((item) => (
-                            <RecordItem record={item} key={item.finishedAt} />
+                        .map((item, index) => (
+                            <RecordItem record={item} key={`${item.finishedAt}-${index}`} />
                         ))}
                 </Paper>
 

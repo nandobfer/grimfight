@@ -4,8 +4,13 @@ import { DamageMeter, HealingMeter } from "../../game/tools/DamageChart"
 import { EventBus } from "../../game/tools/EventBus"
 import { Add, Bolt } from "@mui/icons-material"
 import { GroupChart } from "./DamageChart"
+import { Game } from "../../game/scenes/Game"
 
-export const Recount: React.FC = () => {
+interface RecountProps {
+    game: Game
+}
+
+export const Recount: React.FC<RecountProps> = (props) => {
     const [damageCharts, setDamageCharts] = useState<DamageMeter[]>([])
     const [healingCharts, setHealingCharts] = useState<HealingMeter[]>([])
     const [recountType, setRecountType] = useState<"damage" | "heal">("damage")
@@ -21,12 +26,13 @@ export const Recount: React.FC = () => {
     useEffect(() => {
         EventBus.on("damage-chart", damageHandler)
         EventBus.on("healing-chart", healingHandler)
-        EventBus.emit("request-damage-chart")
+        setHealingCharts([])
+        props.game.playerTeam.damageChart.reset()
         return () => {
             EventBus.off("damage-chart", damageHandler)
             EventBus.off("healing-chart", healingHandler)
         }
-    }, [])
+    }, [props.game])
 
     const highestDamage = useMemo(() => damageCharts.reduce((h, m) => (m.total > h ? m.total : h), 0), [damageCharts])
     const highestHealing = useMemo(() => healingCharts.reduce((h, m) => (m.total > h ? m.total : h), 0), [healingCharts])

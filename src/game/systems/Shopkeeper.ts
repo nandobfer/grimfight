@@ -9,6 +9,7 @@ export class Shopkeeper extends Phaser.GameObjects.Image {
     private coinSprite: Phaser.GameObjects.Sprite
     glowFx: Phaser.FX.Glow
     store: CharacterStore
+    private onSellCharacter?: (character: Character) => void
 
     constructor(scene: Game) {
         const x = scene.background.x + scene.background.width / 3.7
@@ -55,10 +56,10 @@ export class Shopkeeper extends Phaser.GameObjects.Image {
     handleMouseEvents(): void {
         this.setInteractive({ useHandCursor: true, dropZone: true })
         // this.scene.input.enableDebug(this);
-        const onSell = (character: Character) => {
+        this.onSellCharacter = (character: Character) => {
             this.store.sell(character)
         }
-        EventBus.on("sell-character-shopkeeper", onSell)
+        EventBus.on("sell-character-shopkeeper", this.onSellCharacter)
 
         this.on("pointerover", () => {
             // if (this.scene.state === "idle") {
@@ -73,10 +74,21 @@ export class Shopkeeper extends Phaser.GameObjects.Image {
         this.on("pointerup", () => {
             EventBus.emit("toggle-store")
         })
-        this.once("destroy", () => {
-            EventBus.off("sell-character-shopkeeper", onSell)
-            this.removeAllListeners()
-        })
+    }
+
+    dispose() {
+        if (this.onSellCharacter) {
+            EventBus.off("sell-character-shopkeeper", this.onSellCharacter)
+            this.onSellCharacter = undefined
+        }
+        this.removeAllListeners()
+    }
+
+    override destroy(fromScene?: boolean): void {
+        this.dispose()
+        this.costText?.destroy()
+        this.coinSprite?.destroy()
+        super.destroy(fromScene)
     }
 
     private animateGlow(targetStrength: number) {

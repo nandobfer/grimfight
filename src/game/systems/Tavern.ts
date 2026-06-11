@@ -1,14 +1,14 @@
 import { Bench } from "../creature/character/Bench"
-import { Character, CharacterDto } from "../creature/character/Character"
+import { Character } from "../creature/character/Character"
 import { Game } from "../scenes/Game"
 import { EventBus } from "../tools/EventBus"
-import { Item } from "./Items/Item"
 
 export class Tavern extends Phaser.GameObjects.Image {
     declare scene: Game
     private text: Phaser.GameObjects.Text
     glowFx: Phaser.FX.Glow
     bench: Bench
+    private onBenchCharacter?: (character: Character) => void
 
 
     constructor(scene: Game) {
@@ -43,13 +43,13 @@ export class Tavern extends Phaser.GameObjects.Image {
     handleMouseEvents(): void {
         this.setInteractive({ useHandCursor: true, dropZone: true })
 
-        const onBench = (character: Character) => {
+        this.onBenchCharacter = (character: Character) => {
             const dto = character.getDto()
             character.onBenchDrop()
             this.bench.add(dto)
         }
 
-        EventBus.on("bench-character-tavern", onBench)
+        EventBus.on("bench-character-tavern", this.onBenchCharacter)
 
         this.on("pointerover", () => {
             this.onHoverGlow()
@@ -63,10 +63,20 @@ export class Tavern extends Phaser.GameObjects.Image {
             console.log("oi")
             EventBus.emit("toggle-bench")
         })
-        this.once("destroy", () => {
-            EventBus.off("bench-character-tavern", onBench)
-            this.removeAllListeners()
-        })
+    }
+
+    dispose() {
+        if (this.onBenchCharacter) {
+            EventBus.off("bench-character-tavern", this.onBenchCharacter)
+            this.onBenchCharacter = undefined
+        }
+        this.removeAllListeners()
+    }
+
+    override destroy(fromScene?: boolean): void {
+        this.dispose()
+        this.text?.destroy()
+        super.destroy(fromScene)
     }
 
     private animateGlow(targetStrength: number) {
