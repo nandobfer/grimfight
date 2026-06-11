@@ -18,6 +18,11 @@ The SVG adapter also sets per-action attack impact frames for the standard attac
 
 Characters using the standard SVG adapter should use the base attack animation selection unless they intentionally need a custom alias. If a class returns an attack action such as `attacking`, that alias must be created explicitly by its visual definition.
 
+### Monster Visuals
+Monsters share the same `CreatureVisualRegistry` used by playable characters because `Monster` extends `Creature`. `MonsterRegistry.register` installs a default PNG visual under `spritesheets/monsters/<name>.png`, and callers can pass an explicit visual definition to opt into another format.
+
+SVG monster assets use `SvgSpritesheetCreatureVisualDefinition.monster(name)`, which loads `spritesheets/monsters/<name>.svg` using the same geometric creature contract from `docs/svg-spritesheets.md`. The monster SVG helper also creates an `attacking` alias from the standard first attack animation so existing monster classes that request `getAttackingAnimation() === "attacking"` can use SVG assets without needing a separate monster visual registry.
+
 ### SVG Effect And Projectile Visuals
 FX and projectile SVG spritesheets use a separate visual registry from creatures because their animation layout is linear rather than directional. `EffectVisualRegistry` owns preload for registered effect assets, and `SvgSpritesheetEffectVisualDefinition` centralizes the `docs/svg-fx.md` contract.
 

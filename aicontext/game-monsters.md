@@ -20,6 +20,8 @@ Ao receber augment, o time inimigo aplica `onPick` no próprio grupo e emite eve
 ### MonsterRegistry
 `MonsterRegistry` centraliza criação e listagem dos monstros disponíveis para encounters e summons. `create` instancia pela chave registrada, `entries` fornece os construtores para geração de encounter e `getBaseStats` retorna uma cópia dos stats de referência para o sistema de CR.
 
+O registry também conecta cada monstro ao `CreatureVisualRegistry`. Por padrão, monstros usam `spritesheets/monsters/<name>.png`; quando um SVG gerado por IA existir, o registro do monstro pode receber `SvgSpritesheetCreatureVisualDefinition.monster(name)` para carregar `spritesheets/monsters/<name>.svg` sem criar um registry visual separado.
+
 ### Encounters
 `generateEncounter` usa `MonsterRegistry`, RNG determinístico por floor, challenge rating e itemização local para montar o time inimigo. Floors de boss escolhem um monstro, aplicam escalonamento de boss e equipam itens conforme CR.
 

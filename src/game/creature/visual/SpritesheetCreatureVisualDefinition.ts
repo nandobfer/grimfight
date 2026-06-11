@@ -39,6 +39,14 @@ export class SpritesheetCreatureVisualDefinition extends CreatureVisualDefinitio
         })
     }
 
+    static monster(name: string): SpritesheetCreatureVisualDefinition {
+        return new SpritesheetCreatureVisualDefinition({
+            textureKey: name,
+            path: `spritesheets/monsters/${name}.png`,
+            frameWidth: 64,
+        })
+    }
+
     override preload(scene: Phaser.Scene): void {
         scene.load.spritesheet(this.textureKey, this.path, this.frameConfig)
     }
@@ -63,17 +71,24 @@ const svgSpritesheetAnimations = [
 ] as const
 
 export class SvgSpritesheetCreatureVisualDefinition extends SpritesheetCreatureVisualDefinition {
-    constructor(textureKey: string, path: string) {
+    private readonly createAttackingAlias: boolean
+
+    constructor(textureKey: string, path: string, options: { createAttackingAlias?: boolean } = {}) {
         super({
             textureKey,
             path,
             frameWidth: 64,
             frameHeight: 64,
         })
+        this.createAttackingAlias = options.createAttackingAlias ?? false
     }
 
     static character(name: string): SvgSpritesheetCreatureVisualDefinition {
         return new SvgSpritesheetCreatureVisualDefinition(name, `spritesheets/characters/${name}.svg`)
+    }
+
+    static monster(name: string): SvgSpritesheetCreatureVisualDefinition {
+        return new SvgSpritesheetCreatureVisualDefinition(name, `spritesheets/monsters/${name}.svg`, { createAttackingAlias: true })
     }
 
     override createAnimations(creature: Creature): void {
@@ -90,5 +105,17 @@ export class SvgSpritesheetCreatureVisualDefinition extends SpritesheetCreatureV
 
         creature.setAttackAnimationImpactFrame("attacking1", svgSpritesheetAttacking1ImpactFrame)
         creature.setAttackAnimationImpactFrame("attacking2", svgSpritesheetAttacking2ImpactFrame)
+
+        if (this.createAttackingAlias) {
+            creature.extractAnimationsFromSpritesheet(
+                "attacking",
+                svgSpritesheetAnimations[2].startingFrame,
+                svgSpritesheetAnimations[2].usedFramesPerRow,
+                svgSpritesheetTotalFramesPerRow,
+                this.textureKey,
+                creature.name
+            )
+            creature.setAttackAnimationImpactFrame("attacking", svgSpritesheetAttacking1ImpactFrame)
+        }
     }
 }

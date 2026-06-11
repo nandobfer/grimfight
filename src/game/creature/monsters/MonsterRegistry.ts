@@ -15,6 +15,9 @@ import { SkeletonNecromancer } from "./SkeletonNecromancer"
 import { SkeletonDrainer } from "./SkeletonDrainer"
 import { SkeletonPyromancer } from "./SkeletonPyromancer"
 import { SkeletonCryomancer } from "./SkeletonCryomancer"
+import type { CreatureVisualDefinition } from "../visual/CreatureVisualDefinition"
+import { CreatureVisualRegistry } from "../visual/CreatureVisualRegistry"
+import { SpritesheetCreatureVisualDefinition } from "../visual/SpritesheetCreatureVisualDefinition"
 // import { Ifrit } from "./Ifrit"
 
 const CR_1_MONSTER: Record<string, StatsLike> = {
@@ -36,10 +39,16 @@ export class MonsterRegistry {
     private static registry: Map<string, Ctor> = new Map()
     private static normalRegistry: Map<string, Ctor> = new Map()
 
-    static register(name: string, cls: Ctor, normal = true) {
+    static register(name: string, cls: Ctor, normal = true, visual?: CreatureVisualDefinition) {
         this.registry.set(name, cls)
         if (normal) this.normalRegistry.set(name, cls)
+        CreatureVisualRegistry.register(name, visual ?? SpritesheetCreatureVisualDefinition.monster(name))
     }
+
+    static preloadVisuals(scene: Phaser.Scene): void {
+        CreatureVisualRegistry.preload(this.names(), scene)
+    }
+
     static create(name: string, scene: Game): Monster {
         const C = this.registry.get(name)
         if (!C) throw new Error(`Monster not found: ${name}`)
