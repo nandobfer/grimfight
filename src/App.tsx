@@ -3,10 +3,20 @@ import { IRefPhaserGame, PhaserGame } from "./PhaserGame"
 import { Ui } from "./ui/Ui"
 import { EventBus } from "./game/tools/EventBus"
 import { MainMenu } from "./ui/MainMenu/MainMenu"
+import { PreviewPage } from "./preview/PreviewPage"
+import { isPreviewRoute } from "./preview/previewRoute"
 
 type AppState = "menu" | "loading" | "playing"
 
 function App() {
+    if (isPreviewRoute(window.location.pathname)) {
+        return <PreviewPage />
+    }
+
+    return <GameApp />
+}
+
+function GameApp() {
     const [appState, setAppState] = useState<AppState>("menu")
     //  References to the PhaserGame component (game and scene are exposed)
     const phaserRef = useRef<IRefPhaserGame | null>(null)
