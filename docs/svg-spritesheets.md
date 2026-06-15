@@ -1,4 +1,4 @@
-# SVG Spritesheets Geometricas para Criaturas
+# SVG Spritesheets Vetoriais para Criaturas
 
 Este documento define o formato obrigatorio para spritesheets SVG geradas por IA para personagens, monstros e outras criaturas do Grim Fight.
 
@@ -14,13 +14,33 @@ O SVG final deve funcionar como uma spritesheet tradicional. Depois do preload, 
 
 Nunca gere pixel art literal em SVG usando milhares de retangulos de `1x1`. Isso cria arquivos grandes, inconsistentes e dificeis de revisar.
 
-Use sempre um estilo geometrico minimalista:
+Use sempre um estilo vetorial estilizado e modular:
 
-- `circle`, `ellipse`, `rect`, `polygon`, `path` simples e `line`.
-- Poucas cores solidas, sombras simples e highlights discretos.
-- Silhueta clara em tamanho `64x64`.
-- Partes reutilizaveis em `<defs>`.
-- Instancias por frame usando `<use href="#...">` com `transform`.
+- Formas vetoriais limpas (`path`, `circle`, `ellipse`, `rect`, `polygon`, `line`) com curvas e recortes quando melhorarem a silhueta.
+- Camadas reutilizaveis para corpo, cabeca, cabelo, roupas, armadura, arma, acessorios, sombras, brilho e efeito principal.
+- Paleta consistente com cores de base, sombra, highlight e acento visual.
+- Silhueta clara em tamanho `64x64`, sem depender de microdetalhes para ser reconhecivel.
+- Partes reutilizaveis em `<defs>` e instancias por frame usando `<use href="#...">` com `transform`.
+
+## Estilo Visual
+
+O objetivo nao e criar silhuetas pobres ou genericas. A IA pode usar mais elementos visuais, desde que eles sejam controlados, reutilizaveis e legiveis depois da rasterizacao pelo Phaser.
+
+Permitido e recomendado quando ajudar a qualidade:
+
+- `path` com curvas limpas para cabelo, capas, panos, chamas, fumaca, folhas, caudas, chifres, asas e monstros organicos.
+- Strokes finos a moderados para contorno, separacao de planos e leitura de silhueta.
+- Highlights, rim light, sombras internas, oclusao simples e pequenos brilhos de material.
+- Gradientes lineares ou radiais simples para metal, magia, fogo, gelo, veneno, sombras e volume corporal.
+- `clipPath` ou `mask` leves para limitar brilho, runas, padroes de tecido ou efeitos dentro de uma parte.
+- Detalhes recorrentes como olhos, cicatrizes, dentes, runas, joias, fivelas, emblemas, placas de armadura, costuras, penas, folhas ou ossos.
+
+Evite:
+
+- Detalhes menores que 2 pixels quando rasterizados.
+- Centenas de partes unicas por frame.
+- Paths enormes e irrevisaveis que substituem a modularidade.
+- Filtros pesados, blur grande, texturas complexas ou qualquer tecnica que trave o preload.
 
 ## Formato Obrigatorio do Arquivo
 
@@ -151,16 +171,21 @@ Exemplos:
 
 ## Uso Obrigatorio de `<defs>` e `<use>`
 
-Defina partes reutilizaveis uma vez em `<defs>`. Frames devem apenas posicionar, rotacionar, espelhar e variar essas partes.
+Defina partes reutilizaveis uma vez em `<defs>`. Frames devem principalmente posicionar, rotacionar, espelhar e variar essas partes. Pequenas variacoes por frame sao permitidas para smear, impacto, particulas ou expressao, mas a criatura base deve continuar vindo dos mesmos grupos canonicos.
 
 Bom:
 
 ```svg
 <defs>
+  <radialGradient id="armor-shine" cx="35%" cy="20%" r="70%">
+    <stop offset="0" stop-color="#a8b7ff" />
+    <stop offset="1" stop-color="#4b5cc4" />
+  </radialGradient>
   <ellipse id="shadow" cx="32" cy="56" rx="13" ry="4" fill="#000" opacity="0.25" />
   <g id="torso">
-    <rect x="-9" y="-12" width="18" height="24" rx="4" fill="#5b6ee1" />
-    <rect x="-7" y="-10" width="14" height="6" rx="2" fill="#8ea0ff" opacity="0.6" />
+    <path d="M-10,-11 Q0,-15 10,-11 L8,12 Q0,16 -8,12 Z" fill="url(#armor-shine)" stroke="#26306f" stroke-width="1.5" />
+    <path d="M-6,-8 Q0,-11 6,-8 L5,-2 Q0,1 -5,-2 Z" fill="#d9e2ff" opacity="0.45" />
+    <circle cx="0" cy="2" r="2" fill="#f6d36b" />
   </g>
   <g id="head-down">
     <circle cx="0" cy="0" r="8" fill="#f0c38a" />
@@ -176,6 +201,20 @@ Ruim:
 <path d="M...centenas de coordenadas..." />
 ```
 
+## Ficha Visual Canonica
+
+Antes de gerar a spritesheet completa, defina uma ficha visual curta e trate-a como contrato para todos os frames, direcoes, portrait e FX relacionados. A ficha nao precisa entrar no SVG final, mas deve guiar a criacao.
+
+A ficha deve conter:
+
+- Silhueta principal: alto, baixo, largo, magro, encapuzado, alado, quadrupede, arqueiro, mago, bruto etc.
+- Proporcoes fixas: tamanho relativo de cabeca, torso, membros, arma, chifres, capa, cauda ou asas.
+- Paleta: cor primaria, secundaria, sombra, highlight, contorno e cor de acento.
+- Material dominante: pele, osso, metal, couro, tecido, cristal, madeira, energia, sombra, sangue etc.
+- Direcao de luz padrao, preferencialmente vindo de cima/esquerda para manter highlights coerentes.
+- Elemento iconico recorrente: runa, chama, folha, gema, olho, cicatriz, emblema, casco, espinhos, halo, fumaca etc.
+- Assimetria intencional: ombro maior, chifre quebrado, arma em uma mao, olho brilhante, capa rasgada. Mantenha essa assimetria coerente entre direcoes; nao espelhe sem pensar.
+
 ## Consistencia Visual Obrigatoria
 
 A mesma criatura deve parecer a mesma em todos os frames e direcoes. A IA deve tratar a spritesheet como animacao modular, nao como 128 desenhos independentes.
@@ -186,7 +225,10 @@ Regras obrigatorias:
 - Mantenha a mesma escala corporal em todas as linhas.
 - Mantenha o pe/centro do personagem ancorado perto de `x=32`, `y=54`.
 - Mantenha a cabeca, torso, arma e acessorios com tamanhos coerentes entre frames.
-- Mude poses por `transform`, nao redesenhando completamente as partes.
+- Mude poses por `transform` e pequenas variacoes modulares, nao redesenhando completamente as partes.
+- Mantenha highlights e sombras coerentes com a direcao de luz definida na ficha visual.
+- Repita o elemento iconico da criatura nas direcoes onde ele deveria aparecer.
+- Preserve diferencas entre materiais: metal deve ler diferente de tecido, couro, pele, osso ou magia.
 - Evite detalhes abaixo de 2 pixels de espessura, pois o Phaser vai rasterizar o SVG.
 - Use bordas ou contraste suficiente para a silhueta ser legivel em `64x64`.
 - Garanta que armas, capas, efeitos e trails nao atravessem para celulas vizinhas.
@@ -212,14 +254,14 @@ Se usar espelhamento, aplique ao grupo certo e reposicione para manter tudo dent
 
 `attacking2` deve ter 6 frames. Use uma variacao distinta e mais curta, como estocada, golpe lateral, disparo rapido ou pancada secundaria. O impacto visual obrigatorio deve acontecer no quarto frame da animacao, pois o adapter SVG usa esse frame como momento de aplicacao do ataque.
 
-`casting` deve ter 7 frames. Use preparacao, acumulacao, pico magico e dissipacao. Efeitos devem ser geometricos simples, como circulos, runas, arcos, raios curtos ou particulas basicas.
+`casting` deve ter 7 frames. Use preparacao, acumulacao, pico magico e dissipacao. Efeitos devem ser estilizados e coerentes com a criatura, como runas, arcos, raios curtos, particulas, fumaca, folhas, gelo, fogo, sangue, sombra ou brilho sagrado.
 
 ## Boas Praticas para IA Gerar o Arquivo
 
 Ao gerar uma spritesheet SVG completa, siga este fluxo:
 
-1. Defina uma ficha visual curta da criatura: classe, silhueta, paleta, arma e efeito principal.
-2. Crie primeiro `<defs>` com corpo, cabeca por direcao, bracos, pernas, arma, sombra e efeitos basicos.
+1. Defina uma ficha visual canonica da criatura: classe, silhueta, proporcoes, paleta, material, direcao de luz, arma, assimetria e efeito principal.
+2. Crie primeiro `<defs>` com corpo, cabeca por direcao, cabelo/capuz/chifres, bracos, pernas, arma, sombra, highlights, detalhes recorrentes e efeitos basicos.
 3. Crie todas as celulas de `idle` para validar escala e direcao.
 4. Expanda para `walking`, reutilizando o mesmo corpo e alternando transforms de pernas/bracos.
 5. Expanda para `attacking1` e `attacking2`, preservando ancoragem dos pes.
@@ -242,37 +284,51 @@ Antes de finalizar qualquer spritesheet SVG, confirme:
 - Nao ha labels, grades, numeros ou texto renderizado no asset.
 - Nao ha `<animate>`, CSS animation, script ou referencia externa.
 - O personagem e consistente entre todos os frames.
+- A ficha visual canonica foi seguida em paleta, proporcao, materiais, luz, acessorios e elemento iconico.
 - Colunas nao usadas permanecem transparentes.
 
 ## Observacoes de Performance
 
 O Phaser rasteriza SVGs durante o carregamento. Portanto:
 
-- Prefira poucos elementos simples.
-- Evite filtros SVG pesados, blur grande, gradientes complexos e paths enormes.
-- Evite milhares de nodes.
+- Prefira detalhe controlado, modular e reutilizavel.
+- Evite filtros SVG pesados, blur grande, gradientes complexos demais e paths enormes.
+- Evite milhares de nodes ou centenas de elementos exclusivos por frame.
 - Nao gere assets muito maiores que o necessario.
 - Se a spritesheet ficar pesada ou travar o preload, simplifique formas e reduza detalhes.
 
-## Exemplo de Esqueleto Minimo
+## Exemplo de Esqueleto Compacto
 
-Este exemplo nao e uma criatura completa. Ele mostra apenas a estrutura correta.
+Este exemplo nao e uma criatura completa. Ele mostra apenas a estrutura correta com camadas suficientes para orientar um asset mais rico sem abandonar modularidade.
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
   <defs>
+    <linearGradient id="blue-armor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9fb0ff" />
+      <stop offset="0.55" stop-color="#5368d9" />
+      <stop offset="1" stop-color="#28336f" />
+    </linearGradient>
+    <radialGradient id="gold-rune" cx="35%" cy="30%" r="70%">
+      <stop offset="0" stop-color="#fff0a8" />
+      <stop offset="1" stop-color="#d99a2b" />
+    </radialGradient>
     <ellipse id="shadow" cx="32" cy="56" rx="13" ry="4" fill="#000" opacity="0.25" />
     <g id="body">
-      <rect x="-8" y="-12" width="16" height="24" rx="4" fill="#5b6ee1" />
+      <path d="M-10,-12 Q0,-16 10,-12 L8,12 Q0,16 -8,12 Z" fill="url(#blue-armor)" stroke="#1b214d" stroke-width="1.5" />
+      <path d="M-6,-8 Q0,-11 6,-8 L4,-2 Q0,1 -4,-2 Z" fill="#dbe4ff" opacity="0.45" />
+      <circle cx="0" cy="3" r="2.2" fill="url(#gold-rune)" stroke="#6b4216" stroke-width="0.6" />
     </g>
     <g id="head-down">
-      <circle cx="0" cy="0" r="8" fill="#f0c38a" />
+      <path d="M-8,-2 Q-7,-10 0,-11 Q7,-10 8,-2 Q8,7 0,9 Q-8,7 -8,-2 Z" fill="#f0c38a" stroke="#5b3722" stroke-width="1" />
+      <path d="M-8,-3 Q0,-12 8,-3 Q3,-6 0,-5 Q-3,-6 -8,-3 Z" fill="#2a1a14" />
       <circle cx="-3" cy="-1" r="1" fill="#20150f" />
       <circle cx="3" cy="-1" r="1" fill="#20150f" />
     </g>
     <g id="sword">
-      <rect x="-1" y="-14" width="2" height="22" fill="#d7e1ff" />
-      <rect x="-5" y="6" width="10" height="2" fill="#6b3f23" />
+      <path d="M0,-18 L3,4 L0,9 L-3,4 Z" fill="#d7e1ff" stroke="#647094" stroke-width="0.8" />
+      <path d="M0,-15 L1,2" stroke="#ffffff" stroke-width="0.8" opacity="0.7" />
+      <rect x="-5" y="5" width="10" height="2.5" rx="1" fill="#6b3f23" />
     </g>
   </defs>
 
