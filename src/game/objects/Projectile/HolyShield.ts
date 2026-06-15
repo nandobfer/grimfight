@@ -51,8 +51,8 @@ export class HolyShield extends Projectile {
     }
 
     onHit(target: Creature): void {
-        const { value, crit } = this.owner.calculateDamage(this.owner.attackDamage * 0.5 + this.owner.abilityPower * 0.5)
-        target.takeDamage(value, this.owner, "holy", this.critGuaranteed || crit, true, this.owner.abilityName)
+        const { value, crit } = this.owner.calculateDamage(this.owner.attackDamage * 0.5 + this.owner.abilityPower * 0.5, this.critGuaranteed)
+        target.takeDamage(value, this.owner, "holy", crit, true, this.owner.abilityName)
 
         if (this.applyBurn) this.burn(target)
 

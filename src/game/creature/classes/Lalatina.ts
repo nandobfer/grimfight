@@ -152,7 +152,7 @@ Back - Guardian Aura: When an ally is healed, they gain a shield equal to part o
             this.onPlacementChange()
         }
 
-        this.mana *= this.maxMana * 0.65
+        this.gainMana(this.maxMana * 0.65)
     }
 
     override update(time: number, delta: number): void {

@@ -63,9 +63,10 @@ const constellationStars: ConstellationStarDefinition[] = [
 
 export class Rokmora extends Character {
     baseAttackSpeed = 0.75
-    baseAttackDamage = 30
+    baseAttackDamage = 25
     baseMaxMana = 0
-    baseMaxHealth = 500
+    baseMaxHealth = 400
+    baseArmor = 10
     manaLocked = true
 
     abilityName = "Círculo das Estrelas"
@@ -92,7 +93,7 @@ export class Rokmora extends Character {
     override getAbilityDescription(): string {
         return `Rokmora é um golias de pedra, andarilho e eremita, que lê o céu para manter o equilíbrio da natureza. Sob suas mãos antigas, os pequenos e indefesos encontram abrigo.
 
-Passiva: Rokmora navega por constelações enquanto está ativa. Cada constelação dura [primary.main:2 segundos].
+Passiva: Rokmora navega por constelações enquanto está ativa. Cada constelação dura [primary.main:3 segundos].
 
         [primary.main:Constelação do Arqueiro]: cada ataque adiciona uma estrela à constelação. Após um breve intervalo, ela se desprende e avança brilhando contra o alvo atual, causando [info.main:${Math.round(
             calculateRokmoraArcherDamage(this.maxHealth, this.abilityPower)
@@ -104,7 +105,7 @@ Passiva: Rokmora navega por constelações enquanto está ativa. Cada constelaç
 
         [primary.main:Constelação da Taça]: a cada segundo, uma aura verde suave emana de Rokmora. Ela distribui [success.main:${Math.round(
             this.maxHealth * 0.1
-        )} (20% da vida máxima)] de cura entre todos os aliados feridos, incluindo Rokmora.`
+        )} (10% da vida máxima)] de cura entre todos os aliados feridos, incluindo Rokmora.`
     }
 
     override landAttack() {

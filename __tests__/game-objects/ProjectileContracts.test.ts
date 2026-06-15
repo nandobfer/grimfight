@@ -44,11 +44,11 @@ describe("Projectile Base contracts", () => {
         expect(source).toContain("scene?.lights?.removeLight(this.light)")
     })
 
-    it("delegates damage logic to owner", () => {
+    it("delegates damage logic to owner without emitting duplicate afterAttack", () => {
         const source = readSource(projPath)
         expect(source).toContain("onHit(target: Creature)")
         expect(source).toContain("this.owner?.onAttackLand(this.damageType, target)")
-        expect(source).toContain("this.owner?.onHit()")
+        expect(source).not.toContain("this.owner?.onHit()")
     })
 })
 
@@ -66,5 +66,12 @@ describe("Bouncing Projectile contracts", () => {
         expect(source).toContain("getRemainingTargets()")
         expect(source).toContain("this.owner.getEnemyTeam().getChildren(true, true)")
         expect(source).toContain("this.bounces -= 1")
+    })
+
+    it("HolyShield critGuaranteed forces critical damage calculation", () => {
+        const source = readSource(join(projDir, "HolyShield.ts"))
+
+        expect(source).toContain("this.owner.calculateDamage(this.owner.attackDamage * 0.5 + this.owner.abilityPower * 0.5, this.critGuaranteed)")
+        expect(source).toContain('target.takeDamage(value, this.owner, "holy", crit, true, this.owner.abilityName)')
     })
 })

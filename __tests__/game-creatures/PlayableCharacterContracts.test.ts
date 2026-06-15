@@ -68,7 +68,7 @@ describe("playable character class contracts", () => {
         const registrySource = readFileSync(characterRegistryPath, "utf8")
         const registryClassName = contract.registryClassName ?? contract.className
 
-        expect(registrySource).toContain(`CharacterRegistry.register("${contract.registryName}", ${registryClassName})`)
+        expect(registrySource).toMatch(new RegExp(`CharacterRegistry\\.register\\("${contract.registryName}",\\s*${registryClassName}(?:,|\\))`))
     })
 })
 
@@ -100,5 +100,30 @@ describe("playable character pure behavior", () => {
         expect(necromancerSource).toContain("createLinearMapping")
         expect(druidSource).toContain("getAnimationTextureName")
         expect(frankSource).toContain("drainLife(target")
+    })
+
+    it.each(["Frank.ts", "Freud.ts", "Lizwan.ts", "Reno.ts"])("keeps passive no-mana character %s mana locked after stat refresh", (file) => {
+        const source = readClassSource(file)
+
+        expect(source).toMatch(/override refreshStats\(\): void \{[\s\S]*super\.refreshStats\(\)[\s\S]*this\.manaLocked = true[\s\S]*\}/)
+    })
+
+    it("gives Lalatina starting mana through gainMana after refresh", () => {
+        const source = readClassSource("Lalatina.ts")
+
+        expect(source).toContain("this.gainMana(this.maxMana * 0.65)")
+        expect(source).not.toContain("this.mana *= this.maxMana * 0.65")
+    })
+
+    it("keeps Yue cast-triggered traits aligned with the randomly picked fire ray target", () => {
+        const source = readClassSource("Yue.ts")
+
+        expect(source).toMatch(/const target = this\.pickFireRayTarget\(\)[\s\S]*this\.target = target[\s\S]*this\.drawFireRay\(target/)
+    })
+
+    it("passes Silver Bolt's actual victim through Vania's on-hit flow", () => {
+        const source = readClassSource("Vania.ts")
+
+        expect(source).toMatch(/arrow\.onHit = \(target\) => \{[\s\S]*target\.takeDamage\([\s\S]*this\.onHit\(target\)[\s\S]*arrow\.destroy\(\)/)
     })
 })

@@ -120,7 +120,7 @@ Quando o ataque configurado da sequência é alcançado, cria `LightningBolt`, d
 ### Vania
 Vania é uma personagem jogável registrada como `vania`. Ela não usa mana para conjurar e conta ataques para periodicamente transformar seu projétil em `Silver Bolt`.
 
-O disparo especial configura pipeline de luz, adiciona light vinculada ao projétil, aplica dano true no `onHit` e remove listener de update quando o projétil é destruído. `refreshStats` reseta o contador.
+O disparo especial configura pipeline de luz, adiciona light vinculada ao projétil, aplica dano true no `onHit`, encaminha a vítima real pelo fluxo de acerto do personagem e remove listener de update quando o projétil é destruído. `refreshStats` reseta o contador.
 
 ### Ymir
 Ymir é um personagem jogável registrado como `ymir`. Ele possui passiva de congelar atacantes conforme chance configurada e uma habilidade ativa que emite uma onda congelante ao redor de si.
@@ -130,6 +130,6 @@ Ymir é um personagem jogável registrado como `ymir`. Ele possui passiva de con
 ### Yue
 Yue é uma personagem jogável registrada como `yue`, com os traits `Arcanist` e `Incendiary`. Ela usa os assets duplicados de Megumin como base visual, usa mana para conjurar sua habilidade e mantém um ataque básico à distância com `Fireball`.
 
-A habilidade `Fire Ray` escolhe um inimigo ativo e alvejável aleatório, desenha uma linha de fogo reta de Yue até esse alvo e aplica dano de fogo ao final da animação. O dano passa pelo cálculo padrão de dano/crit do `Creature`. O raio é apenas visual, sem colisão física, e cria uma luz laranja pulsante equivalente ao perfil visual do `Fireball` enquanto cresce.
+A habilidade `Fire Ray` escolhe um inimigo ativo e alvejável aleatório, define esse inimigo como alvo atual da Yue para manter traits acionadas por cast alinhadas ao mesmo alvo, desenha uma linha de fogo reta até ele e aplica dano de fogo ao final da animação. O dano passa pelo cálculo padrão de dano/crit do `Creature`. O raio é apenas visual, sem colisão física, e cria uma luz laranja pulsante equivalente ao perfil visual do `Fireball` enquanto cresce.
 
 ## Fixes

@@ -62,7 +62,7 @@ export class Vania extends Character {
         arrow.onHit = (target) => {
             const { value, crit } = this.calculateDamage(this.attackDamage + this.abilityPower * 0.7)
             target.takeDamage(value, this, "true", crit, true, this.abilityName)
-            this.onHit()
+            this.onHit(target)
             arrow.destroy()
         }
 

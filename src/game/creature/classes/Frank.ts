@@ -60,6 +60,7 @@ export class Frank extends Character {
 
     override refreshStats(): void {
         super.refreshStats()
+        this.manaLocked = true
         this.attacksCount = 0
     }
 }

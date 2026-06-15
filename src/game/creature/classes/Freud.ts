@@ -117,6 +117,7 @@ Passiva - [primary.main:Mente Afiada]: acertos críticos causam [info.main:${Mat
 
     override refreshStats(): void {
         super.refreshStats()
+        this.manaLocked = true
         this.clearMindAgileObservers()
     }
 }

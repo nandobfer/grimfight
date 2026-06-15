@@ -47,6 +47,6 @@ export class Lizwan extends Character {
 
     override refreshStats(): void {
         super.refreshStats()
-        // this.mana = this.maxMana * 0.9
+        this.manaLocked = true
     }
 }

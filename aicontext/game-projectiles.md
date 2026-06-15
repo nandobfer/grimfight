@@ -7,7 +7,7 @@ A classe base `Projectile` estende Arcade Sprite e ignora a gravidade. Ela asseg
 Seu `destroy` é explícito e garante a limpeza de timers, tweens, luzes (`lights`) e colliders.
 
 ### Combat Resolution
-Projéteis transferem a responsabilidade do cálculo final e da emissão de acerto para o atirador original através da chamada a `owner.onAttackLand(damageType, target)`. Acertos em paredes desencadeiam efeitos visuais de parede através da cena.
+Projéteis transferem a responsabilidade do cálculo final e da emissão de acerto para o atirador original através da chamada a `owner.onAttackLand(damageType, target)`. A emissão de acerto deve acontecer uma única vez por impacto, porque `onAttackLand` já executa o fluxo de `onHit` do atirador. Acertos em paredes desencadeiam efeitos visuais de parede através da cena.
 
 ### Registered Visuals
 Projéteis podem optar pelo sistema de visual registrado usando `EffectVisualRegistry`. Esse caminho é pensado para spritesheets SVG de `docs/svg-fx.md`: o preload acontece pelo registry, a animação percorre a linha de frames registrada e o construtor base permite desativar o `flipX` legado para preservar projéteis desenhados apontando para a direita.
