@@ -8,7 +8,7 @@ Archer é um personagem jogável registrado como `laherce`. Ele mantém ataque b
 A habilidade cria projéteis independentes, configura o dano no `onHit` de cada flecha e usa o cálculo padrão de dano do `Creature`. A regra deve permanecer na classe do personagem e nos projéteis, sem mover a lógica de combate para UI.
 
 ### Arthas
-Arthas é um personagem jogável registrado como `arthas`. Ele possui lifesteal passivo e uma sequência de conjurações de `Frost Strike` que alterna entre golpe no alvo, golpe em área frontal e pilares de gelo em inimigos.
+Arthas é um personagem jogável registrado como `arthas`, ligado às identidades de nobreza, gelo e morte. Ele possui lifesteal passivo e uma sequência de conjurações de `Frost Strike` que alterna entre golpe no alvo, golpe em área frontal e pilares de gelo em inimigos.
 
 A classe mantém um contador de casts para avançar a sequência e reseta esse estado em `refreshStats`. O efeito visual de luz acompanha o personagem durante o ciclo de vida e remove listeners/lights quando o personagem é destruído.
 

@@ -7,10 +7,10 @@ import { Character } from "../character/Character"
 
 export class Arthas extends Character {
     baseAttackSpeed = 0.75
-    baseAttackDamage = 30
+    baseAttackDamage = 40
     baseMaxMana: number = 80
-    baseMaxHealth: number = 425
-    baseLifesteal: number = 10
+    baseMaxHealth: number = 475
+    baseLifesteal: number = 20
 
     abilityName: string = "Frost Strike"
 
@@ -30,7 +30,7 @@ export class Arthas extends Character {
     }
 
     override getAbilityDescription(): string {
-        return `Passive: Steals [primary.main:10%] of all damage dealt.
+        return `Passive: Steals [primary.main:20%] of all damage dealt.
 
 1st cast: Strikes the current target with a frost strike, dealing [error.main:${Math.round(
             this.attackDamage * 2 + this.abilityPower * 0.3

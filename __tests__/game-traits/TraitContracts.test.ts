@@ -101,6 +101,16 @@ describe("Trait base and registry contracts", () => {
             expect(files.has(registeredClass)).toBe(true)
         }
     })
+
+    it("keeps Arthas aligned with noble popsicle deatheater traits", () => {
+        const source = readSource(registryPath)
+
+        expect(source).toMatch(/TraitsRegistry\.register\("Attacker", AttackerTrait, \[[^\]]*\]/)
+        expect(source.match(/TraitsRegistry\.register\("Attacker", AttackerTrait, \[[^\]]*\]/)?.[0]).not.toContain("arthas")
+        expect(source.match(/TraitsRegistry\.register\("Deatheater", DeathEaterTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
+        expect(source.match(/TraitsRegistry\.register\("Noble", NobleTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
+        expect(source.match(/TraitsRegistry\.register\("Popsicle", PopsicleTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
+    })
 })
 
 describe("individual trait contracts", () => {
