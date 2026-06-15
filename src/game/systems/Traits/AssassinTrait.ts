@@ -1,17 +1,23 @@
 import { Character } from "../../creature/character/Character"
 import { Creature } from "../../creature/Creature"
-import { DeathSkullFx } from "../../fx/DeathSkullFx"
-import { Xfx } from "../../fx/Xfx"
 import { Trait } from "./Trait"
 
-type TraitBoosts = "bonusCritChance" | "bonusCritMultiplier"
+type TraitBoosts = "bonusCritChance" | "bonusCritDamageMultiplier" | "executeDamageMultiplier"
+
+type AssassinStage = Record<TraitBoosts, number> & {
+    descriptionParams: string[]
+}
+
+const executeHealthThreshold = 0.2
 
 export class AssassinTrait extends Trait {
     name = "Assassin"
-    description = "Assassins gain {0} critical hit chance and each successful kill grants {1} to their critical damage multiplier, permanently."
-    stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { bonusCritChance: 20, bonusCritMultiplier: 0.02, descriptionParams: ["20%", "2%"] }],
-        [4, { bonusCritChance: 40, bonusCritMultiplier: 0.04, descriptionParams: ["40%", "4%"] }],
+    description =
+        "Assassins gain {0} critical hit chance, {1} critical damage, and deal {2} extra damage to enemies below 20% health."
+    stages: Map<number, AssassinStage> = new Map([
+        [2, { bonusCritChance: 20, bonusCritDamageMultiplier: 0.2, executeDamageMultiplier: 0.2, descriptionParams: ["20%", "20%", "20%"] }],
+        [4, { bonusCritChance: 40, bonusCritDamageMultiplier: 0.4, executeDamageMultiplier: 0.4, descriptionParams: ["40%", "40%", "40%"] }],
+        [6, { bonusCritChance: 60, bonusCritDamageMultiplier: 0.6, executeDamageMultiplier: 0.6, descriptionParams: ["60%", "60%", "60%"] }],
     ])
 
     constructor(comp: string[]) {
@@ -25,36 +31,27 @@ export class AssassinTrait extends Trait {
 
         const previousHandler = character.eventHandlers.assassinTrait
         if (previousHandler) {
-            character.off("kill", previousHandler)
+            character.off("dealt-damage", previousHandler)
         }
 
-        const killHandler = (killed: Creature) => {
-            character.baseCritDamageMultiplier += values.bonusCritMultiplier
-            new Xfx(character.scene, killed.x, killed.y)
-            const deathFx = new DeathSkullFx(character.scene, killed.x, killed.y, 0.3)
-            character.scene.tweens.add({
-                targets: deathFx,
-                x: character.x,
-                y: character.y,
-                duration: 400,
-                onUpdate: (tween) => {
-                    tween.updateTo("x", character.x)
-                    tween.updateTo("y", character.y)
-                },
-            })
+        const executeWoundedTarget = (target: Creature, damage: number) => {
+            if (target.maxHealth <= 0 || target.health / target.maxHealth > executeHealthThreshold) return
+
+            target.takeDamage(damage * values.executeDamageMultiplier, character, "true", false, false, this.name)
         }
 
-        character.eventHandlers.assassinTrait = killHandler
+        character.eventHandlers.assassinTrait = executeWoundedTarget
         character.critChance += values.bonusCritChance
+        character.critDamageMultiplier += values.bonusCritDamageMultiplier
 
-        character.on("kill", killHandler)
+        character.on("dealt-damage", executeWoundedTarget)
         character.once("destroy", () => this.cleanup(character))
     }
 
     override cleanup(character: Character) {
         const handler = character.eventHandlers.assassinTrait
         if (handler) {
-            character.off("kill", handler)
+            character.off("dealt-damage", handler)
             delete character.eventHandlers.assassinTrait
         }
     }

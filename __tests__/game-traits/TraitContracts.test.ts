@@ -126,4 +126,20 @@ describe("individual trait contracts", () => {
         expect(source).toMatch(/\.off\(|team\.off/)
         expect(source).toContain("once(\"destroy\"")
     })
+
+    it("Assassin uses bounded execute damage instead of permanent kill scaling", () => {
+        const source = readSource(join(traitDir, "AssassinTrait.ts"))
+
+        expect(source).toContain("bonusCritChance")
+        expect(source).toContain("bonusCritDamageMultiplier")
+        expect(source).toContain("executeDamageMultiplier")
+        expect(source).toContain("executeHealthThreshold")
+        expect(source).toContain("[6, { bonusCritChance: 60")
+        expect(source).toContain("character.critDamageMultiplier += values.bonusCritDamageMultiplier")
+        expect(source).toContain("character.on(\"dealt-damage\", executeWoundedTarget)")
+        expect(source).toContain("character.off(\"dealt-damage\", handler)")
+        expect(source).toContain("target.takeDamage(damage * values.executeDamageMultiplier, character, \"true\", false, false, this.name)")
+        expect(source).not.toContain("baseCritDamageMultiplier +=")
+        expect(source).not.toContain("character.on(\"kill\"")
+    })
 })
