@@ -12,6 +12,7 @@ export class SkeletonDrainer extends Skeleton {
     baseAttackDamage = 25
     baseAttackSpeed = 0.75
     baseAttackRange = 3
+		baseMaxMana = 0
 
     abilityName = "Life Drain"
 
@@ -49,7 +50,7 @@ export class SkeletonDrainer extends Skeleton {
             damageType: "dark",
             duration: 5000,
             target: this.target,
-            tickDamage: this.abilityPower * 0.2,
+            tickDamage: this.abilityPower * 0.4,
             tickRate: 750,
             user: this,
             onExpire: () => {
