@@ -4,8 +4,8 @@ import { Character } from "../character/Character"
 import { Creature } from "../Creature"
 
 export class Freud extends Character {
-    baseAttackSpeed = 1
-    baseAttackDamage = 30
+    baseAttackSpeed = 0.9
+    baseAttackDamage = 15
     baseAttackRange = 4
     baseMaxHealth = 250
     baseMaxMana: number = 0
@@ -29,8 +29,8 @@ export class Freud extends Character {
         return `Passiva - [primary.main:Mente Ágil]: quando um inimigo entra no alcance corpo a corpo de Freud, ele muda para esse alvo e tenta atacá-lo imediatamente.
 
 Passiva - [primary.main:Mente Afiada]: acertos críticos causam [info.main:${Math.round(
-            this.abilityPower * 0.75
-        )} (75% AP)] de dano mágico adicional com crítico garantido. Freud recebe um escudo equivalente ao dano adicional causado.`
+            this.abilityPower * 0.5
+        )} (50% AP)] de dano mágico adicional com crítico garantido. Freud recebe um escudo equivalente ao dano adicional causado.`
     }
 
     override extractAttackingAnimation() {
@@ -61,7 +61,7 @@ Passiva - [primary.main:Mente Afiada]: acertos críticos causam [info.main:${Mat
             target.takeDamage(value, this, "normal", crit, true)
 
             if (crit && target.active) {
-                const additionalDamage = this.calculateDamage(this.abilityPower * 0.75, true)
+                const additionalDamage = this.calculateDamage(this.abilityPower * 0.5, true)
                 const damageDealt = target.takeDamage(additionalDamage.value, this, "dark", true, true, "Mente Afiada")
                 if (damageDealt > 0) {
                     this.gainShield(damageDealt, { healer: this, source: "Mente Afiada" })

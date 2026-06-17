@@ -12,7 +12,7 @@ export class SkeletonDrainer extends Skeleton {
     baseAttackDamage = 25
     baseAttackSpeed = 0.75
     baseAttackRange = 3
-		baseMaxMana = 0
+		baseMaxMana = 30
 
     abilityName = "Life Drain"
 
