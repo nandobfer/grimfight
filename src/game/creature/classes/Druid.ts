@@ -9,7 +9,10 @@ import { DamageType } from "../../ui/DamageNumbers"
 import { Character } from "../character/Character"
 import { Creature } from "../Creature"
 
-const humanMultiplier = 1
+const humanRejuvenationMultiplier = 1
+const humanRegrowthMultiplier = 0.5
+const humanRegrowthSource = "Regrowth"
+const humanRejuvenationSource = "Rejuvenation"
 
 type DruidForm = "human" | "bear" | "cat"
 export class Helyna extends Character {
@@ -58,9 +61,11 @@ export class Helyna extends Character {
                 this.attackDamage * 1.5
             )} (150% AD)] damage.`
 
-            const human = `[primary.main:Human] (back): Doesn't transform into anything, but your ability [success.main:(Rejuvenation)] heals the ally with the least health on the field for [info.main:${Math.round(
-                this.abilityPower * humanMultiplier
-            )} (100% AP)] over 3 seconds.`
+            const human = `[primary.main:Human] (back): Remains in human form, weaving restorative nature magic. When cast, [success.main:Regrowth] instantly blooms under the weakest ally for [info.main:${Math.round(
+                this.abilityPower * humanRegrowthMultiplier
+            )} (50% AP)] healing, then [success.main:Rejuvenation] restores [info.main:${Math.round(
+                this.abilityPower * humanRejuvenationMultiplier
+            )} (100% AP)] health over 3 seconds.`
 
             return placement === "front"
                 ? bear
@@ -172,8 +177,11 @@ ${human}`
         const target = this.team.getLowestHealth()
         if (target) {
             new Heal(target)
-            const value = this.abilityPower * humanMultiplier * multiplier
-            new Hot({ abilityName: "Rejuvenation", duration: 3000, target, tickRate: 500, user: this, value, valueType: "total" }).start()
+            const regrowthValue = this.abilityPower * humanRegrowthMultiplier * multiplier
+            const rejuvenationValue = this.abilityPower * humanRejuvenationMultiplier * multiplier
+            const regrowth = this.calculateDamage(regrowthValue)
+            target.heal(regrowth.value, { healer: this, source: humanRegrowthSource })
+            new Hot({ abilityName: humanRejuvenationSource, duration: 3000, target, tickRate: 500, user: this, value: rejuvenationValue, valueType: "total" }).start()
         }
     }
 
