@@ -23,6 +23,7 @@ import { Chichi } from "./classes/Chichi"
 import { Lalatina } from "./classes/Lalatina"
 import { Melo } from "./classes/Melo"
 import { Freud } from "./classes/Freud"
+import { Fandral } from "./classes/Fandral"
 import { Rokmora } from "./classes/Rokmora"
 import { Yue } from "./classes/Yue"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
@@ -97,5 +98,6 @@ CharacterRegistry.register("chichi", Chichi)
 CharacterRegistry.register("lalatina", Lalatina)
 CharacterRegistry.register("melo", Melo)
 CharacterRegistry.register("freud", Freud)
+CharacterRegistry.register("fandral", Fandral, SvgSpritesheetCreatureVisualDefinition.character("fandral"))
 CharacterRegistry.register("rokmora", Rokmora, SvgSpritesheetCreatureVisualDefinition.character("rokmora"))
 CharacterRegistry.register("yue", Yue, SvgSpritesheetCreatureVisualDefinition.character("yue"))

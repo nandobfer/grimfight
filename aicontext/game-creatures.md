@@ -37,7 +37,7 @@ A habilidade ativa troca o alvo para um inimigo de menor vida e modifica tempora
 ### Helyna
 Helyna é uma personagem jogável registrada como `helyna`. Ela usa a habilidade `Druidism` para alternar entre forma humana, urso ou gato conforme a posição inicial.
 
-Na forma humana, Helyna mantém ataque à distância e pode curar o aliado de menor vida com `Hot`. Na forma de urso, transforma atributos defensivos/ofensivos e pode ativar armadura de espinhos que retaliará atacantes. Na forma de gato, transforma atributos ofensivos e pode aplicar sangramento com `Dot`.
+Na forma humana, Helyna mantém ataque à distância e pode curar o aliado de menor vida com duas fontes separadas: `Regrowth` aplica uma cura imediata, e `Rejuvenation` aplica um `Hot` no mesmo alvo. Na forma de urso, transforma atributos defensivos/ofensivos e pode ativar armadura de espinhos que retaliará atacantes. Na forma de gato, transforma atributos ofensivos e pode aplicar sangramento com `Dot`.
 
 `refreshStats` retorna Helyna para a forma humana, restaura caches de atributos e reseta o estado de thorns. O nome de textura/animação deve refletir a forma ativa.
 
@@ -45,6 +45,13 @@ Na forma humana, Helyna mantém ataque à distância e pode curar o aliado de me
 Frank é um personagem jogável registrado como `frank`. Ele não usa mana para conjurar e possui uma passiva que conta ataques para periodicamente drenar vida do alvo.
 
 Quando o ataque configurado da sequência é alcançado, `drainLife` aplica dano venenoso calculado pela regra atual e cura Frank com base no resultado. `refreshStats` reseta o contador para evitar acúmulo indevido entre rounds.
+
+### Fandral
+Fandral é um personagem jogável registrado como `fandral`, ligado a fogo, druidismo e assassinato. Ele permanece em forma felina, emite uma luz fraca e constante de fogo, e usa uma habilidade de corte flamejante em área fixa ao redor do alvo atual.
+
+A habilidade calcula uma linha curta de células centrada no alvo e perpendicular à direção de Fandral, então usa uma margem expandida ao redor dessa faixa para desenhar o efeito. O dano usa o envelope completo do visual animado e interseção com o corpo do inimigo, para que inimigos visualmente sobrepostos pelo corte também sejam afetados. O visual aparece diretamente nessa área como marcas de garra feitas com `Graphics`, sem projétil saindo do personagem. Inimigos na área recebem dano direto de fogo e um `Dot` de burning com fonte separada para damage chart. O FX deve limpar tween, gráfico e listener de estado ao terminar ou ao mudar a rodada.
+
+Se o alvo atual de Fandral ficar inválido no momento do cast, ele tenta retargetar para outro inimigo ativo. Quando o novo alvo está fora de alcance, Fandral salta para perto dele com tween e então executa o corte normalmente. Se não houver nenhum alvo válido, a mana é devolvida para que o cast não seja perdido.
 
 ### Freud
 Freud é um personagem jogável registrado como `freud`. Ele não usa mana para conjurar e possui duas passivas: uma de retarget corpo a corpo quando inimigos entram em alcance adjacente, e outra de dano sombrio adicional em críticos.

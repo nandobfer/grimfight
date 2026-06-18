@@ -1,0 +1,298 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="fandral-fur" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#303449" />
+      <stop offset="0.58" stop-color="#121622" />
+      <stop offset="1" stop-color="#06070d" />
+    </linearGradient>
+    <linearGradient id="fandral-fire" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff4a3" />
+      <stop offset="0.48" stop-color="#f97316" />
+      <stop offset="1" stop-color="#b91c1c" />
+    </linearGradient>
+    <radialGradient id="fandral-eye-fire" cx="45%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#fff7ad" />
+      <stop offset="0.5" stop-color="#fb923c" />
+      <stop offset="1" stop-color="#7f1d1d" />
+    </radialGradient>
+
+    <ellipse id="fandral-shadow" cx="32" cy="56" rx="17" ry="4.5" fill="#000000" opacity="0.28" />
+    <path id="fandral-paw-flame" d="M-4 3 Q-1 -7 1 -2 Q3 -9 5 -1 Q7 5 0 7 Q-6 6 -4 3 Z" fill="url(#fandral-fire)" opacity="0.94" />
+    <path id="fandral-tail-flame" d="M-4 5 Q-1 -8 3 -3 Q5 -12 8 -2 Q11 7 2 11 Q-7 10 -4 5 Z" fill="url(#fandral-fire)" opacity="0.95" />
+    <path id="fandral-ember-rune" d="M0 -4 L3 0 L0 4 L-3 0 Z" fill="#f97316" opacity="0.9" />
+    <g id="fandral-eye-pair">
+      <ellipse cx="-3" cy="0" rx="1.5" ry="2.2" fill="url(#fandral-eye-fire)" />
+      <ellipse cx="3" cy="0" rx="1.5" ry="2.2" fill="url(#fandral-eye-fire)" />
+    </g>
+    <g id="fandral-fire-ring">
+      <circle cx="32" cy="34" r="13" fill="none" stroke="#f97316" stroke-width="2" opacity="0.65" />
+      <path d="M32 18 C35 25 44 25 46 32 C39 30 37 39 32 45 C27 39 25 30 18 32 C20 25 29 25 32 18 Z" fill="#fb923c" opacity="0.25" />
+      <circle cx="23" cy="29" r="2" fill="#facc15" opacity="0.8" />
+      <circle cx="43" cy="37" r="2.3" fill="#fb923c" opacity="0.75" />
+    </g>
+    <g id="fandral-slash">
+      <path d="M18 39 C27 30 39 30 48 39" fill="none" stroke="#f97316" stroke-width="4" stroke-linecap="round" opacity="0.78" />
+      <path d="M21 42 C30 34 39 35 45 42" fill="none" stroke="#fff7ad" stroke-width="1.5" stroke-linecap="round" opacity="0.75" />
+    </g>
+    <g id="fandral-tail-arc">
+      <path d="M17 29 C9 24 9 14 21 12" fill="none" stroke="#fb923c" stroke-width="4" stroke-linecap="round" opacity="0.62" />
+      <path d="M19 29 C12 24 13 17 22 15" fill="none" stroke="#fff7ad" stroke-width="1.5" stroke-linecap="round" opacity="0.75" />
+    </g>
+
+    <g id="fandral-paws-down-neutral">
+      <ellipse cx="23" cy="48" rx="4" ry="5" fill="#0b0d14" stroke="#282c40" stroke-width="1" />
+      <ellipse cx="41" cy="48" rx="4" ry="5" fill="#0b0d14" stroke="#282c40" stroke-width="1" />
+      <ellipse cx="25" cy="37" rx="3.7" ry="4.4" fill="#0b0d14" opacity="0.95" />
+      <ellipse cx="39" cy="37" rx="3.7" ry="4.4" fill="#0b0d14" opacity="0.95" />
+      <use href="#fandral-paw-flame" transform="translate(23 52) scale(0.55)" />
+      <use href="#fandral-paw-flame" transform="translate(41 52) scale(0.55)" />
+      <use href="#fandral-paw-flame" transform="translate(25 41) scale(0.42)" />
+      <use href="#fandral-paw-flame" transform="translate(39 41) scale(0.42)" />
+    </g>
+    <g id="fandral-paws-down-step-a"><use href="#fandral-paws-down-neutral" /><use href="#fandral-paw-flame" transform="translate(20 51) rotate(-14) scale(0.75)" /></g>
+    <g id="fandral-paws-down-step-b"><use href="#fandral-paws-down-neutral" /><use href="#fandral-paw-flame" transform="translate(44 51) rotate(14) scale(0.75)" /></g>
+
+    <g id="fandral-body-down">
+      <path d="M18 34 Q20 24 32 22 Q44 24 46 34 Q47 45 39 50 L25 50 Q17 45 18 34 Z" fill="url(#fandral-fur)" stroke="#05060a" stroke-width="1.5" />
+      <path d="M23 31 Q32 26 41 31" fill="none" stroke="#566079" stroke-width="1.3" opacity="0.7" />
+      <use href="#fandral-ember-rune" transform="translate(22 35) rotate(-18) scale(0.85)" />
+    </g>
+    <g id="fandral-head-down">
+      <path d="M22 24 Q24 13 32 12 Q40 13 42 24 Q40 32 32 34 Q24 32 22 24 Z" fill="#151927" stroke="#05060a" stroke-width="1.5" />
+      <path d="M24 17 L20 10 L28 14 Z" fill="#10131f" stroke="#05060a" stroke-width="1" />
+      <path d="M40 17 L45 12 L39 15 Z" fill="#0f121c" stroke="#05060a" stroke-width="1" />
+      <use href="#fandral-eye-pair" transform="translate(32 23)" />
+      <path d="M29 28 Q32 30 35 28" fill="none" stroke="#555f78" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+    </g>
+    <g id="fandral-tail-down"><path d="M43 36 C55 30 54 20 45 17" fill="none" stroke="#0d1019" stroke-width="6" stroke-linecap="round" /><use href="#fandral-tail-flame" transform="translate(45 17) rotate(22) scale(0.75)" /></g>
+
+    <g id="fandral-body-up">
+      <path d="M18 34 Q20 24 32 22 Q44 24 46 34 Q47 45 39 50 L25 50 Q17 45 18 34 Z" fill="#10141f" stroke="#05060a" stroke-width="1.5" />
+      <path d="M24 29 Q32 25 40 29" fill="none" stroke="#495168" stroke-width="1.2" opacity="0.55" />
+      <use href="#fandral-ember-rune" transform="translate(42 35) rotate(24) scale(0.75)" />
+    </g>
+    <g id="fandral-head-up">
+      <path d="M23 25 Q24 15 32 13 Q40 15 41 25 Q37 31 32 32 Q27 31 23 25 Z" fill="#111522" stroke="#05060a" stroke-width="1.5" />
+      <path d="M25 17 L21 10 L29 14 Z" fill="#0d1019" stroke="#05060a" stroke-width="1" />
+      <path d="M39 17 L44 12 L37 15 Z" fill="#0d1019" stroke="#05060a" stroke-width="1" />
+      <path d="M27 24 Q32 28 37 24" fill="none" stroke="#3f475d" stroke-width="1.3" stroke-linecap="round" />
+    </g>
+    <g id="fandral-tail-up"><path d="M21 38 C8 31 10 18 22 16" fill="none" stroke="#0d1019" stroke-width="6" stroke-linecap="round" /><use href="#fandral-tail-flame" transform="translate(22 16) rotate(-40) scale(0.75)" /></g>
+
+    <g id="fandral-body-left">
+      <path d="M19 36 Q25 25 39 27 Q48 29 50 38 Q45 49 29 49 Q18 47 16 41 Z" fill="url(#fandral-fur)" stroke="#05060a" stroke-width="1.5" />
+      <path d="M24 33 Q33 29 44 34" fill="none" stroke="#59637b" stroke-width="1.3" opacity="0.65" />
+      <use href="#fandral-ember-rune" transform="translate(28 35) rotate(-18) scale(0.85)" />
+    </g>
+    <g id="fandral-head-left">
+      <path d="M13 31 Q14 20 24 18 Q32 20 33 29 Q27 37 18 36 Z" fill="#151927" stroke="#05060a" stroke-width="1.5" />
+      <path d="M18 21 L15 12 L23 18 Z" fill="#10131f" stroke="#05060a" stroke-width="1" />
+      <path d="M28 21 L33 15 L30 22 Z" fill="#0f121c" stroke="#05060a" stroke-width="1" />
+      <ellipse cx="19" cy="28" rx="1.5" ry="2.2" fill="url(#fandral-eye-fire)" />
+      <path d="M15 32 Q19 34 24 32" fill="none" stroke="#555f78" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+    </g>
+    <g id="fandral-paws-left-neutral">
+      <ellipse cx="25" cy="51" rx="5" ry="3.5" fill="#0b0d14" /><ellipse cx="43" cy="51" rx="5" ry="3.5" fill="#0b0d14" />
+      <ellipse cx="22" cy="42" rx="4" ry="3" fill="#0b0d14" opacity="0.95" /><ellipse cx="40" cy="43" rx="4" ry="3" fill="#0b0d14" opacity="0.95" />
+      <use href="#fandral-paw-flame" transform="translate(24 53) rotate(-80) scale(0.5)" /><use href="#fandral-paw-flame" transform="translate(43 53) rotate(-80) scale(0.5)" />
+      <use href="#fandral-paw-flame" transform="translate(21 43) rotate(-80) scale(0.38)" /><use href="#fandral-paw-flame" transform="translate(40 44) rotate(-80) scale(0.38)" />
+    </g>
+    <g id="fandral-paws-left-step-a"><use href="#fandral-paws-left-neutral" /><use href="#fandral-paw-flame" transform="translate(18 51) rotate(-90) scale(0.75)" /></g>
+    <g id="fandral-paws-left-step-b"><use href="#fandral-paws-left-neutral" /><use href="#fandral-paw-flame" transform="translate(48 51) rotate(-70) scale(0.75)" /></g>
+    <g id="fandral-tail-left"><path d="M47 37 C58 31 58 20 47 18" fill="none" stroke="#0d1019" stroke-width="6" stroke-linecap="round" /><use href="#fandral-tail-flame" transform="translate(47 18) rotate(24) scale(0.75)" /></g>
+
+    <g id="fandral-body-right"><use href="#fandral-body-left" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="fandral-head-right">
+      <path d="M51 31 Q50 20 40 18 Q32 20 31 29 Q37 37 46 36 Z" fill="#151927" stroke="#05060a" stroke-width="1.5" />
+      <path d="M46 21 L49 12 L41 18 Z" fill="#10131f" stroke="#05060a" stroke-width="1" />
+      <path d="M36 21 L31 15 L34 22 Z" fill="#0f121c" stroke="#05060a" stroke-width="1" />
+      <ellipse cx="45" cy="28" rx="1.5" ry="2.2" fill="url(#fandral-eye-fire)" />
+      <path d="M49 32 Q45 34 40 32" fill="none" stroke="#555f78" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+    </g>
+    <g id="fandral-paws-right-neutral"><use href="#fandral-paws-left-neutral" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="fandral-paws-right-step-a"><use href="#fandral-paws-right-neutral" /><use href="#fandral-paw-flame" transform="translate(46 51) rotate(90) scale(0.75)" /></g>
+    <g id="fandral-paws-right-step-b"><use href="#fandral-paws-right-neutral" /><use href="#fandral-paw-flame" transform="translate(16 51) rotate(70) scale(0.75)" /></g>
+    <g id="fandral-tail-right"><path d="M17 37 C6 31 6 20 17 18" fill="none" stroke="#0d1019" stroke-width="6" stroke-linecap="round" /><use href="#fandral-tail-flame" transform="translate(17 18) rotate(-24) scale(0.75)" /></g>
+
+    <g id="fandral-down-idle-a"><use href="#fandral-shadow" /><use href="#fandral-tail-down" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-down" /><use href="#fandral-head-down" /></g>
+    <g id="fandral-down-idle-b"><use href="#fandral-shadow" /><use href="#fandral-tail-down" transform="translate(0 -1)" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-down" transform="translate(0 -1)" /><use href="#fandral-head-down" transform="translate(0 -1)" /></g>
+    <g id="fandral-down-walk-a"><use href="#fandral-shadow" /><use href="#fandral-tail-down" transform="rotate(5 44 25)" /><use href="#fandral-paws-down-step-a" /><use href="#fandral-body-down" /><use href="#fandral-head-down" /></g>
+    <g id="fandral-down-walk-b"><use href="#fandral-shadow" /><use href="#fandral-tail-down" transform="rotate(-5 44 25) translate(0 -1)" /><use href="#fandral-paws-down-step-b" /><use href="#fandral-body-down" transform="translate(0 -1)" /><use href="#fandral-head-down" transform="translate(0 -1)" /></g>
+    <g id="fandral-down-attack-prep"><use href="#fandral-shadow" /><use href="#fandral-tail-down" /><use href="#fandral-paws-down-neutral" transform="translate(0 1)" /><use href="#fandral-body-down" transform="translate(0 1) scale(1.02)" /><use href="#fandral-head-down" transform="translate(0 1)" /></g>
+    <g id="fandral-down-attack-swing"><use href="#fandral-shadow" /><use href="#fandral-tail-down" transform="rotate(-8 44 25)" /><use href="#fandral-paws-down-step-a" /><use href="#fandral-body-down" transform="translate(0 -2)" /><use href="#fandral-head-down" transform="translate(0 -4)" /></g>
+    <g id="fandral-down-attack-impact"><use href="#fandral-shadow" /><use href="#fandral-slash" transform="translate(0 7)" /><use href="#fandral-tail-down" /><use href="#fandral-paws-down-step-b" /><use href="#fandral-body-down" transform="translate(0 -1)" /><use href="#fandral-head-down" transform="translate(0 -2)" /></g>
+    <g id="fandral-down-tail-hit"><use href="#fandral-shadow" /><use href="#fandral-tail-arc" transform="translate(0 7) rotate(180 32 32)" /><use href="#fandral-tail-down" transform="rotate(18 44 25)" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-down" /><use href="#fandral-head-down" /></g>
+    <g id="fandral-down-cast-a"><use href="#fandral-shadow" /><use href="#fandral-tail-down" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-down" /><use href="#fandral-head-down" /></g>
+    <g id="fandral-down-cast-b"><use href="#fandral-shadow" /><use href="#fandral-fire-ring" /><use href="#fandral-tail-down" transform="translate(0 -1)" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-down" transform="translate(0 -1)" /><use href="#fandral-head-down" transform="translate(0 -1)" /></g>
+    <g id="fandral-down-cast-c"><use href="#fandral-shadow" /><use href="#fandral-fire-ring" transform="translate(-5 -5) scale(1.15)" /><use href="#fandral-tail-down" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-down" /><use href="#fandral-head-down" /></g>
+
+    <g id="fandral-up-idle-a"><use href="#fandral-shadow" /><use href="#fandral-tail-up" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-up" /><use href="#fandral-head-up" /></g>
+    <g id="fandral-up-idle-b"><use href="#fandral-shadow" /><use href="#fandral-tail-up" transform="translate(0 -1)" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-up" transform="translate(0 -1)" /><use href="#fandral-head-up" transform="translate(0 -1)" /></g>
+    <g id="fandral-up-walk-a"><use href="#fandral-shadow" /><use href="#fandral-tail-up" transform="rotate(-5 20 25)" /><use href="#fandral-paws-down-step-a" /><use href="#fandral-body-up" /><use href="#fandral-head-up" /></g>
+    <g id="fandral-up-walk-b"><use href="#fandral-shadow" /><use href="#fandral-tail-up" transform="rotate(5 20 25) translate(0 -1)" /><use href="#fandral-paws-down-step-b" /><use href="#fandral-body-up" transform="translate(0 -1)" /><use href="#fandral-head-up" transform="translate(0 -1)" /></g>
+    <g id="fandral-up-attack-prep"><use href="#fandral-shadow" /><use href="#fandral-tail-up" /><use href="#fandral-paws-down-neutral" transform="translate(0 1)" /><use href="#fandral-body-up" transform="translate(0 1)" /><use href="#fandral-head-up" transform="translate(0 1)" /></g>
+    <g id="fandral-up-attack-swing"><use href="#fandral-shadow" /><use href="#fandral-tail-up" transform="rotate(10 20 25)" /><use href="#fandral-paws-down-step-a" /><use href="#fandral-body-up" transform="translate(0 -2)" /><use href="#fandral-head-up" transform="translate(0 -4)" /></g>
+    <g id="fandral-up-attack-impact"><use href="#fandral-shadow" /><use href="#fandral-slash" transform="translate(0 -11) rotate(180 32 39)" /><use href="#fandral-tail-up" /><use href="#fandral-paws-down-step-b" /><use href="#fandral-body-up" transform="translate(0 -1)" /><use href="#fandral-head-up" transform="translate(0 -2)" /></g>
+    <g id="fandral-up-tail-hit"><use href="#fandral-shadow" /><use href="#fandral-tail-arc" /><use href="#fandral-tail-up" transform="rotate(-18 20 25)" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-up" /><use href="#fandral-head-up" /></g>
+    <g id="fandral-up-cast-a"><use href="#fandral-shadow" /><use href="#fandral-tail-up" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-up" /><use href="#fandral-head-up" /></g>
+    <g id="fandral-up-cast-b"><use href="#fandral-shadow" /><use href="#fandral-fire-ring" transform="translate(0 -5)" /><use href="#fandral-tail-up" transform="translate(0 -1)" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-up" transform="translate(0 -1)" /><use href="#fandral-head-up" transform="translate(0 -1)" /></g>
+    <g id="fandral-up-cast-c"><use href="#fandral-shadow" /><use href="#fandral-fire-ring" transform="translate(-5 -10) scale(1.15)" /><use href="#fandral-tail-up" /><use href="#fandral-paws-down-neutral" /><use href="#fandral-body-up" /><use href="#fandral-head-up" /></g>
+
+    <g id="fandral-left-idle-a"><use href="#fandral-shadow" /><use href="#fandral-tail-left" /><use href="#fandral-paws-left-neutral" /><use href="#fandral-body-left" /><use href="#fandral-head-left" /></g>
+    <g id="fandral-left-idle-b"><use href="#fandral-shadow" /><use href="#fandral-tail-left" transform="translate(0 -1)" /><use href="#fandral-paws-left-neutral" /><use href="#fandral-body-left" transform="translate(0 -1)" /><use href="#fandral-head-left" transform="translate(0 -1)" /></g>
+    <g id="fandral-left-walk-a"><use href="#fandral-shadow" /><use href="#fandral-tail-left" transform="rotate(6 47 25)" /><use href="#fandral-paws-left-step-a" /><use href="#fandral-body-left" /><use href="#fandral-head-left" /></g>
+    <g id="fandral-left-walk-b"><use href="#fandral-shadow" /><use href="#fandral-tail-left" transform="rotate(-6 47 25) translate(0 -1)" /><use href="#fandral-paws-left-step-b" /><use href="#fandral-body-left" transform="translate(0 -1)" /><use href="#fandral-head-left" transform="translate(-1 -1)" /></g>
+    <g id="fandral-left-attack-prep"><use href="#fandral-shadow" /><use href="#fandral-tail-left" /><use href="#fandral-paws-left-neutral" /><use href="#fandral-body-left" transform="translate(4 1)" /><use href="#fandral-head-left" transform="translate(4 1)" /></g>
+    <g id="fandral-left-attack-swing"><use href="#fandral-shadow" /><use href="#fandral-tail-left" transform="rotate(-10 47 25)" /><use href="#fandral-paws-left-step-a" /><use href="#fandral-body-left" transform="translate(-3 -1)" /><use href="#fandral-head-left" transform="translate(-5 -2)" /></g>
+    <g id="fandral-left-attack-impact"><use href="#fandral-shadow" /><use href="#fandral-slash" transform="translate(-17 3) rotate(-90 32 39)" /><use href="#fandral-tail-left" /><use href="#fandral-paws-left-step-b" /><use href="#fandral-body-left" transform="translate(-2 -1)" /><use href="#fandral-head-left" transform="translate(-6 -2)" /></g>
+    <g id="fandral-left-tail-hit"><use href="#fandral-shadow" /><use href="#fandral-tail-arc" /><use href="#fandral-tail-left" transform="rotate(20 47 25)" /><use href="#fandral-paws-left-neutral" /><use href="#fandral-body-left" /><use href="#fandral-head-left" /></g>
+    <g id="fandral-left-cast-a"><use href="#fandral-shadow" /><use href="#fandral-tail-left" /><use href="#fandral-paws-left-neutral" /><use href="#fandral-body-left" /><use href="#fandral-head-left" /></g>
+    <g id="fandral-left-cast-b"><use href="#fandral-shadow" /><use href="#fandral-fire-ring" transform="translate(-5 -2)" /><use href="#fandral-tail-left" transform="translate(0 -1)" /><use href="#fandral-paws-left-neutral" /><use href="#fandral-body-left" transform="translate(0 -1)" /><use href="#fandral-head-left" transform="translate(0 -1)" /></g>
+    <g id="fandral-left-cast-c"><use href="#fandral-shadow" /><use href="#fandral-fire-ring" transform="translate(-11 -6) scale(1.15)" /><use href="#fandral-tail-left" /><use href="#fandral-paws-left-neutral" /><use href="#fandral-body-left" /><use href="#fandral-head-left" /></g>
+
+    <g id="fandral-right-idle-a"><use href="#fandral-shadow" /><use href="#fandral-tail-right" /><use href="#fandral-paws-right-neutral" /><use href="#fandral-body-right" /><use href="#fandral-head-right" /></g>
+    <g id="fandral-right-idle-b"><use href="#fandral-shadow" /><use href="#fandral-tail-right" transform="translate(0 -1)" /><use href="#fandral-paws-right-neutral" /><use href="#fandral-body-right" transform="translate(0 -1)" /><use href="#fandral-head-right" transform="translate(0 -1)" /></g>
+    <g id="fandral-right-walk-a"><use href="#fandral-shadow" /><use href="#fandral-tail-right" transform="rotate(-6 17 25)" /><use href="#fandral-paws-right-step-a" /><use href="#fandral-body-right" /><use href="#fandral-head-right" /></g>
+    <g id="fandral-right-walk-b"><use href="#fandral-shadow" /><use href="#fandral-tail-right" transform="rotate(6 17 25) translate(0 -1)" /><use href="#fandral-paws-right-step-b" /><use href="#fandral-body-right" transform="translate(0 -1)" /><use href="#fandral-head-right" transform="translate(1 -1)" /></g>
+    <g id="fandral-right-attack-prep"><use href="#fandral-shadow" /><use href="#fandral-tail-right" /><use href="#fandral-paws-right-neutral" /><use href="#fandral-body-right" transform="translate(-4 1)" /><use href="#fandral-head-right" transform="translate(-4 1)" /></g>
+    <g id="fandral-right-attack-swing"><use href="#fandral-shadow" /><use href="#fandral-tail-right" transform="rotate(10 17 25)" /><use href="#fandral-paws-right-step-a" /><use href="#fandral-body-right" transform="translate(3 -1)" /><use href="#fandral-head-right" transform="translate(5 -2)" /></g>
+    <g id="fandral-right-attack-impact"><use href="#fandral-shadow" /><use href="#fandral-slash" transform="translate(17 3) rotate(90 32 39)" /><use href="#fandral-tail-right" /><use href="#fandral-paws-right-step-b" /><use href="#fandral-body-right" transform="translate(2 -1)" /><use href="#fandral-head-right" transform="translate(6 -2)" /></g>
+    <g id="fandral-right-tail-hit"><use href="#fandral-shadow" /><use href="#fandral-tail-arc" transform="translate(64 0) scale(-1 1)" /><use href="#fandral-tail-right" transform="rotate(-20 17 25)" /><use href="#fandral-paws-right-neutral" /><use href="#fandral-body-right" /><use href="#fandral-head-right" /></g>
+    <g id="fandral-right-cast-a"><use href="#fandral-shadow" /><use href="#fandral-tail-right" /><use href="#fandral-paws-right-neutral" /><use href="#fandral-body-right" /><use href="#fandral-head-right" /></g>
+    <g id="fandral-right-cast-b"><use href="#fandral-shadow" /><use href="#fandral-fire-ring" transform="translate(5 -2)" /><use href="#fandral-tail-right" transform="translate(0 -1)" /><use href="#fandral-paws-right-neutral" /><use href="#fandral-body-right" transform="translate(0 -1)" /><use href="#fandral-head-right" transform="translate(0 -1)" /></g>
+    <g id="fandral-right-cast-c"><use href="#fandral-shadow" /><use href="#fandral-fire-ring" transform="translate(5 -6) scale(1.15)" /><use href="#fandral-tail-right" /><use href="#fandral-paws-right-neutral" /><use href="#fandral-body-right" /><use href="#fandral-head-right" /></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-a" /></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-b" /></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-a" /></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-b" /></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-a" /></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-b" /></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-a" /></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-b" /></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-walk-a" /></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-a" /></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-walk-b" /></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-b" /></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-a" /></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-b" /></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-walk-a" /></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-walk-a" /></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-a" /></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-walk-b" /></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-b" /></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-a" /></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-b" /></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-walk-a" /></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-walk-a" /></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-a" /></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-walk-b" /></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-b" /></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-a" /></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-b" /></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-walk-a" /></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-walk-a" /></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-a" /></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-walk-b" /></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-b" /></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-a" /></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-b" /></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-walk-a" /></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-attack-prep" transform="translate(0 1)" /></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-attack-swing" /></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-attack-impact" /></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-attack-swing" /></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-b" /></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-a" /></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-attack-prep" transform="translate(1 0)" /></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-attack-swing" /></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-attack-swing" transform="translate(-1 0)" /></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-attack-impact" /></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-attack-swing" /></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-b" /></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-a" /></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-attack-prep" transform="translate(0 1)" /></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-attack-swing" /></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-attack-impact" /></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-attack-swing" /></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-b" /></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-a" /></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-attack-prep" transform="translate(-1 0)" /></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-attack-swing" /></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-attack-swing" transform="translate(1 0)" /></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-attack-impact" /></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-attack-swing" /></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-b" /></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-a" /></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-a" /></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-attack-prep" /></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-attack-swing" /></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-tail-hit" /></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-b" /></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-a" /></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-a" /></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-attack-prep" /></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-attack-swing" /></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-tail-hit" /></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-b" /></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-a" /></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-a" /></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-attack-prep" /></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-attack-swing" /></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-tail-hit" /></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-b" /></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-a" /></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-a" /></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-attack-prep" /></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-attack-swing" /></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-tail-hit" /></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-b" /></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-a" /></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-cast-a" /></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-cast-b" /></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-cast-c" /></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-cast-b" /></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-cast-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-up-idle-a" /></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-cast-a" /></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-cast-b" /></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-cast-b" transform="translate(-1 0)" /></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-cast-c" /></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-cast-b" /></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-cast-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-left-idle-a" /></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-cast-a" /></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-cast-b" /></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-cast-c" /></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-cast-b" /></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-cast-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-down-idle-a" /></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-cast-a" /></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-cast-b" /></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-cast-b" transform="translate(1 0)" /></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-cast-c" /></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-cast-b" /></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-cast-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#fandral-right-idle-a" /></svg>
+</svg>
