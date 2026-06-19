@@ -12,7 +12,7 @@ import {
 } from "../../src/game/creature/classes/FandralFlameSlash"
 
 describe("Fandral Flame Slash", () => {
-    it("splits ability damage evenly between direct damage and burning", () => {
+    it("keeps direct damage nerfed while preserving total burning damage", () => {
         const abilityPower = 80
         const multiplier = 1.3
 
@@ -23,7 +23,7 @@ describe("Fandral Flame Slash", () => {
         expect(Number.isFinite(burnTotalDamage)).toBe(true)
         expect(directDamage).toBeGreaterThanOrEqual(0)
         expect(burnTotalDamage).toBeGreaterThanOrEqual(0)
-        expect(burnTotalDamage).toBe(directDamage)
+        expect(directDamage * 2).toBeCloseTo(burnTotalDamage)
     })
 
     it("derives each burn tick from the configured total burn window", () => {

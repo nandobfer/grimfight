@@ -438,7 +438,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     onHealFx() {
-        const healEffect = new Heal(this)
+        new Heal(this)
     }
 
     resetMouseEvents() {
@@ -716,11 +716,14 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.mana = 0
         this.manaBar.setValue(this.mana, this.maxMana)
 
-        this.castAbility()
+        const didCast = this.castAbility()
+        if (didCast === false) return
+
         this.emit("cast")
     }
 
-    castAbility(rawMultiplier = 1) {
+    castAbility(rawMultiplier = 1): boolean | void {
+        void rawMultiplier
         // each character and monster will have it's own
     }
 
@@ -1222,6 +1225,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     override update(time: number, delta: number): void {
+        void time
         this.updateCharUi()
 
         if (this.scene.state === "idle") {

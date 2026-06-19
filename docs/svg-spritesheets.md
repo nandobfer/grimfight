@@ -268,6 +268,7 @@ Ao gerar uma spritesheet SVG completa, siga este fluxo:
 6. Expanda para `casting`, reutilizando efeitos definidos em `<defs>`.
 7. Revise todos os `x` e `y` de celulas para garantir multiplos de `64`.
 8. Revise se o root ainda tem `width="576"`, `height="1280"` e `viewBox="0 0 576 1280"`.
+9. Apague qualquer arquivo temporario criado no processo, incluindo scripts auxiliares usados para gerar o SVG, rascunhos, imagens intermediarias e arquivos de conversao. Preserve apenas o asset final que sera versionado.
 
 ## Checklist Antes de Entregar um SVG
 
@@ -286,6 +287,7 @@ Antes de finalizar qualquer spritesheet SVG, confirme:
 - O personagem e consistente entre todos os frames.
 - A ficha visual canonica foi seguida em paleta, proporcao, materiais, luz, acessorios e elemento iconico.
 - Colunas nao usadas permanecem transparentes.
+- Scripts auxiliares, rascunhos, imagens intermediarias e qualquer outro arquivo temporario criado para gerar o asset foram apagados.
 
 ## Observacoes de Performance
 

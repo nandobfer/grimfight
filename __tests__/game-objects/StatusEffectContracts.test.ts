@@ -15,7 +15,7 @@ describe("Status Effect aicontext", () => {
     it("documents status effect contracts without numeric balance values", () => {
         const context = readSource(contextPath)
 
-        for (const heading of ["### Lifecycle And Cleanup", "### Condition", "### Dot And Hot", "### Freeze"]) {
+        for (const heading of ["### Lifecycle And Cleanup", "### Condition", "### Dot And Hot", "### Freeze", "### FireEmpowerment"]) {
             expect(context).toContain(heading)
         }
 
@@ -83,5 +83,20 @@ describe("Freeze contracts", () => {
         expect(source).toContain("export class Freeze extends Condition")
         expect(source).toContain("attributes: [\"frozen\"]")
         expect(source).toContain("values: [true]")
+    })
+})
+
+describe("FireEmpowerment contracts", () => {
+    it("applies attack speed, adds on-hit damage, and owns cleanup", () => {
+        const source = readSource(join(statusDir, "FireEmpowerment.ts"))
+
+        expect(source).toContain("export class FireEmpowerment extends StatusEffect")
+        expect(source).toContain("this.target.attackSpeed += this.attackSpeedBonus")
+        expect(source).toContain("this.target.on(\"afterAttack\", this.onAfterAttack)")
+        expect(source).toContain("this.user.calculateDamage(this.user.abilityPower * this.damageApRatio)")
+        expect(source).toContain("victim.takeDamage(value, this.target, \"fire\", crit, false")
+        expect(source).toContain("this.target.off(\"afterAttack\", this.onAfterAttack)")
+        expect(source).toContain("this.target.scene.events.off(\"gamestate\", this.onGameState)")
+        expect(source).toContain("this.aura?.destroy()")
     })
 })

@@ -10,7 +10,7 @@ import { HolyTrait } from "./HolyTrait"
 import { IncendiaryTrait } from "./IncendiaryTrait"
 import { NobleTrait } from "./NobleTrait"
 import { PackTrait } from "./PackTrait"
-import { PopsicleTrait } from "./PopsicleTrait"
+import { WinterTrait } from "./WinterTrait"
 import { SorcererTrait } from "./SorcererTrait"
 import { SpeedyTrait } from "./SpeedyTrait"
 import { Trait } from "./Trait"
@@ -82,8 +82,8 @@ TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon"
 TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula"])
 TraitsRegistry.register("Pack", PackTrait, ["lizwan", "helyna", "laherce", "banguela"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna", "rokmora", "fandral"])
-TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin", "yue", "fandral"])
+TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin", "yue", "fandral", "melisandre"])
 TraitsRegistry.register("Noble", NobleTrait, ["maximus", "jadis", "statikk", "dracula", "arthas"])
-TraitsRegistry.register("Popsicle", PopsicleTrait, ["reno", "jadis", "rukia", "ymir", "arthas"])
+TraitsRegistry.register("Winter", WinterTrait, ["reno", "jadis", "rukia", "ymir", "arthas", "jacrost"])
 TraitsRegistry.register("Holy", HolyTrait, ["lalatina", "melo"])
-TraitsRegistry.register("Cleric", ClericTrait, ["melo"])
+TraitsRegistry.register("Cleric", ClericTrait, ["melo", "jacrost", "melisandre"])

@@ -6,13 +6,14 @@ import { Trait } from "./Trait"
 
 type TraitBoosts = "freezeChance" | "critChanceBonus"
 
-export class PopsicleTrait extends Trait {
-    name = "Popsicle"
+export class WinterTrait extends Trait {
+    name = "Winter"
     description =
-        "Popsicle have a {0} chance to freeze the enemy for 1 second when attacking. Additionally, their attacks have {1} more chance to critically hit frozen targets."
+        "Winter characters have a {0} chance to freeze the enemy for 1 second when attacking. Additionally, their attacks have {1} more chance to critically hit frozen targets."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { freezeChance: 5, critChanceBonus: 20, descriptionParams: ["5%", "20%"] }],
         [4, { freezeChance: 10, critChanceBonus: 40, descriptionParams: ["10%", "40%"] }],
+        [6, { freezeChance: 15, critChanceBonus: 60, descriptionParams: ["15%", "60%"] }],
     ])
 
     originalTryCrits = new WeakMap<Character, (bonus?: number) => boolean>()
@@ -26,18 +27,18 @@ export class PopsicleTrait extends Trait {
         const values = this.stages.get(this.activeStage)
         if (!values) return
 
-        const previousHandler = character.eventHandlers.popsicleTrait
+        const previousHandler = character.eventHandlers.winterTrait
         if (previousHandler) {
             character.off("dealt-damage", previousHandler)
         }
 
-        const onAttack = (target: Creature, damage: number) => {
+        const onAttack = (target: Creature) => {
             if (RNG.chance() <= values.freezeChance) {
                 new Freeze(target, character, 1000).start()
             }
         }
 
-        character.eventHandlers.popsicleTrait = onAttack
+        character.eventHandlers.winterTrait = onAttack
 
         character.on("dealt-damage", onAttack)
         character.once("destroy", () => this.cleanup(character))
@@ -56,10 +57,10 @@ export class PopsicleTrait extends Trait {
     }
 
     override cleanup(character: Character) {
-        const handler = character.eventHandlers.popsicleTrait
+        const handler = character.eventHandlers.winterTrait
         if (handler) {
             character.off("dealt-damage", handler)
-            delete character.eventHandlers.popsicleTrait
+            delete character.eventHandlers.winterTrait
         }
         this.resetCharacterTryCrit(character)
     }

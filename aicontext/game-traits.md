@@ -8,7 +8,7 @@ Arcanist é uma trait jogável registrada como `Arcanist`, composta por `freud` 
 Quando a trait alcança seus estágios ativos, cada unidade Arcanist ganha AP durante o combate. O ganho usa timer por unidade, varia conforme o estágio ativo e só acumula enquanto a cena está no estado `fighting`.
 
 ### Incendiary
-Incendiary é uma trait jogável registrada como `Incendiary`, composta por `banguela`, `megumin` e `yue`. Ao alcançar estágio ativo, personagens Incendiary aplicam queimadura ao alvo atual quando castam suas habilidades, usando dano baseado no estágio, floor atual e mana máxima do caster.
+Incendiary é uma trait jogável registrada como `Incendiary`, composta por `banguela`, `megumin` e `yue`. Ao alcançar estágio ativo, personagens Incendiary aplicam queimadura ao alvo atual quando castam suas habilidades, usando dano baseado no estágio, floor atual e mana máxima do caster. O alvo é capturado no momento do gatilho e precisa continuar ativo e alvo válido para receber a queimadura.
 
 ### Trait
 `Trait` é a base de sinergias de composição. Ela mantém composição válida, stages, composição ativa e stage ativo. `startApplying` calcula personagens ativos da composição, `tryApply` executa cleanup antes de aplicar modificador e `getActiveStage` escolhe o stage disponível pela composição atual.
@@ -43,8 +43,8 @@ Noble é uma trait de personagens nobres. Quando ativa, escuta kills para conced
 ### Pack
 Pack é uma trait de personagens de matilha. Quando ativa, escuta dano causado para aplicar efeito adicional e remove listener no cleanup.
 
-### Popsicle
-Popsicle é uma trait de personagens de gelo. Quando ativa, escuta dano causado para aplicar freeze ou efeito frio conforme stage atual e remove listener no cleanup.
+### Winter
+Winter é uma trait de personagens de gelo. Quando ativa, escuta dano causado para aplicar freeze ou efeito frio conforme stage atual e remove listener no cleanup.
 
 ### Sorcerer
 Sorcerer é uma trait de conjuradores. Quando ativa, escuta casts para agendar efeito adicional e remove listener no cleanup.

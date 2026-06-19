@@ -52,7 +52,7 @@ Os locks também são respeitados por movimento, ataque, regeneração de mana e
 ### Mana And Casting
 `gainMana` respeita `manaLocked`, atualiza UI e inicia conjuração quando a mana chega ao máximo e a criatura pode castar. `regenMana` converte delta de update em ganho de mana e não roda durante casting.
 
-`startCastingAbility` zera mana, atualiza UI, chama `castAbility` e emite o evento de cast. Subclasses implementam a habilidade concreta sobrescrevendo `castAbility`.
+`startCastingAbility` zera mana, atualiza UI, chama `castAbility` e só emite o evento de cast quando a habilidade não aborta explicitamente. Subclasses implementam a habilidade concreta sobrescrevendo `castAbility` e podem sinalizar abortos sem publicar gatilhos de traits.
 
 ### Death And Wipe
 `die` ajusta pose final, limpa status effects, para movimento/animação, desativa a criatura, reduz depth, executa FX de morte, esconde UI e emite eventos de morte para time e listeners locais.

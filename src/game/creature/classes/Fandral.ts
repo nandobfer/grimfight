@@ -91,35 +91,36 @@ export class Fandral extends Character {
     override getAbilityDescription(): string {
         return `Slashes the grid around the target, dealing [error.main:${Math.round(
             calculateFandralFlameSlashDirectDamage(this.abilityPower)
-        )} (75% AP)] fire damage and burning enemies hit for [error.main:${Math.round(
+        )} (37.5% AP)] fire damage and burning enemies hit for [error.main:${Math.round(
             calculateFandralFlameSlashBurnTotalDamage(this.abilityPower)
         )} (75% AP)] fire damage over 5 seconds.`
     }
 
-    override castAbility(multiplier = 1): void {
-        this.casting = true
+    override castAbility(multiplier = 1): boolean {
+        if (this.casting) return false
 
         const target = this.getValidFlameSlashTarget()
         if (!target) {
-            this.refundFlameSlashCast()
-            return
+            this.target = undefined
+            return false
         }
 
+        this.casting = true
         this.target = target
         if (this.isInAttackRange()) {
-            this.executeFlameSlash(target, multiplier)
-            return
+            return this.executeFlameSlash(target, multiplier)
         }
 
         this.jumpToFlameSlashTarget(target, multiplier)
+        return true
     }
 
-    private executeFlameSlash(target: Creature, multiplier: number): void {
+    private executeFlameSlash(target: Creature, multiplier: number): boolean {
         if (!target.active || !target.canBeTargeted) {
             const nextTarget = this.getValidFlameSlashTarget()
             if (!nextTarget) {
-                this.refundFlameSlashCast()
-                return
+                this.failFlameSlashCast()
+                return false
             }
 
             this.target = nextTarget
@@ -130,14 +131,15 @@ export class Fandral extends Character {
 
         const targetCell = this.scene.grid.worldToCell(target.x, target.y)
         if (!targetCell) {
-            this.refundFlameSlashCast()
-            return
+            this.failFlameSlashCast()
+            return false
         }
 
         const cells = getFandralFlameSlashCells(targetCell, this.facing, this.scene.grid.cols, this.scene.grid.rows)
         const bounds = this.getFlameSlashBounds(cells)
         const hitBounds = expandFandralFlameSlashBoundsForVisualSweep(bounds, this.facing, this.scene.grid.cellW, this.scene.grid.cellH)
         this.drawFlameSlash(cells, bounds, this.facing, () => this.hitFlameSlashBounds(hitBounds, multiplier))
+        return true
     }
 
     private getValidFlameSlashTarget(): Creature | undefined {
@@ -145,8 +147,8 @@ export class Fandral extends Character {
         return this.getClosestEnemy()
     }
 
-    private refundFlameSlashCast() {
-        this.gainMana(this.maxMana)
+    private failFlameSlashCast() {
+        this.target = undefined
         this.casting = false
     }
 
@@ -194,7 +196,7 @@ export class Fandral extends Character {
 
                 const nextTarget = this.getValidFlameSlashTarget()
                 if (!nextTarget) {
-                    this.refundFlameSlashCast()
+                    this.failFlameSlashCast()
                     return
                 }
 

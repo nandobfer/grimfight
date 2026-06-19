@@ -16,6 +16,7 @@ O comportamento legado permanece como padrão. Classes existentes que criam anim
 
 ### Types Of Projectiles
 *   **Linear:** Disparos de linha reta (`Arrow`, `Fireball`, `IceShard`, etc.) voam até o alvo ou limite. Variam majoritariamente em velocidade, animação, tipo de dano e iluminação.
+*   **Graphic-backed:** `Snowball` usa o ciclo de colisão do `Projectile` base com uma textura mínima de hitbox, mas renderiza a bola de neve com `Phaser.Graphics` sincronizado ao projétil. O gráfico gira durante o voo, causa dano frio ao colidir e deve remover listener de `update`, luz e gráfico no destroy.
 *   **Bounce:** Projéteis saltitantes (`LightningBolt`, `HolyShield`) controlam ricochetes varrendo os remanescentes em `getRemainingTargets()` após o impacto, redirecionando o voo para o inimigo ativo mais próximo, diminuindo o número de bounces. `LightningBolt` em particular aplica decréscimo ao seu poder a cada ricochete sucessivo.
 *   **Status Imbuement:** Alguns projéteis aplicam debuffs paralelos ao acerto. Por exemplo, versões aprimoradas do `HolyShield` geram e aplicam um `Dot` passivo nos alvos atingidos.
 

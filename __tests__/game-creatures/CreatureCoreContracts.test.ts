@@ -264,7 +264,8 @@ describe("Creature mana, death, item, aura, and update contracts", () => {
         expect(source).toContain("if (this.casting) return")
         expect(source).toContain("this.gainMana(manaGained)")
         expect(source).toContain("startCastingAbility()")
-        expect(source).toContain("this.castAbility()")
+        expect(source).toContain("const didCast = this.castAbility()")
+        expect(source).toContain("if (didCast === false) return")
         expect(source).toContain("this.emit(\"cast\")")
     })
 

@@ -51,7 +51,7 @@ Fandral é um personagem jogável registrado como `fandral`, ligado a fogo, drui
 
 A habilidade calcula uma linha curta de células centrada no alvo e perpendicular à direção de Fandral, então usa uma margem expandida ao redor dessa faixa para desenhar o efeito. O dano usa o envelope completo do visual animado e interseção com o corpo do inimigo, para que inimigos visualmente sobrepostos pelo corte também sejam afetados. O visual aparece diretamente nessa área como marcas de garra feitas com `Graphics`, sem projétil saindo do personagem. Inimigos na área recebem dano direto de fogo e um `Dot` de burning com fonte separada para damage chart. O FX deve limpar tween, gráfico e listener de estado ao terminar ou ao mudar a rodada.
 
-Se o alvo atual de Fandral ficar inválido no momento do cast, ele tenta retargetar para outro inimigo ativo. Quando o novo alvo está fora de alcance, Fandral salta para perto dele com tween e então executa o corte normalmente. Se não houver nenhum alvo válido, a mana é devolvida para que o cast não seja perdido.
+Se o alvo atual de Fandral ficar inválido no momento do cast, ele tenta retargetar para outro inimigo ativo. Quando o novo alvo está fora de alcance, Fandral salta para perto dele com tween e então executa o corte normalmente. Se não houver nenhum alvo válido, o cast aborta sem emitir gatilhos de cast nem reembolsar mana cheia, evitando reentrância de traits e saltos repetidos.
 
 ### Freud
 Freud é um personagem jogável registrado como `freud`. Ele não usa mana para conjurar e possui duas passivas: uma de retarget corpo a corpo quando inimigos entram em alcance adjacente, e outra de dano sombrio adicional em críticos.
@@ -84,6 +84,16 @@ Knight é um personagem jogável registrado como `maximus`. Sua habilidade cria 
 Melo é um personagem jogável registrado como `melo`. Ele usa `Holybolt` no ataque básico e sua habilidade cura aliados priorizando os que têm menor proporção de vida.
 
 `castAbility` ordena aliados pela fração de vida, cura os alvos selecionados com o cálculo padrão e cria `HolyHeal` para feedback visual. `refreshStats` inicializa mana conforme a regra atual do personagem.
+
+### Melisandre
+Melisandre é uma personagem jogável registrada como `melisandre`, ligada às identidades de suporte, cleric e incendiary. Ela usa `Fireball` no ataque básico à distância e começa o combate com mana inicial pelo fluxo padrão de ganho de mana.
+
+Sua habilidade escolhe aliados ativos priorizando menor proporção de vida e resolve empates por ordem aleatorizada. Os aliados afetados recebem um status temporário de fortalecimento flamejante que aumenta a cadência de ataques e faz ataques causarem dano adicional de fogo atribuído à Melisandre. O status também controla o visual de aura flamejante em `Graphics` e limpa bônus, listeners e desenho ao expirar, quando o alvo sai de combate ou quando a rodada termina.
+
+### Jacrost
+Jacrost é um personagem jogável registrado como `jacrost`, ligado às identidades de suporte, neve e controle. Ele usa `Snowball` no ataque básico à distância e participa das traits `Cleric` e `Winter`.
+
+Sua habilidade `Geada Protetora` cria uma rajada visual de névoa, neve e vento atravessando o board. No meio da animação, aliados ativos recebem escudo calculado pelo fluxo padrão de dano do caster para preservar AP atual, variação e crítico, enquanto inimigos ativos recebem `Freeze` temporário. O FX deve limpar graphic, tween e listeners ao completar, ao ser interrompido por mudança de estado ou quando Jacrost deixa o combate.
 
 ### Rogue
 Rogue é um personagem jogável registrado como `mordred`. Sua habilidade remove temporariamente o personagem da lista de alvos inimigos, escolhe o inimigo mais distante, teleporta para uma posição em torno dele e aplica dano normal imediato.

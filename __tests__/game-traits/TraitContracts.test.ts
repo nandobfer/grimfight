@@ -20,7 +20,7 @@ const traitHeadings: Record<string, string> = {
     IncendiaryTrait: "Incendiary",
     NobleTrait: "Noble",
     PackTrait: "Pack",
-    PopsicleTrait: "Popsicle",
+    WinterTrait: "Winter",
     SorcererTrait: "Sorcerer",
     SpeedyTrait: "Swift",
 }
@@ -102,14 +102,14 @@ describe("Trait base and registry contracts", () => {
         }
     })
 
-    it("keeps Arthas aligned with noble popsicle deatheater traits", () => {
+    it("keeps Arthas aligned with noble winter deatheater traits", () => {
         const source = readSource(registryPath)
 
         expect(source).toMatch(/TraitsRegistry\.register\("Attacker", AttackerTrait, \[[^\]]*\]/)
         expect(source.match(/TraitsRegistry\.register\("Attacker", AttackerTrait, \[[^\]]*\]/)?.[0]).not.toContain("arthas")
         expect(source.match(/TraitsRegistry\.register\("Deatheater", DeathEaterTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
         expect(source.match(/TraitsRegistry\.register\("Noble", NobleTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
-        expect(source.match(/TraitsRegistry\.register\("Popsicle", PopsicleTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
+        expect(source.match(/TraitsRegistry\.register\("Winter", WinterTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
     })
 })
 
@@ -151,5 +151,13 @@ describe("individual trait contracts", () => {
         expect(source).toContain("target.takeDamage(damage * values.executeDamageMultiplier, character, \"true\", false, false, this.name)")
         expect(source).not.toContain("baseCritDamageMultiplier +=")
         expect(source).not.toContain("character.on(\"kill\"")
+    })
+
+    it("Incendiary only burns the active target from a completed cast", () => {
+        const source = readSource(join(traitDir, "IncendiaryTrait.ts"))
+
+        expect(source).toContain("const target = character.target")
+        expect(source).toContain("if (!target?.active || !target.canBeTargeted) return")
+        expect(source).toContain("target,")
     })
 })

@@ -16,4 +16,9 @@ Uma subclasse especializada que aplica modificadores diretos aos atributos base 
 ### Freeze
 Opera como uma `Condition` estrutural, assinalando o modificador específico de `frozen` na criatura, o que, por padrão nos sistemas de core, interrompe sua capacidade de caminhar, atacar e acumular manas.
 
+### FireEmpowerment
+Status temporário usado por Melisandre para fortalecer aliados. Ao aplicar, ele adiciona cadência de ataque, registra um gatilho de pós ataque para causar dano de fogo calculado pela conjuradora e creditado ao aliado empoderado, além de criar uma aura flamejante desenhada com `Graphics`.
+
+Ao expirar, remove o bônus, desregistra o gatilho e destrói o visual. O status também observa mudança de estado da rodada para limpar o efeito antes que resets de criaturas descartem a coleção de status sem executar cleanup individual.
+
 ## Fixes

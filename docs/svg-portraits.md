@@ -79,6 +79,6 @@ Sempre que solicitado a criar um portrait, siga exatamente estes passos:
 2. Gere o codigo SVG do portrait de acordo com a descricao do usuario, garantindo que o viewBox seja `0 0 64 64` e que o personagem ocupe bem o enquadramento.
 3. Revise se o retrato continua reconhecivel como a mesma criatura da spritesheet, sem mudar paleta, rosto, materiais ou elemento iconico.
 4. Salve o SVG no disco temporariamente.
-5. **Converta o SVG para WebP.** O jogo carrega `.webp` em `public/assets/portraits/`. A IA deve usar `ffmpeg`, um script `node` com `sharp`, ou qualquer outro utilitario via terminal (ex: CLI do `sharp` usando `npx sharp-cli`) para converter a imagem final para `.webp`. A conversao deve preservar o tamanho de `64x64` (se ele nao distorcer).
+5. **Converta o SVG para WebP.** O jogo carrega `.webp` em `public/assets/portraits/`. A IA deve usar o `sharp-cli` via `pnpm` (ex: `pnpm dlx sharp-cli`) para converter a imagem final para `.webp`. Nao use `npx`, `npm` ou `yarn`. A conversao deve preservar o tamanho de `64x64` sem distorcer.
 6. Salve ou mova o arquivo convertido para `public/assets/portraits/<nome>.webp`.
-7. Apague o arquivo `.svg` temporario e qualquer script auxiliar utilizado para a conversao, mantendo o repositorio limpo. O repositorio guarda os portraits apenas no formato WebP pronto para o jogo.
+7. Apague o arquivo `.svg` temporario e qualquer arquivo temporario criado no processo, incluindo scripts auxiliares usados para gerar o SVG, scripts de conversao, rascunhos e imagens intermediarias. O repositorio guarda os portraits apenas no formato WebP pronto para o jogo.

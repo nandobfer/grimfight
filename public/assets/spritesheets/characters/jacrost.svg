@@ -1,0 +1,1013 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <!-- Shadows -->
+    <ellipse id="shadow" cx="32" cy="58" rx="14" ry="4" fill="#000" opacity="0.25" />
+    <ellipse id="shadow-cast" cx="32" cy="58" rx="18" ry="6" fill="#00ccff" opacity="0.3" />
+    
+    <!-- Magic Effects -->
+    <radialGradient id="magic-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="40%" stop-color="#00ffff" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0066ff" stop-opacity="0" />
+    </radialGradient>
+    <circle id="magic-ball" cx="0" cy="0" r="6" fill="url(#magic-glow)" />
+    <circle id="magic-ball-large" cx="0" cy="0" r="10" fill="url(#magic-glow)" />
+    <path id="magic-beam-right" d="M0,-4 L40,-1 L40,1 L0,4 Z" fill="url(#magic-glow)" />
+    <path id="magic-beam-left" d="M0,-4 L-40,-1 L-40,1 L0,4 Z" fill="url(#magic-glow)" />
+    <path id="magic-beam-down" d="M-4,0 L-1,40 L1,40 L4,0 Z" fill="url(#magic-glow)" />
+    <path id="magic-beam-up" d="M-4,0 L-1,-40 L1,-40 L4,0 Z" fill="url(#magic-glow)" />
+    
+    <path id="magic-burst" d="M0,-12 L2,-4 L12,0 L2,4 L0,12 L-2,4 L-12,0 L-2,-4 Z" fill="#00ffff" opacity="0.8" />
+
+    <!-- Materials & Colors -->
+    <!-- Tunic: White/Pearl with soft light blue shadows -->
+    <linearGradient id="tunic-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="0.7" stop-color="#e6f0fa" />
+      <stop offset="1" stop-color="#b8d0e6" />
+    </linearGradient>
+
+    <!-- Body Parts -->
+    <!-- Head Down (Front) -->
+    <g id="head-down">
+      <circle cx="0" cy="0" r="9" fill="#ffe0cc" stroke="#d9a58a" stroke-width="0.8" />
+      <circle cx="-3" cy="1" r="1.5" fill="#1a2b3c" />
+      <circle cx="3" cy="1" r="1.5" fill="#1a2b3c" />
+      <path d="M-6,-4 Q0,-12 6,-4 Q8,-8 0,-14 Q-8,-8 -6,-4 Z" fill="#ffffff" stroke="#e0e8f0" stroke-width="0.8" /> <!-- Spiky hair -->
+      <path d="M-8,-2 L-10,-6 L-6,-4 Z" fill="#ffffff" />
+      <path d="M8,-2 L10,-6 L6,-4 Z" fill="#ffffff" />
+      <path d="M-3,-9 L-1,-15 L1,-9 Z" fill="#ffffff" />
+    </g>
+
+    <!-- Head Up (Back) -->
+    <g id="head-up">
+      <circle cx="0" cy="0" r="9" fill="#ffe0cc" stroke="#d9a58a" stroke-width="0.8" />
+      <path d="M-8,-2 Q0,-14 8,-2 Q10,-10 0,-16 Q-10,-10 -8,-2 Z" fill="#ffffff" stroke="#e0e8f0" stroke-width="0.8" /> <!-- Spiky hair back -->
+      <path d="M-4,0 Q0,-14 4,0 Q6,-10 0,-16 Q-6,-10 -4,0 Z" fill="#f2f7fc" /> <!-- Hair layering -->
+    </g>
+
+    <!-- Head Left/Right (Profile) -->
+    <g id="head-left">
+      <circle cx="0" cy="0" r="9" fill="#ffe0cc" stroke="#d9a58a" stroke-width="0.8" />
+      <circle cx="-4" cy="1" r="1.5" fill="#1a2b3c" />
+      <path d="M-2,-4 Q4,-12 8,-2 Q6,-12 0,-14 Q-6,-8 -2,-4 Z" fill="#ffffff" stroke="#e0e8f0" stroke-width="0.8" />
+      <path d="M6,0 L12,-4 L8,-2 Z" fill="#ffffff" />
+    </g>
+    <g id="head-right">
+      <use href="#head-left" transform="scale(-1, 1)" />
+    </g>
+
+    <!-- Tunic (Torso) -->
+    <g id="tunic-down">
+      <path d="M-7,-10 Q0,-12 7,-10 L10,14 Q0,18 -10,14 Z" fill="url(#tunic-grad)" stroke="#8aa8c7" stroke-width="1.2" />
+      <path d="M-8,2 Q0,6 8,2 L7,6 Q0,10 -7,6 Z" fill="#f0ca75" /> <!-- Belt -->
+      <!-- Sleeves -->
+      <path d="M-7,-10 L-12,-2 L-9,4 L-6,0 Z" fill="url(#tunic-grad)" stroke="#8aa8c7" stroke-width="0.8" />
+      <path d="M7,-10 L12,-2 L9,4 L6,0 Z" fill="url(#tunic-grad)" stroke="#8aa8c7" stroke-width="0.8" />
+    </g>
+
+    <g id="tunic-up">
+      <path d="M-7,-10 Q0,-12 7,-10 L10,14 Q0,16 -10,14 Z" fill="url(#tunic-grad)" stroke="#8aa8c7" stroke-width="1.2" />
+      <path d="M-8,2 Q0,4 8,2 L7,6 Q0,8 -7,6 Z" fill="#d4ad5b" /> <!-- Belt back -->
+      <!-- Sleeves -->
+      <path d="M-7,-10 L-12,-2 L-9,4 L-6,0 Z" fill="url(#tunic-grad)" stroke="#8aa8c7" stroke-width="0.8" />
+      <path d="M7,-10 L12,-2 L9,4 L6,0 Z" fill="url(#tunic-grad)" stroke="#8aa8c7" stroke-width="0.8" />
+    </g>
+
+    <g id="tunic-left">
+      <path d="M-4,-10 Q0,-12 5,-10 L6,14 Q0,16 -6,14 Z" fill="url(#tunic-grad)" stroke="#8aa8c7" stroke-width="1.2" />
+      <path d="M-5,2 Q0,4 6,2 L5,6 Q0,8 -6,6 Z" fill="#f0ca75" /> <!-- Belt profile -->
+      <!-- Arm -->
+      <path d="M0,-10 L-4,0 L-2,6 L2,0 Z" fill="url(#tunic-grad)" stroke="#8aa8c7" stroke-width="0.8" />
+    </g>
+    <g id="tunic-right">
+      <use href="#tunic-left" transform="scale(-1, 1)" />
+    </g>
+
+    <!-- Base Body Assembly -->
+    <g id="body-down">
+      <use href="#tunic-down" />
+      <use href="#head-down" transform="translate(0, -18)" />
+    </g>
+    <g id="body-up">
+      <use href="#tunic-up" />
+      <use href="#head-up" transform="translate(0, -18)" />
+    </g>
+    <g id="body-left">
+      <use href="#tunic-left" />
+      <use href="#head-left" transform="translate(0, -18)" />
+    </g>
+    <g id="body-right">
+      <use href="#tunic-right" />
+      <use href="#head-right" transform="translate(0, -18)" />
+    </g>
+
+    <!-- Leg / Foot -->
+    <g id="foot">
+      <rect x="-3" y="0" width="6" height="8" rx="2" fill="#8aa8c7" />
+      <ellipse cx="0" cy="8" rx="4" ry="2" fill="#5c4033" />
+    </g>
+    <g id="foot-profile">
+      <rect x="-2" y="0" width="4" height="8" rx="2" fill="#8aa8c7" />
+      <ellipse cx="-1" cy="8" rx="4" ry="2" fill="#5c4033" />
+    </g>
+
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 37)" />
+  </svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 37)" />
+  </svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 37)" />
+  </svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 37)" />
+  </svg>
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 44) scale(1, 0.8)" />
+      <use href="#foot" transform="translate(38 50) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 40) scale(1, 0.5)" />
+      <use href="#foot" transform="translate(38 52) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 44) scale(1, 0.8)" />
+      <use href="#foot" transform="translate(38 50) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 50) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 44) scale(1, 0.8)" />
+        <use href="#body-up" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 52) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 40) scale(1, 0.5)" />
+        <use href="#body-up" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 50) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 44) scale(1, 0.8)" />
+        <use href="#body-up" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 50) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 44) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 52) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 40) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 50) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 44) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 44) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 50) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 40) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 52) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 44) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 50) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(32 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 44) scale(1, 0.8)" />
+      <use href="#foot" transform="translate(38 50) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 40) scale(1, 0.5)" />
+      <use href="#foot" transform="translate(38 52) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 44) scale(1, 0.8)" />
+      <use href="#foot" transform="translate(38 50) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 50) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 44) scale(1, 0.8)" />
+        <use href="#body-down" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 52) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 40) scale(1, 0.5)" />
+        <use href="#body-down" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 50) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 44) scale(1, 0.8)" />
+        <use href="#body-down" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 44) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 50) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 40) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 52) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 44) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 50) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 50) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 44) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 52) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 40) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 50) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 44) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow" />
+
+      <use href="#foot-profile" transform="translate(32 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(32 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 34)" />
+<use href="#magic-glow" transform="translate(32 34)" />  </svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 34)" />
+<use href="#magic-glow" transform="translate(32 34)" />  </svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 38)" />
+<use href="#magic-glow" transform="translate(32 38)" /><use href="#magic-beam-up" transform="translate(32 18)" />  </svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 37)" />
+<use href="#magic-ball" transform="translate(32 7)" />  </svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 34)" />
+<use href="#magic-glow" transform="translate(32 34)" />  </svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 34)" />
+<use href="#magic-glow" transform="translate(32 34)" />  </svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 38)" />
+<use href="#magic-glow" transform="translate(32 38)" /><use href="#magic-beam-left" transform="translate(16 33)" />  </svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 37)" />
+<use href="#magic-ball" transform="translate(8 32)" />  </svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 34)" />
+<use href="#magic-glow" transform="translate(32 34)" />  </svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 34)" />
+<use href="#magic-glow" transform="translate(32 34)" />  </svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 38)" />
+<use href="#magic-glow" transform="translate(32 38)" /><use href="#magic-beam-down" transform="translate(32 48)" />  </svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 37)" />
+<use href="#magic-ball" transform="translate(32 57)" />  </svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 35)" />
+  </svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 34)" />
+<use href="#magic-glow" transform="translate(32 34)" />  </svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 34)" />
+<use href="#magic-glow" transform="translate(32 34)" />  </svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 38)" />
+<use href="#magic-glow" transform="translate(32 38)" /><use href="#magic-beam-right" transform="translate(48 33)" />  </svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 37)" />
+<use href="#magic-ball" transform="translate(56 32)" />  </svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 32)" />
+<use href="#magic-ball-large" transform="translate(32 12)" />  </svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 38)" />
+<use href="#magic-burst" transform="translate(32 38)" scale="2" />  </svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 37)" />
+<use href="#magic-burst" transform="translate(32 37)" scale="1" opacity="0.5" />  </svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 32)" />
+<use href="#magic-ball-large" transform="translate(32 12)" />  </svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 38)" />
+<use href="#magic-burst" transform="translate(32 38)" scale="2" />  </svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 37)" />
+<use href="#magic-burst" transform="translate(32 37)" scale="1" opacity="0.5" />  </svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 32)" />
+<use href="#magic-ball-large" transform="translate(32 12)" />  </svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 38)" />
+<use href="#magic-burst" transform="translate(32 38)" scale="2" />  </svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 37)" />
+<use href="#magic-burst" transform="translate(32 37)" scale="1" opacity="0.5" />  </svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 34)" />
+  </svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 32)" />
+<use href="#magic-ball-large" transform="translate(32 12)" />  </svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 38)" />
+<use href="#magic-burst" transform="translate(32 38)" scale="2" />  </svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 37)" />
+<use href="#magic-burst" transform="translate(32 37)" scale="1" opacity="0.5" />  </svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 35)" />
+<circle cx="32" cy="35" r="3" fill="url(#magic-glow)" opacity="0.9" /><use href="#magic-ball" transform="translate(32 20)" scale="0.25" />  </svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 34)" />
+<circle cx="32" cy="34" r="6" fill="url(#magic-glow)" opacity="0.8" /><use href="#magic-ball" transform="translate(32 19)" scale="0.5" /><use href="#magic-burst" transform="translate(32 34) rotate(40)" scale="0.5" opacity="0.6" />  </svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 33)" />
+<circle cx="32" cy="33" r="9" fill="url(#magic-glow)" opacity="0.7" /><use href="#magic-ball" transform="translate(32 18)" scale="0.75" />  </svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 34)" />
+<circle cx="32" cy="34" r="12" fill="url(#magic-glow)" opacity="0.6" /><use href="#magic-ball" transform="translate(32 19)" scale="1" /><use href="#magic-burst" transform="translate(32 34) rotate(80)" scale="1" opacity="0.6" />  </svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 35)" />
+<circle cx="32" cy="35" r="15" fill="url(#magic-glow)" opacity="0.5" /><use href="#magic-ball" transform="translate(32 20)" scale="1.25" />  </svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-up" transform="translate(32 36)" />
+<circle cx="32" cy="36" r="18" fill="url(#magic-glow)" opacity="0.3999999999999999" /><use href="#magic-ball" transform="translate(32 21)" scale="1.5" /><use href="#magic-burst" transform="translate(32 36) rotate(120)" scale="1.5" opacity="0.6" />  </svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 35)" />
+<circle cx="32" cy="35" r="3" fill="url(#magic-glow)" opacity="0.9" /><use href="#magic-ball" transform="translate(32 20)" scale="0.25" />  </svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 34)" />
+<circle cx="32" cy="34" r="6" fill="url(#magic-glow)" opacity="0.8" /><use href="#magic-ball" transform="translate(32 19)" scale="0.5" /><use href="#magic-burst" transform="translate(32 34) rotate(40)" scale="0.5" opacity="0.6" />  </svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 33)" />
+<circle cx="32" cy="33" r="9" fill="url(#magic-glow)" opacity="0.7" /><use href="#magic-ball" transform="translate(32 18)" scale="0.75" />  </svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 34)" />
+<circle cx="32" cy="34" r="12" fill="url(#magic-glow)" opacity="0.6" /><use href="#magic-ball" transform="translate(32 19)" scale="1" /><use href="#magic-burst" transform="translate(32 34) rotate(80)" scale="1" opacity="0.6" />  </svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 35)" />
+<circle cx="32" cy="35" r="15" fill="url(#magic-glow)" opacity="0.5" /><use href="#magic-ball" transform="translate(32 20)" scale="1.25" />  </svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(38 48) scale(-1, 1)" />
+      <use href="#foot-profile" transform="translate(26 48) scale(-1, 1)" />
+        <use href="#body-left" transform="translate(32 36)" />
+<circle cx="32" cy="36" r="18" fill="url(#magic-glow)" opacity="0.3999999999999999" /><use href="#magic-ball" transform="translate(32 21)" scale="1.5" /><use href="#magic-burst" transform="translate(32 36) rotate(120)" scale="1.5" opacity="0.6" />  </svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 35)" />
+<circle cx="32" cy="35" r="3" fill="url(#magic-glow)" opacity="0.9" /><use href="#magic-ball" transform="translate(32 20)" scale="0.25" />  </svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 34)" />
+<circle cx="32" cy="34" r="6" fill="url(#magic-glow)" opacity="0.8" /><use href="#magic-ball" transform="translate(32 19)" scale="0.5" /><use href="#magic-burst" transform="translate(32 34) rotate(40)" scale="0.5" opacity="0.6" />  </svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 33)" />
+<circle cx="32" cy="33" r="9" fill="url(#magic-glow)" opacity="0.7" /><use href="#magic-ball" transform="translate(32 18)" scale="0.75" />  </svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 34)" />
+<circle cx="32" cy="34" r="12" fill="url(#magic-glow)" opacity="0.6" /><use href="#magic-ball" transform="translate(32 19)" scale="1" /><use href="#magic-burst" transform="translate(32 34) rotate(80)" scale="1" opacity="0.6" />  </svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 35)" />
+<circle cx="32" cy="35" r="15" fill="url(#magic-glow)" opacity="0.5" /><use href="#magic-ball" transform="translate(32 20)" scale="1.25" />  </svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-down" transform="translate(32 36)" />
+<circle cx="32" cy="36" r="18" fill="url(#magic-glow)" opacity="0.3999999999999999" /><use href="#magic-ball" transform="translate(32 21)" scale="1.5" /><use href="#magic-burst" transform="translate(32 36) rotate(120)" scale="1.5" opacity="0.6" />  </svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+  </svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 35)" />
+<circle cx="32" cy="35" r="3" fill="url(#magic-glow)" opacity="0.9" /><use href="#magic-ball" transform="translate(32 20)" scale="0.25" />  </svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 34)" />
+<circle cx="32" cy="34" r="6" fill="url(#magic-glow)" opacity="0.8" /><use href="#magic-ball" transform="translate(32 19)" scale="0.5" /><use href="#magic-burst" transform="translate(32 34) rotate(40)" scale="0.5" opacity="0.6" />  </svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 33)" />
+<circle cx="32" cy="33" r="9" fill="url(#magic-glow)" opacity="0.7" /><use href="#magic-ball" transform="translate(32 18)" scale="0.75" />  </svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 34)" />
+<circle cx="32" cy="34" r="12" fill="url(#magic-glow)" opacity="0.6" /><use href="#magic-ball" transform="translate(32 19)" scale="1" /><use href="#magic-burst" transform="translate(32 34) rotate(80)" scale="1" opacity="0.6" />  </svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 35)" />
+<circle cx="32" cy="35" r="15" fill="url(#magic-glow)" opacity="0.5" /><use href="#magic-ball" transform="translate(32 20)" scale="1.25" />  </svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#shadow-cast" />
+
+      <use href="#foot-profile" transform="translate(26 48) scale(1, 1)" />
+      <use href="#foot-profile" transform="translate(38 48) scale(1, 1)" />
+        <use href="#body-right" transform="translate(32 36)" />
+<circle cx="32" cy="36" r="18" fill="url(#magic-glow)" opacity="0.3999999999999999" /><use href="#magic-ball" transform="translate(32 21)" scale="1.5" /><use href="#magic-burst" transform="translate(32 36) rotate(120)" scale="1.5" opacity="0.6" />  </svg>
+</svg>

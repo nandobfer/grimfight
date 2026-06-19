@@ -11,6 +11,7 @@ export class IncendiaryTrait extends Trait {
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { baseDamage: 100, descriptionParams: ["100 (+ 10 por andar)"] }],
         [4, { baseDamage: 200, descriptionParams: ["200 (+ 20 por andar)"] }],
+        [6, { baseDamage: 300, descriptionParams: ["300 (+ 30 por andar)"] }],
     ])
 
     constructor(comp: string[]) {
@@ -28,12 +29,14 @@ export class IncendiaryTrait extends Trait {
         }
 
         const addBurn = () => {
-            if (!character.target) return
+            const target = character.target
+            if (!target?.active || !target.canBeTargeted) return
+
             const baseDamage = ((values.baseDamage + (character.scene.floor * values.baseDamage) / 10) * character.maxMana) / 100
             const burn = new Dot({
                 damageType: "fire",
                 duration: 5000,
-                target: character.target,
+                target,
                 tickDamage: baseDamage / 5,
                 tickRate: 1000,
                 user: character,

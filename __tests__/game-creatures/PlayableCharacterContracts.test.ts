@@ -27,9 +27,11 @@ const characterContracts: CharacterContract[] = [
     { file: "Fandral.ts", className: "Fandral", registryName: "fandral" },
     { file: "Frank.ts", className: "Frank", registryName: "frank" },
     { file: "Freud.ts", className: "Freud", registryName: "freud" },
+    { file: "Jacrost.ts", className: "Jacrost", registryName: "jacrost" },
     { file: "Lalatina.ts", className: "Lalatina", registryName: "lalatina" },
     { file: "Lizwan.ts", className: "Lizwan", registryName: "lizwan" },
     { file: "Mage.ts", className: "Mage", registryName: "megumin" },
+    { file: "Melisandre.ts", className: "Melisandre", registryName: "melisandre" },
     { file: "Maximus.ts", className: "Knight", registryName: "maximus", docHeading: "Knight" },
     { file: "Melo.ts", className: "Melo", registryName: "melo" },
     { file: "Mordred.ts", className: "Rogue", registryName: "mordred", docHeading: "Rogue" },
@@ -116,6 +118,13 @@ describe("playable character pure behavior", () => {
         expect(source).not.toContain("this.mana *= this.maxMana * 0.65")
     })
 
+    it("gives Melisandre starting mana through gainMana after refresh", () => {
+        const source = readClassSource("Melisandre.ts")
+
+        expect(source).toContain("this.gainMana(this.maxMana * 0.5)")
+        expect(source).not.toContain("this.mana *= this.maxMana * 0.5")
+    })
+
     it("keeps Yue cast-triggered traits aligned with the randomly picked fire ray target", () => {
         const source = readClassSource("Yue.ts")
 
@@ -126,5 +135,15 @@ describe("playable character pure behavior", () => {
         const source = readClassSource("Vania.ts")
 
         expect(source).toMatch(/arrow\.onHit = \(target\) => \{[\s\S]*target\.takeDamage\([\s\S]*this\.onHit\(target\)[\s\S]*arrow\.destroy\(\)/)
+    })
+
+    it("keeps Fandral pounce casts from reentering or refund-looping without a valid target", () => {
+        const source = readClassSource("Fandral.ts")
+
+        expect(source).toContain("override castAbility(multiplier = 1): boolean")
+        expect(source).toContain("if (this.casting) return false")
+        expect(source).toMatch(/const target = this\.getValidFlameSlashTarget\(\)[\s\S]*if \(!target\) \{[\s\S]*this\.target = undefined[\s\S]*return false[\s\S]*\}/)
+        expect(source).toContain("private failFlameSlashCast()")
+        expect(source).not.toContain("this.gainMana(this.maxMana)")
     })
 })
