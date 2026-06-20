@@ -74,15 +74,15 @@ export class TraitsRegistry {
 }
 
 TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "vania", "laherce", "reno", "chichi"])
-TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud", "yue"])
-TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora"])
+TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud", "yue", "ragnaros"])
+TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora", "ragnaros"])
 TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "frank", "chichi"])
 TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia", "freud", "fandral"])
 TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "helyna"])
 TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula"])
 TraitsRegistry.register("Pack", PackTrait, ["lizwan", "helyna", "laherce", "banguela"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna", "rokmora", "fandral"])
-TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin", "yue", "fandral", "melisandre"])
+TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin", "yue", "fandral", "melisandre", "ragnaros"])
 TraitsRegistry.register("Noble", NobleTrait, ["maximus", "jadis", "statikk", "dracula", "arthas"])
 TraitsRegistry.register("Winter", WinterTrait, ["reno", "jadis", "rukia", "ymir", "arthas", "jacrost"])
 TraitsRegistry.register("Holy", HolyTrait, ["lalatina", "melo"])

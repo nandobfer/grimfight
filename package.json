@@ -28,6 +28,7 @@
         "dev-nolog": "vite --config vite/config.dev.mjs",
         "build-nolog": "vite build --config vite/config.prod.mjs",
         "deploy": "bash scripts/deploy.sh",
+        "deploy:dev": "bash scripts/deploy-dev.sh",
         "start:electron": "electron-vite preview",
         "dev:electron": "electron-vite dev",
         "build:electron": "electron-vite build",

@@ -1,6 +1,13 @@
 import type { Creature } from "../Creature"
 import { CreatureVisualDefinition } from "./CreatureVisualDefinition"
 
+function versionRuntimeAsset(path: string): string {
+    const version = typeof __ASSET_VERSION__ === "string" ? __ASSET_VERSION__ : "dev"
+    const separator = path.includes("?") ? "&" : "?"
+
+    return `${path}${separator}v=${encodeURIComponent(version)}`
+}
+
 export interface SpritesheetCreatureVisualConfig {
     textureKey: string
     path: string
@@ -22,7 +29,7 @@ export class SpritesheetCreatureVisualDefinition extends CreatureVisualDefinitio
         super()
         this.textureKey = config.textureKey
         this.initialFrame = config.initialFrame
-        this.path = config.path
+        this.path = versionRuntimeAsset(config.path)
         this.frameConfig = {
             frameWidth: config.frameWidth,
             frameHeight: config.frameHeight,

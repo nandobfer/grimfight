@@ -25,6 +25,7 @@ import { Melo } from "./classes/Melo"
 import { Freud } from "./classes/Freud"
 import { Fandral } from "./classes/Fandral"
 import { Rokmora } from "./classes/Rokmora"
+import { Ragnaros } from "./classes/Ragnaros"
 import { Yue } from "./classes/Yue"
 import { Jacrost } from "./classes/Jacrost"
 import { Melisandre } from "./classes/Melisandre"
@@ -102,6 +103,7 @@ CharacterRegistry.register("melo", Melo)
 CharacterRegistry.register("freud", Freud)
 CharacterRegistry.register("fandral", Fandral, SvgSpritesheetCreatureVisualDefinition.character("fandral"))
 CharacterRegistry.register("rokmora", Rokmora, SvgSpritesheetCreatureVisualDefinition.character("rokmora"))
+CharacterRegistry.register("ragnaros", Ragnaros, SvgSpritesheetCreatureVisualDefinition.character("ragnaros"))
 CharacterRegistry.register("yue", Yue, SvgSpritesheetCreatureVisualDefinition.character("yue"))
 CharacterRegistry.register("jacrost", Jacrost, SvgSpritesheetCreatureVisualDefinition.character("jacrost"))
 CharacterRegistry.register("melisandre", Melisandre, SvgSpritesheetCreatureVisualDefinition.character("melisandre"))

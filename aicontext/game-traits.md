@@ -3,12 +3,12 @@
 ## Features
 
 ### Arcanist
-Arcanist é uma trait jogável registrada como `Arcanist`, composta por `freud` e `yue`. A trait aparece para personagens da composição, mas só fica ativa quando o time possui personagens únicos suficientes para alcançar seus estágios.
+Arcanist é uma trait jogável registrada como `Arcanist`, composta por `freud`, `yue` e `ragnaros`. A trait aparece para personagens da composição, mas só fica ativa quando o time possui personagens únicos suficientes para alcançar seus estágios.
 
 Quando a trait alcança seus estágios ativos, cada unidade Arcanist ganha AP durante o combate. O ganho usa timer por unidade, varia conforme o estágio ativo e só acumula enquanto a cena está no estado `fighting`.
 
 ### Incendiary
-Incendiary é uma trait jogável registrada como `Incendiary`, composta por `banguela`, `megumin` e `yue`. Ao alcançar estágio ativo, personagens Incendiary aplicam queimadura ao alvo atual quando castam suas habilidades, usando dano baseado no estágio, floor atual e mana máxima do caster. O alvo é capturado no momento do gatilho e precisa continuar ativo e alvo válido para receber a queimadura.
+Incendiary é uma trait jogável registrada como `Incendiary`, composta por personagens de fogo como `banguela`, `megumin`, `yue`, `fandral`, `melisandre` e `ragnaros`. Ao alcançar estágio ativo, personagens Incendiary aplicam queimadura ao alvo atual quando castam suas habilidades, usando dano baseado no estágio, floor atual e mana máxima do caster. O alvo é capturado no momento do gatilho e precisa continuar ativo e alvo válido para receber a queimadura.
 
 ### Trait
 `Trait` é a base de sinergias de composição. Ela mantém composição válida, stages, composição ativa e stage ativo. `startApplying` calcula personagens ativos da composição, `tryApply` executa cleanup antes de aplicar modificador e `getActiveStage` escolhe o stage disponível pela composição atual.
@@ -26,7 +26,7 @@ Assassin é uma trait de personagens assassinos. Quando ativa, aumenta a eficiê
 Cleric é uma trait de suporte. Quando ativa, escuta mortes no time para acionar cura e remove o listener no cleanup.
 
 ### Colossi
-Colossi é uma trait de personagens resistentes. Quando ativa, aplica bônus defensivos conforme stage atual.
+Colossi é uma trait de personagens resistentes, incluindo `ragnaros`. Quando ativa, aplica bônus defensivos conforme stage atual.
 
 ### Deatheater
 Deatheater é uma trait de personagens ligados a morte e revive. Quando ativa, escuta morte da criatura, executa revive condicional em combate e limpa listener e estado interno no cleanup.

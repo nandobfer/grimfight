@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+declare const __ASSET_VERSION__: string
+
 declare module "virtual:asset-preview-manifest" {
     export interface PreviewAssetManifestItem {
         name: string

@@ -1,0 +1,329 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <radialGradient id="ragnaros-magma-core" cx="38%" cy="28%" r="76%">
+      <stop offset="0" stop-color="#fff3a6" />
+      <stop offset="0.22" stop-color="#ffb21f" />
+      <stop offset="0.58" stop-color="#e64512" />
+      <stop offset="1" stop-color="#54120a" />
+    </radialGradient>
+    <linearGradient id="ragnaros-basalt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a3528" />
+      <stop offset="0.48" stop-color="#2a1c19" />
+      <stop offset="1" stop-color="#110b0a" />
+    </linearGradient>
+    <linearGradient id="ragnaros-lava-flow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff1a6" />
+      <stop offset="0.25" stop-color="#ff8a16" />
+      <stop offset="0.68" stop-color="#cf2c0b" />
+      <stop offset="1" stop-color="#5a1007" />
+    </linearGradient>
+
+    <ellipse id="ragnaros-shadow" cx="32" cy="57" rx="18" ry="4.8" fill="#000000" opacity="0.28" />
+
+    <g id="ragnaros-lava-tail-a">
+      <path d="M15 35 Q24 29 33 35 Q42 40 50 33 Q49 47 39 57 Q32 64 22 57 Q13 50 15 35" fill="url(#ragnaros-lava-flow)" stroke="#250604" stroke-width="1.4" />
+      <path d="M20 41 Q12 46 10 55 M45 39 Q54 45 55 55" fill="none" stroke="#ff6a13" stroke-width="3" stroke-linecap="round" opacity="0.75" />
+      <path d="M27 37 Q24 44 28 52 M34 38 Q39 46 35 56 M41 39 Q36 44 39 50" fill="none" stroke="#fff0a3" stroke-width="1.8" stroke-linecap="round" opacity="0.62" />
+      <circle cx="24" cy="53" r="2" fill="#ffb21f" opacity="0.85" />
+      <circle cx="40" cy="52" r="1.7" fill="#ffdd6e" opacity="0.75" />
+    </g>
+    <g id="ragnaros-lava-tail-b">
+      <path d="M14 37 Q26 30 32 36 Q39 43 51 35 Q47 50 37 58 Q29 63 19 56 Q12 50 14 37" fill="url(#ragnaros-lava-flow)" stroke="#250604" stroke-width="1.4" />
+      <path d="M21 42 Q13 48 13 57 M44 40 Q51 48 50 57" fill="none" stroke="#ff6a13" stroke-width="3" stroke-linecap="round" opacity="0.75" />
+      <path d="M25 38 Q30 45 26 54 M32 38 Q34 47 32 57 M41 39 Q34 45 38 52" fill="none" stroke="#fff0a3" stroke-width="1.8" stroke-linecap="round" opacity="0.62" />
+      <circle cx="29" cy="55" r="1.8" fill="#ffb21f" opacity="0.85" />
+      <circle cx="42" cy="48" r="1.5" fill="#ffdd6e" opacity="0.7" />
+    </g>
+    <g id="ragnaros-lava-tail-c">
+      <path d="M13 36 Q23 32 31 35 Q40 37 51 33 Q51 47 40 56 Q32 64 21 57 Q12 50 13 36" fill="url(#ragnaros-lava-flow)" stroke="#250604" stroke-width="1.4" />
+      <path d="M19 40 Q10 46 9 55 M46 39 Q55 45 56 54" fill="none" stroke="#ff6a13" stroke-width="3" stroke-linecap="round" opacity="0.75" />
+      <path d="M23 39 Q27 45 24 53 M31 37 Q37 45 33 57 M39 38 Q42 45 37 53" fill="none" stroke="#fff0a3" stroke-width="1.8" stroke-linecap="round" opacity="0.62" />
+      <circle cx="22" cy="50" r="1.7" fill="#ff9d1a" opacity="0.85" />
+      <circle cx="36" cy="55" r="2" fill="#ffdd6e" opacity="0.75" />
+    </g>
+
+    <g id="ragnaros-shoulder-flames">
+      <path d="M16 30 Q10 21 18 15 Q17 22 22 26 Q20 17 28 10 Q26 21 33 27 Q38 17 47 13 Q43 22 49 29 Q39 24 32 29 Q24 25 16 30" fill="#ff5a12" opacity="0.46" />
+      <path d="M20 28 Q18 22 24 17 M35 28 Q38 21 44 18" fill="none" stroke="#fff0a3" stroke-width="1.6" stroke-linecap="round" opacity="0.62" />
+    </g>
+
+    <g id="ragnaros-torso-down">
+      <use href="#ragnaros-shoulder-flames" />
+      <path d="M19 24 Q24 15 33 15 Q43 16 47 25 L44 41 Q34 49 21 42 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.4" />
+      <path d="M27 19 L32 30 L29 42 M39 20 L35 31 L42 38 M23 31 L31 33" fill="none" stroke="#ff7a14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M27 20 L32 30 M39 21 L36 30" fill="none" stroke="#fff0a3" stroke-width="0.9" stroke-linecap="round" opacity="0.65" />
+      <circle cx="34" cy="33" r="3" fill="url(#ragnaros-magma-core)" stroke="#2b0704" stroke-width="0.8" />
+    </g>
+    <g id="ragnaros-torso-up">
+      <use href="#ragnaros-shoulder-flames" transform="translate(0 1)" />
+      <path d="M18 26 Q24 17 32 16 Q42 17 47 26 L43 42 Q33 49 21 42 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.4" />
+      <path d="M26 22 L35 30 L31 42 M40 31 L45 35 M23 35 L30 38" fill="none" stroke="#d94712" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M27 23 L34 30" stroke="#ffcc58" stroke-width="0.8" stroke-linecap="round" opacity="0.55" />
+    </g>
+    <g id="ragnaros-torso-left">
+      <use href="#ragnaros-shoulder-flames" transform="translate(-2 1)" />
+      <path d="M21 25 Q26 17 36 17 Q44 20 45 29 L42 43 Q32 49 21 42 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.4" />
+      <path d="M27 21 L35 30 L31 42 M23 34 L31 35" fill="none" stroke="#ff7a14" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="31" cy="33" r="2.4" fill="url(#ragnaros-magma-core)" />
+    </g>
+    <g id="ragnaros-torso-right">
+      <use href="#ragnaros-shoulder-flames" transform="translate(2 1)" />
+      <path d="M19 29 Q20 20 28 17 Q38 17 43 25 L43 42 Q32 49 22 43 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.4" />
+      <path d="M37 21 L29 30 L33 42 M41 34 L33 35" fill="none" stroke="#ff7a14" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="33" cy="33" r="2.4" fill="url(#ragnaros-magma-core)" />
+    </g>
+
+    <g id="ragnaros-head-down">
+      <path d="M20 17 Q12 8 17 2 Q20 11 26 13 Q26 5 33 0 Q32 10 38 13 Q43 5 51 4 Q47 11 44 18" fill="#ff5a12" opacity="0.78" />
+      <path d="M22 15 Q17 9 20 5 M33 12 Q33 7 37 4 M42 15 Q47 10 49 7" fill="none" stroke="#fff0a3" stroke-width="1.3" stroke-linecap="round" opacity="0.72" />
+      <path d="M23 13 L30 8 L39 10 L44 18 L40 27 L30 29 L22 23 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.2" />
+      <path d="M27 15 L32 20 L29 26 M38 13 L35 20 L41 23" fill="none" stroke="#ff7a14" stroke-width="1.5" stroke-linecap="round" />
+      <circle cx="29" cy="19" r="1.6" fill="#ffe66d" />
+      <circle cx="37" cy="19" r="1.6" fill="#ffe66d" />
+      <path d="M29 24 Q33 27 38 24" fill="none" stroke="#ffb21f" stroke-width="1.2" stroke-linecap="round" />
+    </g>
+    <g id="ragnaros-head-up">
+      <path d="M21 18 Q13 9 18 3 Q21 12 27 14 Q27 6 34 1 Q33 11 39 14 Q44 6 51 5 Q47 12 44 19" fill="#d94712" opacity="0.66" />
+      <path d="M22 17 L30 10 L40 12 L44 20 L39 28 L29 29 L22 24 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.2" />
+      <path d="M27 16 L35 22 L31 28 M39 19 L43 22" fill="none" stroke="#d94712" stroke-width="1.4" stroke-linecap="round" />
+    </g>
+    <g id="ragnaros-head-left">
+      <path d="M19 18 Q10 10 15 4 Q20 12 27 14 Q28 6 35 2 Q33 12 40 15 Q44 8 51 7 Q45 14 42 21" fill="#ff5a12" opacity="0.76" />
+      <path d="M22 16 L31 9 L40 13 L43 21 L38 28 L27 28 L21 23 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.2" />
+      <path d="M27 15 L33 21 L28 27 M23 22 L29 24" fill="none" stroke="#ff7a14" stroke-width="1.5" stroke-linecap="round" />
+      <circle cx="28" cy="20" r="1.7" fill="#ffe66d" />
+    </g>
+    <g id="ragnaros-head-right">
+      <path d="M45 18 Q54 10 49 4 Q44 12 37 14 Q36 6 29 2 Q31 12 24 15 Q20 8 13 7 Q19 14 22 21" fill="#ff5a12" opacity="0.76" />
+      <path d="M21 21 L24 13 L33 9 L42 16 L43 23 L37 28 L26 28 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.2" />
+      <path d="M37 15 L31 21 L36 27 M41 22 L35 24" fill="none" stroke="#ff7a14" stroke-width="1.5" stroke-linecap="round" />
+      <circle cx="36" cy="20" r="1.7" fill="#ffe66d" />
+    </g>
+
+    <g id="ragnaros-arm-left">
+      <path d="M20 27 Q13 32 13 42" fill="none" stroke="#20110e" stroke-width="8" stroke-linecap="round" />
+      <path d="M20 27 Q14 33 15 42" fill="none" stroke="#6a3324" stroke-width="5.2" stroke-linecap="round" />
+      <path d="M17 33 L13 39" stroke="#ff7a14" stroke-width="1.5" stroke-linecap="round" />
+      <circle cx="14" cy="43" r="3.6" fill="url(#ragnaros-magma-core)" stroke="#260604" stroke-width="0.8" />
+    </g>
+    <g id="ragnaros-arm-right">
+      <path d="M44 27 Q51 32 51 42" fill="none" stroke="#20110e" stroke-width="8" stroke-linecap="round" />
+      <path d="M44 27 Q50 33 49 42" fill="none" stroke="#6a3324" stroke-width="5.2" stroke-linecap="round" />
+      <path d="M47 33 L51 39" stroke="#ff7a14" stroke-width="1.5" stroke-linecap="round" />
+      <circle cx="50" cy="43" r="3.6" fill="url(#ragnaros-magma-core)" stroke="#260604" stroke-width="0.8" />
+    </g>
+
+    <g id="ragnaros-hammer-vertical">
+      <path d="M0 19 L0 -15" stroke="#2a140f" stroke-width="5" stroke-linecap="round" />
+      <path d="M0 18 L0 -14" stroke="#ff6a13" stroke-width="1.5" stroke-linecap="round" opacity="0.9" />
+      <path d="M-18 -31 L16 -28 L22 -17 L15 -7 L-18 -8 L-24 -20 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.4" />
+      <path d="M-15 -25 L0 -15 L13 -27 M5 -9 L12 -19 M-20 -19 L-9 -12" fill="none" stroke="#ff8a16" stroke-width="2.4" stroke-linecap="round" />
+      <circle cx="-7" cy="-16" r="2.2" fill="#fff0a3" opacity="0.8" />
+      <path d="M15 -8 Q18 -3 11 2 M-16 -8 Q-18 -3 -13 1" fill="none" stroke="#ff6a13" stroke-width="2.4" stroke-linecap="round" />
+    </g>
+    <g id="ragnaros-hammer-horizontal">
+      <path d="M-19 0 L15 0" stroke="#2a140f" stroke-width="5" stroke-linecap="round" />
+      <path d="M-18 0 L14 0" stroke="#ff6a13" stroke-width="1.5" stroke-linecap="round" opacity="0.9" />
+      <path d="M15 -17 L31 -12 L34 5 L25 16 L9 10 L8 -8 Z" fill="url(#ragnaros-basalt)" stroke="#080403" stroke-width="1.4" />
+      <path d="M14 -9 L25 2 L16 10 M29 -9 L22 12 M11 5 L21 8" fill="none" stroke="#ff8a16" stroke-width="2.4" stroke-linecap="round" />
+      <circle cx="23" cy="3" r="2.1" fill="#fff0a3" opacity="0.8" />
+      <path d="M26 15 Q32 21 25 24 M32 4 Q37 8 33 14" fill="none" stroke="#ff6a13" stroke-width="2.4" stroke-linecap="round" />
+    </g>
+
+    <g id="ragnaros-impact-front">
+      <path d="M18 46 Q31 36 47 46" fill="none" stroke="#ffb21f" stroke-width="4" stroke-linecap="round" opacity="0.75" />
+      <circle cx="18" cy="47" r="3" fill="#ff5a12" opacity="0.55" />
+      <circle cx="47" cy="47" r="3.4" fill="#ff5a12" opacity="0.55" />
+      <circle cx="32" cy="42" r="2.4" fill="#fff0a3" opacity="0.85" />
+    </g>
+    <g id="ragnaros-cast-flare">
+      <circle cx="32" cy="30" r="14" fill="#ff5a12" opacity="0.2" />
+      <circle cx="32" cy="30" r="9" fill="#ffb21f" opacity="0.26" />
+      <path d="M32 12 L35 24 L47 24 L37 31 L42 43 L32 36 L22 43 L27 31 L17 24 L29 24 Z" fill="#fff0a3" opacity="0.28" />
+      <circle cx="20" cy="36" r="2.2" fill="#ff7a14" opacity="0.8" />
+      <circle cx="45" cy="28" r="1.8" fill="#fff0a3" opacity="0.8" />
+    </g>
+
+    <g id="ragnaros-down-idle-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-down"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-down"/><use href="#ragnaros-hammer-vertical" transform="translate(49 34) rotate(8)"/></g>
+    <g id="ragnaros-down-idle-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-down" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="translate(0 -1)"/><use href="#ragnaros-arm-right" transform="translate(0 -1)"/><use href="#ragnaros-head-down" transform="translate(0 -1)"/><use href="#ragnaros-hammer-vertical" transform="translate(49 32) rotate(4)"/></g>
+    <g id="ragnaros-up-idle-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-hammer-vertical" transform="translate(47 33) rotate(-8)"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-up"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-up"/></g>
+    <g id="ragnaros-up-idle-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-hammer-vertical" transform="translate(47 31) rotate(-4)"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-up" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="translate(0 -1)"/><use href="#ragnaros-arm-right" transform="translate(0 -1)"/><use href="#ragnaros-head-up" transform="translate(0 -1)"/></g>
+    <g id="ragnaros-left-idle-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-left"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-left"/><use href="#ragnaros-hammer-horizontal" transform="translate(24 36) rotate(188)"/></g>
+    <g id="ragnaros-left-idle-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-left" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="translate(0 -1)"/><use href="#ragnaros-arm-right" transform="translate(0 -1)"/><use href="#ragnaros-head-left" transform="translate(0 -1)"/><use href="#ragnaros-hammer-horizontal" transform="translate(24 34) rotate(184)"/></g>
+    <g id="ragnaros-right-idle-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-right"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-right"/><use href="#ragnaros-hammer-horizontal" transform="translate(40 36) rotate(8)"/></g>
+    <g id="ragnaros-right-idle-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-right" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="translate(0 -1)"/><use href="#ragnaros-arm-right" transform="translate(0 -1)"/><use href="#ragnaros-head-right" transform="translate(0 -1)"/><use href="#ragnaros-hammer-horizontal" transform="translate(40 34) rotate(4)"/></g>
+
+    <g id="ragnaros-down-walk-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-down"/><use href="#ragnaros-arm-left" transform="rotate(7 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(-8 45 31)"/><use href="#ragnaros-head-down"/><use href="#ragnaros-hammer-vertical" transform="translate(49 35) rotate(12)"/></g>
+    <g id="ragnaros-down-walk-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-down" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="rotate(-7 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(8 45 31)"/><use href="#ragnaros-head-down" transform="translate(0 -1)"/><use href="#ragnaros-hammer-vertical" transform="translate(48 32) rotate(-2)"/></g>
+    <g id="ragnaros-up-walk-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-hammer-vertical" transform="translate(47 35) rotate(-12)"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-up"/><use href="#ragnaros-arm-left" transform="rotate(7 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(-8 45 31)"/><use href="#ragnaros-head-up"/></g>
+    <g id="ragnaros-up-walk-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-hammer-vertical" transform="translate(46 32) rotate(2)"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-up" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="rotate(-7 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(8 45 31)"/><use href="#ragnaros-head-up" transform="translate(0 -1)"/></g>
+    <g id="ragnaros-left-walk-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-left"/><use href="#ragnaros-arm-left" transform="rotate(-9 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(7 45 31)"/><use href="#ragnaros-head-left"/><use href="#ragnaros-hammer-horizontal" transform="translate(23 36) rotate(193)"/></g>
+    <g id="ragnaros-left-walk-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-left" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="rotate(9 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(-7 45 31)"/><use href="#ragnaros-head-left" transform="translate(0 -1)"/><use href="#ragnaros-hammer-horizontal" transform="translate(25 33) rotate(176)"/></g>
+    <g id="ragnaros-right-walk-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-right"/><use href="#ragnaros-arm-left" transform="rotate(7 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(-9 45 31)"/><use href="#ragnaros-head-right"/><use href="#ragnaros-hammer-horizontal" transform="translate(41 36) rotate(13)"/></g>
+    <g id="ragnaros-right-walk-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-right" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="rotate(-7 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(9 45 31)"/><use href="#ragnaros-head-right" transform="translate(0 -1)"/><use href="#ragnaros-hammer-horizontal" transform="translate(39 33) rotate(-4)"/></g>
+
+    <g id="ragnaros-down-attack-prep"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-down"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(-36 45 31)"/><use href="#ragnaros-head-down"/><use href="#ragnaros-hammer-vertical" transform="translate(43 27) rotate(-42)"/></g>
+    <g id="ragnaros-down-attack-swing"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-down"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(25 45 31)"/><use href="#ragnaros-head-down"/><use href="#ragnaros-hammer-vertical" transform="translate(43 42) rotate(52)"/></g>
+    <g id="ragnaros-down-attack-impact"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-down"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(36 45 31)"/><use href="#ragnaros-head-down"/><use href="#ragnaros-hammer-vertical" transform="translate(41 45) rotate(68)"/><use href="#ragnaros-impact-front"/></g>
+    <g id="ragnaros-up-attack-prep"><use href="#ragnaros-shadow"/><use href="#ragnaros-hammer-vertical" transform="translate(42 27) rotate(42)"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-up"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(-36 45 31)"/><use href="#ragnaros-head-up"/></g>
+    <g id="ragnaros-up-attack-swing"><use href="#ragnaros-shadow"/><use href="#ragnaros-hammer-vertical" transform="translate(42 22) rotate(-52)"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-up"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(25 45 31)"/><use href="#ragnaros-head-up"/></g>
+    <g id="ragnaros-up-attack-impact"><use href="#ragnaros-shadow"/><use href="#ragnaros-impact-front" transform="translate(0 -18) rotate(180 32 44)"/><use href="#ragnaros-hammer-vertical" transform="translate(42 20) rotate(-68)"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-up"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(36 45 31)"/><use href="#ragnaros-head-up"/></g>
+    <g id="ragnaros-left-attack-prep"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-left"/><use href="#ragnaros-arm-left" transform="rotate(-35 20 31)"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-left"/><use href="#ragnaros-hammer-horizontal" transform="translate(34 29) rotate(138)"/></g>
+    <g id="ragnaros-left-attack-swing"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-left"/><use href="#ragnaros-arm-left" transform="rotate(23 20 31)"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-left"/><use href="#ragnaros-hammer-horizontal" transform="translate(20 40) rotate(218)"/></g>
+    <g id="ragnaros-left-attack-impact"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-left"/><use href="#ragnaros-arm-left" transform="rotate(35 20 31)"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-left"/><use href="#ragnaros-hammer-horizontal" transform="translate(18 43) rotate(235)"/><use href="#ragnaros-impact-front" transform="translate(-13 0)"/></g>
+    <g id="ragnaros-right-attack-prep"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-right"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(35 45 31)"/><use href="#ragnaros-head-right"/><use href="#ragnaros-hammer-horizontal" transform="translate(30 29) rotate(42)"/></g>
+    <g id="ragnaros-right-attack-swing"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-right"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(-23 45 31)"/><use href="#ragnaros-head-right"/><use href="#ragnaros-hammer-horizontal" transform="translate(44 40) rotate(-38)"/></g>
+    <g id="ragnaros-right-attack-impact"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-right"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right" transform="rotate(-35 45 31)"/><use href="#ragnaros-head-right"/><use href="#ragnaros-hammer-horizontal" transform="translate(46 43) rotate(-55)"/><use href="#ragnaros-impact-front" transform="translate(13 0)"/></g>
+
+    <g id="ragnaros-down-thrust"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-down"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-down"/><use href="#ragnaros-hammer-vertical" transform="translate(42 43) rotate(85)"/></g>
+    <g id="ragnaros-up-thrust"><use href="#ragnaros-shadow"/><use href="#ragnaros-hammer-vertical" transform="translate(42 20) rotate(-85)"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-up"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-up"/></g>
+    <g id="ragnaros-left-thrust"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-left"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-left"/><use href="#ragnaros-hammer-horizontal" transform="translate(18 36) rotate(180)"/></g>
+    <g id="ragnaros-right-thrust"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-right"/><use href="#ragnaros-arm-left"/><use href="#ragnaros-arm-right"/><use href="#ragnaros-head-right"/><use href="#ragnaros-hammer-horizontal" transform="translate(46 36)"/></g>
+
+    <g id="ragnaros-down-cast-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-down"/><use href="#ragnaros-arm-left" transform="rotate(-18 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(18 45 31)"/><use href="#ragnaros-head-down"/><use href="#ragnaros-hammer-vertical" transform="translate(32 32)"/></g>
+    <g id="ragnaros-down-cast-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-cast-flare"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-down" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="rotate(-30 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(30 45 31)"/><use href="#ragnaros-head-down" transform="translate(0 -1)"/><use href="#ragnaros-hammer-vertical" transform="translate(32 25)"/></g>
+    <g id="ragnaros-down-cast-c"><use href="#ragnaros-shadow"/><use href="#ragnaros-cast-flare" transform="scale(1.12 1.12) translate(-3 -5)"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-down"/><use href="#ragnaros-arm-left" transform="rotate(-23 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(23 45 31)"/><use href="#ragnaros-head-down"/><use href="#ragnaros-hammer-vertical" transform="translate(32 23)"/></g>
+    <g id="ragnaros-up-cast-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-hammer-vertical" transform="translate(32 30)"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-up"/><use href="#ragnaros-arm-left" transform="rotate(-18 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(18 45 31)"/><use href="#ragnaros-head-up"/></g>
+    <g id="ragnaros-up-cast-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-cast-flare" transform="translate(0 -5)"/><use href="#ragnaros-hammer-vertical" transform="translate(32 24)"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-up" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="rotate(-30 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(30 45 31)"/><use href="#ragnaros-head-up" transform="translate(0 -1)"/></g>
+    <g id="ragnaros-up-cast-c"><use href="#ragnaros-shadow"/><use href="#ragnaros-cast-flare" transform="scale(1.12 1.12) translate(-3 -9)"/><use href="#ragnaros-hammer-vertical" transform="translate(32 22)"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-up"/><use href="#ragnaros-arm-left" transform="rotate(-23 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(23 45 31)"/><use href="#ragnaros-head-up"/></g>
+    <g id="ragnaros-left-cast-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-left"/><use href="#ragnaros-arm-left" transform="rotate(-18 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(18 45 31)"/><use href="#ragnaros-head-left"/><use href="#ragnaros-hammer-vertical" transform="translate(27 31) rotate(-18)"/></g>
+    <g id="ragnaros-left-cast-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-cast-flare" transform="translate(-6 -2)"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-left" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="rotate(-30 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(30 45 31)"/><use href="#ragnaros-head-left" transform="translate(0 -1)"/><use href="#ragnaros-hammer-vertical" transform="translate(27 25) rotate(-8)"/></g>
+    <g id="ragnaros-left-cast-c"><use href="#ragnaros-shadow"/><use href="#ragnaros-cast-flare" transform="scale(1.12 1.12) translate(-10 -6)"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-left"/><use href="#ragnaros-arm-left" transform="rotate(-23 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(23 45 31)"/><use href="#ragnaros-head-left"/><use href="#ragnaros-hammer-vertical" transform="translate(27 22) rotate(-4)"/></g>
+    <g id="ragnaros-right-cast-a"><use href="#ragnaros-shadow"/><use href="#ragnaros-lava-tail-a"/><use href="#ragnaros-torso-right"/><use href="#ragnaros-arm-left" transform="rotate(-18 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(18 45 31)"/><use href="#ragnaros-head-right"/><use href="#ragnaros-hammer-vertical" transform="translate(37 31) rotate(18)"/></g>
+    <g id="ragnaros-right-cast-b"><use href="#ragnaros-shadow"/><use href="#ragnaros-cast-flare" transform="translate(6 -2)"/><use href="#ragnaros-lava-tail-b"/><use href="#ragnaros-torso-right" transform="translate(0 -1)"/><use href="#ragnaros-arm-left" transform="rotate(-30 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(30 45 31)"/><use href="#ragnaros-head-right" transform="translate(0 -1)"/><use href="#ragnaros-hammer-vertical" transform="translate(37 25) rotate(8)"/></g>
+    <g id="ragnaros-right-cast-c"><use href="#ragnaros-shadow"/><use href="#ragnaros-cast-flare" transform="scale(1.12 1.12) translate(2 -6)"/><use href="#ragnaros-lava-tail-c"/><use href="#ragnaros-torso-right"/><use href="#ragnaros-arm-left" transform="rotate(-23 20 31)"/><use href="#ragnaros-arm-right" transform="rotate(23 45 31)"/><use href="#ragnaros-head-right"/><use href="#ragnaros-hammer-vertical" transform="translate(37 22) rotate(4)"/></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-a"/></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-b"/></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-a"/></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-b"/></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-a"/></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-b"/></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-a"/></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-b"/></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-walk-a"/></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-a"/></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-walk-b"/></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-b"/></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-walk-a" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-a"/></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-walk-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-b"/></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-walk-a"/></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-walk-a"/></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-a"/></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-walk-b"/></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-b"/></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-walk-a" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-a"/></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-walk-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-b"/></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-walk-a"/></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-walk-a"/></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-a"/></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-walk-b"/></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-b"/></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-walk-a" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-a"/></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-walk-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-b"/></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-walk-a"/></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-walk-a"/></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-a"/></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-walk-b"/></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-b"/></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-walk-a" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-a"/></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-walk-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-b"/></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-walk-a"/></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-attack-prep"/></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-attack-prep" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-attack-swing"/></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-attack-swing" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-attack-impact"/></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-attack-swing"/></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-a"/></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-b"/></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-attack-prep"/></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-attack-prep" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-attack-swing"/></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-attack-swing" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-attack-impact"/></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-attack-swing"/></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-a"/></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-b"/></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-attack-prep"/></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-attack-prep" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-attack-swing"/></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-attack-swing" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-attack-impact"/></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-attack-swing"/></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-a"/></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-b"/></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-attack-prep"/></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-attack-prep" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-attack-swing"/></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-attack-swing" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-attack-impact"/></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-attack-swing"/></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-a"/></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-b"/></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-attack-prep"/></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-thrust" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-thrust"/></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-attack-impact"/></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-a"/></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-b"/></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-attack-prep"/></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-thrust" transform="translate(-1 -1)"/></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-thrust"/></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-attack-impact"/></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-a"/></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-b"/></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-attack-prep"/></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-thrust" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-thrust"/></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-attack-impact"/></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-a"/></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-b"/></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-attack-prep"/></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-thrust" transform="translate(1 -1)"/></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-thrust"/></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-attack-impact"/></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-a"/></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-b"/></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-cast-a"/></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-cast-b"/></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-cast-c"/></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-cast-c" transform="translate(0 -1)"/></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-cast-b"/></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-cast-a"/></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-up-idle-a"/></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-cast-a"/></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-cast-b"/></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-cast-c"/></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-cast-c" transform="translate(0 -1)"/></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-cast-b"/></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-cast-a"/></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-left-idle-a"/></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-cast-a"/></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-cast-b"/></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-cast-c"/></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-cast-c" transform="translate(0 -1)"/></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-cast-b"/></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-cast-a"/></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-down-idle-a"/></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-cast-a"/></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-cast-b"/></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-cast-c"/></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-cast-c" transform="translate(0 -1)"/></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-cast-b"/></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-cast-a"/></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#ragnaros-right-idle-a"/></svg>
+</svg>

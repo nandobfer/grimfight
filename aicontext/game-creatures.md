@@ -119,6 +119,15 @@ O FX visual da constelação acompanha Rokmora em `update`, interpola a cor entr
 
 As fórmulas puras da passiva ficam em `src/game/creature/classes/RokmoraConstellations.ts` para manter a regra testável sem instanciar Phaser.
 
+### Ragnaros
+Ragnaros é um personagem jogável registrado como `ragnaros`, ligado a fogo, arcano e resistência colossal. Ele usa habilidade passiva, mantém mana travada para não conjurar pelo fluxo padrão e preserva mana máxima apenas como integração com efeitos que leem esse atributo.
+
+Ao receber dano em combate, Ragnaros pode retaliar com um cone de lava na direção do atacante. A retaliação define temporariamente o atacante como alvo atual e emite `cast`, permitindo que Incendiary e itens acionados por conjuração resolvam pelo mesmo contrato dos demais personagens. Em seguida, inimigos ativos dentro do cone recebem dano de fogo baseado no AP atual de Ragnaros.
+
+O cone e o efeito constante de lava derretendo são desenhados com `Graphics`. O cone é temporário e limpa tween e gráfico ao terminar ou mudar o estado da rodada. A lava constante acompanha o personagem em `update`, reutiliza gotículas internas em vez de criar objetos por quadro e destrói o gráfico junto com Ragnaros.
+
+As fórmulas e a geometria pura da passiva ficam em `src/game/creature/classes/RagnarosLavaRetaliation.ts` para manter a regra testável sem instanciar Phaser.
+
 ### Rukia
 Rukia é uma personagem jogável registrada como `rukia`. Ela aplica dano frio passivo após ataques e sua habilidade executa uma cadeia de dashes atacando inimigos escolhidos pelo sistema de RNG.
 

@@ -1,4 +1,5 @@
 import fs from "node:fs"
+import crypto from "node:crypto"
 import path from "node:path"
 
 const virtualModuleId = "virtual:asset-preview-manifest"
@@ -18,7 +19,9 @@ const extensions = {
 
 function toAssetUrl(filePath) {
     const relativePath = path.relative(path.resolve(process.cwd(), "public"), filePath).replaceAll(path.sep, "/")
-    return `/${relativePath}`
+    const hash = crypto.createHash("sha256").update(fs.readFileSync(filePath)).digest("hex").slice(0, 12)
+
+    return `/${relativePath}?v=${hash}`
 }
 
 function collectAssets(kind) {

@@ -20,6 +20,9 @@ const phasermsg = () => {
 
 export default defineConfig({
     base: './',
+    define: {
+        __ASSET_VERSION__: JSON.stringify(`${Date.now().toString(36)}`),
+    },
     plugins: [
         react(),
         assetPreviewManifest(),
