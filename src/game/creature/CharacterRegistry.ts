@@ -29,6 +29,7 @@ import { Ragnaros } from "./classes/Ragnaros"
 import { Yue } from "./classes/Yue"
 import { Jacrost } from "./classes/Jacrost"
 import { Melisandre } from "./classes/Melisandre"
+import { Dranho } from "./classes/Dranho"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
 import { SpritesheetCreatureVisualDefinition, SvgSpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
@@ -107,3 +108,4 @@ CharacterRegistry.register("ragnaros", Ragnaros, SvgSpritesheetCreatureVisualDef
 CharacterRegistry.register("yue", Yue, SvgSpritesheetCreatureVisualDefinition.character("yue"))
 CharacterRegistry.register("jacrost", Jacrost, SvgSpritesheetCreatureVisualDefinition.character("jacrost"))
 CharacterRegistry.register("melisandre", Melisandre, SvgSpritesheetCreatureVisualDefinition.character("melisandre"))
+CharacterRegistry.register("dranho", Dranho, SvgSpritesheetCreatureVisualDefinition.character("dranho"))

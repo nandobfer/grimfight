@@ -1,0 +1,31 @@
+Como não tenho acesso direto à ferramenta de execução de terminal (`bash`) nesta sessão para executar o `pnpm dlx` e realizar a conversão, fornecerei o conteúdo do SVG do portrait de "Dranho" abaixo.
+
+Você pode salvar este código como `dranho.svg` e executar a conversão manualmente:
+
+```bash
+# Salve o código abaixo como dranho.svg
+pnpm dlx sharp-cli dranho.svg -o public/assets/portraits/dranho.webp
+```
+
+### Código SVG (dranho.svg)
+
+```xml
+<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'>
+  <defs>
+    <linearGradient id='robe' x1='0' y1='0' x2='0' y2='1'>
+      <stop offset='0' stop-color='#7e57c2'/>
+      <stop offset='1' stop-color='#4527a0'/>
+    </linearGradient>
+    <radialGradient id='arcane' cx='50%' cy='50%' r='50%'>
+      <stop offset='0' stop-color='#e1bee7' stop-opacity='0.8'/>
+      <stop offset='1' stop-color='#4527a0' stop-opacity='0'/>
+    </radialGradient>
+  </defs>
+  <circle cx='32' cy='20' r='28' fill='url(#arcane)'/>
+  <path d='M8,64 Q32,45 56,64 L50,45 Q32,40 14,45 Z' fill='url(#robe)' stroke='#2a1a45' stroke-width='1.5'/>
+  <path d='M32,48 L36,52 L32,56 L28,52 Z' fill='#ffd700' stroke='#b8860b' stroke-width='1'/>
+  <path d='M18,22 Q20,5 32,5 Q44,5 46,22 Q44,38 32,42 Q20,38 18,22 Z' fill='#f0c38a' stroke='#5b3722' stroke-width='1'/>
+  <path d='M18,20 Q20,2 32,2 Q44,2 46,20 Q40,10 32,10 Q24,10 18,20 Z' fill='#3e2723'/>
+  <path d='M32,2 Q40,2 42,15 Q32,12 22,15 Z' fill='#9c27b0'/>
+</svg>
+```

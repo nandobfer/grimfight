@@ -3,7 +3,7 @@
 ## Features
 
 ### Arcanist
-Arcanist é uma trait jogável registrada como `Arcanist`, composta por `freud`, `yue` e `ragnaros`. A trait aparece para personagens da composição, mas só fica ativa quando o time possui personagens únicos suficientes para alcançar seus estágios.
+ Arcanist é uma trait jogável registrada como `Arcanist`, composta por `freud`, `yue`, `ragnaros` e `dranho`. A trait aparece para personagens da composição, mas só fica ativa quando o time possui personagens únicos suficientes para alcançar seus estágios.
 
 Quando a trait alcança seus estágios ativos, cada unidade Arcanist ganha AP durante o combate. O ganho usa timer por unidade, varia conforme o estágio ativo e só acumula enquanto a cena está no estado `fighting`.
 
@@ -23,7 +23,7 @@ Attacker é uma trait de personagens ofensivos. Quando ativa, aplica bônus de a
 Assassin é uma trait de personagens assassinos. Quando ativa, aumenta a eficiência crítica dos personagens da composição e registra comportamento em dano causado para punir alvos feridos com dano adicional de execução. O dano adicional não deve reemitir o próprio evento de dano para evitar recursão, e o listener deve ser limpo ao reaplicar ou destruir a criatura.
 
 ### Cleric
-Cleric é uma trait de suporte. Quando ativa, escuta mortes no time para acionar cura e remove o listener no cleanup.
+Cleric é uma trait de suporte composta por personagens como `melo`, `jacrost`, `melisandre` e `dranho`. Quando ativa, escuta mortes no time para acionar cura e remove o listener no cleanup.
 
 ### Colossi
 Colossi é uma trait de personagens resistentes, incluindo `ragnaros`. Quando ativa, aplica bônus defensivos conforme stage atual.

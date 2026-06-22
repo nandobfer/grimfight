@@ -1,0 +1,56 @@
+<output>
+<compartments>
+<compartment start="43" end="43" title="Create Ragnaros portrait" episode_type="feature" importance="50">
+<p1>
+Planejei e implementei o portrait para Ragnaros, seguindo @docs/svg-portraits.md e mantendo consistência com a spritesheet criada anteriormente.
+
+O plano visual:
+- Enquadramento: Torso superior e cabeça, preenchendo quase todo o quadro 64x64.
+- Materiais: Basalto escuro (#262626) para o corpo e cabeça, rachaduras com brilho de magma (#f97316) e olhos incandescentes (#fef08a).
+- Estrutura: SVG 64x64, sem fundo, seguindo a ficha visual de um elemental de basalto e lava.
+
+Implementação:
+Criei `temp_ragnaros.svg`, validei a estrutura, e converti para WebP usando `pnpm dlx sharp-cli` conforme exigido, salvando em `public/assets/portraits/ragnaros.webp`. O arquivo SVG temporário foi removido.
+</p1>
+<p2>
+Criei o portrait de Ragnaros como um arquivo WebP 64x64, seguindo os padrões vetoriais de @docs/svg-portraits.md e a consistência visual da spritesheet. Basalto e magma, torso e cabeça, fundo transparente.
+</p2>
+<p3>
+Portrait de Ragnaros implementado e convertido para WebP conforme diretrizes de UI.
+</p3>
+<p4>Ragnaros portrait; 64x64 WebP; consistência com spritesheet</p4>
+</compartment>
+</compartments>
+<meta>
+<messages_processed>43-43</messages_processed>
+<unprocessed_from>44</unprocessed_from>
+</meta>
+</output>
+
+<!-- Implementing the plan -->
+
+```bash
+cat > temp_ragnaros.svg <<EOF
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="magma-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff7ed" />
+      <stop offset="30%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#7c2d12" />
+    </radialGradient>
+  </defs>
+  <!-- Basalt torso -->
+  <path d="M10,60 Q32,45 54,60 L50,30 Q32,20 14,30 Z" fill="#262626" stroke="#171717" stroke-width="2" />
+  <!-- Basalt head -->
+  <path d="M18,25 Q22,5 32,5 Q42,5 46,25 Q44,40 32,45 Q20,40 18,25 Z" fill="#404040" stroke="#262626" stroke-width="1.5" />
+  <!-- Magma cracks (torso) -->
+  <path d="M25,40 L35,45 M30,50 L40,55" fill="none" stroke="url(#magma-glow)" stroke-width="3" stroke-linecap="round" />
+  <!-- Eyes -->
+  <circle cx="26" cy="20" r="2.5" fill="#fef08a" />
+  <circle cx="38" cy="20" r="2.5" fill="#fef08a" />
+</svg>
+EOF
+
+pnpm dlx sharp-cli -i temp_ragnaros.svg -o public/assets/portraits/ragnaros.webp
+rm temp_ragnaros.svg
+```

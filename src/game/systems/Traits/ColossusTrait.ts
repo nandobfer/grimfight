@@ -8,7 +8,8 @@ export class ColossusTrait extends Trait {
     description = "Colossi gain {0} health and {1} armor."
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { healthMultiplier: 0.15, armor: 15, descriptionParams: ["15%", "15%"] }],
-        [4, { healthMultiplier: 0.35, armor: 25, descriptionParams: ["35%", "25%"] }],
+        [4, { healthMultiplier: 0.35, armor: 20, descriptionParams: ["35%", "20%"] }],
+				[6. { healthMultiplier: 0.50, armor: 25, descriptionParams: ["50%", "25%"] }],
     ])
 
     constructor(comp: string[]) {

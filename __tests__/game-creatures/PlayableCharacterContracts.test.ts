@@ -14,7 +14,7 @@ const classesDir = join(process.cwd(), "src/game/creature/classes")
 const characterRegistryPath = join(process.cwd(), "src/game/creature/CharacterRegistry.ts")
 const gameCreaturesContextPath = join(process.cwd(), "aicontext/game-creatures.md")
 
-const helperFiles = new Set(["FandralFlameSlash.ts", "RagnarosLavaRetaliation.ts", "RokmoraConstellations.ts", "YueFireRay.ts"])
+const helperFiles = new Set(["DranhoChannel.ts", "FandralFlameSlash.ts", "RagnarosLavaRetaliation.ts", "RokmoraConstellations.ts", "YueFireRay.ts"])
 
 const characterContracts: CharacterContract[] = [
     { file: "Archer.ts", className: "Archer", registryName: "laherce" },
@@ -23,6 +23,7 @@ const characterContracts: CharacterContract[] = [
     { file: "Barbarian.ts", className: "Barbarian", registryName: "grok" },
     { file: "Chichi.ts", className: "Chichi", registryName: "chichi" },
     { file: "Dracula.ts", className: "Dracula", registryName: "dracula" },
+    { file: "Dranho.ts", className: "Dranho", registryName: "dranho" },
     { file: "Druid.ts", className: "Helyna", registryName: "helyna", docHeading: "Helyna" },
     { file: "Fandral.ts", className: "Fandral", registryName: "fandral" },
     { file: "Frank.ts", className: "Frank", registryName: "frank" },
