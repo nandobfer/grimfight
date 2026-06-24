@@ -1,7 +1,7 @@
 // src/game/characters/monsters/Skeleton.ts
 
-import { LifeDrain } from "../../fx/LifeDrain"
 import { SoulParticles } from "../../fx/SoulParticles"
+import { VitalDrainChannel } from "../../fx/VitalDrainChannel"
 import { Deathbolt } from "../../objects/Projectile/Deathbolt"
 import { Dot } from "../../objects/StatusEffect/Dot"
 import { Game } from "../../scenes/Game"
@@ -34,7 +34,7 @@ export class SkeletonDrainer extends Skeleton {
     override landAttack(target = this.target) {
         if (!target || !this.active) return
 
-        const projectile = new Deathbolt(this.scene, this.x, this.y, this).fire(target)
+        new Deathbolt(this.scene, this.x, this.y, this).fire(target)
     }
 
     override castAbility(): void {
@@ -43,9 +43,9 @@ export class SkeletonDrainer extends Skeleton {
         this.casting = true
 
         this.startChanneling()
-        const lifeDrain = new LifeDrain(this.target, this)
+        const lifeDrain = new VitalDrainChannel(this.target, this)
 
-        const dot = new Dot({
+        new Dot({
             abilityName: this.abilityName,
             damageType: "dark",
             duration: 5000,

@@ -1,11 +1,11 @@
 import { Hot } from "../../objects/StatusEffect/Hot"
-import { SoothingMist } from "../../fx/SoothingMist"
 import { Game } from "../../scenes/Game"
 import { Character } from "../character/Character"
 import { Creature } from "../Creature"
 import { LeavesFx } from "../../fx/LeavesFx"
 import { WindRazor } from "../../objects/Projectile/WindRazor"
 import { WindBreeze } from "../../fx/WindBreezeFx"
+import { RenewingMistChannel } from "../../fx/RenewingMistChannel"
 
 export class Chichi extends Character {
     baseAttackSpeed = 1
@@ -16,7 +16,7 @@ export class Chichi extends Character {
 
     abilityName = "Ki Clone"
     clone: Chichi | undefined = undefined
-    soothingMist?: SoothingMist
+    soothingMist?: RenewingMistChannel
     renewingMist: Hot | undefined = undefined
 
     constructor(scene: Game, id: string) {
@@ -45,7 +45,7 @@ Back: The clone channels [success.main:Renewing Mist] at the ally with the lowes
             this.soothingMist.destroy()
         }
 
-        this.soothingMist = new SoothingMist(target, this)
+        this.soothingMist = new RenewingMistChannel(target, this)
         this.scene.perRoundFx.add(this.soothingMist)
 
         const sceneRef = this.scene
