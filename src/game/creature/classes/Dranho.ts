@@ -134,7 +134,7 @@ export class Dranho extends Character {
         if (!this.team) return []
 
         return this.team
-            .getChildren(true, true)
+            .getChildren(false, true)
             .filter((ally) => ally !== this && ally.active)
             .sort((a, b) => b.abilityPower - a.abilityPower)
     }

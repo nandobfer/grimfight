@@ -37,7 +37,7 @@ A habilidade ativa troca o alvo para um inimigo de menor vida e modifica tempora
 ### Dranho
 Dranho é um personagem jogável registrado como `dranho`, ligado às identidades de arcano e cleric. Ele não usa ataques básicos, mana ou o evento `cast`; em vez disso, permanece canalizando enquanto houver um alvo válido em alcance.
 
-A canalização causa dano periódico no alvo atual usando uma contribuição do AP do próprio Dranho e uma contribuição agregada do AP dos aliados ativos, sem contar Dranho. O efeito visual é desenhado com `Graphics` persistente como energia roxa fluindo dos aliados ativos até Dranho, energia convergindo nele e feixes em arco até o alvo, e deve limpar o gráfico ao perder alvo, sair de combate, resetar stats ou destruir o personagem.
+A canalização causa dano periódico no alvo atual usando uma contribuição do AP do próprio Dranho e uma contribuição agregada do AP dos aliados ativos do time principal, sem contar Dranho e sem incluir summons/minions. O efeito visual é desenhado com `Graphics` persistente como energia roxa fluindo desses aliados válidos até Dranho, energia convergindo nele e feixes em arco até o alvo, e deve limpar o gráfico ao perder alvo, sair de combate, resetar stats ou destruir o personagem.
 
 ### Helyna
 Helyna é uma personagem jogável registrada como `helyna`. Ela usa a habilidade `Druidism` para alternar entre forma humana, urso ou gato conforme a posição inicial.
