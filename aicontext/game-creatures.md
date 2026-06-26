@@ -29,6 +29,13 @@ Na posição frontal, o clone atua como tanque e pode receber cura dos ataques d
 
 `destroyClone` remove o clone, limpa beams/status de cura, destrava mana do mestre e restaura o ataque padrão. Qualquer FX ou status criado pela habilidade deve ser limpo quando o clone termina.
 
+### Clover
+Clover é um personagem jogável registrado como `clover`, ligado às identidades de atacante e feitiçaria. Ele atua como lutador corpo a corpo híbrido, usando ataques físicos e uma habilidade de corte sombrio que escala com o dano de ataque atual.
+
+Ao conjurar `Dark Cleave`, Clover mantém o alvo atual ou retargeta pelo fluxo padrão, calcula uma direção frontal com pequena variação aleatória e garante que a linha resultante ainda atravesse o alvo escolhido. O corte é desenhado com `Graphics` como energia preta com contorno e brilho vermelho escuro, avança a partir de Clover e atravessa inimigos, causando dano sombrio uma única vez por inimigo atingido. Um hitbox físico acompanha a ponta do corte para encerrar o efeito ao colidir com as paredes da arena, enquanto a colisão de dano usa interseção do segmento visual para evitar tunneling e manter o alvo principal dentro da área.
+
+O FX deve limpar gráfico, hitbox, luz, timer, collider e listeners de update/gamestate quando terminar, bater em parede, mudar de rodada, Clover morrer ou o alvo original sair de cena. A fórmula pura de dano e helpers de geometria ficam em `src/game/creature/classes/CloverDarkCleave.ts` para permitir testes sem carregar Phaser.
+
 ### Dracula
 Dracula é um personagem jogável registrado como `dracula`. Ele possui lifesteal passivo, observa a morte do alvo atual e ganha benefício de sustain/ofensivo quando esse alvo morre.
 

@@ -9,6 +9,7 @@ export class SpeedyTrait extends Trait {
     stages: Map<number, Record<TraitBoosts, any>> = new Map([
         [2, { attackSpeedMultiplier: 0.3, descriptionParams: ["30%"] }],
         [4, { attackSpeedMultiplier: 0.5, descriptionParams: ["50%"] }],
+        [6, { attackSpeedMultiplier: 0.8, descriptionParams: ["80%"] }],
     ])
 
     constructor(comp: string[]) {

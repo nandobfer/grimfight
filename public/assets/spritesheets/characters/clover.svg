@@ -1,0 +1,305 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="clover-skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d69a67" />
+      <stop offset="0.65" stop-color="#a9643f" />
+      <stop offset="1" stop-color="#6f3528" />
+    </linearGradient>
+    <linearGradient id="clover-sword" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5f1111" />
+      <stop offset="0.45" stop-color="#0b0a12" />
+      <stop offset="1" stop-color="#050409" />
+    </linearGradient>
+    <linearGradient id="clover-pants" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b2b38" />
+      <stop offset="1" stop-color="#050509" />
+    </linearGradient>
+
+    <ellipse id="clover-shadow" cx="32" cy="56" rx="15" ry="4.5" fill="#000000" opacity="0.27" />
+
+    <g id="clover-greatsword-vertical">
+      <path d="M0 -30 L7 3 L2 22 L-2 22 L-7 3 Z" fill="url(#clover-sword)" stroke="#050409" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M0 -25 L2 1 L0 16" fill="none" stroke="#b91c1c" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+      <rect x="-9" y="17" width="18" height="4" rx="1.5" fill="#210b0b" stroke="#050409" stroke-width="1" />
+      <rect x="-3" y="20" width="6" height="11" rx="2" fill="#281111" stroke="#050409" stroke-width="1" />
+    </g>
+    <g id="clover-greatsword-horizontal">
+      <path d="M-29 0 L1 -7 L22 -2 L22 2 L1 7 Z" fill="url(#clover-sword)" stroke="#050409" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M-23 0 L1 -2 L15 0" fill="none" stroke="#b91c1c" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+      <rect x="16" y="-9" width="4" height="18" rx="1.5" fill="#210b0b" stroke="#050409" stroke-width="1" />
+      <rect x="20" y="-3" width="10" height="6" rx="2" fill="#281111" stroke="#050409" stroke-width="1" />
+    </g>
+    <g id="clover-greatsword-planted">
+      <path d="M0 -28 L7 3 L2 18 L-2 18 L-7 3 Z" fill="url(#clover-sword)" stroke="#050409" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M0 -23 L2 0 L0 13" fill="none" stroke="#b91c1c" stroke-width="1.2" stroke-linecap="round" opacity="0.75" />
+      <rect x="-9" y="14" width="18" height="4" rx="1.5" fill="#210b0b" stroke="#050409" stroke-width="1" />
+      <rect x="-3" y="17" width="6" height="10" rx="2" fill="#281111" stroke="#050409" stroke-width="1" />
+    </g>
+
+    <g id="clover-pants-neutral">
+      <path d="M22 38 L31 37 L31 54 L25 54 Q21 48 22 38" fill="url(#clover-pants)" stroke="#050509" stroke-width="1" />
+      <path d="M33 37 L43 39 Q43 48 39 54 L33 54 Z" fill="url(#clover-pants)" stroke="#050509" stroke-width="1" />
+      <path d="M27 45 L31 43 M37 43 L42 41" stroke="#4b4b5d" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+      <path d="M24 54 Q27 57 31 55 M34 55 Q38 57 42 54" fill="none" stroke="#9b5f42" stroke-width="2.4" stroke-linecap="round" />
+    </g>
+    <g id="clover-pants-step-a">
+      <path d="M21 38 L30 37 L30 54 L23 54 Q19 48 21 38" fill="url(#clover-pants)" stroke="#050509" stroke-width="1" transform="rotate(-7 26 47)" />
+      <path d="M35 37 L43 40 Q44 49 39 54 L33 53 Z" fill="url(#clover-pants)" stroke="#050509" stroke-width="1" transform="rotate(8 38 47)" />
+      <path d="M23 54 Q26 56 30 55 M34 54 Q38 57 43 54" fill="none" stroke="#9b5f42" stroke-width="2.4" stroke-linecap="round" />
+    </g>
+    <g id="clover-pants-step-b">
+      <path d="M22 37 L31 38 L31 54 L24 55 Q21 49 22 37" fill="url(#clover-pants)" stroke="#050509" stroke-width="1" transform="rotate(8 27 47)" />
+      <path d="M34 38 L42 38 Q43 48 38 54 L32 53 Z" fill="url(#clover-pants)" stroke="#050509" stroke-width="1" transform="rotate(-7 38 47)" />
+      <path d="M23 54 Q27 57 31 55 M33 54 Q37 56 41 54" fill="none" stroke="#9b5f42" stroke-width="2.4" stroke-linecap="round" />
+    </g>
+
+    <g id="clover-torso-down">
+      <path d="M21 25 Q32 17 43 25 L41 40 Q32 47 23 40 Z" fill="url(#clover-skin)" stroke="#4a211b" stroke-width="1.2" />
+      <path d="M27 26 Q32 30 37 26 M32 29 L31 39 M25 34 Q32 38 39 34" fill="none" stroke="#f0bc86" stroke-width="1.3" stroke-linecap="round" opacity="0.75" />
+      <path d="M24 31 Q21 36 23 40 M40 30 Q44 36 41 40" fill="none" stroke="#5b281f" stroke-width="1.2" stroke-linecap="round" opacity="0.75" />
+    </g>
+    <g id="clover-torso-up">
+      <path d="M21 25 Q32 18 43 25 L41 40 Q32 46 23 40 Z" fill="url(#clover-skin)" stroke="#4a211b" stroke-width="1.2" />
+      <path d="M25 29 Q32 25 39 29 M25 37 Q32 42 40 37" fill="none" stroke="#6f3528" stroke-width="1.3" stroke-linecap="round" opacity="0.85" />
+    </g>
+    <g id="clover-torso-left">
+      <path d="M23 25 Q31 18 41 26 L40 40 Q32 46 23 40 Z" fill="url(#clover-skin)" stroke="#4a211b" stroke-width="1.2" />
+      <path d="M29 26 Q35 30 39 34 M25 35 Q31 38 38 36" fill="none" stroke="#f0bc86" stroke-width="1.1" stroke-linecap="round" opacity="0.7" />
+    </g>
+    <g id="clover-torso-right">
+      <path d="M23 26 Q33 18 41 25 L41 40 Q32 46 24 40 Z" fill="url(#clover-skin)" stroke="#4a211b" stroke-width="1.2" />
+      <path d="M35 26 Q29 30 25 34 M26 36 Q33 38 39 35" fill="none" stroke="#f0bc86" stroke-width="1.1" stroke-linecap="round" opacity="0.7" />
+    </g>
+
+    <g id="clover-arm-left"><path d="M22 28 Q17 34 18 43" fill="none" stroke="#b9784c" stroke-width="5.2" stroke-linecap="round" /><path d="M19 34 L16 39" stroke="#5b281f" stroke-width="1.1" stroke-linecap="round" /></g>
+    <g id="clover-arm-right"><path d="M42 28 Q48 34 46 43" fill="none" stroke="#b9784c" stroke-width="5.2" stroke-linecap="round" /><path d="M45 34 L49 39" stroke="#5b281f" stroke-width="1.1" stroke-linecap="round" /></g>
+    <g id="clover-arm-left-raised"><path d="M22 28 Q18 25 17 20" fill="none" stroke="#b9784c" stroke-width="5.2" stroke-linecap="round" /></g>
+    <g id="clover-arm-right-raised"><path d="M42 28 Q47 25 48 20" fill="none" stroke="#b9784c" stroke-width="5.2" stroke-linecap="round" /></g>
+    <g id="clover-arm-left-down"><path d="M22 28 Q19 36 24 45" fill="none" stroke="#b9784c" stroke-width="5.2" stroke-linecap="round" /></g>
+    <g id="clover-arm-right-down"><path d="M42 28 Q45 36 40 45" fill="none" stroke="#b9784c" stroke-width="5.2" stroke-linecap="round" /></g>
+
+    <g id="clover-head-down">
+      <circle cx="32" cy="18" r="8" fill="#b9784c" stroke="#4a211b" stroke-width="1" />
+      <path d="M24 16 Q27 9 34 10 Q39 11 40 17 Q35 13 30 15 Q27 16 24 16" fill="#4a0f0f" stroke="#1f0808" stroke-width="0.8" />
+      <path d="M28 12 Q34 9 40 16" fill="none" stroke="#8b1e1e" stroke-width="1.2" stroke-linecap="round" />
+      <circle cx="29" cy="18" r="1" fill="#130b09" />
+      <circle cx="35" cy="18" r="1" fill="#130b09" />
+      <path d="M29 22 Q32 24 35 22" fill="none" stroke="#4a211b" stroke-width="1.2" stroke-linecap="round" />
+    </g>
+    <g id="clover-head-up">
+      <circle cx="32" cy="18" r="8" fill="#a9643f" stroke="#4a211b" stroke-width="1" />
+      <path d="M24 19 Q27 10 34 10 Q39 12 40 20 Q33 16 24 19" fill="#4a0f0f" stroke="#1f0808" stroke-width="0.8" />
+      <path d="M27 15 Q33 11 39 17" fill="none" stroke="#8b1e1e" stroke-width="1.2" stroke-linecap="round" />
+    </g>
+    <g id="clover-head-left">
+      <circle cx="31" cy="18" r="8" fill="#b9784c" stroke="#4a211b" stroke-width="1" />
+      <path d="M24 16 Q28 9 36 11 Q40 13 39 18 Q33 14 27 16 Z" fill="#4a0f0f" stroke="#1f0808" stroke-width="0.8" />
+      <path d="M28 12 Q34 10 39 16" fill="none" stroke="#8b1e1e" stroke-width="1.1" stroke-linecap="round" />
+      <circle cx="27" cy="18" r="1" fill="#130b09" />
+      <path d="M25 22 Q29 24 32 22" fill="none" stroke="#4a211b" stroke-width="1.1" stroke-linecap="round" />
+    </g>
+    <g id="clover-head-right">
+      <circle cx="33" cy="18" r="8" fill="#b9784c" stroke="#4a211b" stroke-width="1" />
+      <path d="M25 18 Q25 12 30 10 Q37 9 41 16 Q36 14 30 16 Z" fill="#4a0f0f" stroke="#1f0808" stroke-width="0.8" />
+      <path d="M26 16 Q31 10 37 12" fill="none" stroke="#8b1e1e" stroke-width="1.1" stroke-linecap="round" />
+      <circle cx="37" cy="18" r="1" fill="#130b09" />
+      <path d="M34 22 Q37 24 40 22" fill="none" stroke="#4a211b" stroke-width="1.1" stroke-linecap="round" />
+    </g>
+
+    <g id="clover-dark-slash">
+      <path d="M17 43 Q31 32 48 38" fill="none" stroke="#5f1111" stroke-width="4" stroke-linecap="round" opacity="0.78" />
+      <path d="M22 45 Q34 38 45 42" fill="none" stroke="#b91c1c" stroke-width="1.5" stroke-linecap="round" opacity="0.75" />
+    </g>
+    <g id="clover-ground-crack">
+      <path d="M20 52 L28 49 L32 54 L37 49 L45 53" fill="none" stroke="#5f1111" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" />
+      <circle cx="32" cy="51" r="3" fill="#b91c1c" opacity="0.25" />
+    </g>
+
+    <g id="clover-down-idle-a"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(49 33) rotate(7)" /><use href="#clover-pants-neutral" /><use href="#clover-torso-down" /><use href="#clover-arm-left" /><use href="#clover-arm-right" /><use href="#clover-head-down" /></g>
+    <g id="clover-down-idle-b"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(49 32) rotate(4)" /><use href="#clover-pants-neutral" transform="translate(0 -1)" /><use href="#clover-torso-down" transform="translate(0 -1)" /><use href="#clover-arm-left" transform="translate(0 -1)" /><use href="#clover-arm-right" transform="translate(0 -1)" /><use href="#clover-head-down" transform="translate(0 -1)" /></g>
+    <g id="clover-down-walk-a"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(49 34) rotate(11)" /><use href="#clover-pants-step-a" /><use href="#clover-torso-down" /><use href="#clover-arm-left" transform="rotate(7 20 33)" /><use href="#clover-arm-right" transform="rotate(-8 45 33)" /><use href="#clover-head-down" /></g>
+    <g id="clover-down-walk-b"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(49 32) rotate(0)" /><use href="#clover-pants-step-b" /><use href="#clover-torso-down" transform="translate(0 -1)" /><use href="#clover-arm-left" transform="rotate(-7 20 33)" /><use href="#clover-arm-right" transform="rotate(8 45 33)" /><use href="#clover-head-down" transform="translate(0 -1)" /></g>
+    <g id="clover-down-attack-prep"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(39 23) rotate(-42)" /><use href="#clover-pants-neutral" /><use href="#clover-torso-down" /><use href="#clover-arm-left-raised" /><use href="#clover-arm-right-raised" /><use href="#clover-head-down" /></g>
+    <g id="clover-down-attack-swing"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-down" /><use href="#clover-arm-left" /><use href="#clover-arm-right" transform="rotate(18 45 33)" /><use href="#clover-head-down" /><use href="#clover-greatsword-vertical" transform="translate(41 40) rotate(48)" /></g>
+    <g id="clover-down-attack-impact"><use href="#clover-shadow" /><use href="#clover-dark-slash" /><use href="#clover-pants-step-b" /><use href="#clover-torso-down" /><use href="#clover-arm-left" /><use href="#clover-arm-right" transform="rotate(26 45 33)" /><use href="#clover-head-down" /><use href="#clover-greatsword-vertical" transform="translate(39 44) rotate(70)" /></g>
+    <g id="clover-down-thrust"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-down" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-down" /><use href="#clover-greatsword-vertical" transform="translate(35 41) rotate(88)" /></g>
+    <g id="clover-down-cast-ready"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-down" /><use href="#clover-arm-left-raised" /><use href="#clover-arm-right-raised" /><use href="#clover-head-down" /><use href="#clover-greatsword-planted" transform="translate(32 28)" /></g>
+    <g id="clover-down-cast-down"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-down" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-down" /><use href="#clover-greatsword-planted" transform="translate(32 35)" /></g>
+    <g id="clover-down-cast-impact"><use href="#clover-shadow" /><use href="#clover-ground-crack" /><use href="#clover-pants-neutral" /><use href="#clover-torso-down" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-down" /><use href="#clover-greatsword-planted" transform="translate(32 35)" /></g>
+
+    <g id="clover-up-idle-a"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(47 33) rotate(-7)" /><use href="#clover-pants-neutral" /><use href="#clover-torso-up" /><use href="#clover-arm-left" /><use href="#clover-arm-right" /><use href="#clover-head-up" /></g>
+    <g id="clover-up-idle-b"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(47 32) rotate(-4)" /><use href="#clover-pants-neutral" transform="translate(0 -1)" /><use href="#clover-torso-up" transform="translate(0 -1)" /><use href="#clover-arm-left" transform="translate(0 -1)" /><use href="#clover-arm-right" transform="translate(0 -1)" /><use href="#clover-head-up" transform="translate(0 -1)" /></g>
+    <g id="clover-up-walk-a"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(47 34) rotate(-11)" /><use href="#clover-pants-step-a" /><use href="#clover-torso-up" /><use href="#clover-arm-left" transform="rotate(7 20 33)" /><use href="#clover-arm-right" transform="rotate(-8 45 33)" /><use href="#clover-head-up" /></g>
+    <g id="clover-up-walk-b"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(47 32) rotate(0)" /><use href="#clover-pants-step-b" /><use href="#clover-torso-up" transform="translate(0 -1)" /><use href="#clover-arm-left" transform="rotate(-7 20 33)" /><use href="#clover-arm-right" transform="rotate(8 45 33)" /><use href="#clover-head-up" transform="translate(0 -1)" /></g>
+    <g id="clover-up-attack-prep"><use href="#clover-shadow" /><use href="#clover-greatsword-vertical" transform="translate(39 23) rotate(42)" /><use href="#clover-pants-neutral" /><use href="#clover-torso-up" /><use href="#clover-arm-left-raised" /><use href="#clover-arm-right-raised" /><use href="#clover-head-up" /></g>
+    <g id="clover-up-attack-swing"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-up" /><use href="#clover-arm-left" /><use href="#clover-arm-right" transform="rotate(18 45 33)" /><use href="#clover-head-up" /><use href="#clover-greatsword-vertical" transform="translate(41 25) rotate(-48)" /></g>
+    <g id="clover-up-attack-impact"><use href="#clover-shadow" /><use href="#clover-dark-slash" transform="translate(0 -15) rotate(180 32 40)" /><use href="#clover-pants-step-b" /><use href="#clover-torso-up" /><use href="#clover-arm-left" /><use href="#clover-arm-right" transform="rotate(26 45 33)" /><use href="#clover-head-up" /><use href="#clover-greatsword-vertical" transform="translate(39 22) rotate(-70)" /></g>
+    <g id="clover-up-thrust"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-up" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-up" /><use href="#clover-greatsword-vertical" transform="translate(35 22) rotate(-88)" /></g>
+    <g id="clover-up-cast-ready"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-up" /><use href="#clover-arm-left-raised" /><use href="#clover-arm-right-raised" /><use href="#clover-head-up" /><use href="#clover-greatsword-planted" transform="translate(32 28)" /></g>
+    <g id="clover-up-cast-down"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-up" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-up" /><use href="#clover-greatsword-planted" transform="translate(32 35)" /></g>
+    <g id="clover-up-cast-impact"><use href="#clover-shadow" /><use href="#clover-ground-crack" /><use href="#clover-pants-neutral" /><use href="#clover-torso-up" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-up" /><use href="#clover-greatsword-planted" transform="translate(32 35)" /></g>
+
+    <g id="clover-left-idle-a"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-left" /><use href="#clover-arm-left" /><use href="#clover-arm-right" /><use href="#clover-head-left" /><use href="#clover-greatsword-horizontal" transform="translate(29 36) rotate(-9)" /></g>
+    <g id="clover-left-idle-b"><use href="#clover-shadow" /><use href="#clover-pants-neutral" transform="translate(0 -1)" /><use href="#clover-torso-left" transform="translate(0 -1)" /><use href="#clover-arm-left" transform="translate(0 -1)" /><use href="#clover-arm-right" transform="translate(0 -1)" /><use href="#clover-head-left" transform="translate(0 -1)" /><use href="#clover-greatsword-horizontal" transform="translate(28 35) rotate(-5)" /></g>
+    <g id="clover-left-walk-a"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-left" /><use href="#clover-arm-left" transform="rotate(7 20 33)" /><use href="#clover-arm-right" transform="rotate(-8 45 33)" /><use href="#clover-head-left" /><use href="#clover-greatsword-horizontal" transform="translate(28 36) rotate(-13)" /></g>
+    <g id="clover-left-walk-b"><use href="#clover-shadow" /><use href="#clover-pants-step-b" /><use href="#clover-torso-left" transform="translate(0 -1)" /><use href="#clover-arm-left" transform="rotate(-7 20 33)" /><use href="#clover-arm-right" transform="rotate(8 45 33)" /><use href="#clover-head-left" transform="translate(0 -1)" /><use href="#clover-greatsword-horizontal" transform="translate(27 35) rotate(-2)" /></g>
+    <g id="clover-left-attack-prep"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-left" /><use href="#clover-arm-left-raised" /><use href="#clover-arm-right-raised" /><use href="#clover-head-left" /><use href="#clover-greatsword-horizontal" transform="translate(36 25) rotate(45)" /></g>
+    <g id="clover-left-attack-swing"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-left" /><use href="#clover-arm-left" /><use href="#clover-arm-right" transform="rotate(18 45 33)" /><use href="#clover-head-left" /><use href="#clover-greatsword-horizontal" transform="translate(27 39) rotate(-20)" /></g>
+    <g id="clover-left-attack-impact"><use href="#clover-shadow" /><use href="#clover-dark-slash" transform="translate(-8 0)" /><use href="#clover-pants-step-b" /><use href="#clover-torso-left" /><use href="#clover-arm-left" /><use href="#clover-arm-right" transform="rotate(26 45 33)" /><use href="#clover-head-left" /><use href="#clover-greatsword-horizontal" transform="translate(23 40) rotate(-4)" /></g>
+    <g id="clover-left-thrust"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-left" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-left" /><use href="#clover-greatsword-horizontal" transform="translate(25 39) rotate(0)" /></g>
+    <g id="clover-left-cast-ready"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-left" /><use href="#clover-arm-left-raised" /><use href="#clover-arm-right-raised" /><use href="#clover-head-left" /><use href="#clover-greatsword-planted" transform="translate(32 28)" /></g>
+    <g id="clover-left-cast-down"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-left" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-left" /><use href="#clover-greatsword-planted" transform="translate(32 35)" /></g>
+    <g id="clover-left-cast-impact"><use href="#clover-shadow" /><use href="#clover-ground-crack" /><use href="#clover-pants-neutral" /><use href="#clover-torso-left" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-left" /><use href="#clover-greatsword-planted" transform="translate(32 35)" /></g>
+
+    <g id="clover-right-idle-a"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-right" /><use href="#clover-arm-left" /><use href="#clover-arm-right" /><use href="#clover-head-right" /><use href="#clover-greatsword-horizontal" transform="translate(35 36) scale(-1 1) rotate(-9)" /></g>
+    <g id="clover-right-idle-b"><use href="#clover-shadow" /><use href="#clover-pants-neutral" transform="translate(0 -1)" /><use href="#clover-torso-right" transform="translate(0 -1)" /><use href="#clover-arm-left" transform="translate(0 -1)" /><use href="#clover-arm-right" transform="translate(0 -1)" /><use href="#clover-head-right" transform="translate(0 -1)" /><use href="#clover-greatsword-horizontal" transform="translate(36 35) scale(-1 1) rotate(-5)" /></g>
+    <g id="clover-right-walk-a"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-right" /><use href="#clover-arm-left" transform="rotate(7 20 33)" /><use href="#clover-arm-right" transform="rotate(-8 45 33)" /><use href="#clover-head-right" /><use href="#clover-greatsword-horizontal" transform="translate(36 36) scale(-1 1) rotate(-13)" /></g>
+    <g id="clover-right-walk-b"><use href="#clover-shadow" /><use href="#clover-pants-step-b" /><use href="#clover-torso-right" transform="translate(0 -1)" /><use href="#clover-arm-left" transform="rotate(-7 20 33)" /><use href="#clover-arm-right" transform="rotate(8 45 33)" /><use href="#clover-head-right" transform="translate(0 -1)" /><use href="#clover-greatsword-horizontal" transform="translate(37 35) scale(-1 1) rotate(-2)" /></g>
+    <g id="clover-right-attack-prep"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-right" /><use href="#clover-arm-left-raised" /><use href="#clover-arm-right-raised" /><use href="#clover-head-right" /><use href="#clover-greatsword-horizontal" transform="translate(28 25) scale(-1 1) rotate(45)" /></g>
+    <g id="clover-right-attack-swing"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-right" /><use href="#clover-arm-left" /><use href="#clover-arm-right" transform="rotate(18 45 33)" /><use href="#clover-head-right" /><use href="#clover-greatsword-horizontal" transform="translate(37 39) scale(-1 1) rotate(-20)" /></g>
+    <g id="clover-right-attack-impact"><use href="#clover-shadow" /><use href="#clover-dark-slash" transform="translate(8 0) scale(-1 1) translate(-64 0)" /><use href="#clover-pants-step-b" /><use href="#clover-torso-right" /><use href="#clover-arm-left" /><use href="#clover-arm-right" transform="rotate(26 45 33)" /><use href="#clover-head-right" /><use href="#clover-greatsword-horizontal" transform="translate(41 40) scale(-1 1) rotate(-4)" /></g>
+    <g id="clover-right-thrust"><use href="#clover-shadow" /><use href="#clover-pants-step-a" /><use href="#clover-torso-right" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-right" /><use href="#clover-greatsword-horizontal" transform="translate(39 39) scale(-1 1) rotate(0)" /></g>
+    <g id="clover-right-cast-ready"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-right" /><use href="#clover-arm-left-raised" /><use href="#clover-arm-right-raised" /><use href="#clover-head-right" /><use href="#clover-greatsword-planted" transform="translate(32 28)" /></g>
+    <g id="clover-right-cast-down"><use href="#clover-shadow" /><use href="#clover-pants-neutral" /><use href="#clover-torso-right" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-right" /><use href="#clover-greatsword-planted" transform="translate(32 35)" /></g>
+    <g id="clover-right-cast-impact"><use href="#clover-shadow" /><use href="#clover-ground-crack" /><use href="#clover-pants-neutral" /><use href="#clover-torso-right" /><use href="#clover-arm-left-down" /><use href="#clover-arm-right-down" /><use href="#clover-head-right" /><use href="#clover-greatsword-planted" transform="translate(32 35)" /></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-a" /></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-b" /></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-a" /></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-b" /></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-a" /></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-b" /></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-a" /></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-b" /></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-walk-a" /></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-a" /></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-walk-b" /></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-b" /></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-walk-a" /></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-a" /></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-walk-b" /></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-b" /></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-walk-a" /></svg>
+
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-walk-a" /></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-a" /></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-walk-b" /></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-b" /></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-walk-a" /></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-a" /></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-walk-b" /></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-b" /></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-walk-a" /></svg>
+
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-walk-a" /></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-a" /></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-walk-b" /></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-b" /></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-walk-a" /></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-a" /></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-walk-b" /></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-b" /></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-walk-a" /></svg>
+
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-walk-a" /></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-a" /></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-walk-b" /></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-b" /></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-walk-a" /></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-a" /></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-walk-b" /></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-b" /></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-walk-a" /></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-attack-swing" /></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-attack-impact" /></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-thrust" /></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-a" /></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-b" /></svg>
+
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-attack-swing" /></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-attack-impact" /></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-thrust" /></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-a" /></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-b" /></svg>
+
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-attack-swing" /></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-attack-impact" /></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-thrust" /></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-a" /></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-b" /></svg>
+
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-attack-swing" /></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-attack-swing" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-attack-impact" /></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-thrust" /></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-a" /></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-b" /></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-attack-prep" /></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-attack-swing" /></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-thrust" /></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-attack-impact" /></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-a" /></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-b" /></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-attack-prep" /></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-attack-swing" /></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-thrust" /></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-attack-impact" /></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-a" /></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-b" /></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-attack-prep" /></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-attack-swing" /></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-thrust" /></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-attack-impact" /></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-a" /></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-b" /></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-attack-prep" /></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-attack-swing" /></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-thrust" /></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-attack-impact" /></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-a" /></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-b" /></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-cast-ready" /></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-cast-ready" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-cast-down" /></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-cast-impact" /></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-cast-impact" transform="translate(0 1)" /></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-cast-down" /></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-up-idle-a" /></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-cast-ready" /></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-cast-ready" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-cast-down" /></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-cast-impact" /></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-cast-impact" transform="translate(0 1)" /></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-cast-down" /></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-left-idle-a" /></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-cast-ready" /></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-cast-ready" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-cast-down" /></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-cast-impact" /></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-cast-impact" transform="translate(0 1)" /></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-cast-down" /></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-down-idle-a" /></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-cast-ready" /></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-cast-ready" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-cast-down" /></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-cast-impact" /></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-cast-impact" transform="translate(0 1)" /></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-cast-down" /></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#clover-right-idle-a" /></svg>
+</svg>
