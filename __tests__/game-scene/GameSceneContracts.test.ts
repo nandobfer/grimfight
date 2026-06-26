@@ -55,6 +55,25 @@ describe("Game Scene contracts", () => {
         expect(source).toContain("handleEnemiesAugments()")
     })
 
+    it("exposes board size as a derived player team rule instead of floor progression", () => {
+        const source = readSource(join(sceneDir, "Game.ts"))
+
+        expect(source).toContain("get max_characters_in_board()")
+        expect(source).toContain("this.playerTeam?.getMaxBoardCharacters()")
+        expect(source).not.toContain("this.max_characters_in_board = Math.min(max_characters_in_board, this.floor)")
+    })
+
+    it("seeds an empty player board with one random character", () => {
+        const source = readSource(join(sceneDir, "Game.ts"))
+
+        expect(source).toContain("if (this.playerTeam.getLength() === 0)")
+        expect(source).toContain("this.generateFirstCharacter()")
+        expect(source).toContain("generateFirstCharacter()")
+        expect(source).toContain("CharacterRegistry.random(this)")
+        expect(source).toContain("this.playerTeam.add(randomCharacter)")
+        expect(source).toContain("this.grid.updateCharacterCount()")
+    })
+
     it("cleans up persistent listeners on scene shutdown", () => {
         const source = readSource(join(sceneDir, "Game.ts"))
 
@@ -68,10 +87,31 @@ describe("Game Scene contracts", () => {
         const source = readSource(join(sceneDir, "Game.ts"))
 
         expect(source).toContain("saveProgress()")
+        expect(source).toContain("if (this.isHydratingSavedRun) return")
         expect(source).toContain("localStorage.setItem(\"progress\"")
         expect(source).toContain("loadProgress()")
         expect(source).toContain("localStorage.getItem(\"progress\"")
+        expect(source).toContain("claimedItemChoiceFloors")
         expect(source).toContain("saveRecord()")
         expect(source).toContain("localStorage.setItem(\"gamerecords\"")
+    })
+
+    it("hydrates saved characters before allowing persistence side effects", () => {
+        const source = readSource(join(sceneDir, "Game.ts"))
+
+        expect(source).toContain("isHydratingSavedRun = false")
+        expect(source).toContain("this.isHydratingSavedRun = true")
+        expect(source).toContain("character.loadFromDto(dto)")
+        expect(source).toContain("this.playerTeam.add(character)")
+        expect(source).toContain("this.isHydratingSavedRun = false")
+    })
+
+    it("marks floor item choices as claimed after the chosen item is accepted", () => {
+        const source = readSource(join(sceneDir, "Game.ts"))
+
+        expect(source).toContain("if (this.claimedItemChoiceFloors.has(this.floor)) return")
+        expect(source).toContain("this.pendingItemChoiceFloor = this.floor")
+        expect(source).toContain("claimPendingItemChoiceReward()")
+        expect(source).toContain("this.claimedItemChoiceFloors.add(this.pendingItemChoiceFloor)")
     })
 })

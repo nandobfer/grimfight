@@ -4,7 +4,6 @@ import { Game } from "../../scenes/Game"
 import { Item } from "../../systems/Items/Item"
 import { ItemRegistry } from "../../systems/Items/ItemRegistry"
 import { EventBus } from "../../tools/EventBus"
-import { DamageType } from "../../ui/DamageNumbers"
 import { LevelBadge } from "../../ui/LevelBadge"
 import { Creature } from "../Creature"
 import { PlayerTeam } from "./PlayerTeam"
@@ -34,7 +33,6 @@ export class Character extends Creature {
     abilityDescription: string = ""
     abilityName: string = ""
 
-    private draggingFromBoard = false
     public dropToBench = false
     private globalDragCtrl?: AbortController
 
@@ -88,7 +86,9 @@ export class Character extends Creature {
         this.boardX = dto.boardX
         this.boardY = dto.boardY
         this.baseCritDamageMultiplier = dto.baseCritDamageMultiplier || this.baseCritDamageMultiplier
-        for (const entry of dto.items) {
+        const savedItems = dto.items.includes("thiefsgloves") ? ["thiefsgloves"] : dto.items
+
+        for (const entry of savedItems) {
             const item = ItemRegistry.create(entry, this.scene)
             item.snapToCreature(this)
             this.equipItem(item)
@@ -139,23 +139,11 @@ export class Character extends Creature {
             this.scene.grid.showHighlightAtWorld(pointer.worldX, pointer.worldY)
             this.setDepth(this.depth + 1000)
 
-            // sending to react
-            this.draggingFromBoard = true
             this.dropToBench = false
             // ---- NEW: forward to window so we still track when pointer leaves canvas
             this.globalDragCtrl?.abort()
             const ctrl = new AbortController()
             this.globalDragCtrl = ctrl
-
-            // helper: client/page -> world
-            const toWorld = (ev: PointerEvent) => {
-                const pageX = ev.clientX + window.scrollX
-                const pageY = ev.clientY + window.scrollY
-                const gx = this.scene.scale.transformX(pageX)
-                const gy = this.scene.scale.transformY(pageY)
-                const p = this.scene.cameras.main.getWorldPoint(gx, gy)
-                return { x: p.x, y: p.y }
-            }
 
             let rafId: number | null = null
             const onMove = (ev: PointerEvent) => {
@@ -350,7 +338,9 @@ export class Character extends Creature {
             name: this.name,
             abilityDescription: this.getAbilityDescription(),
             baseCritDamageMultiplier: this.baseCritDamageMultiplier,
-            items: Array.from(this.items.values()).map((item) => item.key),
+            items: Array.from(this.items.values())
+                .filter((item) => !item.temporarySource)
+                .map((item) => item.key),
         }
         return data
     }
@@ -367,15 +357,19 @@ export class Character extends Creature {
     override equipItem(item: Item, fromThiefsGloves = false): void {
         super.equipItem(item, fromThiefsGloves)
         if (!fromThiefsGloves) this.scene.availableItems.delete(item)
-        this.team.saveCurrentCharacters()
-        this.scene.saveProgress()
+        if (!this.scene.isHydratingSavedRun && !fromThiefsGloves) {
+            this.team.saveCurrentCharacters()
+            this.scene.saveProgress()
+        }
     }
 
     override unequipItem(item: Item, fromThiefsGloves = false): void {
         super.unequipItem(item, fromThiefsGloves)
         if (!fromThiefsGloves) this.scene.availableItems.add(item)
-        this.team.saveCurrentCharacters()
-        this.scene.saveProgress()
+        if (!this.scene.isHydratingSavedRun && !fromThiefsGloves) {
+            this.team.saveCurrentCharacters()
+            this.scene.saveProgress()
+        }
     }
 
     onBenchDrop() {

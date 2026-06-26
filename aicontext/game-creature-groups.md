@@ -20,6 +20,8 @@ Merges só acontecem fora de `fighting`. O fluxo escolhe um keeper, consome dono
 
 O time salva personagens por DTO, remove personagens inválidos do board, controla benching, calcula se o board está cheio, emite augments e recalcula traits a partir de personagens únicos via `TraitsRegistry`.
 
+O limite de personagens no board e derivado do maior nivel entre os personagens atualmente posicionados, respeitando limites absolutos definidos em helper puro para permitir cobertura de teste sem carregar Phaser.
+
 Recompensas de vitória e consolação delegam ganho de gold à cena e renovam a loja, sem fixar fórmulas no contexto.
 
 ### EnemyTeam

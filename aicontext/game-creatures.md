@@ -124,6 +124,15 @@ O FX visual da constelação acompanha Rokmora em `update`, interpola a cor entr
 
 As fórmulas puras da passiva ficam em `src/game/creature/classes/RokmoraConstellations.ts` para manter a regra testável sem instanciar Phaser.
 
+### Robilton
+Robilton é um personagem jogável registrado como `robilton`, ligado às identidades de arqueiro arcano e atacante veloz. Ele usa ataque básico à distância com projétil desenhado em `Graphics`, participa das traits `Arcanist` e `Swift`, e usa os assets próprios de spritesheet SVG e portrait WebP.
+
+Cada ataque aplica um Orbe de Gravidade ao alvo atingido. Os orbes não possuem limite máximo de stacks e são renderizados por um `Graphics` persistente como esferas roxas orbitando cada inimigo afetado. O estado dos orbes é limpo quando o alvo morre ou é destruído, quando Robilton reseta, quando a rodada sai de combate ou quando Robilton é destruído.
+
+A habilidade `Estrela de Nêutrons` canaliza uma estrela roxa crescente por uma janela que diminui conforme a velocidade de ataque atual de Robilton. Ao fim da conjuração, se o alvo original não estiver mais válido, Robilton retargeta antes de disparar. A estrela é lançada como projétil gráfico com rastro, explode ao colidir, causa dano sombrio em área, detona apenas os Orbes de Gravidade dos inimigos atingidos pela explosão e cria um buraco negro temporário centrado no impacto. O buraco negro puxa todos os inimigos ativos do tabuleiro em direção ao centro com força total, sem tratamento especial para monstros grandes ou bosses.
+
+Todos os efeitos de Robilton são desenhados com `Phaser.GameObjects.Graphics`. Projéteis, hitboxes, tweens, timers e listeners de update/gamestate devem limpar explicitamente ao terminar, mudar a rodada, resetar stats ou destruir o personagem. As fórmulas puras de tempo de conjuração, dano, raio e força ficam em `src/game/creature/classes/RobiltonNeutronStar.ts` para manter a regra testável sem instanciar Phaser.
+
 ### Ragnaros
 Ragnaros é um personagem jogável registrado como `ragnaros`, ligado a fogo, arcano e resistência colossal. Ele usa habilidade passiva, mantém mana travada para não conjurar pelo fluxo padrão e preserva mana máxima apenas como integração com efeitos que leem esse atributo.
 

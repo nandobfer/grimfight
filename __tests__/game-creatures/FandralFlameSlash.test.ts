@@ -6,13 +6,15 @@ import {
     doFandralFlameSlashBoundsIntersect,
     expandFandralFlameSlashBounds,
     expandFandralFlameSlashBoundsForVisualSweep,
+    FANDRAL_FLAME_SLASH_BURN_AP_RATIO,
+    FANDRAL_FLAME_SLASH_DIRECT_AP_RATIO,
     getFandralFlameSlashBurnTickCount,
     getFandralFlameSlashCells,
     isPointInsideFandralFlameSlashBounds,
 } from "../../src/game/creature/classes/FandralFlameSlash"
 
 describe("Fandral Flame Slash", () => {
-    it("keeps direct damage nerfed while preserving total burning damage", () => {
+    it("derives direct and burning damage from their configured ratios", () => {
         const abilityPower = 80
         const multiplier = 1.3
 
@@ -23,7 +25,8 @@ describe("Fandral Flame Slash", () => {
         expect(Number.isFinite(burnTotalDamage)).toBe(true)
         expect(directDamage).toBeGreaterThanOrEqual(0)
         expect(burnTotalDamage).toBeGreaterThanOrEqual(0)
-        expect(directDamage * 2).toBeCloseTo(burnTotalDamage)
+        expect(directDamage).toBeCloseTo(abilityPower * FANDRAL_FLAME_SLASH_DIRECT_AP_RATIO * multiplier)
+        expect(burnTotalDamage).toBeCloseTo(abilityPower * FANDRAL_FLAME_SLASH_BURN_AP_RATIO * multiplier)
     })
 
     it("derives each burn tick from the configured total burn window", () => {

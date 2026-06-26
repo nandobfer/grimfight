@@ -1,0 +1,342 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="robilton-leather-front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6d2a83" />
+      <stop offset="0.55" stop-color="#3f1856" />
+      <stop offset="1" stop-color="#1d1028" />
+    </linearGradient>
+    <linearGradient id="robilton-leather-back" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4c1d5f" />
+      <stop offset="1" stop-color="#160d22" />
+    </linearGradient>
+    <linearGradient id="robilton-bow-wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6b3f24" />
+      <stop offset="0.55" stop-color="#3a2118" />
+      <stop offset="1" stop-color="#1a1010" />
+    </linearGradient>
+    <radialGradient id="robilton-arcane" cx="45%" cy="42%" r="65%">
+      <stop offset="0" stop-color="#f5e8ff" />
+      <stop offset="0.36" stop-color="#c084fc" />
+      <stop offset="0.72" stop-color="#8b5cf6" />
+      <stop offset="1" stop-color="#581c87" stop-opacity="0" />
+    </radialGradient>
+
+    <ellipse id="robilton-shadow" cx="32" cy="56" rx="13" ry="4" fill="#000000" opacity="0.25" />
+    <ellipse id="robilton-cast-shadow" cx="32" cy="56" rx="16" ry="4.8" fill="#000000" opacity="0.31" />
+    <path id="robilton-spark" d="M0 -3 L1.2 -1 L3 0 L1.2 1 L0 3 L-1.2 1 L-3 0 L-1.2 -1 Z" fill="#ead7ff" opacity="0.9" />
+    <path id="robilton-rune" d="M0 -4 L3 0 L0 4 L-3 0 Z" fill="#c084fc" stroke="#2e1065" stroke-width="0.5" />
+
+    <g id="robilton-legs-neutral">
+      <rect x="25" y="46" width="5" height="9" rx="2" fill="#1a1321" />
+      <rect x="34" y="46" width="5" height="9" rx="2" fill="#1a1321" />
+      <path d="M23 54 L30 54" stroke="#100914" stroke-width="2" stroke-linecap="round" />
+      <path d="M34 54 L41 54" stroke="#100914" stroke-width="2" stroke-linecap="round" />
+    </g>
+    <g id="robilton-legs-step-a">
+      <rect x="22" y="46" width="5" height="10" rx="2" fill="#1a1321" transform="rotate(-8 24.5 51)" />
+      <rect x="36" y="47" width="5" height="8" rx="2" fill="#1a1321" transform="rotate(8 38.5 51)" />
+      <path d="M21 54 L29 54" stroke="#100914" stroke-width="2" stroke-linecap="round" />
+      <path d="M36 54 L43 54" stroke="#100914" stroke-width="2" stroke-linecap="round" />
+    </g>
+    <g id="robilton-legs-step-b">
+      <rect x="26" y="47" width="5" height="8" rx="2" fill="#1a1321" transform="rotate(8 28.5 51)" />
+      <rect x="37" y="46" width="5" height="10" rx="2" fill="#1a1321" transform="rotate(-8 39.5 51)" />
+      <path d="M24 54 L31 54" stroke="#100914" stroke-width="2" stroke-linecap="round" />
+      <path d="M36 54 L44 54" stroke="#100914" stroke-width="2" stroke-linecap="round" />
+    </g>
+
+    <g id="robilton-armor-down">
+      <path d="M22 26 Q32 20 42 26 L45 48 Q32 54 19 48 Z" fill="url(#robilton-leather-front)" stroke="#13091d" stroke-width="1.4" />
+      <path d="M25 29 Q32 33 39 29 L38 39 Q32 42 26 39 Z" fill="#2a1238" stroke="#8b5cf6" stroke-width="0.8" opacity="0.9" />
+      <use href="#robilton-rune" transform="translate(32 36) scale(0.7)" />
+      <path d="M22 43 Q32 48 43 43" fill="none" stroke="#8b5cf6" stroke-width="1.1" opacity="0.45" />
+    </g>
+    <g id="robilton-armor-up">
+      <path d="M22 26 Q32 20 42 26 L45 48 Q32 54 19 48 Z" fill="url(#robilton-leather-back)" stroke="#13091d" stroke-width="1.4" />
+      <path d="M24 31 Q32 27 40 31" fill="none" stroke="#8b5cf6" stroke-width="1.3" opacity="0.48" />
+      <path d="M22 43 Q32 48 43 43" fill="none" stroke="#2e1065" stroke-width="1.4" opacity="0.7" />
+    </g>
+    <g id="robilton-armor-left">
+      <path d="M21 27 Q29 21 40 26 L44 49 Q33 54 20 49 Z" fill="url(#robilton-leather-front)" stroke="#13091d" stroke-width="1.4" />
+      <path d="M25 29 Q32 33 40 30 L39 39 Q32 42 26 39 Z" fill="#2a1238" stroke="#8b5cf6" stroke-width="0.8" opacity="0.9" />
+      <use href="#robilton-rune" transform="translate(31 36) scale(0.62)" />
+    </g>
+    <g id="robilton-armor-right">
+      <path d="M24 26 Q35 21 43 28 L44 49 Q31 54 20 49 Z" fill="url(#robilton-leather-front)" stroke="#13091d" stroke-width="1.4" />
+      <path d="M24 30 Q32 33 39 30 L38 39 Q32 42 25 39 Z" fill="#2a1238" stroke="#8b5cf6" stroke-width="0.8" opacity="0.9" />
+      <use href="#robilton-rune" transform="translate(33 36) scale(0.62)" />
+    </g>
+
+    <g id="robilton-head-down">
+      <path d="M24 20 Q24 12 32 10 Q40 12 40 20 Q39 28 32 30 Q25 28 24 20 Z" fill="#d9a989" stroke="#70452f" stroke-width="1" />
+      <path d="M24 18 Q27 10 32 9 Q38 10 41 18 Q36 16 32 16 Q28 16 24 18 Z" fill="#b7b7b7" />
+      <path d="M26 24 Q32 29 38 24 Q36 31 32 32 Q28 31 26 24 Z" fill="#c7c7c7" stroke="#6b6b6b" stroke-width="0.6" />
+      <circle cx="29" cy="21" r="1" fill="#1c120d" />
+      <circle cx="35" cy="21" r="1" fill="#1c120d" />
+      <path d="M28 18 Q32 17 36 18" stroke="#7a7a7a" stroke-width="0.8" stroke-linecap="round" />
+    </g>
+    <g id="robilton-head-up">
+      <path d="M24 21 Q24 12 32 10 Q40 12 40 21 Q38 29 32 30 Q26 29 24 21 Z" fill="#c59678" stroke="#633b29" stroke-width="0.8" />
+      <path d="M23 20 Q26 9 33 8 Q41 11 41 21 Q36 18 32 18 Q28 18 23 20 Z" fill="#ababab" />
+      <path d="M27 25 Q32 28 37 25" fill="none" stroke="#6b6b6b" stroke-width="1.1" stroke-linecap="round" opacity="0.8" />
+    </g>
+    <g id="robilton-head-left">
+      <path d="M24 20 Q25 12 32 10 Q39 13 39 21 Q36 29 29 30 Q24 28 24 20 Z" fill="#d9a989" stroke="#70452f" stroke-width="1" />
+      <path d="M24 19 Q26 10 33 9 Q40 12 40 21 Q35 17 31 16 Q28 16 24 19 Z" fill="#b7b7b7" />
+      <path d="M25 24 Q29 29 34 25 Q32 31 29 31 Q26 30 25 24 Z" fill="#c7c7c7" stroke="#6b6b6b" stroke-width="0.6" />
+      <circle cx="28" cy="21" r="1" fill="#1c120d" />
+      <path d="M26 18 Q30 17 34 18" stroke="#7a7a7a" stroke-width="0.8" stroke-linecap="round" />
+    </g>
+    <g id="robilton-head-right">
+      <path d="M25 21 Q25 13 32 10 Q39 12 40 20 Q40 28 35 30 Q28 29 25 21 Z" fill="#d9a989" stroke="#70452f" stroke-width="1" />
+      <path d="M24 21 Q25 12 32 9 Q39 10 40 19 Q36 16 32 16 Q28 17 24 21 Z" fill="#b7b7b7" />
+      <path d="M30 25 Q35 29 39 24 Q38 30 35 31 Q32 31 30 25 Z" fill="#c7c7c7" stroke="#6b6b6b" stroke-width="0.6" />
+      <circle cx="36" cy="21" r="1" fill="#1c120d" />
+      <path d="M30 18 Q34 17 38 18" stroke="#7a7a7a" stroke-width="0.8" stroke-linecap="round" />
+    </g>
+
+    <g id="robilton-bow-down">
+      <path d="M47 18 Q55 34 47 50" fill="none" stroke="url(#robilton-bow-wood)" stroke-width="3" stroke-linecap="round" />
+      <path d="M48 19 Q43 34 48 50" fill="none" stroke="#e9d5ff" stroke-width="0.9" opacity="0.8" />
+      <path d="M43 34 L53 34" stroke="#c084fc" stroke-width="1.5" stroke-linecap="round" opacity="0.8" />
+    </g>
+    <g id="robilton-bow-up">
+      <path d="M17 18 Q9 34 17 50" fill="none" stroke="url(#robilton-bow-wood)" stroke-width="3" stroke-linecap="round" />
+      <path d="M16 19 Q21 34 16 50" fill="none" stroke="#e9d5ff" stroke-width="0.9" opacity="0.75" />
+      <path d="M11 34 L21 34" stroke="#8b5cf6" stroke-width="1.4" stroke-linecap="round" opacity="0.75" />
+    </g>
+    <g id="robilton-bow-left">
+      <path d="M14 19 Q6 34 14 49" fill="none" stroke="url(#robilton-bow-wood)" stroke-width="3" stroke-linecap="round" />
+      <path d="M15 20 Q20 34 15 49" fill="none" stroke="#e9d5ff" stroke-width="0.9" opacity="0.82" />
+      <path d="M9 34 L32 34" stroke="#c084fc" stroke-width="1.4" stroke-linecap="round" opacity="0.8" />
+    </g>
+    <g id="robilton-bow-right">
+      <path d="M50 19 Q58 34 50 49" fill="none" stroke="url(#robilton-bow-wood)" stroke-width="3" stroke-linecap="round" />
+      <path d="M49 20 Q44 34 49 49" fill="none" stroke="#e9d5ff" stroke-width="0.9" opacity="0.82" />
+      <path d="M32 34 L55 34" stroke="#c084fc" stroke-width="1.4" stroke-linecap="round" opacity="0.8" />
+    </g>
+    <g id="robilton-arrow-right">
+      <path d="M27 34 L52 34" stroke="#e9d5ff" stroke-width="1.4" stroke-linecap="round" />
+      <path d="M52 34 L47 31 L48 34 L47 37 Z" fill="#d8b4fe" />
+      <circle cx="52" cy="34" r="3.5" fill="url(#robilton-arcane)" opacity="0.85" />
+    </g>
+    <g id="robilton-arrow-left"><use href="#robilton-arrow-right" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="robilton-arrow-down">
+      <path d="M32 27 L32 52" stroke="#e9d5ff" stroke-width="1.4" stroke-linecap="round" />
+      <path d="M32 52 L29 47 L32 48 L35 47 Z" fill="#d8b4fe" />
+      <circle cx="32" cy="52" r="3.5" fill="url(#robilton-arcane)" opacity="0.85" />
+    </g>
+    <g id="robilton-arrow-up"><use href="#robilton-arrow-down" transform="translate(0 64) scale(1 -1)" /></g>
+
+    <g id="robilton-charge-small"><circle cx="0" cy="0" r="5" fill="url(#robilton-arcane)" opacity="0.6" /><use href="#robilton-spark" transform="translate(5 -5) scale(0.75)" /></g>
+    <g id="robilton-charge-medium"><circle cx="0" cy="0" r="8" fill="url(#robilton-arcane)" opacity="0.72" /><use href="#robilton-spark" transform="translate(8 -7)" /><use href="#robilton-spark" transform="translate(-7 5) scale(0.7)" /></g>
+    <g id="robilton-charge-large"><circle cx="0" cy="0" r="11" fill="url(#robilton-arcane)" opacity="0.84" /><circle cx="0" cy="0" r="5" fill="#f5e8ff" opacity="0.7" /><use href="#robilton-spark" transform="translate(11 -8)" /><use href="#robilton-spark" transform="translate(-10 7) scale(0.85)" /><use href="#robilton-spark" transform="translate(2 12) scale(0.7)" /></g>
+
+    <g id="robilton-arms-idle-down">
+      <path d="M24 29 L18 40 L21 41 L28 31 Z" fill="#4c1d5f" stroke="#13091d" stroke-width="0.8" />
+      <path d="M40 29 L47 35 L45 38 L36 31 Z" fill="#4c1d5f" stroke="#13091d" stroke-width="0.8" />
+      <circle cx="20" cy="41" r="2" fill="#d9a989" />
+      <circle cx="46" cy="37" r="2" fill="#d9a989" />
+    </g>
+    <g id="robilton-arms-idle-up">
+      <path d="M24 29 L18 38 L21 40 L28 31 Z" fill="#2e143d" stroke="#13091d" stroke-width="0.8" />
+      <path d="M40 29 L46 38 L43 40 L36 31 Z" fill="#2e143d" stroke="#13091d" stroke-width="0.8" />
+    </g>
+    <g id="robilton-arms-idle-left">
+      <path d="M25 30 L15 35 L17 38 L30 32 Z" fill="#4c1d5f" stroke="#13091d" stroke-width="0.8" />
+      <path d="M39 30 L45 39 L42 41 L35 32 Z" fill="#341543" stroke="#13091d" stroke-width="0.8" />
+      <circle cx="16" cy="37" r="2" fill="#d9a989" />
+    </g>
+    <g id="robilton-arms-idle-right">
+      <path d="M25 30 L19 39 L22 41 L29 32 Z" fill="#341543" stroke="#13091d" stroke-width="0.8" />
+      <path d="M39 30 L49 35 L47 38 L34 32 Z" fill="#4c1d5f" stroke="#13091d" stroke-width="0.8" />
+      <circle cx="48" cy="37" r="2" fill="#d9a989" />
+    </g>
+
+    <g id="robilton-base-down"><use href="#robilton-shadow" /><use href="#robilton-legs-neutral" /><use href="#robilton-armor-down" /><use href="#robilton-head-down" /><use href="#robilton-arms-idle-down" /><use href="#robilton-bow-down" /></g>
+    <g id="robilton-base-up"><use href="#robilton-shadow" /><use href="#robilton-legs-neutral" /><use href="#robilton-bow-up" /><use href="#robilton-armor-up" /><use href="#robilton-head-up" /><use href="#robilton-arms-idle-up" /></g>
+    <g id="robilton-base-left"><use href="#robilton-shadow" /><use href="#robilton-legs-neutral" /><use href="#robilton-bow-left" /><use href="#robilton-armor-left" /><use href="#robilton-head-left" /><use href="#robilton-arms-idle-left" /></g>
+    <g id="robilton-base-right"><use href="#robilton-shadow" /><use href="#robilton-legs-neutral" /><use href="#robilton-bow-right" /><use href="#robilton-armor-right" /><use href="#robilton-head-right" /><use href="#robilton-arms-idle-right" /></g>
+
+    <g id="robilton-idle-down-a"><use href="#robilton-base-down" /></g>
+    <g id="robilton-idle-down-b"><use href="#robilton-base-down" transform="translate(0 -1)" /><use href="#robilton-spark" transform="translate(50 31) scale(0.45)" /></g>
+    <g id="robilton-idle-up-a"><use href="#robilton-base-up" /></g>
+    <g id="robilton-idle-up-b"><use href="#robilton-base-up" transform="translate(0 -1)" /><use href="#robilton-spark" transform="translate(14 31) scale(0.45)" /></g>
+    <g id="robilton-idle-left-a"><use href="#robilton-base-left" /></g>
+    <g id="robilton-idle-left-b"><use href="#robilton-base-left" transform="translate(0 -1)" /><use href="#robilton-spark" transform="translate(12 32) scale(0.45)" /></g>
+    <g id="robilton-idle-right-a"><use href="#robilton-base-right" /></g>
+    <g id="robilton-idle-right-b"><use href="#robilton-base-right" transform="translate(0 -1)" /><use href="#robilton-spark" transform="translate(52 32) scale(0.45)" /></g>
+
+    <g id="robilton-walk-down-a"><use href="#robilton-shadow" /><use href="#robilton-legs-step-a" /><use href="#robilton-armor-down" /><use href="#robilton-head-down" /><use href="#robilton-arms-idle-down" transform="rotate(-4 32 34)" /><use href="#robilton-bow-down" transform="rotate(3 48 34)" /></g>
+    <g id="robilton-walk-down-b"><use href="#robilton-shadow" /><use href="#robilton-legs-step-b" /><use href="#robilton-armor-down" transform="translate(0 -1)" /><use href="#robilton-head-down" transform="translate(0 -1)" /><use href="#robilton-arms-idle-down" transform="rotate(4 32 34) translate(0 -1)" /><use href="#robilton-bow-down" transform="rotate(-3 48 34)" /></g>
+    <g id="robilton-walk-up-a"><use href="#robilton-shadow" /><use href="#robilton-legs-step-a" /><use href="#robilton-bow-up" transform="rotate(-3 16 34)" /><use href="#robilton-armor-up" /><use href="#robilton-head-up" /><use href="#robilton-arms-idle-up" /></g>
+    <g id="robilton-walk-up-b"><use href="#robilton-shadow" /><use href="#robilton-legs-step-b" /><use href="#robilton-bow-up" transform="rotate(3 16 34)" /><use href="#robilton-armor-up" transform="translate(0 -1)" /><use href="#robilton-head-up" transform="translate(0 -1)" /><use href="#robilton-arms-idle-up" transform="translate(0 -1)" /></g>
+    <g id="robilton-walk-left-a"><use href="#robilton-shadow" /><use href="#robilton-legs-step-a" /><use href="#robilton-bow-left" transform="rotate(-3 14 34)" /><use href="#robilton-armor-left" /><use href="#robilton-head-left" /><use href="#robilton-arms-idle-left" /></g>
+    <g id="robilton-walk-left-b"><use href="#robilton-shadow" /><use href="#robilton-legs-step-b" /><use href="#robilton-bow-left" transform="rotate(4 14 34)" /><use href="#robilton-armor-left" transform="translate(0 -1)" /><use href="#robilton-head-left" transform="translate(0 -1)" /><use href="#robilton-arms-idle-left" transform="translate(0 -1)" /></g>
+    <g id="robilton-walk-right-a"><use href="#robilton-shadow" /><use href="#robilton-legs-step-a" /><use href="#robilton-bow-right" transform="rotate(3 50 34)" /><use href="#robilton-armor-right" /><use href="#robilton-head-right" /><use href="#robilton-arms-idle-right" /></g>
+    <g id="robilton-walk-right-b"><use href="#robilton-shadow" /><use href="#robilton-legs-step-b" /><use href="#robilton-bow-right" transform="rotate(-4 50 34)" /><use href="#robilton-armor-right" transform="translate(0 -1)" /><use href="#robilton-head-right" transform="translate(0 -1)" /><use href="#robilton-arms-idle-right" transform="translate(0 -1)" /></g>
+
+    <g id="robilton-attack-down-a"><use href="#robilton-base-down" /><use href="#robilton-arrow-down" opacity="0.45" /></g>
+    <g id="robilton-attack-down-b"><use href="#robilton-base-down" transform="translate(0 -1)" /><use href="#robilton-arrow-down" /></g>
+    <g id="robilton-attack-down-impact"><use href="#robilton-base-down" /><use href="#robilton-arrow-down" transform="translate(0 4)" /><use href="#robilton-charge-medium" transform="translate(32 52)" /></g>
+    <g id="robilton-attack-up-a"><use href="#robilton-base-up" /><use href="#robilton-arrow-up" opacity="0.45" /></g>
+    <g id="robilton-attack-up-b"><use href="#robilton-base-up" transform="translate(0 -1)" /><use href="#robilton-arrow-up" /></g>
+    <g id="robilton-attack-up-impact"><use href="#robilton-base-up" /><use href="#robilton-arrow-up" transform="translate(0 -4)" /><use href="#robilton-charge-medium" transform="translate(32 12)" /></g>
+    <g id="robilton-attack-left-a"><use href="#robilton-base-left" /><use href="#robilton-arrow-left" opacity="0.45" /></g>
+    <g id="robilton-attack-left-b"><use href="#robilton-base-left" transform="translate(0 -1)" /><use href="#robilton-arrow-left" /></g>
+    <g id="robilton-attack-left-impact"><use href="#robilton-base-left" /><use href="#robilton-arrow-left" transform="translate(-4 0)" /><use href="#robilton-charge-medium" transform="translate(12 34)" /></g>
+    <g id="robilton-attack-right-a"><use href="#robilton-base-right" /><use href="#robilton-arrow-right" opacity="0.45" /></g>
+    <g id="robilton-attack-right-b"><use href="#robilton-base-right" transform="translate(0 -1)" /><use href="#robilton-arrow-right" /></g>
+    <g id="robilton-attack-right-impact"><use href="#robilton-base-right" /><use href="#robilton-arrow-right" transform="translate(4 0)" /><use href="#robilton-charge-medium" transform="translate(52 34)" /></g>
+
+    <g id="robilton-cast-down-a"><use href="#robilton-cast-shadow" /><use href="#robilton-legs-neutral" /><use href="#robilton-armor-down" /><use href="#robilton-head-down" /><use href="#robilton-arms-idle-down" transform="rotate(-7 32 34)" /><use href="#robilton-bow-down" transform="rotate(-5 48 34)" /></g>
+    <g id="robilton-cast-down-b"><use href="#robilton-cast-down-a" /><use href="#robilton-charge-small" transform="translate(32 47)" /></g>
+    <g id="robilton-cast-down-c"><use href="#robilton-cast-down-a" transform="translate(0 -1)" /><use href="#robilton-arrow-down" /><use href="#robilton-charge-medium" transform="translate(32 47)" /></g>
+    <g id="robilton-cast-down-d"><use href="#robilton-cast-down-a" /><use href="#robilton-arrow-down" transform="translate(0 3)" /><use href="#robilton-charge-large" transform="translate(32 50)" /></g>
+    <g id="robilton-cast-up-a"><use href="#robilton-cast-shadow" /><use href="#robilton-legs-neutral" /><use href="#robilton-bow-up" transform="rotate(5 16 34)" /><use href="#robilton-armor-up" /><use href="#robilton-head-up" /><use href="#robilton-arms-idle-up" /></g>
+    <g id="robilton-cast-up-b"><use href="#robilton-cast-up-a" /><use href="#robilton-charge-small" transform="translate(32 17)" /></g>
+    <g id="robilton-cast-up-c"><use href="#robilton-cast-up-a" transform="translate(0 -1)" /><use href="#robilton-arrow-up" /><use href="#robilton-charge-medium" transform="translate(32 17)" /></g>
+    <g id="robilton-cast-up-d"><use href="#robilton-cast-up-a" /><use href="#robilton-arrow-up" transform="translate(0 -3)" /><use href="#robilton-charge-large" transform="translate(32 14)" /></g>
+    <g id="robilton-cast-left-a"><use href="#robilton-cast-shadow" /><use href="#robilton-legs-neutral" /><use href="#robilton-bow-left" transform="rotate(-6 14 34)" /><use href="#robilton-armor-left" /><use href="#robilton-head-left" /><use href="#robilton-arms-idle-left" /></g>
+    <g id="robilton-cast-left-b"><use href="#robilton-cast-left-a" /><use href="#robilton-charge-small" transform="translate(18 34)" /></g>
+    <g id="robilton-cast-left-c"><use href="#robilton-cast-left-a" transform="translate(0 -1)" /><use href="#robilton-arrow-left" /><use href="#robilton-charge-medium" transform="translate(18 34)" /></g>
+    <g id="robilton-cast-left-d"><use href="#robilton-cast-left-a" /><use href="#robilton-arrow-left" transform="translate(-3 0)" /><use href="#robilton-charge-large" transform="translate(13 34)" /></g>
+    <g id="robilton-cast-right-a"><use href="#robilton-cast-shadow" /><use href="#robilton-legs-neutral" /><use href="#robilton-bow-right" transform="rotate(6 50 34)" /><use href="#robilton-armor-right" /><use href="#robilton-head-right" /><use href="#robilton-arms-idle-right" /></g>
+    <g id="robilton-cast-right-b"><use href="#robilton-cast-right-a" /><use href="#robilton-charge-small" transform="translate(46 34)" /></g>
+    <g id="robilton-cast-right-c"><use href="#robilton-cast-right-a" transform="translate(0 -1)" /><use href="#robilton-arrow-right" /><use href="#robilton-charge-medium" transform="translate(46 34)" /></g>
+    <g id="robilton-cast-right-d"><use href="#robilton-cast-right-a" /><use href="#robilton-arrow-right" transform="translate(3 0)" /><use href="#robilton-charge-large" transform="translate(51 34)" /></g>
+  </defs>
+
+  <svg x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-up-a" /></svg>
+  <svg x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-up-b" /></svg>
+  <svg x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-left-a" /></svg>
+  <svg x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-left-b" /></svg>
+  <svg x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-down-a" /></svg>
+  <svg x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-down-b" /></svg>
+  <svg x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-right-a" /></svg>
+  <svg x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-right-b" /></svg>
+
+  <svg x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-up-a" /></svg>
+  <svg x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-up-b" /></svg>
+  <svg x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-up-a" /></svg>
+  <svg x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-up-b" /></svg>
+  <svg x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-up-a" /></svg>
+  <svg x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-up-b" /></svg>
+  <svg x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-up-a" /></svg>
+  <svg x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-up-b" /></svg>
+  <svg x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-up-b" /></svg>
+  <svg x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-left-a" /></svg>
+  <svg x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-left-b" /></svg>
+  <svg x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-left-a" /></svg>
+  <svg x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-left-b" /></svg>
+  <svg x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-left-a" /></svg>
+  <svg x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-left-b" /></svg>
+  <svg x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-left-a" /></svg>
+  <svg x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-left-b" /></svg>
+  <svg x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-left-b" /></svg>
+  <svg x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-down-a" /></svg>
+  <svg x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-down-b" /></svg>
+  <svg x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-down-a" /></svg>
+  <svg x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-down-b" /></svg>
+  <svg x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-down-a" /></svg>
+  <svg x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-down-b" /></svg>
+  <svg x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-down-a" /></svg>
+  <svg x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-down-b" /></svg>
+  <svg x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-down-b" /></svg>
+  <svg x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-right-a" /></svg>
+  <svg x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-right-b" /></svg>
+  <svg x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-right-a" /></svg>
+  <svg x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-right-b" /></svg>
+  <svg x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-right-a" /></svg>
+  <svg x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-right-b" /></svg>
+  <svg x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-right-a" /></svg>
+  <svg x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-walk-right-b" /></svg>
+  <svg x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-right-b" /></svg>
+
+  <svg x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-a" /></svg>
+  <svg x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-b" /></svg>
+  <svg x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-b" transform="translate(0 -1)" /></svg>
+  <svg x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-b" /></svg>
+  <svg x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-impact" /></svg>
+  <svg x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-b" /></svg>
+  <svg x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-a" /></svg>
+  <svg x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-up-a" /></svg>
+  <svg x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-a" /></svg>
+  <svg x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-b" /></svg>
+  <svg x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-b" transform="translate(-1 0)" /></svg>
+  <svg x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-b" /></svg>
+  <svg x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-impact" /></svg>
+  <svg x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-b" /></svg>
+  <svg x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-a" /></svg>
+  <svg x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-left-a" /></svg>
+  <svg x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-a" /></svg>
+  <svg x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-b" /></svg>
+  <svg x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-b" transform="translate(0 1)" /></svg>
+  <svg x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-b" /></svg>
+  <svg x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-impact" /></svg>
+  <svg x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-b" /></svg>
+  <svg x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-a" /></svg>
+  <svg x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-down-a" /></svg>
+  <svg x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-a" /></svg>
+  <svg x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-b" /></svg>
+  <svg x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-b" transform="translate(1 0)" /></svg>
+  <svg x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-b" /></svg>
+  <svg x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-impact" /></svg>
+  <svg x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-b" /></svg>
+  <svg x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-a" /></svg>
+  <svg x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-right-a" /></svg>
+
+  <svg x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-a" /></svg>
+  <svg x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-b" /></svg>
+  <svg x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-impact" /></svg>
+  <svg x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-b" /></svg>
+  <svg x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-up-a" /></svg>
+  <svg x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-up-a" /></svg>
+  <svg x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-a" /></svg>
+  <svg x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-b" /></svg>
+  <svg x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-impact" /></svg>
+  <svg x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-b" /></svg>
+  <svg x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-left-a" /></svg>
+  <svg x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-left-a" /></svg>
+  <svg x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-a" /></svg>
+  <svg x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-b" /></svg>
+  <svg x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-impact" /></svg>
+  <svg x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-b" /></svg>
+  <svg x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-down-a" /></svg>
+  <svg x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-down-a" /></svg>
+  <svg x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-a" /></svg>
+  <svg x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-b" /></svg>
+  <svg x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-impact" /></svg>
+  <svg x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-b" /></svg>
+  <svg x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-attack-right-a" /></svg>
+  <svg x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-idle-right-a" /></svg>
+
+  <svg x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-up-a" /></svg>
+  <svg x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-up-b" /></svg>
+  <svg x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-up-c" /></svg>
+  <svg x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-up-d" /></svg>
+  <svg x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-up-d" transform="translate(0 -1)" /></svg>
+  <svg x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-up-c" /></svg>
+  <svg x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-up-b" /></svg>
+  <svg x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-left-a" /></svg>
+  <svg x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-left-b" /></svg>
+  <svg x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-left-c" /></svg>
+  <svg x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-left-d" /></svg>
+  <svg x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-left-d" transform="translate(-1 0)" /></svg>
+  <svg x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-left-c" /></svg>
+  <svg x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-left-b" /></svg>
+  <svg x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-down-a" /></svg>
+  <svg x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-down-b" /></svg>
+  <svg x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-down-c" /></svg>
+  <svg x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-down-d" /></svg>
+  <svg x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-down-d" transform="translate(0 1)" /></svg>
+  <svg x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-down-c" /></svg>
+  <svg x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-down-b" /></svg>
+  <svg x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-right-a" /></svg>
+  <svg x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-right-b" /></svg>
+  <svg x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-right-c" /></svg>
+  <svg x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-right-d" /></svg>
+  <svg x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-right-d" transform="translate(1 0)" /></svg>
+  <svg x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-right-c" /></svg>
+  <svg x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#robilton-cast-right-b" /></svg>
+</svg>

@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Chip, Tooltip, Typography } from "@mui/material"
+import { Box, Button, Chip, Tooltip } from "@mui/material"
 import { EventBus } from "../../game/tools/EventBus"
-import { Game, max_characters_in_board } from "../../game/scenes/Game"
+import { Game } from "../../game/scenes/Game"
 import { Augment } from "../../game/systems/Augment/Augment"
 import { renderTokensDescription } from "../../game/tools/TokenizedText"
-import { Character } from "../../game/creature/character/Character"
 import { AugmentModal } from "../AugmentModal/AugmentModal"
-import { DebugMenu } from "../DebugMenu/DebugMenu"
 
 interface CharactersRowProps {
     game: Game
 }
 
 export const PlayerAugments: React.FC<CharactersRowProps> = (props) => {
-    const [charactersLength, setCharactersLength] = useState(props.game.playerTeam?.getChildren()?.length || 0)
     const [augments, setAugments] = useState(Array.from(props.game.playerTeam.augments.values()))
     const [openTooltip, setOpenTooltip] = React.useState<boolean>(false)
 
@@ -26,9 +23,6 @@ export const PlayerAugments: React.FC<CharactersRowProps> = (props) => {
     }
 
     useEffect(() => {
-        const charactersHandler = (characters: Character[]) => {
-            setCharactersLength(characters.length)
-        }
         const augmentsHandler = (augments: Augment[]) => {
             setAugments([...augments])
         }
@@ -37,12 +31,10 @@ export const PlayerAugments: React.FC<CharactersRowProps> = (props) => {
             setAugments((augments) => [...augments, augment])
         }
 
-        EventBus.on("characters-change", charactersHandler)
         EventBus.on("augments-add", addAgument)
         EventBus.on("augments-change", augmentsHandler)
 
         return () => {
-            EventBus.off("characters-change", charactersHandler)
             EventBus.off("augments-add", addAgument)
             EventBus.off("augments-change", augmentsHandler)
         }

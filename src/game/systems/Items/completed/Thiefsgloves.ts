@@ -72,6 +72,7 @@ export class Thiefsgloves extends Item {
         }
 
         const randomItem = ItemRegistry.randomCompleted(this.scene, excludeList)
+        randomItem.temporarySource = "thiefsgloves"
         randomItem.removeDragHandlers()
         randomItem.snapToCreature(creature)
         this.items.add(randomItem)

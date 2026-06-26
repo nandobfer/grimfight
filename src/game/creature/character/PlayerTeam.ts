@@ -6,6 +6,7 @@ import { DamageChart } from "../../tools/DamageChart"
 import { EventBus } from "../../tools/EventBus"
 import { CreatureGroup } from "../CreatureGroup"
 import { Bench } from "./Bench"
+import { calculateMaxCharactersInBoard } from "./boardLimit"
 import { Character } from "./Character"
 import { CharacterStore } from "./CharacterStore"
 
@@ -206,7 +207,13 @@ export class PlayerTeam extends CreatureGroup {
         return this.getChildren().reduce((level, char) => (level > char.level ? level : char.level), 0)
     }
 
+    getMaxBoardCharacters() {
+        return calculateMaxCharactersInBoard(this.getHighestLevelChar())
+    }
+
     saveCurrentCharacters() {
+        if (this.scene.isHydratingSavedRun) return
+
         const characters = this.getChildren()
         this.scene.savePlayerCharacters(characters.map((char) => char.getDto()))
     }
@@ -215,32 +222,17 @@ export class PlayerTeam extends CreatureGroup {
         const grid = this.scene.grid
         if (!grid) return
 
-        // allowed team rows (bottom 3)
-        const allowedRows = [grid.rows - 1, grid.rows - 2, grid.rows - 3].filter((r) => r >= 0)
-
-        const toDestroy: Character[] = []
-        const keepByCell = new Map<string, Character>()
-
-        const key = (col: number, row: number) => `${col},${row}`
-
         for (const character of this.getChildren()) {
-            // invalid stored coords
             if (!(character.boardX > 0 && character.boardY > 0)) {
-                toDestroy.push(character)
+                this.placeInOpenCell(character)
                 continue
             }
 
             const cell = grid.worldToCell(character.boardX, character.boardY)
-            // outside grid
             if (!cell) {
-                toDestroy.push(character)
+                this.placeInOpenCell(character)
                 continue
             }
-            // not a player row
-            // if (!allowedRows.includes(cell.row)) {
-            //     toDestroy.push(character)
-            //     continue
-            // }
 
             // snap slightly off-center characters to exact center (no reflow)
             const center = grid.cellToCenter(cell.col, cell.row)
@@ -251,21 +243,28 @@ export class PlayerTeam extends CreatureGroup {
                 character.boardY = center.y
                 character.reset()
             }
-
-            // de-dup per cell: keep the first, destroy extras
-            // const k = key(cell.col, cell.row)
-            // if (!keepByCell.has(k)) {
-            //     keepByCell.set(k, character)
-            // } else {
-            //     toDestroy.push(character)
-            // }
         }
+    }
 
-        if (toDestroy.length) {
-            // remove & destroy extras/out-of-bounds without touching survivors
-            for (const character of toDestroy) character.destroy(true)
-            // persist only alive characters
-            this.saveAndEmit()
+    private placeInOpenCell(character: Character) {
+        const grid = this.scene.grid
+        if (!grid) return
+
+        const rows = [grid.rows - 1, grid.rows - 2, grid.rows - 3].filter((row) => row >= 0)
+
+        for (const row of rows) {
+            for (let col = 0; col < grid.cols; col++) {
+                const { x, y } = grid.cellToCenter(col, row)
+                const taken = this.getChildren().some((candidate) => candidate !== character && candidate.boardX === x && candidate.boardY === y)
+                if (taken) continue
+
+                character.boardX = x
+                character.boardY = y
+                character.setPosition(x, y)
+                character.body?.reset(x, y)
+                character.reset()
+                return
+            }
         }
     }
 
@@ -299,7 +298,7 @@ export class PlayerTeam extends CreatureGroup {
     }
 
     isBoardFull(): boolean {
-        return this.countActive() >= this.scene.max_characters_in_board
+        return this.countActive() >= this.getMaxBoardCharacters()
     }
 
     resetTraits() {

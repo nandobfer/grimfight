@@ -16,6 +16,7 @@ export class Item {
     sprite: Phaser.GameObjects.Image
     scene: Game
     user?: Creature
+    temporarySource?: "thiefsgloves"
 
     id = RNG.uuid()
 
@@ -122,13 +123,13 @@ export class Item {
     }
 
     // each augment must override
-    applyModifier(creature: Creature) {}
+    applyModifier(_creature: Creature) {}
 
     // each augment must override
-    afterApplying(characters: Creature[]) {}
+    afterApplying(_characters: Creature[]) {}
 
     // each augment must override
-    cleanup(creature: Creature) {}
+    cleanup(_creature: Creature) {}
 
     private handleItemOnPoint(pointer: Phaser.Input.Pointer) {
         const x = Phaser.Math.Clamp(pointer.x, 0, this.scene.scale.width)
@@ -198,7 +199,7 @@ export class Item {
             this.resetTooltip()
         })
 
-        this.sprite.on("dragstart", (pointer: Phaser.Input.Pointer) => {
+        this.sprite.on("dragstart", () => {
             if (this.scene.state !== "idle") return
 
             this.showHoverBorder()

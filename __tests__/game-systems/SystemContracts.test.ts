@@ -1,6 +1,14 @@
-import { describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
+import { EventEmitter } from "node:events"
+import { EventBus } from "../../src/game/tools/EventBus"
+
+vi.mock("phaser", () => ({
+    Events: {
+        EventEmitter,
+    },
+}))
 
 const root = process.cwd()
 const systemsDir = join(root, "src/game/systems")
@@ -35,6 +43,125 @@ const systemContracts = [
 function readSource(path: string) {
     return readFileSync(path, "utf8")
 }
+
+class FakeImage {
+    eventHandlers = new Map<string, Array<(...args: unknown[]) => void>>()
+    postFX = {
+        addGlow: vi.fn(() => ({ outerStrength: 0 })),
+    }
+    scene: unknown
+    x: number
+    y: number
+
+    constructor(scene: unknown, x: number, y: number) {
+        this.scene = scene
+        this.x = x
+        this.y = y
+    }
+
+    setPipeline = vi.fn(() => this)
+    setScale = vi.fn(() => this)
+    setInteractive = vi.fn(() => this)
+    removeAllListeners = vi.fn(() => {
+        this.eventHandlers.clear()
+        return this
+    })
+    destroy = vi.fn(() => undefined)
+
+    on(event: string, handler: (...args: unknown[]) => void) {
+        this.eventHandlers.set(event, [...(this.eventHandlers.get(event) ?? []), handler])
+        return this
+    }
+
+    emit(event: string, ...args: unknown[]) {
+        for (const handler of this.eventHandlers.get(event) ?? []) {
+            handler(...args)
+        }
+    }
+}
+
+function chainableText() {
+    return {
+        setOrigin: vi.fn(function (this: unknown) {
+            return this
+        }),
+        setVisible: vi.fn(function (this: unknown) {
+            return this
+        }),
+        setShadow: vi.fn(function (this: unknown) {
+            return this
+        }),
+        setPipeline: vi.fn(function (this: unknown) {
+            return this
+        }),
+        setText: vi.fn(function (this: unknown) {
+            return this
+        }),
+        destroy: vi.fn(),
+    }
+}
+
+function chainableSprite() {
+    return {
+        width: 0,
+        setScale: vi.fn(function (this: unknown) {
+            return this
+        }),
+        setVisible: vi.fn(function (this: unknown) {
+            return this
+        }),
+        play: vi.fn(function (this: unknown) {
+            return this
+        }),
+        setPosition: vi.fn(function (this: unknown) {
+            return this
+        }),
+        destroy: vi.fn(),
+    }
+}
+
+function makeScene() {
+    return {
+        background: { x: 100, y: 100, width: 300, height: 300 },
+        add: {
+            existing: vi.fn(),
+            text: vi.fn(() => chainableText()),
+            sprite: vi.fn(() => chainableSprite()),
+        },
+        anims: {
+            exists: vi.fn(() => true),
+            create: vi.fn(),
+            generateFrameNumbers: vi.fn(() => []),
+        },
+        tweens: {
+            add: vi.fn(),
+        },
+        playerTeam: {
+            store: {
+                sell: vi.fn(),
+                getCost: vi.fn(() => 1),
+            },
+            bench: {
+                add: vi.fn(),
+            },
+        },
+    }
+}
+
+beforeEach(() => {
+    vi.stubGlobal("Phaser", {
+        GameObjects: {
+            Image: FakeImage,
+        },
+    })
+    EventBus.removeAllListeners()
+})
+
+afterEach(() => {
+    EventBus.removeAllListeners()
+    vi.unstubAllGlobals()
+    vi.restoreAllMocks()
+})
 
 describe("top-level system aicontext", () => {
     it.each(systemContracts)("documents $name without numeric balance values", (contract) => {
@@ -72,47 +199,69 @@ describe("Summon contracts", () => {
 })
 
 describe("Shopkeeper contracts", () => {
-    it("bridges character selling, store toggling, visual feedback, and cleanup", () => {
-        const source = readSource(join(systemsDir, "Shopkeeper.ts"))
+    it("sells emitted characters and removes its EventBus listener on dispose", async () => {
+        const { Shopkeeper } = await import("../../src/game/systems/Shopkeeper")
+        const scene = makeScene()
+        const shopkeeper = new Shopkeeper(scene as never)
+        const character = { level: 1 }
 
-        expect(source).toContain("export class Shopkeeper extends Phaser.GameObjects.Image")
-        expect(source).toContain("this.store = this.scene.playerTeam.store")
-        expect(source).toContain("this.costText = this.scene.add")
-        expect(source).toContain("this.coinSprite = this.scene.add")
-        expect(source).toContain("handleMouseEvents(): void")
-        expect(source).toContain("EventBus.on(\"sell-character-shopkeeper\", onSell)")
-        expect(source).toContain("this.store.sell(character)")
-        expect(source).toContain("this.on(\"pointerover\"")
-        expect(source).toContain("this.on(\"pointerout\"")
-        expect(source).toContain("this.on(\"pointerup\"")
-        expect(source).toContain("EventBus.emit(\"toggle-store\")")
-        expect(source).toContain("EventBus.off(\"sell-character-shopkeeper\", onSell)")
-        expect(source).toContain("this.removeAllListeners()")
-        expect(source).toContain("renderCharacterCost")
-        expect(source).toContain("hideCharacterCost")
+        EventBus.emit("sell-character-shopkeeper", character)
+        expect(scene.playerTeam.store.sell).toHaveBeenCalledWith(character)
+
+        shopkeeper.dispose()
+        EventBus.emit("sell-character-shopkeeper", character)
+
+        expect(scene.playerTeam.store.sell).toHaveBeenCalledTimes(1)
+        expect(shopkeeper.removeAllListeners).toHaveBeenCalledOnce()
+    })
+
+    it("emits store toggles from pointer interaction", async () => {
+        const { Shopkeeper } = await import("../../src/game/systems/Shopkeeper")
+        const scene = makeScene()
+        const shopkeeper = new Shopkeeper(scene as never)
+        const onToggleStore = vi.fn()
+
+        EventBus.on("toggle-store", onToggleStore)
+        shopkeeper.emit("pointerup")
+
+        expect(onToggleStore).toHaveBeenCalledOnce()
     })
 })
 
 describe("Tavern contracts", () => {
-    it("bridges bench drops, bench toggling, visual feedback, and cleanup", () => {
-        const source = readSource(join(systemsDir, "Tavern.ts"))
+    it("benches emitted characters and removes its EventBus listener on dispose", async () => {
+        const { Tavern } = await import("../../src/game/systems/Tavern")
+        const scene = makeScene()
+        const tavern = new Tavern(scene as never)
+        const dto = { id: "char-1", name: "dracula", level: 1 }
+        const character = {
+            getDto: vi.fn(() => dto),
+            onBenchDrop: vi.fn(),
+        }
 
-        expect(source).toContain("export class Tavern extends Phaser.GameObjects.Image")
-        expect(source).toContain("this.bench = this.scene.playerTeam.bench")
-        expect(source).toContain("this.text = this.scene.add")
-        expect(source).toContain("handleMouseEvents(): void")
-        expect(source).toContain("EventBus.on(\"bench-character-tavern\", onBench)")
-        expect(source).toContain("const dto = character.getDto()")
-        expect(source).toContain("character.onBenchDrop()")
-        expect(source).toContain("this.bench.add(dto)")
-        expect(source).toContain("this.on(\"pointerover\"")
-        expect(source).toContain("this.on(\"pointerout\"")
-        expect(source).toContain("this.on(\"pointerup\"")
-        expect(source).toContain("EventBus.emit(\"toggle-bench\")")
-        expect(source).toContain("EventBus.off(\"bench-character-tavern\", onBench)")
-        expect(source).toContain("this.removeAllListeners()")
-        expect(source).toContain("renderStoreLabel")
-        expect(source).toContain("hideStoreLabel")
+        EventBus.emit("bench-character-tavern", character)
+
+        expect(character.getDto).toHaveBeenCalledOnce()
+        expect(character.onBenchDrop).toHaveBeenCalledOnce()
+        expect(scene.playerTeam.bench.add).toHaveBeenCalledWith(dto)
+
+        tavern.dispose()
+        EventBus.emit("bench-character-tavern", character)
+
+        expect(scene.playerTeam.bench.add).toHaveBeenCalledTimes(1)
+        expect(tavern.removeAllListeners).toHaveBeenCalledOnce()
+    })
+
+    it("emits bench toggles from pointer interaction", async () => {
+        const { Tavern } = await import("../../src/game/systems/Tavern")
+        const scene = makeScene()
+        const tavern = new Tavern(scene as never)
+        const onToggleBench = vi.fn()
+
+        EventBus.on("toggle-bench", onToggleBench)
+        tavern.emit("pointerup")
+
+        expect(onToggleBench).toHaveBeenCalledOnce()
     })
 })
 

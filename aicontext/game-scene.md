@@ -15,9 +15,17 @@ Componentes de UI que precisam de estado da cena atual devem receber a instânci
 A cena transita entre dois estados globais (`GameState`): `idle` e `fighting`. No estado `idle`, o jogador prepara a equipe e itens. `startRound` inicia o combate chamando reset nos times e alterando o estado para `fighting`. 
 O término de um round utiliza `endRoundSoon`, que defere a resolução de vitória ou derrota para evitar inconsistências durante a iteração de update de atores.
 
+Quando a cena carrega personagens do jogador e nao existe composicao salva, ela cria um personagem jogavel aleatorio diretamente no board pelo fluxo normal do `PlayerTeam`.
+
+Durante a hidratacao de uma run salva, a cena bloqueia persistencia intermediaria. Personagens, niveis, posicoes e itens devem ser restaurados antes que qualquer efeito de equipamento ou reset possa regravar o save.
+
 ### Floor Progression And Encounters
 O jogo avança progressivamente através do `floor`. `onFloorDefeated` aplica as recompensas (ouro, vidas) baseadas no andar atual e invoca `buildFloor` para gerar o próximo encontro.
 Os inimigos são populados a partir de `generateEncounter`. Adicionalmente, augments são oferecidos ao jogador a cada cinco andares (via `handleAugmentsFloor`) e itens especiais/bigornas a cada dez andares (`handleArtifactsFloor`). Inimigos também escalam recebendo augments periodicamente (`handleEnemiesAugments`).
+
+Escolhas especiais de item concedidas por andar sao marcadas como reivindicadas no progresso local quando o jogador aceita o item. Ao continuar uma run, andares ja reivindicados nao reabrem a escolha.
+
+O tamanho permitido do board do jogador nao progride pelo `floor`; a cena expoe esse valor como regra derivada do `PlayerTeam` atual.
 
 ### UI Drag Bridge
 A integração entre o canvas do Phaser e as interfaces overlay React ocorre ouvindo intenções do `EventBus`.
@@ -25,6 +33,8 @@ Ao receber eventos como `ui-drag-start`, a cena gera uma representação visual 
 
 ### Persistence
 O estado global da run (ouro, andar, vidas, augments ativos, itens disponíveis) é mantido sincronizado com `localStorage` através das funções `saveProgress` e `loadProgress`. O histórico de runs é registrado em `saveRecord`.
+
+Itens temporarios ou efeitos de hidratacao nao fazem parte da persistencia permanente da run.
 
 ### Cleanup
 Para suportar restart da cena ou recarregamentos limpos, a cena desregistra seus listeners de teclado e `EventBus` respondendo ao evento `Phaser.Scenes.Events.SHUTDOWN`.

@@ -3,7 +3,7 @@
 ## Features
 
 ### Arcanist
- Arcanist é uma trait jogável registrada como `Arcanist`, composta por `freud`, `yue`, `ragnaros` e `dranho`. A trait aparece para personagens da composição, mas só fica ativa quando o time possui personagens únicos suficientes para alcançar seus estágios.
+ Arcanist é uma trait jogável registrada como `Arcanist`, composta por personagens arcanos como `freud`, `yue`, `zairon`, `dranho` e `robilton`. A trait aparece para personagens da composição, mas só fica ativa quando o time possui personagens únicos suficientes para alcançar seus estágios.
 
 Quando a trait alcança seus estágios ativos, cada unidade Arcanist ganha AP durante o combate. O ganho usa timer por unidade, varia conforme o estágio ativo e só acumula enquanto a cena está no estado `fighting`.
 
@@ -50,6 +50,6 @@ Winter é uma trait de personagens de gelo. Quando ativa, escuta dano causado pa
 Sorcerer é uma trait de conjuradores. Quando ativa, escuta casts para agendar efeito adicional e remove listener no cleanup.
 
 ### Swift
-Swift é uma trait de personagens rápidos. Quando ativa, aplica bônus de velocidade ou attack speed conforme stage atual.
+Swift é uma trait de personagens rápidos, incluindo `robilton`. Quando ativa, aplica bônus de velocidade ou attack speed conforme stage atual.
 
 ## Fixes

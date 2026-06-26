@@ -35,12 +35,12 @@ export interface GameProgressDto {
     playerAugments: Augment[]
     enemyAugments: Augment[]
     availableItems: string[]
+    claimedItemChoiceFloors?: number[]
     record?: GameRecord
 }
 
 export const starting_player_lives = 3
 export const starting_player_gold = 1
-export const max_characters_in_board = 7
 export const max_bench_size = Infinity
 
 export class Game extends Scene {
@@ -60,10 +60,12 @@ export class Game extends Scene {
     tavern: Tavern
     currentRecord: GameRecord
     availableItems = new Set<Item>()
+    claimedItemChoiceFloors = new Set<number>()
+    pendingItemChoiceFloor?: number
+    isHydratingSavedRun = false
 
     playerGold = starting_player_gold
     playerLives = starting_player_lives
-    max_characters_in_board = 1
     max_bench_size = max_bench_size
 
     private uiGhost?: Character
@@ -93,6 +95,10 @@ export class Game extends Scene {
 
     constructor() {
         super("Game")
+    }
+
+    get max_characters_in_board() {
+        return this.playerTeam?.getMaxBoardCharacters() ?? 1
     }
 
     create() {
@@ -514,14 +520,24 @@ export class Game extends Scene {
             return
         }
 
+        if (this.claimedItemChoiceFloors.has(this.floor)) return
+
         const playerAugments = Array.from(this.playerTeam.augments.values())
         if (playerAugments.find((augment) => augment.chosenFloor === this.floor)) return
 
+        this.pendingItemChoiceFloor = this.floor
         new ArtifactAndCompletedAnvilAugment().onPick(this.playerTeam)
     }
 
+    claimPendingItemChoiceReward() {
+        if (this.pendingItemChoiceFloor) {
+            this.claimedItemChoiceFloors.add(this.pendingItemChoiceFloor)
+            this.pendingItemChoiceFloor = undefined
+        }
+        this.saveProgress()
+    }
+
     resetFloor() {
-        this.max_characters_in_board = Math.min(max_characters_in_board, this.floor)
         this.changeState("idle") // wait for player to start
         this.enemyTeam.reset()
         this.playerTeam.reset()
@@ -566,7 +582,6 @@ export class Game extends Scene {
         }
 
         this.resetProgress()
-        this.max_characters_in_board = 1
         this.clearFloor()
         this.buildFloor()
         this.playerTeam.bench.clear()
@@ -610,6 +625,8 @@ export class Game extends Scene {
             item.sprite.destroy(true)
         }
         this.availableItems.clear()
+        this.claimedItemChoiceFloors.clear()
+        this.pendingItemChoiceFloor = undefined
         this.resetAugments()
         this.saveProgress()
         this.savePlayerCharacters([])
@@ -636,24 +653,29 @@ export class Game extends Scene {
     }
 
     loadPlayerCharacters() {
-        this.playerTeam.clear(true, true)
-        const characters = this.getSavedCharacters()
+        this.isHydratingSavedRun = true
+        try {
+            this.playerTeam.clear(true, true)
+            const characters = this.getSavedCharacters()
 
-        for (const dto of characters) {
-            try {
-                const character = CharacterRegistry.create(dto.name, this, dto.id, dto.boardX, dto.boardY)
-                this.playerTeam.add(character)
-                character.loadFromDto(dto)
-            } catch (error) {
-                console.error("Error creating character:", error)
+            for (const dto of characters) {
+                try {
+                    const character = CharacterRegistry.create(dto.name, this, dto.id, dto.boardX, dto.boardY)
+                    character.loadFromDto(dto)
+                    this.playerTeam.add(character)
+                } catch (error) {
+                    console.error("Error creating character:", error)
+                }
             }
+
+            this.playerTeam.reset()
+            this.playerTeam.damageChart.emitDamageArray()
+        } finally {
+            this.isHydratingSavedRun = false
         }
 
-        this.playerTeam.reset()
-        this.playerTeam.damageChart.emitDamageArray()
-
         if (this.playerTeam.getLength() === 0) {
-            // this.generateFirstCharacter()
+            this.generateFirstCharacter()
         }
     }
 
@@ -666,6 +688,8 @@ export class Game extends Scene {
     }
 
     saveProgress() {
+        if (this.isHydratingSavedRun) return
+
         const data = this.getProgress()
         try {
             localStorage.setItem("progress", JSON.stringify(data))
@@ -682,7 +706,10 @@ export class Game extends Scene {
             version: this.version,
             playerAugments: Array.from(this.playerTeam.augments.values()),
             enemyAugments: Array.from(this.enemyTeam.augments.values()),
-            availableItems: Array.from(this.availableItems.values()).map((item) => item.key),
+            availableItems: Array.from(this.availableItems.values())
+                .filter((item) => !item.temporarySource)
+                .map((item) => item.key),
+            claimedItemChoiceFloors: Array.from(this.claimedItemChoiceFloors.values()),
         }
         progress.record = this.getCurrentRecord(progress)
         return progress
@@ -710,6 +737,7 @@ export class Game extends Scene {
                 this.playerGold = progress.playerGold
                 this.playerLives = progress.playerLives
                 this.currentRecord = progress.record || this.getCurrentRecord(progress)
+                this.claimedItemChoiceFloors = new Set(progress.claimedItemChoiceFloors ?? [])
                 progress.availableItems?.forEach((item) => this.availableItems.add(ItemRegistry.create(item, this)))
                 progress.playerAugments?.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments?.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
@@ -746,6 +774,8 @@ export class Game extends Scene {
         const randomCharacter = CharacterRegistry.random(this)
         this.playerTeam.add(randomCharacter)
         this.playerTeam.reset()
+        this.playerTeam.damageChart.emitDamageArray()
+        this.grid.updateCharacterCount()
     }
 
     onHitFx(damageType: DamageType, _x: number, _y: number, target?: Creature) {

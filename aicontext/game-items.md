@@ -35,4 +35,6 @@ Ao equipar, a criatura assume o item e registra sync no evento de movimento. Ao 
 ### Thiefsgloves
 Thiefsgloves possui restrição especial de equipamento e gera itens temporários por rodada. Ele escuta mudança de estado da cena para equipar e limpar esses itens, removendo listeners e sprites temporários em cleanup.
 
+Itens gerados por Thiefsgloves sao marcados como temporarios. Eles nao entram no DTO de personagem nem na lista de itens soltos da run, e saves antigos com itens extras junto da luva carregam apenas a propria luva.
+
 ## Fixes
