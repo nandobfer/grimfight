@@ -39,7 +39,7 @@ export interface GameProgressDto {
     record?: GameRecord
 }
 
-export const starting_player_lives = 3
+export const starting_player_lives = 10
 export const starting_player_gold = 1
 export const max_bench_size = Infinity
 

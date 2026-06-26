@@ -5,9 +5,9 @@ export class BonusHealthAugment extends Augment {
     constructor() {
         const name = "bonushealth"
         super(name)
-        this.values.boost = Phaser.Math.RND.weightedPick([1, 1, 2])
+        this.values.boost = 3
         this.descriptionValues.boost = { color: "error.main", value: this.values.boost }
-        this.description = `you gain [bonus:1 health]`
+        this.description = `you gain [bonus:${this.values.boost} health]`
         this.color = "default"
     }
 

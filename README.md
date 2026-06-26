@@ -16,7 +16,7 @@ Lightweight 2D action built with Phaser + React, shipped via Electron.
 * Deep Item Crafting: Combine components into completed items (think TFT-style recipes). Drag an item onto a hero to equip; merge automatically when a valid pair is present.
 * Augments & Events: Every few floors, pick from random augments that reshape your run. Enemies earn augments on milestones too.
 * Abilities With Style: From Dracula’s blood hunt to Rogue’s blink-flurry and Ymir’s freezing nova, each unit has a defining kit.
-* Roguelite Loop: 3 lives, escalating floors, gold rewards, occasional loot drops, and run records saved locally.
+* Roguelite Loop: 10 lives, escalating floors, gold rewards, occasional loot drops, and run records saved locally.
 * Satisfying Juice: Damage numbers, glow/border highlights, blood bursts, lighting, and smooth tweened movement.
 
 ## How to Play

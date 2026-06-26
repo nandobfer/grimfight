@@ -93,4 +93,12 @@ describe("individual augment contracts", () => {
 
         expect(source.includes("applyModifier") || source.includes("onPick")).toBe(true)
     })
+
+    it("BonusHealthAugment grants a fixed lives boost through the scene progress flow", () => {
+        const source = readSource(join(augmentDir, "BonusHealthAugment.ts"))
+
+        expect(source).toContain("this.values.boost = 3")
+        expect(source).toContain("this.descriptionValues.boost")
+        expect(source).toContain("team.scene.changePlayerLives(team.scene.playerLives + this.values.boost)")
+    })
 })

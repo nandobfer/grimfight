@@ -17,6 +17,7 @@ Augments documentados: AttackerAugment, BattlemageAugment, BonusHealthAugment, C
 
 ### Economy And Item Augments
 Augments de economia e itemização executam efeitos quando escolhidos. Eles podem alterar gold, vidas, spawnar itens, abrir escolhas de anvil ou entregar artifacts e itens completos.
+BonusHealthAugment concede vidas imediatamente pela cena para manter persistencia e UI sincronizadas pelo fluxo normal de progresso.
 
 Augments documentados: AnvilAugment, ArtifactAndCompletedAnvilAugment, BonusGoldAugment, ItemAugment.
 

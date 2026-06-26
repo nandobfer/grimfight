@@ -193,8 +193,10 @@ export class PlayerTeam extends CreatureGroup {
     grantFloorReward(floor: number) {
         const gold = 1 + Math.round(floor * 0.5)
         this.scene.addPlayerGold(gold)
+        if (floor % 10 === 0) {
+            this.scene.changePlayerLives(this.scene.playerLives + 3)
+        }
         this.store.shuffle()
-
     }
 
     grantDefeatConsolation(floor: number) {

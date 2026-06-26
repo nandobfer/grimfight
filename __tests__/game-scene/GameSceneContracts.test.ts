@@ -45,14 +45,27 @@ describe("Game Scene contracts", () => {
 
     it("manages floor progression and augment triggers", () => {
         const source = readSource(join(sceneDir, "Game.ts"))
+        const playerTeamSource = readSource(join(root, "src/game/creature/character/PlayerTeam.ts"))
 
         expect(source).toContain("onFloorDefeated()")
         expect(source).toContain("this.floor += 1")
         expect(source).toContain("buildFloor()")
+        expect(source).toContain("this.playerTeam.grantFloorReward(this.floor)")
+        expect(playerTeamSource).toContain("grantFloorReward(floor: number)")
+        expect(playerTeamSource).toContain("if (floor % 10 === 0)")
+        expect(playerTeamSource).toContain("this.scene.changePlayerLives(this.scene.playerLives + 3)")
         expect(source).toContain("generateEncounter(this, this.floor)")
         expect(source).toContain("handleAugmentsFloor()")
         expect(source).toContain("handleArtifactsFloor()")
         expect(source).toContain("handleEnemiesAugments()")
+    })
+
+    it("defines the configured starting player lives", () => {
+        const source = readSource(join(sceneDir, "Game.ts"))
+
+        expect(source).toContain("export const starting_player_lives = 10")
+        expect(source).toContain("playerLives = starting_player_lives")
+        expect(source).toContain("this.playerLives = starting_player_lives")
     })
 
     it("exposes board size as a derived player team rule instead of floor progression", () => {

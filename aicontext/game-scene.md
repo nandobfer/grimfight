@@ -21,6 +21,7 @@ Durante a hidratacao de uma run salva, a cena bloqueia persistencia intermediari
 
 ### Floor Progression And Encounters
 O jogo avança progressivamente através do `floor`. `onFloorDefeated` aplica as recompensas (ouro, vidas) baseadas no andar atual e invoca `buildFloor` para gerar o próximo encontro.
+Vitórias em andares de boss concedem vidas extras pela recompensa de floor, antes do avanço para o próximo encontro.
 Os inimigos são populados a partir de `generateEncounter`. Adicionalmente, augments são oferecidos ao jogador a cada cinco andares (via `handleAugmentsFloor`) e itens especiais/bigornas a cada dez andares (`handleArtifactsFloor`). Inimigos também escalam recebendo augments periodicamente (`handleEnemiesAugments`).
 
 Escolhas especiais de item concedidas por andar sao marcadas como reivindicadas no progresso local quando o jogador aceita o item. Ao continuar uma run, andares ja reivindicados nao reabrem a escolha.
