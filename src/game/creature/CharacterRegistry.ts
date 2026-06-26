@@ -31,6 +31,7 @@ import { Jacrost } from "./classes/Jacrost"
 import { Melisandre } from "./classes/Melisandre"
 import { Dranho } from "./classes/Dranho"
 import { Robilton } from "./classes/Robilton"
+import { Silvia } from "./classes/Silvia"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
 import { SpritesheetCreatureVisualDefinition, SvgSpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
@@ -111,3 +112,4 @@ CharacterRegistry.register("jacrost", Jacrost, SvgSpritesheetCreatureVisualDefin
 CharacterRegistry.register("melisandre", Melisandre, SvgSpritesheetCreatureVisualDefinition.character("melisandre"))
 CharacterRegistry.register("dranho", Dranho, SvgSpritesheetCreatureVisualDefinition.character("dranho"))
 CharacterRegistry.register("robilton", Robilton, SvgSpritesheetCreatureVisualDefinition.character("robilton"))
+CharacterRegistry.register("silvia", Silvia, SvgSpritesheetCreatureVisualDefinition.character("silvia"))

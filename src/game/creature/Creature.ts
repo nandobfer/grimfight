@@ -520,6 +520,14 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.updateFacingDirection()
     }
 
+    taunt(target: Creature): void {
+        if (!this.active || !this.canBeTargeted || !target.active) return
+
+        target.stopMoving()
+        target.target = this
+        target.updateFacingDirection()
+    }
+
     idle() {
         this.play(`${this.getAnimationTextureName()}-idle-${this.facing}`, true)
     }

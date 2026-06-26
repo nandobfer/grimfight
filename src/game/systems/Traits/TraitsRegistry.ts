@@ -74,11 +74,11 @@ export class TraitsRegistry {
 }
 
 TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "vania", "laherce", "reno", "chichi"])
-TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud", "yue", "zairon", "dranho", "robilton"])
-TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora", "ragnaros"])
+TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud", "yue", "zairon", "dranho", "robilton", "silvia"])
+TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora", "ragnaros", "silvia"])
 TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "frank", "chichi", "robilton"])
 TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia", "freud", "fandral"])
-TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "helyna"])
+TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "helyna", "silvia"])
 TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula"])
 TraitsRegistry.register("Pack", PackTrait, ["lizwan", "helyna", "laherce", "banguela"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna", "rokmora", "fandral"])

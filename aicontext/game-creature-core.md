@@ -34,6 +34,8 @@ Os locks também são respeitados por movimento, ataque, regeneração de mana e
 
 `teleportTo` sincroniza sprite, body e evento de movimento. `dashTo` usa tween e emite movimento ao completar. `removeFromEnemyTarget` limpa referências de inimigos que estavam mirando a criatura e pode torná-la temporariamente não alvejável.
 
+`taunt` força uma criatura ativa a mirar a própria criatura que provocou o efeito, desde que essa origem esteja ativa e alvejável. O método também interrompe o movimento atual do alvo e recalcula a direção visual para reutilização por habilidades de controle.
+
 ### Facing And Animation
 `updateFacingDirection` calcula a direção visual a partir do alvo. `getOppositeDirection` fornece a direção inversa para posicionamentos ao redor de alvos.
 

@@ -153,6 +153,8 @@ describe("Creature targeting, movement, and animation contracts", () => {
         expect(source).toContain("getFartestEnemy()")
         expect(source).toContain("newTarget()")
         expect(source).toContain("this.target = this.getClosestEnemy()")
+        expect(source).toContain("taunt(target: Creature)")
+        expect(source).toContain("target.target = this")
     })
 
     it("moves, teleports, dashes, and updates facing through explicit hooks", () => {

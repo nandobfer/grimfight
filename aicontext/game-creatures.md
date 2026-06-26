@@ -133,6 +133,15 @@ A habilidade `Estrela de Nêutrons` canaliza uma estrela roxa crescente por uma 
 
 Todos os efeitos de Robilton são desenhados com `Phaser.GameObjects.Graphics`. Projéteis, hitboxes, tweens, timers e listeners de update/gamestate devem limpar explicitamente ao terminar, mudar a rodada, resetar stats ou destruir o personagem. As fórmulas puras de tempo de conjuração, dano, raio e força ficam em `src/game/creature/classes/RobiltonNeutronStar.ts` para manter a regra testável sem instanciar Phaser.
 
+### Silvia
+Silvia é uma personagem jogável registrada como `silvia`, ligada a magia arcana, feitiçaria e resistência colossal. Ela atua como tanque conjuradora de linha de frente, usando correntes mágicas para proteger aliados pressionados e manipular alvo inimigo.
+
+Sua passiva converte AP atual em vida máxima e vida máxima atual em AP usando snapshots dos atributos antes dos bônus, evitando retroalimentação entre as duas conversões. A habilidade procura o inimigo que está atacando o aliado ativo mais ferido; se nenhum inimigo estiver pressionando outro aliado, mantém o alvo atual ou retargeta pelo fluxo padrão.
+
+Ao conjurar, Silvia lança duas correntes roxas desenhadas com `Graphics` em trajetórias curvas e perseguidoras. As correntes colidem somente com o alvo escolhido, causam dano sombrio, puxam esse alvo para a frente de Silvia e usam o contrato reutilizável de taunt da criatura para forçar o alvo a atacá-la. Hitboxes, gráficos, listeners, timers e tweens criados pela habilidade devem limpar ao atingir, ao mudar de estado, ao resetar stats ou ao destruir Silvia.
+
+As fórmulas puras da passiva, dano e geometria ficam em `src/game/creature/classes/SilviaChains.ts` para manter a regra testável sem instanciar Phaser.
+
 ### Ragnaros
 Ragnaros é um personagem jogável registrado como `ragnaros`, ligado a fogo, arcano e resistência colossal. Ele usa habilidade passiva, mantém mana travada para não conjurar pelo fluxo padrão e preserva mana máxima apenas como integração com efeitos que leem esse atributo.
 
