@@ -9,7 +9,7 @@ import { DruidTrait } from "./DruidTrait"
 import { HolyTrait } from "./HolyTrait"
 import { IncendiaryTrait } from "./IncendiaryTrait"
 import { NobleTrait } from "./NobleTrait"
-import { PackTrait } from "./PackTrait"
+import { PoisonerTrait } from "./PoisonerTrait"
 import { WinterTrait } from "./WinterTrait"
 import { SorcererTrait } from "./SorcererTrait"
 import { SpeedyTrait } from "./SpeedyTrait"
@@ -80,7 +80,7 @@ TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "fr
 TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia", "freud", "fandral"])
 TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "helyna", "silvia", "clover"])
 TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula"])
-TraitsRegistry.register("Pack", PackTrait, ["lizwan", "helyna", "laherce", "banguela"])
+TraitsRegistry.register("Poisoner", PoisonerTrait, ["lizwan", "helyna", "laherce", "banguela"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna", "rokmora", "fandral"])
 TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin", "yue", "fandral", "melisandre", "ragnaros"])
 TraitsRegistry.register("Noble", NobleTrait, ["maximus", "jadis", "statikk", "dracula", "arthas"])

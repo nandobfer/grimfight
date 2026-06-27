@@ -19,7 +19,7 @@ const traitHeadings: Record<string, string> = {
     HolyTrait: "Holy",
     IncendiaryTrait: "Incendiary",
     NobleTrait: "Noble",
-    PackTrait: "Pack",
+    PoisonerTrait: "Poisoner",
     WinterTrait: "Winter",
     SorcererTrait: "Sorcerer",
     SpeedyTrait: "Swift",

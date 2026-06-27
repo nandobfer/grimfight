@@ -36,7 +36,7 @@ export function calculateRobiltonBlackHoleRadius(abilityPower: number): number {
 }
 
 export function calculateRobiltonBlackHolePullStrength(abilityPower: number): number {
-    return 180 + safeNonNegative(abilityPower)
+    return 70 + safeNonNegative(abilityPower) * 0.4
 }
 
 export function calculateRobiltonGravityOrbDamage(abilityPower: number, stacks: number, multiplier = 1): number {

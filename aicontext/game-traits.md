@@ -40,8 +40,8 @@ Holy é uma trait de personagens sagrados. Quando ativa, escuta casts e aplica c
 ### Noble
 Noble é uma trait de personagens nobres. Quando ativa, escuta kills para conceder bônus temporários e remove listener no cleanup.
 
-### Pack
-Pack é uma trait de personagens de matilha. Quando ativa, escuta dano causado para aplicar efeito adicional e remove listener no cleanup.
+### Poisoner
+Poisoner é uma trait de personagens venenosos. Quando ativa, escuta dano causado para aplicar efeito adicional e remove listener no cleanup.
 
 ### Winter
 Winter é uma trait de personagens de gelo. Quando ativa, escuta dano causado para aplicar freeze ou efeito frio conforme stage atual e remove listener no cleanup.

@@ -15,6 +15,7 @@ const characterRegistryPath = join(process.cwd(), "src/game/creature/CharacterRe
 const gameCreaturesContextPath = join(process.cwd(), "aicontext/game-creatures.md")
 
 const helperFiles = new Set([
+    "CloverDarkCleave.ts",
     "DranhoChannel.ts",
     "FandralFlameSlash.ts",
     "RagnarosLavaRetaliation.ts",
@@ -30,6 +31,7 @@ const characterContracts: CharacterContract[] = [
     { file: "Banguela.ts", className: "Banguela", registryName: "banguela" },
     { file: "Barbarian.ts", className: "Barbarian", registryName: "grok" },
     { file: "Chichi.ts", className: "Chichi", registryName: "chichi" },
+    { file: "Clover.ts", className: "Clover", registryName: "clover" },
     { file: "Dracula.ts", className: "Dracula", registryName: "dracula" },
     { file: "Dranho.ts", className: "Dranho", registryName: "dranho" },
     { file: "Druid.ts", className: "Helyna", registryName: "helyna", docHeading: "Helyna" },
@@ -117,10 +119,18 @@ describe("playable character pure behavior", () => {
         expect(frankSource).toContain("drainLife(target")
     })
 
-    it.each(["Frank.ts", "Freud.ts", "Lizwan.ts", "Reno.ts"])("keeps passive no-mana character %s mana locked after stat refresh", (file) => {
+    it.each(["Frank.ts", "Freud.ts", "Reno.ts"])("keeps passive no-mana character %s mana locked after stat refresh", (file) => {
         const source = readClassSource(file)
 
         expect(source).toMatch(/override refreshStats\(\): void \{[\s\S]*super\.refreshStats\(\)[\s\S]*this\.manaLocked = true[\s\S]*\}/)
+    })
+
+    it("keeps Lizwan's passive damage chart name separate from his catalytic cast source", () => {
+        const source = readClassSource("Lizwan.ts")
+
+        expect(source).toContain('abilityName = "Deadly Poison"')
+        expect(source).toContain('private readonly catalyticPoisonSource = "Veneno Catalisador"')
+        expect(source).toMatch(/this\.target\.takeDamage\(damage, this, "poison", false, true, this\.catalyticPoisonSource\)/)
     })
 
     it("gives Lalatina starting mana through gainMana after refresh", () => {

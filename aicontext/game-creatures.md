@@ -78,9 +78,11 @@ Na posição frontal, concede escudo a aliados próximos. Na posição do meio, 
 Ao destruir Lalatina, a aura ativa deve ser removida do time. `applyAura` é responsável por remover aura antiga, criar a aura correta, adicionar ao time e atualizar stats do grupo.
 
 ### Lizwan
-Lizwan é um personagem jogável registrado como `lizwan`. Ele não usa mana para conjurar e aplica veneno a cada ataque.
+Lizwan é um personagem jogável registrado como `lizwan`. Ele aplica veneno a cada ataque e usa mana para catalisar venenos ativos no alvo atual.
 
 `landAttack` preserva o ataque base, cria feedback visual de veneno e aplica um `Dot` do tipo poison no alvo atual. O status carrega usuário, alvo e nome da habilidade para integração com damage chart e cleanup do sistema de status.
+
+Ao conjurar, Lizwan soma o dano bruto restante dos `Dot` poison ativos no alvo atual e aplica uma parcela desse potencial como dano poison imediato creditado a uma fonte separada da passiva no damage chart. Se o alvo estiver inválido ou não houver veneno restante, o cast aborta sem emitir gatilhos de conjuração.
 
 ### Mage
 Mage é uma personagem jogável registrada como `megumin`. Ela usa `Fireball` no ataque básico e sua habilidade causa explosão de fogo no alvo atual.

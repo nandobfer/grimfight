@@ -1,4 +1,5 @@
 import { DamageType } from "../../ui/DamageNumbers"
+import { calculateRemainingDotDamage } from "./DotDamage"
 import { StatusEffect, StatusEffectParams } from "./StatusEffect"
 
 export interface DotParams extends StatusEffectParams {
@@ -33,6 +34,15 @@ export class Dot extends StatusEffect {
         this.target.takeDamage(damage, this.user, this.damageType, crit, true, this.abilityName)
 
         this.onTick?.(damage)
+    }
+
+    getRemainingRawDamage(): number {
+        return calculateRemainingDotDamage({
+            duration: this.duration,
+            totalTimePassed: this.totalTimePassed,
+            tickDamage: this.tickDamage,
+            tickRate: this.tickRate,
+        })
     }
 
     override update(delta: number): void {

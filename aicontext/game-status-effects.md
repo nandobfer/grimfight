@@ -10,7 +10,7 @@
 Uma subclasse especializada que aplica modificadores diretos aos atributos base de uma criatura por tempo determinado. `onApply` salva os valores prévios da criatura no registro interno `conditionsValues`. `onExpire` resgata esses valores e efetua o reestabelecimento seguro do estado, em conjunto com o cleanup de efeitos visuais associados.
 
 ### Dot And Hot
-*   **Dot (Damage over Time):** Acumula contagem conforme um tick rate. Ao estourar, executa rotina de cálculo de dano provindo do usuário lançador (`user.calculateDamage`) e aplica o dano contínuo marcando a fonte primária.
+*   **Dot (Damage over Time):** Acumula contagem conforme um tick rate. Ao estourar, executa rotina de cálculo de dano provindo do usuário lançador (`user.calculateDamage`) e aplica o dano contínuo marcando a fonte primária. Também expõe o dano bruto restante por helper puro para habilidades que interagem com potencial pendente de dano ao longo do tempo.
 *   **Hot (Heal over Time):** De forma análoga ao Dot, invoca um tick de cura periódica, respeitando tetos e limites, curando a entidade alvo e delegando visualização.
 
 ### Freeze

@@ -8,11 +8,11 @@ export class Lizwan extends Character {
     baseSpeed = 130
     baseAttackDamage = 15
     baseCritChance = 20
-    baseMaxMana: number = 0
-    // baseMaxMana: number = 50
-    manaLocked: boolean = true
+    baseMaxMana: number = 60
 
     abilityName = "Deadly Poison"
+    private readonly catalyticPoisonDamageRatio = 0.3
+    private readonly catalyticPoisonSource = "Veneno Catalisador"
 
     constructor(scene: Game, id: string) {
         super(scene, "lizwan", id)
@@ -21,7 +21,9 @@ export class Lizwan extends Character {
     override getAbilityDescription(): string {
         return `Attacks apply a stack of deadly poison. The poison deals [info.main:${Math.round(
             this.abilityPower * 0.05
-        )} (5% AP)] damage per second. Lasts 10 seconds and [primary.main:stacks indefinitely].`
+        )} (5% AP)] damage per second. Lasts 10 seconds and [primary.main:stacks indefinitely]. On cast, catalyzes poison on the target, dealing [info.main:${Math.round(
+            this.catalyticPoisonDamageRatio * 100
+        )}%] of the remaining poison damage.`
     }
 
     override landAttack(): void {
@@ -45,8 +47,16 @@ export class Lizwan extends Character {
         poison.start()
     }
 
-    override refreshStats(): void {
-        super.refreshStats()
-        this.manaLocked = true
+    override castAbility(multiplier = 1): boolean | void {
+        if (!this.target?.active) return false
+
+        const remainingPoisonDamage = [...this.target.statusEffects]
+            .filter((effect): effect is Dot => effect instanceof Dot && effect.damageType === "poison")
+            .reduce((total, poison) => total + poison.getRemainingRawDamage(), 0)
+
+        if (remainingPoisonDamage <= 0) return false
+
+        const damage = remainingPoisonDamage * this.catalyticPoisonDamageRatio * multiplier
+        this.target.takeDamage(damage, this, "poison", false, true, this.catalyticPoisonSource)
     }
 }
