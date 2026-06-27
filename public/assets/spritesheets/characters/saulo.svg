@@ -1,0 +1,632 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="saulo-suit" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#394041" />
+      <stop offset="0.62" stop-color="#22282a" />
+      <stop offset="1" stop-color="#111617" />
+    </linearGradient>
+    <linearGradient id="saulo-skin" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#f0eee7" />
+      <stop offset="0.55" stop-color="#cfcfc7" />
+      <stop offset="1" stop-color="#92998f" />
+    </linearGradient>
+    <linearGradient id="saulo-glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7a9294" />
+      <stop offset="0.45" stop-color="#27383c" />
+      <stop offset="1" stop-color="#0b1012" />
+    </linearGradient>
+    <linearGradient id="saulo-poison" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#baff70" />
+      <stop offset="0.5" stop-color="#50d83c" />
+      <stop offset="1" stop-color="#137324" />
+    </linearGradient>
+    <radialGradient id="saulo-poison-glow" cx="45%" cy="28%" r="70%">
+      <stop offset="0" stop-color="#e8ff9b" stop-opacity="0.9" />
+      <stop offset="0.45" stop-color="#6cff52" stop-opacity="0.55" />
+      <stop offset="1" stop-color="#1ea73a" stop-opacity="0" />
+    </radialGradient>
+
+    <ellipse id="saulo-shadow" cx="32" cy="56" rx="13" ry="4.2" fill="#000" opacity="0.28" />
+
+    <g id="saulo-vapor-a">
+      <path d="M0,0 C-4,-4 5,-6 1,-10 C-2,-13 4,-15 2,-19" fill="none" stroke="#90ff68" stroke-width="1.4" stroke-linecap="round" opacity="0.55" />
+      <circle cx="4" cy="-13" r="1.5" fill="#b7ff7a" opacity="0.5" />
+    </g>
+    <g id="saulo-vapor-b">
+      <path d="M0,0 C4,-5 -3,-7 1,-12 C4,-15 -4,-17 -1,-21" fill="none" stroke="#90ff68" stroke-width="1.2" stroke-linecap="round" opacity="0.42" />
+      <circle cx="-3" cy="-15" r="1.2" fill="#b7ff7a" opacity="0.42" />
+    </g>
+
+    <g id="saulo-tank-back">
+      <ellipse cx="0" cy="0" rx="8" ry="5" fill="#233228" stroke="#0a130d" stroke-width="1.4" />
+      <rect x="-8" y="-2" width="16" height="27" rx="6" fill="url(#saulo-poison)" stroke="#0a130d" stroke-width="1.4" />
+      <path d="M-4,0 L-4,22" stroke="#d4ff8a" stroke-width="1.4" opacity="0.6" />
+      <path d="M4,1 L4,21" stroke="#0a4919" stroke-width="1.4" opacity="0.7" />
+      <ellipse cx="0" cy="7" rx="12" ry="17" fill="url(#saulo-poison-glow)" opacity="0.55" />
+      <rect x="-5" y="-8" width="10" height="6" rx="2" fill="#18211c" stroke="#0a130d" stroke-width="1" />
+    </g>
+    <g id="saulo-tank-side">
+      <rect x="-5" y="-12" width="10" height="29" rx="5" fill="url(#saulo-poison)" stroke="#0a130d" stroke-width="1.4" />
+      <path d="M-2,-8 L-2,14" stroke="#dbff8e" stroke-width="1.2" opacity="0.55" />
+      <path d="M3,-8 L3,14" stroke="#0b551c" stroke-width="1.1" opacity="0.75" />
+      <ellipse cx="0" cy="2" rx="8" ry="18" fill="url(#saulo-poison-glow)" opacity="0.42" />
+      <rect x="-4" y="-16" width="8" height="5" rx="2" fill="#17221b" stroke="#0a130d" stroke-width="1" />
+    </g>
+
+    <g id="saulo-torso-down">
+      <path d="M-12,-13 Q-4,-20 9,-15 Q16,-8 14,7 Q13,18 1,19 Q-10,18 -13,8 Q-17,-3 -12,-13 Z" fill="url(#saulo-suit)" stroke="#070a0b" stroke-width="1.5" />
+      <path d="M-9,-9 Q-1,-14 9,-10 Q12,-3 10,8 Q5,14 -5,12 Q-10,7 -11,-2 Z" fill="#4a5352" opacity="0.35" />
+      <path d="M-8,-13 Q-1,-18 7,-14" fill="none" stroke="#697270" stroke-width="1.3" opacity="0.55" />
+      <path d="M-13,-2 Q-5,1 11,0" fill="none" stroke="#0d1213" stroke-width="1.2" opacity="0.7" />
+    </g>
+    <g id="saulo-torso-up">
+      <path d="M-13,-13 Q-1,-19 11,-14 Q15,-5 13,8 Q9,19 -3,18 Q-13,16 -15,5 Q-16,-5 -13,-13 Z" fill="url(#saulo-suit)" stroke="#070a0b" stroke-width="1.5" />
+      <path d="M-7,-12 Q0,-16 9,-12 Q12,-6 10,6 Q4,12 -7,10 Q-11,4 -10,-4 Z" fill="#4b5350" opacity="0.28" />
+      <path d="M-10,-13 Q-1,-17 10,-13" fill="none" stroke="#68706e" stroke-width="1.2" opacity="0.45" />
+    </g>
+    <g id="saulo-torso-side">
+      <path d="M-13,-12 Q-2,-20 10,-13 Q14,-5 10,9 Q6,19 -6,18 Q-14,14 -14,3 Q-16,-6 -13,-12 Z" fill="url(#saulo-suit)" stroke="#070a0b" stroke-width="1.5" />
+      <path d="M-8,-10 Q0,-15 8,-10 Q10,-3 7,8 Q2,13 -6,11 Q-10,5 -10,-3 Z" fill="#4b5350" opacity="0.32" />
+      <path d="M-12,-11 Q-4,-17 8,-13" fill="none" stroke="#6b7471" stroke-width="1.2" opacity="0.5" />
+    </g>
+
+    <g id="saulo-head-down">
+      <path d="M-8,-7 Q-6,-15 1,-16 Q9,-14 10,-6 Q10,1 5,5 Q-2,8 -8,3 Q-11,-1 -8,-7 Z" fill="url(#saulo-skin)" stroke="#3e433d" stroke-width="1.2" />
+      <path d="M-7,-2 Q0,-7 8,-2 L6,5 Q0,9 -6,5 Z" fill="#1b2324" stroke="#050809" stroke-width="1" />
+      <ellipse cx="-3" cy="0" rx="3.4" ry="2.5" fill="url(#saulo-glass)" stroke="#050809" stroke-width="0.8" />
+      <ellipse cx="4" cy="0" rx="3.4" ry="2.5" fill="url(#saulo-glass)" stroke="#050809" stroke-width="0.8" />
+      <path d="M-1,2 Q1,1 3,2 L4,7 Q1,10 -2,7 Z" fill="#0f1515" stroke="#030505" stroke-width="0.8" />
+      <circle cx="-7" cy="5" r="3" fill="#151b1b" stroke="#050809" stroke-width="0.8" />
+      <circle cx="8" cy="5" r="3" fill="#151b1b" stroke="#050809" stroke-width="0.8" />
+      <path d="M-5,-11 Q0,-14 6,-11" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.35" />
+    </g>
+    <g id="saulo-head-up">
+      <path d="M-8,-6 Q-6,-14 1,-16 Q9,-14 10,-6 Q9,2 3,6 Q-4,7 -8,2 Q-11,-1 -8,-6 Z" fill="url(#saulo-skin)" stroke="#3e433d" stroke-width="1.2" />
+      <path d="M-7,0 Q0,4 8,0" fill="none" stroke="#6f786f" stroke-width="1.2" opacity="0.65" />
+      <path d="M-4,4 Q0,6 5,4" fill="none" stroke="#1b2420" stroke-width="1" opacity="0.8" />
+    </g>
+    <g id="saulo-head-side">
+      <path d="M-7,-7 Q-4,-15 3,-15 Q11,-12 11,-5 Q11,2 6,5 Q0,8 -6,3 Q-10,-1 -7,-7 Z" fill="url(#saulo-skin)" stroke="#3e433d" stroke-width="1.2" />
+      <path d="M1,-4 Q9,-6 11,0 L9,5 Q4,8 -1,4 Z" fill="#1b2324" stroke="#050809" stroke-width="1" />
+      <ellipse cx="5" cy="-1" rx="4.2" ry="2.8" fill="url(#saulo-glass)" stroke="#050809" stroke-width="0.8" />
+      <path d="M9,2 L14,5 Q15,8 12,10 L7,7 Z" fill="#0f1515" stroke="#030505" stroke-width="0.8" />
+      <circle cx="13" cy="8" r="2.8" fill="#151b1b" stroke="#050809" stroke-width="0.8" />
+      <path d="M-4,-11 Q0,-14 6,-12" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.32" />
+    </g>
+
+    <g id="saulo-arm">
+      <path d="M0,-1 Q-3,8 -2,16 Q-1,20 2,18 Q4,9 5,1 Z" fill="#1d2324" stroke="#080b0c" stroke-width="1.1" />
+      <ellipse cx="0" cy="19" rx="2.6" ry="3.2" fill="url(#saulo-skin)" stroke="#3e433d" stroke-width="0.8" />
+    </g>
+    <g id="saulo-leg">
+      <path d="M-2,-1 Q-4,7 -3,15 L-5,25 Q-2,28 2,26 L4,15 Q4,7 3,0 Z" fill="#171c1d" stroke="#070a0b" stroke-width="1.1" />
+      <path d="M-5,24 Q-1,27 6,25 Q7,29 1,30 Q-5,30 -8,27 Z" fill="#0d1112" />
+    </g>
+    <g id="saulo-leg-back">
+      <path d="M-2,0 Q-5,8 -4,16 L-6,25 Q-3,27 1,26 L3,15 Q4,7 3,0 Z" fill="#111617" stroke="#060808" stroke-width="1" opacity="0.9" />
+      <path d="M-6,24 Q-2,27 4,25 Q5,28 0,29 Q-6,29 -8,27 Z" fill="#090d0e" />
+    </g>
+
+    <g id="saulo-hose-down">
+      <path d="M13,6 C21,4 23,13 15,17 C8,21 7,12 1,10" fill="none" stroke="#172222" stroke-width="2.2" stroke-linecap="round" />
+      <path d="M13,6 C21,4 23,13 15,17" fill="none" stroke="#40514a" stroke-width="0.9" stroke-linecap="round" opacity="0.55" />
+    </g>
+    <g id="saulo-hose-up">
+      <path d="M10,3 C18,5 20,13 11,16 C4,18 2,10 -4,11" fill="none" stroke="#172222" stroke-width="2.2" stroke-linecap="round" />
+      <path d="M10,3 C18,5 20,13 11,16" fill="none" stroke="#40514a" stroke-width="0.9" stroke-linecap="round" opacity="0.55" />
+    </g>
+    <g id="saulo-hose-side">
+      <path d="M-3,-4 C6,-5 9,2 13,7 C16,12 12,16 6,15" fill="none" stroke="#172222" stroke-width="2.2" stroke-linecap="round" />
+      <path d="M-3,-4 C6,-5 9,2 13,7" fill="none" stroke="#40514a" stroke-width="0.9" stroke-linecap="round" opacity="0.55" />
+    </g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(28 29) rotate(3)" />
+    <use href="#saulo-leg" transform="translate(36 29) rotate(-3)" />
+    <use href="#saulo-torso-up" transform="translate(31 33) rotate(-5)" />
+    <use href="#saulo-tank-back" transform="translate(36 22) rotate(6)" />
+    <use href="#saulo-arm" transform="translate(21 30) rotate(12)" />
+    <use href="#saulo-arm" transform="translate(42 29) scale(-1 1) rotate(8)" />
+    <use href="#saulo-head-up" transform="translate(29 19) rotate(-7)" />
+    <use href="#saulo-vapor-a" transform="translate(42 17)" />
+  </svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.03 1) translate(-1 0)" />
+    <use href="#saulo-leg-back" transform="translate(28 30) rotate(2)" />
+    <use href="#saulo-leg" transform="translate(36 30) rotate(-2)" />
+    <use href="#saulo-torso-up" transform="translate(31 34) rotate(-5)" />
+    <use href="#saulo-tank-back" transform="translate(36 23) rotate(6)" />
+    <use href="#saulo-arm" transform="translate(21 31) rotate(10)" />
+    <use href="#saulo-arm" transform="translate(42 30) scale(-1 1) rotate(6)" />
+    <use href="#saulo-head-up" transform="translate(29 20) rotate(-7)" />
+    <use href="#saulo-vapor-b" transform="translate(43 16)" />
+  </svg>
+
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(31 29) rotate(2)" />
+    <use href="#saulo-leg" transform="translate(38 29) rotate(-5)" />
+    <use href="#saulo-tank-side" transform="translate(41 24) rotate(6)" />
+    <use href="#saulo-torso-side" transform="translate(33 33) scale(-1 1) rotate(5)" />
+    <use href="#saulo-arm" transform="translate(39 30) scale(-1 1) rotate(2)" />
+    <use href="#saulo-arm" transform="translate(25 31) rotate(12)" />
+    <use href="#saulo-head-side" transform="translate(27 19) scale(-1 1) rotate(5)" />
+    <use href="#saulo-hose-side" transform="translate(39 25) scale(-1 1)" />
+    <use href="#saulo-vapor-a" transform="translate(43 14)" />
+  </svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.03 1) translate(-1 0)" />
+    <use href="#saulo-leg-back" transform="translate(31 30) rotate(1)" />
+    <use href="#saulo-leg" transform="translate(38 30) rotate(-4)" />
+    <use href="#saulo-tank-side" transform="translate(41 25) rotate(5)" />
+    <use href="#saulo-torso-side" transform="translate(33 34) scale(-1 1) rotate(5)" />
+    <use href="#saulo-arm" transform="translate(39 31) scale(-1 1) rotate(0)" />
+    <use href="#saulo-arm" transform="translate(25 32) rotate(10)" />
+    <use href="#saulo-head-side" transform="translate(27 20) scale(-1 1) rotate(5)" />
+    <use href="#saulo-hose-side" transform="translate(39 26) scale(-1 1)" />
+    <use href="#saulo-vapor-b" transform="translate(43 14)" />
+  </svg>
+
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-tank-back" transform="translate(39 22) rotate(6)" />
+    <use href="#saulo-leg-back" transform="translate(28 29) rotate(2)" />
+    <use href="#saulo-leg" transform="translate(37 29) rotate(-2)" />
+    <use href="#saulo-torso-down" transform="translate(32 33) rotate(-4)" />
+    <use href="#saulo-arm" transform="translate(22 31) rotate(13)" />
+    <use href="#saulo-arm" transform="translate(43 30) scale(-1 1) rotate(7)" />
+    <use href="#saulo-head-down" transform="translate(31 20) rotate(-5)" />
+    <use href="#saulo-hose-down" transform="translate(30 21)" />
+    <use href="#saulo-vapor-a" transform="translate(45 16)" />
+  </svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.03 1) translate(-1 0)" />
+    <use href="#saulo-tank-back" transform="translate(39 23) rotate(6)" />
+    <use href="#saulo-leg-back" transform="translate(28 30) rotate(1)" />
+    <use href="#saulo-leg" transform="translate(37 30) rotate(-1)" />
+    <use href="#saulo-torso-down" transform="translate(32 34) rotate(-4)" />
+    <use href="#saulo-arm" transform="translate(22 32) rotate(11)" />
+    <use href="#saulo-arm" transform="translate(43 31) scale(-1 1) rotate(5)" />
+    <use href="#saulo-head-down" transform="translate(31 21) rotate(-5)" />
+    <use href="#saulo-hose-down" transform="translate(30 22)" />
+    <use href="#saulo-vapor-b" transform="translate(46 15)" />
+  </svg>
+
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(33 29) rotate(-2)" />
+    <use href="#saulo-leg" transform="translate(26 29) rotate(5)" />
+    <use href="#saulo-tank-side" transform="translate(23 24) rotate(-6)" />
+    <use href="#saulo-torso-side" transform="translate(31 33) rotate(-5)" />
+    <use href="#saulo-arm" transform="translate(25 30) rotate(-2)" />
+    <use href="#saulo-arm" transform="translate(39 31) scale(-1 1) rotate(-12)" />
+    <use href="#saulo-head-side" transform="translate(37 19) rotate(-5)" />
+    <use href="#saulo-hose-side" transform="translate(25 25)" />
+    <use href="#saulo-vapor-a" transform="translate(24 14)" />
+  </svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.03 1) translate(-1 0)" />
+    <use href="#saulo-leg-back" transform="translate(33 30) rotate(-1)" />
+    <use href="#saulo-leg" transform="translate(26 30) rotate(4)" />
+    <use href="#saulo-tank-side" transform="translate(23 25) rotate(-5)" />
+    <use href="#saulo-torso-side" transform="translate(31 34) rotate(-5)" />
+    <use href="#saulo-arm" transform="translate(25 31) rotate(0)" />
+    <use href="#saulo-arm" transform="translate(39 32) scale(-1 1) rotate(-10)" />
+    <use href="#saulo-head-side" transform="translate(37 20) rotate(-5)" />
+    <use href="#saulo-hose-side" transform="translate(25 26)" />
+    <use href="#saulo-vapor-b" transform="translate(24 14)" />
+  </svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.95 1) translate(2 0)" />
+    <use href="#saulo-leg-back" transform="translate(27 28) rotate(-10)" />
+    <use href="#saulo-leg" transform="translate(37 30) rotate(10)" />
+    <use href="#saulo-torso-up" transform="translate(31 33) rotate(-8)" />
+    <use href="#saulo-tank-back" transform="translate(37 22) rotate(10)" />
+    <use href="#saulo-arm" transform="translate(21 29) rotate(20)" />
+    <use href="#saulo-arm" transform="translate(43 30) scale(-1 1) rotate(-4)" />
+    <use href="#saulo-head-up" transform="translate(29 19) rotate(-9)" />
+    <use href="#saulo-vapor-a" transform="translate(43 16)" />
+  </svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1 1)" />
+    <use href="#saulo-leg-back" transform="translate(28 29) rotate(-4)" />
+    <use href="#saulo-leg" transform="translate(36 29) rotate(6)" />
+    <use href="#saulo-torso-up" transform="translate(31 32) rotate(-6)" />
+    <use href="#saulo-tank-back" transform="translate(37 21) rotate(8)" />
+    <use href="#saulo-arm" transform="translate(21 29) rotate(15)" />
+    <use href="#saulo-arm" transform="translate(43 30) scale(-1 1) rotate(1)" />
+    <use href="#saulo-head-up" transform="translate(29 18) rotate(-8)" />
+    <use href="#saulo-vapor-b" transform="translate(43 15)" />
+  </svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.05 1) translate(-2 0)" />
+    <use href="#saulo-leg-back" transform="translate(29 30) rotate(3)" />
+    <use href="#saulo-leg" transform="translate(35 28) rotate(-2)" />
+    <use href="#saulo-torso-up" transform="translate(32 34) rotate(-4)" />
+    <use href="#saulo-tank-back" transform="translate(36 23) rotate(5)" />
+    <use href="#saulo-arm" transform="translate(22 31) rotate(8)" />
+    <use href="#saulo-arm" transform="translate(42 29) scale(-1 1) rotate(8)" />
+    <use href="#saulo-head-up" transform="translate(30 20) rotate(-6)" />
+  </svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.08 1) translate(-2 0)" />
+    <use href="#saulo-leg-back" transform="translate(30 29) rotate(8)" />
+    <use href="#saulo-leg" transform="translate(34 30) rotate(-7)" />
+    <use href="#saulo-torso-up" transform="translate(32 35) rotate(-3)" />
+    <use href="#saulo-tank-back" transform="translate(36 24) rotate(3)" />
+    <use href="#saulo-arm" transform="translate(22 32) rotate(3)" />
+    <use href="#saulo-arm" transform="translate(42 31) scale(-1 1) rotate(14)" />
+    <use href="#saulo-head-up" transform="translate(30 21) rotate(-5)" />
+    <use href="#saulo-vapor-a" transform="translate(42 17)" />
+  </svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.02 1) translate(-1 0)" />
+    <use href="#saulo-leg-back" transform="translate(29 30) rotate(4)" />
+    <use href="#saulo-leg" transform="translate(35 29) rotate(-3)" />
+    <use href="#saulo-torso-up" transform="translate(32 34) rotate(-4)" />
+    <use href="#saulo-tank-back" transform="translate(36 23) rotate(4)" />
+    <use href="#saulo-arm" transform="translate(22 31) rotate(7)" />
+    <use href="#saulo-arm" transform="translate(42 30) scale(-1 1) rotate(9)" />
+    <use href="#saulo-head-up" transform="translate(30 20) rotate(-6)" />
+  </svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.98 1) translate(1 0)" />
+    <use href="#saulo-leg-back" transform="translate(28 29) rotate(-2)" />
+    <use href="#saulo-leg" transform="translate(36 29) rotate(4)" />
+    <use href="#saulo-torso-up" transform="translate(31 32) rotate(-6)" />
+    <use href="#saulo-tank-back" transform="translate(37 21) rotate(7)" />
+    <use href="#saulo-arm" transform="translate(21 29) rotate(13)" />
+    <use href="#saulo-arm" transform="translate(43 30) scale(-1 1) rotate(3)" />
+    <use href="#saulo-head-up" transform="translate(29 18) rotate(-8)" />
+    <use href="#saulo-vapor-b" transform="translate(43 15)" />
+  </svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.95 1) translate(2 0)" />
+    <use href="#saulo-leg-back" transform="translate(27 28) rotate(-9)" />
+    <use href="#saulo-leg" transform="translate(37 30) rotate(9)" />
+    <use href="#saulo-torso-up" transform="translate(31 33) rotate(-8)" />
+    <use href="#saulo-tank-back" transform="translate(37 22) rotate(10)" />
+    <use href="#saulo-arm" transform="translate(21 29) rotate(19)" />
+    <use href="#saulo-arm" transform="translate(43 30) scale(-1 1) rotate(-3)" />
+    <use href="#saulo-head-up" transform="translate(29 19) rotate(-9)" />
+  </svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.02 1) translate(-1 0)" />
+    <use href="#saulo-leg-back" transform="translate(28 30) rotate(2)" />
+    <use href="#saulo-leg" transform="translate(36 28) rotate(-5)" />
+    <use href="#saulo-torso-up" transform="translate(32 34) rotate(-4)" />
+    <use href="#saulo-tank-back" transform="translate(36 23) rotate(4)" />
+    <use href="#saulo-arm" transform="translate(22 31) rotate(6)" />
+    <use href="#saulo-arm" transform="translate(42 30) scale(-1 1) rotate(11)" />
+    <use href="#saulo-head-up" transform="translate(30 20) rotate(-6)" />
+    <use href="#saulo-vapor-a" transform="translate(42 17)" />
+  </svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1 1)" />
+    <use href="#saulo-leg-back" transform="translate(28 29) rotate(-4)" />
+    <use href="#saulo-leg" transform="translate(36 29) rotate(6)" />
+    <use href="#saulo-torso-up" transform="translate(31 32) rotate(-6)" />
+    <use href="#saulo-tank-back" transform="translate(37 21) rotate(8)" />
+    <use href="#saulo-arm" transform="translate(21 29) rotate(15)" />
+    <use href="#saulo-arm" transform="translate(43 30) scale(-1 1) rotate(1)" />
+    <use href="#saulo-head-up" transform="translate(29 18) rotate(-8)" />
+  </svg>
+
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.95 1) translate(2 0)" />
+    <use href="#saulo-leg-back" transform="translate(34 29) rotate(12)" />
+    <use href="#saulo-leg" transform="translate(29 28) rotate(-16)" />
+    <use href="#saulo-tank-side" transform="translate(42 23) rotate(10)" />
+    <use href="#saulo-torso-side" transform="translate(33 33) scale(-1 1) rotate(8)" />
+    <use href="#saulo-arm" transform="translate(39 29) scale(-1 1) rotate(16)" />
+    <use href="#saulo-arm" transform="translate(25 29) rotate(-7)" />
+    <use href="#saulo-head-side" transform="translate(26 18) scale(-1 1) rotate(8)" />
+    <use href="#saulo-hose-side" transform="translate(40 24) scale(-1 1)" />
+    <use href="#saulo-vapor-a" transform="translate(44 14)" />
+  </svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(33 30) rotate(8)" />
+    <use href="#saulo-leg" transform="translate(30 28) rotate(-10)" />
+    <use href="#saulo-tank-side" transform="translate(42 22) rotate(8)" />
+    <use href="#saulo-torso-side" transform="translate(33 32) scale(-1 1) rotate(6)" />
+    <use href="#saulo-arm" transform="translate(39 29) scale(-1 1) rotate(12)" />
+    <use href="#saulo-arm" transform="translate(25 30) rotate(-2)" />
+    <use href="#saulo-head-side" transform="translate(26 17) scale(-1 1) rotate(7)" />
+    <use href="#saulo-hose-side" transform="translate(40 23) scale(-1 1)" />
+  </svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.06 1) translate(-2 0)" />
+    <use href="#saulo-leg-back" transform="translate(32 30) rotate(1)" />
+    <use href="#saulo-leg" transform="translate(31 30) rotate(-3)" />
+    <use href="#saulo-tank-side" transform="translate(41 24) rotate(5)" />
+    <use href="#saulo-torso-side" transform="translate(33 34) scale(-1 1) rotate(4)" />
+    <use href="#saulo-arm" transform="translate(39 31) scale(-1 1) rotate(4)" />
+    <use href="#saulo-arm" transform="translate(25 32) rotate(6)" />
+    <use href="#saulo-head-side" transform="translate(27 20) scale(-1 1) rotate(5)" />
+    <use href="#saulo-hose-side" transform="translate(39 26) scale(-1 1)" />
+    <use href="#saulo-vapor-b" transform="translate(43 14)" />
+  </svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.1 1) translate(-3 0)" />
+    <use href="#saulo-leg-back" transform="translate(30 29) rotate(-9)" />
+    <use href="#saulo-leg" transform="translate(35 31) rotate(10)" />
+    <use href="#saulo-tank-side" transform="translate(40 25) rotate(2)" />
+    <use href="#saulo-torso-side" transform="translate(33 35) scale(-1 1) rotate(2)" />
+    <use href="#saulo-arm" transform="translate(39 32) scale(-1 1) rotate(-4)" />
+    <use href="#saulo-arm" transform="translate(25 33) rotate(12)" />
+    <use href="#saulo-head-side" transform="translate(28 21) scale(-1 1) rotate(3)" />
+    <use href="#saulo-hose-side" transform="translate(39 27) scale(-1 1)" />
+  </svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.02 1) translate(-1 0)" />
+    <use href="#saulo-leg-back" transform="translate(31 30) rotate(-2)" />
+    <use href="#saulo-leg" transform="translate(33 29) rotate(4)" />
+    <use href="#saulo-tank-side" transform="translate(41 24) rotate(4)" />
+    <use href="#saulo-torso-side" transform="translate(33 34) scale(-1 1) rotate(4)" />
+    <use href="#saulo-arm" transform="translate(39 31) scale(-1 1) rotate(3)" />
+    <use href="#saulo-arm" transform="translate(25 32) rotate(7)" />
+    <use href="#saulo-head-side" transform="translate(27 20) scale(-1 1) rotate(5)" />
+    <use href="#saulo-hose-side" transform="translate(39 26) scale(-1 1)" />
+    <use href="#saulo-vapor-a" transform="translate(43 15)" />
+  </svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(33 30) rotate(8)" />
+    <use href="#saulo-leg" transform="translate(30 28) rotate(-10)" />
+    <use href="#saulo-tank-side" transform="translate(42 22) rotate(8)" />
+    <use href="#saulo-torso-side" transform="translate(33 32) scale(-1 1) rotate(6)" />
+    <use href="#saulo-arm" transform="translate(39 29) scale(-1 1) rotate(12)" />
+    <use href="#saulo-arm" transform="translate(25 30) rotate(-2)" />
+    <use href="#saulo-head-side" transform="translate(26 17) scale(-1 1) rotate(7)" />
+    <use href="#saulo-hose-side" transform="translate(40 23) scale(-1 1)" />
+    <use href="#saulo-vapor-b" transform="translate(44 13)" />
+  </svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.95 1) translate(2 0)" />
+    <use href="#saulo-leg-back" transform="translate(34 29) rotate(12)" />
+    <use href="#saulo-leg" transform="translate(29 28) rotate(-16)" />
+    <use href="#saulo-tank-side" transform="translate(42 23) rotate(10)" />
+    <use href="#saulo-torso-side" transform="translate(33 33) scale(-1 1) rotate(8)" />
+    <use href="#saulo-arm" transform="translate(39 29) scale(-1 1) rotate(16)" />
+    <use href="#saulo-arm" transform="translate(25 29) rotate(-7)" />
+    <use href="#saulo-head-side" transform="translate(26 18) scale(-1 1) rotate(8)" />
+    <use href="#saulo-hose-side" transform="translate(40 24) scale(-1 1)" />
+  </svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.07 1) translate(-2 0)" />
+    <use href="#saulo-leg-back" transform="translate(31 30) rotate(-5)" />
+    <use href="#saulo-leg" transform="translate(34 31) rotate(7)" />
+    <use href="#saulo-tank-side" transform="translate(40 25) rotate(3)" />
+    <use href="#saulo-torso-side" transform="translate(33 35) scale(-1 1) rotate(2)" />
+    <use href="#saulo-arm" transform="translate(39 32) scale(-1 1) rotate(-1)" />
+    <use href="#saulo-arm" transform="translate(25 33) rotate(10)" />
+    <use href="#saulo-head-side" transform="translate(28 21) scale(-1 1) rotate(3)" />
+    <use href="#saulo-hose-side" transform="translate(39 27) scale(-1 1)" />
+    <use href="#saulo-vapor-a" transform="translate(43 15)" />
+  </svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(33 30) rotate(8)" />
+    <use href="#saulo-leg" transform="translate(30 28) rotate(-10)" />
+    <use href="#saulo-tank-side" transform="translate(42 22) rotate(8)" />
+    <use href="#saulo-torso-side" transform="translate(33 32) scale(-1 1) rotate(6)" />
+    <use href="#saulo-arm" transform="translate(39 29) scale(-1 1) rotate(12)" />
+    <use href="#saulo-arm" transform="translate(25 30) rotate(-2)" />
+    <use href="#saulo-head-side" transform="translate(26 17) scale(-1 1) rotate(7)" />
+    <use href="#saulo-hose-side" transform="translate(40 23) scale(-1 1)" />
+  </svg>
+
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.95 1) translate(2 0)" />
+    <use href="#saulo-tank-back" transform="translate(40 21) rotate(10)" />
+    <use href="#saulo-leg-back" transform="translate(27 28) rotate(-11)" />
+    <use href="#saulo-leg" transform="translate(38 30) rotate(12)" />
+    <use href="#saulo-torso-down" transform="translate(32 33) rotate(-7)" />
+    <use href="#saulo-arm" transform="translate(22 29) rotate(20)" />
+    <use href="#saulo-arm" transform="translate(44 30) scale(-1 1) rotate(-2)" />
+    <use href="#saulo-head-down" transform="translate(31 19) rotate(-8)" />
+    <use href="#saulo-hose-down" transform="translate(30 20)" />
+    <use href="#saulo-vapor-a" transform="translate(46 15)" />
+  </svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-tank-back" transform="translate(40 20) rotate(8)" />
+    <use href="#saulo-leg-back" transform="translate(28 29) rotate(-5)" />
+    <use href="#saulo-leg" transform="translate(37 29) rotate(7)" />
+    <use href="#saulo-torso-down" transform="translate(32 32) rotate(-5)" />
+    <use href="#saulo-arm" transform="translate(22 29) rotate(15)" />
+    <use href="#saulo-arm" transform="translate(44 30) scale(-1 1) rotate(3)" />
+    <use href="#saulo-head-down" transform="translate(31 18) rotate(-7)" />
+    <use href="#saulo-hose-down" transform="translate(30 19)" />
+  </svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.06 1) translate(-2 0)" />
+    <use href="#saulo-tank-back" transform="translate(39 22) rotate(5)" />
+    <use href="#saulo-leg-back" transform="translate(29 30) rotate(2)" />
+    <use href="#saulo-leg" transform="translate(36 28) rotate(-2)" />
+    <use href="#saulo-torso-down" transform="translate(32 34) rotate(-3)" />
+    <use href="#saulo-arm" transform="translate(22 31) rotate(8)" />
+    <use href="#saulo-arm" transform="translate(43 29) scale(-1 1) rotate(9)" />
+    <use href="#saulo-head-down" transform="translate(31 20) rotate(-5)" />
+    <use href="#saulo-hose-down" transform="translate(30 21)" />
+    <use href="#saulo-vapor-b" transform="translate(45 16)" />
+  </svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.1 1) translate(-3 0)" />
+    <use href="#saulo-tank-back" transform="translate(39 24) rotate(3)" />
+    <use href="#saulo-leg-back" transform="translate(30 29) rotate(9)" />
+    <use href="#saulo-leg" transform="translate(35 31) rotate(-9)" />
+    <use href="#saulo-torso-down" transform="translate(32 35) rotate(-2)" />
+    <use href="#saulo-arm" transform="translate(22 32) rotate(3)" />
+    <use href="#saulo-arm" transform="translate(43 31) scale(-1 1) rotate(15)" />
+    <use href="#saulo-head-down" transform="translate(31 21) rotate(-4)" />
+    <use href="#saulo-hose-down" transform="translate(30 22)" />
+  </svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.02 1) translate(-1 0)" />
+    <use href="#saulo-tank-back" transform="translate(39 22) rotate(4)" />
+    <use href="#saulo-leg-back" transform="translate(29 30) rotate(4)" />
+    <use href="#saulo-leg" transform="translate(36 29) rotate(-4)" />
+    <use href="#saulo-torso-down" transform="translate(32 34) rotate(-3)" />
+    <use href="#saulo-arm" transform="translate(22 31) rotate(7)" />
+    <use href="#saulo-arm" transform="translate(43 30) scale(-1 1) rotate(10)" />
+    <use href="#saulo-head-down" transform="translate(31 20) rotate(-5)" />
+    <use href="#saulo-hose-down" transform="translate(30 21)" />
+    <use href="#saulo-vapor-a" transform="translate(45 16)" />
+  </svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-tank-back" transform="translate(40 20) rotate(8)" />
+    <use href="#saulo-leg-back" transform="translate(28 29) rotate(-5)" />
+    <use href="#saulo-leg" transform="translate(37 29) rotate(7)" />
+    <use href="#saulo-torso-down" transform="translate(32 32) rotate(-5)" />
+    <use href="#saulo-arm" transform="translate(22 29) rotate(15)" />
+    <use href="#saulo-arm" transform="translate(44 30) scale(-1 1) rotate(3)" />
+    <use href="#saulo-head-down" transform="translate(31 18) rotate(-7)" />
+    <use href="#saulo-hose-down" transform="translate(30 19)" />
+    <use href="#saulo-vapor-b" transform="translate(46 14)" />
+  </svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.95 1) translate(2 0)" />
+    <use href="#saulo-tank-back" transform="translate(40 21) rotate(10)" />
+    <use href="#saulo-leg-back" transform="translate(27 28) rotate(-11)" />
+    <use href="#saulo-leg" transform="translate(38 30) rotate(12)" />
+    <use href="#saulo-torso-down" transform="translate(32 33) rotate(-7)" />
+    <use href="#saulo-arm" transform="translate(22 29) rotate(20)" />
+    <use href="#saulo-arm" transform="translate(44 30) scale(-1 1) rotate(-2)" />
+    <use href="#saulo-head-down" transform="translate(31 19) rotate(-8)" />
+    <use href="#saulo-hose-down" transform="translate(30 20)" />
+  </svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.07 1) translate(-2 0)" />
+    <use href="#saulo-tank-back" transform="translate(39 24) rotate(3)" />
+    <use href="#saulo-leg-back" transform="translate(30 29) rotate(7)" />
+    <use href="#saulo-leg" transform="translate(35 31) rotate(-7)" />
+    <use href="#saulo-torso-down" transform="translate(32 35) rotate(-2)" />
+    <use href="#saulo-arm" transform="translate(22 32) rotate(4)" />
+    <use href="#saulo-arm" transform="translate(43 31) scale(-1 1) rotate(14)" />
+    <use href="#saulo-head-down" transform="translate(31 21) rotate(-4)" />
+    <use href="#saulo-hose-down" transform="translate(30 22)" />
+    <use href="#saulo-vapor-a" transform="translate(45 16)" />
+  </svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-tank-back" transform="translate(40 20) rotate(8)" />
+    <use href="#saulo-leg-back" transform="translate(28 29) rotate(-5)" />
+    <use href="#saulo-leg" transform="translate(37 29) rotate(7)" />
+    <use href="#saulo-torso-down" transform="translate(32 32) rotate(-5)" />
+    <use href="#saulo-arm" transform="translate(22 29) rotate(15)" />
+    <use href="#saulo-arm" transform="translate(44 30) scale(-1 1) rotate(3)" />
+    <use href="#saulo-head-down" transform="translate(31 18) rotate(-7)" />
+    <use href="#saulo-hose-down" transform="translate(30 19)" />
+  </svg>
+
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.95 1) translate(2 0)" />
+    <use href="#saulo-leg-back" transform="translate(30 29) rotate(-12)" />
+    <use href="#saulo-leg" transform="translate(35 28) rotate(16)" />
+    <use href="#saulo-tank-side" transform="translate(22 23) rotate(-10)" />
+    <use href="#saulo-torso-side" transform="translate(31 33) rotate(-8)" />
+    <use href="#saulo-arm" transform="translate(25 29) rotate(-16)" />
+    <use href="#saulo-arm" transform="translate(39 29) scale(-1 1) rotate(7)" />
+    <use href="#saulo-head-side" transform="translate(38 18) rotate(-8)" />
+    <use href="#saulo-hose-side" transform="translate(24 24)" />
+    <use href="#saulo-vapor-a" transform="translate(23 14)" />
+  </svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(31 30) rotate(-8)" />
+    <use href="#saulo-leg" transform="translate(34 28) rotate(10)" />
+    <use href="#saulo-tank-side" transform="translate(22 22) rotate(-8)" />
+    <use href="#saulo-torso-side" transform="translate(31 32) rotate(-6)" />
+    <use href="#saulo-arm" transform="translate(25 29) rotate(-12)" />
+    <use href="#saulo-arm" transform="translate(39 30) scale(-1 1) rotate(2)" />
+    <use href="#saulo-head-side" transform="translate(38 17) rotate(-7)" />
+    <use href="#saulo-hose-side" transform="translate(24 23)" />
+  </svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.06 1) translate(-2 0)" />
+    <use href="#saulo-leg-back" transform="translate(32 30) rotate(-1)" />
+    <use href="#saulo-leg" transform="translate(33 30) rotate(3)" />
+    <use href="#saulo-tank-side" transform="translate(23 24) rotate(-5)" />
+    <use href="#saulo-torso-side" transform="translate(31 34) rotate(-4)" />
+    <use href="#saulo-arm" transform="translate(25 31) rotate(-4)" />
+    <use href="#saulo-arm" transform="translate(39 32) scale(-1 1) rotate(-6)" />
+    <use href="#saulo-head-side" transform="translate(37 20) rotate(-5)" />
+    <use href="#saulo-hose-side" transform="translate(25 26)" />
+    <use href="#saulo-vapor-b" transform="translate(24 14)" />
+  </svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.1 1) translate(-3 0)" />
+    <use href="#saulo-leg-back" transform="translate(34 29) rotate(9)" />
+    <use href="#saulo-leg" transform="translate(29 31) rotate(-10)" />
+    <use href="#saulo-tank-side" transform="translate(24 25) rotate(-2)" />
+    <use href="#saulo-torso-side" transform="translate(31 35) rotate(-2)" />
+    <use href="#saulo-arm" transform="translate(25 32) rotate(4)" />
+    <use href="#saulo-arm" transform="translate(39 33) scale(-1 1) rotate(-12)" />
+    <use href="#saulo-head-side" transform="translate(36 21) rotate(-3)" />
+    <use href="#saulo-hose-side" transform="translate(25 27)" />
+  </svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.02 1) translate(-1 0)" />
+    <use href="#saulo-leg-back" transform="translate(33 30) rotate(2)" />
+    <use href="#saulo-leg" transform="translate(31 29) rotate(-4)" />
+    <use href="#saulo-tank-side" transform="translate(23 24) rotate(-4)" />
+    <use href="#saulo-torso-side" transform="translate(31 34) rotate(-4)" />
+    <use href="#saulo-arm" transform="translate(25 31) rotate(-3)" />
+    <use href="#saulo-arm" transform="translate(39 32) scale(-1 1) rotate(-7)" />
+    <use href="#saulo-head-side" transform="translate(37 20) rotate(-5)" />
+    <use href="#saulo-hose-side" transform="translate(25 26)" />
+    <use href="#saulo-vapor-a" transform="translate(24 15)" />
+  </svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(31 30) rotate(-8)" />
+    <use href="#saulo-leg" transform="translate(34 28) rotate(10)" />
+    <use href="#saulo-tank-side" transform="translate(22 22) rotate(-8)" />
+    <use href="#saulo-torso-side" transform="translate(31 32) rotate(-6)" />
+    <use href="#saulo-arm" transform="translate(25 29) rotate(-12)" />
+    <use href="#saulo-arm" transform="translate(39 30) scale(-1 1) rotate(2)" />
+    <use href="#saulo-head-side" transform="translate(38 17) rotate(-7)" />
+    <use href="#saulo-hose-side" transform="translate(24 23)" />
+    <use href="#saulo-vapor-b" transform="translate(23 13)" />
+  </svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(0.95 1) translate(2 0)" />
+    <use href="#saulo-leg-back" transform="translate(30 29) rotate(-12)" />
+    <use href="#saulo-leg" transform="translate(35 28) rotate(16)" />
+    <use href="#saulo-tank-side" transform="translate(22 23) rotate(-10)" />
+    <use href="#saulo-torso-side" transform="translate(31 33) rotate(-8)" />
+    <use href="#saulo-arm" transform="translate(25 29) rotate(-16)" />
+    <use href="#saulo-arm" transform="translate(39 29) scale(-1 1) rotate(7)" />
+    <use href="#saulo-head-side" transform="translate(38 18) rotate(-8)" />
+    <use href="#saulo-hose-side" transform="translate(24 24)" />
+  </svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" transform="scale(1.07 1) translate(-2 0)" />
+    <use href="#saulo-leg-back" transform="translate(33 30) rotate(5)" />
+    <use href="#saulo-leg" transform="translate(30 31) rotate(-7)" />
+    <use href="#saulo-tank-side" transform="translate(24 25) rotate(-3)" />
+    <use href="#saulo-torso-side" transform="translate(31 35) rotate(-2)" />
+    <use href="#saulo-arm" transform="translate(25 32) rotate(1)" />
+    <use href="#saulo-arm" transform="translate(39 33) scale(-1 1) rotate(-10)" />
+    <use href="#saulo-head-side" transform="translate(36 21) rotate(-3)" />
+    <use href="#saulo-hose-side" transform="translate(25 27)" />
+    <use href="#saulo-vapor-a" transform="translate(24 15)" />
+  </svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden">
+    <use href="#saulo-shadow" />
+    <use href="#saulo-leg-back" transform="translate(31 30) rotate(-8)" />
+    <use href="#saulo-leg" transform="translate(34 28) rotate(10)" />
+    <use href="#saulo-tank-side" transform="translate(22 22) rotate(-8)" />
+    <use href="#saulo-torso-side" transform="translate(31 32) rotate(-6)" />
+    <use href="#saulo-arm" transform="translate(25 29) rotate(-12)" />
+    <use href="#saulo-arm" transform="translate(39 30) scale(-1 1) rotate(2)" />
+    <use href="#saulo-head-side" transform="translate(38 17) rotate(-7)" />
+    <use href="#saulo-hose-side" transform="translate(24 23)" />
+  </svg>
+</svg>

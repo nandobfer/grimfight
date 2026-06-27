@@ -153,6 +153,17 @@ describe("individual trait contracts", () => {
         expect(source).not.toContain("character.on(\"kill\"")
     })
 
+    it("Poisoner converts only poison damage into nervous system shock true damage", () => {
+        const source = readSource(join(traitDir, "PoisonerTrait.ts"))
+
+        expect(source).toContain("[2, { damageMultiplier: 0.2")
+        expect(source).toContain("[4, { damageMultiplier: 0.4")
+        expect(source).not.toContain("[3, { damageMultiplier")
+        expect(source).toContain("if (damageType !== \"poison\") return")
+        expect(source).toContain("target.takeDamage(extraDamage, character, \"true\", false, false, nervousSystemShockSource)")
+        expect(source).toContain("Nervous System Shock")
+    })
+
     it("Incendiary only burns the active target from a completed cast", () => {
         const source = readSource(join(traitDir, "IncendiaryTrait.ts"))
 

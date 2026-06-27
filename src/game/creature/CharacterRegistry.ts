@@ -33,6 +33,7 @@ import { Dranho } from "./classes/Dranho"
 import { Robilton } from "./classes/Robilton"
 import { Silvia } from "./classes/Silvia"
 import { Clover } from "./classes/Clover"
+import { Saulo } from "./classes/Saulo"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
 import { SpritesheetCreatureVisualDefinition, SvgSpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
@@ -115,3 +116,4 @@ CharacterRegistry.register("dranho", Dranho, SvgSpritesheetCreatureVisualDefinit
 CharacterRegistry.register("robilton", Robilton, SvgSpritesheetCreatureVisualDefinition.character("robilton"))
 CharacterRegistry.register("silvia", Silvia, SvgSpritesheetCreatureVisualDefinition.character("silvia"))
 CharacterRegistry.register("clover", Clover, SvgSpritesheetCreatureVisualDefinition.character("clover"))
+CharacterRegistry.register("saulo", Saulo, SvgSpritesheetCreatureVisualDefinition.character("saulo"))

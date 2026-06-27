@@ -73,14 +73,14 @@ export class TraitsRegistry {
     }
 }
 
-TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "vania", "laherce", "reno", "chichi", "clover"])
+TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "vania", "laherce", "reno", "chichi", "clover", "banguela"])
 TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud", "yue", "zairon", "dranho", "robilton", "silvia"])
-TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora", "ragnaros", "silvia"])
+TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora", "ragnaros", "silvia", "saulo"])
 TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "frank", "chichi", "robilton"])
 TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia", "freud", "fandral"])
 TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "helyna", "silvia", "clover"])
 TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula"])
-TraitsRegistry.register("Poisoner", PoisonerTrait, ["lizwan", "helyna", "laherce", "banguela"])
+TraitsRegistry.register("Poisoner", PoisonerTrait, ["lizwan", "saulo"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna", "rokmora", "fandral"])
 TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin", "yue", "fandral", "melisandre", "ragnaros"])
 TraitsRegistry.register("Noble", NobleTrait, ["maximus", "jadis", "statikk", "dracula", "arthas"])

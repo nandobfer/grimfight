@@ -142,6 +142,15 @@ A habilidade `Estrela de Nêutrons` canaliza uma estrela roxa crescente por uma 
 
 Todos os efeitos de Robilton são desenhados com `Phaser.GameObjects.Graphics`. Projéteis, hitboxes, tweens, timers e listeners de update/gamestate devem limpar explicitamente ao terminar, mudar a rodada, resetar stats ou destruir o personagem. As fórmulas puras de tempo de conjuração, dano, raio e força ficam em `src/game/creature/classes/RobiltonNeutronStar.ts` para manter a regra testável sem instanciar Phaser.
 
+### Saulo
+Saulo é um personagem jogável registrado como `saulo`, ligado às identidades de veneno e resistência colossal. Ele usa spritesheet SVG e portrait WebP próprios, nunca executa ataques básicos e transforma movimento em fonte principal de pressão no combate.
+
+Durante combate, Saulo mira sempre o inimigo válido mais distante. Quando alcança distância corpo a corpo, atravessa a célula do alvo até a borda oposta antes de trocar novamente para o inimigo mais distante. Se restar apenas um alvo válido, ele patrulha entre bordas opostas da célula desse alvo para atravessá-lo repetidamente e cobrir a área com veneno.
+
+Saulo não desvia de outras criaturas e pode atravessar unidades livremente, mas continua respeitando os limites da arena. Enquanto se move, emite nuvens temporárias de gás venenoso desenhadas com `Graphics`; inimigos dentro dessas nuvens recebem ou renovam um `Dot` venenoso creditado a Saulo, permitindo integração com damage chart e traits acionadas por dano causado.
+
+Ao conjurar, Saulo aplica `Hot` em si mesmo, recebe aumento temporário de velocidade e provoca o alvo atual usando o contrato de taunt da criatura. Nuvens de gás, timers de velocidade, referências de patrulha e efeitos temporários devem limpar ao sair de combate, resetar stats ou destruir o personagem.
+
 ### Silvia
 Silvia é uma personagem jogável registrada como `silvia`, ligada a magia arcana, feitiçaria e resistência colossal. Ela atua como tanque conjuradora de linha de frente, usando correntes mágicas para proteger aliados pressionados e manipular alvo inimigo.
 

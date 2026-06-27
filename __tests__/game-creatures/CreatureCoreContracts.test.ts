@@ -234,7 +234,7 @@ describe("Creature combat contracts", () => {
         expect(source).toContain("attacker.heal")
         expect(source).toContain("this.die()")
         expect(source).toContain("attacker.emit(\"kill\", this)")
-        expect(source).toContain("attacker.emit(\"dealt-damage\", this, finalDamage)")
+        expect(source).toContain("attacker.emit(\"dealt-damage\", this, finalDamage, type, source)")
         expect(source).toContain("this.emit(\"damage-taken\", finalDamage, attacker)")
         expect(source).toContain("attacker.emit(\"dealt-damage-crit\", this, finalDamage)")
     })

@@ -919,7 +919,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
 
         if (emit) {
-            attacker.emit("dealt-damage", this, finalDamage)
+            attacker.emit("dealt-damage", this, finalDamage, type, source)
             this.emit("damage-taken", finalDamage, attacker)
 
             if (crit) {

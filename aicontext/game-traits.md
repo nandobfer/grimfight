@@ -41,7 +41,7 @@ Holy é uma trait de personagens sagrados. Quando ativa, escuta casts e aplica c
 Noble é uma trait de personagens nobres. Quando ativa, escuta kills para conceder bônus temporários e remove listener no cleanup.
 
 ### Poisoner
-Poisoner é uma trait de personagens venenosos. Quando ativa, escuta dano causado para aplicar efeito adicional e remove listener no cleanup.
+Poisoner é uma trait de personagens venenosos. Quando ativa, escuta dano causado por personagens da composição e só reage quando o dano resolvido é venenoso, aplicando dano verdadeiro adicional no mesmo alvo como choque no sistema nervoso. O dano adicional não reemite o próprio evento de dano para evitar recursão, aparece no chart com fonte própria e o listener é removido no cleanup.
 
 ### Winter
 Winter é uma trait de personagens de gelo. Quando ativa, escuta dano causado para aplicar freeze ou efeito frio conforme stage atual e remove listener no cleanup.

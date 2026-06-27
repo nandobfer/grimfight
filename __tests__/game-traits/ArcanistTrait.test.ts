@@ -66,10 +66,10 @@ describe("Arcanist trait", () => {
     })
 
     it("activates stages from matching composition counts", () => {
-        const trait = new ArcanistTrait(["freud", "second", "third", "fourth"])
-        const stages = Array.from(trait.stages.keys()).sort((a, b) => a - b)
+        const stages = Array.from(new ArcanistTrait(["freud"]).stages.keys()).sort((a, b) => a - b)
         const firstStage = stages[0]
         const finalStage = stages[stages.length - 1]
+        const trait = new ArcanistTrait(Array.from({ length: finalStage }, (_, index) => `arcanist-${index}`))
 
         const firstStageCharacters = trait.comp.slice(0, firstStage)
         trait.startApplying(firstStageCharacters.map(namedCharacter))

@@ -1,16 +1,22 @@
 import { Character } from "../../creature/character/Character"
 import { Creature } from "../../creature/Creature"
+import { DamageType } from "../../ui/DamageNumbers"
 import { Trait } from "./Trait"
 
 type TraitBoosts = "damageMultiplier"
 
+type PoisonerStage = Record<TraitBoosts, number> & {
+    descriptionParams: string[]
+}
+
+const nervousSystemShockSource = "Nervous System Shock"
+
 export class PoisonerTrait extends Trait {
     name = "Poisoner"
-    description = "Enemies receive {0} additional damage when attacked by a poisoner"
-    stages: Map<number, Record<TraitBoosts, any>> = new Map([
-        [2, { damageMultiplier: 0.1, descriptionParams: ["10%"] }],
-        [3, { damageMultiplier: 0.2, descriptionParams: ["20%"] }],
-        [4, { damageMultiplier: 0.3, descriptionParams: ["30%"] }],
+    description = "Enemies hit by poison damage suffer {0} of that poison damage again as true damage from nervous system shock."
+    stages: Map<number, PoisonerStage> = new Map([
+        [2, { damageMultiplier: 0.2, descriptionParams: ["20%"] }],
+        [4, { damageMultiplier: 0.4, descriptionParams: ["40%"] }],
     ])
 
     constructor(comp: string[]) {
@@ -27,14 +33,16 @@ export class PoisonerTrait extends Trait {
             character.off("dealt-damage", previousHandler)
         }
 
-        const tickDamage = (target: Creature, damage: number) => {
+        const shockNervousSystem = (target: Creature, damage: number, damageType: DamageType) => {
+            if (damageType !== "poison") return
+
             const extraDamage = damage * values.damageMultiplier
-            target.takeDamage(extraDamage, character, "true", false, false, `${this.name} Bonus`)
+            target.takeDamage(extraDamage, character, "true", false, false, nervousSystemShockSource)
         }
 
-        character.eventHandlers.poisonerTrait = tickDamage
+        character.eventHandlers.poisonerTrait = shockNervousSystem
 
-        character.on("dealt-damage", tickDamage)
+        character.on("dealt-damage", shockNervousSystem)
         character.once("destroy", () => this.cleanup(character))
     }
 

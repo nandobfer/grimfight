@@ -40,5 +40,5 @@ export function calculateRobiltonBlackHolePullStrength(abilityPower: number): nu
 }
 
 export function calculateRobiltonGravityOrbDamage(abilityPower: number, stacks: number, multiplier = 1): number {
-    return Math.floor(safeNonNegative(stacks)) * safeNonNegative(abilityPower) * 0.12 * safeNonNegative(multiplier)
+    return Math.floor(safeNonNegative(stacks)) * safeNonNegative(abilityPower) * 0.3 * safeNonNegative(multiplier)
 }
