@@ -34,19 +34,22 @@ export class Silvia extends Character {
     baseAttackSpeed = 0.72
     baseAttackDamage = 20
     baseMaxMana = 90
-    baseMaxHealth = 450
+    baseMaxHealth = 425
     baseArmor = 10
 
     abilityName = "Correntes da Matriarca"
 
     private readonly activeFxCleanups = new Set<() => void>()
+    private readonly recentChainTargets = new Set<Creature>()
+    private passiveMaxHealthBonus = 0
+    private passiveAbilityPowerBonus = 0
 
     constructor(scene: Game, id: string) {
         super(scene, "silvia", id)
     }
 
     override getAbilityDescription(): string {
-        const passive = calculateSilviaPassiveBonuses(this.abilityPower, this.maxHealth)
+        const passive = calculateSilviaPassiveBonuses(this.getExternalAbilityPower(), this.getExternalMaxHealth())
         const damage = calculateSilviaChainDamage(this.abilityPower)
 
         return `Passiva: Silvia ganha [success.main:${Math.round(
@@ -57,16 +60,20 @@ export class Silvia extends Character {
 
 Ao conjurar [primary.main:${this.abilityName}], Silvia protege o aliado mais ferido, lançando duas correntes arcanas contra o inimigo que o ameaça. As correntes causam [info.main:${Math.round(
             damage
-        )} (135% AP)] de dano sombrio, puxam o alvo para frente de Silvia e o forçam a atacá-la.`
+        )} (135% AP)] de dano sombrio, puxam o alvo para frente de Silvia e o forçam a atacá-la. Se nenhum aliado estiver sob ameaça, Silvia prende o inimigo mais distante.`
     }
 
     override castAbility(multiplier = 1): boolean | void {
-        const target = this.getSilviaCastTarget()
+        const excludedTargets = multiplier !== 1 ? this.recentChainTargets : undefined
+        if (multiplier === 1) this.recentChainTargets.clear()
+
+        const target = this.getSilviaCastTarget(excludedTargets) ?? this.getSilviaCastTarget()
         if (!target) {
             this.target = undefined
             return false
         }
 
+        this.recentChainTargets.add(target)
         this.casting = true
         this.target = target
         this.updateFacingDirection()
@@ -78,8 +85,16 @@ Ao conjurar [primary.main:${this.abilityName}], Silvia protege o aliado mais fer
     override refreshStats(): void {
         super.refreshStats()
         this.cleanupActiveFx()
-        this.applyPassiveSnapshotBonuses()
+        this.recentChainTargets.clear()
+        this.passiveMaxHealthBonus = 0
+        this.passiveAbilityPowerBonus = 0
+        this.syncPassiveBonuses()
         this.gainMana(this.maxMana * 0.3)
+    }
+
+    override update(time: number, delta: number): void {
+        super.update(time, delta)
+        if (this.active) this.syncPassiveBonuses()
     }
 
     override destroy(fromScene?: boolean): void {
@@ -87,28 +102,38 @@ Ao conjurar [primary.main:${this.abilityName}], Silvia protege o aliado mais fer
         super.destroy(fromScene)
     }
 
-    private applyPassiveSnapshotBonuses(): void {
-        const snapshotAbilityPower = this.abilityPower
-        const snapshotMaxHealth = this.maxHealth
-        const bonuses = calculateSilviaPassiveBonuses(snapshotAbilityPower, snapshotMaxHealth)
+    private syncPassiveBonuses(): void {
+        const bonuses = calculateSilviaPassiveBonuses(this.getExternalAbilityPower(), this.getExternalMaxHealth())
+        const maxHealthDelta = bonuses.maxHealthBonus - this.passiveMaxHealthBonus
+        const abilityPowerDelta = bonuses.abilityPowerBonus - this.passiveAbilityPowerBonus
 
-        this.maxHealth += bonuses.maxHealthBonus
-        this.health += bonuses.maxHealthBonus
-        this.abilityPower += bonuses.abilityPowerBonus
-        this.resetUi()
+        if (Math.abs(maxHealthDelta) < 0.001 && Math.abs(abilityPowerDelta) < 0.001) return
+
+        this.maxHealth += maxHealthDelta
+        this.health = Phaser.Math.Clamp(this.health + maxHealthDelta, 0, this.maxHealth)
+        this.abilityPower += abilityPowerDelta
+        this.passiveMaxHealthBonus = bonuses.maxHealthBonus
+        this.passiveAbilityPowerBonus = bonuses.abilityPowerBonus
+        this.updateHealthUi()
     }
 
-    private getSilviaCastTarget(): Creature | undefined {
-        const threatenedAlly = this.getLowestHealthThreatenedAlly()
-        const protectorTarget = threatenedAlly ? this.getClosestEnemyTargeting(threatenedAlly) : undefined
+    private getExternalAbilityPower(): number {
+        return this.abilityPower - this.passiveAbilityPowerBonus
+    }
+
+    private getExternalMaxHealth(): number {
+        return this.maxHealth - this.passiveMaxHealthBonus
+    }
+
+    private getSilviaCastTarget(excludedTargets?: Set<Creature>): Creature | undefined {
+        const threatenedAlly = this.getLowestHealthThreatenedAlly(excludedTargets)
+        const protectorTarget = threatenedAlly ? this.getClosestEnemyTargeting(threatenedAlly, excludedTargets) : undefined
         if (protectorTarget) return protectorTarget
-        if (this.target?.active && this.target.canBeTargeted) return this.target
 
-        this.newTarget()
-        return this.target?.active && this.target.canBeTargeted ? this.target : undefined
+        return this.getFarthestEnemy(excludedTargets)
     }
 
-    private getLowestHealthThreatenedAlly(): Creature | undefined {
+    private getLowestHealthThreatenedAlly(excludedTargets?: Set<Creature>): Creature | undefined {
         const allies = this.team
             .getChildren(true, true)
             .filter((ally) => ally !== this && ally.active && ally.health > 0) as Creature[]
@@ -117,7 +142,7 @@ Ao conjurar [primary.main:${this.abilityName}], Silvia protege o aliado mais fer
         let chosenHealthFraction = Number.POSITIVE_INFINITY
 
         for (const ally of allies) {
-            if (!this.getClosestEnemyTargeting(ally)) continue
+            if (!this.getClosestEnemyTargeting(ally, excludedTargets)) continue
 
             const healthFraction = ally.maxHealth > 0 ? ally.health / ally.maxHealth : 1
             if (!chosen || healthFraction < chosenHealthFraction) {
@@ -129,10 +154,10 @@ Ao conjurar [primary.main:${this.abilityName}], Silvia protege o aliado mais fer
         return chosen
     }
 
-    private getClosestEnemyTargeting(ally: Creature): Creature | undefined {
+    private getClosestEnemyTargeting(ally: Creature, excludedTargets?: Set<Creature>): Creature | undefined {
         const enemies = this.getEnemyTeam()
             .getChildren(true, true)
-            .filter((enemy) => enemy.active && enemy.canBeTargeted && enemy.target === ally) as Creature[]
+            .filter((enemy) => !excludedTargets?.has(enemy) && enemy.active && enemy.canBeTargeted && enemy.target === ally) as Creature[]
 
         let chosen: Creature | undefined
         let chosenDistance = Number.POSITIVE_INFINITY
@@ -140,6 +165,25 @@ Ao conjurar [primary.main:${this.abilityName}], Silvia protege o aliado mais fer
         for (const enemy of enemies) {
             const distance = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y)
             if (!chosen || distance < chosenDistance) {
+                chosen = enemy
+                chosenDistance = distance
+            }
+        }
+
+        return chosen
+    }
+
+    private getFarthestEnemy(excludedTargets?: Set<Creature>): Creature | undefined {
+        const enemies = this.getEnemyTeam()
+            .getChildren(true, true)
+            .filter((enemy) => !excludedTargets?.has(enemy) && enemy.active && enemy.canBeTargeted) as Creature[]
+
+        let chosen: Creature | undefined
+        let chosenDistance = Number.NEGATIVE_INFINITY
+
+        for (const enemy of enemies) {
+            const distance = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y)
+            if (!chosen || distance > chosenDistance) {
                 chosen = enemy
                 chosenDistance = distance
             }

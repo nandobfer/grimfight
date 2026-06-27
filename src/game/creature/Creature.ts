@@ -252,6 +252,12 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.manaBar.setValue(0, this.maxMana)
     }
 
+    protected updateHealthUi() {
+        this.healthBar.redrawBg()
+        this.healthBar.setValue(this.health, this.maxHealth)
+        this.healthBar.setShield(this.shield, this.health, this.maxHealth)
+    }
+
     teleportTo(x: number, y: number) {
         this.setPosition(x, y)
         this.body.reset(x, y) // hard-sync body to sprite

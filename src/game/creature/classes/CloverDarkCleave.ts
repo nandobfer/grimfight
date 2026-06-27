@@ -3,13 +3,13 @@ export interface CloverPoint {
     y: number
 }
 
-export const CLOVER_DARK_CLEAVE_AD_RATIO = 1.4
+export const CLOVER_DARK_CLEAVE_AD_RATIO = 2
 export const CLOVER_DARK_CLEAVE_SPEED = 620
 export const CLOVER_DARK_CLEAVE_MIN_RANGE = 220
 export const CLOVER_DARK_CLEAVE_MAX_RANGE = 420
 export const CLOVER_DARK_CLEAVE_MIN_LENGTH = 74
 export const CLOVER_DARK_CLEAVE_MAX_LENGTH = 132
-export const CLOVER_DARK_CLEAVE_HIT_RADIUS = 18
+export const CLOVER_DARK_CLEAVE_HIT_RADIUS = 26
 export const CLOVER_DARK_CLEAVE_MAX_ANGLE_OFFSET = 0.28
 
 function safeNonNegative(value: number): number {

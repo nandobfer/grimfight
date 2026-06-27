@@ -3,6 +3,7 @@ import {
     calculateCloverDarkCleaveDamage,
     clampCloverDarkCleaveLength,
     clampCloverDarkCleaveRange,
+    CLOVER_DARK_CLEAVE_AD_RATIO,
     CLOVER_DARK_CLEAVE_HIT_RADIUS,
     CLOVER_DARK_CLEAVE_MAX_LENGTH,
     CLOVER_DARK_CLEAVE_MAX_RANGE,
@@ -19,6 +20,7 @@ describe("CloverDarkCleave", () => {
 
         expect(baseDamage).toBeGreaterThan(0)
         expect(Number.isFinite(baseDamage)).toBe(true)
+        expect(baseDamage).toBeCloseTo(30 * CLOVER_DARK_CLEAVE_AD_RATIO)
         expect(doubledDamage).toBeCloseTo(baseDamage * 2)
         expect(calculateCloverDarkCleaveDamage(-10)).toBe(0)
         expect(calculateCloverDarkCleaveDamage(Number.NaN)).toBe(0)
@@ -42,5 +44,12 @@ describe("CloverDarkCleave", () => {
         expect(distancePointToSegment({ x: 50, y: 12 }, start, end)).toBeCloseTo(12)
         expect(doesCloverDarkCleaveSegmentHit({ x: 50, y: CLOVER_DARK_CLEAVE_HIT_RADIUS - 1 }, start, end)).toBe(true)
         expect(doesCloverDarkCleaveSegmentHit({ x: 50, y: CLOVER_DARK_CLEAVE_HIT_RADIUS + 8 }, start, end)).toBe(false)
+    })
+
+    it("keeps enough lateral tolerance for the target hit point", () => {
+        const start = { x: 0, y: 0 }
+        const end = { x: 120, y: 28 }
+
+        expect(doesCloverDarkCleaveSegmentHit({ x: 72, y: 2 }, start, end)).toBe(true)
     })
 })

@@ -41,7 +41,7 @@ export class Clover extends Character {
     override getAbilityDescription(): string {
         return `Clover drives his greatsword down and fires a dark energy cleave through his current target. The cleave pierces enemies, dealing [error.main:${Math.round(
             calculateCloverDarkCleaveDamage(this.attackDamage)
-        )} (140% AD)] dark damage to each enemy hit.`
+        )} (200% AD)] dark damage to each enemy hit.`
     }
 
     override castAbility(multiplier = 1): boolean | void {
@@ -62,7 +62,16 @@ export class Clover extends Character {
         if (this.target?.active && this.target.canBeTargeted) return this.target
 
         this.newTarget()
-        return this.target?.active && this.target.canBeTargeted ? this.target : undefined
+        if (this.target?.active && this.target.canBeTargeted) return this.target
+
+        const fallbackTarget = this.getClosestEnemy()
+        if (fallbackTarget?.active && fallbackTarget.canBeTargeted) {
+            this.target = fallbackTarget
+            this.updateFacingDirection()
+            return fallbackTarget
+        }
+
+        return undefined
     }
 
     private playCastingAnimation(): void {
@@ -87,7 +96,6 @@ export class Clover extends Character {
         let cleaned = false
         let wallCollider: Phaser.Physics.Arcade.Collider | undefined
         let lifespanTimer: Phaser.Time.TimerEvent | undefined
-        let light: Phaser.GameObjects.Light | undefined
 
         this.scene.perRoundFx.add(hitbox)
         this.scene.perRoundFx.add(graphic)
@@ -105,10 +113,6 @@ export class Clover extends Character {
         body.setCircle(darkCleaveHitboxSize / 2)
         this.scene.physics.velocityFromRotation(angle, CLOVER_DARK_CLEAVE_SPEED, body.velocity)
 
-        if (this.scene.lights) {
-            light = this.scene.lights.addLight(origin.x, origin.y, 54, darkCleaveGlowColor, 1.6)
-        }
-
         const cleanup = (destroyHitbox = true, destroyGraphic = true) => {
             if (cleaned) return
             cleaned = true
@@ -123,10 +127,6 @@ export class Clover extends Character {
             lifespanTimer?.remove(false)
             lifespanTimer = undefined
 
-            if (light) {
-                this.scene.lights.removeLight(light)
-                light = undefined
-            }
             if (destroyHitbox && hitbox.active) hitbox.destroy(true)
             if (destroyGraphic && graphic.active) graphic.destroy(true)
 
@@ -162,7 +162,6 @@ export class Clover extends Character {
             hitbox.setPosition(front.x, front.y)
             body.reset(front.x, front.y)
             body.setVelocity(direction.x * CLOVER_DARK_CLEAVE_SPEED, direction.y * CLOVER_DARK_CLEAVE_SPEED)
-            light?.setPosition((front.x + back.x) / 2, (front.y + back.y) / 2)
             this.drawDarkCleave(graphic, back, front, normal, length, elapsed)
             this.hitEnemiesTouchingSegment(back, front, hitEnemy)
 
@@ -200,16 +199,20 @@ export class Clover extends Character {
                 x: origin.x + Math.cos(angle) * Math.max(distance + CLOVER_DARK_CLEAVE_HIT_RADIUS * 2, CLOVER_DARK_CLEAVE_MIN_RANGE),
                 y: origin.y + Math.sin(angle) * Math.max(distance + CLOVER_DARK_CLEAVE_HIT_RADIUS * 2, CLOVER_DARK_CLEAVE_MIN_RANGE),
             }
-            if (doesCloverDarkCleaveSegmentHit({ x: target.x, y: target.y }, origin, end)) return angle
+            if (doesCloverDarkCleaveSegmentHit(this.getDarkCleaveHitPoint(target), origin, end)) return angle
         }
 
         return baseAngle
     }
 
+    private getDarkCleaveHitPoint(creature: Creature): { x: number; y: number } {
+        return { x: creature.x, y: creature.y - 14 }
+    }
+
     private hitEnemiesTouchingSegment(start: { x: number; y: number }, end: { x: number; y: number }, hitEnemy: (enemy: Creature) => void): void {
         for (const enemy of this.getEnemyTeam().getChildren(true, true)) {
             if (!enemy.active || !enemy.canBeTargeted) continue
-            if (doesCloverDarkCleaveSegmentHit({ x: enemy.x, y: enemy.y - 14 }, start, end)) hitEnemy(enemy)
+            if (doesCloverDarkCleaveSegmentHit(this.getDarkCleaveHitPoint(enemy), start, end)) hitEnemy(enemy)
         }
     }
 

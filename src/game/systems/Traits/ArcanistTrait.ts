@@ -13,6 +13,7 @@ export class ArcanistTrait extends Trait {
     stages: Map<number, ArcanistStage> = new Map([
         [2, { apMultiplier: 0.05, delay: 5000, descriptionParams: ["5%", "5"] }],
         [4, { apMultiplier: 0.05, delay: 2000, descriptionParams: ["5%", "2"] }],
+        [6, { apMultiplier: 0.05, delay: 1000, descriptionParams: ["5%", "1"] }],
     ])
 
     constructor(comp: string[]) {
