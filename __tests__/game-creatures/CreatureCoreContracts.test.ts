@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs"
 import { join } from "node:path"
 
 const creaturePath = join(process.cwd(), "src/game/creature/Creature.ts")
+const creatureResourcesPath = join(process.cwd(), "src/game/creature/CreatureResources.ts")
 const contextPath = join(process.cwd(), "aicontext/game-creature-core.md")
 
 function readSource(path: string) {
@@ -28,6 +29,7 @@ describe("Creature core aicontext", () => {
             "### Combat",
             "### Damage Healing And Shield",
             "### Mana And Casting",
+            "### Resource Modes",
             "### Death And Wipe",
             "### Items",
             "### Auras And Status Effects",
@@ -269,6 +271,22 @@ describe("Creature mana, death, item, aura, and update contracts", () => {
         expect(source).toContain("const didCast = this.castAbility()")
         expect(source).toContain("if (didCast === false) return")
         expect(source).toContain("this.emit(\"cast\")")
+    })
+
+    it("supports opt-in rage and energy resource modes without replacing mana defaults", () => {
+        const source = creatureSource()
+        const resourceSource = readSource(creatureResourcesPath)
+
+        expect(source).toContain('export type CreatureResourceType = "mana" | "rage" | "energy"')
+        expect(source).toContain('resourceType: CreatureResourceType = "mana"')
+        expect(source).toContain('setResourceType(resourceType: CreatureResourceType)')
+        expect(source).toContain('if (this.resourceType !== "mana") return')
+        expect(source).toContain('gainRage(rageGained: number)')
+        expect(source).toContain('gainEnergy(energyGained: number)')
+        expect(source).toContain('regenEnergy(delta: number)')
+        expect(source).toContain('this.regenEnergy(delta)')
+        expect(source).toContain('calculateRageFromDamageTaken(finalDamage, this.maxHealth, this.maxRage)')
+        expect(resourceSource).toContain('calculateRageFromDamageTaken')
     })
 
     it("handles death, revive, wipe checks, and death FX lifecycle hooks", () => {

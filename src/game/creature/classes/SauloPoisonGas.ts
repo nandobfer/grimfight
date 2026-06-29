@@ -17,7 +17,7 @@ export interface SauloGridCell {
     row: number
 }
 
-export const SAULO_GAS_CLOUD_DURATION_MS = 1000
+export const SAULO_GAS_CLOUD_DURATION_MS = 2000
 export const SAULO_GAS_EMIT_INTERVAL_MS = 180
 export const SAULO_GAS_EMIT_DISTANCE = 22
 export const SAULO_GAS_RADIUS = 42

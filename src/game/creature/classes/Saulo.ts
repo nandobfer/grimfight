@@ -71,13 +71,13 @@ export class Saulo extends Character {
         const healing = calculateSauloOverdriveHealing(this.maxHealth)
         const speedBoost = calculateSauloSpeedBoost(this.speed)
 
-        return `Saulo não ataca. Ele atravessa o combate perseguindo sempre o inimigo mais distante e deixa para trás nuvens de gás venenoso que duram brevemente, aplicando veneno em inimigos dentro da área por [success.main:${Math.round(
+        return `Saulo não ataca. Ele atravessa o combate perseguindo sempre o inimigo mais distante e deixa para trás nuvens de gás venenoso que duram brevemente, aplicando veneno em inimigos dentro da área por [info.main:${Math.round(
             tickDamage
         )} (11% AP)] de dano por tick.
 
 Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [success.main:${Math.round(
             healing
-        )} (22% vida máxima)] ao longo de 5 segundos, ganha [success.main:${Math.round(speedBoost)} de velocidade] temporária e provoca o alvo atual.`
+        )} (22% vida máxima)] ao longo de 5 segundos, ganha [primary.main:${Math.round(speedBoost)} de velocidade] temporária e provoca o alvo atual.`
     }
 
     override newTarget(): void {

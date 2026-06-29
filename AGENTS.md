@@ -97,6 +97,7 @@ Antes de implementar, leia nesta ordem:
 - Traits, auras, augments e itens devem aplicar e limpar modificadores de forma previsível para não acumular bônus indevidos entre rounds.
 - Ao mexer em stats, considere impacto em CR, escalonamento infinito, boss floors, itens inimigos e power spikes do jogador.
 - Ao criar habilidade, priorize clareza de telegraph, feedback visual, cleanup e comportamento consistente com alvo, range, mana e estado da unidade.
+- Em descrições tokenizadas de habilidades, use `info.main` para mágico/AP, `error.main` para físico/AD, `success.main` para tank/vida e `primary.main` para destaques semânticos como nomes de habilidades, efeitos-chave ou ênfase textual. Inclua os ratios relevantes junto dos valores calculados, seguindo o padrão de `Lizwan.ts`. A descrição da habilidade deve ser imersiva para o jogador, sem expor terminologia técnica de código (como "raw damage before mitigation").
 - Se o usuário solicitar criação, alteração, análise ou revisão de balanceamento, leia obrigatoriamente `aicontext/game-balance.md` antes de propor ou editar regras de gameplay.
 - Defina fórmulas e valores de balanceamento no código de regra apropriado, preferencialmente em funções puras ou constantes nomeadas próximas da classe/sistema que as usa.
 - Ao documentar fórmulas em `aicontext/`, descreva o comportamento de forma generalizada e evite registrar percentuais, durações, thresholds, ratios, valores de stats ou fórmulas exatas que possam mudar por balanceamento.

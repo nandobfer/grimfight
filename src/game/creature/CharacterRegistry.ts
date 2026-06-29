@@ -10,7 +10,7 @@ import { Rogue } from "./classes/Mordred"
 import { Sorcerer } from "./classes/Sorcerer"
 import { Statikk } from "./classes/Statikk"
 import { Necromancer } from "./classes/Necromancer"
-import { Helyna } from "./classes/Druid"
+import { Helyna } from "./classes/Helyna"
 import { Arthas } from "./classes/Arthas"
 import { Vania } from "./classes/Vania"
 import { Banguela } from "./classes/Banguela"
@@ -34,6 +34,8 @@ import { Robilton } from "./classes/Robilton"
 import { Silvia } from "./classes/Silvia"
 import { Clover } from "./classes/Clover"
 import { Saulo } from "./classes/Saulo"
+import { Lucio } from "./classes/Lucio"
+import { Nala } from "./classes/Nala"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
 import { SpritesheetCreatureVisualDefinition, SvgSpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
@@ -117,3 +119,5 @@ CharacterRegistry.register("robilton", Robilton, SvgSpritesheetCreatureVisualDef
 CharacterRegistry.register("silvia", Silvia, SvgSpritesheetCreatureVisualDefinition.character("silvia"))
 CharacterRegistry.register("clover", Clover, SvgSpritesheetCreatureVisualDefinition.character("clover"))
 CharacterRegistry.register("saulo", Saulo, SvgSpritesheetCreatureVisualDefinition.character("saulo"))
+CharacterRegistry.register("lucio", Lucio, SvgSpritesheetCreatureVisualDefinition.character("lucio"))
+CharacterRegistry.register("nala", Nala, SvgSpritesheetCreatureVisualDefinition.character("nala"))

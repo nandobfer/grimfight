@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="nala-scales" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f8f3a" />
+      <stop offset="0.55" stop-color="#3f6b2b" />
+      <stop offset="1" stop-color="#1d3d1d" />
+    </linearGradient>
+    <linearGradient id="nala-belly" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b6c76c" />
+      <stop offset="1" stop-color="#71843d" />
+    </linearGradient>
+    <linearGradient id="nala-leather" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e4a31" />
+      <stop offset="0.6" stop-color="#102f22" />
+      <stop offset="1" stop-color="#071713" />
+    </linearGradient>
+    <linearGradient id="nala-wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a5a2b" />
+      <stop offset="1" stop-color="#3c2412" />
+    </linearGradient>
+    <radialGradient id="nala-venom" cx="45%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#d9ff70" />
+      <stop offset="0.5" stop-color="#72d63c" />
+      <stop offset="1" stop-color="#15451c" stop-opacity="0" />
+    </radialGradient>
+
+    <ellipse id="nala-shadow" cx="32" cy="56" rx="16" ry="4.5" fill="#000000" opacity="0.3" />
+    <path id="nala-spark" d="M0 -4 L1.4 -1.4 L4 0 L1.4 1.4 L0 4 L-1.4 1.4 L-4 0 L-1.4 -1.4 Z" fill="#b8ff5a" opacity="0.88" />
+    <g id="nala-arrow"><path d="M0 0 L18 0" stroke="#d7c184" stroke-width="1.4" stroke-linecap="round" /><path d="M18 0 L14 -2.5 L15 0 L14 2.5 Z" fill="#d7e5a0" stroke="#34441d" stroke-width="0.5" /></g>
+    <g id="nala-bow"><path d="M0 -14 Q-7 0 0 14" fill="none" stroke="url(#nala-wood)" stroke-width="3" stroke-linecap="round" /><path d="M0 -13 Q5 0 0 13" fill="none" stroke="#d9c796" stroke-width="0.8" opacity="0.85" /></g>
+    <g id="nala-venom-burst"><circle cx="0" cy="0" r="8" fill="url(#nala-venom)" opacity="0.75" /><use href="#nala-spark" transform="translate(-7 -3) scale(0.75)" /><use href="#nala-spark" transform="translate(7 3) scale(0.6)" /></g>
+
+    <g id="nala-tail-down-neutral">
+      <path d="M18 51 C25 42 40 42 46 50 C42 57 24 58 18 51 Z" fill="url(#nala-scales)" stroke="#112d17" stroke-width="1.4" />
+      <path d="M24 51 C30 48 38 48 42 51" fill="none" stroke="url(#nala-belly)" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+    </g>
+    <g id="nala-tail-down-step-a"><path d="M16 51 C25 40 43 43 48 51 C41 57 24 58 16 51 Z" fill="url(#nala-scales)" stroke="#112d17" stroke-width="1.4" /><path d="M23 51 C31 47 40 48 44 51" fill="none" stroke="url(#nala-belly)" stroke-width="2" stroke-linecap="round" opacity="0.8" /></g>
+    <g id="nala-tail-down-step-b"><path d="M20 51 C26 44 38 39 46 48 C44 57 24 58 20 51 Z" fill="url(#nala-scales)" stroke="#112d17" stroke-width="1.4" /><path d="M25 51 C31 48 38 47 42 49" fill="none" stroke="url(#nala-belly)" stroke-width="2" stroke-linecap="round" opacity="0.8" /></g>
+    <g id="nala-tail-up-neutral"><use href="#nala-tail-down-neutral" /><path d="M20 46 C14 39 16 31 25 29" fill="none" stroke="#244f24" stroke-width="5" stroke-linecap="round" /><path d="M22 45 C18 39 19 34 26 32" fill="none" stroke="#71843d" stroke-width="1.5" stroke-linecap="round" opacity="0.8" /></g>
+    <g id="nala-tail-up-step-a"><use href="#nala-tail-down-step-a" /><path d="M20 46 C12 39 15 30 26 29" fill="none" stroke="#244f24" stroke-width="5" stroke-linecap="round" /></g>
+    <g id="nala-tail-up-step-b"><use href="#nala-tail-down-step-b" /><path d="M44 46 C51 39 48 31 39 29" fill="none" stroke="#244f24" stroke-width="5" stroke-linecap="round" /></g>
+    <g id="nala-tail-left-neutral"><path d="M17 51 C25 45 39 45 49 51 C42 56 25 57 17 51 Z" fill="url(#nala-scales)" stroke="#112d17" stroke-width="1.4" /><path d="M23 51 C31 48 40 48 45 51" fill="none" stroke="url(#nala-belly)" stroke-width="2" stroke-linecap="round" opacity="0.8" /></g>
+    <g id="nala-tail-left-step-a"><path d="M13 51 C22 43 39 45 51 51 C42 57 24 57 13 51 Z" fill="url(#nala-scales)" stroke="#112d17" stroke-width="1.4" /><path d="M22 51 C31 48 41 48 46 51" fill="none" stroke="url(#nala-belly)" stroke-width="2" stroke-linecap="round" opacity="0.8" /></g>
+    <g id="nala-tail-left-step-b"><path d="M20 51 C27 45 42 43 52 49 C45 57 27 58 20 51 Z" fill="url(#nala-scales)" stroke="#112d17" stroke-width="1.4" /><path d="M25 51 C34 48 42 47 47 50" fill="none" stroke="url(#nala-belly)" stroke-width="2" stroke-linecap="round" opacity="0.8" /></g>
+    <g id="nala-tail-right-neutral"><use href="#nala-tail-left-neutral" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="nala-tail-right-step-a"><use href="#nala-tail-left-step-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="nala-tail-right-step-b"><use href="#nala-tail-left-step-b" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="nala-torso-down"><path d="M21 28 Q32 19 43 28 L40 45 Q32 49 24 45 Z" fill="url(#nala-leather)" stroke="#06130e" stroke-width="1.4" /><path d="M26 29 L38 29 L36 43 L28 43 Z" fill="#1f5b36" opacity="0.55" /><path d="M24 36 H40" stroke="#081a12" stroke-width="2" stroke-linecap="round" /></g>
+    <g id="nala-torso-up"><path d="M21 28 Q32 19 43 28 L40 45 Q32 49 24 45 Z" fill="#123323" stroke="#06130e" stroke-width="1.4" /><path d="M24 31 Q32 26 40 31" fill="none" stroke="#2d6743" stroke-width="1.5" opacity="0.7" /></g>
+    <g id="nala-torso-left"><path d="M21 29 Q30 20 42 27 L43 45 Q32 50 22 45 Z" fill="url(#nala-leather)" stroke="#06130e" stroke-width="1.4" /><path d="M25 31 Q33 34 40 31" fill="none" stroke="#2f7a49" stroke-width="1.5" opacity="0.6" /></g>
+    <g id="nala-torso-right"><use href="#nala-torso-left" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="nala-head-down"><path d="M24 20 Q24 12 32 10 Q40 12 40 20 Q39 28 32 30 Q25 28 24 20 Z" fill="url(#nala-scales)" stroke="#143017" stroke-width="1" /><path d="M24 18 Q27 10 32 9 Q38 10 41 18 Q35 16 32 16 Q28 16 24 18 Z" fill="#050505" /><ellipse cx="29" cy="21" rx="1.1" ry="1.6" fill="#f4d34d" /><ellipse cx="35" cy="21" rx="1.1" ry="1.6" fill="#f4d34d" /><path d="M31 25 Q32 26 33 25" fill="none" stroke="#183516" stroke-width="1" stroke-linecap="round" /></g>
+    <g id="nala-head-up"><path d="M24 21 Q24 13 32 10 Q40 13 40 21 Q38 28 32 30 Q26 28 24 21 Z" fill="#38652b" stroke="#143017" stroke-width="1" /><path d="M23 20 Q28 10 33 8 Q39 11 41 20 Q35 17 32 17 Q28 17 23 20 Z" fill="#050505" /></g>
+    <g id="nala-head-left"><path d="M24 21 Q25 13 33 10 Q40 13 39 22 Q36 29 29 30 Q24 27 24 21 Z" fill="url(#nala-scales)" stroke="#143017" stroke-width="1" /><path d="M24 19 Q28 10 34 9 Q40 13 40 21 Q34 17 31 17 Q28 17 24 19 Z" fill="#050505" /><ellipse cx="28" cy="22" rx="1.1" ry="1.6" fill="#f4d34d" /></g>
+    <g id="nala-head-right"><use href="#nala-head-left" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="nala-ponytail-down"><path d="M37 13 Q49 17 45 30 Q41 38 35 29 Q42 23 37 13 Z" fill="#050505" stroke="#000000" stroke-width="0.8" /></g>
+    <g id="nala-ponytail-up"><path d="M27 13 Q15 17 19 30 Q23 38 29 29 Q22 23 27 13 Z" fill="#050505" stroke="#000000" stroke-width="0.8" /></g>
+    <g id="nala-ponytail-left"><path d="M36 13 Q47 18 43 30 Q39 38 33 28 Q40 23 36 13 Z" fill="#050505" stroke="#000000" stroke-width="0.8" /></g>
+    <g id="nala-ponytail-right"><use href="#nala-ponytail-left" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="nala-arms-down"><path d="M22 30 L15 40 Q15 44 19 45 L27 33 Z" fill="url(#nala-scales)" stroke="#143017" stroke-width="1" /><path d="M42 30 L49 40 Q49 44 45 45 L37 33 Z" fill="url(#nala-scales)" stroke="#143017" stroke-width="1" /><use href="#nala-bow" transform="translate(47 36) rotate(14)" /></g>
+    <g id="nala-arms-up"><path d="M22 30 L15 39 Q15 43 19 44 L27 33 Z" fill="#38652b" stroke="#143017" stroke-width="1" /><path d="M42 30 L49 39 Q49 43 45 44 L37 33 Z" fill="#38652b" stroke="#143017" stroke-width="1" /><use href="#nala-bow" transform="translate(46 34) rotate(-165)" /></g>
+    <g id="nala-arms-left"><path d="M25 31 L13 35 Q10 38 13 41 L30 33 Z" fill="url(#nala-scales)" stroke="#143017" stroke-width="1" /><path d="M40 31 L47 40 Q47 43 43 44 L36 33 Z" fill="#38652b" stroke="#143017" stroke-width="1" /><use href="#nala-bow" transform="translate(16 35) rotate(-92)" /></g>
+    <g id="nala-arms-right"><use href="#nala-arms-left" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="nala-draw-down"><path d="M23 31 L19 38" stroke="url(#nala-scales)" stroke-width="5" stroke-linecap="round" /><path d="M41 31 L45 38" stroke="url(#nala-scales)" stroke-width="5" stroke-linecap="round" /><use href="#nala-bow" transform="translate(48 34) rotate(24)" /><use href="#nala-arrow" transform="translate(31 37) rotate(16)" /></g>
+    <g id="nala-draw-up"><path d="M23 31 L18 37" stroke="#38652b" stroke-width="5" stroke-linecap="round" /><path d="M41 31 L46 37" stroke="#38652b" stroke-width="5" stroke-linecap="round" /><use href="#nala-bow" transform="translate(46 32) rotate(-156)" /><use href="#nala-arrow" transform="translate(34 32) rotate(-165)" /></g>
+    <g id="nala-draw-left"><path d="M25 31 L16 35" stroke="url(#nala-scales)" stroke-width="5" stroke-linecap="round" /><path d="M40 31 L45 39" stroke="#38652b" stroke-width="5" stroke-linecap="round" /><use href="#nala-bow" transform="translate(15 34) rotate(-92)" /><use href="#nala-arrow" transform="translate(31 35) rotate(180)" /></g>
+    <g id="nala-draw-right"><use href="#nala-draw-left" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="nala-down-idle-a"><use href="#nala-shadow" /><use href="#nala-tail-down-neutral" /><use href="#nala-ponytail-down" /><use href="#nala-arms-down" /><use href="#nala-torso-down" /><use href="#nala-head-down" /></g>
+    <g id="nala-down-idle-b"><use href="#nala-down-idle-a" transform="translate(0 -1)" /></g>
+    <g id="nala-up-idle-a"><use href="#nala-shadow" /><use href="#nala-tail-up-neutral" /><use href="#nala-ponytail-up" /><use href="#nala-arms-up" /><use href="#nala-torso-up" /><use href="#nala-head-up" /></g>
+    <g id="nala-up-idle-b"><use href="#nala-up-idle-a" transform="translate(0 -1)" /></g>
+    <g id="nala-left-idle-a"><use href="#nala-shadow" /><use href="#nala-tail-left-neutral" /><use href="#nala-ponytail-left" /><use href="#nala-arms-left" /><use href="#nala-torso-left" /><use href="#nala-head-left" /></g>
+    <g id="nala-left-idle-b"><use href="#nala-left-idle-a" transform="translate(0 -1)" /></g>
+    <g id="nala-right-idle-a"><use href="#nala-shadow" /><use href="#nala-tail-right-neutral" /><use href="#nala-ponytail-right" /><use href="#nala-arms-right" /><use href="#nala-torso-right" /><use href="#nala-head-right" /></g>
+    <g id="nala-right-idle-b"><use href="#nala-right-idle-a" transform="translate(0 -1)" /></g>
+
+    <g id="nala-down-walk-a"><use href="#nala-shadow" /><use href="#nala-tail-down-step-a" /><use href="#nala-ponytail-down" /><use href="#nala-arms-down" transform="rotate(-4 32 35)" /><use href="#nala-torso-down" /><use href="#nala-head-down" /></g>
+    <g id="nala-down-walk-b"><use href="#nala-shadow" /><use href="#nala-tail-down-step-b" /><use href="#nala-ponytail-down" transform="translate(1 -1)" /><use href="#nala-arms-down" transform="rotate(4 32 35)" /><use href="#nala-torso-down" transform="translate(0 -1)" /><use href="#nala-head-down" transform="translate(0 -1)" /></g>
+    <g id="nala-up-walk-a"><use href="#nala-shadow" /><use href="#nala-tail-up-step-a" /><use href="#nala-ponytail-up" /><use href="#nala-arms-up" transform="rotate(4 32 35)" /><use href="#nala-torso-up" /><use href="#nala-head-up" /></g>
+    <g id="nala-up-walk-b"><use href="#nala-shadow" /><use href="#nala-tail-up-step-b" /><use href="#nala-ponytail-up" transform="translate(-1 -1)" /><use href="#nala-arms-up" transform="rotate(-4 32 35)" /><use href="#nala-torso-up" transform="translate(0 -1)" /><use href="#nala-head-up" transform="translate(0 -1)" /></g>
+    <g id="nala-left-walk-a"><use href="#nala-shadow" /><use href="#nala-tail-left-step-a" /><use href="#nala-ponytail-left" /><use href="#nala-arms-left" transform="rotate(-5 32 35)" /><use href="#nala-torso-left" /><use href="#nala-head-left" /></g>
+    <g id="nala-left-walk-b"><use href="#nala-shadow" /><use href="#nala-tail-left-step-b" /><use href="#nala-ponytail-left" transform="translate(1 -1)" /><use href="#nala-arms-left" transform="rotate(5 32 35)" /><use href="#nala-torso-left" transform="translate(0 -1)" /><use href="#nala-head-left" transform="translate(-1 -1)" /></g>
+    <g id="nala-right-walk-a"><use href="#nala-left-walk-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="nala-right-walk-b"><use href="#nala-left-walk-b" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="nala-down-attack-prep"><use href="#nala-shadow" /><use href="#nala-tail-down-step-a" /><use href="#nala-ponytail-down" /><use href="#nala-draw-down" /><use href="#nala-torso-down" /><use href="#nala-head-down" /></g>
+    <g id="nala-down-attack-impact"><use href="#nala-down-attack-prep" /><use href="#nala-venom-burst" transform="translate(50 41)" /></g>
+    <g id="nala-up-attack-prep"><use href="#nala-shadow" /><use href="#nala-tail-up-step-a" /><use href="#nala-ponytail-up" /><use href="#nala-draw-up" /><use href="#nala-torso-up" /><use href="#nala-head-up" /></g>
+    <g id="nala-up-attack-impact"><use href="#nala-up-attack-prep" /><use href="#nala-venom-burst" transform="translate(46 23)" /></g>
+    <g id="nala-left-attack-prep"><use href="#nala-shadow" /><use href="#nala-tail-left-step-a" /><use href="#nala-ponytail-left" /><use href="#nala-draw-left" /><use href="#nala-torso-left" /><use href="#nala-head-left" /></g>
+    <g id="nala-left-attack-impact"><use href="#nala-left-attack-prep" /><use href="#nala-venom-burst" transform="translate(12 35)" /></g>
+    <g id="nala-right-attack-prep"><use href="#nala-left-attack-prep" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="nala-right-attack-impact"><use href="#nala-left-attack-impact" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="nala-down-cast-a"><use href="#nala-down-idle-a" /><circle cx="33" cy="36" r="7" fill="url(#nala-venom)" opacity="0.45" /></g>
+    <g id="nala-down-cast-b"><use href="#nala-down-idle-b" /><circle cx="33" cy="36" r="13" fill="url(#nala-venom)" opacity="0.7" /><use href="#nala-spark" transform="translate(22 30)" /><use href="#nala-spark" transform="translate(44 42) scale(0.8)" /></g>
+    <g id="nala-up-cast-a"><use href="#nala-up-idle-a" /><circle cx="32" cy="30" r="7" fill="url(#nala-venom)" opacity="0.45" /></g>
+    <g id="nala-up-cast-b"><use href="#nala-up-idle-b" /><circle cx="32" cy="29" r="13" fill="url(#nala-venom)" opacity="0.7" /><use href="#nala-spark" transform="translate(21 23)" /><use href="#nala-spark" transform="translate(43 35) scale(0.8)" /></g>
+    <g id="nala-left-cast-a"><use href="#nala-left-idle-a" /><circle cx="23" cy="35" r="7" fill="url(#nala-venom)" opacity="0.45" /></g>
+    <g id="nala-left-cast-b"><use href="#nala-left-idle-b" /><circle cx="20" cy="35" r="13" fill="url(#nala-venom)" opacity="0.7" /><use href="#nala-spark" transform="translate(12 29)" /><use href="#nala-spark" transform="translate(26 46) scale(0.8)" /></g>
+    <g id="nala-right-cast-a"><use href="#nala-left-cast-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="nala-right-cast-b"><use href="#nala-left-cast-b" transform="translate(64 0) scale(-1 1)" /></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-b" /></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-b" /></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-b" /></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-b" /></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-walk-a" /></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-walk-b" /></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-b" /></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-b" /></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-walk-a" /></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-walk-a" /></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-walk-b" /></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-b" /></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-b" /></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-walk-a" /></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-walk-a" /></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-walk-b" /></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-b" /></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-b" /></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-walk-a" /></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-walk-a" /></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-walk-b" /></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-b" /></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-b" /></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-walk-a" /></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-attack-impact" /></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-b" /></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-attack-prep" transform="translate(1 -1)" /></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-attack-prep" transform="translate(2 -1)" /></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-attack-impact" /></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-b" /></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-attack-impact" /></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-b" /></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-attack-prep" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-attack-prep" transform="translate(-2 -1)" /></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-attack-impact" /></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-b" /></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-attack-prep" /></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-attack-impact" /></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-b" /></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-attack-prep" /></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-attack-prep" transform="translate(2 -1)" /></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-attack-impact" /></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-b" /></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-attack-prep" /></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-attack-impact" /></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-b" /></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-attack-prep" /></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-attack-prep" transform="translate(-2 -1)" /></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-attack-impact" /></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-b" /></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-cast-a" /></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-cast-b" /></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-cast-a" /></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-b" /></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-up-idle-a" /></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-cast-a" /></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-cast-b" /></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-cast-b" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-cast-a" /></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-b" /></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-left-idle-a" /></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-cast-a" /></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-cast-b" /></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-cast-a" /></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-b" /></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-down-idle-a" /></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-cast-a" /></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-cast-b" /></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-cast-b" transform="translate(1 -1)" /></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-cast-a" /></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-b" /></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#nala-right-idle-a" /></svg>
+</svg>

@@ -70,6 +70,11 @@ export class ProgressBar extends UiElement {
         this.bar.fillRect(0, 0, Math.max(0, Math.floor(this.width * ratio)), this.height)
     }
 
+    setColor(color: number): void {
+        this.fillColor = color
+        this.lastRatio = -1
+    }
+
     redrawBg() {
         this.bg.clear()
         this.bg.lineStyle(this.borderWidth, this.borderColor, 1)

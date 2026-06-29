@@ -34,6 +34,9 @@ Deatheater é uma trait de personagens ligados a morte e revive. Quando ativa, e
 ### Druid
 Druid é uma trait de personagens druídicos. Quando ativa, aplica bônus de stats conforme composição atual.
 
+### Feral
+Feral é uma trait de personagens selvagens e ameaçadores. Quando ativa, personagens Feral recebem bônus ofensivos e vida máxima, e amplificam esses próprios bônus quando estão com pouca vida. A trait reage a mudanças de vida por listeners de dano recebido e cura, sem polling por frame. Enquanto ameaçado, o personagem recebe feedback visual por `Graphics` do Phaser e um leve aumento de escala, com limpeza dos listeners, do efeito visual e dos bônus condicionais ao reaplicar ou destruir a criatura.
+
 ### Holy
 Holy é uma trait de personagens sagrados. Quando ativa, escuta casts e aplica cura ou shield conforme stage atual, removendo listener no cleanup.
 
@@ -42,6 +45,9 @@ Noble é uma trait de personagens nobres. Quando ativa, escuta kills para conced
 
 ### Poisoner
 Poisoner é uma trait de personagens venenosos. Quando ativa, escuta dano causado por personagens da composição e só reage quando o dano resolvido é venenoso, aplicando dano verdadeiro adicional no mesmo alvo como choque no sistema nervoso. O dano adicional não reemite o próprio evento de dano para evitar recursão, aparece no chart com fonte própria e o listener é removido no cleanup.
+
+### Sniper
+Sniper é uma trait de personagens de longo alcance. Quando ativa, escuta dano causado por personagens da composição e aplica dano adicional conforme a distância em células entre o sniper e o alvo no momento do dano. O dano adicional não reemite o evento para evitar recursão. Snipers também reutilizam a proteção de sobrevivência por limiar que remove foco inimigo e torna o usuário temporariamente inalvejável, com cleanup do listener e da proteção ao reaplicar ou destruir a criatura.
 
 ### Winter
 Winter é uma trait de personagens de gelo. Quando ativa, escuta dano causado para aplicar freeze ou efeito frio conforme stage atual e remove listener no cleanup.

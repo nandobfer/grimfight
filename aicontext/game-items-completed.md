@@ -58,4 +58,7 @@ Embora todos os itens chamem cleanup no destroy, estes focam em acúmulos progre
 *   **Dragonclaw:** Proporciona defesa mágica gigantesca e periodicamente regenera parcela do dano sofrido ou vida máxima.
 *   **Spiritvisage:** Aumenta passivamente toda cura recebida e adiciona regeneração de vida contínua a cada segundo.
 
+### Sobrevivência Por Limiar Compartilhada
+Nightedge usa um helper compartilhado de sobrevivência por limiar. Esse helper limita o dano recebido antes da primeira ativação para que o portador não seja eliminado pelo mesmo golpe que deveria acionar a proteção, remove o foco dos inimigos, concede uma janela temporária de inalvejabilidade e restaura o comportamento original no cleanup quando não houver outros efeitos usando a mesma proteção.
+
 ## Fixes

@@ -6,6 +6,7 @@ import { ClericTrait } from "./ClericTrait"
 import { ColossusTrait } from "./ColossusTrait"
 import { DeathEaterTrait } from "./DeathEaterTrait"
 import { DruidTrait } from "./DruidTrait"
+import { FeralTrait } from "./FeralTrait"
 import { HolyTrait } from "./HolyTrait"
 import { IncendiaryTrait } from "./IncendiaryTrait"
 import { NobleTrait } from "./NobleTrait"
@@ -13,6 +14,7 @@ import { PoisonerTrait } from "./PoisonerTrait"
 import { WinterTrait } from "./WinterTrait"
 import { SorcererTrait } from "./SorcererTrait"
 import { SpeedyTrait } from "./SpeedyTrait"
+import { SniperTrait } from "./SniperTrait"
 import { Trait } from "./Trait"
 
 type Ctor = new (comp: string[]) => Trait
@@ -73,17 +75,19 @@ export class TraitsRegistry {
     }
 }
 
-TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "vania", "laherce", "reno", "chichi", "clover", "banguela"])
-TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud", "yue", "zairon", "dranho", "robilton", "silvia"])
+TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "vania", "laherce", "chichi", "clover"])
+TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud", "yue", "zairon", "dranho", "robilton", "silvia", "lucio"])
 TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora", "ragnaros", "silvia", "saulo"])
 TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "frank", "chichi", "robilton"])
 TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia", "freud", "fandral"])
-TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "helyna", "silvia", "clover"])
-TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula"])
-TraitsRegistry.register("Poisoner", PoisonerTrait, ["lizwan", "saulo"])
+TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "silvia", "clover", "melo"])
+TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula", "lucio"])
+TraitsRegistry.register("Poisoner", PoisonerTrait, ["lizwan", "saulo", "lucio", "nala"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna", "rokmora", "fandral"])
 TraitsRegistry.register("Incendiary", IncendiaryTrait, ["banguela", "megumin", "yue", "fandral", "melisandre", "ragnaros"])
 TraitsRegistry.register("Noble", NobleTrait, ["maximus", "jadis", "statikk", "dracula", "arthas"])
 TraitsRegistry.register("Winter", WinterTrait, ["reno", "jadis", "rukia", "ymir", "arthas", "jacrost"])
 TraitsRegistry.register("Holy", HolyTrait, ["lalatina", "melo"])
 TraitsRegistry.register("Cleric", ClericTrait, ["melo", "jacrost", "melisandre", "dranho"])
+TraitsRegistry.register("Sniper", SniperTrait, ["laherce", "nala", "reno", "freud"])
+TraitsRegistry.register("Feral", FeralTrait, ["nala", "banguela", "helyna", "grok"])

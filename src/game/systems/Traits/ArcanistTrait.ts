@@ -11,9 +11,9 @@ export class ArcanistTrait extends Trait {
     name = "Arcanist"
     description = "Arcanists gain {0} AP every {1} seconds during combat."
     stages: Map<number, ArcanistStage> = new Map([
-        [2, { apMultiplier: 0.05, delay: 5000, descriptionParams: ["5%", "5"] }],
-        [4, { apMultiplier: 0.05, delay: 2000, descriptionParams: ["5%", "2"] }],
-        [6, { apMultiplier: 0.05, delay: 1000, descriptionParams: ["5%", "1"] }],
+        [2, { apMultiplier: 0.07, delay: 4000, descriptionParams: ["7%", "4"] }],
+        [4, { apMultiplier: 0.07, delay: 2000, descriptionParams: ["7%", "2"] }],
+        [6, { apMultiplier: 0.07, delay: 1000, descriptionParams: ["7%", "1"] }],
     ])
 
     constructor(comp: string[]) {

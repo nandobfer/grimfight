@@ -56,6 +56,11 @@ Os locks também são respeitados por movimento, ataque, regeneração de mana e
 
 `startCastingAbility` zera mana, atualiza UI, chama `castAbility` e só emite o evento de cast quando a habilidade não aborta explicitamente. Subclasses implementam a habilidade concreta sobrescrevendo `castAbility` e podem sinalizar abortos sem publicar gatilhos de traits.
 
+### Resource Modes
+Mana é o recurso padrão de toda criatura. Criaturas específicas podem trocar temporariamente para modos alternativos de recurso, como rage ou energy, substituindo a cor e o preenchimento da barra interna sem alterar o contrato padrão das demais unidades.
+
+Rage é abastecida por dano recebido enquanto a criatura está nesse modo. Energy regenera passivamente durante combate enquanto a criatura não está conjurando. Ganhos de mana são ignorados fora do modo de mana para evitar loops entre recursos e casts automáticos indevidos.
+
 ### Death And Wipe
 `die` ajusta pose final, limpa status effects, para movimento/animação, desativa a criatura, reduz depth, executa FX de morte, esconde UI e emite eventos de morte para time e listeners locais.
 

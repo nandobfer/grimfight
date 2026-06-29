@@ -18,6 +18,9 @@ const helperFiles = new Set([
     "CloverDarkCleave.ts",
     "DranhoChannel.ts",
     "FandralFlameSlash.ts",
+    "HelynaForms.ts",
+    "LucioPoisonBubble.ts",
+    "NalaSerpents.ts",
     "RagnarosLavaRetaliation.ts",
     "RobiltonNeutronStar.ts",
     "RokmoraConstellations.ts",
@@ -35,18 +38,20 @@ const characterContracts: CharacterContract[] = [
     { file: "Clover.ts", className: "Clover", registryName: "clover" },
     { file: "Dracula.ts", className: "Dracula", registryName: "dracula" },
     { file: "Dranho.ts", className: "Dranho", registryName: "dranho" },
-    { file: "Druid.ts", className: "Helyna", registryName: "helyna", docHeading: "Helyna" },
+    { file: "Helyna.ts", className: "Helyna", registryName: "helyna" },
     { file: "Fandral.ts", className: "Fandral", registryName: "fandral" },
     { file: "Frank.ts", className: "Frank", registryName: "frank" },
     { file: "Freud.ts", className: "Freud", registryName: "freud" },
     { file: "Jacrost.ts", className: "Jacrost", registryName: "jacrost" },
     { file: "Lalatina.ts", className: "Lalatina", registryName: "lalatina" },
     { file: "Lizwan.ts", className: "Lizwan", registryName: "lizwan" },
+    { file: "Lucio.ts", className: "Lucio", registryName: "lucio" },
     { file: "Mage.ts", className: "Mage", registryName: "megumin" },
     { file: "Melisandre.ts", className: "Melisandre", registryName: "melisandre" },
     { file: "Maximus.ts", className: "Knight", registryName: "maximus", docHeading: "Knight" },
     { file: "Melo.ts", className: "Melo", registryName: "melo" },
     { file: "Mordred.ts", className: "Rogue", registryName: "mordred", docHeading: "Rogue" },
+    { file: "Nala.ts", className: "Nala", registryName: "nala" },
     { file: "Necromancer.ts", className: "Necromancer", registryName: "zairon" },
     { file: "Reno.ts", className: "Reno", registryName: "reno" },
     { file: "Rokmora.ts", className: "Rokmora", registryName: "rokmora" },
@@ -111,7 +116,7 @@ describe("playable character pure behavior", () => {
     it("keeps non-Phaser helper behavior colocated with the owning character classes", () => {
         const renoSource = readClassSource("Reno.ts")
         const necromancerSource = readClassSource("Necromancer.ts")
-        const druidSource = readClassSource("Druid.ts")
+        const druidSource = readClassSource("Helyna.ts")
         const frankSource = readClassSource("Frank.ts")
 
         expect(renoSource).toContain("scaleAdFromAs()")

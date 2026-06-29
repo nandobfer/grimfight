@@ -12,8 +12,16 @@ import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { RNG } from "../tools/RNG"
 import { Aura } from "../systems/Aura/Aura"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
+import { calculateRageFromDamageTaken } from "./CreatureResources"
 
 export type Direction = "left" | "up" | "down" | "right"
+export type CreatureResourceType = "mana" | "rage" | "energy"
+
+const resourceBarColors: Record<CreatureResourceType, number> = {
+    mana: 0x3498db,
+    rage: 0xe74c3c,
+    energy: 0xf1c40f,
+}
 
 export type AttributeStatus =
     | "health"
@@ -64,6 +72,12 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     baseManaPerSecond = 10
     baseManaPerAttack = 10
     baseManaOnHit = 2
+    resourceType: CreatureResourceType = "mana"
+    rage = 0
+    maxRage = 100
+    energy = 100
+    maxEnergy = 100
+    energyPerSecond = 10
     /** incremental, base + x + y */
     baseArmor = 0
     baseSpeed = 50
@@ -157,6 +171,9 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 				this.manaLocked = false
         this.frozen = false
         this.mana = 0
+        this.rage = 0
+        this.energy = this.maxEnergy
+        this.setResourceType("mana")
         this.active = true
         this.setRotation(0)
         this.setAlpha(1)
@@ -248,8 +265,64 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.healthBar.setValue(this.maxHealth, this.maxHealth)
         this.healthBar.setShield(this.shield, this.health, this.maxHealth)
         this.manaBar.reset()
+        this.manaBar.setColor(resourceBarColors[this.resourceType])
         this.manaBar.redrawBg()
-        this.manaBar.setValue(0, this.maxMana)
+        this.updateResourceUi()
+    }
+
+    setResourceType(resourceType: CreatureResourceType) {
+        this.resourceType = resourceType
+        this.manaBar?.setColor(resourceBarColors[resourceType])
+        this.updateResourceUi()
+    }
+
+    protected getCurrentResourceValue(): number {
+        if (this.resourceType === "rage") return this.rage
+        if (this.resourceType === "energy") return this.energy
+        return this.mana
+    }
+
+    protected getCurrentResourceMax(): number {
+        if (this.resourceType === "rage") return this.maxRage
+        if (this.resourceType === "energy") return this.maxEnergy
+        return this.maxMana
+    }
+
+    protected updateResourceUi() {
+        this.manaBar?.setValue(this.getCurrentResourceValue(), this.getCurrentResourceMax())
+    }
+
+    spendResource(value: number): boolean {
+        if (this.resourceType === "rage") {
+            if (this.rage < value) return false
+            this.rage = Phaser.Math.Clamp(this.rage - value, 0, this.maxRage)
+            this.updateResourceUi()
+            return true
+        }
+
+        if (this.resourceType === "energy") {
+            if (this.energy < value) return false
+            this.energy = Phaser.Math.Clamp(this.energy - value, 0, this.maxEnergy)
+            this.updateResourceUi()
+            return true
+        }
+
+        if (this.mana < value) return false
+        this.mana = Phaser.Math.Clamp(this.mana - value, 0, this.maxMana)
+        this.updateResourceUi()
+        return true
+    }
+
+    gainRage(rageGained: number) {
+        if (this.resourceType !== "rage") return
+        this.rage = Phaser.Math.Clamp(this.rage + rageGained, 0, this.maxRage)
+        this.updateResourceUi()
+    }
+
+    gainEnergy(energyGained: number) {
+        if (this.resourceType !== "energy") return
+        this.energy = Phaser.Math.Clamp(this.energy + energyGained, 0, this.maxEnergy)
+        this.updateResourceUi()
     }
 
     protected updateHealthUi() {
@@ -281,6 +354,50 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
                     onComplete?.()
                 } catch (error) {}
             },
+        })
+    }
+
+    pounceToTarget(target: Creature, onComplete?: () => void) {
+        const position = target.randomPointAround()
+        const distance = Phaser.Math.Distance.Between(this.x, this.y, position.x, position.y)
+        const duration = Phaser.Math.Clamp((distance / 1500) * 1000, 90, 220)
+        let cleaned = false
+        let tween: Phaser.Tweens.Tween | undefined
+
+        const cleanup = () => {
+            if (cleaned) return
+            cleaned = true
+
+            this.scene.events.off("gamestate", stopPounce)
+            this.off("died", stopPounce)
+            this.off("destroy", stopPounce)
+
+            if (tween) {
+                tween.stop()
+                this.scene.tweens.remove(tween)
+                tween = undefined
+            }
+        }
+
+        const stopPounce = () => cleanup()
+
+        this.scene.events.once("gamestate", stopPounce)
+        this.once("died", stopPounce)
+        this.once("destroy", stopPounce)
+
+        tween = this.scene.tweens.add({
+            targets: this,
+            x: position.x,
+            y: position.y,
+            duration,
+            ease: "Expo.easeOut",
+            onComplete: () => {
+                cleanup()
+                this.body?.reset(position.x, position.y)
+                this.emit("move", this, position.x, position.y)
+                onComplete?.()
+            },
+            onStop: () => cleanup(),
         })
     }
 
@@ -927,6 +1044,10 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
+        if (finalDamage > 0 && this.resourceType === "rage") {
+            this.gainRage(calculateRageFromDamageTaken(finalDamage, this.maxHealth, this.maxRage))
+        }
+
         return finalDamage
     }
 
@@ -1004,6 +1125,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     }
 
     gainMana(manaGained: number) {
+        if (this.resourceType !== "mana") return
         if (this.manaLocked) return
 
         this.mana = Phaser.Math.Clamp(this.mana + manaGained, 0, this.maxMana)
@@ -1016,10 +1138,19 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
     regenMana(delta: number) {
         if (this.casting) return
+        if (this.resourceType !== "mana") return
 
         const passedSeconds = delta / 1000
         const manaGained = this.manaPerSecond * passedSeconds
         this.gainMana(manaGained)
+    }
+
+    regenEnergy(delta: number) {
+        if (this.resourceType !== "energy") return
+        if (this.casting) return
+
+        const passedSeconds = delta / 1000
+        this.gainEnergy(this.energyPerSecond * passedSeconds)
     }
 
     getMissingHealthFraction() {
@@ -1209,6 +1340,7 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
 
         this.updateDepth()
         this.regenMana(delta)
+        this.regenEnergy(delta)
 
         for (const effect of this.statusEffects) {
             effect.update(delta)

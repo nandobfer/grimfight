@@ -16,10 +16,12 @@ const traitHeadings: Record<string, string> = {
     ColossusTrait: "Colossi",
     DeathEaterTrait: "Deatheater",
     DruidTrait: "Druid",
+    FeralTrait: "Feral",
     HolyTrait: "Holy",
     IncendiaryTrait: "Incendiary",
     NobleTrait: "Noble",
     PoisonerTrait: "Poisoner",
+    SniperTrait: "Sniper",
     WinterTrait: "Winter",
     SorcererTrait: "Sorcerer",
     SpeedyTrait: "Swift",
@@ -111,6 +113,7 @@ describe("Trait base and registry contracts", () => {
         expect(source.match(/TraitsRegistry\.register\("Noble", NobleTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
         expect(source.match(/TraitsRegistry\.register\("Winter", WinterTrait, \[[^\]]*\]/)?.[0]).toContain("arthas")
     })
+
 })
 
 describe("individual trait contracts", () => {
@@ -162,6 +165,19 @@ describe("individual trait contracts", () => {
         expect(source).toContain("if (damageType !== \"poison\") return")
         expect(source).toContain("target.takeDamage(extraDamage, character, \"true\", false, false, nervousSystemShockSource)")
         expect(source).toContain("Nervous System Shock")
+    })
+
+    it("Sniper scales damage by grid distance and reuses threshold untargetability", () => {
+        const source = readSource(join(traitDir, "SniperTrait.ts"))
+
+        expect(source).toContain("damageMultiplierPerGrid")
+        expect(source).toContain("calculateSniperGridDistance")
+        expect(source).toContain("calculateSniperDamageMultiplier")
+        expect(source).toContain("target.takeDamage(damage * damageMultiplier, character, \"true\", false, false, this.name)")
+        expect(source).toContain("applyThresholdUntargetable")
+        expect(source).toContain("cleanupThresholdUntargetable")
+        expect(source).toContain("character.on(\"dealt-damage\", amplifyDamageByDistance)")
+        expect(source).toContain("character.off(\"dealt-damage\", handler)")
     })
 
     it("Incendiary only burns the active target from a completed cast", () => {

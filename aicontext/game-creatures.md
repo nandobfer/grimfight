@@ -47,11 +47,15 @@ Dranho é um personagem jogável registrado como `dranho`, ligado às identidade
 A canalização causa dano periódico no alvo atual usando uma contribuição do AP do próprio Dranho e uma contribuição agregada do AP dos aliados ativos do time principal, sem contar Dranho e sem incluir summons/minions. O efeito visual é desenhado com `Graphics` persistente como energia roxa fluindo desses aliados válidos até Dranho, energia convergindo nele e feixes em arco até o alvo, e deve limpar o gráfico ao perder alvo, sair de combate, resetar stats ou destruir o personagem.
 
 ### Helyna
-Helyna é uma personagem jogável registrada como `helyna`. Ela usa a habilidade `Druidism` para alternar entre forma humana, urso ou gato conforme a posição inicial.
+Helyna é uma personagem jogável registrada como `helyna`, ligada ao druidismo. Ela usa a habilidade `Druidism` para alternar entre forma humana, urso ou gato conforme a posição inicial.
 
-Na forma humana, Helyna mantém ataque à distância e pode curar o aliado de menor vida com duas fontes separadas: `Regrowth` aplica uma cura imediata, e `Rejuvenation` aplica um `Hot` no mesmo alvo. Na forma de urso, transforma atributos defensivos/ofensivos e pode ativar armadura de espinhos que retaliará atacantes. Na forma de gato, transforma atributos ofensivos e pode aplicar sangramento com `Dot`.
+Na posição traseira, Helyna não se transforma. Ela mantém ataque à distância e conjura curas em sequência, priorizando aliados feridos diferentes quando possível. Cada cura combina `Regrowth`, uma cura imediata, e `Rejuvenation`, um `Hot` no mesmo alvo.
 
-`refreshStats` retorna Helyna para a forma humana, restaura caches de atributos e reseta o estado de thorns. O nome de textura/animação deve refletir a forma ativa.
+Na posição frontal, Helyna assume temporariamente a forma de urso. A transformação aumenta seus atributos defensivos e ofensivos, preserva a proporção de vida ao entrar e sair da forma, troca mana por rage e aplica `Regrowth` com `Rejuvenation` em si mesma após ganhar a vida máxima da forma. Em forma de urso, o ataque básico é substituído por um cleave físico em área usando o envelope visual do corte de Fandral sem efeitos elementais adicionais. Quando ferida e com rage suficiente, ela usa `Regeneração Frenética` para aplicar um `Hot` em si mesma.
+
+Na posição central, Helyna assume temporariamente a forma de gato. A transformação preserva a proporção de vida ao entrar e sair da forma, troca mana por energy, salta para perto do alvo sem causar dano inicial e usa `Rake` apenas quando está corpo a corpo. `Rake` consome energy, respeita cooldown próprio, desenha uma mordida com `Graphics` e aplica um `Dot` físico severo.
+
+`refreshStats` retorna Helyna para a forma humana, remove timers de transformação, restaura caches de atributos, reseta recursos temporários e garante que a barra volte para mana. O nome de textura/animação deve refletir a forma ativa.
 
 ### Frank
 Frank é um personagem jogável registrado como `frank`. Ele não usa mana para conjurar e possui uma passiva que conta ataques para periodicamente drenar vida do alvo.
@@ -83,6 +87,20 @@ Lizwan é um personagem jogável registrado como `lizwan`. Ele aplica veneno a c
 `landAttack` preserva o ataque base, cria feedback visual de veneno e aplica um `Dot` do tipo poison no alvo atual. O status carrega usuário, alvo e nome da habilidade para integração com damage chart e cleanup do sistema de status.
 
 Ao conjurar, Lizwan soma o dano bruto restante dos `Dot` poison ativos no alvo atual e aplica uma parcela desse potencial como dano poison imediato creditado a uma fonte separada da passiva no damage chart. Se o alvo estiver inválido ou não houver veneno restante, o cast aborta sem emitir gatilhos de conjuração.
+
+### Lucio
+Lucio é um personagem jogável registrado como `lucio`, ligado a veneno e morte. Ele atua como caster venenoso de ataques lentos: ataques básicos não causam dano instantâneo padrão, mas lançam uma bolha venenosa lenta contra o alvo atual.
+
+Cada bolha venenosa é um projétil desenhado com `Graphics`, usando um hitbox físico mínimo, luz própria e rastro pegajoso temporário. Ao colidir com um inimigo, a bolha aplica um `Dot` poison que escala com AP de Lucio e credita o dano no damage chart como fonte de ataque básico. Ao colidir com parede ou terminar seu ciclo, limpa gráficos, rastro, listener de update, luz, tween e colliders pelo fluxo de `Projectile`.
+
+Ao conjurar `Poison Nova`, Lucio dispara bolhas venenosas simultâneas ao redor de si. As bolhas da habilidade usam a mesma regra de dano das bolhas de ataque básico, mas creditam o `Dot` no damage chart como fonte da habilidade para manter a leitura separada.
+
+### Nala
+Nala é uma personagem jogável registrada como `nala`, ligada a veneno e ataque. Ela usa ataque básico à distância com `Arrow`, participa das traits `Poisoner` e `Attacker`, e usa spritesheet SVG e portrait WebP próprios.
+
+Ao conjurar `Serpent Volley`, Nala cria cobras venenosas desenhadas com `Graphics` e hitboxes próprios. As cobras saem em direções aleatórias, ignoram paredes e colidem apenas com inimigos e minions inimigos. Depois de uma curta janela inicial, cada cobra passa a perseguir sempre o alvo atual de Nala; se ela trocar de alvo, as cobras ajustam o homing para o novo alvo válido. Se não houver alvo válido, o efeito encerra com cleanup.
+
+Ao colidir, cada cobra causa dano venenoso direto e aplica um `Dot` poison. Tanto o impacto quanto o dano ao longo do tempo escalam com AD e AP atuais de Nala para preservar sua identidade híbrida. Cobras, gráficos, hitboxes, overlaps, timers e listeners de update/gamestate limpam ao acertar, expirar, sair de combate, resetar stats ou destruir Nala. As fórmulas puras da habilidade ficam em `src/game/creature/classes/NalaSerpents.ts` para permitir testes sem carregar Phaser.
 
 ### Mage
 Mage é uma personagem jogável registrada como `megumin`. Ela usa `Fireball` no ataque básico e sua habilidade causa explosão de fogo no alvo atual.
