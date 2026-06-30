@@ -19,7 +19,7 @@ Antes de implementar, leia nesta ordem:
 5. O contexto específico da tarefa:
    - Personagens jogáveis: `src/game/creature/Creature.ts`, `src/game/creature/character/Character.ts`, `src/game/creature/character/PlayerTeam.ts`, `src/game/creature/CharacterRegistry.ts` e `src/game/creature/classes/`
    - Monstros e encontros: `src/game/creature/monsters/Monster.ts`, `src/game/creature/monsters/EnemyTeam.ts`, `src/game/creature/monsters/MonsterRegistry.ts` e `src/game/tools/Encounter.ts`
-   - Spritesheets e assets visuais de criaturas gerados por IA: `docs/svg-spritesheets.md`, `src/game/creature/visual/SpritesheetCreatureVisualDefinition.ts`, `src/game/creature/visual/CreatureVisualDefinition.ts` e `src/game/creature/Creature.ts`
+   - Assets visuais de criaturas gerados por IA: `docs/svg-spritesheets.md`, `docs/procedural-creature-visuals.md`, `src/game/creature/visual/SpritesheetCreatureVisualDefinition.ts`, `src/game/creature/visual/ProceduralCreatureVisualDefinition.ts`, `src/game/creature/visual/CreatureVisualDefinition.ts` e `src/game/creature/Creature.ts`
    - Itens e receitas: `src/game/systems/Items/Item.ts`, `src/game/systems/Items/ItemRegistry.ts` e `src/game/systems/Items/`
    - Augments: `src/game/systems/Augment/Augment.ts`, `src/game/systems/Augment/AugmentsRegistry.ts` e `src/game/systems/Augment/`
    - Traits e auras: `src/game/systems/Traits/` e `src/game/systems/Aura/`
@@ -144,6 +144,13 @@ Antes de implementar, leia nesta ordem:
 - Toda spritesheet SVG padrão deve conter `idle`, `walking`, `attacking1`, `attacking2` e `casting`, sempre nas quatro direções `up`, `left`, `down`, `right`.
 - Não gere pixel art literal com milhares de retângulos `1x1`; use partes modulares em `<defs>` e instâncias por frame com `<use>` e `transform`.
 - Preserve a compatibilidade futura com `SpritesheetCreatureVisualDefinition`: o SVG deve permitir extração por frame indexado, com `frameWidth: 64`, `frameHeight: 64` e `totalFramesPerRow: 9`.
+
+### Creature visuals procedurais com Phaser Graphics
+
+- Se o usuário solicitar criação, alteração ou integração de criatura, personagem ou monstro usando Phaser Graphics, textura procedural ou visual procedural, leia obrigatoriamente `docs/procedural-creature-visuals.md`.
+- Use `Phaser.Graphics` para gerar texturas runtime em `preload`, não como objeto persistente da criatura, salvo autorização explícita.
+- Preserve o contrato de animações de `Creature`: `idle`, `walking`, `attacking1`, `attacking2` e `casting`, sempre nas quatro direções `up`, `left`, `down`, `right`.
+- Não desenhe frames em `update`; gere e reutilize texturas compartilhadas.
 
 ### Spritesheets SVG de FX e Projéteis gerados por IA
 

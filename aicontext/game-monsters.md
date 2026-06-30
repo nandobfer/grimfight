@@ -35,6 +35,13 @@ Encontros comuns escolhem monstros do registry, distribuem o CR alvo entre os in
 
 A lista ponderada de esqueletos serve como fonte para summons que invocam variantes esqueléticas. A habilidade preserva o fluxo padrão de casting e usa o cálculo de dano da criatura.
 
+### Slime
+`Slime` é um monstro frontal com visual procedural gerado por `Phaser.Graphics`. O visual base é uma massa azul gelatinosa, e suas animações procedurais cobrem idle, caminhada, ataques gelatinosos e casting em forma de poça.
+
+Sua passiva divide o slime quando ele cruza o limite de vida definido pela regra da criatura sem morrer. A vida atual vira a nova vida máxima das duas metades, ambas reduzem o tamanho visual, e o slime deixa de dividir ao atingir o tamanho mínimo. A divisão chama `removeFromEnemyTarget` para permitir que os inimigos redistribuam alvo entre as metades. Se o slime estiver transformado quando dividir, ele permanece transformado; a nova metade sempre nasce como o slime azul original e recebe cópias independentes dos itens do original.
+
+Sua ativa escolhe uma criatura do time oposto e mantém uma instância auxiliar como forma copiada por uma janela temporária. O objeto real continua sendo o próprio slime, preservando alvo, posição, itens e identidade de combate; os ataques básicos e casts são delegados para a forma copiada enquanto ela existe. A transformação e o retorno preservam a proporção de vida atual e aplicam tint/glow azul sobre a forma copiada para comunicar que ainda é uma massa gelatinosa.
+
 ### ArmoredSkeleton
 `ArmoredSkeleton` é uma variante defensiva de `Skeleton`. Sua habilidade cria um FX de escudo, concede shield ao próprio monstro e trava mana até o escudo ser quebrado.
 

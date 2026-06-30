@@ -1,4 +1,4 @@
-import { Creature } from "../../creature/Creature"
+import type { Creature } from "../../creature/Creature"
 
 export interface StatusEffectParams {
     target: Creature

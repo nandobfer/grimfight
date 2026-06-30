@@ -46,6 +46,8 @@ Itens ativados pelo evento de dano finalizado do portador.
 *   **Morello:** Aplica Queimadura e debuff de redução de cura nos inimigos que sofrem o dano do portador.
 *   **Redbuff:** Análogo ao Morello, mas orientado ao ataque físico; atinge os alvos com a penalidade contínua de queimadura.
 
+Burns aplicados por itens não reemitem eventos de dano nos próprios ticks. O dano original que aplica o burn ainda pode vir de ataques, habilidades ou outros efeitos emitidos, mas o dano periódico do item não deve reacionar passivas de dano para evitar renovação recursiva e cascatas entre itens.
+
 ### Gatilhos de Início de Round (`gamestate`)
 Itens que injetam lógicas específicas quando o round sai de "idle" para "fighting".
 *   **Crownguard:** No momento do start do combate, envolve o portador num escudo temporário que escala com seu poder.

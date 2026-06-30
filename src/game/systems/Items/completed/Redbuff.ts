@@ -27,7 +27,7 @@ export class Redbuff extends Item {
             creature.off("dealt-damage", previousHandler)
         }
 
-        const applyBurn = (victim: Creature, damage: number) => {
+        const applyBurn = (victim: Creature) => {
             const burn = this.burns.get(victim)
             if (!burn) {
                 const burn = new Dot({
@@ -38,6 +38,7 @@ export class Redbuff extends Item {
                     tickRate: 950,
                     user: creature,
                     abilityName: this.name,
+                    emitDamageEvents: false,
                 })
                 this.burns.set(victim, burn)
                 burn.start()

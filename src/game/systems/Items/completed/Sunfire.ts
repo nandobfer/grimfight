@@ -7,10 +7,10 @@ export class Sunfire extends Item {
     key = "sunfire"
     name = "Sunfire Cape"
     descriptionLines = [
-    "+10% max health",
-    "+10% armor",
-    "Passive: When attacked, applies a burn on the enemy that deals 1% of the attacker's max health per second, lasts 5 seconds."
-]
+        "+10% max health",
+        "+10% armor",
+        "Passive: When attacked, applies a burn on the enemy that deals 1% of the attacker's max health per second, lasts 5 seconds.",
+    ]
     burns = new WeakMap<Creature, Dot>()
 
     constructor(scene: Game) {
@@ -27,7 +27,7 @@ export class Sunfire extends Item {
             creature.off("damage-taken", previousHandler)
         }
 
-        const applyBurn = (damage: number, attacker: Creature) => {
+        const applyBurn = (_damage: number, attacker: Creature) => {
             const burn = this.burns.get(attacker)
             if (!burn) {
                 const burn = new Dot({
@@ -38,6 +38,7 @@ export class Sunfire extends Item {
                     tickRate: 950,
                     user: creature,
                     abilityName: this.name,
+                    emitDamageEvents: false,
                 })
                 this.burns.set(attacker, burn)
                 burn.start()

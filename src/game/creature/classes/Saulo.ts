@@ -48,7 +48,6 @@ export class Saulo extends Character {
     abilityName = "Toxic Overdrive"
 
     private readonly gasClouds: GasCloud[] = []
-    private readonly poisonDots = new WeakMap<Creature, Dot>()
     private gasEmitElapsed = 0
     private gasDamageElapsed = 0
     private lastGasPosition?: SauloPoint
@@ -425,13 +424,7 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
         for (const enemy of this.getValidEnemies()) {
             if (!this.isEnemyInsideGas(enemy)) continue
 
-            const existingDot = this.poisonDots.get(enemy)
-            if (existingDot) {
-                existingDot.resetDuration()
-                continue
-            }
-
-            const dot = new Dot({
+            new Dot({
                 abilityName: "Poison Gas",
                 damageType: "poison",
                 duration: SAULO_GAS_DOT_DURATION_MS,
@@ -439,9 +432,7 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
                 tickDamage: calculateSauloPoisonGasTickDamage(this.abilityPower),
                 tickRate: SAULO_GAS_DOT_TICK_RATE_MS,
                 user: this,
-            })
-            this.poisonDots.set(enemy, dot)
-            dot.start()
+            }).start()
         }
     }
 

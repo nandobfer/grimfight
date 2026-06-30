@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
 import {
+    calculateSauloPoisonGasAverageStacks,
     calculateSauloOverdriveHealing,
     calculateSauloPoisonGasTickDamage,
     calculateSauloSpeedBoost,
@@ -7,6 +8,7 @@ import {
     getSauloSingleTargetPatrolEndpoints,
     getSauloTargetCellCrossingEndpoints,
     SAULO_GAS_CLOUD_DURATION_MS,
+    SAULO_GAS_DOT_DURATION_MS,
     SAULO_GAS_DOT_TICK_RATE_MS,
     SAULO_GAS_RADIUS,
     SAULO_OVERDRIVE_DURATION_MS,
@@ -21,6 +23,16 @@ describe("Saulo poison gas", () => {
         expect(Number.isFinite(damage)).toBe(true)
         expect(damage).toBeGreaterThanOrEqual(0)
         expect(amplifiedDamage).toBeCloseTo(damage * 1.5)
+    })
+
+    it("derives average temporal poison stacks from dot duration and application interval", () => {
+        const stacks = calculateSauloPoisonGasAverageStacks(SAULO_GAS_DOT_DURATION_MS, SAULO_GAS_DOT_TICK_RATE_MS)
+
+        expect(Number.isFinite(stacks)).toBe(true)
+        expect(stacks).toBeGreaterThan(1)
+        expect(stacks).toBe(SAULO_GAS_DOT_DURATION_MS / SAULO_GAS_DOT_TICK_RATE_MS)
+        expect(calculateSauloPoisonGasAverageStacks(0, SAULO_GAS_DOT_TICK_RATE_MS)).toBe(0)
+        expect(calculateSauloPoisonGasAverageStacks(SAULO_GAS_DOT_DURATION_MS, 0)).toBe(0)
     })
 
     it("calculates finite non-negative overdrive healing and speed boost", () => {

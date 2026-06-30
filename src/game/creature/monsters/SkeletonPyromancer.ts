@@ -46,7 +46,7 @@ export class SkeletonPyromancer extends Skeleton {
             const enemyTeam = this.getEnemyTeam()
             const enemies = enemyTeam.getChildren(true, true)
 
-            const explosionRadius = (pumpkin.displayWidth / 2) * 1.2 // Slightly larger than visual
+            const explosionRadius = (pumpkin.displayWidth / 2) * 0.8
 
             for (const enemy of enemies) {
                 const distance = Phaser.Math.Distance.Between(pumpkin.x, pumpkin.y, enemy.x, enemy.y)

@@ -165,7 +165,7 @@ Saulo é um personagem jogável registrado como `saulo`, ligado às identidades 
 
 Durante combate, Saulo mira sempre o inimigo válido mais distante. Quando alcança distância corpo a corpo, atravessa a célula do alvo até a borda oposta antes de trocar novamente para o inimigo mais distante. Se restar apenas um alvo válido, ele patrulha entre bordas opostas da célula desse alvo para atravessá-lo repetidamente e cobrir a área com veneno.
 
-Saulo não desvia de outras criaturas e pode atravessar unidades livremente, mas continua respeitando os limites da arena. Enquanto se move, emite nuvens temporárias de gás venenoso desenhadas com `Graphics`; inimigos dentro dessas nuvens recebem ou renovam um `Dot` venenoso creditado a Saulo, permitindo integração com damage chart e traits acionadas por dano causado.
+Saulo não desvia de outras criaturas e pode atravessar unidades livremente, mas continua respeitando os limites da arena. Enquanto se move, emite nuvens temporárias de gás venenoso desenhadas com `Graphics`; inimigos dentro dessas nuvens recebem novas instâncias empilháveis de `Dot` venenoso creditadas a Saulo a cada aplicação periódica, permitindo integração com damage chart e traits acionadas por dano causado. A sobreposição é temporal por reaplicação do veneno, não multiplicada pela quantidade de nuvens sobrepostas no mesmo alvo.
 
 Ao conjurar, Saulo aplica `Hot` em si mesmo, recebe aumento temporário de velocidade e provoca o alvo atual usando o contrato de taunt da criatura. Nuvens de gás, timers de velocidade, referências de patrulha e efeitos temporários devem limpar ao sair de combate, resetar stats ou destruir o personagem.
 

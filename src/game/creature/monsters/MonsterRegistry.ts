@@ -6,17 +6,16 @@ import { Zombie } from "./Zombie"
 import { Demonic } from "./Demonic"
 import { StatsLike } from "../../tools/ChallengeRating"
 import { ArmoredSkeleton } from "./ArmoredSkeleton"
-import { EvilFanatic } from "./EvilFanatic"
-import { Mantis } from "./Mantis"
-import { IceDemonic } from "./IceDemonic"
 import { SkeletonArcher } from "./SkeletonArcher"
 import { SkeletonAssassin } from "./SkeletonAssassin"
 import { SkeletonNecromancer } from "./SkeletonNecromancer"
 import { SkeletonDrainer } from "./SkeletonDrainer"
 import { SkeletonPyromancer } from "./SkeletonPyromancer"
 import { SkeletonCryomancer } from "./SkeletonCryomancer"
+import { Slime, drawSlimeFrame } from "./Slime"
 import type { CreatureVisualDefinition } from "../visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "../visual/CreatureVisualRegistry"
+import { ProceduralCreatureVisualDefinition } from "../visual/ProceduralCreatureVisualDefinition"
 import { SpritesheetCreatureVisualDefinition } from "../visual/SpritesheetCreatureVisualDefinition"
 // import { Ifrit } from "./Ifrit"
 
@@ -73,6 +72,7 @@ export class MonsterRegistry {
 }
 
 MonsterRegistry.register("skeleton", Skeleton)
+MonsterRegistry.register("slime", Slime, true, new ProceduralCreatureVisualDefinition({ textureKey: "slime", drawFrame: drawSlimeFrame }))
 MonsterRegistry.register("zombie", Zombie)
 MonsterRegistry.register("demonic", Demonic)
 // MonsterRegistry.register("ice_demonic", IceDemonic)

@@ -33,6 +33,12 @@ export function calculateSauloPoisonGasTickDamage(abilityPower: number, multipli
     return Math.max(0, abilityPower) * SAULO_GAS_AP_RATIO_PER_TICK * multiplier
 }
 
+export function calculateSauloPoisonGasAverageStacks(dotDurationMs: number, applicationIntervalMs: number): number {
+    if (dotDurationMs <= 0 || applicationIntervalMs <= 0) return 0
+
+    return dotDurationMs / applicationIntervalMs
+}
+
 export function calculateSauloOverdriveHealing(maxHealth: number, multiplier = 1): number {
     return Math.max(0, maxHealth) * SAULO_OVERDRIVE_HOT_MAX_HEALTH_RATIO * multiplier
 }
