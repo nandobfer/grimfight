@@ -3,6 +3,7 @@ import { Augment } from "../../systems/Augment/Augment"
 import { EventBus } from "../../tools/EventBus"
 import { CreatureGroup } from "../CreatureGroup"
 import { Monster } from "./Monster"
+import { Slime } from "./Slime"
 
 export class EnemyTeam extends CreatureGroup {
     constructor(
@@ -19,9 +20,20 @@ export class EnemyTeam extends CreatureGroup {
     }
 
     reset() {
+        this.clearSlimeSplitClones()
         super.reset()
         this.replaceInBoard()
         this.snapItems()
+    }
+
+    private clearSlimeSplitClones(): void {
+        for (const monster of this.getChildren().filter((monster) => monster instanceof Slime && monster.isSplitClone)) {
+            monster.destroyUi()
+            for (const item of monster.items) {
+                item.sprite.destroy(true)
+            }
+            this.remove(monster, true, true)
+        }
     }
 
     replaceInBoard() {
