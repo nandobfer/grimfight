@@ -83,6 +83,8 @@ export class Slime extends Monster {
 
     private isSplitting = false
     private splitSplashTimer?: Phaser.Time.TimerEvent
+    private originalBaseScale?: number
+    private originalBaseMaxHealth?: number
 
     constructor(scene: Game) {
         super(scene, "slime")
@@ -120,6 +122,14 @@ export class Slime extends Monster {
         this.splitSplashTimer = undefined
         this.isSplitting = false
         this.canBeTargeted = true
+
+        if (!this.isSplitClone) {
+            this.originalBaseScale ??= this.baseScale
+            this.originalBaseMaxHealth ??= this.baseMaxHealth
+            this.baseScale = this.originalBaseScale
+            this.baseMaxHealth = this.originalBaseMaxHealth
+        }
+
         super.reset()
     }
 

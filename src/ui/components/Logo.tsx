@@ -1,8 +1,8 @@
-import React from 'react'
-import {Avatar, Box} from '@mui/material'
+import React from "react"
+import { Avatar } from "@mui/material"
 
 interface LogoProps {
-    size?: number
+    size?: number | Record<string, number>
 }
 
 export const Logo: React.FC<LogoProps> = (props) => {

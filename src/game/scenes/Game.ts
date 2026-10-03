@@ -103,8 +103,6 @@ export class Game extends Scene {
 
     create() {
         this.sceneBindingsDisposed = false
-        this.physics.world.createDebugGraphic()
-        this.physics.world.debugGraphic.visible = false
         this.camera = this.cameras.main
 
         this.createBackground()
@@ -127,9 +125,12 @@ export class Game extends Scene {
         this.buildFloor()
 
         this.onKeyD = () => {
-            const currentlyDebugging = this.physics.world.debugGraphic.visible
-            this.physics.world.debugGraphic.visible = !currentlyDebugging
-            console.log(`Physics debug: ${!currentlyDebugging}`)
+            const debugGraphic = this.physics.world.debugGraphic ?? this.physics.world.createDebugGraphic()
+            const nextDebugState = !this.physics.world.drawDebug
+            this.physics.world.drawDebug = nextDebugState
+            debugGraphic.visible = nextDebugState
+            if (!nextDebugState) debugGraphic.clear()
+            console.log(`Physics debug: ${nextDebugState}`)
         }
         this.onKeySpace = () => {
             if (this.state === "idle") {
@@ -250,8 +251,12 @@ export class Game extends Scene {
         this.physics.add.overlap(this.playerTeam, this.enemyTeam)
         this.physics.add.overlap(this.enemyTeam, this.enemyTeam)
 
-        this.physics.add.collider(this.walls, this.playerTeam)
-        this.physics.add.collider(this.walls, this.enemyTeam)
+        this.physics.add.collider(this.walls, this.playerTeam, undefined, this.shouldCollideWithArenaWall, this)
+        this.physics.add.collider(this.walls, this.enemyTeam, undefined, this.shouldCollideWithArenaWall, this)
+    }
+
+    private shouldCollideWithArenaWall(_wall: unknown, object: unknown): boolean {
+        return !(object instanceof Creature && object.name === "saulo")
     }
 
     private installUiDragBridge() {
@@ -263,7 +268,7 @@ export class Game extends Scene {
             // Build a character instance WITHOUT adding to the team yet
             const ghost = CharacterRegistry.create(dto.name, this, dto.id, 0, 0)
             ghost.loadFromDto(dto) // level etc.
-            ghost.body.enable = false // no physics until we drop
+            if (ghost.body) ghost.body.enable = false // no physics until we drop
             ghost.setAlpha(0.95).setDepth(9999)
             ghost.disableInteractive() // we control it manually
             ghost.anims.play(`${ghost.name}-idle-down`, true)
@@ -314,7 +319,7 @@ export class Game extends Scene {
 
             if (snapped && !this.playerTeam.isBoardFull()) {
                 // snapCharacter already set boardX/boardY on the ghost
-                ghost.body.enable = true
+                if (ghost.body) ghost.body.enable = true
                 this.playerTeam.add(ghost) // will NOT auto-reposition because boardX/boardY are set
                 ghost.resetMouseEvents()
                 this.playerTeam.saveAndEmit()
@@ -342,7 +347,7 @@ export class Game extends Scene {
             const character = this.dragFromBoard.get(id)
             if (!character) return
             character.setVisible(false)
-            character.body.enable = false
+            if (character.body) character.body.enable = false
             // (Optional) add a subtle marker in-world if you want
         }
         EventBus.on("bench-hover-enter", this.onBenchHoverEnter)
@@ -352,7 +357,7 @@ export class Game extends Scene {
             const character = this.dragFromBoard.get(id)
             if (!character) return
             character.setVisible(true)
-            character.body.enable = true
+            if (character.body) character.body.enable = true
         }
         EventBus.on("bench-hover-leave", this.onBenchHoverLeave)
 
@@ -374,7 +379,7 @@ export class Game extends Scene {
             const ch = this.dragFromBoard.get(id)
             if (!ch) return
             ch.setVisible(true)
-            ch.body.enable = true
+            if (ch.body) ch.body.enable = true
             this.dragFromBoard.delete(id)
         }
         EventBus.on("bench-cancel", this.onBenchCancel)

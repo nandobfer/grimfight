@@ -8,6 +8,7 @@ import {
     calculateSauloPoisonGasTickDamage,
     calculateSauloSpeedBoost,
     chooseSauloInitialPatrolEndpoint,
+    getSauloRunawayWallPoint,
     getSauloSingleTargetPatrolEndpoints,
     getSauloTargetCellCrossingEndpoints,
     SAULO_GAS_CLOUD_DURATION_MS,
@@ -18,7 +19,7 @@ import {
     SAULO_GAS_RADIUS,
     SAULO_OVERDRIVE_DURATION_MS,
 } from "./SauloPoisonGas"
-import type { SauloPoint } from "./SauloPoisonGas"
+import type { SauloGridMetrics, SauloPoint, SauloVector } from "./SauloPoisonGas"
 
 interface GasCloud {
     x: number
@@ -55,6 +56,9 @@ export class Saulo extends Character {
     private singleTargetPatrolTarget?: Creature
     private singleTargetPatrolCell?: { col: number; row: number }
     private singleTargetPatrolEndpoints?: [SauloPoint, SauloPoint]
+    private runawayTarget?: Creature
+    private runawayDirection?: SauloVector
+    private runawayDestination?: SauloPoint
     private crossingTarget?: Creature
     private crossingDestination?: SauloPoint
     private speedBoostBonus = 0
@@ -83,6 +87,7 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
         this.stopMoving()
         this.idle()
         this.clearCrossing()
+        this.clearRunaway()
         this.target = this.getFartestEnemy()
         this.resetPatrolIfTargetChanged()
         this.updateFacingDirection()
@@ -125,10 +130,19 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
         if (validEnemies.length === 1) {
             this.clearCrossing()
             this.target = validEnemies[0]
+
+            if (validEnemies[0].target === this) {
+                this.clearSingleTargetPatrol()
+                this.moveAwayFromSingleTarget(validEnemies[0])
+                return
+            }
+
+            this.clearRunaway()
             this.moveThroughSingleTarget(validEnemies[0])
             return
         }
 
+        this.clearRunaway()
         this.clearSingleTargetPatrol()
 
         if (this.moveToCrossingDestination()) {
@@ -212,6 +226,81 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
 
         this.moveToPoint(this.singleTargetPatrolEndpoints[this.singleTargetPatrolEndpointIndex])
         this.emit("move", this)
+    }
+
+    private moveAwayFromSingleTarget(target: Creature): void {
+        if (this.moveLocked || this.frozen) return
+
+        if (this.shouldResetRunaway(target)) {
+            this.runawayTarget = target
+            this.runawayDirection = this.createRandomRunawayDirection()
+            this.runawayDestination = this.getRunawayWallPoint(this.runawayDirection)
+        }
+
+        if (!this.runawayDirection || !this.runawayDestination) return
+
+        if (Phaser.Math.Distance.Between(this.x, this.y, this.runawayDestination.x, this.runawayDestination.y) <= this.calculateRunawayArrivalDistance()) {
+            this.runawayDirection = { x: -this.runawayDirection.x, y: -this.runawayDirection.y }
+            this.runawayDestination = this.getRunawayWallPoint(this.runawayDirection)
+        }
+
+        this.moveToPoint(this.runawayDestination)
+        this.emit("move", this)
+    }
+
+    private shouldResetRunaway(target: Creature): boolean {
+        return this.runawayTarget !== target || !this.runawayDirection || !this.runawayDestination
+    }
+
+    private clearRunaway(): void {
+        this.runawayTarget = undefined
+        this.runawayDirection = undefined
+        this.runawayDestination = undefined
+    }
+
+    private calculateRunawayArrivalDistance(): number {
+        return Math.max(8, Math.min(this.scene.grid.cellW, this.scene.grid.cellH) * 0.12)
+    }
+
+    private createRandomRunawayDirection(): SauloVector {
+        const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
+        return { x: Math.cos(angle), y: Math.sin(angle) }
+    }
+
+    private getRunawayWallPoint(direction: SauloVector): SauloPoint {
+        return getSauloRunawayWallPoint(this.getArenaWallMetrics(), { x: this.x, y: this.y }, direction)
+    }
+
+    private getArenaWallMetrics(): SauloGridMetrics {
+        const fallback = this.getGridMetrics()
+        const bodies = this.scene.walls
+            .getChildren()
+            .map((wall) => (wall.body instanceof Phaser.Physics.Arcade.StaticBody ? wall.body : undefined))
+            .filter((body): body is Phaser.Physics.Arcade.StaticBody => body !== undefined)
+
+        const verticalWalls = bodies.filter((body) => body.height > body.width)
+        const horizontalWalls = bodies.filter((body) => body.width >= body.height)
+        if (verticalWalls.length < 2 || horizontalWalls.length < 2) return fallback
+
+        const leftWall = verticalWalls.reduce((left, wall) => (wall.center.x < left.center.x ? wall : left))
+        const rightWall = verticalWalls.reduce((right, wall) => (wall.center.x > right.center.x ? wall : right))
+        const topWall = horizontalWalls.reduce((top, wall) => (wall.center.y < top.center.y ? wall : top))
+        const bottomWall = horizontalWalls.reduce((bottom, wall) => (wall.center.y > bottom.center.y ? wall : bottom))
+        const left = leftWall.x + leftWall.width
+        const right = rightWall.x
+        const top = topWall.y + topWall.height
+        const bottom = bottomWall.y
+
+        if (right <= left || bottom <= top) return fallback
+
+        return {
+            left,
+            top,
+            cellW: right - left,
+            cellH: bottom - top,
+            cols: 1,
+            rows: 1,
+        }
     }
 
     private shouldResetSingleTargetPatrol(target: Creature, targetCell: { col: number; row: number }): boolean {
@@ -469,6 +558,7 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
         this.cleanupGasClouds()
         this.cleanupSpeedBoost()
         this.clearSingleTargetPatrol()
+        this.clearRunaway()
         this.clearCrossing()
         this.lastGasPosition = undefined
         this.overdriveHot = undefined

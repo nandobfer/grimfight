@@ -4,6 +4,7 @@ import { CharacterRegistry } from "../creature/CharacterRegistry"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { MonsterRegistry } from "../creature/monsters/MonsterRegistry"
 import { EffectVisualRegistry } from "../fx/visual/EffectVisualRegistry"
+import { DarkCleave } from "../objects/Projectile/DarkCleave"
 
 export class Preloader extends Scene {
     constructor() {
@@ -31,6 +32,7 @@ export class Preloader extends Scene {
         this.loadExtraSprites()
         this.loadRagnarokSprites()
         EffectVisualRegistry.preload(this)
+        DarkCleave.preload(this)
         this.loadParticles()
         this.loadItems()
     }

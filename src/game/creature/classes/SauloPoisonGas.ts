@@ -17,6 +17,11 @@ export interface SauloGridCell {
     row: number
 }
 
+export interface SauloVector {
+    x: number
+    y: number
+}
+
 export const SAULO_GAS_CLOUD_DURATION_MS = 2000
 export const SAULO_GAS_EMIT_INTERVAL_MS = 180
 export const SAULO_GAS_EMIT_DISTANCE = 22
@@ -74,6 +79,33 @@ export function chooseSauloInitialPatrolEndpoint(from: SauloPoint, endpoints: [S
     return firstDistance >= secondDistance ? 0 : 1
 }
 
+export function getSauloRunawayWallPoint(grid: SauloGridMetrics, from: SauloPoint, direction: SauloVector, wallInset = 0): SauloPoint {
+    const bounds = getSauloGridBounds(grid, wallInset)
+    const origin = {
+        x: clamp(from.x, bounds.left, bounds.right),
+        y: clamp(from.y, bounds.top, bounds.bottom),
+    }
+    const candidates: SauloPoint[] = []
+
+    addVerticalRayIntersection(candidates, bounds.left, bounds, origin, direction)
+    addVerticalRayIntersection(candidates, bounds.right, bounds, origin, direction)
+    addHorizontalRayIntersection(candidates, bounds.top, bounds, origin, direction)
+    addHorizontalRayIntersection(candidates, bounds.bottom, bounds, origin, direction)
+
+    let chosen: SauloPoint | undefined
+    let chosenDistance = Number.POSITIVE_INFINITY
+
+    for (const candidate of candidates) {
+        const distance = getDistanceSquared(origin, candidate)
+        if (distance < chosenDistance) {
+            chosen = candidate
+            chosenDistance = distance
+        }
+    }
+
+    return chosen ?? origin
+}
+
 function getSauloCellCenter(grid: SauloGridMetrics, col: number, row: number): SauloPoint {
     const cell = getClampedCell(grid, { col, row })
     return {
@@ -104,6 +136,56 @@ function getClampedCell(grid: SauloGridMetrics, cell: SauloGridCell): SauloGridC
         col: Math.max(0, Math.min(grid.cols - 1, cell.col)),
         row: Math.max(0, Math.min(grid.rows - 1, cell.row)),
     }
+}
+
+function getSauloGridBounds(grid: SauloGridMetrics, inset = 0) {
+    const safeInset = Math.max(0, Math.min(inset, (grid.cols * grid.cellW) / 2, (grid.rows * grid.cellH) / 2))
+
+    return {
+        left: grid.left + safeInset,
+        right: grid.left + grid.cols * grid.cellW - safeInset,
+        top: grid.top + safeInset,
+        bottom: grid.top + grid.rows * grid.cellH - safeInset,
+    }
+}
+
+function addVerticalRayIntersection(
+    candidates: SauloPoint[],
+    x: number,
+    bounds: ReturnType<typeof getSauloGridBounds>,
+    origin: SauloPoint,
+    direction: SauloVector
+): void {
+    if (direction.x === 0) return
+
+    const t = (x - origin.x) / direction.x
+    if (t <= 0) return
+
+    const y = origin.y + direction.y * t
+    if (y < bounds.top || y > bounds.bottom) return
+
+    candidates.push({ x, y })
+}
+
+function addHorizontalRayIntersection(
+    candidates: SauloPoint[],
+    y: number,
+    bounds: ReturnType<typeof getSauloGridBounds>,
+    origin: SauloPoint,
+    direction: SauloVector
+): void {
+    if (direction.y === 0) return
+
+    const t = (y - origin.y) / direction.y
+    if (t <= 0) return
+
+    const x = origin.x + direction.x * t
+    if (x < bounds.left || x > bounds.right) return
+    candidates.push({ x, y })
+}
+
+function clamp(value: number, min: number, max: number): number {
+    return Math.max(min, Math.min(max, value))
 }
 
 function getDistanceSquared(a: SauloPoint, b: SauloPoint): number {

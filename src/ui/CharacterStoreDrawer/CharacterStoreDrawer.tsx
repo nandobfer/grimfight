@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, ClickAwayListener, Divider, Drawer, IconButton, MenuItem, Paper, SwipeableDrawer, useMediaQuery } from "@mui/material"
+import { Box, IconButton, SwipeableDrawer, useMediaQuery } from "@mui/material"
 import { Game, GameState } from "../../game/scenes/Game"
 import { StoreList } from "./StoreList"
-import { Close, ExpandMore, Refresh } from "@mui/icons-material"
+import { Refresh } from "@mui/icons-material"
 import { EventBus } from "../../game/tools/EventBus"
 import { usePlayerProgress } from "../hooks/usePlayerProgress"
 import { GoldCoin } from "../components/GoldCoin"
-import { BenchList } from "./BenchList"
 
 interface CharacterStoreDrawerProps {
     game: Game
@@ -19,9 +18,9 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
     const isMobile = useMediaQuery("(orientation: portrait)")
 
     const [open, setOpen] = useState(true)
-    const [gamestate, setGamestate] = useState<GameState>("idle")
 
     const closeStore = () => {
+        EventBus.emit("store-open-change", false)
         setOpen(false)
     }
 
@@ -30,17 +29,19 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
     }
 
     const openStore = () => {
-        console.log("abrindo a loja")
+        EventBus.emit("store-open-change", true)
         setOpen(true)
     }
 
     const toggleStore = () => {
-        setOpen((value) => !value)
+        setOpen((value) => {
+            EventBus.emit("store-open-change", !value)
+            return !value
+        })
     }
 
     useEffect(() => {
         const handler = (state: GameState) => {
-            setGamestate(state)
             if (state === "idle") {
                 openStore()
             }
@@ -51,7 +52,6 @@ export const CharacterStoreDrawer: React.FC<CharacterStoreDrawerProps> = ({ game
         EventBus.on("toggle-store", toggleStore)
 
         return () => {
-            console.log("desmontou o drawer")
             EventBus.off("gamestate", handler)
             EventBus.off("open-store", openStore)
             EventBus.off("toggle-store", toggleStore)

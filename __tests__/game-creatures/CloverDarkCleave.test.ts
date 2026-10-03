@@ -1,14 +1,11 @@
 import { describe, expect, it } from "vitest"
 import {
     calculateCloverDarkCleaveDamage,
-    clampCloverDarkCleaveLength,
-    clampCloverDarkCleaveRange,
     CLOVER_DARK_CLEAVE_AD_RATIO,
     CLOVER_DARK_CLEAVE_HIT_RADIUS,
-    CLOVER_DARK_CLEAVE_MAX_LENGTH,
-    CLOVER_DARK_CLEAVE_MAX_RANGE,
-    CLOVER_DARK_CLEAVE_MIN_LENGTH,
-    CLOVER_DARK_CLEAVE_MIN_RANGE,
+    CLOVER_DARK_CLEAVE_MAX_ANGLE_OFFSET,
+    getCloverWallContact,
+    pickCloverDarkCleaveAngle,
     distancePointToSegment,
     doesCloverDarkCleaveSegmentHit,
 } from "../../src/game/creature/classes/CloverDarkCleave"
@@ -26,15 +23,25 @@ describe("CloverDarkCleave", () => {
         expect(calculateCloverDarkCleaveDamage(Number.NaN)).toBe(0)
     })
 
-    it("clamps range while keeping enough distance to reach the target", () => {
-        expect(clampCloverDarkCleaveRange(0, 0)).toBe(CLOVER_DARK_CLEAVE_MIN_RANGE)
-        expect(clampCloverDarkCleaveRange(9999, 9999)).toBe(CLOVER_DARK_CLEAVE_MAX_RANGE)
-        expect(clampCloverDarkCleaveRange(260, CLOVER_DARK_CLEAVE_MIN_RANGE)).toBeGreaterThanOrEqual(260 + CLOVER_DARK_CLEAVE_HIT_RADIUS * 2)
+    it("preserves random deviation while keeping the target inside the swept hit area", () => {
+        const origin = { x: 0, y: 0 }
+        for (const target of [{ x: 60, y: 12 }, { x: -600, y: 220 }, { x: 0, y: -300 }]) {
+            for (const sign of [-1, 1]) {
+                const angle = pickCloverDarkCleaveAngle(origin, target, sign * CLOVER_DARK_CLEAVE_MAX_ANGLE_OFFSET)
+                const distance = Math.hypot(target.x, target.y) + CLOVER_DARK_CLEAVE_HIT_RADIUS
+                expect(doesCloverDarkCleaveSegmentHit(target, origin, { x: Math.cos(angle) * distance, y: Math.sin(angle) * distance })).toBe(true)
+                expect(angle).not.toBe(Math.atan2(target.y, target.x))
+            }
+        }
     })
 
-    it("clamps visual slash length", () => {
-        expect(clampCloverDarkCleaveLength(0)).toBe(CLOVER_DARK_CLEAVE_MIN_LENGTH)
-        expect(clampCloverDarkCleaveLength(9999)).toBe(CLOVER_DARK_CLEAVE_MAX_LENGTH)
+    it("finds wall contact even when a frame crosses the entire wall", () => {
+        const wall = { left: 100, right: 110, top: -50, bottom: 50 }
+        expect(getCloverWallContact({ x: 0, y: 0 }, { x: 200, y: 0 }, wall)).toBeCloseTo(0.5)
+        expect(getCloverWallContact({ x: 200, y: 0 }, { x: 0, y: 0 }, wall)).toBeCloseTo(0.45)
+        expect(getCloverWallContact({ x: 0, y: 80 }, { x: 200, y: 80 }, wall)).toBeUndefined()
+        expect(getCloverWallContact({ x: 105, y: 0 }, { x: 105, y: 0 }, wall)).toBe(0)
+        expect(getCloverWallContact({ x: 0, y: 0 }, { x: 200, y: 0 }, wall, 10)).toBeCloseTo(0.45)
     })
 
     it("detects hits against the moving slash segment", () => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, ClickAwayListener, IconButton, Paper, Popper } from "@mui/material"
+import { Box, Button, ClickAwayListener, IconButton, Paper, Popper, Tooltip } from "@mui/material"
 import { Game } from "../../game/scenes/Game"
 import { DebugFloor } from "./DebugFloor"
 import { DebugGold } from "./DebugGold"
@@ -33,12 +33,14 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
     return (
         <ClickAwayListener onClickAway={closeMenu}>
             <Box sx={{ pointerEvents: "auto" }}>
-                <Button color="inherit" startIcon={<Code />} onClick={(ev) => setAnchorEl(ev.currentTarget)} sx={{ alignSelf: "end" }} size="small">
-                    debug menu
-                </Button>
+                <Tooltip title="Debug menu" placement="auto">
+                    <IconButton color="inherit" onClick={(ev) => setAnchorEl(ev.currentTarget)} sx={{ alignSelf: "end" }} size="small" aria-label="Open debug menu">
+                        <Code fontSize="small" />
+                    </IconButton>
+                </Tooltip>
 
                 <Popper open={!!anchorEl} anchorEl={anchorEl} placement="auto">
-                    <Paper sx={{ flexDirection: "column", gap: 1, padding: 1, width: 300 }}>
+                    <Paper sx={{ display: "flex", flexDirection: "column", gap: 1, padding: 1, width: { xs: 260, sm: 300 } }}>
                         <Button onClick={resetGame} color="error" variant="outlined">
                             reset game
                         </Button>

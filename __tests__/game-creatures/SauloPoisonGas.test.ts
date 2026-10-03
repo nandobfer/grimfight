@@ -5,6 +5,7 @@ import {
     calculateSauloPoisonGasTickDamage,
     calculateSauloSpeedBoost,
     chooseSauloInitialPatrolEndpoint,
+    getSauloRunawayWallPoint,
     getSauloSingleTargetPatrolEndpoints,
     getSauloTargetCellCrossingEndpoints,
     SAULO_GAS_CLOUD_DURATION_MS,
@@ -74,6 +75,35 @@ describe("Saulo poison gas", () => {
         expect(getSauloTargetCellCrossingEndpoints(grid, cell, { x: 390, y: 360 })[1]).toEqual({ x: 292 + SAULO_TARGET_CELL_EDGE_INSET, y: 360 })
         expect(getSauloTargetCellCrossingEndpoints(grid, cell, { x: 324, y: 300 })[1]).toEqual({ x: 324, y: 392 - SAULO_TARGET_CELL_EDGE_INSET })
         expect(getSauloTargetCellCrossingEndpoints(grid, cell, { x: 324, y: 420 })[1]).toEqual({ x: 324, y: 328 + SAULO_TARGET_CELL_EDGE_INSET })
+    })
+
+    it("projects runaway movement to the first arena wall hit by an arbitrary angle", () => {
+        const grid = { left: 0, top: 0, cellW: 50, cellH: 50, cols: 4, rows: 3 }
+
+        expect(getSauloRunawayWallPoint(grid, { x: 50, y: 50 }, { x: 1, y: 0.5 })).toEqual({ x: 200, y: 125 })
+        expect(getSauloRunawayWallPoint(grid, { x: 50, y: 50 }, { x: -0.5, y: -1 })).toEqual({ x: 25, y: 0 })
+    })
+
+    it("uses the opposite vector to cross back to the opposite arena wall", () => {
+        const grid = { left: 0, top: 0, cellW: 50, cellH: 50, cols: 4, rows: 3 }
+
+        const firstWall = getSauloRunawayWallPoint(grid, { x: 50, y: 50 }, { x: 1, y: 0.5 })
+        const oppositeWall = getSauloRunawayWallPoint(grid, firstWall, { x: -1, y: -0.5 })
+
+        expect(oppositeWall).toEqual({ x: 0, y: 25 })
+    })
+
+    it("can project runaway movement to an inset wall to keep the body away from colliders", () => {
+        const grid = { left: 0, top: 0, cellW: 50, cellH: 50, cols: 4, rows: 3 }
+
+        expect(getSauloRunawayWallPoint(grid, { x: 50, y: 50 }, { x: 1, y: 0.5 }, 20)).toEqual({ x: 180, y: 115 })
+        expect(getSauloRunawayWallPoint(grid, { x: 50, y: 50 }, { x: -0.5, y: -1 }, 20)).toEqual({ x: 35, y: 20 })
+    })
+
+    it("returns the clamped origin when runaway direction has no movement", () => {
+        const grid = { left: 10, top: 20, cellW: 30, cellH: 40, cols: 2, rows: 2 }
+
+        expect(getSauloRunawayWallPoint(grid, { x: 200, y: -10 }, { x: 0, y: 0 })).toEqual({ x: 70, y: 20 })
     })
 
     it("exposes positive finite timing and radius constants", () => {

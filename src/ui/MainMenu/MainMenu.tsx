@@ -119,7 +119,7 @@ export const MainMenu: React.FC<MainMenuProps> = (props) => {
                         animation: "grimMenuPulse 7s ease-in-out infinite",
                     }}
                 />
-                <Box sx={{ position: "relative", zIndex: 1, flexDirection: "column", alignItems: "center", gap: 2, width: "min(92vw, 520px)" }}>
+                <Box sx={{ position: "relative", zIndex: 1, flexDirection: "column", alignItems: "center", gap: 2, width: { xs: "min(86vw, 340px)", sm: "min(92vw, 520px)" } }}>
                     <Paper
                         elevation={18}
                         sx={{
@@ -127,10 +127,10 @@ export const MainMenu: React.FC<MainMenuProps> = (props) => {
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
-                            gap: { xs: 2, sm: 3 },
+                            gap: { xs: 1.25, sm: 3 },
                             width: 1,
-                            px: { xs: 3, sm: 6 },
-                            py: { xs: 4, sm: 5 },
+                            px: { xs: 2, sm: 6 },
+                            py: { xs: 2.5, sm: 5 },
                             border: "1px solid rgba(250, 204, 21, 0.22)",
                             background:
                                 "linear-gradient(180deg, rgba(20, 14, 23, 0.86), rgba(7, 6, 10, 0.94)), radial-gradient(circle at top, rgba(127, 29, 29, 0.38), transparent 52%)",
@@ -138,11 +138,11 @@ export const MainMenu: React.FC<MainMenuProps> = (props) => {
                             backdropFilter: "blur(18px)",
                         }}
                     >
-                        <Logo size={360} />
-                        <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.7)", letterSpacing: 3, textTransform: "uppercase" }}>
+                        <Logo size={{ xs: 220, sm: 360 }} />
+                        <Typography variant="body2" sx={{ color: "rgba(255,255,255,0.7)", letterSpacing: { xs: 1.5, sm: 3 }, fontSize: { xs: "0.7rem", sm: "0.875rem" }, textTransform: "uppercase", textAlign: "center" }}>
                             Enfrente a masmorra infinita
                         </Typography>
-                        <Stack sx={{ width: 1, gap: 1.5 }}>
+                        <Stack sx={{ width: 1, gap: { xs: 1, sm: 1.5 } }}>
                             <Button size="large" variant="contained" disabled={props.isLoading} onClick={startNewGame}>
                                 Nova Masmorra
                             </Button>

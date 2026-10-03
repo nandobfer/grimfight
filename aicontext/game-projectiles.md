@@ -5,6 +5,7 @@
 ### Projectile Lifecycle And Safety
 A classe base `Projectile` estende Arcade Sprite e ignora a gravidade. Ela assegura que um mesmo alvo não receba danos múltiplos no mesmo frame de sobreposição mantendo um conjunto `alreadyOverlaped`. Se viajar além de seu tempo de vida útil ou limites, um timer de `watchdog` promove a autodestruição. 
 Seu `destroy` é explícito e garante a limpeza de timers, tweens, luzes (`lights`) e colliders.
+O listener de mudança de estado registrado no EventBus também é removido no destroy, inclusive quando o projétil termina antes do fim da rodada.
 
 ### Combat Resolution
 Projéteis transferem a responsabilidade do cálculo final e da emissão de acerto para o atirador original através da chamada a `owner.onAttackLand(damageType, target)`. A emissão de acerto deve acontecer uma única vez por impacto, porque `onAttackLand` já executa o fluxo de `onHit` do atirador. Acertos em paredes desencadeiam efeitos visuais de parede através da cena.
@@ -16,6 +17,7 @@ O comportamento legado permanece como padrão. Classes existentes que criam anim
 
 ### Types Of Projectiles
 *   **Linear:** Disparos de linha reta (`Arrow`, `Fireball`, `IceShard`, etc.) voam até o alvo ou limite. Variam majoritariamente em velocidade, animação, tipo de dano e iluminação.
+*   **Piercing slash:** `DarkCleave` usa uma textura de meia-lua gerada por `Graphics` no preload. A colisão varre o deslocamento entre frames, limita o percurso à primeira parede e aplica o fluxo de dano da habilidade de Clover uma única vez por inimigo ou minion. A morte do alvo original não interrompe o voo; encerramento de combate, morte ou destruição do dono e shutdown da cena limpam o disparo.
 *   **Graphic-backed:** `Snowball` usa o ciclo de colisão do `Projectile` base com uma textura mínima de hitbox, mas renderiza a bola de neve com `Phaser.Graphics` sincronizado ao projétil. O gráfico gira durante o voo, causa dano frio ao colidir e deve remover listener de `update`, luz e gráfico no destroy.
 *   **Bounce:** Projéteis saltitantes (`LightningBolt`, `HolyShield`) controlam ricochetes varrendo os remanescentes em `getRemainingTargets()` após o impacto, redirecionando o voo para o inimigo ativo mais próximo, diminuindo o número de bounces. `LightningBolt` em particular aplica decréscimo ao seu poder a cada ricochete sucessivo.
 *   **Status Imbuement:** Alguns projéteis aplicam debuffs paralelos ao acerto. Por exemplo, versões aprimoradas do `HolyShield` geram e aplicam um `Dot` passivo nos alvos atingidos.

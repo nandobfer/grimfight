@@ -41,9 +41,16 @@ export const GameMenu: React.FC<GameMenuProps> = (props) => {
     }, [])
 
     return (
-        <Dialog open={showMenu} onClose={closeMenu} slotProps={{ backdrop: { sx: { backdropFilter: "blur(2px)" } }, paper: { elevation: 0 } }}>
-            <Logo />
-            <Box sx={{ flexDirection: "column", gap: 1 }}>
+        <Dialog
+            open={showMenu}
+            onClose={closeMenu}
+            slotProps={{
+                backdrop: { sx: { backdropFilter: "blur(2px)" } },
+                paper: { elevation: 0, sx: { alignItems: "center", padding: { xs: 2, sm: 3 }, margin: { xs: 1, sm: 4 }, width: { xs: "calc(100% - 16px)", sm: "auto" } } },
+            }}
+        >
+            <Logo size={{ xs: 180, sm: 360 }} />
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1, width: { xs: 1, sm: "auto" } }}>
                 <RecordHistory game={props.game} buttonLabel="Histórico" />
                 <Button variant="outlined" color="secondary" onClick={quitToMenu}>
                     Sair

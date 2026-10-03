@@ -29,6 +29,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
     alreadyOverlaped = new Set<Creature>()
     private watchdog?: Phaser.Time.TimerEvent
+    private readonly onGameState = () => this.destroy()
     protected lightTween?: Phaser.Tweens.Tween
     protected colliders: Phaser.Physics.Arcade.Collider[] = []
 
@@ -80,9 +81,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         })
         if (overlapMinions) this.colliders.push(overlapMinions)
 
-        EventBus.once("gamestate", () => {
-            this.destroy()
-        })
+        EventBus.once("gamestate", this.onGameState)
 
         if (visualOptions.autoPlayVisual) {
             this.playRegisteredVisual(visualOptions.animation)
@@ -174,6 +173,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     destroy(fromScene?: boolean): void {
+        EventBus.off("gamestate", this.onGameState)
         // clear timers/colliders/tweens to avoid leaking references
         if (this.watchdog) {
             this.watchdog.remove(false)
