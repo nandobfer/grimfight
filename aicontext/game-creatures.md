@@ -2,6 +2,15 @@
 
 ## Features
 
+### Antonio
+Antonio é um personagem jogável registrado como `antonio`, um bruiser corpo a corpo ligado às identidades de veneno e feral. Ele usa spritesheet SVG e portrait WebP próprios.
+
+Passiva: cada ataque básico injeta ovos de formiga no alvo atingido. Acertos críticos injetam mais ovos, de acordo com o multiplicador de crítico arredondado para baixo. Os ovos persistem no alvo até serem consumidos, até o alvo morrer ou ser destruído, até Antonio resetar stats ou até Antonio ser destruído. Enquanto existirem, Antonio desenha com `Graphics` ovos verdes grudados em cada alvo afetado.
+
+Ativa: Antonio morde o alvo, injetando sempre um ovo extra antes de chocar a ninhada. A mordida consome todos os ovos do alvo, cura Antonio por ovo consumido de forma proporcional à própria vida máxima e invoca formiguinhas gráficas equivalentes ao número de ovos. Cada formiguinha dura poucos segundos, persegue o alvo e causa dano de veneno híbrido continuamente enquanto viva.
+
+As formiguinhas são desenhadas com `Phaser.GameObjects.Graphics`, atualizadas por Antonio em um único laço por frame e limpas ao expirar, quando o alvo morre ou é destruído, quando a rodada sai de combate, quando Antonio reseta stats ou é destruído. O dano de veneno das formiguinhas é creditado a Antonio, integrando com as traits acionadas por dano causado. As fórmulas puras de ovos por acerto, dano por tick das formiguinhas e cura por ovo ficam em `src/game/creature/classes/AntonioAnts.ts` para permitir testes sem carregar Phaser.
+
 ### Archer
 Archer é um personagem jogável registrado como `laherce`. Ele mantém ataque básico à distância usando `Arrow` e sua habilidade dispara uma rajada em cone na direção do alvo atual ou da direção em que está virado.
 

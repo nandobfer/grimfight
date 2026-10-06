@@ -36,6 +36,7 @@ import { Clover } from "./classes/Clover"
 import { Saulo } from "./classes/Saulo"
 import { Lucio } from "./classes/Lucio"
 import { Nala } from "./classes/Nala"
+import { Antonio } from "./classes/Antonio"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
 import { SpritesheetCreatureVisualDefinition, SvgSpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
@@ -121,3 +122,4 @@ CharacterRegistry.register("clover", Clover, SvgSpritesheetCreatureVisualDefinit
 CharacterRegistry.register("saulo", Saulo, SvgSpritesheetCreatureVisualDefinition.character("saulo"))
 CharacterRegistry.register("lucio", Lucio, SvgSpritesheetCreatureVisualDefinition.character("lucio"))
 CharacterRegistry.register("nala", Nala, SvgSpritesheetCreatureVisualDefinition.character("nala"))
+CharacterRegistry.register("antonio", Antonio, SvgSpritesheetCreatureVisualDefinition.character("antonio"))

@@ -15,6 +15,7 @@ const characterRegistryPath = join(process.cwd(), "src/game/creature/CharacterRe
 const gameCreaturesContextPath = join(process.cwd(), "aicontext/game-creatures.md")
 
 const helperFiles = new Set([
+    "AntonioAnts.ts",
     "CloverDarkCleave.ts",
     "DranhoChannel.ts",
     "FandralFlameSlash.ts",
@@ -30,6 +31,7 @@ const helperFiles = new Set([
 ])
 
 const characterContracts: CharacterContract[] = [
+    { file: "Antonio.ts", className: "Antonio", registryName: "antonio" },
     { file: "Archer.ts", className: "Archer", registryName: "laherce" },
     { file: "Arthas.ts", className: "Arthas", registryName: "arthas" },
     { file: "Banguela.ts", className: "Banguela", registryName: "banguela" },
@@ -138,6 +140,13 @@ describe("playable character pure behavior", () => {
         expect(source).toContain('abilityName = "Deadly Poison"')
         expect(source).toContain('private readonly catalyticPoisonSource = "Veneno Catalisador"')
         expect(source).toMatch(/this\.target\.takeDamage\(damage, this, "poison", false, true, this\.catalyticPoisonSource\)/)
+    })
+
+    it("credits Antonio's antling poison to his ability source", () => {
+        const source = readClassSource("Antonio.ts")
+
+        expect(source).toContain('abilityName = "Enxame Devorador"')
+        expect(source).toMatch(/takeDamage\(value, this\.owner, "poison", crit, true, this\.owner\.abilityName\)/)
     })
 
     it("gives Lalatina starting mana through gainMana after refresh", () => {

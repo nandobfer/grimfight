@@ -1,0 +1,535 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="antonio-chitin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26332a" />
+      <stop offset="0.5" stop-color="#141c16" />
+      <stop offset="1" stop-color="#070a08" />
+    </linearGradient>
+    <linearGradient id="antonio-plates" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#32412f" />
+      <stop offset="1" stop-color="#0c120c" />
+    </linearGradient>
+    <radialGradient id="antonio-venom" cx="45%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#d9ff70" />
+      <stop offset="0.5" stop-color="#5cff2e" />
+      <stop offset="1" stop-color="#145c14" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="antonio-eye" cx="40%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#e6ffb0" />
+      <stop offset="0.5" stop-color="#8dff4a" />
+      <stop offset="1" stop-color="#2f9f1f" />
+    </radialGradient>
+
+    <ellipse id="antonio-shadow" cx="32" cy="56" rx="15" ry="4.5" fill="#000000" opacity="0.32" />
+    <path id="antonio-spark" d="M0 -4 L1.4 -1.4 L4 0 L1.4 1.4 L0 4 L-1.4 1.4 L-4 0 L-1.4 -1.4 Z" fill="#b6ff5a" opacity="0.88" />
+    <path id="antonio-drip" d="M0 0 Q1.2 3 0 5.4 Q-1.2 3 0 0 Z" fill="#8dff4a" opacity="0.85" />
+    <g id="antonio-claw">
+      <path d="M0 0 L-2.4 5.4 M0 0 L0.4 6.2 M0 0 L3 5" fill="none" stroke="#0a0d0a" stroke-width="1.7" stroke-linecap="round" />
+      <path d="M0 0 L-2.4 5.4 M0 0 L0.4 6.2 M0 0 L3 5" fill="none" stroke="#5cff2e" stroke-width="0.5" stroke-linecap="round" opacity="0.5" />
+    </g>
+    <g id="antonio-slash">
+      <path d="M-9 -7 Q6 -11 13 2 Q4 -3 -7 1 Q2 2 11 7" fill="none" stroke="#5cff2e" stroke-width="2" stroke-linecap="round" opacity="0.9" />
+      <path d="M-6 -5 Q6 -7 10 2" fill="none" stroke="#eaffc8" stroke-width="0.8" opacity="0.8" />
+    </g>
+    <g id="antonio-venom-burst">
+      <circle cx="0" cy="0" r="8" fill="url(#antonio-venom)" opacity="0.75" />
+      <use href="#antonio-spark" transform="translate(-7 -3) scale(0.75)" />
+      <use href="#antonio-spark" transform="translate(7 3) scale(0.6)" />
+      <use href="#antonio-spark" transform="translate(2 -7) scale(0.55)" />
+    </g>
+
+    <g id="antonio-claw-hand-left">
+      <path d="M-2 -1 Q2 -2 3 1 Q1 4 -2 3 Z" fill="#1c241c" stroke="#030503" stroke-width="0.6" />
+      <use href="#antonio-claw" transform="rotate(-35)" />
+    </g>
+    <g id="antonio-claw-hand-right">
+      <use href="#antonio-claw-hand-left" transform="translate(0 0) scale(-1 1)" />
+    </g>
+
+    <g id="antonio-legs-down">
+      <path d="M27 44 L25 53 Q25 55 28 55 L31 55 L32 44 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <path d="M37 44 L39 53 Q39 55 36 55 L33 55 L32 44 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <path d="M26 50 L31 50 M33 50 L38 50" stroke="#5cff2e" stroke-width="0.5" opacity="0.4" />
+    </g>
+    <g id="antonio-legs-down-step-a">
+      <path d="M27 44 L23 52 Q23 55 26 55 L31 54 L32 44 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <path d="M37 44 L40 52 Q40 55 37 55 L33 54 L32 44 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+    </g>
+    <g id="antonio-legs-down-step-b">
+      <path d="M27 44 L24 53 Q24 55 27 55 L32 53 L32 44 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M37 44 L41 52 Q41 55 38 55 L33 54 L32 44 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+    </g>
+    <g id="antonio-legs-up">
+      <path d="M27 44 L25 53 Q25 55 28 55 L32 55 L32 44 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M37 44 L39 53 Q39 55 36 55 L32 55 L32 44 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+    </g>
+    <g id="antonio-legs-up-step-a">
+      <path d="M27 44 L24 52 Q24 55 27 55 L32 54 L32 44 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <path d="M37 44 L40 53 Q40 55 37 55 L32 54 L32 44 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+    </g>
+    <g id="antonio-legs-up-step-b">
+      <path d="M27 44 L24 53 Q24 55 27 55 L32 54 L32 44 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M37 44 L41 52 Q41 55 38 55 L32 54 L32 44 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+    </g>
+    <g id="antonio-legs-left">
+      <path d="M27 45 L23 53 Q23 55 26 55 L30 54 L32 45 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M32 45 L34 53 Q34 55 37 55 L39 53 L36 45 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+    </g>
+    <g id="antonio-legs-left-step-a">
+      <path d="M27 45 L22 53 Q22 55 25 55 L31 53 L32 45 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <path d="M32 45 L35 53 Q35 55 38 54 L39 52 L36 45 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+    </g>
+    <g id="antonio-legs-left-step-b">
+      <path d="M27 45 L25 53 Q25 55 28 55 L32 54 L32 45 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M32 45 L36 52 Q37 55 40 54 L40 52 L36 45 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+    </g>
+
+    <g id="antonio-head-down">
+      <path d="M24 15 Q24 8 32 7 Q40 8 40 15 Q41 22 36 26 L28 26 Q23 22 24 15 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1.1" />
+      <path d="M26 12 Q32 7 38 12 Q34 10 32 10 Q30 10 26 12 Z" fill="#3f5a3f" opacity="0.5" />
+      <ellipse cx="28" cy="16" rx="3.4" ry="4.2" fill="url(#antonio-eye)" stroke="#0d1a0d" stroke-width="0.6" />
+      <ellipse cx="36" cy="16" rx="3.4" ry="4.2" fill="url(#antonio-eye)" stroke="#0d1a0d" stroke-width="0.6" />
+      <ellipse cx="27" cy="15" rx="1.1" ry="1.5" fill="#eaffc8" opacity="0.85" />
+      <ellipse cx="35" cy="15" rx="1.1" ry="1.5" fill="#eaffc8" opacity="0.85" />
+      <path d="M29 25 Q30 29 27 31 Q29 28 31 26 Z" fill="#1c241c" stroke="#030503" stroke-width="0.7" />
+      <path d="M35 25 Q34 29 37 31 Q35 28 33 26 Z" fill="#1c241c" stroke="#030503" stroke-width="0.7" />
+      <use href="#antonio-drip" transform="translate(32 27)" />
+      <path d="M28 8 Q22 2 17 4" fill="none" stroke="#1c241c" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M36 8 Q42 2 47 4" fill="none" stroke="#1c241c" stroke-width="1.6" stroke-linecap="round" />
+      <circle cx="17" cy="4" r="1.4" fill="#5cff2e" />
+      <circle cx="47" cy="4" r="1.4" fill="#5cff2e" />
+    </g>
+    <g id="antonio-head-bite-down">
+      <use href="#antonio-head-down" />
+      <path d="M28 26 Q25 31 21 32 Q27 30 30 28 Z" fill="#1c241c" stroke="#030503" stroke-width="0.7" />
+      <path d="M36 26 Q39 31 43 32 Q37 30 34 28 Z" fill="#1c241c" stroke="#030503" stroke-width="0.7" />
+      <ellipse cx="32" cy="31" rx="4.2" ry="3" fill="url(#antonio-venom)" opacity="0.65" />
+    </g>
+    <g id="antonio-head-up">
+      <path d="M24 15 Q24 8 32 7 Q40 8 40 15 Q41 22 36 26 L28 26 Q23 22 24 15 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1.1" />
+      <path d="M26 12 Q32 7 38 12 Q34 10 32 10 Q30 10 26 12 Z" fill="#3f5a3f" opacity="0.4" />
+      <path d="M32 9 L32 24" stroke="#5cff2e" stroke-width="0.8" opacity="0.45" />
+      <path d="M28 8 Q23 3 18 6" fill="none" stroke="#1c241c" stroke-width="1.6" stroke-linecap="round" />
+      <path d="M36 8 Q41 3 46 6" fill="none" stroke="#1c241c" stroke-width="1.6" stroke-linecap="round" />
+      <circle cx="18" cy="6" r="1.4" fill="#5cff2e" />
+      <circle cx="46" cy="6" r="1.4" fill="#5cff2e" />
+    </g>
+    <g id="antonio-head-left">
+      <path d="M23 15 Q23 8 31 7 Q39 8 39 16 Q39 24 33 26 Q25 25 23 15 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1.1" />
+      <path d="M25 12 Q31 7 37 12 Q33 10 30 10 Q27 10 25 12 Z" fill="#3f5a3f" opacity="0.45" />
+      <ellipse cx="27" cy="16" rx="3" ry="4" fill="url(#antonio-eye)" stroke="#0d1a0d" stroke-width="0.6" />
+      <ellipse cx="26" cy="15" rx="1" ry="1.4" fill="#eaffc8" opacity="0.85" />
+      <path d="M24 24 Q21 27 23 30 Q25 27 27 25 Z" fill="#1c241c" stroke="#030503" stroke-width="0.7" />
+      <path d="M25 27 L24 30" stroke="#8dff4a" stroke-width="0.9" opacity="0.85" />
+      <path d="M33 8 Q39 2 45 5" fill="none" stroke="#1c241c" stroke-width="1.6" stroke-linecap="round" />
+      <circle cx="45" cy="5" r="1.4" fill="#5cff2e" />
+    </g>
+    <g id="antonio-head-bite-left">
+      <use href="#antonio-head-left" />
+      <path d="M24 24 Q20 29 18 32 Q24 29 27 25 Z" fill="#1c241c" stroke="#030503" stroke-width="0.7" />
+      <ellipse cx="23" cy="29" rx="3.6" ry="2.6" fill="url(#antonio-venom)" opacity="0.65" />
+    </g>
+    <g id="antonio-head-right"><use href="#antonio-head-left" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="antonio-head-bite-right"><use href="#antonio-head-bite-left" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="antonio-torso-down">
+      <path d="M22 27 Q32 21 42 27 L40 45 Q32 49 24 45 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1.4" />
+      <path d="M25 29 Q32 25 39 29 Q35 27 32 27 Q29 27 25 29 Z" fill="#3f5a3f" opacity="0.45" />
+      <path d="M25 34 H39" stroke="#5cff2e" stroke-width="1" opacity="0.5" />
+      <path d="M26 39 H38" stroke="#5cff2e" stroke-width="0.8" opacity="0.35" />
+      <circle cx="32" cy="31" r="1.8" fill="url(#antonio-venom)" stroke="#2f9f1f" stroke-width="0.5" />
+    </g>
+    <g id="antonio-torso-up">
+      <path d="M22 27 Q32 21 42 27 L40 45 Q32 49 24 45 Z" fill="#0e140e" stroke="#030503" stroke-width="1.4" />
+      <path d="M25 30 Q32 26 39 30" fill="none" stroke="#2f4a2f" stroke-width="1.4" opacity="0.6" />
+      <path d="M32 24 L32 46" stroke="#5cff2e" stroke-width="0.8" opacity="0.35" />
+    </g>
+    <g id="antonio-torso-left">
+      <ellipse cx="43" cy="42" rx="7" ry="8" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1.2" />
+      <path d="M40 37 Q46 36 49 41" fill="none" stroke="#5cff2e" stroke-width="0.9" opacity="0.45" />
+      <path d="M40 42 Q46 42 50 44" fill="none" stroke="#5cff2e" stroke-width="0.7" opacity="0.3" />
+      <path d="M49 47 L53 51 L48 49 Z" fill="#1c241c" stroke="#030503" stroke-width="0.6" />
+      <path d="M22 28 Q30 22 40 27 L40 45 Q31 49 23 45 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1.3" />
+      <path d="M25 31 Q31 33 37 31" fill="none" stroke="#2f4a2f" stroke-width="1.3" opacity="0.6" />
+      <path d="M26 36 H36" stroke="#5cff2e" stroke-width="0.8" opacity="0.4" />
+    </g>
+    <g id="antonio-torso-right"><use href="#antonio-torso-left" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="antonio-arms-down">
+      <path d="M23 29 L16 39 Q16 43 20 43 L27 33 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-left" transform="translate(18 42)" />
+      <path d="M41 29 L49 38 Q50 43 45 44 L37 33 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-right" transform="translate(47 43)" />
+    </g>
+    <g id="antonio-arms-up">
+      <path d="M23 29 L17 38 Q17 42 21 42 L28 33 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M41 29 L47 38 Q47 42 44 43 L37 33 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-left" transform="translate(19 42)" />
+      <use href="#antonio-claw-hand-right" transform="translate(45 43)" />
+    </g>
+    <g id="antonio-arms-left">
+      <path d="M34 30 L40 39 Q40 43 36 43 L30 34 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M26 30 L16 37 Q13 40 16 43 L28 34 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-left" transform="translate(15 42)" />
+    </g>
+    <g id="antonio-arms-right"><use href="#antonio-arms-left" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="antonio-arms-wind-down">
+      <path d="M23 29 L16 39 Q16 43 20 43 L27 33 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-left" transform="translate(18 42)" />
+      <path d="M41 29 L44 22 Q45 19 42 18 L37 30 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-right" transform="translate(43 18) rotate(-90)" />
+    </g>
+    <g id="antonio-arms-strike-down">
+      <path d="M23 29 L15 38 Q14 42 18 43 L27 33 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-left" transform="translate(16 42)" />
+      <path d="M41 30 L50 36 Q53 39 50 42 L38 35 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-right" transform="translate(52 42) rotate(20)" />
+    </g>
+    <g id="antonio-arms-wind-left">
+      <path d="M34 30 L40 39 Q40 43 36 43 L30 34 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M30 30 L34 22 Q36 19 32 18 L26 31 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-left" transform="translate(32 18) rotate(90)" />
+    </g>
+    <g id="antonio-arms-strike-left">
+      <path d="M34 30 L40 38 Q40 42 36 43 L30 34 Z" fill="#0e140e" stroke="#030503" stroke-width="1" />
+      <path d="M28 31 L17 36 Q13 39 16 43 L29 34 Z" fill="url(#antonio-chitin)" stroke="#030503" stroke-width="1" />
+      <use href="#antonio-claw-hand-left" transform="translate(14 42) rotate(30)" />
+    </g>
+    <g id="antonio-arms-wind-right"><use href="#antonio-arms-wind-left" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="antonio-arms-strike-right"><use href="#antonio-arms-strike-left" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="antonio-down-idle-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-down" />
+      <use href="#antonio-torso-down" />
+      <use href="#antonio-arms-down" />
+      <use href="#antonio-head-down" />
+    </g>
+    <g id="antonio-down-idle-b"><use href="#antonio-down-idle-a" transform="translate(0 -1)" /></g>
+    <g id="antonio-up-idle-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-up" />
+      <use href="#antonio-torso-up" />
+      <use href="#antonio-arms-up" />
+      <use href="#antonio-head-up" />
+    </g>
+    <g id="antonio-up-idle-b"><use href="#antonio-up-idle-a" transform="translate(0 -1)" /></g>
+    <g id="antonio-left-idle-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-left" />
+      <use href="#antonio-torso-left" />
+      <use href="#antonio-arms-left" />
+      <use href="#antonio-head-left" />
+    </g>
+    <g id="antonio-left-idle-b"><use href="#antonio-left-idle-a" transform="translate(0 -1)" /></g>
+    <g id="antonio-right-idle-a"><use href="#antonio-left-idle-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="antonio-right-idle-b"><use href="#antonio-left-idle-b" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="antonio-down-walk-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-down-step-a" />
+      <use href="#antonio-torso-down" />
+      <use href="#antonio-arms-down" transform="rotate(-5 32 34)" />
+      <use href="#antonio-head-down" />
+    </g>
+    <g id="antonio-down-walk-b">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-down-step-b" />
+      <use href="#antonio-torso-down" transform="translate(0 -1)" />
+      <use href="#antonio-arms-down" transform="rotate(5 32 34)" />
+      <use href="#antonio-head-down" transform="translate(0 -1)" />
+    </g>
+    <g id="antonio-up-walk-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-up-step-a" />
+      <use href="#antonio-torso-up" />
+      <use href="#antonio-arms-up" transform="rotate(5 32 34)" />
+      <use href="#antonio-head-up" />
+    </g>
+    <g id="antonio-up-walk-b">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-up-step-b" />
+      <use href="#antonio-torso-up" transform="translate(0 -1)" />
+      <use href="#antonio-arms-up" transform="rotate(-5 32 34)" />
+      <use href="#antonio-head-up" transform="translate(0 -1)" />
+    </g>
+    <g id="antonio-left-walk-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-left-step-a" />
+      <use href="#antonio-torso-left" />
+      <use href="#antonio-arms-left" transform="rotate(-4 32 34)" />
+      <use href="#antonio-head-left" />
+    </g>
+    <g id="antonio-left-walk-b">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-left-step-b" />
+      <use href="#antonio-torso-left" transform="translate(0 -1)" />
+      <use href="#antonio-arms-left" transform="rotate(4 32 34)" />
+      <use href="#antonio-head-left" transform="translate(0 -1)" />
+    </g>
+    <g id="antonio-right-walk-a"><use href="#antonio-left-walk-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="antonio-right-walk-b"><use href="#antonio-left-walk-b" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="antonio-down-attack-prep">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-down-step-a" />
+      <use href="#antonio-torso-down" />
+      <use href="#antonio-arms-wind-down" />
+      <use href="#antonio-head-down" />
+    </g>
+    <g id="antonio-down-attack-impact">
+      <use href="#antonio-down-attack-prep" />
+      <use href="#antonio-slash" transform="translate(50 38) rotate(20)" />
+      <use href="#antonio-venom-burst" transform="translate(52 43) scale(0.9)" />
+    </g>
+    <g id="antonio-up-attack-prep">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-up-step-a" />
+      <use href="#antonio-torso-up" />
+      <use href="#antonio-arms-up" transform="rotate(-8 32 34)" />
+      <use href="#antonio-head-up" />
+    </g>
+    <g id="antonio-up-attack-impact">
+      <use href="#antonio-up-attack-prep" />
+      <use href="#antonio-slash" transform="translate(48 22) rotate(-80)" />
+      <use href="#antonio-venom-burst" transform="translate(46 20) scale(0.85)" />
+    </g>
+    <g id="antonio-left-attack-prep">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-left-step-a" />
+      <use href="#antonio-torso-left" />
+      <use href="#antonio-arms-wind-left" />
+      <use href="#antonio-head-left" />
+    </g>
+    <g id="antonio-left-attack-impact">
+      <use href="#antonio-left-attack-prep" />
+      <use href="#antonio-slash" transform="translate(10 36) rotate(-30)" />
+      <use href="#antonio-venom-burst" transform="translate(9 39) scale(0.85)" />
+    </g>
+    <g id="antonio-right-attack-prep"><use href="#antonio-left-attack-prep" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="antonio-right-attack-impact"><use href="#antonio-left-attack-impact" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="antonio-down-bite-prep">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-down-step-a" />
+      <use href="#antonio-torso-down" />
+      <use href="#antonio-arms-down" />
+      <use href="#antonio-head-bite-down" />
+    </g>
+    <g id="antonio-down-bite-impact">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-down-step-a" />
+      <use href="#antonio-torso-down" />
+      <use href="#antonio-arms-down" />
+      <use href="#antonio-head-down" />
+      <use href="#antonio-venom-burst" transform="translate(32 32) scale(0.8)" />
+    </g>
+    <g id="antonio-up-bite-prep">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-up-step-a" />
+      <use href="#antonio-torso-up" />
+      <use href="#antonio-arms-up" />
+      <use href="#antonio-head-up" />
+    </g>
+    <g id="antonio-up-bite-impact">
+      <use href="#antonio-up-bite-prep" />
+      <use href="#antonio-venom-burst" transform="translate(32 14) scale(0.8)" />
+    </g>
+    <g id="antonio-left-bite-prep">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-left-step-a" />
+      <use href="#antonio-torso-left" />
+      <use href="#antonio-arms-left" />
+      <use href="#antonio-head-bite-left" />
+    </g>
+    <g id="antonio-left-bite-impact">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-left-step-a" />
+      <use href="#antonio-torso-left" />
+      <use href="#antonio-arms-left" />
+      <use href="#antonio-head-left" />
+      <use href="#antonio-venom-burst" transform="translate(22 27) scale(0.8)" />
+    </g>
+    <g id="antonio-right-bite-prep"><use href="#antonio-left-bite-prep" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="antonio-right-bite-impact"><use href="#antonio-left-bite-impact" transform="translate(64 0) scale(-1 1)" /></g>
+
+    <g id="antonio-down-cast-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-down" />
+      <use href="#antonio-torso-down" />
+      <use href="#antonio-arms-wind-down" />
+      <use href="#antonio-head-bite-down" />
+      <circle cx="32" cy="30" r="6" fill="url(#antonio-venom)" opacity="0.5" />
+    </g>
+    <g id="antonio-down-cast-b">
+      <use href="#antonio-down-cast-a" />
+      <circle cx="32" cy="31" r="12" fill="url(#antonio-venom)" opacity="0.6" />
+      <use href="#antonio-spark" transform="translate(22 26)" />
+      <use href="#antonio-spark" transform="translate(43 36) scale(0.8)" />
+    </g>
+    <g id="antonio-up-cast-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-up" />
+      <use href="#antonio-torso-up" />
+      <use href="#antonio-arms-up" transform="rotate(-8 32 34)" />
+      <use href="#antonio-head-up" />
+      <circle cx="32" cy="18" r="6" fill="url(#antonio-venom)" opacity="0.5" />
+    </g>
+    <g id="antonio-up-cast-b">
+      <use href="#antonio-up-cast-a" />
+      <circle cx="32" cy="17" r="12" fill="url(#antonio-venom)" opacity="0.6" />
+      <use href="#antonio-spark" transform="translate(22 12)" />
+      <use href="#antonio-spark" transform="translate(43 22) scale(0.8)" />
+    </g>
+    <g id="antonio-left-cast-a">
+      <use href="#antonio-shadow" />
+      <use href="#antonio-legs-left" />
+      <use href="#antonio-torso-left" />
+      <use href="#antonio-arms-wind-left" />
+      <use href="#antonio-head-bite-left" />
+      <circle cx="24" cy="28" r="6" fill="url(#antonio-venom)" opacity="0.5" />
+    </g>
+    <g id="antonio-left-cast-b">
+      <use href="#antonio-left-cast-a" />
+      <circle cx="23" cy="28" r="12" fill="url(#antonio-venom)" opacity="0.6" />
+      <use href="#antonio-spark" transform="translate(14 23)" />
+      <use href="#antonio-spark" transform="translate(34 36) scale(0.8)" />
+    </g>
+    <g id="antonio-right-cast-a"><use href="#antonio-left-cast-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="antonio-right-cast-b"><use href="#antonio-left-cast-b" transform="translate(64 0) scale(-1 1)" /></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-b" /></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-b" /></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-b" /></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-b" /></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-walk-a" /></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-walk-b" /></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-b" /></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-b" /></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-walk-a" /></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-walk-a" /></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-walk-b" /></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-b" /></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-b" /></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-walk-a" /></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-walk-a" /></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-walk-b" /></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-b" /></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-b" /></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-walk-a" /></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-walk-a" /></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-walk-b" /></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-b" /></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-b" /></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-walk-a" /></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-attack-impact" /></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-b" /></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-attack-prep" transform="translate(1 -1)" /></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-attack-prep" transform="translate(2 -1)" /></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-attack-impact" /></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-b" /></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-attack-impact" /></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-b" /></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-attack-prep" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-attack-prep" transform="translate(-2 -1)" /></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-attack-impact" /></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-b" /></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-bite-prep" /></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-bite-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-bite-impact" /></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-b" /></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-bite-prep" /></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-bite-prep" transform="translate(2 -1)" /></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-bite-impact" /></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-b" /></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-bite-prep" /></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-bite-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-bite-impact" /></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-b" /></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-bite-prep" /></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-bite-prep" transform="translate(-2 -1)" /></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-bite-impact" /></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-b" /></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-cast-a" /></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-cast-b" /></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-cast-a" /></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-b" /></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-up-idle-a" /></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-cast-a" /></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-cast-b" /></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-cast-b" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-cast-a" /></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-b" /></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-left-idle-a" /></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-cast-a" /></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-cast-b" /></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-cast-a" /></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-b" /></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-down-idle-a" /></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-cast-a" /></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-cast-b" /></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-cast-b" transform="translate(1 -1)" /></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-cast-a" /></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-b" /></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#antonio-right-idle-a" /></svg>
+</svg>
