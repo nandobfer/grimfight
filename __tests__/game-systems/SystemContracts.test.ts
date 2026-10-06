@@ -269,8 +269,8 @@ describe("GameRecord contracts", () => {
     it("declares local run record fields and DTO dependencies", () => {
         const source = readSource(join(systemsDir, "GameRecord.ts"))
 
-        expect(source).toContain("import { CharacterDto }")
-        expect(source).toContain("import { Augment }")
+        expect(source).toMatch(/import(?: type)? \{ CharacterDto \}/)
+        expect(source).toMatch(/import(?: type)? \{ Augment \}/)
         expect(source).toContain("export class GameRecord")
         expect(source).toContain("finishedAt: number")
         expect(source).toContain("floor: number")

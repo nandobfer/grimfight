@@ -1,31 +1,17 @@
-import React from "react"
-import { Box, Typography, useTheme } from "@mui/material"
-import { GameRecord } from "../../../../game/systems/GameRecord"
+import { Box, Typography } from "@mui/material"
+import type { GameRecordStatistics } from "../../../../game/systems/GameRecordStatistics"
 import { FloorTimestamp } from "./FloorTimestamp"
 import { FloorCharacters } from "./FloorCharacters"
 import { FloorTraits } from "./FloorTraits"
 
-interface StatisticsProps {
-    records: GameRecord[]
-}
-
-export const Statistics: React.FC<StatisticsProps> = (props) => {
-    const theme = useTheme()
-
-    return (
-        <Box sx={{ flexDirection: "column", gap: 1, width: 1000 }}>
-            <Typography>best results</Typography>
-            <Box sx={{ flexDirection: "row", gap: 1 }}>
-                <FloorTimestamp records={props.records} y="floor" color={theme.palette.primary.main} />
-                <FloorCharacters records={props.records} y="floor" color={theme.palette.primary.main} />
-                <FloorTraits records={props.records} y="floor" color={theme.palette.primary.main} />
+export const Statistics = ({ statistics }: { statistics: GameRecordStatistics }) => (
+    <Box sx={{ flexDirection: "column", gap: 2, width: 1, minWidth: 0 }}>
+        {statistics.records.length === 0 ? <Typography color="text.secondary" sx={{ py: 3 }}>As estatísticas aparecerão após encerrar sua primeira run.</Typography> : <>
+            <FloorTimestamp days={statistics.days} />
+            <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "repeat(2, minmax(0, 1fr))" }, gap: 2, minWidth: 0 }}>
+                <FloorCharacters entries={statistics.characters} />
+                <FloorTraits entries={statistics.traits} estimated={statistics.estimatedTraits} />
             </Box>
-            <Typography>total games</Typography>
-            <Box sx={{ flexDirection: "row", gap: 1 }}>
-                <FloorTimestamp records={props.records} y="count" color={theme.palette.info.main} />
-                <FloorCharacters records={props.records} y="count" color={theme.palette.info.main} />
-                <FloorTraits records={props.records} y="count" color={theme.palette.info.main} />
-            </Box>
-        </Box>
-    )
-}
+        </>}
+    </Box>
+)

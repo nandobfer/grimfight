@@ -20,6 +20,7 @@ import { GoldCoinFx } from "../fx/GoldExplosion"
 import { Shopkeeper } from "../systems/Shopkeeper"
 import { EnemyTeam } from "../creature/monsters/EnemyTeam"
 import { GameRecord } from "../systems/GameRecord"
+import { GameRecordTraits } from "../systems/GameRecordTraits"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { Item } from "../systems/Items/Item"
 import { Tavern } from "../systems/Tavern"
@@ -600,6 +601,7 @@ export class Game extends Scene {
         const progress = this.getProgress()
         this.currentRecord = this.getCurrentRecord(progress)
         this.currentRecord.finishedAt = Date.now()
+        this.currentRecord.traits = GameRecordTraits.fromComposition(this.currentRecord.comp.map((character) => character.name))
 
         const records = this.getSavedGameRecords()
         records.push(this.currentRecord)

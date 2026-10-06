@@ -8,6 +8,10 @@ import {
     calculateSauloPoisonGasTickDamage,
     calculateSauloSpeedBoost,
     chooseSauloInitialPatrolEndpoint,
+    clampSauloMovementPoint,
+    getSauloInwardRunawayDirection,
+    getSauloMovementBounds,
+    hasSauloReachedMovementPoint,
     getSauloRunawayWallPoint,
     getSauloSingleTargetPatrolEndpoints,
     getSauloTargetCellCrossingEndpoints,
@@ -64,6 +68,8 @@ export class Saulo extends Character {
     private speedBoostBonus = 0
     private speedBoostTimer?: Phaser.Time.TimerEvent
     private overdriveHot?: Hot
+    private arenaWallMetrics?: SauloGridMetrics
+    private previousMovementPosition?: SauloPoint
 
     constructor(scene: Game, id: string) {
         super(scene, "saulo", id)
@@ -74,7 +80,7 @@ export class Saulo extends Character {
         const healing = calculateSauloOverdriveHealing(this.maxHealth)
         const speedBoost = calculateSauloSpeedBoost(this.speed)
 
-        return `Saulo não ataca. Ele atravessa o combate perseguindo sempre o inimigo mais distante e deixa para trás nuvens de gás venenoso que duram brevemente, aplicando veneno em inimigos dentro da área por [info.main:${Math.round(
+        return `Saulo não ataca. Ele atravessa o combate perseguindo sempre o inimigo mais distante e deixa para trás nuvens de gás venenoso que permanecem por [primary.main:${SAULO_GAS_CLOUD_DURATION_MS / 1000} segundos], aplicando veneno em inimigos dentro da área por [info.main:${Math.round(
             tickDamage
         )} (11% AP)] de dano por tick.
 
@@ -84,6 +90,7 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
     }
 
     override newTarget(): void {
+        this.previousMovementPosition = undefined
         this.stopMoving()
         this.idle()
         this.clearCrossing()
@@ -155,20 +162,26 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
         }
 
         if (!this.moveLocked && !this.frozen) {
-            this.moveToTarget()
+            this.moveToPoint(this.target)
             this.emit("move", this)
         }
     }
 
     override update(time: number, delta: number): void {
+        if (this.scene.state === "fighting" && this.active && this.health > 0) {
+            const point = clampSauloMovementPoint(this.getMovementBounds(), { x: this.x, y: this.y })
+            if (point.x !== this.x || point.y !== this.y) this.body.reset(point.x, point.y)
+        }
         super.update(time, delta)
 
         if (this.scene.state !== "fighting" || !this.active || this.health <= 0) {
             this.cleanupGasClouds()
             this.lastGasPosition = undefined
+            this.previousMovementPosition = undefined
             return
         }
 
+        this.previousMovementPosition = { x: this.x, y: this.y }
         this.updatePoisonGas(time, delta)
     }
 
@@ -205,7 +218,7 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
 
         const targetCell = this.scene.grid.worldToCell(target.x, target.y)
         if (!targetCell) {
-            this.moveToTarget()
+            this.moveToPoint(target)
             this.emit("move", this)
             return
         }
@@ -214,13 +227,16 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
             this.singleTargetPatrolTarget = target
             this.singleTargetPatrolCell = { col: targetCell.col, row: targetCell.row }
             this.singleTargetPatrolEndpoints = getSauloSingleTargetPatrolEndpoints(this.getGridMetrics(), targetCell, { x: this.x, y: this.y })
+            const bounds = this.getMovementBounds()
+            this.singleTargetPatrolEndpoints = [clampSauloMovementPoint(bounds, this.singleTargetPatrolEndpoints[0]), clampSauloMovementPoint(bounds, this.singleTargetPatrolEndpoints[1])]
+            this.previousMovementPosition = undefined
             this.singleTargetPatrolEndpointIndex = chooseSauloInitialPatrolEndpoint({ x: this.x, y: this.y }, this.singleTargetPatrolEndpoints)
         }
 
         if (!this.singleTargetPatrolEndpoints || this.singleTargetPatrolEndpointIndex === undefined) return
 
         const destination = this.singleTargetPatrolEndpoints[this.singleTargetPatrolEndpointIndex]
-        if (Phaser.Math.Distance.Between(this.x, this.y, destination.x, destination.y) <= this.calculateSingleTargetPatrolArrivalDistance()) {
+        if (this.hasReachedPoint(destination, this.calculateSingleTargetPatrolArrivalDistance())) {
             this.singleTargetPatrolEndpointIndex = this.singleTargetPatrolEndpointIndex === 0 ? 1 : 0
         }
 
@@ -233,14 +249,17 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
 
         if (this.shouldResetRunaway(target)) {
             this.runawayTarget = target
-            this.runawayDirection = this.createRandomRunawayDirection()
+            this.runawayDirection = getSauloInwardRunawayDirection(this.getMovementBounds(), { x: this.x, y: this.y }, this.createRandomRunawayDirection())
             this.runawayDestination = this.getRunawayWallPoint(this.runawayDirection)
+            this.previousMovementPosition = undefined
         }
 
         if (!this.runawayDirection || !this.runawayDestination) return
 
-        if (Phaser.Math.Distance.Between(this.x, this.y, this.runawayDestination.x, this.runawayDestination.y) <= this.calculateRunawayArrivalDistance()) {
-            this.runawayDirection = { x: -this.runawayDirection.x, y: -this.runawayDirection.y }
+        const remainingProjection = (this.runawayDestination.x - this.x) * this.runawayDirection.x + (this.runawayDestination.y - this.y) * this.runawayDirection.y
+        if (this.hasReachedPoint(this.runawayDestination, this.calculateRunawayArrivalDistance()) || remainingProjection <= 0) {
+            this.body.reset(this.runawayDestination.x, this.runawayDestination.y)
+            this.runawayDirection = getSauloInwardRunawayDirection(this.getMovementBounds(), { x: this.x, y: this.y }, { x: -this.runawayDirection.x, y: -this.runawayDirection.y })
             this.runawayDestination = this.getRunawayWallPoint(this.runawayDirection)
         }
 
@@ -268,7 +287,21 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
     }
 
     private getRunawayWallPoint(direction: SauloVector): SauloPoint {
-        return getSauloRunawayWallPoint(this.getArenaWallMetrics(), { x: this.x, y: this.y }, direction)
+        return getSauloRunawayWallPoint(this.getMovementBounds(), { x: this.x, y: this.y }, direction)
+    }
+
+    private getMovementBounds(): SauloGridMetrics {
+        this.arenaWallMetrics ??= this.getArenaWallMetrics()
+        // Arcade may advance the body before synchronizing the sprite this frame.
+        const left = this.x + this.scaleX * (this.body.offset.x - this.displayOriginX)
+        const top = this.y + this.scaleY * (this.body.offset.y - this.displayOriginY)
+        return getSauloMovementBounds(this.arenaWallMetrics, {
+            left, right: left + this.body.width, top, bottom: top + this.body.height,
+        }, { x: this.x, y: this.y })
+    }
+
+    private hasReachedPoint(point: SauloPoint, radius: number): boolean {
+        return hasSauloReachedMovementPoint({ x: this.x, y: this.y }, point, radius, this.previousMovementPosition)
     }
 
     private getArenaWallMetrics(): SauloGridMetrics {
@@ -335,7 +368,8 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
 
         const [, destination] = getSauloTargetCellCrossingEndpoints(this.getGridMetrics(), targetCell, { x: this.x, y: this.y })
         this.crossingTarget = target
-        this.crossingDestination = destination
+        this.crossingDestination = clampSauloMovementPoint(this.getMovementBounds(), destination)
+        this.previousMovementPosition = undefined
         this.moveToCrossingDestination()
     }
 
@@ -350,7 +384,7 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
 
         if (this.moveLocked || this.frozen) return true
 
-        if (Phaser.Math.Distance.Between(this.x, this.y, this.crossingDestination.x, this.crossingDestination.y) <= this.calculateCrossingArrivalDistance()) {
+        if (this.hasReachedPoint(this.crossingDestination, this.calculateCrossingArrivalDistance())) {
             const crossedTarget = this.crossingTarget
             this.clearCrossing()
             this.target = this.getFarthestEnemyExcept(crossedTarget) ?? this.getFartestEnemy()
@@ -385,6 +419,7 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
     }
 
     private moveToPoint(point: SauloPoint): void {
+        point = clampSauloMovementPoint(this.getMovementBounds(), point)
         const angle = Phaser.Math.Angle.Between(this.x, this.y, point.x, point.y)
         this.scene.physics.velocityFromAngle(Phaser.Math.RadToDeg(angle), this.speed, this.body.velocity)
         this.updateFacingToward(point.x, point.y)
@@ -555,6 +590,8 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
     }
 
     private cleanupSauloState(): void {
+        this.arenaWallMetrics = undefined
+        this.previousMovementPosition = undefined
         this.cleanupGasClouds()
         this.cleanupSpeedBoost()
         this.clearSingleTargetPatrol()

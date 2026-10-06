@@ -6,6 +6,10 @@ import {
     calculateSauloSpeedBoost,
     chooseSauloInitialPatrolEndpoint,
     getSauloRunawayWallPoint,
+    getSauloMovementBounds,
+    getSauloInwardRunawayDirection,
+    clampSauloMovementPoint,
+    hasSauloReachedMovementPoint,
     getSauloSingleTargetPatrolEndpoints,
     getSauloTargetCellCrossingEndpoints,
     SAULO_GAS_CLOUD_DURATION_MS,
@@ -104,6 +108,39 @@ describe("Saulo poison gas", () => {
         const grid = { left: 10, top: 20, cellW: 30, cellH: 40, cols: 2, rows: 2 }
 
         expect(getSauloRunawayWallPoint(grid, { x: 200, y: -10 }, { x: 0, y: 0 })).toEqual({ x: 70, y: 20 })
+    })
+
+    it("accounts for asymmetric body extents so each physical edge reaches the arena wall", () => {
+        const arena = { left: 0, top: 0, cellW: 200, cellH: 150, cols: 1, rows: 1 }
+        const anchor = { x: 50, y: 60 }
+        const body = { left: 40, right: 60, top: 40, bottom: 65 }
+        const bounds = getSauloMovementBounds(arena, body, anchor)
+        expect(bounds).toEqual({ left: 10, top: 20, cellW: 180, cellH: 125, cols: 1, rows: 1 })
+        expect(clampSauloMovementPoint(bounds, { x: -50, y: 200 })).toEqual({ x: 10, y: 145 })
+        expect(getSauloRunawayWallPoint(bounds, anchor, { x: 0, y: 1 }).y + body.bottom - anchor.y).toBe(150)
+        expect(getSauloRunawayWallPoint(bounds, anchor, { x: 1, y: 0 }).x + body.right - anchor.x).toBe(200)
+    })
+
+    it("reflects outward directions at every wall and corner into a useful inward route", () => {
+        const arena = { left: 0, top: 0, cellW: 200, cellH: 150, cols: 1, rows: 1 }
+        for (const origin of [{ x: 0, y: 50 }, { x: 200, y: 50 }, { x: 50, y: 0 }, { x: 50, y: 150 },
+            { x: 0, y: 0 }, { x: 200, y: 0 }, { x: 0, y: 150 }, { x: 200, y: 150 }]) {
+            for (const direction of [{ x: 1, y: 0.5 }, { x: -1, y: 0.5 }, { x: 1, y: -0.5 }, { x: -1, y: -0.5 }]) {
+                const inward = getSauloInwardRunawayDirection(arena, origin, direction)
+                const destination = getSauloRunawayWallPoint(arena, origin, inward)
+                expect(Math.hypot(destination.x - origin.x, destination.y - origin.y)).toBeGreaterThan(0)
+                expect(clampSauloMovementPoint(arena, destination)).toEqual(destination)
+                expect(Math.hypot(inward.x, inward.y)).toBeCloseTo(Math.hypot(direction.x, direction.y))
+            }
+        }
+    })
+
+    it("recognizes reaching or crossing an endpoint during a long frame without claiming parallel near misses", () => {
+        const destination = { x: 100, y: 50 }
+        expect(hasSauloReachedMovementPoint({ x: 100, y: 50 }, destination, 4)).toBe(true)
+        expect(hasSauloReachedMovementPoint({ x: 130, y: 50 }, destination, 4, { x: 70, y: 50 })).toBe(true)
+        expect(hasSauloReachedMovementPoint({ x: 130, y: 70 }, destination, 4, { x: 70, y: 70 })).toBe(false)
+        expect(hasSauloReachedMovementPoint({ x: 70, y: 50 }, destination, 4, { x: 70, y: 50 })).toBe(false)
     })
 
     it("exposes positive finite timing and radius constants", () => {

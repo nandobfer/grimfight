@@ -22,7 +22,7 @@ export interface SauloVector {
     y: number
 }
 
-export const SAULO_GAS_CLOUD_DURATION_MS = 2000
+export const SAULO_GAS_CLOUD_DURATION_MS = 2500
 export const SAULO_GAS_EMIT_INTERVAL_MS = 180
 export const SAULO_GAS_EMIT_DISTANCE = 22
 export const SAULO_GAS_RADIUS = 42
@@ -85,6 +85,9 @@ export function getSauloRunawayWallPoint(grid: SauloGridMetrics, from: SauloPoin
         x: clamp(from.x, bounds.left, bounds.right),
         y: clamp(from.y, bounds.top, bounds.bottom),
     }
+    // An outward ray starting on a wall has already reached its destination.
+    if ((origin.x <= bounds.left && direction.x < 0) || (origin.x >= bounds.right && direction.x > 0) ||
+        (origin.y <= bounds.top && direction.y < 0) || (origin.y >= bounds.bottom && direction.y > 0)) return origin
     const candidates: SauloPoint[] = []
 
     addVerticalRayIntersection(candidates, bounds.left, bounds, origin, direction)
@@ -104,6 +107,42 @@ export function getSauloRunawayWallPoint(grid: SauloGridMetrics, from: SauloPoin
     }
 
     return chosen ?? origin
+}
+
+/** Convert arena edges into reachable sprite-anchor coordinates using body extents. */
+export function getSauloMovementBounds(arena: SauloGridMetrics, body: { left: number; right: number; top: number; bottom: number }, anchor: SauloPoint): SauloGridMetrics {
+    const left = arena.left + anchor.x - body.left
+    const top = arena.top + anchor.y - body.top
+    const right = arena.left + arena.cols * arena.cellW + anchor.x - body.right
+    const bottom = arena.top + arena.rows * arena.cellH + anchor.y - body.bottom
+    return { left, top, cellW: Math.max(0, right - left), cellH: Math.max(0, bottom - top), cols: 1, rows: 1 }
+}
+
+export function clampSauloMovementPoint(bounds: SauloGridMetrics, point: SauloPoint): SauloPoint {
+    return { x: clamp(point.x, bounds.left, bounds.left + bounds.cellW * bounds.cols),
+        y: clamp(point.y, bounds.top, bounds.top + bounds.cellH * bounds.rows) }
+}
+
+/** Reflect only outward components so mixed directions can escape corners. */
+export function getSauloInwardRunawayDirection(bounds: SauloGridMetrics, from: SauloPoint, direction: SauloVector): SauloVector {
+    const epsilon = 0.001
+    return {
+        x: (from.x <= bounds.left + epsilon && direction.x < 0) ||
+            (from.x >= bounds.left + bounds.cellW * bounds.cols - epsilon && direction.x > 0) ? -direction.x : direction.x,
+        y: (from.y <= bounds.top + epsilon && direction.y < 0) ||
+            (from.y >= bounds.top + bounds.cellH * bounds.rows - epsilon && direction.y > 0) ? -direction.y : direction.y,
+    }
+}
+
+export function hasSauloReachedMovementPoint(current: SauloPoint, destination: SauloPoint, radius: number, previous?: SauloPoint): boolean {
+    if (getDistanceSquared(current, destination) <= radius * radius) return true
+    if (!previous) return false
+    const dx = current.x - previous.x
+    const dy = current.y - previous.y
+    const lengthSquared = dx * dx + dy * dy
+    if (lengthSquared === 0) return false
+    const t = clamp(((destination.x - previous.x) * dx + (destination.y - previous.y) * dy) / lengthSquared, 0, 1)
+    return getDistanceSquared({ x: previous.x + dx * t, y: previous.y + dy * t }, destination) <= radius * radius
 }
 
 function getSauloCellCenter(grid: SauloGridMetrics, col: number, row: number): SauloPoint {

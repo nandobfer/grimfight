@@ -174,7 +174,11 @@ Saulo é um personagem jogável registrado como `saulo`, ligado às identidades 
 
 Durante combate, Saulo mira sempre o inimigo válido mais distante. Quando alcança distância corpo a corpo, atravessa a célula do alvo até a borda oposta antes de trocar novamente para o inimigo mais distante. Se restar apenas um alvo válido, ele patrulha entre bordas opostas da célula desse alvo para atravessá-lo repetidamente e cobrir a área com veneno.
 
+Se o último inimigo estiver perseguindo Saulo, ele escolhe uma direção inicial aleatória e corre entre bordas da arena, invertendo o percurso ao chegar à parede. Componentes apontando para fora são refletidos nas paredes e cantos para garantir uma rota útil. Limites e destinos consideram tamanho, escala, offset físico e âncora do sprite; o corpo chega à borda sem sair da arena. A chegada reconhece também o deslocamento entre frames e a ultrapassagem do destino. Destinos de patrulha e travessia são limitados ao espaço alcançável. Bloqueios de movimento e freeze continuam impedindo a corrida.
+
 Saulo não desvia de outras criaturas e pode atravessar unidades livremente, mas continua respeitando os limites da arena. Enquanto se move, emite nuvens temporárias de gás venenoso desenhadas com `Graphics`; inimigos dentro dessas nuvens recebem novas instâncias empilháveis de `Dot` venenoso creditadas a Saulo a cada aplicação periódica, permitindo integração com damage chart e traits acionadas por dano causado. A sobreposição é temporal por reaplicação do veneno, não multiplicada pela quantidade de nuvens sobrepostas no mesmo alvo.
+
+A duração da nuvem no mapa é independente da duração do veneno aplicado ao inimigo. A configuração da nuvem controla sua expiração, dissipação visual e tempo exibido na descrição da habilidade.
 
 Ao conjurar, Saulo aplica `Hot` em si mesmo, recebe aumento temporário de velocidade e provoca o alvo atual usando o contrato de taunt da criatura. Nuvens de gás, timers de velocidade, referências de patrulha e efeitos temporários devem limpar ao sair de combate, resetar stats ou destruir o personagem.
 
