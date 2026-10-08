@@ -23,7 +23,7 @@ Attacker é uma trait de personagens ofensivos. Quando ativa, aplica bônus de a
 Assassin é uma trait de personagens assassinos. Quando ativa, aumenta a eficiência crítica dos personagens da composição e registra comportamento em dano causado para punir alvos feridos com dano adicional de execução. O dano adicional não deve reemitir o próprio evento de dano para evitar recursão, e o listener deve ser limpo ao reaplicar ou destruir a criatura.
 
 ### Cleric
-Cleric é uma trait de suporte composta por personagens como `melo`, `jacrost`, `melisandre` e `dranho`. Quando ativa, escuta mortes no time para acionar cura e remove o listener no cleanup.
+Cleric é uma trait de suporte composta por personagens como `melo`, `jacrost`, `melisandre`, `dranho` e `saulo`. Quando ativa, escuta mortes no time para acionar cura e remove o listener no cleanup.
 
 ### Colossi
 Colossi é uma trait de personagens resistentes, incluindo `ragnaros`. Quando ativa, aplica bônus defensivos conforme stage atual.

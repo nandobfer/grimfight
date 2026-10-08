@@ -71,8 +71,25 @@ export class Saulo extends Character {
     private arenaWallMetrics?: SauloGridMetrics
     private previousMovementPosition?: SauloPoint
 
+    private readonly onGasLifecycle = (time: number, delta: number) => {
+        if (this.gasClouds.length === 0) return
+
+        if (this.scene.state !== "fighting") {
+            this.cleanupGasClouds()
+            return
+        }
+
+        this.gasDamageElapsed += delta
+        this.updateGasClouds(time, delta)
+        this.applyGasDamage()
+    }
+
     constructor(scene: Game, id: string) {
         super(scene, "saulo", id)
+
+        // Gas clouds outlive Saulo: they keep aging, drawing and applying poison until
+        // they expire on their own or the round ends, even after he dies.
+        scene.events.on("update", this.onGasLifecycle)
     }
 
     override getAbilityDescription(): string {
@@ -175,17 +192,20 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
         super.update(time, delta)
 
         if (this.scene.state !== "fighting" || !this.active || this.health <= 0) {
-            this.cleanupGasClouds()
+            // Existing clouds keep aging and expiring through the scene lifecycle listener;
+            // a dead or idle Saulo only stops emitting new ones.
             this.lastGasPosition = undefined
             this.previousMovementPosition = undefined
             return
         }
 
         this.previousMovementPosition = { x: this.x, y: this.y }
-        this.updatePoisonGas(time, delta)
+        this.gasEmitElapsed += delta
+        this.tryEmitGasCloud()
     }
 
     override destroy(fromScene?: boolean): void {
+        this.scene?.events.off("update", this.onGasLifecycle)
         this.cleanupSauloState()
         super.destroy(fromScene)
     }
@@ -482,14 +502,6 @@ Ao conjurar [primary.main:${this.abilityName}], Saulo cura a si mesmo em [succes
             this.speed = Math.max(0, this.speed - this.speedBoostBonus)
             this.speedBoostBonus = 0
         }
-    }
-
-    private updatePoisonGas(time: number, delta: number): void {
-        this.gasEmitElapsed += delta
-        this.gasDamageElapsed += delta
-        this.tryEmitGasCloud()
-        this.updateGasClouds(time, delta)
-        this.applyGasDamage()
     }
 
     private tryEmitGasCloud(): void {

@@ -111,6 +111,15 @@ Ao conjurar `Serpent Volley`, Nala cria cobras venenosas desenhadas com `Graphic
 
 Ao colidir, cada cobra causa dano venenoso direto e aplica um `Dot` poison. Tanto o impacto quanto o dano ao longo do tempo escalam com AD e AP atuais de Nala para preservar sua identidade híbrida. Cobras, gráficos, hitboxes, overlaps, timers e listeners de update/gamestate limpam ao acertar, expirar, sair de combate, resetar stats ou destruir Nala. As fórmulas puras da habilidade ficam em `src/game/creature/classes/NalaSerpents.ts` para permitir testes sem carregar Phaser.
 
+### Maricuri
+Maricuri é uma personagem jogável registrada como `maricuri`, ligada às identidades de veneno e feitiçaria. Ela usa spritesheet SVG e portrait WebP próprios, participa das traits `Poisoner` e `Sorcerer` e atua como caster venenosa à distância: seu ataque básico não causa dano direto.
+
+Cada ataque lança um frasquinho alquímico desenhado com `Graphics`, seguindo o mesmo mecanismo da habilidade em escala menor: ele voa até um ponto aleatório ao redor do alvo, pulsa por uma janela de telegraph e então detona, liberando uma pequena nuvem de veneno. A nuvem aplica periodicamente novas instâncias de `Dot` poison aos inimigos dentro do raio, creditadas à fonte de ataque básico, e o ataque credita o fluxo de on-hit do dono. O ataque básico não causa dano direto; toda a pressão vem do veneno ao longo do tempo. Cada aplicação empilha uma instância independente de veneno, como em outros personagens de veneno.
+
+Ao conjurar sua habilidade, Maricuri escolhe um inimigo válido aleatório, define um ponto aleatório ao redor dele limitado à arena e arremessa um frasco grande desenhado com `Graphics`, uma versão muito maior do frasco do ataque básico. O frasco voa até o ponto, pulsa por uma janela de telegraph e então detona, liberando uma nuvem de veneno de raio bem maior que permanece por uma duração própria. Enquanto a nuvem existir, ela aplica periodicamente novas instâncias de `Dot` poison aos inimigos dentro do raio, creditadas ao nome da habilidade e empilháveis pela reaplicação. A detonação em si não causa dano direto; toda a pressão vem do veneno ao longo do tempo.
+
+Um recast concedido por trait de feitiçaria usa o mesmo fluxo com um multiplicador de eficácia, gerando um segundo frasco com dano de veneno escalado. Frascos, nuvens, gráficos, listeners de update/gamestate e timers limpam ao detonar, expirar, sair de combate, resetar stats ou destruir Maricuri. As fórmulas puras do frasquinho e da nuvem ficam em `src/game/creature/classes/MaricuriAlchemy.ts` para manter a regra testável sem instanciar Phaser.
+
 ### Mage
 Mage é uma personagem jogável registrada como `megumin`. Ela usa `Fireball` no ataque básico e sua habilidade causa explosão de fogo no alvo atual.
 
@@ -170,7 +179,7 @@ A habilidade `Estrela de Nêutrons` canaliza uma estrela roxa crescente por uma 
 Todos os efeitos de Robilton são desenhados com `Phaser.GameObjects.Graphics`. Projéteis, hitboxes, tweens, timers e listeners de update/gamestate devem limpar explicitamente ao terminar, mudar a rodada, resetar stats ou destruir o personagem. As fórmulas puras de tempo de conjuração, dano, raio e força ficam em `src/game/creature/classes/RobiltonNeutronStar.ts` para manter a regra testável sem instanciar Phaser.
 
 ### Saulo
-Saulo é um personagem jogável registrado como `saulo`, ligado às identidades de veneno e resistência colossal. Ele usa spritesheet SVG e portrait WebP próprios, nunca executa ataques básicos e transforma movimento em fonte principal de pressão no combate.
+Saulo é um personagem jogável registrado como `saulo`, ligado às identidades de veneno, resistência colossal e suporte clerical. Ele usa spritesheet SVG e portrait WebP próprios, nunca executa ataques básicos e transforma movimento em fonte principal de pressão no combate.
 
 Durante combate, Saulo mira sempre o inimigo válido mais distante. Quando alcança distância corpo a corpo, atravessa a célula do alvo até a borda oposta antes de trocar novamente para o inimigo mais distante. Se restar apenas um alvo válido, ele patrulha entre bordas opostas da célula desse alvo para atravessá-lo repetidamente e cobrir a área com veneno.
 

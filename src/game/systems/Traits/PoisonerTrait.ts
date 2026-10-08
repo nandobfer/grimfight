@@ -17,6 +17,7 @@ export class PoisonerTrait extends Trait {
     stages: Map<number, PoisonerStage> = new Map([
         [2, { damageMultiplier: 0.2, descriptionParams: ["20%"] }],
         [4, { damageMultiplier: 0.4, descriptionParams: ["40%"] }],
+        [6, { damageMultiplier: 0.6, descriptionParams: ["60%"] }],
     ])
 
     constructor(comp: string[]) {
