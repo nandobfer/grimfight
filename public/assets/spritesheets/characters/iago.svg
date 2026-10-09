@@ -1,0 +1,437 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="iago-hair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a5068" />
+      <stop offset="0.55" stop-color="#2b3040" />
+      <stop offset="1" stop-color="#12151f" />
+    </linearGradient>
+    <linearGradient id="iago-haori" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6a86c2" />
+      <stop offset="0.55" stop-color="#3a5185" />
+      <stop offset="1" stop-color="#1b2a4d" />
+    </linearGradient>
+    <linearGradient id="iago-haori-back" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#54699e" />
+      <stop offset="1" stop-color="#141d38" />
+    </linearGradient>
+    <linearGradient id="iago-cloth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2ecdd" />
+      <stop offset="1" stop-color="#c9bfa6" />
+    </linearGradient>
+    <linearGradient id="iago-sash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c24a58" />
+      <stop offset="1" stop-color="#6e1f2b" />
+    </linearGradient>
+    <linearGradient id="iago-hakama" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2d3856" />
+      <stop offset="1" stop-color="#10152a" />
+    </linearGradient>
+    <linearGradient id="iago-skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0c69a" />
+      <stop offset="1" stop-color="#c89268" />
+    </linearGradient>
+    <linearGradient id="iago-steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2f6ff" />
+      <stop offset="1" stop-color="#93a3c8" />
+    </linearGradient>
+    <linearGradient id="iago-lacquer" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a2f3a" />
+      <stop offset="1" stop-color="#0c0e14" />
+    </linearGradient>
+    <radialGradient id="iago-gold" cx="35%" cy="30%" r="70%">
+      <stop offset="0" stop-color="#fff0b0" />
+      <stop offset="0.6" stop-color="#e8c45a" />
+      <stop offset="1" stop-color="#8a6a1e" />
+    </radialGradient>
+    <radialGradient id="iago-wind" cx="45%" cy="40%" r="65%">
+      <stop offset="0" stop-color="#f2fbff" />
+      <stop offset="0.55" stop-color="#a8d8f5" />
+      <stop offset="1" stop-color="#6aa8d8" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="iago-leaf-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d8e79a" />
+      <stop offset="1" stop-color="#7fa03c" />
+    </linearGradient>
+
+    <ellipse id="iago-shadow" cx="32" cy="56" rx="13" ry="4.2" fill="#000000" opacity="0.3" />
+
+    <g id="iago-katana">
+      <path d="M2 -1.6 Q14 -2.4 22 -2.8 L22 0.6 Q14 0.2 2 1.6 Z" fill="url(#iago-steel)" stroke="#5b6a94" stroke-width="0.6" />
+      <path d="M3 -1 Q14 -1.6 21 -1.9" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.8" />
+      <ellipse cx="0" cy="0" rx="1.4" ry="3.6" fill="url(#iago-gold)" stroke="#6b4216" stroke-width="0.4" />
+      <rect x="-9" y="-1.5" width="9" height="3" rx="1.2" fill="url(#iago-lacquer)" stroke="#000000" stroke-width="0.3" />
+      <path d="M-7.6 -1.4 L-6 0 L-7.6 1.4 M-4.4 -1.4 L-2.8 0 L-4.4 1.4" fill="none" stroke="url(#iago-gold)" stroke-width="0.5" />
+      <circle cx="-9.2" cy="0" r="1.3" fill="url(#iago-gold)" stroke="#6b4216" stroke-width="0.3" />
+    </g>
+    <g id="iago-scabbard">
+      <path d="M-3 -1.2 Q8 -3 17 -1.6 L17 1.2 Q8 -0.2 -3 1.2 Z" fill="url(#iago-lacquer)" stroke="#000000" stroke-width="0.4" />
+      <rect x="-4.4" y="-1.8" width="2.2" height="3.6" rx="0.9" fill="url(#iago-gold)" stroke="#6b4216" stroke-width="0.3" />
+    </g>
+
+    <path id="iago-wind-arc" d="M-3 -15 Q24 -2 -3 15 Q12 0 -3 -15 Z" fill="url(#iago-wind)" opacity="0.8" />
+    <g id="iago-gust">
+      <path d="M-11 3 Q0 -2 11 1" fill="none" stroke="#dff0ff" stroke-width="1.6" stroke-linecap="round" opacity="0.8" />
+      <path d="M-9 8 Q1 4 10 7" fill="none" stroke="#bfe0ff" stroke-width="1.2" stroke-linecap="round" opacity="0.65" />
+      <path d="M-6 -3 Q2 -6 9 -4" fill="none" stroke="#eef8ff" stroke-width="1" stroke-linecap="round" opacity="0.7" />
+    </g>
+    <g id="iago-leaf">
+      <path d="M0 -3.4 Q4 -1.4 4 1.8 Q0 3.2 -3 1.2 Q-4 -1.2 0 -3.4 Z" fill="url(#iago-leaf-grad)" stroke="#5f7a2a" stroke-width="0.4" />
+      <path d="M-2.4 0.6 Q0 -1 3 -0.6" fill="none" stroke="#4f6a22" stroke-width="0.4" />
+    </g>
+    <g id="iago-wind-spiral">
+      <path d="M0 -15 C9 -15 14 -8 13 0 C12 7 5 12 -2 11 C-8 10 -11 5 -10 0 C-9 -4 -5 -6 -2 -5 C1 -4 2 -1 1 1" fill="none" stroke="#dff0ff" stroke-width="2.2" stroke-linecap="round" opacity="0.85" />
+      <path d="M0 -11 C6 -11 9 -6 9 -1 C8 4 4 8 -1 7" fill="none" stroke="#a8d8f5" stroke-width="1.2" stroke-linecap="round" opacity="0.6" />
+    </g>
+    <g id="iago-wind-burst">
+      <use href="#iago-wind-spiral" transform="scale(1.1)" />
+      <use href="#iago-gust" transform="translate(0 12) scale(0.9)" />
+      <use href="#iago-leaf" transform="translate(-9 -8) rotate(40)" />
+      <use href="#iago-leaf" transform="translate(10 6) rotate(-30)" />
+      <use href="#iago-leaf" transform="translate(6 -10) rotate(80)" />
+    </g>
+
+    <g id="iago-legs-down">
+      <path d="M25 44 L23 53 Q26 56 29 54 L31 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+      <path d="M33 44 L35 54 Q38 56 41 53 L39 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+      <path d="M23.4 50.5 L29.5 50.5" stroke="#c9bfa6" stroke-width="0.9" stroke-linecap="round" opacity="0.7" />
+      <path d="M34.5 50.5 L40.6 50.5" stroke="#c9bfa6" stroke-width="0.9" stroke-linecap="round" opacity="0.7" />
+    </g>
+    <g id="iago-legs-down-a">
+      <path d="M25 44 L20 52 Q23 55 26 53 L30 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+      <path d="M33 44 L38 52 Q35 55 32 53 L30 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+    </g>
+    <g id="iago-legs-down-b">
+      <path d="M25 44 L24 54 Q27 56 30 54 L31 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+      <path d="M33 44 L36 53 Q39 55 42 53 L39 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+    </g>
+    <g id="iago-legs-left">
+      <path d="M27 44 L26 54 Q29 56 32 54 L33 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+      <path d="M33 44 L35 54 Q38 56 40 54 L38 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+      <path d="M26.4 50.5 L32.5 50.5" stroke="#c9bfa6" stroke-width="0.9" stroke-linecap="round" opacity="0.7" />
+      <path d="M35.4 50.5 L39.6 50.5" stroke="#c9bfa6" stroke-width="0.9" stroke-linecap="round" opacity="0.7" />
+    </g>
+    <g id="iago-legs-left-a">
+      <path d="M27 44 L21 52 Q24 55 27 53 L32 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+      <path d="M33 44 L39 52 Q36 55 33 53 L31 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+    </g>
+    <g id="iago-legs-left-b">
+      <path d="M27 44 L25 54 Q28 56 31 54 L33 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+      <path d="M33 44 L36 54 Q39 56 41 54 L38 44 Z" fill="url(#iago-hakama)" stroke="#0a0d18" stroke-width="0.8" />
+    </g>
+
+    <g id="iago-torso-down">
+      <path d="M21 27 Q32 19 43 27 L45 45 Q32 50 19 45 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1.2" />
+      <path d="M27 25 L32 35 L37 25 L34 24 L32 30 L30 24 Z" fill="url(#iago-cloth)" stroke="#9a9078" stroke-width="0.5" />
+      <path d="M22 29 L32 22 L42 29" fill="none" stroke="url(#iago-gold)" stroke-width="1" opacity="0.85" />
+      <path d="M21 39 Q32 42 43 39 L43 44 Q32 47 21 44 Z" fill="url(#iago-sash)" stroke="#4a1420" stroke-width="0.7" />
+      <path d="M29 40 H35 L35 44 H29 Z" fill="url(#iago-gold)" opacity="0.9" />
+      <path d="M19 27 Q16 31 18 36 L24 35 Q22 30 24 27 Z" fill="url(#iago-lacquer)" stroke="#000000" stroke-width="0.7" />
+      <path d="M18.4 31 L23.6 30" stroke="url(#iago-gold)" stroke-width="0.6" />
+      <use href="#iago-scabbard" transform="translate(23 43) rotate(18)" />
+    </g>
+    <g id="iago-torso-up">
+      <path d="M21 27 Q32 19 43 27 L45 45 Q32 50 19 45 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1.2" />
+      <path d="M23 30 Q32 25 41 30" fill="none" stroke="#8ea6d8" stroke-width="1" opacity="0.5" />
+      <circle cx="32" cy="34" r="3" fill="none" stroke="url(#iago-gold)" stroke-width="1" />
+      <circle cx="32" cy="34" r="1" fill="url(#iago-gold)" />
+      <path d="M21 39 Q32 42 43 39 L43 44 Q32 47 21 44 Z" fill="#5a1c26" stroke="#4a1420" stroke-width="0.7" />
+      <path d="M19 27 Q16 31 18 36 L24 35 Q22 30 24 27 Z" fill="url(#iago-lacquer)" stroke="#000000" stroke-width="0.7" />
+    </g>
+    <g id="iago-torso-left">
+      <path d="M22 27 Q31 20 44 26 L45 45 Q32 50 21 45 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1.2" />
+      <path d="M27 26 L31 34 L36 27 L33 25 L31 30 L29 25 Z" fill="url(#iago-cloth)" stroke="#9a9078" stroke-width="0.5" />
+      <path d="M24 29 L33 23 L42 29" fill="none" stroke="url(#iago-gold)" stroke-width="0.9" opacity="0.8" />
+      <path d="M22 39 Q32 42 43 39 L43 44 Q32 47 22 44 Z" fill="url(#iago-sash)" stroke="#4a1420" stroke-width="0.7" />
+      <use href="#iago-scabbard" transform="translate(24 43) rotate(24)" />
+    </g>
+
+    <g id="iago-head-down">
+      <path d="M25 20 Q25 12 32 11 Q39 12 39 20 Q39 27 32 29 Q25 27 25 20 Z" fill="url(#iago-skin)" stroke="#6b4226" stroke-width="0.9" />
+      <ellipse cx="29.2" cy="19.6" rx="1.15" ry="1.35" fill="#20150f" />
+      <ellipse cx="34.8" cy="19.6" rx="1.15" ry="1.35" fill="#20150f" />
+      <circle cx="29.6" cy="19.1" r="0.4" fill="#bfe0ff" />
+      <path d="M27 16.6 L30.4 16.2 M37 16.6 L33.6 16.2" stroke="#20242f" stroke-width="0.7" stroke-linecap="round" />
+      <path d="M30 26 Q32 29 34 26 Q32 27.4 30 26 Z" fill="#20242f" opacity="0.9" />
+      <path d="M30.4 23.4 Q32 24.2 33.6 23.4" fill="none" stroke="#20242f" stroke-width="0.7" />
+      <path d="M24 19 Q23 8 32 6 Q41 8 41 19 Q38 11 33 11 Q28 12 26 17 Q27 14 24 19 Z" fill="url(#iago-hair)" stroke="#0d1018" stroke-width="0.7" />
+      <path d="M26 17 Q30 10 37 10 Q33 13 30 18 Z" fill="#5a6178" opacity="0.5" />
+      <path d="M25 14 Q24 21 27 26 Q24 21 27 15 Z" fill="url(#iago-hair)" />
+      <path d="M40 14 Q42 21 39 26 Q42 21 39 15 Z" fill="url(#iago-hair)" />
+    </g>
+    <g id="iago-head-up">
+      <path d="M27 26 Q32 29 37 26 L37 23 Q32 25 27 23 Z" fill="#c89268" stroke="#6b4226" stroke-width="0.5" />
+      <path d="M25 20 Q25 11 32 10 Q39 11 39 20 Q39 27 32 29 Q25 27 25 20 Z" fill="url(#iago-hair)" stroke="#0d1018" stroke-width="0.8" />
+      <path d="M27 15 Q32 12 37 15" fill="none" stroke="#4a5068" stroke-width="0.9" opacity="0.55" />
+      <path d="M28 22 Q32 25 36 22" fill="none" stroke="#4a5068" stroke-width="0.7" opacity="0.4" />
+    </g>
+    <g id="iago-head-left">
+      <path d="M25 21 Q26 13 33 11 Q40 13 39 21 Q37 28 30 29 Q25 26 25 21 Z" fill="url(#iago-skin)" stroke="#6b4226" stroke-width="0.9" />
+      <path d="M25 19 L28.5 19" stroke="#20150f" stroke-width="1.1" stroke-linecap="round" />
+      <circle cx="27.4" cy="19" r="0.4" fill="#bfe0ff" />
+      <path d="M25 17 L28.5 16.6" stroke="#20242f" stroke-width="0.8" stroke-linecap="round" />
+      <path d="M25 21 Q23.6 21.6 25 22.6" fill="none" stroke="#a9714a" stroke-width="0.6" />
+      <path d="M26 26 Q29 29 31 26 Q29 27 26 26 Z" fill="#20242f" opacity="0.9" />
+      <path d="M24 20 Q24 9 33 7 Q42 10 40 20 Q36 13 31 13 Q27 13 24 20 Z" fill="url(#iago-hair)" stroke="#0d1018" stroke-width="0.7" />
+      <path d="M38 14 Q44 19 41 26 Q40 20 38 16 Z" fill="url(#iago-hair)" />
+    </g>
+
+    <g id="iago-ponytail-down">
+      <path d="M34 10 Q45 9 48 19 Q50 29 44 38 Q47 29 43 21 Q40 15 34 13 Z" fill="url(#iago-hair)" stroke="#0d1018" stroke-width="0.6" />
+      <path d="M37 13 Q44 15 45 22" fill="none" stroke="#5a6178" stroke-width="0.7" opacity="0.5" />
+    </g>
+    <g id="iago-ponytail-up">
+      <path d="M28 10 Q36 10 36 20 Q36 30 32 38 Q34 29 33 20 Q32 13 32 12 Q30 13 29 20 Q28 29 30 38 Q26 30 26 20 Q26 11 28 10 Z" fill="url(#iago-hair)" stroke="#0d1018" stroke-width="0.6" />
+      <path d="M32 12 L32 34" stroke="#5a6178" stroke-width="0.5" opacity="0.4" />
+    </g>
+    <g id="iago-ponytail-left">
+      <path d="M28 10 Q18 9 15 19 Q13 29 19 38 Q16 29 20 21 Q23 15 28 13 Z" fill="url(#iago-hair)" stroke="#0d1018" stroke-width="0.6" />
+      <path d="M25 13 Q18 15 17 22" fill="none" stroke="#5a6178" stroke-width="0.7" opacity="0.5" />
+    </g>
+
+    <g id="iago-arms-down">
+      <path d="M22 29 L16 37 Q15 41 19 42 L27 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M42 29 L48 37 Q49 41 45 42 L37 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(44 40) rotate(-72)" />
+    </g>
+    <g id="iago-arms-up">
+      <path d="M22 29 L16 37 Q15 41 19 42 L27 32 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <path d="M42 29 L48 37 Q49 41 45 42 L37 32 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(44 40) rotate(-72)" />
+    </g>
+    <g id="iago-arms-left">
+      <path d="M25 30 L15 34 Q12 37 15 40 L30 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M40 30 L46 38 Q46 41 42 42 L36 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(13 36) rotate(120)" />
+    </g>
+
+    <g id="iago-attack-arms-down">
+      <path d="M22 29 L24 20 Q28 18 30 23 L28 31 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M42 29 L50 24 Q53 28 49 32 L37 31 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(48 25) rotate(-48)" />
+    </g>
+    <g id="iago-attack-arms-up">
+      <path d="M22 29 L24 20 Q28 18 30 23 L28 31 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <path d="M42 29 L50 24 Q53 28 49 32 L37 31 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(48 25) rotate(-48)" />
+    </g>
+    <g id="iago-attack-arms-left">
+      <path d="M26 30 L34 24 Q38 26 36 31 L30 33 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M40 30 L48 26 Q51 30 47 34 L36 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(46 26) rotate(-40)" />
+    </g>
+
+    <g id="iago-attack-arms-down-impact">
+      <path d="M22 29 L14 30 Q11 33 14 36 L27 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M42 29 L44 23 Q48 22 50 26 L40 31 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(26 33) rotate(180)" />
+    </g>
+    <g id="iago-attack-arms-up-impact">
+      <path d="M22 29 L14 30 Q11 33 14 36 L27 32 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <path d="M42 29 L44 23 Q48 22 50 26 L40 31 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(26 33) rotate(180)" />
+    </g>
+    <g id="iago-attack-arms-left-impact">
+      <path d="M25 30 L14 32 Q11 35 14 38 L30 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M40 30 L46 24 Q49 26 48 31 L38 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(26 33) rotate(180)" />
+    </g>
+
+    <g id="iago-attack2-arms-down-impact">
+      <path d="M22 29 L16 24 Q19 20 23 23 L27 31 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M42 29 L48 34 Q48 38 44 39 L37 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(24 28) rotate(-135)" />
+    </g>
+    <g id="iago-attack2-arms-up-impact">
+      <path d="M22 29 L16 24 Q19 20 23 23 L27 31 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <path d="M42 29 L48 34 Q48 38 44 39 L37 32 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(24 28) rotate(-135)" />
+    </g>
+    <g id="iago-attack2-arms-left-impact">
+      <path d="M26 30 L18 24 Q21 20 25 24 L30 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M40 30 L46 36 Q44 40 40 39 L36 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(22 26) rotate(-125)" />
+    </g>
+
+    <g id="iago-cast-arms-down">
+      <path d="M22 29 L18 24 Q22 20 26 24 L28 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M42 29 L46 24 Q42 20 38 24 L36 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(34 26) rotate(-90)" />
+    </g>
+    <g id="iago-cast-arms-up">
+      <path d="M22 29 L18 24 Q22 20 26 24 L28 32 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <path d="M42 29 L46 24 Q42 20 38 24 L36 32 Z" fill="url(#iago-haori-back)" stroke="#0e1730" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(34 26) rotate(-90)" />
+    </g>
+    <g id="iago-cast-arms-left">
+      <path d="M25 30 L18 26 Q20 22 24 25 L30 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <path d="M40 30 L44 25 Q40 21 36 25 L36 32 Z" fill="url(#iago-haori)" stroke="#12203c" stroke-width="1" />
+      <use href="#iago-katana" transform="translate(30 26) rotate(-90)" />
+    </g>
+
+    <g id="iago-down-idle-a"><use href="#iago-shadow" /><use href="#iago-legs-down" /><use href="#iago-torso-down" /><use href="#iago-arms-down" /><use href="#iago-head-down" /><use href="#iago-ponytail-down" /></g>
+    <g id="iago-down-idle-b"><use href="#iago-down-idle-a" transform="translate(0 -1)" /></g>
+    <g id="iago-down-walk-a"><use href="#iago-shadow" /><use href="#iago-legs-down-a" /><use href="#iago-torso-down" /><use href="#iago-arms-down" transform="rotate(-4 32 35)" /><use href="#iago-head-down" /><use href="#iago-ponytail-down" /></g>
+    <g id="iago-down-walk-b"><use href="#iago-shadow" /><use href="#iago-legs-down-b" /><use href="#iago-torso-down" transform="translate(0 -1)" /><use href="#iago-arms-down" transform="rotate(4 32 35)" /><use href="#iago-head-down" transform="translate(0 -1)" /><use href="#iago-ponytail-down" /></g>
+    <g id="iago-down-attack-prep"><use href="#iago-shadow" /><use href="#iago-legs-down-a" /><use href="#iago-torso-down" /><use href="#iago-attack-arms-down" /><use href="#iago-head-down" /><use href="#iago-ponytail-down" /></g>
+    <g id="iago-down-attack-impact"><use href="#iago-shadow" /><use href="#iago-legs-down-a" /><use href="#iago-torso-down" /><use href="#iago-attack-arms-down-impact" /><use href="#iago-head-down" /><use href="#iago-ponytail-down" /><use href="#iago-wind-arc" transform="translate(12 34)" /><use href="#iago-gust" transform="translate(24 31)" /><use href="#iago-leaf" transform="translate(8 28) rotate(30)" /><use href="#iago-leaf" transform="translate(30 42) rotate(-40)" /></g>
+    <g id="iago-down-attack2-impact"><use href="#iago-shadow" /><use href="#iago-legs-down-b" /><use href="#iago-torso-down" /><use href="#iago-attack2-arms-down-impact" /><use href="#iago-head-down" /><use href="#iago-ponytail-down" /><use href="#iago-wind-arc" transform="translate(18 32) rotate(-90)" /><use href="#iago-gust" transform="translate(22 24)" /><use href="#iago-leaf" transform="translate(10 20) rotate(-20)" /><use href="#iago-leaf" transform="translate(26 14) rotate(50)" /></g>
+    <g id="iago-down-cast-a"><use href="#iago-shadow" /><use href="#iago-legs-down" /><use href="#iago-torso-down" /><use href="#iago-cast-arms-down" /><use href="#iago-head-down" /><use href="#iago-ponytail-down" /><use href="#iago-wind-spiral" transform="translate(22 18) scale(0.6)" /></g>
+    <g id="iago-down-cast-b"><use href="#iago-down-cast-a" /><use href="#iago-wind-burst" transform="translate(20 20)" /></g>
+    <g id="iago-up-idle-a"><use href="#iago-shadow" /><use href="#iago-legs-down" /><use href="#iago-torso-up" /><use href="#iago-arms-up" /><use href="#iago-head-up" /><use href="#iago-ponytail-up" /></g>
+    <g id="iago-up-idle-b"><use href="#iago-up-idle-a" transform="translate(0 -1)" /></g>
+    <g id="iago-up-walk-a"><use href="#iago-shadow" /><use href="#iago-legs-down-a" /><use href="#iago-torso-up" /><use href="#iago-arms-up" transform="rotate(-4 32 35)" /><use href="#iago-head-up" /><use href="#iago-ponytail-up" /></g>
+    <g id="iago-up-walk-b"><use href="#iago-shadow" /><use href="#iago-legs-down-b" /><use href="#iago-torso-up" transform="translate(0 -1)" /><use href="#iago-arms-up" transform="rotate(4 32 35)" /><use href="#iago-head-up" transform="translate(0 -1)" /><use href="#iago-ponytail-up" /></g>
+    <g id="iago-up-attack-prep"><use href="#iago-shadow" /><use href="#iago-legs-down-a" /><use href="#iago-torso-up" /><use href="#iago-attack-arms-up" /><use href="#iago-head-up" /><use href="#iago-ponytail-up" /></g>
+    <g id="iago-up-attack-impact"><use href="#iago-shadow" /><use href="#iago-legs-down-a" /><use href="#iago-torso-up" /><use href="#iago-attack-arms-up-impact" /><use href="#iago-head-up" /><use href="#iago-ponytail-up" /><use href="#iago-wind-arc" transform="translate(52 34) rotate(180)" /><use href="#iago-gust" transform="translate(40 31)" /><use href="#iago-leaf" transform="translate(56 28) rotate(-30)" /><use href="#iago-leaf" transform="translate(34 42) rotate(40)" /></g>
+    <g id="iago-up-attack2-impact"><use href="#iago-shadow" /><use href="#iago-legs-down-b" /><use href="#iago-torso-up" /><use href="#iago-attack2-arms-up-impact" /><use href="#iago-head-up" /><use href="#iago-ponytail-up" /><use href="#iago-wind-arc" transform="translate(46 32) rotate(-90)" /><use href="#iago-gust" transform="translate(42 24)" /><use href="#iago-leaf" transform="translate(54 20) rotate(20)" /><use href="#iago-leaf" transform="translate(38 14) rotate(-50)" /></g>
+    <g id="iago-up-cast-a"><use href="#iago-shadow" /><use href="#iago-legs-down" /><use href="#iago-torso-up" /><use href="#iago-cast-arms-up" /><use href="#iago-head-up" /><use href="#iago-ponytail-up" /><use href="#iago-wind-spiral" transform="translate(42 18) scale(0.6)" /></g>
+    <g id="iago-up-cast-b"><use href="#iago-up-cast-a" /><use href="#iago-wind-burst" transform="translate(44 20)" /></g>
+    <g id="iago-left-idle-a"><use href="#iago-shadow" /><use href="#iago-legs-left" /><use href="#iago-torso-left" /><use href="#iago-arms-left" /><use href="#iago-head-left" /><use href="#iago-ponytail-left" /></g>
+    <g id="iago-left-idle-b"><use href="#iago-left-idle-a" transform="translate(0 -1)" /></g>
+    <g id="iago-left-walk-a"><use href="#iago-shadow" /><use href="#iago-legs-left-a" /><use href="#iago-torso-left" /><use href="#iago-arms-left" transform="rotate(-4 32 35)" /><use href="#iago-head-left" /><use href="#iago-ponytail-left" /></g>
+    <g id="iago-left-walk-b"><use href="#iago-shadow" /><use href="#iago-legs-left-b" /><use href="#iago-torso-left" transform="translate(0 -1)" /><use href="#iago-arms-left" transform="rotate(4 32 35)" /><use href="#iago-head-left" transform="translate(0 -1)" /><use href="#iago-ponytail-left" /></g>
+    <g id="iago-left-attack-prep"><use href="#iago-shadow" /><use href="#iago-legs-left-a" /><use href="#iago-torso-left" /><use href="#iago-attack-arms-left" /><use href="#iago-head-left" /><use href="#iago-ponytail-left" /></g>
+    <g id="iago-left-attack-impact"><use href="#iago-shadow" /><use href="#iago-legs-left-a" /><use href="#iago-torso-left" /><use href="#iago-attack-arms-left-impact" /><use href="#iago-head-left" /><use href="#iago-ponytail-left" /><use href="#iago-wind-arc" transform="translate(12 34) rotate(180)" /><use href="#iago-gust" transform="translate(6 32)" /><use href="#iago-leaf" transform="translate(10 26) rotate(30)" /><use href="#iago-leaf" transform="translate(4 40) rotate(-40)" /></g>
+    <g id="iago-left-attack2-impact"><use href="#iago-shadow" /><use href="#iago-legs-left-b" /><use href="#iago-torso-left" /><use href="#iago-attack2-arms-left-impact" /><use href="#iago-head-left" /><use href="#iago-ponytail-left" /><use href="#iago-wind-arc" transform="translate(16 30) rotate(-135)" /><use href="#iago-gust" transform="translate(14 22)" /><use href="#iago-leaf" transform="translate(12 18) rotate(-20)" /><use href="#iago-leaf" transform="translate(6 14) rotate(50)" /></g>
+    <g id="iago-left-cast-a"><use href="#iago-shadow" /><use href="#iago-legs-left" /><use href="#iago-torso-left" /><use href="#iago-cast-arms-left" /><use href="#iago-head-left" /><use href="#iago-ponytail-left" /><use href="#iago-wind-spiral" transform="translate(14 18) scale(0.6)" /></g>
+    <g id="iago-left-cast-b"><use href="#iago-left-cast-a" /><use href="#iago-wind-burst" transform="translate(12 20)" /></g>
+    <g id="iago-right-idle-a"><use href="#iago-left-idle-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="iago-right-idle-b"><use href="#iago-left-idle-b" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="iago-right-walk-a"><use href="#iago-left-walk-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="iago-right-walk-b"><use href="#iago-left-walk-b" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="iago-right-attack-prep"><use href="#iago-left-attack-prep" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="iago-right-attack-impact"><use href="#iago-left-attack-impact" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="iago-right-attack2-impact"><use href="#iago-left-attack2-impact" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="iago-right-cast-a"><use href="#iago-left-cast-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="iago-right-cast-b"><use href="#iago-left-cast-b" transform="translate(64 0) scale(-1 1)" /></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-b" /></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-b" /></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-b" /></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-b" /></svg>
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-walk-a" /></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-walk-b" /></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-b" /></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-b" /></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-walk-a" /></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-walk-a" /></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-walk-b" /></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-b" /></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-b" /></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-walk-a" /></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-walk-a" /></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-walk-b" /></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-b" /></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-b" /></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-walk-a" /></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-walk-a" /></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-walk-b" /></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-b" /></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-b" /></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-walk-a" /></svg>
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-attack-impact" /></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-b" /></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-attack-impact" /></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-b" /></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-attack-impact" /></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-b" /></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-attack-impact" /></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-b" /></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-attack-prep" /></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-attack2-impact" /></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-b" /></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-attack-prep" /></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-attack2-impact" /></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-b" /></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-attack-prep" /></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-attack2-impact" /></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-b" /></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-attack-prep" /></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-attack2-impact" /></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-b" /></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-cast-a" /></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-cast-b" /></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-cast-a" /></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-b" /></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-up-idle-a" /></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-cast-a" /></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-cast-b" /></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-cast-a" /></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-b" /></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-left-idle-a" /></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-cast-a" /></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-cast-b" /></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-cast-a" /></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-b" /></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-down-idle-a" /></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-cast-a" /></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-cast-b" /></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-cast-a" /></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-b" /></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#iago-right-idle-a" /></svg>
+</svg>

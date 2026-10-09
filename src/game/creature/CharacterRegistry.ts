@@ -40,6 +40,8 @@ import { Antonio } from "./classes/Antonio"
 import { Maricuri } from "./classes/Maricuri"
 import { Rodolfo } from "./classes/Rodolfo"
 import { Sorita } from "./classes/Sorita"
+import { Iago } from "./classes/Iago"
+import { Edno } from "./classes/Edno"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
 import { SpritesheetCreatureVisualDefinition, SvgSpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
@@ -129,3 +131,5 @@ CharacterRegistry.register("antonio", Antonio, SvgSpritesheetCreatureVisualDefin
 CharacterRegistry.register("maricuri", Maricuri, SvgSpritesheetCreatureVisualDefinition.character("maricuri"))
 CharacterRegistry.register("rodolfo", Rodolfo, SvgSpritesheetCreatureVisualDefinition.character("rodolfo"))
 CharacterRegistry.register("sorita", Sorita, SvgSpritesheetCreatureVisualDefinition.character("sorita"))
+CharacterRegistry.register("iago", Iago, SvgSpritesheetCreatureVisualDefinition.character("iago"))
+CharacterRegistry.register("edno", Edno, SvgSpritesheetCreatureVisualDefinition.character("edno"))

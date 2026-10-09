@@ -53,6 +53,7 @@ export class Game extends Scene {
     enemyTeam: EnemyTeam
     state: GameState = "idle"
     walls: Phaser.GameObjects.Group
+    projectiles: Phaser.GameObjects.Group
     floor = 1
     grid: Grid
     private fireEffects: Phaser.GameObjects.Group
@@ -108,6 +109,7 @@ export class Game extends Scene {
 
         this.createBackground()
         this.perRoundFx = this.add.group()
+        this.projectiles = this.add.group()
         this.grid = new Grid(this, this.background)
         this.goldCoinFx = new GoldCoinFx(this)
         this.playerTeam = new PlayerTeam(this, true)
@@ -478,6 +480,7 @@ export class Game extends Scene {
     clearFloor() {
         this.enemyTeam.clear(true, true)
         this.perRoundFx.clear(true, true)
+        this.projectiles.clear(true, true)
     }
 
     buildFloor() {

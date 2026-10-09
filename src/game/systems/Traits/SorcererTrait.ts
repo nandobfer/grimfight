@@ -10,6 +10,7 @@ export class SorcererTrait extends Trait {
         [2, { apMultiplier: 0.5, descriptionParams: ["50%"] }],
         [4, { apMultiplier: 0.75, descriptionParams: ["75%"] }],
         [6, { apMultiplier: 1.25, descriptionParams: ["125%"] }],
+        [8, { apMultiplier: 2.00, descriptionParams: ["200%"] }],
     ])
 
     constructor(comp: string[]) {

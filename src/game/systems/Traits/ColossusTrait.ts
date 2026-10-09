@@ -10,6 +10,7 @@ export class ColossusTrait extends Trait {
         [2, { healthMultiplier: 0.15, armor: 15, descriptionParams: ["15%", "15%"] }],
         [4, { healthMultiplier: 0.35, armor: 20, descriptionParams: ["35%", "20%"] }],
 				[6, { healthMultiplier: 0.50, armor: 25, descriptionParams: ["50%", "25%"] }],
+				[8, { healthMultiplier: 1.00, armor: 30, descriptionParams: ["100%", "30%"] }],
     ])
 
     constructor(comp: string[]) {

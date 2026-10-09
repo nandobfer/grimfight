@@ -39,6 +39,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene
         this.scene?.add.existing(this)
         this.scene?.physics.add.existing(this)
+        this.scene?.projectiles?.add(this)
         if (visualOptions.flipX ?? true) {
             this.toggleFlipX()
         }
@@ -174,6 +175,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
     destroy(fromScene?: boolean): void {
         EventBus.off("gamestate", this.onGameState)
+        this.scene?.projectiles?.remove(this)
         // clear timers/colliders/tweens to avoid leaking references
         if (this.watchdog) {
             this.watchdog.remove(false)

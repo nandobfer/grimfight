@@ -973,6 +973,21 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         this.emit("gain-shield", value, plot?.healer)
     }
 
+    /**
+     * Removes shield directly (not through damage). Emits `shield-broken` when
+     * the shield is fully depleted, matching the normal shield consumption flow.
+     */
+    loseShield(value: number) {
+        if (!this.active || value <= 0 || this.shield <= 0) return
+
+        this.shield = Math.max(0, this.shield - value)
+        this.healthBar?.setShield(this.shield, this.health, this.maxHealth)
+
+        if (this.shield === 0) {
+            this.emit("shield-broken")
+        }
+    }
+
     heal(value: number, plot?: { healer: Creature; source: string }) {
         if (!this.active) return
 

@@ -259,4 +259,22 @@ Sua passiva observa as mortes de criaturas de encontro do time oposto enquanto S
 
 As fórmulas puras do dado carregado, da tabela de drops, dos pips e do filtro de alvo ficam em `src/game/creature/classes/SoritaDice.ts` para manter a regra testável sem instanciar Phaser.
 
+### Iago
+Iago é um personagem jogável registrado como `iago`, ligado às identidades de atacante e destino. Ele usa spritesheet SVG e portrait WebP próprios, luta corpo a corpo com uma katana e canaliza vento como elemento icônico.
+
+Sua habilidade é composta por duas passivas, sem cast ativo e com mana travada. A primeira faz sua chance de crítico ser guiada pelo destino: o fluxo de rolagem do destino é aplicado ao próprio teste de crítico, de modo que a chance efetiva corresponde à probabilidade de ao menos uma das rolagens do destino acertar, crescendo conforme a trait `Destiny` fornece mais rolagens. A segunda faz cada ataque básico rolar um dado de vinte lados pelo mesmo fluxo de destino; a face máxima libera um furacão de vento em linha reta na direção do alvo, causando dano a todos os inimigos que ele cruza, escalado por dano de ataque e poder de habilidade. Assim como o crítico, a chance de disparar o furacão cresce conforme a trait `Destiny` fornece mais rolagens.
+
+O furacão é desenhado inteiramente com `Graphics`, avança em linha reta a partir de Iago na direção do alvo, atinge cada inimigo uma única vez e para ao sair da arena. Ele entra no grupo de FX por rodada e limpa tweens, luz, `Graphics` e listeners de `update` e `gamestate` ao terminar, ao mudar o estado da rodada ou ao destruir Iago.
+
+As fórmulas puras do dado, do gatilho do furacão, do dano escalado e da chance efetiva de crítico ficam em `src/game/creature/classes/IagoDice.ts` para manter a regra testável sem instanciar Phaser.
+
+### Edno
+Edno é um personagem jogável registrado como `edno`, ligado às identidades de destino e resistência colossal. Ele usa spritesheet SVG e portrait WebP próprios, luta corpo a corpo com um escudo lendário e atua como tanque de linha de frente.
+
+Ao conjurar, Edno ergue uma égide espectral e rola um dado de destino de poucas faces. Cada ponto sorteado conjura um escudo espectral largo e fino à sua frente, empilhado um na frente do outro, e concede a Edno um escudo temporário proporcional ao valor sorteado e à própria vida máxima. A trait `Destiny` aplica sua rolagem de múltiplas tentativas ao mesmo dado, tornando faces altas mais prováveis conforme a composição.
+
+Enquanto a égide existir, a mana de Edno fica travada, limitando novos casts a janelas espaçadas, e todo projétil inimigo que colidir com os escudos é interceptado e bloqueado sem atingir o alvo; projéteis aliados são ignorados. O escudo concedido é temporário: quando a égide expira, ele é removido pelo fluxo normal de escudo, podendo quebrar e acionar efeitos ligados à quebra de escudo.
+
+Os escudos são desenhados com `Phaser.GameObjects.Graphics` com mistura aditiva e alpha translúcido, com aro dourado e gema central. Como efeito persistente, a égide vive por sua própria duração e permanece ativa mesmo se Edno morrer, dissipando apenas ao expirar ou quando a rodada sai de combate. Gráficos, hitbox, colliders e listeners de `update` e `gamestate` limpam ao terminar a duração ou quando a rodada sai de combate, sem desfazer a égide na morte do personagem. As fórmulas puras do número de escudos e do valor do escudo temporário ficam em `src/game/creature/classes/EdnoAegis.ts` para manter a regra testável sem instanciar Phaser.
+
 ## Fixes

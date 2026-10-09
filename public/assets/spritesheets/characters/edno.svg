@@ -1,0 +1,528 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="edno-green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7ba35a"/>
+      <stop offset="0.55" stop-color="#4f7a3f"/>
+      <stop offset="1" stop-color="#2f4a28"/>
+    </linearGradient>
+    <linearGradient id="edno-green-dark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f6330"/>
+      <stop offset="1" stop-color="#1c2f1a"/>
+    </linearGradient>
+    <linearGradient id="edno-leather" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7a5533"/>
+      <stop offset="1" stop-color="#3c2818"/>
+    </linearGradient>
+    <linearGradient id="edno-skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0c793"/>
+      <stop offset="1" stop-color="#d19f6c"/>
+    </linearGradient>
+    <linearGradient id="edno-hair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#454b60"/>
+      <stop offset="1" stop-color="#181a22"/>
+    </linearGradient>
+    <linearGradient id="edno-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6e6a0"/>
+      <stop offset="0.5" stop-color="#d8b24a"/>
+      <stop offset="1" stop-color="#8a6a1e"/>
+    </linearGradient>
+    <linearGradient id="edno-shield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#539069"/>
+      <stop offset="0.55" stop-color="#2f6b4a"/>
+      <stop offset="1" stop-color="#1c4231"/>
+    </linearGradient>
+    <radialGradient id="edno-gem" cx="40%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#dcffb0"/>
+      <stop offset="0.5" stop-color="#5fc45a"/>
+      <stop offset="1" stop-color="#1d4a28"/>
+    </radialGradient>
+    <radialGradient id="edno-mana" cx="45%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.45" stop-color="#a8e4ff"/>
+      <stop offset="1" stop-color="#2a6fd6"/>
+    </radialGradient>
+
+    <ellipse id="edno-shadow" cx="32" cy="56" rx="15" ry="4.5" fill="#000000" opacity="0.3"/>
+    <path id="edno-spark" d="M0 -4 L1.4 -1.4 L4 0 L1.4 1.4 L0 4 L-1.4 1.4 L-4 0 L-1.4 -1.4 Z" fill="#cdefff" opacity="0.9"/>
+    <g id="edno-rune-ring">
+      <circle cx="0" cy="0" r="9" fill="none" stroke="url(#edno-gold)" stroke-width="1.1" opacity="0.9"/>
+      <circle cx="0" cy="0" r="6" fill="none" stroke="#a8e4ff" stroke-width="0.7" opacity="0.6"/>
+      <circle cx="0" cy="0" r="1.2" fill="#f6e6a0"/>
+    </g>
+    <g id="edno-mana-burst">
+      <circle cx="0" cy="0" r="8" fill="url(#edno-mana)" opacity="0.7"/>
+      <use href="#edno-spark" transform="translate(-6 -3) scale(0.7)"/>
+      <use href="#edno-spark" transform="translate(6 3) scale(0.55)"/>
+    </g>
+    <g id="edno-impact">
+      <path d="M-10 -6 Q0 -1 10 -6" fill="none" stroke="#eafff0" stroke-width="1.8" stroke-linecap="round" opacity="0.9"/>
+      <circle cx="0" cy="0" r="6" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+      <use href="#edno-spark" transform="translate(0 3)"/>
+    </g>
+
+    <g id="edno-shield-front">
+      <path d="M-13 -12 L13 -12 Q13 3 10 9 Q5 15 0 16 Q-5 15 -10 9 Q-13 3 -13 -12 Z" fill="url(#edno-shield)" stroke="#0f2419" stroke-width="1.6"/>
+      <path d="M-13 -12 L13 -12 Q13 3 10 9 Q5 15 0 16 Q-5 15 -10 9 Q-13 3 -13 -12 Z" fill="none" stroke="url(#edno-gold)" stroke-width="1.8"/>
+      <path d="M-9 -8 L9 -8" stroke="#dfffe6" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="0" cy="0" r="3.4" fill="url(#edno-gem)" stroke="#1d4a28" stroke-width="0.8"/>
+      <circle cx="-1" cy="-1" r="1" fill="#eafff0" opacity="0.85"/>
+    </g>
+    <g id="edno-shield-side">
+      <path d="M-3 -12 Q3 -12 3 -9 L3 8 Q0 14 -3 8 Z" fill="url(#edno-shield)" stroke="#0f2419" stroke-width="1.2"/>
+      <path d="M-3 -12 Q3 -12 3 -9 L3 8 Q0 14 -3 8" fill="none" stroke="url(#edno-gold)" stroke-width="1.3"/>
+      <circle cx="0" cy="-1" r="1.6" fill="url(#edno-gem)"/>
+    </g>
+    <g id="edno-shield-back">
+      <path d="M-13 -12 L13 -12 Q13 3 10 9 Q5 15 0 16 Q-5 15 -10 9 Q-13 3 -13 -12 Z" fill="#26402f" stroke="#0f2419" stroke-width="1.6"/>
+      <path d="M-9 -8 Q0 -3 9 -8 L9 6 Q0 12 -9 6 Z" fill="#395a44" stroke="#14281d" stroke-width="1"/>
+      <path d="M-10 -1 L10 -1 M-9 3 L9 3" stroke="#6b4a2e" stroke-width="1.6" stroke-linecap="round"/>
+    </g>
+
+    <g id="edno-legs-down-neutral">
+      <path d="M26 43 L25 50 L25 55 L30 55 L30 49 L31 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M33 43 L34 49 L34 55 L39 55 L39 50 L38 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M25 52 L30 52 L30 55 L25 55 Z" fill="#1c1e26"/>
+      <path d="M34 52 L39 52 L39 55 L34 55 Z" fill="#1c1e26"/>
+    </g>
+    <g id="edno-legs-down-step-a">
+      <path d="M25 43 L22 50 L23 55 L28 55 L29 49 L30 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M34 43 L36 49 L36 55 L41 55 L40 50 L39 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M23 52 L28 52 L28 55 L23 55 Z" fill="#1c1e26"/>
+      <path d="M36 52 L41 52 L41 55 L36 55 Z" fill="#1c1e26"/>
+    </g>
+    <g id="edno-legs-down-step-b">
+      <path d="M27 43 L26 50 L26 55 L31 55 L31 49 L32 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M32 43 L33 49 L33 55 L38 55 L38 50 L37 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M26 52 L31 52 L31 55 L26 55 Z" fill="#1c1e26"/>
+      <path d="M33 52 L38 52 L38 55 L33 55 Z" fill="#1c1e26"/>
+    </g>
+    <g id="edno-legs-left-neutral">
+      <path d="M28 43 L26 50 L25 55 L31 55 L32 49 L33 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M33 43 L35 50 L36 55 L41 55 L39 49 L38 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M25 52 L31 52 L31 55 L25 55 Z" fill="#1c1e26"/>
+      <path d="M36 52 L41 52 L41 55 L36 55 Z" fill="#1c1e26"/>
+    </g>
+    <g id="edno-legs-left-step-a">
+      <path d="M25 43 L22 50 L21 55 L27 55 L29 49 L31 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M34 43 L37 50 L38 55 L43 55 L40 49 L38 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M21 52 L27 52 L27 55 L21 55 Z" fill="#1c1e26"/>
+      <path d="M38 52 L43 52 L43 55 L38 55 Z" fill="#1c1e26"/>
+    </g>
+    <g id="edno-legs-left-step-b">
+      <path d="M29 43 L28 50 L28 55 L33 55 L33 49 L34 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M33 43 L34 50 L34 55 L39 55 L39 49 L38 43 Z" fill="url(#edno-leather)" stroke="#14202a" stroke-width="1"/>
+      <path d="M28 52 L33 52 L33 55 L28 55 Z" fill="#1c1e26"/>
+      <path d="M34 52 L39 52 L39 55 L34 55 Z" fill="#1c1e26"/>
+    </g>
+
+    <g id="edno-torso-down">
+      <path d="M20 27 Q32 20 44 27 L42 45 Q32 49 22 45 Z" fill="url(#edno-green)" stroke="#14202a" stroke-width="1.4"/>
+      <path d="M26 28 L38 28 L37 42 L27 42 Z" fill="#3f7d5a" opacity="0.4"/>
+      <path d="M24 44 Q32 48 40 44" fill="none" stroke="url(#edno-gold)" stroke-width="1.3"/>
+      <circle cx="32" cy="34" r="2.6" fill="url(#edno-gem)" stroke="#1d4a28" stroke-width="0.7"/>
+      <path d="M19 26 Q24 23 29 26 L28 30 L20 30 Z" fill="url(#edno-green-dark)" stroke="#14202a" stroke-width="1"/>
+      <path d="M35 26 Q40 23 45 26 L44 30 L36 30 Z" fill="url(#edno-green-dark)" stroke="#14202a" stroke-width="1"/>
+    </g>
+    <g id="edno-torso-up">
+      <path d="M20 27 Q32 20 44 27 L42 45 Q32 49 22 45 Z" fill="url(#edno-green-dark)" stroke="#14202a" stroke-width="1.4"/>
+      <path d="M25 31 Q32 27 39 31" fill="none" stroke="#2f4a28" stroke-width="1.5" opacity="0.7"/>
+      <path d="M19 26 Q24 23 29 26 L28 30 L20 30 Z" fill="url(#edno-green-dark)" stroke="#14202a" stroke-width="1"/>
+      <path d="M35 26 Q40 23 45 26 L44 30 L36 30 Z" fill="url(#edno-green-dark)" stroke="#14202a" stroke-width="1"/>
+    </g>
+    <g id="edno-torso-left">
+      <path d="M20 28 Q30 21 42 26 L43 45 Q32 49 21 45 Z" fill="url(#edno-green)" stroke="#14202a" stroke-width="1.4"/>
+      <path d="M24 31 Q33 34 40 30" fill="none" stroke="#2f4a28" stroke-width="1.4" opacity="0.6"/>
+      <path d="M19 27 Q24 24 29 27 L28 31 L20 31 Z" fill="url(#edno-green-dark)" stroke="#14202a" stroke-width="1"/>
+    </g>
+    <g id="edno-torso-right"><use href="#edno-torso-left" transform="translate(64 0) scale(-1 1)"/></g>
+
+    <g id="edno-arm-hold-down">
+      <path d="M25 28 L31 40" stroke="#14202a" stroke-width="6.5" stroke-linecap="round"/>
+      <path d="M25 28 L31 40" stroke="url(#edno-green)" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="31" cy="40" r="2.6" fill="url(#edno-leather)" stroke="#14202a" stroke-width="0.8"/>
+    </g>
+    <g id="edno-arm-free-down">
+      <path d="M40 28 L44 40" stroke="#14202a" stroke-width="6.5" stroke-linecap="round"/>
+      <path d="M40 28 L44 40" stroke="url(#edno-green)" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="44" cy="40" r="2.6" fill="url(#edno-leather)" stroke="#14202a" stroke-width="0.8"/>
+    </g>
+    <g id="edno-arm-hold-up">
+      <path d="M26 28 L30 38" stroke="#14202a" stroke-width="6.5" stroke-linecap="round"/>
+      <path d="M26 28 L30 38" stroke="url(#edno-green-dark)" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <g id="edno-arm-free-up">
+      <path d="M39 28 L44 38" stroke="#14202a" stroke-width="6.5" stroke-linecap="round"/>
+      <path d="M39 28 L44 38" stroke="url(#edno-green-dark)" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="44" cy="38" r="2.6" fill="url(#edno-leather)" stroke="#14202a" stroke-width="0.8"/>
+    </g>
+    <g id="edno-arm-hold-left">
+      <path d="M28 29 L14 37" stroke="#14202a" stroke-width="6" stroke-linecap="round"/>
+      <path d="M28 29 L14 37" stroke="url(#edno-green)" stroke-width="4.6" stroke-linecap="round"/>
+      <circle cx="14" cy="37" r="2.4" fill="url(#edno-leather)" stroke="#14202a" stroke-width="0.8"/>
+    </g>
+    <g id="edno-arm-free-left">
+      <path d="M38 29 L44 38" stroke="#14202a" stroke-width="5.6" stroke-linecap="round"/>
+      <path d="M38 29 L44 38" stroke="url(#edno-green)" stroke-width="4.2" stroke-linecap="round"/>
+      <circle cx="44" cy="38" r="2.3" fill="url(#edno-leather)" stroke="#14202a" stroke-width="0.8"/>
+    </g>
+
+    <g id="edno-head-down">
+      <path d="M24 20 Q24 12 32 10 Q40 12 40 20 Q39 28 32 30 Q25 28 24 20 Z" fill="url(#edno-skin)" stroke="#14202a" stroke-width="1"/>
+      <path d="M23 19 Q24 9 32 8 Q41 10 41 19 Q37 13 32 14 Q27 13 23 19 Z" fill="url(#edno-hair)"/>
+      <path d="M23 18 L20 12 L26 15 Z" fill="url(#edno-hair)"/>
+      <path d="M41 18 L44 12 L38 15 Z" fill="url(#edno-hair)"/>
+      <path d="M27 14 L30 22 L34 22 L33 14 Z" fill="url(#edno-hair)"/>
+      <circle cx="28.5" cy="21" r="1.2" fill="#4fae5a"/>
+      <circle cx="35.5" cy="21" r="1.2" fill="#4fae5a"/>
+      <path d="M30.5 26 Q32 27 33.5 26" fill="none" stroke="#8a5a3a" stroke-width="0.9" stroke-linecap="round"/>
+    </g>
+    <g id="edno-head-up">
+      <path d="M24 20 Q24 12 32 10 Q40 12 40 20 Q39 28 32 30 Q25 28 24 20 Z" fill="url(#edno-hair)" stroke="#14202a" stroke-width="1"/>
+      <path d="M23 19 Q24 9 32 8 Q41 10 41 19 Q37 12 32 14 Q27 12 23 19 Z" fill="url(#edno-hair)"/>
+      <path d="M23 18 L20 12 L26 15 Z" fill="url(#edno-hair)"/>
+      <path d="M41 18 L44 12 L38 15 Z" fill="url(#edno-hair)"/>
+      <path d="M30 28 L30 33 L34 33 L34 28 Z" fill="url(#edno-skin)" stroke="#14202a" stroke-width="0.8"/>
+    </g>
+    <g id="edno-head-left">
+      <path d="M24 20 Q25 12 33 10 Q40 13 39 21 Q36 28 29 29 Q24 26 24 20 Z" fill="url(#edno-skin)" stroke="#14202a" stroke-width="1"/>
+      <path d="M23 18 Q27 9 34 8 Q41 11 40 20 Q35 14 30 14 Q26 14 23 18 Z" fill="url(#edno-hair)"/>
+      <path d="M39 16 L44 11 L40 19 Z" fill="url(#edno-hair)"/>
+      <path d="M23 17 L25 23 L22 20 Z" fill="url(#edno-hair)"/>
+      <circle cx="28" cy="21" r="1.2" fill="#4fae5a"/>
+    </g>
+    <g id="edno-head-right"><use href="#edno-head-left" transform="translate(64 0) scale(-1 1)"/></g>
+
+    <g id="edno-cape-up">
+      <path d="M21 27 Q13 38 19 51 Q26 56 32 55 Q38 56 45 51 Q51 38 43 27 Q38 33 32 33 Q26 33 21 27 Z" fill="url(#edno-green)" stroke="#14202a" stroke-width="1.3"/>
+      <path d="M32 33 L32 55" stroke="#2f4a28" stroke-width="1" opacity="0.5"/>
+      <path d="M24 32 Q20 42 22 50" fill="none" stroke="#2f4a28" stroke-width="1" opacity="0.5"/>
+      <path d="M40 32 Q44 42 42 50" fill="none" stroke="#2f4a28" stroke-width="1" opacity="0.5"/>
+    </g>
+    <g id="edno-cape-left">
+      <path d="M30 27 Q38 38 34 50 Q30 54 26 50 Q28 38 26 29 Z" fill="url(#edno-green-dark)" stroke="#14202a" stroke-width="1.2"/>
+    </g>
+
+    <g id="edno-down-idle-a">
+      <use href="#edno-shadow"/>
+      <use href="#edno-legs-down-neutral"/>
+      <use href="#edno-torso-down"/>
+      <use href="#edno-arm-free-down"/>
+      <use href="#edno-arm-hold-down"/>
+      <use href="#edno-head-down"/>
+      <use href="#edno-shield-front" transform="translate(29 40)"/>
+    </g>
+    <g id="edno-down-idle-b"><use href="#edno-down-idle-a" transform="translate(0 -1)"/></g>
+
+    <g id="edno-up-idle-a">
+      <use href="#edno-shadow"/>
+      <use href="#edno-shield-back" transform="translate(32 16)"/>
+      <use href="#edno-legs-down-neutral"/>
+      <use href="#edno-arm-hold-up"/>
+      <use href="#edno-arm-free-up"/>
+      <use href="#edno-torso-up"/>
+      <use href="#edno-cape-up"/>
+      <use href="#edno-head-up"/>
+    </g>
+    <g id="edno-up-idle-b"><use href="#edno-up-idle-a" transform="translate(0 -1)"/></g>
+
+    <g id="edno-left-idle-a">
+      <use href="#edno-shadow"/>
+      <use href="#edno-cape-left"/>
+      <use href="#edno-legs-left-neutral"/>
+      <use href="#edno-torso-left"/>
+      <use href="#edno-arm-free-left"/>
+      <use href="#edno-arm-hold-left"/>
+      <use href="#edno-head-left"/>
+      <use href="#edno-shield-side" transform="translate(13 37)"/>
+    </g>
+    <g id="edno-left-idle-b"><use href="#edno-left-idle-a" transform="translate(0 -1)"/></g>
+    <g id="edno-right-idle-a"><use href="#edno-left-idle-a" transform="translate(64 0) scale(-1 1)"/></g>
+    <g id="edno-right-idle-b"><use href="#edno-left-idle-b" transform="translate(64 0) scale(-1 1)"/></g>
+
+    <g id="edno-down-walk-a">
+      <use href="#edno-shadow"/>
+      <use href="#edno-legs-down-step-a"/>
+      <use href="#edno-torso-down"/>
+      <use href="#edno-arm-free-down" transform="rotate(-5 40 28)"/>
+      <use href="#edno-arm-hold-down"/>
+      <use href="#edno-head-down"/>
+      <use href="#edno-shield-front" transform="translate(30 41)"/>
+    </g>
+    <g id="edno-down-walk-b">
+      <use href="#edno-shadow"/>
+      <use href="#edno-legs-down-step-b"/>
+      <use href="#edno-torso-down" transform="translate(0 -1)"/>
+      <use href="#edno-arm-free-down" transform="rotate(5 40 28)"/>
+      <use href="#edno-arm-hold-down"/>
+      <use href="#edno-head-down" transform="translate(0 -1)"/>
+      <use href="#edno-shield-front" transform="translate(31 40)"/>
+    </g>
+    <g id="edno-up-walk-a">
+      <use href="#edno-shadow"/>
+      <use href="#edno-shield-back" transform="translate(32 16)"/>
+      <use href="#edno-legs-down-step-a"/>
+      <use href="#edno-arm-hold-up"/>
+      <use href="#edno-arm-free-up" transform="rotate(-5 39 28)"/>
+      <use href="#edno-torso-up"/>
+      <use href="#edno-cape-up" transform="rotate(-2 32 40)"/>
+      <use href="#edno-head-up"/>
+    </g>
+    <g id="edno-up-walk-b">
+      <use href="#edno-shadow"/>
+      <use href="#edno-shield-back" transform="translate(32 15)"/>
+      <use href="#edno-legs-down-step-b"/>
+      <use href="#edno-arm-hold-up"/>
+      <use href="#edno-arm-free-up" transform="rotate(5 39 28)"/>
+      <use href="#edno-torso-up" transform="translate(0 -1)"/>
+      <use href="#edno-cape-up" transform="rotate(2 32 40)"/>
+      <use href="#edno-head-up" transform="translate(0 -1)"/>
+    </g>
+    <g id="edno-left-walk-a">
+      <use href="#edno-shadow"/>
+      <use href="#edno-cape-left"/>
+      <use href="#edno-legs-left-step-a"/>
+      <use href="#edno-torso-left"/>
+      <use href="#edno-arm-free-left" transform="rotate(6 38 29)"/>
+      <use href="#edno-arm-hold-left"/>
+      <use href="#edno-head-left"/>
+      <use href="#edno-shield-side" transform="translate(12 37)"/>
+    </g>
+    <g id="edno-left-walk-b">
+      <use href="#edno-shadow"/>
+      <use href="#edno-cape-left"/>
+      <use href="#edno-legs-left-step-b"/>
+      <use href="#edno-torso-left" transform="translate(0 -1)"/>
+      <use href="#edno-arm-free-left" transform="rotate(-6 38 29)"/>
+      <use href="#edno-arm-hold-left"/>
+      <use href="#edno-head-left" transform="translate(0 -1)"/>
+      <use href="#edno-shield-side" transform="translate(13 36)"/>
+    </g>
+    <g id="edno-right-walk-a"><use href="#edno-left-walk-a" transform="translate(64 0) scale(-1 1)"/></g>
+    <g id="edno-right-walk-b"><use href="#edno-left-walk-b" transform="translate(64 0) scale(-1 1)"/></g>
+
+    <g id="edno-down-attack-prep">
+      <use href="#edno-shadow"/>
+      <use href="#edno-legs-down-step-a"/>
+      <use href="#edno-torso-down" transform="rotate(-4 32 36)"/>
+      <use href="#edno-head-down" transform="rotate(-4 32 36)"/>
+      <use href="#edno-arm-hold-down" transform="rotate(-10 25 28)"/>
+      <use href="#edno-shield-front" transform="translate(27 40) rotate(-14)"/>
+    </g>
+    <g id="edno-down-attack-impact">
+      <use href="#edno-shadow"/>
+      <use href="#edno-legs-down-step-a"/>
+      <use href="#edno-torso-down" transform="rotate(7 32 36)"/>
+      <use href="#edno-head-down" transform="rotate(7 32 36)"/>
+      <use href="#edno-arm-hold-down" transform="rotate(12 25 28)"/>
+      <use href="#edno-shield-front" transform="translate(36 39) rotate(8)"/>
+      <use href="#edno-impact" transform="translate(42 50)"/>
+    </g>
+    <g id="edno-up-attack-prep">
+      <use href="#edno-shadow"/>
+      <use href="#edno-shield-back" transform="translate(30 15)"/>
+      <use href="#edno-legs-down-step-a"/>
+      <use href="#edno-arm-hold-up" transform="rotate(-10 26 28)"/>
+      <use href="#edno-arm-free-up"/>
+      <use href="#edno-torso-up"/>
+      <use href="#edno-cape-up"/>
+      <use href="#edno-head-up"/>
+    </g>
+    <g id="edno-up-attack-impact">
+      <use href="#edno-shadow"/>
+      <use href="#edno-shield-back" transform="translate(32 9)"/>
+      <use href="#edno-legs-down-step-a"/>
+      <use href="#edno-arm-hold-up" transform="rotate(10 26 28)"/>
+      <use href="#edno-arm-free-up"/>
+      <use href="#edno-torso-up"/>
+      <use href="#edno-cape-up"/>
+      <use href="#edno-head-up"/>
+      <use href="#edno-impact" transform="translate(32 6)"/>
+    </g>
+    <g id="edno-left-attack-prep">
+      <use href="#edno-shadow"/>
+      <use href="#edno-cape-left"/>
+      <use href="#edno-legs-left-step-a"/>
+      <use href="#edno-torso-left" transform="rotate(-3 30 36)"/>
+      <use href="#edno-head-left" transform="rotate(-3 30 36)"/>
+      <use href="#edno-arm-free-left"/>
+      <use href="#edno-arm-hold-left" transform="rotate(-8 28 29)"/>
+      <use href="#edno-shield-side" transform="translate(18 37) rotate(-10)"/>
+    </g>
+    <g id="edno-left-attack-impact">
+      <use href="#edno-shadow"/>
+      <use href="#edno-cape-left"/>
+      <use href="#edno-legs-left-step-a"/>
+      <use href="#edno-torso-left" transform="rotate(5 30 36)"/>
+      <use href="#edno-head-left" transform="rotate(5 30 36)"/>
+      <use href="#edno-arm-free-left"/>
+      <use href="#edno-arm-hold-left" transform="rotate(10 28 29)"/>
+      <use href="#edno-shield-side" transform="translate(8 37) rotate(8)"/>
+      <use href="#edno-impact" transform="translate(7 40) rotate(-90)"/>
+    </g>
+    <g id="edno-right-attack-prep"><use href="#edno-left-attack-prep" transform="translate(64 0) scale(-1 1)"/></g>
+    <g id="edno-right-attack-impact"><use href="#edno-left-attack-impact" transform="translate(64 0) scale(-1 1)"/></g>
+
+    <g id="edno-down-cast-a">
+      <use href="#edno-down-idle-a"/>
+      <circle cx="29" cy="40" r="7" fill="url(#edno-mana)" opacity="0.4"/>
+    </g>
+    <g id="edno-down-cast-b">
+      <use href="#edno-down-idle-b"/>
+      <use href="#edno-rune-ring" transform="translate(29 40)"/>
+      <use href="#edno-mana-burst" transform="translate(29 40)"/>
+    </g>
+    <g id="edno-up-cast-a">
+      <use href="#edno-up-idle-a"/>
+      <circle cx="32" cy="33" r="7" fill="url(#edno-mana)" opacity="0.4"/>
+    </g>
+    <g id="edno-up-cast-b">
+      <use href="#edno-up-idle-b"/>
+      <use href="#edno-rune-ring" transform="translate(32 32)"/>
+      <use href="#edno-mana-burst" transform="translate(32 32)"/>
+    </g>
+    <g id="edno-left-cast-a">
+      <use href="#edno-left-idle-a"/>
+      <circle cx="20" cy="36" r="7" fill="url(#edno-mana)" opacity="0.4"/>
+    </g>
+    <g id="edno-left-cast-b">
+      <use href="#edno-left-idle-b"/>
+      <use href="#edno-rune-ring" transform="translate(18 36)"/>
+      <use href="#edno-mana-burst" transform="translate(18 36)"/>
+    </g>
+    <g id="edno-right-cast-a"><use href="#edno-left-cast-a" transform="translate(64 0) scale(-1 1)"/></g>
+    <g id="edno-right-cast-b"><use href="#edno-left-cast-b" transform="translate(64 0) scale(-1 1)"/></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-b"/></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-b"/></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-b"/></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-b"/></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-walk-a"/></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-walk-b"/></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-b"/></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-walk-a" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-walk-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-b"/></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-walk-a"/></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-walk-a"/></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-walk-b"/></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-b"/></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-walk-a" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-walk-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-b"/></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-walk-a"/></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-walk-a"/></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-walk-b"/></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-b"/></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-walk-a" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-walk-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-b"/></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-walk-a"/></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-walk-a"/></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-walk-b"/></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-b"/></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-walk-a" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-walk-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-b"/></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-walk-a"/></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-attack-prep"/></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-attack-prep" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-attack-prep" transform="translate(0 -2)"/></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-attack-impact"/></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-attack-prep"/></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-b"/></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-attack-prep"/></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-attack-prep" transform="translate(1 -1)"/></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-attack-prep" transform="translate(2 -1)"/></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-attack-impact"/></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-attack-prep"/></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-b"/></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-attack-prep"/></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-attack-prep" transform="translate(0 -1)"/></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-attack-prep" transform="translate(0 -2)"/></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-attack-impact"/></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-attack-prep"/></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-b"/></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-attack-prep"/></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-attack-prep" transform="translate(-1 -1)"/></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-attack-prep" transform="translate(-2 -1)"/></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-attack-impact"/></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-attack-prep"/></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-b"/></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-attack-prep"/></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-attack-prep" transform="translate(0 -2)"/></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-attack-impact"/></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-b"/></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-attack-prep"/></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-attack-prep" transform="translate(2 -1)"/></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-attack-impact"/></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-b"/></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-attack-prep"/></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-attack-prep" transform="translate(0 -2)"/></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-attack-impact"/></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-b"/></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-attack-prep"/></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-attack-prep" transform="translate(-2 -1)"/></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-attack-impact"/></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-b"/></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-cast-a"/></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-cast-b"/></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-cast-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-cast-a"/></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-b"/></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-up-idle-a"/></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-cast-a"/></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-cast-b"/></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-cast-b" transform="translate(-1 -1)"/></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-cast-a"/></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-b"/></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-left-idle-a"/></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-cast-a"/></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-cast-b"/></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-cast-b" transform="translate(0 -1)"/></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-cast-a"/></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-b"/></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-down-idle-a"/></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-cast-a"/></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-cast-b"/></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-cast-b" transform="translate(1 -1)"/></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-cast-a"/></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-b"/></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#edno-right-idle-a"/></svg>
+</svg>
