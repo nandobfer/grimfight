@@ -31,6 +31,9 @@ Colossi é uma trait de personagens resistentes, incluindo `ragnaros`. Quando at
 ### Deatheater
 Deatheater é uma trait de personagens ligados a morte e revive. Quando ativa, escuta morte da criatura, executa revive condicional em combate e limpa listener e estado interno no cleanup.
 
+### Destiny
+Destiny é uma trait de personagens ligados ao destino, ativada a partir de duas unidades distintas. Quando ativa, qualquer efeito do personagem que role o destino passa a rolar múltiplas vezes e a usar o maior valor obtido. Cada estágio eleva o número de rolagens. A trait expõe a contagem de rolagens ao personagem e a limpa ao reaplicar, sair da composição ou destruir a criatura.
+
 ### Druid
 Druid é uma trait de personagens druídicos. Quando ativa, aplica bônus de stats conforme composição atual.
 

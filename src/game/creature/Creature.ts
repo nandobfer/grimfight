@@ -57,6 +57,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
     conditionsValues = new Map<keyof Creature, any>()
     items = new Set<Item>()
     master?: Creature
+    /** Temporary clone spawned during combat (e.g. a slime split copy), not part of the encounter. */
+    isClone = false
     canBeTargeted = true
 
     level = 1

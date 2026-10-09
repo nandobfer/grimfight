@@ -15,6 +15,7 @@ const traitHeadings: Record<string, string> = {
     ClericTrait: "Cleric",
     ColossusTrait: "Colossi",
     DeathEaterTrait: "Deatheater",
+    DestinyTrait: "Destiny",
     DruidTrait: "Druid",
     FeralTrait: "Feral",
     HolyTrait: "Holy",

@@ -5,6 +5,8 @@
 ### Creature
 `Creature` é a base de toda unidade combatente do jogo. Personagens jogáveis, monstros e minions reutilizam essa classe para stats, combate automático, movimento, alvo, itens, status effects, auras, augments, UI interna e efeitos visuais.
 
+Cada unidade pode ser uma criatura de encontro, uma invocação vinculada a um master ou uma cópia temporária de clone. O flag `isClone` marca clones de combate, como as cópias de divisão de slime, e `master` marca invocações e minions. Regras que contam apenas criaturas de encontro devem ignorar unidades com master ou com `isClone` ativo.
+
 ### Construction
 O construtor consulta `CreatureVisualRegistry` para decidir textura e frame inicial. Quando a instância não é apenas de dados, ela registra sprite e physics na cena, cria animações, inicializa barras de vida e mana, configura corpo físico e aplica pipeline visual.
 

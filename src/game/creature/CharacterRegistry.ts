@@ -38,6 +38,8 @@ import { Lucio } from "./classes/Lucio"
 import { Nala } from "./classes/Nala"
 import { Antonio } from "./classes/Antonio"
 import { Maricuri } from "./classes/Maricuri"
+import { Rodolfo } from "./classes/Rodolfo"
+import { Sorita } from "./classes/Sorita"
 import type { CreatureVisualDefinition } from "./visual/CreatureVisualDefinition"
 import { CreatureVisualRegistry } from "./visual/CreatureVisualRegistry"
 import { SpritesheetCreatureVisualDefinition, SvgSpritesheetCreatureVisualDefinition } from "./visual/SpritesheetCreatureVisualDefinition"
@@ -125,3 +127,5 @@ CharacterRegistry.register("lucio", Lucio, SvgSpritesheetCreatureVisualDefinitio
 CharacterRegistry.register("nala", Nala, SvgSpritesheetCreatureVisualDefinition.character("nala"))
 CharacterRegistry.register("antonio", Antonio, SvgSpritesheetCreatureVisualDefinition.character("antonio"))
 CharacterRegistry.register("maricuri", Maricuri, SvgSpritesheetCreatureVisualDefinition.character("maricuri"))
+CharacterRegistry.register("rodolfo", Rodolfo, SvgSpritesheetCreatureVisualDefinition.character("rodolfo"))
+CharacterRegistry.register("sorita", Sorita, SvgSpritesheetCreatureVisualDefinition.character("sorita"))

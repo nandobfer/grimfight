@@ -1,0 +1,338 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="rodolfo-robe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5b74b8" />
+      <stop offset="0.5" stop-color="#2b3a67" />
+      <stop offset="1" stop-color="#16203f" />
+    </linearGradient>
+    <linearGradient id="rodolfo-robe-back" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#42558a" />
+      <stop offset="1" stop-color="#1a2547" />
+    </linearGradient>
+    <linearGradient id="rodolfo-skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6cfa0" />
+      <stop offset="1" stop-color="#dfa878" />
+    </linearGradient>
+    <linearGradient id="rodolfo-hair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3f1ec" />
+      <stop offset="0.55" stop-color="#cdc8c0" />
+      <stop offset="1" stop-color="#9a948b" />
+    </linearGradient>
+    <linearGradient id="rodolfo-wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a5a2b" />
+      <stop offset="1" stop-color="#3c2412" />
+    </linearGradient>
+    <radialGradient id="rodolfo-gold" cx="35%" cy="30%" r="70%">
+      <stop offset="0" stop-color="#fff0b0" />
+      <stop offset="0.6" stop-color="#d8b24a" />
+      <stop offset="1" stop-color="#8a6a1e" />
+    </radialGradient>
+    <radialGradient id="rodolfo-mana" cx="45%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="0.4" stop-color="#a8e4ff" />
+      <stop offset="0.8" stop-color="#2a6fd6" />
+      <stop offset="1" stop-color="#123a78" />
+    </radialGradient>
+    <radialGradient id="rodolfo-water" cx="42%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#e8faff" />
+      <stop offset="0.45" stop-color="#69c8ef" />
+      <stop offset="0.85" stop-color="#1b6ea8" />
+      <stop offset="1" stop-color="#0d3f66" stop-opacity="0.35" />
+    </radialGradient>
+
+    <ellipse id="rodolfo-shadow" cx="32" cy="56" rx="14" ry="4.5" fill="#000000" opacity="0.3" />
+    <path id="rodolfo-spark" d="M0 -4 L1.4 -1.4 L4 0 L1.4 1.4 L0 4 L-1.4 1.4 L-4 0 L-1.4 -1.4 Z" fill="#d8f4ff" opacity="0.9" />
+
+    <g id="rodolfo-staff">
+      <path d="M0 9 L0 -23" stroke="url(#rodolfo-wood)" stroke-width="2.6" stroke-linecap="round" />
+      <path d="M-0.9 8 L-0.9 -21" stroke="#d8c9a8" stroke-width="0.7" opacity="0.45" />
+      <circle cx="0" cy="-25" r="3.6" fill="url(#rodolfo-mana)" stroke="#123a78" stroke-width="0.7" />
+      <circle cx="-1" cy="-26" r="1.1" fill="#ffffff" opacity="0.85" />
+    </g>
+
+    <g id="rodolfo-water-orb">
+      <circle cx="0" cy="0" r="7" fill="url(#rodolfo-water)" opacity="0.92" />
+      <use href="#rodolfo-spark" transform="translate(-6 -2) scale(0.7)" />
+      <use href="#rodolfo-spark" transform="translate(5 4) scale(0.55)" />
+      <use href="#rodolfo-spark" transform="translate(6 -4) scale(0.45)" />
+    </g>
+
+    <g id="rodolfo-fate-rune">
+      <circle cx="0" cy="0" r="9" fill="none" stroke="url(#rodolfo-gold)" stroke-width="1.2" opacity="0.9" />
+      <circle cx="0" cy="0" r="6.6" fill="none" stroke="#d8f4ff" stroke-width="0.7" opacity="0.6" />
+      <circle cx="0" cy="0" r="1.3" fill="#f6e29a" />
+      <circle cx="-4" cy="-3.2" r="0.9" fill="#d8f4ff" />
+      <circle cx="4" cy="3.2" r="0.9" fill="#d8f4ff" />
+      <circle cx="4" cy="-4" r="0.8" fill="#f6e29a" />
+      <circle cx="-4" cy="4" r="0.8" fill="#f6e29a" />
+    </g>
+
+    <g id="rodolfo-torso-down">
+      <path d="M20 25 Q32 17 44 25 L46 45 Q32 50 18 45 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1.3" />
+      <path d="M27 24 Q32 21 37 24 L37 40 Q32 43 27 40 Z" fill="#3a4d80" opacity="0.45" />
+      <path d="M23 33 H41" stroke="#d8b24a" stroke-width="1.6" stroke-linecap="round" />
+      <circle cx="32" cy="29" r="2.3" fill="url(#rodolfo-gold)" stroke="#6b4216" stroke-width="0.6" />
+    </g>
+    <g id="rodolfo-torso-up">
+      <path d="M20 25 Q32 17 44 25 L46 45 Q32 50 18 45 Z" fill="url(#rodolfo-robe-back)" stroke="#0d1226" stroke-width="1.3" />
+      <path d="M22 27 Q32 22 42 27 L43 45 Q32 49 21 45 Z" fill="#26365f" opacity="0.5" />
+      <path d="M24 29 Q32 25 40 29" fill="none" stroke="#5b74b8" stroke-width="1.2" opacity="0.55" />
+    </g>
+    <g id="rodolfo-torso-left">
+      <path d="M22 26 Q31 18 44 24 L45 45 Q32 50 21 45 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1.3" />
+      <path d="M26 27 Q34 30 42 28" fill="none" stroke="#5b74b8" stroke-width="1.3" opacity="0.45" />
+      <path d="M25 33 H41" stroke="#d8b24a" stroke-width="1.3" stroke-linecap="round" opacity="0.8" />
+    </g>
+
+    <g id="rodolfo-head-down">
+      <path d="M25 20 Q25 12 32 11 Q39 12 39 20 Q39 27 32 29 Q25 27 25 20 Z" fill="url(#rodolfo-skin)" stroke="#5b3722" stroke-width="0.9" />
+      <circle cx="29" cy="20" r="1.1" fill="#2a1a14" />
+      <circle cx="35" cy="20" r="1.1" fill="#2a1a14" />
+      <path d="M30 24 Q32 25 34 24" fill="none" stroke="#c78f5a" stroke-width="0.8" stroke-linecap="round" />
+      <path d="M24 19 Q24 9 32 7 Q40 9 40 19 Q37 14 32 14 Q27 14 24 19 Z" fill="url(#rodolfo-hair)" stroke="#6f6a62" stroke-width="0.7" />
+      <path d="M24 18 Q23 23 25 26 Q24 21 26 18 Z" fill="url(#rodolfo-hair)" />
+      <path d="M40 18 Q41 23 39 26 Q40 21 38 18 Z" fill="url(#rodolfo-hair)" />
+      <path d="M28 15 Q30 10 33 12 Q31 14 30 17 Z" fill="#f3f1ec" opacity="0.6" />
+    </g>
+    <g id="rodolfo-head-up">
+      <path d="M25 21 Q25 13 32 11 Q39 13 39 21 Q39 28 32 30 Q25 28 25 21 Z" fill="#e0b47f" stroke="#5b3722" stroke-width="0.9" />
+      <path d="M24 20 Q24 10 32 8 Q40 10 40 20 Q36 15 32 15 Q28 15 24 20 Z" fill="url(#rodolfo-hair)" stroke="#6f6a62" stroke-width="0.7" />
+      <path d="M26 26 Q32 30 38 26 Q32 33 26 26 Z" fill="url(#rodolfo-hair)" opacity="0.9" />
+      <path d="M28 14 Q30 9 33 11 Q31 13 30 16 Z" fill="#f3f1ec" opacity="0.55" />
+    </g>
+    <g id="rodolfo-head-left">
+      <path d="M25 21 Q26 13 33 11 Q40 13 39 21 Q37 28 30 29 Q25 26 25 21 Z" fill="url(#rodolfo-skin)" stroke="#5b3722" stroke-width="0.9" />
+      <circle cx="28" cy="21" r="1.1" fill="#2a1a14" />
+      <path d="M25 24 Q27 25 29 24" fill="none" stroke="#c78f5a" stroke-width="0.8" stroke-linecap="round" />
+      <path d="M24 20 Q24 10 33 8 Q41 11 40 20 Q36 14 31 14 Q27 14 24 20 Z" fill="url(#rodolfo-hair)" stroke="#6f6a62" stroke-width="0.7" />
+      <path d="M38 15 Q43 19 41 25 Q40 20 38 17 Z" fill="url(#rodolfo-hair)" />
+      <path d="M28 14 Q31 9 34 12 Q31 13 30 16 Z" fill="#f3f1ec" opacity="0.55" />
+    </g>
+
+    <g id="rodolfo-legs-down">
+      <path d="M26 44 L25 53 Q27 55 29 53 L30 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+      <path d="M34 44 L35 53 Q37 55 39 53 L38 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+    </g>
+    <g id="rodolfo-legs-down-a">
+      <path d="M26 44 L22 52 Q24 55 27 53 L30 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+      <path d="M34 44 L38 52 Q36 55 33 53 L30 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+    </g>
+    <g id="rodolfo-legs-down-b">
+      <path d="M26 44 L24 53 Q26 55 28 53 L30 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+      <path d="M34 44 L36 53 Q38 55 40 53 L38 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+    </g>
+    <g id="rodolfo-legs-left">
+      <path d="M28 44 L27 53 Q29 55 31 53 L32 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+      <path d="M34 44 L35 53 Q37 55 39 53 L38 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+    </g>
+    <g id="rodolfo-legs-left-a">
+      <path d="M27 44 L23 52 Q25 55 28 53 L31 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+      <path d="M34 44 L39 52 Q37 55 34 53 L30 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+    </g>
+    <g id="rodolfo-legs-left-b">
+      <path d="M29 44 L27 53 Q29 55 31 53 L33 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+      <path d="M34 44 L36 53 Q38 55 40 53 L38 44 Z" fill="#101a30" stroke="#0d1226" stroke-width="0.9" />
+    </g>
+
+    <g id="rodolfo-arms-down">
+      <path d="M22 29 L16 39 Q16 43 20 44 L27 32 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1" />
+      <path d="M42 29 L48 38 Q48 42 44 43 L37 32 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1" />
+      <use href="#rodolfo-staff" transform="translate(48 40) rotate(8)" />
+    </g>
+    <g id="rodolfo-arms-up">
+      <path d="M22 29 L16 39 Q16 43 20 44 L27 32 Z" fill="#33456f" stroke="#0d1226" stroke-width="1" />
+      <path d="M42 29 L48 38 Q48 42 44 43 L37 32 Z" fill="#33456f" stroke="#0d1226" stroke-width="1" />
+      <use href="#rodolfo-staff" transform="translate(48 40) rotate(8)" />
+    </g>
+    <g id="rodolfo-arms-left">
+      <path d="M25 30 L15 34 Q12 37 15 40 L30 32 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1" />
+      <path d="M40 30 L46 38 Q46 41 42 42 L36 32 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1" />
+      <use href="#rodolfo-staff" transform="translate(43 40) rotate(6)" />
+    </g>
+
+    <g id="rodolfo-cast-arms-down">
+      <path d="M23 30 L20 23 Q24 19 28 24 L28 32 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1" />
+      <path d="M41 30 L44 23 Q40 19 36 24 L36 32 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1" />
+      <use href="#rodolfo-staff" transform="translate(33 26) rotate(8)" />
+    </g>
+    <g id="rodolfo-cast-arms-up">
+      <path d="M23 30 L20 23 Q24 19 28 24 L28 32 Z" fill="#33456f" stroke="#0d1226" stroke-width="1" />
+      <path d="M41 30 L44 23 Q40 19 36 24 L36 32 Z" fill="#33456f" stroke="#0d1226" stroke-width="1" />
+      <use href="#rodolfo-staff" transform="translate(33 26) rotate(8)" />
+    </g>
+    <g id="rodolfo-cast-arms-left">
+      <path d="M26 30 L20 25 Q18 28 21 32 L30 33 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1" />
+      <path d="M39 30 L44 24 Q42 20 38 24 L36 32 Z" fill="url(#rodolfo-robe)" stroke="#0d1226" stroke-width="1" />
+      <use href="#rodolfo-staff" transform="translate(34 26) rotate(4)" />
+    </g>
+
+    <g id="rodolfo-down-idle-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down" /><use href="#rodolfo-torso-down" /><use href="#rodolfo-arms-down" /><use href="#rodolfo-head-down" /></g>
+    <g id="rodolfo-down-idle-b"><use href="#rodolfo-down-idle-a" transform="translate(0 -1)" /></g>
+    <g id="rodolfo-down-walk-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down-a" /><use href="#rodolfo-torso-down" /><use href="#rodolfo-arms-down" transform="rotate(-4 32 35)" /><use href="#rodolfo-head-down" /></g>
+    <g id="rodolfo-down-walk-b"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down-b" /><use href="#rodolfo-torso-down" transform="translate(0 -1)" /><use href="#rodolfo-arms-down" transform="rotate(4 32 35)" /><use href="#rodolfo-head-down" transform="translate(0 -1)" /></g>
+    <g id="rodolfo-down-attack-prep"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down-a" /><use href="#rodolfo-torso-down" /><use href="#rodolfo-cast-arms-down" /><use href="#rodolfo-head-down" /></g>
+    <g id="rodolfo-down-attack-impact"><use href="#rodolfo-down-attack-prep" /><use href="#rodolfo-water-orb" transform="translate(52 37)" /></g>
+    <g id="rodolfo-down-cast-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down" /><use href="#rodolfo-torso-down" /><use href="#rodolfo-cast-arms-down" /><use href="#rodolfo-head-down" /><use href="#rodolfo-fate-rune" transform="translate(40 9) scale(0.6)" /></g>
+    <g id="rodolfo-down-cast-b"><use href="#rodolfo-down-cast-a" /><use href="#rodolfo-fate-rune" transform="translate(40 13)" /><use href="#rodolfo-spark" transform="translate(24 8)" /><use href="#rodolfo-spark" transform="translate(50 18) scale(0.8)" /></g>
+
+    <g id="rodolfo-up-idle-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down" /><use href="#rodolfo-torso-up" /><use href="#rodolfo-arms-up" /><use href="#rodolfo-head-up" /></g>
+    <g id="rodolfo-up-idle-b"><use href="#rodolfo-up-idle-a" transform="translate(0 -1)" /></g>
+    <g id="rodolfo-up-walk-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down-a" /><use href="#rodolfo-torso-up" /><use href="#rodolfo-arms-up" transform="rotate(4 32 35)" /><use href="#rodolfo-head-up" /></g>
+    <g id="rodolfo-up-walk-b"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down-b" /><use href="#rodolfo-torso-up" transform="translate(0 -1)" /><use href="#rodolfo-arms-up" transform="rotate(-4 32 35)" /><use href="#rodolfo-head-up" transform="translate(0 -1)" /></g>
+    <g id="rodolfo-up-attack-prep"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down-a" /><use href="#rodolfo-torso-up" /><use href="#rodolfo-cast-arms-up" /><use href="#rodolfo-head-up" /></g>
+    <g id="rodolfo-up-attack-impact"><use href="#rodolfo-up-attack-prep" /><use href="#rodolfo-water-orb" transform="translate(52 18)" /></g>
+    <g id="rodolfo-up-cast-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-down" /><use href="#rodolfo-torso-up" /><use href="#rodolfo-cast-arms-up" /><use href="#rodolfo-head-up" /><use href="#rodolfo-fate-rune" transform="translate(40 9) scale(0.6)" /></g>
+    <g id="rodolfo-up-cast-b"><use href="#rodolfo-up-cast-a" /><use href="#rodolfo-fate-rune" transform="translate(40 13)" /><use href="#rodolfo-spark" transform="translate(24 8)" /><use href="#rodolfo-spark" transform="translate(50 18) scale(0.8)" /></g>
+
+    <g id="rodolfo-left-idle-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-left" /><use href="#rodolfo-torso-left" /><use href="#rodolfo-arms-left" /><use href="#rodolfo-head-left" /></g>
+    <g id="rodolfo-left-idle-b"><use href="#rodolfo-left-idle-a" transform="translate(0 -1)" /></g>
+    <g id="rodolfo-left-walk-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-left-a" /><use href="#rodolfo-torso-left" /><use href="#rodolfo-arms-left" transform="rotate(-5 32 35)" /><use href="#rodolfo-head-left" /></g>
+    <g id="rodolfo-left-walk-b"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-left-b" /><use href="#rodolfo-torso-left" transform="translate(0 -1)" /><use href="#rodolfo-arms-left" transform="rotate(5 32 35)" /><use href="#rodolfo-head-left" transform="translate(-1 -1)" /></g>
+    <g id="rodolfo-left-attack-prep"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-left-a" /><use href="#rodolfo-torso-left" /><use href="#rodolfo-cast-arms-left" /><use href="#rodolfo-head-left" /></g>
+    <g id="rodolfo-left-attack-impact"><use href="#rodolfo-left-attack-prep" /><use href="#rodolfo-water-orb" transform="translate(9 34)" /></g>
+    <g id="rodolfo-left-cast-a"><use href="#rodolfo-shadow" /><use href="#rodolfo-legs-left" /><use href="#rodolfo-torso-left" /><use href="#rodolfo-cast-arms-left" /><use href="#rodolfo-head-left" /><use href="#rodolfo-fate-rune" transform="translate(38 9) scale(0.6)" /></g>
+    <g id="rodolfo-left-cast-b"><use href="#rodolfo-left-cast-a" /><use href="#rodolfo-fate-rune" transform="translate(38 13)" /><use href="#rodolfo-spark" transform="translate(22 8)" /><use href="#rodolfo-spark" transform="translate(48 18) scale(0.8)" /></g>
+
+    <g id="rodolfo-right-idle-a"><use href="#rodolfo-left-idle-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="rodolfo-right-idle-b"><use href="#rodolfo-left-idle-b" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="rodolfo-right-walk-a"><use href="#rodolfo-left-walk-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="rodolfo-right-walk-b"><use href="#rodolfo-left-walk-b" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="rodolfo-right-attack-prep"><use href="#rodolfo-left-attack-prep" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="rodolfo-right-attack-impact"><use href="#rodolfo-left-attack-impact" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="rodolfo-right-cast-a"><use href="#rodolfo-left-cast-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="rodolfo-right-cast-b"><use href="#rodolfo-left-cast-b" transform="translate(64 0) scale(-1 1)" /></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-b" /></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-b" /></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-b" /></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-b" /></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-walk-a" /></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-walk-b" /></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-b" /></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-b" /></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-walk-a" /></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-walk-a" /></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-walk-b" /></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-b" /></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-b" /></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-walk-a" /></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-walk-a" /></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-walk-b" /></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-b" /></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-b" /></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-walk-a" /></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-walk-a" /></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-walk-b" /></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-b" /></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-b" /></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-walk-a" /></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-attack-impact" /></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-b" /></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-attack-prep" transform="translate(1 -1)" /></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-attack-prep" transform="translate(2 -1)" /></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-attack-impact" /></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-b" /></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-attack-impact" /></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-b" /></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-attack-prep" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-attack-prep" transform="translate(-2 -1)" /></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-attack-impact" /></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-b" /></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-attack-prep" /></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-attack-impact" /></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-b" /></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-attack-prep" /></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-attack-prep" transform="translate(2 -1)" /></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-attack-impact" /></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-b" /></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-attack-prep" /></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-attack-impact" /></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-b" /></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-attack-prep" /></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-attack-prep" transform="translate(-2 -1)" /></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-attack-impact" /></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-b" /></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-cast-a" /></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-cast-b" /></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-cast-a" /></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-b" /></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-up-idle-a" /></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-cast-a" /></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-cast-b" /></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-cast-b" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-cast-a" /></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-b" /></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-left-idle-a" /></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-cast-a" /></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-cast-b" /></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-cast-a" /></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-b" /></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-down-idle-a" /></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-cast-a" /></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-cast-b" /></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-cast-b" transform="translate(1 -1)" /></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-cast-a" /></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-b" /></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#rodolfo-right-idle-a" /></svg>
+</svg>

@@ -27,7 +27,7 @@ export class EnemyTeam extends CreatureGroup {
     }
 
     private clearSlimeSplitClones(): void {
-        for (const monster of this.getChildren().filter((monster) => monster instanceof Slime && monster.isSplitClone)) {
+        for (const monster of this.getChildren().filter((monster) => monster instanceof Slime && monster.isClone)) {
             monster.destroyUi()
             for (const item of monster.items) {
                 item.sprite.destroy(true)

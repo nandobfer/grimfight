@@ -3,6 +3,7 @@
 import { Game } from "../../scenes/Game"
 import { Item } from "../../systems/Items/Item"
 import { ItemRegistry } from "../../systems/Items/ItemRegistry"
+import { maxOfRolls } from "../../tools/Destiny"
 import { EventBus } from "../../tools/EventBus"
 import { LevelBadge } from "../../ui/LevelBadge"
 import { Creature } from "../Creature"
@@ -29,6 +30,9 @@ export class Character extends Creature {
     baseSpeed = 100
     baseMaxHealth = 300
     baseAbilityPower: number = 50
+
+    /** How many fate rolls an effect makes, keeping the highest. Raised by the Destiny trait. */
+    destinyRolls = 1
 
     abilityDescription: string = ""
     abilityName: string = ""
@@ -71,6 +75,17 @@ export class Character extends Creature {
             this.x = this.boardX
             this.y = this.boardY
         }
+    }
+
+    override calculateStats() {
+        super.calculateStats()
+
+        this.destinyRolls = 1
+    }
+
+    /** Rolls fate `destinyRolls` times, keeping the highest value. */
+    rollDestiny(max = 100): number {
+        return maxOfRolls(this.destinyRolls, () => Phaser.Math.Between(1, max))
     }
 
     reapplyTraits() {

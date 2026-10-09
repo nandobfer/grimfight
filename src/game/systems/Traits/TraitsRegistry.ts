@@ -5,6 +5,7 @@ import { AttackerTrait } from "./AttackerTrait"
 import { ClericTrait } from "./ClericTrait"
 import { ColossusTrait } from "./ColossusTrait"
 import { DeathEaterTrait } from "./DeathEaterTrait"
+import { DestinyTrait } from "./DestinyTrait"
 import { DruidTrait } from "./DruidTrait"
 import { FeralTrait } from "./FeralTrait"
 import { HolyTrait } from "./HolyTrait"
@@ -79,8 +80,8 @@ TraitsRegistry.register("Attacker", AttackerTrait, ["grok", "mordred", "vania", 
 TraitsRegistry.register("Arcanist", ArcanistTrait, ["freud", "yue", "zairon", "dranho", "robilton", "silvia", "lucio"])
 TraitsRegistry.register("Colossi", ColossusTrait, ["maximus", "grok", "frank", "ymir", "lalatina", "rokmora", "ragnaros", "silvia", "saulo"])
 TraitsRegistry.register("Swift", SpeedyTrait, ["lizwan", "statikk", "vania", "frank", "chichi", "robilton"])
-TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia", "freud", "fandral"])
-TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "silvia", "clover", "melo", "maricuri"])
+TraitsRegistry.register("Assassin", AssassinTrait, ["lizwan", "mordred", "dracula", "rukia", "freud", "fandral", "sorita"])
+TraitsRegistry.register("Sorcerer", SorcererTrait, ["megumin", "jadis", "zairon", "silvia", "clover", "melo", "maricuri", "rodolfo"])
 TraitsRegistry.register("Deatheater", DeathEaterTrait, ["zairon", "arthas", "frank", "dracula", "lucio"])
 TraitsRegistry.register("Poisoner", PoisonerTrait, ["lizwan", "saulo", "lucio", "nala", "antonio", "maricuri"])
 TraitsRegistry.register("Druid", DruidTrait, ["helyna", "rokmora", "fandral"])
@@ -91,3 +92,4 @@ TraitsRegistry.register("Holy", HolyTrait, ["lalatina", "melo"])
 TraitsRegistry.register("Cleric", ClericTrait, ["melo", "jacrost", "melisandre", "dranho", "saulo"])
 TraitsRegistry.register("Sniper", SniperTrait, ["laherce", "nala", "reno", "freud"])
 TraitsRegistry.register("Feral", FeralTrait, ["nala", "banguela", "helyna", "grok", "antonio"])
+TraitsRegistry.register("Destiny", DestinyTrait, ["rodolfo", "sorita"])

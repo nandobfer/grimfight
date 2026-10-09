@@ -239,4 +239,24 @@ Yue é uma personagem jogável registrada como `yue`, com os traits `Arcanist` e
 
 A habilidade `Fire Ray` escolhe um inimigo ativo e alvejável aleatório, define esse inimigo como alvo atual da Yue para manter traits acionadas por cast alinhadas ao mesmo alvo, desenha uma linha de fogo reta até ele e aplica dano de fogo ao final da animação. O dano passa pelo cálculo padrão de dano/crit do `Creature`. O raio é apenas visual, sem colisão física, e cria uma luz laranja pulsante equivalente ao perfil visual do `Fireball` enquanto cresce.
 
+### Rodolfo
+Rodolfo é um personagem jogável registrado como `rodolfo`, ligado às identidades de feitiçaria e destino. Ele usa spritesheet SVG e portrait WebP próprios e atua como caster de longo alcance, com ataque básico de projétil de água e participação na trait `Sorcerer`.
+
+Ao conjurar, Rodolfo rola o destino e libera um de quatro feitiços, cada um com alvo, área, dano e nome próprios no damage chart: uma esfera de água no alvo atual com respingo, uma broca de terra que atravessa inimigos em linha, um relâmpago encadeado que liga vários inimigos e, raramente, uma bola de fogo nuclear em área. O resultado é resolvido por uma rolagem única por cast, escalada pelo multiplicador de recast de feitiçaria, e o alvo é retargetado quando o alvo atual fica inválido. A descrição da habilidade apresenta a chance, o nome e o dano de cada feitiço.
+
+O relâmpago encadeado desenha a cadeia inteira de uma vez, ligando o conjurador e todos os alvos escolhidos ao mesmo tempo, em vez de mover um projétil de um inimigo para o outro. Os alvos são escolhidos do mais próximo ao mais distante a partir do alvo inicial, sem repetir, e cada salto sucessivo causa menos dano. A cadeia é limitada a um número fixo de inimigos.
+
+A trait `Destiny` faz Rodolfo rolar o destino múltiplas vezes e manter o maior valor, tornando resultados raros mais prováveis conforme a composição. A contagem de rolagens é fornecida pela trait, exposta pelo personagem e limpa no reset de stats e no cleanup, sem acumular entre rounds.
+
+A esfera de água e a broca são projéteis próprios desenhados com `Graphics`, e o relâmpago encadeado e o nuclear são efeitos desenhados com `Graphics`. Projéteis, efeitos, luzes, tweens, timers, colliders e listeners de `gamestate` limpam ao terminar, ao mudar a rodada, ao resetar stats ou ao destruir Rodolfo. As fórmulas puras do destino ficam em `src/game/creature/classes/RodolfoDestiny.ts` para manter a regra testável sem instanciar Phaser.
+
+### Sorita
+Sorita é uma personagem jogável registrada como `sorita`, ligada às identidades de assassina e destino. Ela usa spritesheet SVG e portrait WebP próprios, luta corpo a corpo com uma adaga e carrega vários dados como elemento icônico.
+
+Sua habilidade ativa rola um dado de seis lados pelo fluxo de destino da criatura e golpeia imediatamente o alvo atual, causando dano físico proporcional ao dano de ataque e ao valor rolado, com um piso de dano de ataque mesmo no menor resultado. A face máxima transforma o golpe em crítico garantido e em dano verdadeiro. Se o alvo atual estiver inválido, ela retargeta para o inimigo válido mais próximo; sem alvo válido, o cast aborta sem publicar gatilhos de conjuração. Ao conjurar, o resultado aparece como um dado isométrico desenhado com `Graphics` em um ponto aleatório ao redor de Sorita, com os pips da face sorteada no topo e o número em destaque ao lado; a face crítica recebe destaque dourado com estrela. O efeito entra no grupo de FX por rodada e limpa tweens, `Graphics`, texto e listeners ao terminar, ao mudar o estado da rodada ou ao destruir Sorita.
+
+Sua passiva observa as mortes de criaturas de encontro do time oposto enquanto Sorita está viva, ignorando invocações com master e cópias temporárias de clone. A cada morte válida, ela rola um dado de cem lados pelo mesmo fluxo de destino e só dropa algo quando o resultado cai exatamente em uma das faces premiadas da tabela: a face perfeita dropa um artefato aleatório, uma faixa de faces altas específicas dropa um item completo e faces baixas específicas dropam um componente. A maioria dos resultados não dropa nada, então a passiva é um payoff raro. Os drops entram no estoque de itens disponíveis da run pelo fluxo de spawn da cena e são salvos junto ao progresso. O observer de morte é removido quando Sorita é destruída.
+
+As fórmulas puras do dado carregado, da tabela de drops, dos pips e do filtro de alvo ficam em `src/game/creature/classes/SoritaDice.ts` para manter a regra testável sem instanciar Phaser.
+
 ## Fixes

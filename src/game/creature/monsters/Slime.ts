@@ -79,7 +79,6 @@ export class Slime extends Monster {
     baseManaPerAttack = 12
     baseManaPerSecond = 6
     abilityName = "Ooze Bloom"
-    isSplitClone = false
 
     private isSplitting = false
     private splitSplashTimer?: Phaser.Time.TimerEvent
@@ -123,7 +122,7 @@ export class Slime extends Monster {
         this.isSplitting = false
         this.canBeTargeted = true
 
-        if (!this.isSplitClone) {
+        if (!this.isClone) {
             this.originalBaseScale ??= this.baseScale
             this.originalBaseMaxHealth ??= this.baseMaxHealth
             this.baseScale = this.originalBaseScale
@@ -156,7 +155,7 @@ export class Slime extends Monster {
         const splitScale = this.baseScale / 2
         const clone = new Slime(this.scene)
         const position = this.randomPointAround()
-        clone.isSplitClone = true
+        clone.isClone = true
         this.team.add(clone)
         clone.reset()
 

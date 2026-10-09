@@ -25,9 +25,11 @@ const helperFiles = new Set([
     "NalaSerpents.ts",
     "RagnarosLavaRetaliation.ts",
     "RobiltonNeutronStar.ts",
+    "RodolfoDestiny.ts",
     "RokmoraConstellations.ts",
     "SauloPoisonGas.ts",
     "SilviaChains.ts",
+    "SoritaDice.ts",
     "YueFireRay.ts",
 ])
 
@@ -62,8 +64,10 @@ const characterContracts: CharacterContract[] = [
     { file: "Ragnaros.ts", className: "Ragnaros", registryName: "ragnaros" },
     { file: "Rukia.ts", className: "Rukia", registryName: "rukia" },
     { file: "Robilton.ts", className: "Robilton", registryName: "robilton" },
+    { file: "Rodolfo.ts", className: "Rodolfo", registryName: "rodolfo" },
     { file: "Saulo.ts", className: "Saulo", registryName: "saulo" },
     { file: "Silvia.ts", className: "Silvia", registryName: "silvia" },
+    { file: "Sorita.ts", className: "Sorita", registryName: "sorita" },
     { file: "Sorcerer.ts", className: "Sorcerer", registryName: "jadis" },
     { file: "Statikk.ts", className: "Statikk", registryName: "statikk" },
     { file: "Vania.ts", className: "Vania", registryName: "vania" },

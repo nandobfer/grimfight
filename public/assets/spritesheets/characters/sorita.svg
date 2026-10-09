@@ -1,0 +1,387 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="576" height="1280" viewBox="0 0 576 1280">
+  <defs>
+    <linearGradient id="sorita-leather" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c2416b" />
+      <stop offset="0.55" stop-color="#8f2f50" />
+      <stop offset="1" stop-color="#3d1226" />
+    </linearGradient>
+    <linearGradient id="sorita-leather-back" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a83a5e" />
+      <stop offset="1" stop-color="#2c0d1c" />
+    </linearGradient>
+    <linearGradient id="sorita-tunic" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7b9cf" />
+      <stop offset="1" stop-color="#e07ba0" />
+    </linearGradient>
+    <linearGradient id="sorita-skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6d0a8" />
+      <stop offset="1" stop-color="#dca87a" />
+    </linearGradient>
+    <linearGradient id="sorita-hair" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3f1ec" />
+      <stop offset="0.55" stop-color="#cdc8c0" />
+      <stop offset="1" stop-color="#9a948b" />
+    </linearGradient>
+    <linearGradient id="sorita-steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eaf0ff" />
+      <stop offset="1" stop-color="#8f9dc4" />
+    </linearGradient>
+    <linearGradient id="sorita-ivory" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf6e3" />
+      <stop offset="1" stop-color="#e6d8b8" />
+    </linearGradient>
+    <radialGradient id="sorita-gold" cx="35%" cy="30%" r="70%">
+      <stop offset="0" stop-color="#fff0b0" />
+      <stop offset="0.6" stop-color="#e8c45a" />
+      <stop offset="1" stop-color="#8a6a1e" />
+    </radialGradient>
+    <radialGradient id="sorita-fate" cx="45%" cy="40%" r="62%">
+      <stop offset="0" stop-color="#fff7d6" />
+      <stop offset="0.5" stop-color="#ffd98a" />
+      <stop offset="1" stop-color="#e08a3c" stop-opacity="0" />
+    </radialGradient>
+
+    <ellipse id="sorita-shadow" cx="32" cy="56" rx="13" ry="4.2" fill="#000000" opacity="0.3" />
+    <path id="sorita-fate-spark" d="M0 -4 L1.4 -1.4 L4 0 L1.4 1.4 L0 4 L-1.4 1.4 L-4 0 L-1.4 -1.4 Z" fill="#ffe9a8" opacity="0.9" />
+    <path id="sorita-rose-spark" d="M0 -3 L1.1 -1.1 L3 0 L1.1 1.1 L0 3 L-1.1 1.1 L-3 0 L-1.1 -1.1 Z" fill="#ff9dc0" opacity="0.85" />
+    <path id="sorita-crit-star" d="M0 -8 L1.8 -1.8 L8 0 L1.8 1.8 L0 8 L-1.8 1.8 L-8 0 L-1.8 -1.8 Z" fill="#fff0b0" stroke="#e8c45a" stroke-width="0.6" opacity="0.95" />
+    <path id="sorita-slash-arc" d="M2 -13 Q20 -2 2 13 Q12 0 2 -13 Z" fill="#ffd9e6" opacity="0.75" />
+
+    <g id="sorita-dagger">
+      <path d="M1 -1.6 L13 -2.4 L17 0 L13 2.4 L1 1.6 Z" fill="url(#sorita-steel)" stroke="#5b6a94" stroke-width="0.7" />
+      <path d="M3 -1 L12 -1.6" stroke="#ffffff" stroke-width="0.5" opacity="0.75" />
+      <rect x="-1" y="-4" width="2" height="8" rx="1" fill="url(#sorita-gold)" stroke="#6b4216" stroke-width="0.5" />
+      <rect x="-6" y="-1.4" width="6" height="2.8" rx="1.2" fill="#3d1226" stroke="#1b0a12" stroke-width="0.4" />
+      <circle cx="-6.4" cy="0" r="1.4" fill="url(#sorita-gold)" stroke="#6b4216" stroke-width="0.4" />
+    </g>
+    <g id="sorita-die">
+      <path d="M0 -5 L5 -2.5 L0 0 L-5 -2.5 Z" fill="url(#sorita-ivory)" stroke="#8a7a52" stroke-width="0.5" />
+      <path d="M-5 -2.5 L0 0 L0 5 L-5 2.5 Z" fill="#d9cba6" stroke="#8a7a52" stroke-width="0.5" />
+      <path d="M5 -2.5 L0 0 L0 5 L5 2.5 Z" fill="#efe3c4" stroke="#8a7a52" stroke-width="0.5" />
+      <circle cx="0" cy="-2.5" r="0.7" fill="#3a2f1a" />
+      <circle cx="-2.4" cy="-0.4" r="0.6" fill="#3a2f1a" />
+      <circle cx="-2.4" cy="2" r="0.6" fill="#3a2f1a" />
+      <circle cx="2.4" cy="-0.4" r="0.6" fill="#3a2f1a" />
+      <circle cx="2.4" cy="1.2" r="0.6" fill="#3a2f1a" />
+      <circle cx="2.4" cy="2.8" r="0.6" fill="#3a2f1a" />
+    </g>
+    <g id="sorita-die-six">
+      <rect x="-6" y="-6" width="12" height="12" rx="2.6" fill="url(#sorita-ivory)" stroke="#8a7a52" stroke-width="0.7" />
+      <circle cx="-2.6" cy="-3.4" r="0.9" fill="#3a2f1a" />
+      <circle cx="-2.6" cy="0" r="0.9" fill="#3a2f1a" />
+      <circle cx="-2.6" cy="3.4" r="0.9" fill="#3a2f1a" />
+      <circle cx="2.6" cy="-3.4" r="0.9" fill="#3a2f1a" />
+      <circle cx="2.6" cy="0" r="0.9" fill="#3a2f1a" />
+      <circle cx="2.6" cy="3.4" r="0.9" fill="#3a2f1a" />
+    </g>
+    <g id="sorita-fate-rune">
+      <circle cx="0" cy="0" r="9" fill="none" stroke="url(#sorita-gold)" stroke-width="1.2" opacity="0.9" />
+      <circle cx="0" cy="0" r="6.4" fill="none" stroke="#ffe9a8" stroke-width="0.7" opacity="0.6" />
+      <circle cx="0" cy="0" r="1.3" fill="#fff0b0" />
+      <circle cx="-4" cy="-3" r="0.9" fill="#ff9dc0" />
+      <circle cx="4" cy="3" r="0.9" fill="#ff9dc0" />
+      <circle cx="4" cy="-4" r="0.8" fill="#ffe9a8" />
+      <circle cx="-4" cy="4" r="0.8" fill="#ffe9a8" />
+    </g>
+    <g id="sorita-die-burst">
+      <use href="#sorita-die" transform="scale(1.15)" />
+      <use href="#sorita-fate-spark" transform="translate(-7 -6)" />
+      <use href="#sorita-fate-spark" transform="translate(7 5) scale(0.8)" />
+      <use href="#sorita-rose-spark" transform="translate(6 -6) scale(0.7)" />
+    </g>
+
+    <g id="sorita-torso-down">
+      <path d="M21 26 Q32 18 43 26 L45 45 Q32 50 19 45 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1.3" />
+      <path d="M27 25 Q32 22 37 25 L36 41 Q32 44 28 41 Z" fill="url(#sorita-tunic)" opacity="0.6" />
+      <path d="M22 34 H42" stroke="url(#sorita-gold)" stroke-width="1.6" stroke-linecap="round" />
+      <circle cx="32" cy="29" r="1.8" fill="url(#sorita-gold)" stroke="#6b4216" stroke-width="0.5" />
+    </g>
+    <g id="sorita-torso-up">
+      <path d="M21 26 Q32 18 43 26 L45 45 Q32 50 19 45 Z" fill="url(#sorita-leather-back)" stroke="#3d1226" stroke-width="1.3" />
+      <path d="M23 28 Q32 23 41 28" fill="none" stroke="#f2a0bd" stroke-width="1.2" opacity="0.5" />
+      <path d="M22 34 H42" stroke="#8a6a1e" stroke-width="1.2" stroke-linecap="round" opacity="0.8" />
+    </g>
+    <g id="sorita-torso-left">
+      <path d="M22 27 Q31 19 44 25 L45 45 Q32 50 21 45 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1.3" />
+      <path d="M26 28 Q34 31 42 29" fill="none" stroke="#f2a0bd" stroke-width="1.3" opacity="0.45" />
+      <path d="M24 34 H40" stroke="url(#sorita-gold)" stroke-width="1.3" stroke-linecap="round" opacity="0.85" />
+    </g>
+
+    <g id="sorita-head-down">
+      <path d="M25 20 Q25 12 32 11 Q39 12 39 20 Q39 27 32 29 Q25 27 25 20 Z" fill="url(#sorita-skin)" stroke="#7a4a2c" stroke-width="0.9" />
+      <circle cx="29" cy="20" r="1.1" fill="#3a1f14" />
+      <circle cx="35" cy="20" r="1.1" fill="#3a1f14" />
+      <circle cx="35" cy="20" r="0.45" fill="#ffe9a8" />
+      <path d="M30 24 Q32 25.2 34 24" fill="none" stroke="#c78f5a" stroke-width="0.8" stroke-linecap="round" />
+      <path d="M24 19 Q24 8 32 6 Q40 8 40 19 Q37 13 32 13 Q27 13 24 19 Z" fill="url(#sorita-hair)" stroke="#7f7a72" stroke-width="0.7" />
+      <path d="M24 18 Q22 24 25 28 Q23 22 26 18 Z" fill="url(#sorita-hair)" />
+      <path d="M40 18 Q42 24 39 28 Q41 22 38 18 Z" fill="url(#sorita-hair)" />
+      <path d="M28 14 Q30 9 33 11 Q31 13 30 16 Z" fill="#ffffff" opacity="0.6" />
+    </g>
+    <g id="sorita-head-up">
+      <path d="M25 21 Q25 13 32 11 Q39 13 39 21 Q39 28 32 30 Q25 28 25 21 Z" fill="#e0b47f" stroke="#7a4a2c" stroke-width="0.9" />
+      <path d="M24 20 Q24 9 32 7 Q40 9 40 20 Q36 14 32 14 Q28 14 24 20 Z" fill="url(#sorita-hair)" stroke="#7f7a72" stroke-width="0.7" />
+      <path d="M26 26 Q32 31 38 26 Q32 34 26 26 Z" fill="url(#sorita-hair)" opacity="0.95" />
+      <path d="M28 13 Q30 8 33 10 Q31 12 30 15 Z" fill="#ffffff" opacity="0.5" />
+    </g>
+    <g id="sorita-head-left">
+      <path d="M25 21 Q26 13 33 11 Q40 13 39 21 Q37 28 30 29 Q25 26 25 21 Z" fill="url(#sorita-skin)" stroke="#7a4a2c" stroke-width="0.9" />
+      <circle cx="28" cy="21" r="1.1" fill="#3a1f14" />
+      <circle cx="28" cy="21" r="0.45" fill="#ffe9a8" />
+      <path d="M25 24 Q27 25 29 24" fill="none" stroke="#c78f5a" stroke-width="0.8" stroke-linecap="round" />
+      <path d="M24 20 Q24 9 33 7 Q42 10 40 20 Q36 13 31 13 Q27 13 24 20 Z" fill="url(#sorita-hair)" stroke="#7f7a72" stroke-width="0.7" />
+      <path d="M38 14 Q44 19 41 26 Q40 20 38 16 Z" fill="url(#sorita-hair)" />
+      <path d="M28 13 Q31 8 34 11 Q31 12 30 15 Z" fill="#ffffff" opacity="0.55" />
+    </g>
+
+    <g id="sorita-legs-down">
+      <path d="M26 44 L25 53 Q27 55 29 53 L30 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+      <path d="M34 44 L35 53 Q37 55 39 53 L38 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+      <path d="M25.4 51.2 L29 51.2" stroke="#e8c45a" stroke-width="0.9" stroke-linecap="round" opacity="0.8" />
+      <path d="M35 51.2 L38.6 51.2" stroke="#e8c45a" stroke-width="0.9" stroke-linecap="round" opacity="0.8" />
+    </g>
+    <g id="sorita-legs-down-a">
+      <path d="M26 44 L22 52 Q24 55 27 53 L30 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+      <path d="M34 44 L38 52 Q36 55 33 53 L30 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+    </g>
+    <g id="sorita-legs-down-b">
+      <path d="M26 44 L24 53 Q26 55 28 53 L30 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+      <path d="M34 44 L36 53 Q38 55 40 53 L38 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+    </g>
+    <g id="sorita-legs-left">
+      <path d="M28 44 L27 53 Q29 55 31 53 L32 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+      <path d="M34 44 L35 53 Q37 55 39 53 L38 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+    </g>
+    <g id="sorita-legs-left-a">
+      <path d="M27 44 L23 52 Q25 55 28 53 L31 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+      <path d="M34 44 L39 52 Q37 55 34 53 L30 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+    </g>
+    <g id="sorita-legs-left-b">
+      <path d="M29 44 L27 53 Q29 55 31 53 L33 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+      <path d="M34 44 L36 53 Q38 55 40 53 L38 44 Z" fill="#2a1220" stroke="#14060d" stroke-width="0.9" />
+    </g>
+
+    <g id="sorita-arms-down">
+      <path d="M22 29 L16 38 Q16 42 20 43 L27 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <path d="M42 29 L48 38 Q48 42 44 43 L37 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(46 41) rotate(-24)" />
+      <use href="#sorita-die" transform="translate(15 27)" />
+      <use href="#sorita-die" transform="translate(21 23) scale(0.8)" />
+    </g>
+    <g id="sorita-arms-up">
+      <path d="M22 29 L16 38 Q16 42 20 43 L27 32 Z" fill="#8f2f50" stroke="#3d1226" stroke-width="1" />
+      <path d="M42 29 L48 38 Q48 42 44 43 L37 32 Z" fill="#8f2f50" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(46 41) rotate(-24)" />
+      <use href="#sorita-die" transform="translate(16 27)" />
+      <use href="#sorita-die" transform="translate(22 23) scale(0.8)" />
+    </g>
+    <g id="sorita-arms-left">
+      <path d="M25 30 L15 34 Q12 37 15 40 L30 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <path d="M40 30 L46 38 Q46 41 42 42 L36 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(15 35) rotate(180)" />
+      <use href="#sorita-die" transform="translate(44 25)" />
+      <use href="#sorita-die" transform="translate(50 29) scale(0.8)" />
+    </g>
+
+    <g id="sorita-attack-arms-down">
+      <path d="M22 29 L18 21 Q22 17 26 22 L27 31 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <path d="M42 29 L50 22 Q53 26 49 30 L37 31 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(50 21) rotate(46)" />
+    </g>
+    <g id="sorita-attack-arms-up">
+      <path d="M22 29 L18 21 Q22 17 26 22 L27 31 Z" fill="#8f2f50" stroke="#3d1226" stroke-width="1" />
+      <path d="M42 29 L50 22 Q53 26 49 30 L37 31 Z" fill="#8f2f50" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(50 21) rotate(46)" />
+    </g>
+    <g id="sorita-attack-arms-left">
+      <path d="M26 30 L12 31 Q9 34 12 37 L30 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <path d="M40 30 L46 37 Q46 40 42 41 L36 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(11 33) rotate(180)" />
+    </g>
+
+    <g id="sorita-cast-arms-down">
+      <path d="M23 30 L19 22 Q23 18 27 23 L28 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <path d="M41 30 L48 38 Q48 42 44 43 L37 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(46 41) rotate(-24)" />
+    </g>
+    <g id="sorita-cast-arms-up">
+      <path d="M23 30 L19 22 Q23 18 27 23 L28 32 Z" fill="#8f2f50" stroke="#3d1226" stroke-width="1" />
+      <path d="M41 30 L48 38 Q48 42 44 43 L37 32 Z" fill="#8f2f50" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(46 41) rotate(-24)" />
+    </g>
+    <g id="sorita-cast-arms-left">
+      <path d="M25 30 L14 33 Q11 36 14 39 L30 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <path d="M40 30 L47 38 Q47 41 43 42 L36 32 Z" fill="url(#sorita-leather)" stroke="#3d1226" stroke-width="1" />
+      <use href="#sorita-dagger" transform="translate(14 34) rotate(180)" />
+    </g>
+
+    <g id="sorita-down-idle-a"><use href="#sorita-shadow" /><use href="#sorita-legs-down" /><use href="#sorita-torso-down" /><use href="#sorita-arms-down" /><use href="#sorita-head-down" /></g>
+    <g id="sorita-down-idle-b"><use href="#sorita-down-idle-a" transform="translate(0 -1)" /></g>
+    <g id="sorita-down-walk-a"><use href="#sorita-shadow" /><use href="#sorita-legs-down-a" /><use href="#sorita-torso-down" /><use href="#sorita-arms-down" transform="rotate(-4 32 35)" /><use href="#sorita-head-down" /></g>
+    <g id="sorita-down-walk-b"><use href="#sorita-shadow" /><use href="#sorita-legs-down-b" /><use href="#sorita-torso-down" transform="translate(0 -1)" /><use href="#sorita-arms-down" transform="rotate(4 32 35)" /><use href="#sorita-head-down" transform="translate(0 -1)" /></g>
+    <g id="sorita-down-attack-prep"><use href="#sorita-shadow" /><use href="#sorita-legs-down-a" /><use href="#sorita-torso-down" /><use href="#sorita-attack-arms-down" /><use href="#sorita-head-down" /></g>
+    <g id="sorita-down-attack-impact"><use href="#sorita-down-attack-prep" /><use href="#sorita-slash-arc" transform="translate(48 40) rotate(-30)" /><use href="#sorita-die-burst" transform="translate(50 32)" /></g>
+    <g id="sorita-down-cast-a"><use href="#sorita-shadow" /><use href="#sorita-legs-down" /><use href="#sorita-torso-down" /><use href="#sorita-cast-arms-down" /><use href="#sorita-head-down" /><use href="#sorita-fate-rune" transform="translate(21 17) scale(0.6)" /></g>
+    <g id="sorita-down-cast-b"><use href="#sorita-down-cast-a" /><use href="#sorita-fate-rune" transform="translate(21 16)" /><use href="#sorita-die-six" transform="translate(21 16) scale(0.85)" /><use href="#sorita-fate-spark" transform="translate(11 11)" /><use href="#sorita-rose-spark" transform="translate(31 23) scale(0.8)" /></g>
+
+    <g id="sorita-up-idle-a"><use href="#sorita-shadow" /><use href="#sorita-legs-down" /><use href="#sorita-torso-up" /><use href="#sorita-arms-up" /><use href="#sorita-head-up" /></g>
+    <g id="sorita-up-idle-b"><use href="#sorita-up-idle-a" transform="translate(0 -1)" /></g>
+    <g id="sorita-up-walk-a"><use href="#sorita-shadow" /><use href="#sorita-legs-down-a" /><use href="#sorita-torso-up" /><use href="#sorita-arms-up" transform="rotate(4 32 35)" /><use href="#sorita-head-up" /></g>
+    <g id="sorita-up-walk-b"><use href="#sorita-shadow" /><use href="#sorita-legs-down-b" /><use href="#sorita-torso-up" transform="translate(0 -1)" /><use href="#sorita-arms-up" transform="rotate(-4 32 35)" /><use href="#sorita-head-up" transform="translate(0 -1)" /></g>
+    <g id="sorita-up-attack-prep"><use href="#sorita-shadow" /><use href="#sorita-legs-down-a" /><use href="#sorita-torso-up" /><use href="#sorita-attack-arms-up" /><use href="#sorita-head-up" /></g>
+    <g id="sorita-up-attack-impact"><use href="#sorita-up-attack-prep" /><use href="#sorita-slash-arc" transform="translate(48 40) rotate(-30)" /><use href="#sorita-die-burst" transform="translate(50 32)" /></g>
+    <g id="sorita-up-cast-a"><use href="#sorita-shadow" /><use href="#sorita-legs-down" /><use href="#sorita-torso-up" /><use href="#sorita-cast-arms-up" /><use href="#sorita-head-up" /><use href="#sorita-fate-rune" transform="translate(21 17) scale(0.6)" /></g>
+    <g id="sorita-up-cast-b"><use href="#sorita-up-cast-a" /><use href="#sorita-fate-rune" transform="translate(21 16)" /><use href="#sorita-die-six" transform="translate(21 16) scale(0.85)" /><use href="#sorita-fate-spark" transform="translate(11 11)" /><use href="#sorita-rose-spark" transform="translate(31 23) scale(0.8)" /></g>
+
+    <g id="sorita-left-idle-a"><use href="#sorita-shadow" /><use href="#sorita-legs-left" /><use href="#sorita-torso-left" /><use href="#sorita-arms-left" /><use href="#sorita-head-left" /></g>
+    <g id="sorita-left-idle-b"><use href="#sorita-left-idle-a" transform="translate(0 -1)" /></g>
+    <g id="sorita-left-walk-a"><use href="#sorita-shadow" /><use href="#sorita-legs-left-a" /><use href="#sorita-torso-left" /><use href="#sorita-arms-left" transform="rotate(-5 32 35)" /><use href="#sorita-head-left" /></g>
+    <g id="sorita-left-walk-b"><use href="#sorita-shadow" /><use href="#sorita-legs-left-b" /><use href="#sorita-torso-left" transform="translate(0 -1)" /><use href="#sorita-arms-left" transform="rotate(5 32 35)" /><use href="#sorita-head-left" transform="translate(-1 -1)" /></g>
+    <g id="sorita-left-attack-prep"><use href="#sorita-shadow" /><use href="#sorita-legs-left-a" /><use href="#sorita-torso-left" /><use href="#sorita-attack-arms-left" /><use href="#sorita-head-left" /></g>
+    <g id="sorita-left-attack-impact"><use href="#sorita-left-attack-prep" /><use href="#sorita-slash-arc" transform="translate(8 35) rotate(150)" /><use href="#sorita-die-burst" transform="translate(9 34)" /></g>
+    <g id="sorita-left-cast-a"><use href="#sorita-shadow" /><use href="#sorita-legs-left" /><use href="#sorita-torso-left" /><use href="#sorita-cast-arms-left" /><use href="#sorita-head-left" /><use href="#sorita-fate-rune" transform="translate(22 17) scale(0.6)" /></g>
+    <g id="sorita-left-cast-b"><use href="#sorita-left-cast-a" /><use href="#sorita-fate-rune" transform="translate(22 16)" /><use href="#sorita-die-six" transform="translate(22 16) scale(0.85)" /><use href="#sorita-fate-spark" transform="translate(12 11)" /><use href="#sorita-rose-spark" transform="translate(32 23) scale(0.8)" /></g>
+
+    <g id="sorita-right-idle-a"><use href="#sorita-left-idle-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="sorita-right-idle-b"><use href="#sorita-left-idle-b" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="sorita-right-walk-a"><use href="#sorita-left-walk-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="sorita-right-walk-b"><use href="#sorita-left-walk-b" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="sorita-right-attack-prep"><use href="#sorita-left-attack-prep" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="sorita-right-attack-impact"><use href="#sorita-left-attack-impact" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="sorita-right-cast-a"><use href="#sorita-left-cast-a" transform="translate(64 0) scale(-1 1)" /></g>
+    <g id="sorita-right-cast-b"><use href="#sorita-left-cast-b" transform="translate(64 0) scale(-1 1)" /></g>
+  </defs>
+
+  <svg id="frame-idle-up-0" x="0" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-idle-up-1" x="64" y="0" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-b" /></svg>
+  <svg id="frame-idle-left-0" x="0" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-idle-left-1" x="64" y="64" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-b" /></svg>
+  <svg id="frame-idle-down-0" x="0" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-idle-down-1" x="64" y="128" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-b" /></svg>
+  <svg id="frame-idle-right-0" x="0" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+  <svg id="frame-idle-right-1" x="64" y="192" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-b" /></svg>
+
+  <svg id="frame-walking-up-0" x="0" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-walk-a" /></svg>
+  <svg id="frame-walking-up-1" x="64" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-walking-up-2" x="128" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-walk-b" /></svg>
+  <svg id="frame-walking-up-3" x="192" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-b" /></svg>
+  <svg id="frame-walking-up-4" x="256" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-5" x="320" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-walking-up-6" x="384" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-up-7" x="448" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-b" /></svg>
+  <svg id="frame-walking-up-8" x="512" y="256" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-walk-a" /></svg>
+  <svg id="frame-walking-left-0" x="0" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-walk-a" /></svg>
+  <svg id="frame-walking-left-1" x="64" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-walking-left-2" x="128" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-walk-b" /></svg>
+  <svg id="frame-walking-left-3" x="192" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-b" /></svg>
+  <svg id="frame-walking-left-4" x="256" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-5" x="320" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-walking-left-6" x="384" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-left-7" x="448" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-b" /></svg>
+  <svg id="frame-walking-left-8" x="512" y="320" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-walk-a" /></svg>
+  <svg id="frame-walking-down-0" x="0" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-walk-a" /></svg>
+  <svg id="frame-walking-down-1" x="64" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-walking-down-2" x="128" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-walk-b" /></svg>
+  <svg id="frame-walking-down-3" x="192" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-b" /></svg>
+  <svg id="frame-walking-down-4" x="256" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-5" x="320" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-walking-down-6" x="384" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-down-7" x="448" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-b" /></svg>
+  <svg id="frame-walking-down-8" x="512" y="384" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-walk-a" /></svg>
+  <svg id="frame-walking-right-0" x="0" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-walk-a" /></svg>
+  <svg id="frame-walking-right-1" x="64" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+  <svg id="frame-walking-right-2" x="128" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-walk-b" /></svg>
+  <svg id="frame-walking-right-3" x="192" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-b" /></svg>
+  <svg id="frame-walking-right-4" x="256" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-walk-a" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-5" x="320" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+  <svg id="frame-walking-right-6" x="384" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-walk-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-walking-right-7" x="448" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-b" /></svg>
+  <svg id="frame-walking-right-8" x="512" y="448" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-walk-a" /></svg>
+
+  <svg id="frame-attacking1-up-0" x="0" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-attacking1-up-1" x="64" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-2" x="128" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-up-3" x="192" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-up-4" x="256" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-attack-impact" /></svg>
+  <svg id="frame-attacking1-up-5" x="320" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-attack-prep" /></svg>
+  <svg id="frame-attacking1-up-6" x="384" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-b" /></svg>
+  <svg id="frame-attacking1-up-7" x="448" y="512" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-attacking1-left-0" x="0" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-attacking1-left-1" x="64" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-2" x="128" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-attack-prep" transform="translate(1 -1)" /></svg>
+  <svg id="frame-attacking1-left-3" x="192" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-attack-prep" transform="translate(2 -1)" /></svg>
+  <svg id="frame-attacking1-left-4" x="256" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-attack-impact" /></svg>
+  <svg id="frame-attacking1-left-5" x="320" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-attack-prep" /></svg>
+  <svg id="frame-attacking1-left-6" x="384" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-b" /></svg>
+  <svg id="frame-attacking1-left-7" x="448" y="576" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-attacking1-down-0" x="0" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-attacking1-down-1" x="64" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-2" x="128" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-attack-prep" transform="translate(0 -1)" /></svg>
+  <svg id="frame-attacking1-down-3" x="192" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking1-down-4" x="256" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-attack-impact" /></svg>
+  <svg id="frame-attacking1-down-5" x="320" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-attack-prep" /></svg>
+  <svg id="frame-attacking1-down-6" x="384" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-b" /></svg>
+  <svg id="frame-attacking1-down-7" x="448" y="640" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-attacking1-right-0" x="0" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+  <svg id="frame-attacking1-right-1" x="64" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-2" x="128" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-attack-prep" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-attacking1-right-3" x="192" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-attack-prep" transform="translate(-2 -1)" /></svg>
+  <svg id="frame-attacking1-right-4" x="256" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-attack-impact" /></svg>
+  <svg id="frame-attacking1-right-5" x="320" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-attack-prep" /></svg>
+  <svg id="frame-attacking1-right-6" x="384" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-b" /></svg>
+  <svg id="frame-attacking1-right-7" x="448" y="704" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+
+  <svg id="frame-attacking2-up-0" x="0" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-attacking2-up-1" x="64" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-attack-prep" /></svg>
+  <svg id="frame-attacking2-up-2" x="128" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-up-3" x="192" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-attack-impact" /></svg>
+  <svg id="frame-attacking2-up-4" x="256" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-b" /></svg>
+  <svg id="frame-attacking2-up-5" x="320" y="768" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-attacking2-left-0" x="0" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-attacking2-left-1" x="64" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-attack-prep" /></svg>
+  <svg id="frame-attacking2-left-2" x="128" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-attack-prep" transform="translate(2 -1)" /></svg>
+  <svg id="frame-attacking2-left-3" x="192" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-attack-impact" /></svg>
+  <svg id="frame-attacking2-left-4" x="256" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-b" /></svg>
+  <svg id="frame-attacking2-left-5" x="320" y="832" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-attacking2-down-0" x="0" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-attacking2-down-1" x="64" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-attack-prep" /></svg>
+  <svg id="frame-attacking2-down-2" x="128" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-attack-prep" transform="translate(0 -2)" /></svg>
+  <svg id="frame-attacking2-down-3" x="192" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-attack-impact" /></svg>
+  <svg id="frame-attacking2-down-4" x="256" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-b" /></svg>
+  <svg id="frame-attacking2-down-5" x="320" y="896" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-attacking2-right-0" x="0" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+  <svg id="frame-attacking2-right-1" x="64" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-attack-prep" /></svg>
+  <svg id="frame-attacking2-right-2" x="128" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-attack-prep" transform="translate(-2 -1)" /></svg>
+  <svg id="frame-attacking2-right-3" x="192" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-attack-impact" /></svg>
+  <svg id="frame-attacking2-right-4" x="256" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-b" /></svg>
+  <svg id="frame-attacking2-right-5" x="320" y="960" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+
+  <svg id="frame-casting-up-0" x="0" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-casting-up-1" x="64" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-cast-a" /></svg>
+  <svg id="frame-casting-up-2" x="128" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-cast-b" /></svg>
+  <svg id="frame-casting-up-3" x="192" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-up-4" x="256" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-cast-a" /></svg>
+  <svg id="frame-casting-up-5" x="320" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-b" /></svg>
+  <svg id="frame-casting-up-6" x="384" y="1024" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-up-idle-a" /></svg>
+  <svg id="frame-casting-left-0" x="0" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-casting-left-1" x="64" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-cast-a" /></svg>
+  <svg id="frame-casting-left-2" x="128" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-cast-b" /></svg>
+  <svg id="frame-casting-left-3" x="192" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-cast-b" transform="translate(-1 -1)" /></svg>
+  <svg id="frame-casting-left-4" x="256" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-cast-a" /></svg>
+  <svg id="frame-casting-left-5" x="320" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-b" /></svg>
+  <svg id="frame-casting-left-6" x="384" y="1088" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-left-idle-a" /></svg>
+  <svg id="frame-casting-down-0" x="0" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-casting-down-1" x="64" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-cast-a" /></svg>
+  <svg id="frame-casting-down-2" x="128" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-cast-b" /></svg>
+  <svg id="frame-casting-down-3" x="192" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-cast-b" transform="translate(0 -1)" /></svg>
+  <svg id="frame-casting-down-4" x="256" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-cast-a" /></svg>
+  <svg id="frame-casting-down-5" x="320" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-b" /></svg>
+  <svg id="frame-casting-down-6" x="384" y="1152" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-down-idle-a" /></svg>
+  <svg id="frame-casting-right-0" x="0" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+  <svg id="frame-casting-right-1" x="64" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-cast-a" /></svg>
+  <svg id="frame-casting-right-2" x="128" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-cast-b" /></svg>
+  <svg id="frame-casting-right-3" x="192" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-cast-b" transform="translate(1 -1)" /></svg>
+  <svg id="frame-casting-right-4" x="256" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-cast-a" /></svg>
+  <svg id="frame-casting-right-5" x="320" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-b" /></svg>
+  <svg id="frame-casting-right-6" x="384" y="1216" width="64" height="64" viewBox="0 0 64 64" overflow="hidden"><use href="#sorita-right-idle-a" /></svg>
+</svg>
