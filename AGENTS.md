@@ -25,7 +25,6 @@ Antes de implementar, leia nesta ordem:
    - Traits e auras: `src/game/systems/Traits/` e `src/game/systems/Aura/`
    - Projéteis, efeitos e status: `src/game/objects/Projectile/`, `src/game/fx/` e `src/game/objects/StatusEffect/`
    - UI React: `src/ui/`, `src/PhaserGame.tsx` e `src/game/tools/EventBus.ts`
-   - Desktop/Electron: `electron/` e `electron.vite.config.ts`
 
 ## 3. Regras não negociáveis
 
@@ -56,7 +55,6 @@ Antes de implementar, leia nesta ordem:
 - `src/ui/`: overlay React/MUI, drawers, modais, HUD, menus e tooltips.
 - `src/game/tools/EventBus.ts`: ponte entre Phaser e React. Toda subscription deve ter cleanup.
 - `public/assets/`: sprites, spritesheets, imagens e demais assets.
-- `electron/`: empacotamento desktop.
 
 ## 5. Orientação a objetos obrigatória
 
@@ -126,14 +124,13 @@ Antes de implementar, leia nesta ordem:
 - Engine: Phaser 3.90 com Arcade Physics, Lights, Graphics e Sprites.
 - UI: React 19 + MUI 7.
 - Bundler: Vite 6.
-- Desktop: Electron + electron-vite.
 - Linguagem: TypeScript 5.7 em modo strict.
 - Persistência: `localStorage`.
 - Gerenciador de pacotes: exclusivamente `pnpm`.
 - Desenvolvimento web: `pnpm dev-nolog`.
 - Build web: `pnpm build-nolog`.
-- Desenvolvimento Electron: `pnpm dev:electron`.
-- Build Electron: `pnpm build:electron`.
+- Deploy (Docker): `docker compose up -d --build` (build da imagem + sobe o container nginx).
+- O nginx do container escuta na porta fixa `8080`; o compose publica em `127.0.0.1:${PORT}` (rede bridge) e o nginx do host faz proxy reverso. `PORT` é lido do `.env`.
 - Não use `npm install`, `npm run`, `yarn` ou `yarn.lock` como fonte de verdade.
 - Arquivos `package-lock.json` e `yarn.lock`, se presentes, devem ser tratados como legado até a migração completa para `pnpm-lock.yaml`.
 
@@ -173,7 +170,6 @@ Antes de implementar, leia nesta ordem:
 - Para fórmulas de dano, cura, escudo, ganho de atributo e timers, prefira testar invariantes estáveis: resultado finito, não negativo quando aplicável, proporcionalidade entre entrada e multiplicador, split/distribuição correta, cleanup, estado `idle`/`fighting`, registro de timers e valores derivados da própria configuração atual.
 - Quando um teste precisar interagir com stages, delays ou multiplicadores, derive a expectativa das estruturas registradas no sistema sob teste, em vez de duplicar números literais no teste.
 - Não rode build automaticamente após toda edição. Use `pnpm build-nolog` apenas quando o usuário pedir, quando a mudança afetar configuração/bundling/tipos amplos, ou quando houver risco concreto que justifique a validação completa.
-- Para mudanças Electron, também valide com `pnpm build:electron` ou `pnpm dev:electron`, conforme aplicável.
 
 ## 12. Checklist mínimo antes de encerrar
 

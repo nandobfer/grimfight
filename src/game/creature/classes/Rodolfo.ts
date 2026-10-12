@@ -141,4 +141,9 @@ ${rows.join("\n")}
         const key = `${this.getAnimationTextureName()}-casting-${this.facing}`
         this.play({ key, frameRate: 14, repeat: 0 }, true)
     }
+
+    override refreshStats(): void {
+        super.refreshStats()
+        this.gainMana(this.maxMana * 0.7)
+    }
 }

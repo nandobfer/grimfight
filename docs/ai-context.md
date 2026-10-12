@@ -18,7 +18,6 @@ Este documento existe para servir como contexto operacional para IA e para desen
 - Engine de jogo: `Phaser 3`, usando `Arcade Physics`, lights, tweens e animações de spritesheet.
 - UI/HUD: `React 19` + `MUI`.
 - Build web: `Vite`.
-- Build desktop: `Electron` via `electron-vite`.
 - Graficos/estado visual de combate: no lado Phaser.
 - Menus, drawers, modais, counters e tooltip: no lado React.
 - Persistencia: `localStorage`.

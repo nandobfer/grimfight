@@ -1,0 +1,21 @@
+services:
+  grimfight:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+      network: host
+    image: nandoburgos/grimfight
+    container_name: grimfight
+    restart: always
+    ports:
+      # O nginx do container escuta fixo em 8080; publica só em 127.0.0.1 e o
+      # nginx do host faz o proxy reverso (TLS). PORT vem do .env.
+      - "127.0.0.1:${PORT:?defina PORT no .env}:8080"
+    environment:
+      NODE_ENV: production
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M

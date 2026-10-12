@@ -8,7 +8,7 @@ Build a team, place them on a tactical grid, and hit Space to watch the chaos.
 
 Merge components into powerful items, pick augments every few floors, and climb as far as you can on a single run.
 
-Lightweight 2D action built with Phaser + React, shipped via Electron.
+Lightweight 2D action built with Phaser + React, shipped as a static web build.
 
 ## Features
 
@@ -50,7 +50,6 @@ In-game tooltips show possible recipes and highlight what’s craftable with you
 
 * Engine: Phaser (Arcade Physics, Lights, Graphics)
 * UI: React + MUI, event-bridged with a lightweight EventBus
-* Desktop: Electron via electron-vite
 * Persistence: localStorage (progress, characters, run records)
 
 ## Contributing
