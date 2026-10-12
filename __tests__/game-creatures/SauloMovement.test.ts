@@ -1,4 +1,5 @@
 import { afterAll, describe, expect, it, vi } from "vitest"
+import { EventEmitter } from "node:events"
 import type { Game } from "../../src/game/scenes/Game"
 import type { Creature } from "../../src/game/creature/Creature"
 import { SAULO_GAS_CLOUD_DURATION_MS, SAULO_GAS_EMIT_INTERVAL_MS } from "../../src/game/creature/classes/SauloPoisonGas"
@@ -32,6 +33,7 @@ vi.mock("../../src/game/creature/character/Character", async () => {
         updateFacingDirection() {}
         update() { this.withTargetUpdate() }
         withTargetUpdate() {}
+        destroy() { this.active = false; this.removeAllListeners() }
     } }
 })
 vi.mock("../../src/game/objects/StatusEffect/Dot", () => ({ Dot: class { start() {} } }))
@@ -57,6 +59,7 @@ function setup() {
     const graphic = { active: true, scene: {}, setDepth: vi.fn().mockReturnThis(), setBlendMode: vi.fn().mockReturnThis(),
         clear: vi.fn(), fillStyle: vi.fn(), fillEllipse: vi.fn(), fillCircle: vi.fn(), destroy: vi.fn() }
     const scene = {
+        events: new EventEmitter(),
         state: "fighting", enemyTeam: { getChildren: () => [enemy] }, walls: { getChildren: () => [] },
         grid: { cellW: 50, cellH: 50, cols: 4, rows: 3, cellToCenter: () => ({ x: 25, y: 25 }) },
         physics: { velocityFromAngle: (degrees: number, speed: number, velocity: { x: number; y: number }) => {
@@ -121,10 +124,48 @@ describe("Saulo runaway movement", () => {
         const { saulo, graphic, scene } = setup()
         saulo.update(0, SAULO_GAS_EMIT_INTERVAL_MS)
         expect(scene.perRoundFx.add).toHaveBeenCalledWith(graphic)
-        saulo.update(1, SAULO_GAS_CLOUD_DURATION_MS - SAULO_GAS_EMIT_INTERVAL_MS - 1)
+        // A nuvem nasce com idade zero; seu ciclo segue o update da cena,
+        // independentemente do update ou do estado de vida do personagem.
+        scene.events.emit("update", 1, SAULO_GAS_CLOUD_DURATION_MS - 1)
         expect(graphic.destroy).not.toHaveBeenCalled()
-        saulo.update(2, 1)
+        scene.events.emit("update", 2, 1)
         expect(graphic.destroy).toHaveBeenCalledOnce()
         expect(scene.perRoundFx.remove).toHaveBeenCalledWith(graphic, false, false)
+    })
+
+    it("keeps existing clouds aging after Saulo dies without emitting new ones", () => {
+        const { saulo, graphic, scene } = setup()
+        saulo.update(0, SAULO_GAS_EMIT_INTERVAL_MS)
+        saulo.health = 0
+        saulo.update(1, SAULO_GAS_EMIT_INTERVAL_MS)
+        expect(scene.perRoundFx.add).toHaveBeenCalledOnce()
+        scene.events.emit("update", 2, SAULO_GAS_CLOUD_DURATION_MS - 1)
+        expect(graphic.clear).toHaveBeenCalled()
+        expect(graphic.destroy).not.toHaveBeenCalled()
+        scene.events.emit("update", 3, 1)
+        expect(graphic.destroy).toHaveBeenCalledOnce()
+    })
+
+    it("cleans existing clouds when the round stops fighting", () => {
+        const { saulo, graphic, scene } = setup()
+        saulo.update(0, SAULO_GAS_EMIT_INTERVAL_MS)
+        scene.state = "idle"
+        scene.events.emit("update", 1, 0)
+        expect(graphic.destroy).toHaveBeenCalledOnce()
+        expect(scene.perRoundFx.remove).toHaveBeenCalledWith(graphic, false, false)
+        scene.events.emit("update", 2, SAULO_GAS_CLOUD_DURATION_MS)
+        expect(graphic.destroy).toHaveBeenCalledOnce()
+    })
+
+    it("removes the scene lifecycle listener and clouds when Saulo is destroyed", () => {
+        const { saulo, graphic, scene } = setup()
+        expect(scene.events.listenerCount("update")).toBe(1)
+        saulo.update(0, SAULO_GAS_EMIT_INTERVAL_MS)
+        saulo.destroy()
+        expect(scene.events.listenerCount("update")).toBe(0)
+        expect(graphic.destroy).toHaveBeenCalledOnce()
+        expect(scene.perRoundFx.remove).toHaveBeenCalledWith(graphic, false, false)
+        scene.events.emit("update", 1, SAULO_GAS_CLOUD_DURATION_MS)
+        expect(graphic.destroy).toHaveBeenCalledOnce()
     })
 })
