@@ -52,6 +52,11 @@ In-game tooltips show possible recipes and highlight what’s craftable with you
 * UI: React + MUI, event-bridged with a lightweight EventBus
 * Persistence: localStorage (progress, characters, run records)
 
+## CI/CD
+
+GitHub Actions runs tests on pull requests and builds/deploys the Docker image on
+`main`. Production setup, secrets and branch protection: [docs/ci-cd.md](docs/ci-cd.md).
+
 ## Contributing
 
 Issues, balance notes, and PRs welcome. Please include:

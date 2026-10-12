@@ -1,0 +1,129 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Serializa o pipeline inteiro para evitar builds/deploys paralelos na main.
+# Cancela apenas PRs; nunca interrompe um deploy em andamento.
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  IMAGE_REPOSITORY: nandoburgos/grimfight
+  DEPLOY_PLATFORM: linux/amd64
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
+      - name: Configurar Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22"
+          cache: pnpm
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+      - name: Testar
+        run: pnpm test
+
+  build:
+    name: Build image
+    needs: test
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Configurar Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Construir imagem no runner
+        run: |
+          docker buildx build --platform "$DEPLOY_PLATFORM" --target runner \
+            --load --tag "${IMAGE_REPOSITORY}:${GITHUB_SHA}" .
+      - name: Exportar imagem e checksum
+        run: |
+          set -euo pipefail
+          docker save "${IMAGE_REPOSITORY}:${GITHUB_SHA}" | gzip > grimfight-image.tar.gz
+          sha256sum grimfight-image.tar.gz > grimfight-image.tar.gz.sha256
+      - name: Publicar artefato
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: grimfight-image
+          path: |
+            grimfight-image.tar.gz
+            grimfight-image.tar.gz.sha256
+          if-no-files-found: error
+          retention-days: 3
+          compression-level: 0
+
+  deploy:
+    name: Deploy production
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Baixar imagem
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0
+        with:
+          name: grimfight-image
+      - name: Configurar Node para o script TypeScript nativo
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Preparar SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          test -n "$SSH_KEY" && test -n "$KNOWN_HOSTS"
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          printf '%s\n' "$KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/deploy_key" "$HOME/.ssh/known_hosts"
+          echo "DEPLOY_SSH_KEY=$HOME/.ssh/deploy_key" >> "$GITHUB_ENV"
+          echo "DEPLOY_KNOWN_HOSTS=$HOME/.ssh/known_hosts" >> "$GITHUB_ENV"
+      - name: Validar artefato
+        run: |
+          sha256sum -c grimfight-image.tar.gz.sha256
+          echo "DEPLOY_IMAGE_SHA256=$(cut -d ' ' -f1 grimfight-image.tar.gz.sha256)" >> "$GITHUB_ENV"
+      - name: Publicar em produção
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_SSH_USER: ${{ secrets.DEPLOY_SSH_USER }}
+          DEPLOY_SSH_PORT: ${{ vars.DEPLOY_SSH_PORT || '22' }}
+          DEPLOY_REMOTE_DIR: ${{ vars.DEPLOY_REMOTE_DIR }}
+          DEPLOY_PROJECT_NAME: ${{ vars.DEPLOY_PROJECT_NAME }}
+          DEPLOY_SERVICE: ${{ vars.DEPLOY_SERVICE || 'grimfight' }}
+          DEPLOY_HEALTHCHECK_URL: ${{ vars.DEPLOY_HEALTHCHECK_URL }}
+          DEPLOY_IMAGE_REPOSITORY: ${{ env.IMAGE_REPOSITORY }}
+          DEPLOY_IMAGE_TAG: ${{ github.sha }}
+          DEPLOY_IMAGE_ARCHIVE: ${{ github.workspace }}/grimfight-image.tar.gz
+        run: node scripts/deploy-production.ts
+      - name: Remover chave temporária
+        if: always()
+        run: rm -f "$HOME/.ssh/deploy_key" "$HOME/.ssh/known_hosts"

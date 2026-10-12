@@ -4,6 +4,11 @@ dist-ssr
 build
 coverage
 .git
+.github
+.deploy
+worktrees
+*image.tar.gz*
+.next
 .gitignore
 .env
 .env*

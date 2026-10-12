@@ -1,0 +1,5 @@
+# Recebe a imagem já construída pelo GitHub; não busca imagem em registry.
+services:
+  grimfight:
+    image: ${GRIMFIGHT_IMAGE:?defina GRIMFIGHT_IMAGE (repositorio:tag)}
+    pull_policy: never

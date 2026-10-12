@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 .env
+.deploy/
+*image.tar.gz*
 
 # Editor directories and files
 .vscode/*
