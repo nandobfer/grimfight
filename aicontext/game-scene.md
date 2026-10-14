@@ -32,10 +32,14 @@ O tamanho permitido do board do jogador nao progride pelo `floor`; a cena expoe 
 A integração entre o canvas do Phaser e as interfaces overlay React ocorre ouvindo intenções do `EventBus`.
 Ao receber eventos como `ui-drag-start`, a cena gera uma representação visual (ghost) e ativa o modo de drop no grid. `ui-drag-end` confirma a ação engatilhando o encaixe no board ou vendendo o personagem/enviando ao bench caso seja dropado sobre áreas específicas (Shopkeeper ou Tavern).
 
+Um bridge equivalente cuida dos itens da bolsa. `ui-item-drag-start` cria um ghost do item, `ui-item-drag-move` acompanha o ponteiro e mostra preview de merge sobre criaturas, e `ui-item-drag-end` equipa o item na criatura sob o ponteiro ou apenas limpa o ghost quando o drop aconteceu dentro do painel da bolsa.
+
 ### Persistence
 O estado global da run (ouro, andar, vidas, augments ativos, itens disponíveis) é mantido sincronizado com `localStorage` através das funções `saveProgress` e `loadProgress`. O histórico de runs é registrado em `saveRecord`.
 
 Itens temporarios ou efeitos de hidratacao nao fazem parte da persistencia permanente da run.
+
+Os itens guardados pertencem a bolsa (`ItemInventory`) e sao persistidos por `progress.availableItems` como a lista de chaves na ordem exibida.
 
 ### Cleanup
 Para suportar restart da cena ou recarregamentos limpos, a cena desregistra seus listeners de teclado e `EventBus` respondendo ao evento `Phaser.Scenes.Events.SHUTDOWN`.

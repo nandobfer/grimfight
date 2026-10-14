@@ -315,7 +315,7 @@ describe("Creature mana, death, item, aura, and update contracts", () => {
         expect(source).toContain("Item.resetTooltip()")
         expect(source).toContain("hasThiefsGloves()")
         expect(source).toContain("equipItem(_item: Item")
-        expect(source).toContain("item.drop()")
+        expect(source).toContain("return this.rejectEquip(item)")
         expect(source).toContain("this.items.add(item)")
         expect(source).toContain("this.on(\"move\", item.syncPosition, item)")
         expect(source).toContain("unequipItem(item: Item")

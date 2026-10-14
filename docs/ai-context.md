@@ -112,7 +112,7 @@ Principais campos:
 - `grid`: grade tatica e regras de snap/rows.
 - `shopkeeper`: ponto de venda.
 - `tavern`: ponto de storage/bench.
-- `availableItems`: conjunto de itens soltos no board.
+- `inventory` (`availableItems`): bolsa com todos os itens do jogador; nao existem mais itens soltos no board.
 - `floor`, `playerGold`, `playerLives`.
 - `state`: `"idle"` ou `"fighting"`.
 - `currentRecord`: snapshot parcial da run para historico.
@@ -651,7 +651,7 @@ Arquivo:
 - drag-and-drop;
 - tooltip;
 - snap no personagem;
-- drop no board;
+- armazenamento na bolsa;
 - preview de merge entre itens;
 - equip/unequip com personagem.
 
@@ -668,7 +668,7 @@ Subclasses de item sobrescrevem:
 Ao arrastar um item:
 
 - se soltar sobre personagem valido, equipe;
-- se soltar fora, volta a ser item solto;
+- se soltar fora, volta para a bolsa;
 - se pairar sobre outro item compativel, mostra preview do merge resultante;
 - se pairar sobre personagem, pode mostrar preview da composicao final.
 
@@ -1028,7 +1028,7 @@ Representa `GameProgressDto`:
 - `version`
 - `playerAugments`
 - `enemyAugments`
-- `availableItems`
+- `availableItems` (chaves persistidas da bolsa)
 - `record`
 
 ## `characters`
@@ -1228,9 +1228,9 @@ Nao assumir replay deterministico total da run.
 
 O limite cresce com o floor, mas e capado em `6`. Isso afeta summon automatico, loja e bench.
 
-## 8. `availableItems` representa itens soltos
+## 8. `inventory` e a bolsa de itens
 
-Ao equipar item em `Character`, o item sai desse set. Ao desequipar, volta.
+Ao equipar um item em `Character`, o item sai da bolsa. Ao desequipar, vender, enviar ao bench ou descartar fora de uma criatura, ele volta para a bolsa. Nao existem mais itens soltos no board.
 
 ## 9. Morte e fim de round sao assincronos
 

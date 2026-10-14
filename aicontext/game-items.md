@@ -3,9 +3,18 @@
 ## Features
 
 ### Item
-`Item` é a base de componentes, itens completos e artifacts. Ele controla sprite, borda visual, drag and drop, tooltip, merge preview, snap em criaturas, drop no board e sincronização de posição com o usuário equipado.
+`Item` é a base de componentes, itens completos e artifacts. Ele controla sprite, borda visual, drag and drop, tooltip, merge preview, snap em criaturas, armazenamento na bolsa e sincronização de posição com o usuário equipado.
+
+Itens guardados usam `store`, que esconde o sprite e o mantém fora do board até serem equipados.
 
 Itens possuem hooks de regra como `applyModifier`, `afterApplying` e `cleanup`. Qualquer item que registre listeners, timers ou efeitos persistentes deve remover esses recursos no cleanup ou quando o sprite for destruído.
+
+### Inventory
+`ItemInventory` é o dono único dos itens que o jogador possui. Ele substitui a antiga coleção de itens soltos no board, preserva a ordem de exibição e expõe `add`, `delete`, `clear`, `values`, iteração e `reorder`. `add` guarda o item na bolsa escondendo o sprite, e `serialize` persiste apenas as chaves na ordem atual.
+
+`ItemInventoryLayout` concentra as regras puras de layout: categorização em artefato, completo e componente, agrupamento e reordenação dentro da própria categoria. `ItemRegistry.categoryOf` define a categoria de cada item.
+
+A interface React da bolsa (`Inventory`) escuta `inventory-change`, mostra um ícone próprio e os três divisores, permite reordenar por arraste dentro da categoria e emite `ui-item-drag-start`, `ui-item-drag-move` e `ui-item-drag-end` para equipar itens arrastados até o board. Arrastar para fora do painel pede à cena que resolva o drop; arrastar dentro do painel apenas reordena.
 
 ### ItemRegistry
 `ItemRegistry` centraliza registros de componentes, itens completos, artifacts e receitas. O registry cria itens por chave, lista categorias, sorteia itens respeitando exclusões, resolve receitas e expõe receitas relacionadas a componentes.
@@ -32,9 +41,11 @@ O drag de item só deve alterar regra de jogo por intenção explícita do usuá
 
 Ao equipar, a criatura assume o item e registra sync no evento de movimento. Ao desequipar, cleanup é executado, o usuário é removido e o listener de movimento é desligado.
 
+Itens nunca ficam soltos no board: ao soltar um item fora de uma criatura válida, ele volta para a bolsa. Quando a criatura não pode receber o item, por limite de slots ou restrição de luvas, o equipamento é rejeitado e o item permanece na bolsa.
+
 ### Thiefsgloves
 Thiefsgloves possui restrição especial de equipamento e gera itens temporários por rodada. Ele escuta mudança de estado da cena para equipar e limpar esses itens, removendo listeners e sprites temporários em cleanup.
 
-Itens gerados por Thiefsgloves sao marcados como temporarios. Eles nao entram no DTO de personagem nem na lista de itens soltos da run, e saves antigos com itens extras junto da luva carregam apenas a propria luva.
+Itens gerados por Thiefsgloves sao marcados como temporarios. Eles nao entram no DTO de personagem nem na lista persistida da bolsa, e saves antigos com itens extras junto da luva carregam apenas a propria luva.
 
 ## Fixes

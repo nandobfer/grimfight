@@ -13,6 +13,7 @@ import { GameMenu } from "./GameMenu/GameMenu"
 import { ItemTooltip } from "./ItemTooltip"
 import { ItemAnvilModal } from "./ItemAnvilModal/ItemAnvilModal"
 import { TavernDrawer } from "./Tavern/TavernDrawer"
+import { Inventory } from "./Inventory/Inventory"
 import { DebugMenu } from "./DebugMenu/DebugMenu"
 import { Menu } from "@mui/icons-material"
 
@@ -42,6 +43,7 @@ export const Ui: React.FC = () => {
                     <>
                         <Box sx={{ display: "flex", flexDirection: "column", height: 1, pointerEvents: "none", gap: 1 }}>
                             <ItemAnvilModal game={game} />
+                            <Inventory game={game} />
                             <PlayerAugments game={game} />
                             <DebugMenu game={game} />
                             <Traits game={game} />

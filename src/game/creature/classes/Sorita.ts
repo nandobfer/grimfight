@@ -99,7 +99,6 @@ Passive: whenever an enemy dies, she rolls a hundred-sided die and keeps the bes
     private dropItem(drop: SoritaDrop): void {
         const item = this.createDropItem(drop)
         this.scene.availableItems.add(item)
-        item.dropOnBoard()
         this.scene.saveProgress()
     }
 

@@ -23,6 +23,7 @@ import { GameRecord } from "../systems/GameRecord"
 import { GameRecordTraits } from "../systems/GameRecordTraits"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { Item } from "../systems/Items/Item"
+import { ItemInventory } from "../systems/Items/ItemInventory"
 import { Tavern } from "../systems/Tavern"
 import { ArtifactAndCompletedAnvilAugment } from "../systems/Augment/ArtifactAndCompletedAnvilAugment"
 
@@ -61,7 +62,7 @@ export class Game extends Scene {
     shopkeeper: Shopkeeper
     tavern: Tavern
     currentRecord: GameRecord
-    availableItems = new Set<Item>()
+    inventory = new ItemInventory()
     claimedItemChoiceFloors = new Set<number>()
     pendingItemChoiceFloor?: number
     isHydratingSavedRun = false
@@ -93,6 +94,11 @@ export class Game extends Scene {
     private onBenchDrop?: ({ id, dto }: { id: string; dto: CharacterDto }) => void
     private onBenchCancel?: ({ id }: { id: string }) => void
 
+    private onUiItemDragStart?: (payload: { itemId: string; clientX: number; clientY: number }) => void
+    private onUiItemDragMove?: (payload: { clientX: number; clientY: number }) => void
+    private onUiItemDragEnd?: (payload: { clientX: number; clientY: number; dropped: boolean }) => void
+    private itemGhost?: { item: Item; sprite: Phaser.GameObjects.Image }
+
     perRoundFx: Phaser.GameObjects.Group
 
     constructor() {
@@ -101,6 +107,12 @@ export class Game extends Scene {
 
     get max_characters_in_board() {
         return this.playerTeam?.getMaxBoardCharacters() ?? 1
+    }
+
+    /** Backpack that holds every item the player owns. Kept as a compatibility
+     *  alias for the former `availableItems` loose-item set. */
+    get availableItems(): ItemInventory {
+        return this.inventory
     }
 
     create() {
@@ -159,6 +171,7 @@ export class Game extends Scene {
         EventBus.on("unpause", this.onUnpause)
         this.installUiDragBridge()
         this.installBenchHoverBridge()
+        this.installItemDragBridge()
 
         // clean up listeners on shutdown so hot-reloads or scene restarts don't leak
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.disposeSceneBindings())
@@ -184,6 +197,12 @@ export class Game extends Scene {
         if (this.onBenchHoverLeave) EventBus.off("bench-hover-leave", this.onBenchHoverLeave)
         if (this.onBenchDrop) EventBus.off("bench-drop", this.onBenchDrop)
         if (this.onBenchCancel) EventBus.off("bench-cancel", this.onBenchCancel)
+        if (this.onUiItemDragStart) EventBus.off("ui-item-drag-start", this.onUiItemDragStart)
+        if (this.onUiItemDragMove) EventBus.off("ui-item-drag-move", this.onUiItemDragMove)
+        if (this.onUiItemDragEnd) EventBus.off("ui-item-drag-end", this.onUiItemDragEnd)
+
+        this.itemGhost?.sprite.destroy()
+        this.itemGhost = undefined
 
         this.shopkeeper?.dispose()
         this.tavern?.dispose()
@@ -388,6 +407,80 @@ export class Game extends Scene {
         EventBus.on("bench-cancel", this.onBenchCancel)
     }
 
+    // Items are dragged from the React backpack onto the board. The scene only
+    // owns a lightweight visual ghost; the real Item sprite stays hidden until
+    // it is equipped.
+    private installItemDragBridge() {
+        this.onUiItemDragStart = ({ itemId, clientX, clientY }: { itemId: string; clientX: number; clientY: number }) => {
+            if (this.sceneBindingsDisposed || this.state === "fighting") return
+
+            const item = this.inventory.findById(itemId)
+            if (!item) return
+
+            const { x, y } = this.clientToWorld(clientX, clientY)
+            const sprite = this.add.image(x, y, item.sprite.texture.key).setDepth(9999).setScale(item.sprite.scale)
+            this.itemGhost = { item, sprite }
+            this.grid.showHighlightAtWorld(x, y)
+        }
+        EventBus.on("ui-item-drag-start", this.onUiItemDragStart)
+
+        this.onUiItemDragMove = ({ clientX, clientY }: { clientX: number; clientY: number }) => {
+            if (this.sceneBindingsDisposed || !this.itemGhost) return
+
+            const { x, y } = this.clientToWorld(clientX, clientY)
+            this.itemGhost.sprite.setPosition(x, y)
+            const cell = this.grid.showHighlightAtWorld(x, y)
+            this.emitItemDragTooltip(this.itemGhost.item, cell, clientX, clientY)
+        }
+        EventBus.on("ui-item-drag-move", this.onUiItemDragMove)
+
+        this.onUiItemDragEnd = ({ clientX, clientY, dropped }: { clientX: number; clientY: number; dropped: boolean }) => {
+            if (this.sceneBindingsDisposed) return
+
+            const ghost = this.itemGhost
+            this.itemGhost = undefined
+            this.grid.hideHighlight()
+            Item.resetTooltip()
+
+            if (!ghost) return
+            ghost.sprite.destroy()
+
+            // Dropped inside the backpack panel: the UI handles reordering, the
+            // scene only cleans up its ghost.
+            if (!dropped) return
+
+            const { x, y } = this.clientToWorld(clientX, clientY)
+            this.equipItemFromWorld(ghost.item, x, y)
+        }
+        EventBus.on("ui-item-drag-end", this.onUiItemDragEnd)
+    }
+
+    private emitItemDragTooltip(item: Item, cell: { col: number; row: number } | null, clientX: number, clientY: number) {
+        const pointerPosition = { x: clientX, y: clientY }
+        const creature = cell ? this.playerTeam.getCreatureInCell(cell.col, cell.row) : null
+        const mergeResult = creature?.getMergeResult(item)?.result
+
+        EventBus.emit("item-tooltip", mergeResult ?? item, pointerPosition)
+    }
+
+    private equipItemFromWorld(item: Item, x: number, y: number) {
+        const cell = this.grid.worldToCell(x, y)
+        const creature = cell ? this.playerTeam.getCreatureInCell(cell.col, cell.row) : null
+
+        if (!creature) {
+            // Dropped outside a character: the item simply stays in the backpack.
+            this.inventory.add(item)
+            return
+        }
+
+        const equipped = creature.equipItem(item)
+        if (equipped) {
+            equipped.snapToCreature(creature)
+        } else {
+            this.inventory.add(item)
+        }
+    }
+
     // Map browser client coords -> world coords under the camera, robust to CSS scaling + DPR
     private clientToWorld(clientX: number, clientY: number) {
         // ScaleManager expects *page* coords; add current scroll offset
@@ -428,7 +521,6 @@ export class Game extends Scene {
     spawnItem(key: string, silent = false) {
         const item = ItemRegistry.create(key, this)
         this.availableItems.add(item)
-        item.dropOnBoard()
 
         if (!silent) {
             this.saveProgress()
@@ -439,7 +531,6 @@ export class Game extends Scene {
         for (let count = 1; count <= quantity; count++) {
             const item = ItemRegistry.randomComponent(this)
             this.availableItems.add(item)
-            item.dropOnBoard()
 
             if (!silent) {
                 this.saveProgress()
@@ -716,9 +807,7 @@ export class Game extends Scene {
             version: this.version,
             playerAugments: Array.from(this.playerTeam.augments.values()),
             enemyAugments: Array.from(this.enemyTeam.augments.values()),
-            availableItems: Array.from(this.availableItems.values())
-                .filter((item) => !item.temporarySource)
-                .map((item) => item.key),
+            availableItems: this.inventory.serialize(),
             claimedItemChoiceFloors: Array.from(this.claimedItemChoiceFloors.values()),
         }
         progress.record = this.getCurrentRecord(progress)
@@ -751,8 +840,8 @@ export class Game extends Scene {
                 progress.availableItems?.forEach((item) => this.availableItems.add(ItemRegistry.create(item, this)))
                 progress.playerAugments?.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments?.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
-                this.availableItems.forEach((item) => item.dropOnBoard())
                 this.playerTeam.emitAugments()
+                this.inventory.emit()
             }
         } catch (error) {
             console.error("Error loading saved progress:", error)

@@ -225,7 +225,7 @@ export class Character extends Creature {
                 this.scene.grid.hideDropOverlay()
                 EventBus.emit("sell-character-shopkeeper", this)
 
-                this.items.forEach((item) => item.drop())
+                this.items.forEach((item) => this.scene.availableItems.add(item))
                 return
             }
 
@@ -369,13 +369,17 @@ export class Character extends Creature {
         return super.calculateAttackRange() * Math.max(1, this.scale * 0.75)
     }
 
-    override equipItem(item: Item, fromThiefsGloves = false): void {
-        super.equipItem(item, fromThiefsGloves)
-        if (!fromThiefsGloves) this.scene.availableItems.delete(item)
+    override equipItem(item: Item, fromThiefsGloves = false): Item | undefined {
+        const equipped = super.equipItem(item, fromThiefsGloves)
+        if (!fromThiefsGloves) {
+            if (equipped) this.scene.availableItems.delete(item)
+            else this.scene.availableItems.add(item)
+        }
         if (!this.scene.isHydratingSavedRun && !fromThiefsGloves) {
             this.team.saveCurrentCharacters()
             this.scene.saveProgress()
         }
+        return equipped
     }
 
     override unequipItem(item: Item, fromThiefsGloves = false): void {
@@ -389,7 +393,7 @@ export class Character extends Creature {
 
     onBenchDrop() {
         this.dropToBench = true // tells dragend to skip snapping logic
-        this.items.forEach((item) => item.dropOnBoard())
+        this.items.forEach((item) => this.unequipItem(item))
         this.destroy(true)
         this.team.resetTraits()
         this.team.saveAndEmit()

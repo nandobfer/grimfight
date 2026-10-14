@@ -127,10 +127,15 @@ export class Monster extends Creature {
         }
     }
 
-    override equipItem(item: Item, fromThiefsGloves?: boolean): void {
-        super.equipItem(item, fromThiefsGloves)
-        item.removeDragHandlers()
-        item.snapToCreature(this)
+    override equipItem(item: Item, fromThiefsGloves = false): Item | undefined {
+        const equipped = super.equipItem(item, fromThiefsGloves)
+        if (!equipped) {
+            item.sprite.destroy(true)
+            return undefined
+        }
+        equipped.removeDragHandlers()
+        equipped.snapToCreature(this)
+        return equipped
     }
 
     override unequipItem(item: Item, fromThiefsGloves = false): void {

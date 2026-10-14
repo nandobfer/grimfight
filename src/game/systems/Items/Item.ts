@@ -226,8 +226,9 @@ export class Item {
                 character.equipItem(this)
                 this.hideBorder()
             } else {
+                // Items are never left loose on the board: return them to the backpack.
                 this.user?.unequipItem(this)
-                this.showLooseBorder()
+                this.scene.availableItems.add(this)
             }
 
             // Reset depth after dragging ends
@@ -274,6 +275,7 @@ export class Item {
     snapToCreature(creature: Creature) {
         if (creature.items.size === 3 && this.user !== creature) return
 
+        this.sprite.setVisible(true)
         this.sprite.setScale(this.equiped_scale)
         this.syncPosition(creature, creature.boardX, creature.boardY)
         this.hideBorder()
@@ -313,63 +315,12 @@ export class Item {
         }
     }
 
-    dropOnBoard() {
-        let x = this.scene.background.x
-        x += this.scene.background.x / 2
-
-        this.sprite.setPosition(x, this.scene.background.y)
-        this.drop()
-    }
-
-    drop() {
+    /** Puts the item back into the backpack, hiding its in-world sprite. */
+    store() {
         this.user = undefined
-        this.sprite.setVisible(true)
-
-        // Calculate a random direction and distance for the drop
-        const angle = Phaser.Math.Between(0, 360)
-        const distance = Phaser.Math.Between(0, 100)
-        const targetX = this.sprite.x + Math.cos(Phaser.Math.DegToRad(angle)) * distance
-        const targetY = this.sprite.y + Math.sin(Phaser.Math.DegToRad(angle)) * distance
-
-        // Set initial state (small and transparent)
-        this.sprite.setScale(0.05)
-        this.sprite.setAlpha(0.7)
-
-        // Create a bounce effect with multiple tweens
-        this.scene.tweens.chain({
-            targets: this.sprite,
-            tweens: [
-                {
-                    // First: move to random position with scale up
-                    x: targetX,
-                    y: targetY,
-                    scale: 0.45, // Overshoot a bit
-                    alpha: 1,
-                    duration: 200,
-                    ease: "Back.easeOut",
-                    onComplete: () => {
-                        // Second: slight bounce back
-                        this.scene.tweens.add({
-                            targets: this.sprite,
-                            scale: this.big_scale,
-                            duration: 100,
-                            ease: "Bounce.easeOut",
-                            onComplete: () => {
-                                this.showLooseBorder()
-                            },
-                        })
-                    },
-                },
-            ],
-        })
-
-        // Optional: add a slight rotation
-        this.scene.tweens.add({
-            targets: this.sprite,
-            rotation: Phaser.Math.DegToRad(Phaser.Math.Between(-45, 45)),
-            duration: 300,
-            ease: "Sine.easeOut",
-        })
+        this.sprite.setVisible(false)
+        this.sprite.setPosition(10000, 10000)
+        this.hideBorder()
     }
 
     syncPosition(creature: Creature, x = creature.x, y = creature.y) {

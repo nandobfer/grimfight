@@ -25,7 +25,6 @@ export const ItemAnvilModal: React.FC<ItemAnvilModalProps> = (props) => {
         handleClose()
         const item = ItemRegistry.create(chosenItem.key, props.game)
         props.game.availableItems.add(item)
-        item.dropOnBoard()
         props.game.claimPendingItemChoiceReward()
         setAnvilAvailable(false)
     }
