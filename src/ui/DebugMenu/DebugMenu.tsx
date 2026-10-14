@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, ClickAwayListener, IconButton, Paper, Popper, Tooltip } from "@mui/material"
+import { Box, Button, ClickAwayListener, IconButton, Paper, Popper, Tooltip, Typography } from "@mui/material"
 import { Game } from "../../game/scenes/Game"
 import { DebugFloor } from "./DebugFloor"
 import { DebugGold } from "./DebugGold"
@@ -7,6 +7,7 @@ import { Code } from "@mui/icons-material"
 import { DebugCharacter } from "./DebugCharacter"
 import { DebugItems } from "./DebugItems"
 import { DebugSpeed } from "./DebugSpeed"
+import { debugMenuVersionLabel } from "./debugMenuVersion"
 
 interface DebugMenuProps {
     game: Game
@@ -53,6 +54,9 @@ export const DebugMenu: React.FC<DebugMenuProps> = (props) => {
                         </Box>
                         <DebugCharacter game={game} closeMenu={closeMenu} />
                         <DebugItems game={game} closeMenu={closeMenu} />
+                        <Typography variant="caption" color="text.secondary" sx={{ alignSelf: "center" }}>
+                            {debugMenuVersionLabel}
+                        </Typography>
                     </Paper>
                 </Popper>
             </Box>

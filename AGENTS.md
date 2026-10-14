@@ -187,3 +187,12 @@ Antes de implementar, leia nesta ordem:
 12. Atualizei documentação quando a mudança alterou comportamento, fluxo, contrato ou regra de jogo.
 13. Documentei fórmulas e efeitos em `aicontext/` de forma generalizada, sem cristalizar valores de balanceamento mutáveis.
 14. Mantive testes de gameplay desacoplados de números de balanceamento, salvo quando o usuário pediu explicitamente para travar esses valores.
+
+## 13. Versionamento e commits automáticos
+
+- Antes de efetivar qualquer commit, incremente o campo `version` do `package.json`, seguindo SemVer (`MAJOR.MINOR.PATCH`).
+- Classifique o incremento pelo conjunto de mudanças do commit: MAJOR para alterações incompatíveis; MINOR para novas funcionalidades; PATCH para correções, refatorações, documentação e ajustes internos.
+- Em commits com mudanças de tipos diferentes, aplique o maior incremento necessário; ao subir MAJOR ou MINOR, zere os campos inferiores.
+- Inclua o `package.json` atualizado no mesmo commit da mudança; não crie um commit dedicado apenas ao incremento de versão.
+- Não incremente a versão quando o commit não for efetivado e nunca reduza a versão abaixo do valor vigente.
+- Trate esta seção apenas como política de versionamento: ela não autoriza commits por si só.
