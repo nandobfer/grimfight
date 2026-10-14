@@ -25,7 +25,7 @@ export class Iago extends Character {
     baseMaxMana = 0
     manaLocked = true
     baseCritChance = 10
-    baseSpeed = 60
+    baseSpeed = 100
 
     abilityName = "Steel Tempest"
 
