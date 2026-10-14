@@ -15,6 +15,18 @@ Componentes de UI que precisam de estado da cena atual devem receber a instânci
 A cena transita entre dois estados globais (`GameState`): `idle` e `fighting`. No estado `idle`, o jogador prepara a equipe e itens. `startRound` inicia o combate chamando reset nos times e alterando o estado para `fighting`. 
 O término de um round utiliza `endRoundSoon`, que defere a resolução de vitória ou derrota para evitar inconsistências durante a iteração de update de atores.
 
+### Battle Time And Overtime
+Cada batalha possui um tempo limite de combate ativo gerenciado por `BattleTimer`. A cena alimenta o cronometro apenas enquanto o estado e `fighting`; pausar o jogo ou entrar em `idle` interrompe a contagem.
+
+Quando o tempo acaba, o combate continua, mas a cena aplica um multiplicador de velocidade maior via `setGameSpeed`, acelerando fisica, animacoes, tweens e timers para encurtar batalhas arrastadas. A cena nao encerra a batalha sozinha ao estourar o tempo.
+
+A velocidade efetiva combina a velocidade manual de debug (`setManualGameSpeed`) com o multiplicador de overtime, de modo que a aceleracao automatica nunca sobrescreve a escolha manual. Ao encerrar a batalha, a cena captura se a vitoria aconteceu dentro do tempo antes de sair de `fighting`, volta a velocidade normal e reinicia o cronometro.
+
+A cena publica snapshots do cronometro pelo `EventBus` (`battle-timer`) para a UI exibir o tempo restante e o multiplicador de overtime. O cronometro e um estado transitorio: nao entra na persistencia local.
+
+### Fast Victory Reward
+Vencer antes do tempo concede um bonus de ouro sobre a recompensa normal do floor. O calculo fica em helpers puros (`floorReward`), e `PlayerTeam.grantFloorReward` recebe se a vitoria foi rapida. Vidas extras de floors de boss, loot e a consolacao de derrota nao sao afetados pelo bonus.
+
 Quando a cena carrega personagens do jogador e nao existe composicao salva, ela cria um personagem jogavel aleatorio diretamente no board pelo fluxo normal do `PlayerTeam`.
 
 Durante a hidratacao de uma run salva, a cena bloqueia persistencia intermediaria. Personagens, niveis, posicoes e itens devem ser restaurados antes que qualquer efeito de equipamento ou reset possa regravar o save.

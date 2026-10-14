@@ -14,6 +14,7 @@ import { ItemTooltip } from "./ItemTooltip"
 import { ItemAnvilModal } from "./ItemAnvilModal/ItemAnvilModal"
 import { TavernDrawer } from "./Tavern/TavernDrawer"
 import { DebugMenu } from "./DebugMenu/DebugMenu"
+import { BattleTimer } from "./BattleTimer/BattleTimer"
 import { Menu } from "@mui/icons-material"
 
 export const Ui: React.FC = () => {
@@ -63,6 +64,10 @@ export const Ui: React.FC = () => {
                         </Box>
 
                         <GameMenu game={game} />
+
+                        <Box sx={{ position: "absolute", top: { xs: 1, sm: 2 }, left: "50%", transform: "translateX(-50%)", zIndex: 2 }}>
+                            <BattleTimer game={game} />
+                        </Box>
 
                         <ItemTooltip />
                     </>

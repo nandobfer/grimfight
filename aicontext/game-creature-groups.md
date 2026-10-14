@@ -22,7 +22,7 @@ O time salva personagens por DTO, remove personagens inválidos do board, contro
 
 O limite de personagens no board e derivado do maior nivel entre os personagens atualmente posicionados, respeitando limites absolutos definidos em helper puro para permitir cobertura de teste sem carregar Phaser.
 
-Recompensas de vitória e consolação delegam ganho de gold à cena e renovam a loja, sem fixar fórmulas no contexto.
+Recompensas de vitória e consolação delegam ganho de gold à cena e renovam a loja, sem fixar fórmulas no contexto. A recompensa de vitória considera se a batalha terminou dentro do tempo limite, concedendo um bônus de gold calculado em helper puro (`floorReward`).
 
 ### EnemyTeam
 `EnemyTeam` é o grupo de monstros do encounter atual. Ele especializa `CreatureGroup` para retornar filhos como monstros.
