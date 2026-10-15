@@ -22,7 +22,10 @@ import { EnemyTeam } from "../creature/monsters/EnemyTeam"
 import { GameRecord } from "../systems/GameRecord"
 import { GameRecordTraits } from "../systems/GameRecordTraits"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
-import { Item } from "../systems/Items/Item"
+import { ItemInventory } from "../systems/Items/ItemInventory"
+import type { Item } from "../systems/Items/Item"
+import type { ItemDeposit } from "../systems/Items/ItemDeposit"
+import { InventoryBag } from "../ui/InventoryBag"
 import { Tavern } from "../systems/Tavern"
 import { ArtifactAndCompletedAnvilAugment } from "../systems/Augment/ArtifactAndCompletedAnvilAugment"
 import { BattleTimer, BattleTimerSnapshot, defaultBattleTimerOptions } from "../systems/BattleTimer"
@@ -63,7 +66,8 @@ export class Game extends Scene {
     shopkeeper: Shopkeeper
     tavern: Tavern
     currentRecord: GameRecord
-    availableItems = new Set<Item>()
+    inventory = new ItemInventory()
+    inventoryBag?: InventoryBag
     claimedItemChoiceFloors = new Set<number>()
     pendingItemChoiceFloor?: number
     isHydratingSavedRun = false
@@ -110,6 +114,12 @@ export class Game extends Scene {
         return this.playerTeam?.getMaxBoardCharacters() ?? 1
     }
 
+    /** Backpack that holds every item the player owns. Kept as a compatibility
+     *  alias for the former `availableItems` loose-item set. */
+    get availableItems(): ItemInventory {
+        return this.inventory
+    }
+
     create() {
         this.sceneBindingsDisposed = false
         this.camera = this.cameras.main
@@ -133,6 +143,7 @@ export class Game extends Scene {
 
         this.loadProgress()
         this.loadPlayerCharacters()
+        this.inventoryBag = new InventoryBag(this, this.inventory)
         this.createArenaTorches()
         this.buildFloor()
 
@@ -193,6 +204,9 @@ export class Game extends Scene {
         if (this.onBenchHoverLeave) EventBus.off("bench-hover-leave", this.onBenchHoverLeave)
         if (this.onBenchDrop) EventBus.off("bench-drop", this.onBenchDrop)
         if (this.onBenchCancel) EventBus.off("bench-cancel", this.onBenchCancel)
+
+        this.inventoryBag?.dispose()
+        this.inventoryBag = undefined
 
         this.shopkeeper?.dispose()
         this.tavern?.dispose()
@@ -423,6 +437,11 @@ export class Game extends Scene {
         this.events.emit("gamestate", this.state)
         EventBus.emit("gamestate", this.state)
 
+        // The backpack cannot be rearranged during combat.
+        if (state === "fighting") {
+            this.inventoryBag?.close()
+        }
+
         // Update character count display when entering idle state
         if (state === "idle") {
             this.grid.updateCharacterCount()
@@ -439,8 +458,7 @@ export class Game extends Scene {
 
     spawnItem(key: string, silent = false) {
         const item = ItemRegistry.create(key, this)
-        this.availableItems.add(item)
-        item.dropOnBoard()
+        this.addItemToBag(item)
 
         if (!silent) {
             this.saveProgress()
@@ -450,13 +468,32 @@ export class Game extends Scene {
     spawnItems(quantity: number, silent = false) {
         for (let count = 1; count <= quantity; count++) {
             const item = ItemRegistry.randomComponent(this)
-            this.availableItems.add(item)
-            item.dropOnBoard()
+            this.addItemToBag(item, this.rewardDeposit(count - 1))
 
             if (!silent) {
                 this.saveProgress()
             }
         }
+    }
+
+    /**
+     * Hands an item to the backpack, animating it in from its visible source. Callers
+     * that know where the item physically was (a creature, a drop point) pass their own
+     * `deposit`; rewards and the anvil fall back to the arena delivery point.
+     */
+    addItemToBag(item: Item, deposit?: ItemDeposit) {
+        this.availableItems.add(item, deposit ?? this.rewardDeposit())
+    }
+
+    /** Spreads simultaneous rewards so their fly-in animations do not overlap. */
+    private rewardDeposit(index = 0): ItemDeposit {
+        const point = this.inventoryBag?.deliveryPoint()
+        if (!point) return { animate: false }
+
+        const column = index % 3
+        const row = Math.floor(index / 3)
+
+        return { from: { x: point.x + (column - 1) * 44, y: point.y + (row - 1) * 44 } }
     }
 
     handleLootReward() {
@@ -647,6 +684,8 @@ export class Game extends Scene {
         this.floor = 1
         this.playerLives = starting_player_lives
         this.playerGold = starting_player_gold
+        // Flights from the previous run must not survive the reset.
+        this.inventoryBag?.cancelFlights()
         for (const item of this.availableItems) {
             item.sprite.destroy(true)
         }
@@ -732,9 +771,7 @@ export class Game extends Scene {
             version: this.version,
             playerAugments: Array.from(this.playerTeam.augments.values()),
             enemyAugments: Array.from(this.enemyTeam.augments.values()),
-            availableItems: Array.from(this.availableItems.values())
-                .filter((item) => !item.temporarySource)
-                .map((item) => item.key),
+            availableItems: this.inventory.serialize(),
             claimedItemChoiceFloors: Array.from(this.claimedItemChoiceFloors.values()),
         }
         progress.record = this.getCurrentRecord(progress)
@@ -767,8 +804,8 @@ export class Game extends Scene {
                 progress.availableItems?.forEach((item) => this.availableItems.add(ItemRegistry.create(item, this)))
                 progress.playerAugments?.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments?.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
-                this.availableItems.forEach((item) => item.dropOnBoard())
                 this.playerTeam.emitAugments()
+                this.inventory.emit()
             }
         } catch (error) {
             console.error("Error loading saved progress:", error)

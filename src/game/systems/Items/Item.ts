@@ -3,6 +3,8 @@ import { Game } from "../../scenes/Game"
 import { EventBus } from "../../tools/EventBus"
 import { RNG } from "../../tools/RNG"
 import { ItemRegistry } from "./ItemRegistry"
+import { ITEM_DRAG_BORDER_DEPTH, ITEM_DRAG_DEPTH, ITEM_EQUIPPED_BORDER_DEPTH, ITEM_EQUIPPED_DEPTH } from "./InventoryDepths"
+import type { ItemDeposit } from "./ItemDeposit"
 
 export interface PointerPosition {
     x: number
@@ -56,9 +58,9 @@ export class Item {
                 this.big_scale *= 1.5
             }
 
-            this.sprite = scene.add.image(10000, 10000, texture) // spawnin g outside game canvas
+            this.sprite = scene.add.image(10000, 10000, texture) // spawning outside game canvas
             this.sprite.setScale(this.big_scale)
-            this.sprite.setDepth(1000)
+            this.sprite.setDepth(ITEM_EQUIPPED_DEPTH)
 
             this.border = scene.add
                 .rectangle(this.sprite.x, this.sprite.y, this.sprite.displayWidth + 6, this.sprite.displayHeight + 6)
@@ -132,10 +134,16 @@ export class Item {
     cleanup(_creature: Creature) {}
 
     private handleItemOnPoint(pointer: Phaser.Input.Pointer) {
+        // The backpack panel owns the pointer while it is over the panel: merging
+        // two items is not a backpack gesture.
+        if (this.scene.inventoryBag?.blocksPoint(pointer.worldX, pointer.worldY)) return
+
         const x = Phaser.Math.Clamp(pointer.x, 0, this.scene.scale.width)
         const y = Phaser.Math.Clamp(pointer.y, 0, this.scene.scale.height)
 
         const targetItem = Array.from(this.scene.availableItems).find((item: Item) => {
+            if (!item.sprite.visible) return false
+
             const bounds = item.sprite.getBounds()
             const adjustedBounds = {
                 x: Phaser.Math.Clamp(bounds.x, 0, this.scene.scale.width),
@@ -193,8 +201,9 @@ export class Item {
         })
 
         this.sprite.on("pointerout", () => {
-            if (!this.user) this.showLooseBorder() // back to 0.6 when loose
-            else this.hideBorder()
+            // Items only ever live in the backpack or equipped to a creature, so
+            // leaving hover always hides the highlight border.
+            this.hideBorder()
 
             this.resetTooltip()
         })
@@ -207,8 +216,8 @@ export class Item {
             this.preDrag = { x: this.sprite.x, y: this.sprite.y }
 
             // Set a very high depth to ensure the item is always on top
-            this.sprite.setDepth(9999)
-            this.border.setDepth(10000)
+            this.sprite.setDepth(ITEM_DRAG_DEPTH)
+            this.border.setDepth(ITEM_DRAG_BORDER_DEPTH)
         })
 
         this.sprite.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -226,13 +235,20 @@ export class Item {
                 character.equipItem(this)
                 this.hideBorder()
             } else {
-                this.user?.unequipItem(this)
-                this.showLooseBorder()
+                // Items are never left loose on the board: return them to the
+                // backpack. Dropping straight onto the bag stores the item right away;
+                // anywhere else makes it fly in from the point where it was released.
+                const droppedOnBag = this.scene.inventoryBag?.blocksPoint(pointer.worldX, pointer.worldY) ?? false
+                const deposit: ItemDeposit = droppedOnBag ? { animate: false } : { from: { x: this.sprite.x, y: this.sprite.y } }
+
+                this.user?.unequipItem(this, false, deposit)
+                this.scene.availableItems.add(this, deposit)
+                this.scene.inventoryBag?.handleSlotDrop(this, pointer)
             }
 
-            // Reset depth after dragging ends
-            this.sprite.setDepth(1000)
-            this.border.setDepth(1001)
+            // The item kept its drag depth on purpose: `presentItem` below moves it
+            // back to the layer that matches where it landed.
+            this.scene.inventoryBag?.presentItem(this)
         })
 
         this.sprite.on("pointerup", () => {
@@ -274,6 +290,7 @@ export class Item {
     snapToCreature(creature: Creature) {
         if (creature.items.size === 3 && this.user !== creature) return
 
+        this.sprite.setVisible(true)
         this.sprite.setScale(this.equiped_scale)
         this.syncPosition(creature, creature.boardX, creature.boardY)
         this.hideBorder()
@@ -297,6 +314,10 @@ export class Item {
     }
 
     private handleCreatureOnPoint(pointer: Phaser.Input.Pointer) {
+        // The backpack panel owns the pointer while it is over the panel area,
+        // so creatures behind the panel are never highlighted or equipped.
+        if (this.scene.inventoryBag?.blocksPoint(pointer.worldX, pointer.worldY)) return
+
         const x = pointer.x
         const y = pointer.y
         const cell = this.scene.grid.worldToCell(x, y)
@@ -313,63 +334,30 @@ export class Item {
         }
     }
 
-    dropOnBoard() {
-        let x = this.scene.background.x
-        x += this.scene.background.x / 2
-
-        this.sprite.setPosition(x, this.scene.background.y)
-        this.drop()
+    /** Puts the item back into the backpack, hiding its in-world sprite. */
+    store() {
+        this.user = undefined
+        this.sprite.clearMask()
+        this.sprite.setVisible(false)
+        this.sprite.setPosition(10000, 10000)
+        this.hideBorder()
     }
 
-    drop() {
+    /**
+     * Draws the item inside a backpack slot. The sprite is scaled down to fit
+     * `maxSize` so items of different texture sizes look consistent, and moved to
+     * the backpack layer so the panel never covers it.
+     */
+    showInSlot(x: number, y: number, maxSize: number, depth = ITEM_EQUIPPED_DEPTH) {
+        const largest = Math.max(1, this.sprite.width, this.sprite.height)
+
         this.user = undefined
+        this.sprite.setPosition(x, y)
+        this.sprite.setScale(maxSize / largest)
+        this.sprite.setRotation(0)
+        this.sprite.setDepth(depth)
         this.sprite.setVisible(true)
-
-        // Calculate a random direction and distance for the drop
-        const angle = Phaser.Math.Between(0, 360)
-        const distance = Phaser.Math.Between(0, 100)
-        const targetX = this.sprite.x + Math.cos(Phaser.Math.DegToRad(angle)) * distance
-        const targetY = this.sprite.y + Math.sin(Phaser.Math.DegToRad(angle)) * distance
-
-        // Set initial state (small and transparent)
-        this.sprite.setScale(0.05)
-        this.sprite.setAlpha(0.7)
-
-        // Create a bounce effect with multiple tweens
-        this.scene.tweens.chain({
-            targets: this.sprite,
-            tweens: [
-                {
-                    // First: move to random position with scale up
-                    x: targetX,
-                    y: targetY,
-                    scale: 0.45, // Overshoot a bit
-                    alpha: 1,
-                    duration: 200,
-                    ease: "Back.easeOut",
-                    onComplete: () => {
-                        // Second: slight bounce back
-                        this.scene.tweens.add({
-                            targets: this.sprite,
-                            scale: this.big_scale,
-                            duration: 100,
-                            ease: "Bounce.easeOut",
-                            onComplete: () => {
-                                this.showLooseBorder()
-                            },
-                        })
-                    },
-                },
-            ],
-        })
-
-        // Optional: add a slight rotation
-        this.scene.tweens.add({
-            targets: this.sprite,
-            rotation: Phaser.Math.DegToRad(Phaser.Math.Between(-45, 45)),
-            duration: 300,
-            ease: "Sine.easeOut",
-        })
+        this.hideBorder()
     }
 
     syncPosition(creature: Creature, x = creature.x, y = creature.y) {

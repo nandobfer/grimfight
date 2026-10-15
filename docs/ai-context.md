@@ -112,7 +112,7 @@ Principais campos:
 - `grid`: grade tatica e regras de snap/rows.
 - `shopkeeper`: ponto de venda.
 - `tavern`: ponto de storage/bench.
-- `availableItems`: conjunto de itens soltos no board.
+- `inventory` (`availableItems`): bolsa com todos os itens do jogador; nao existem mais itens soltos no board.
 - `floor`, `playerGold`, `playerLives`.
 - `state`: `"idle"` ou `"fighting"`.
 - `currentRecord`: snapshot parcial da run para historico.
@@ -651,7 +651,7 @@ Arquivo:
 - drag-and-drop;
 - tooltip;
 - snap no personagem;
-- drop no board;
+- armazenamento na bolsa;
 - preview de merge entre itens;
 - equip/unequip com personagem.
 
@@ -668,9 +668,15 @@ Subclasses de item sobrescrevem:
 Ao arrastar um item:
 
 - se soltar sobre personagem valido, equipe;
-- se soltar fora, volta a ser item solto;
-- se pairar sobre outro item compativel, mostra preview do merge resultante;
+- se soltar sobre um slot da bolsa da mesma categoria, reordena dentro da categoria;
+- se soltar sobre o icone ou o painel da bolsa, guarda na hora;
+- se soltar fora, volta para a bolsa voando do ponto onde foi solto;
+- se pairar sobre outro item compativel fora da bolsa, mostra preview do merge resultante;
 - se pairar sobre personagem, pode mostrar preview da composicao final.
+
+Todo item que entra na bolsa por outra origem (desequipar, venda, banco, fusao, loot, recompensa) tambem voa ate o icone, partindo da posicao do personagem, da criatura que gerou o item ou do ponto de entrega na arena. Restaurar um save, consumir um componente em uma fusao e soltar o item sobre a propria bolsa guardam o item sem animacao.
+
+O painel da bolsa tem prioridade sobre o board: enquanto o ponteiro esta sobre a area do painel, criaturas e itens atras dele nao sao considerados.
 
 ### Slot limit
 
@@ -1028,7 +1034,7 @@ Representa `GameProgressDto`:
 - `version`
 - `playerAugments`
 - `enemyAugments`
-- `availableItems`
+- `availableItems` (chaves persistidas da bolsa)
 - `record`
 
 ## `characters`
@@ -1228,9 +1234,11 @@ Nao assumir replay deterministico total da run.
 
 O limite cresce com o floor, mas e capado em `6`. Isso afeta summon automatico, loja e bench.
 
-## 8. `availableItems` representa itens soltos
+## 8. `inventory` e a bolsa de itens
 
-Ao equipar item em `Character`, o item sai desse set. Ao desequipar, volta.
+Ao equipar um item em `Character`, o item sai da bolsa. Ao desequipar, vender, enviar ao bench ou descartar fora de uma criatura, ele volta para a bolsa. Nao existem mais itens soltos no board.
+
+O icone da bolsa fica fixo no canto superior direito do mapa. O grid cresce com o conteudo, respeitando limites de colunas e de linhas visiveis, e passa a rolar quando o conteudo ultrapassa esses limites. A area rolavel e recortada por mascara e itens fora da janela nao recebem hover nem drop. O painel desenha acima das barras de vida das criaturas.
 
 ## 9. Morte e fim de round sao assincronos
 

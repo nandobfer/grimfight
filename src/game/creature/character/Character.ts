@@ -2,6 +2,7 @@
 
 import { Game } from "../../scenes/Game"
 import { Item } from "../../systems/Items/Item"
+import type { ItemDeposit } from "../../systems/Items/ItemDeposit"
 import { ItemRegistry } from "../../systems/Items/ItemRegistry"
 import { maxOfRolls } from "../../tools/Destiny"
 import { EventBus } from "../../tools/EventBus"
@@ -225,7 +226,7 @@ export class Character extends Creature {
                 this.scene.grid.hideDropOverlay()
                 EventBus.emit("sell-character-shopkeeper", this)
 
-                this.items.forEach((item) => item.drop())
+                this.items.forEach((item) => this.scene.availableItems.add(item, this.characterDeposit()))
                 return
             }
 
@@ -369,18 +370,31 @@ export class Character extends Creature {
         return super.calculateAttackRange() * Math.max(1, this.scale * 0.75)
     }
 
-    override equipItem(item: Item, fromThiefsGloves = false): void {
-        super.equipItem(item, fromThiefsGloves)
-        if (!fromThiefsGloves) this.scene.availableItems.delete(item)
+    override equipItem(item: Item, fromThiefsGloves = false): Item | undefined {
+        const equipped = super.equipItem(item, fromThiefsGloves)
+        if (!fromThiefsGloves) {
+            if (equipped) this.scene.availableItems.delete(item)
+            else this.scene.availableItems.add(item, this.characterDeposit())
+        }
         if (!this.scene.isHydratingSavedRun && !fromThiefsGloves) {
             this.team.saveCurrentCharacters()
             this.scene.saveProgress()
         }
+        return equipped
     }
 
-    override unequipItem(item: Item, fromThiefsGloves = false): void {
-        super.unequipItem(item, fromThiefsGloves)
-        if (!fromThiefsGloves) this.scene.availableItems.add(item)
+    /**
+     * Visual context for every transfer that starts on this character: the item flies
+     * into the backpack from the character's own position.
+     */
+    private characterDeposit(): ItemDeposit {
+        return { from: { x: this.x, y: this.y } }
+    }
+
+    override unequipItem(item: Item, fromThiefsGloves = false, deposit: ItemDeposit = { from: { x: this.x, y: this.y } }): void {
+        super.unequipItem(item, fromThiefsGloves, deposit)
+        // Temporary items (Thief's Gloves) are round scoped and never stored.
+        if (!fromThiefsGloves && !item.temporarySource) this.scene.availableItems.add(item, deposit)
         if (!this.scene.isHydratingSavedRun && !fromThiefsGloves) {
             this.team.saveCurrentCharacters()
             this.scene.saveProgress()
@@ -389,7 +403,7 @@ export class Character extends Creature {
 
     onBenchDrop() {
         this.dropToBench = true // tells dragend to skip snapping logic
-        this.items.forEach((item) => item.dropOnBoard())
+        this.items.forEach((item) => this.unequipItem(item))
         this.destroy(true)
         this.team.resetTraits()
         this.team.saveAndEmit()

@@ -156,7 +156,6 @@ export class PlayerTeam extends CreatureGroup {
                     // destroy donor after reaching the keeper
                     for (const item of donor.items) {
                         donor.unequipItem(item)
-                        item.drop()
                     }
                     donor.destroy(true)
                     doneOne()

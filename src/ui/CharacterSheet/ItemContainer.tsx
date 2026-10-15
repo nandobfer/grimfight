@@ -21,8 +21,8 @@ export const ItemContainer: React.FC<ItemContainerProps> = ({ item }) => {
 
     const onClick = () => {
         if (item.user) {
+            // Unequipping returns the item to the backpack.
             item.user.unequipItem(item)
-            item.dropOnBoard()
         }
     }
 

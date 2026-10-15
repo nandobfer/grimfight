@@ -5,6 +5,7 @@ import { Bow } from "./components/Bow"
 import { Cloak } from "./components/Cloak"
 import { Gloves } from "./components/Gloves"
 import { Item } from "./Item"
+import type { InventoryCategory } from "./ItemInventoryLayout"
 import { Rod } from "./components/Rod"
 import { Sword } from "./components/Sword"
 import { Tear } from "./components/Tear"
@@ -148,6 +149,13 @@ export class ItemRegistry {
 
     static isArtifact(item: Item) {
         return this.artifactRegistry.has(item.key)
+    }
+
+    /** Classifies an item into its backpack divider. */
+    static categoryOf(item: Item): InventoryCategory {
+        if (this.artifactRegistry.has(item.key)) return "artifact"
+        if (this.componentRegistry.has(item.key)) return "component"
+        return "completed"
     }
 
     static getComponentRecipes(key: string) {

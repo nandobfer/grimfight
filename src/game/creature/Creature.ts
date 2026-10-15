@@ -8,6 +8,7 @@ import { Heal } from "../fx/Heal"
 import { burstBlood } from "../fx/Blood"
 import { StatusEffect } from "../objects/StatusEffect/StatusEffect"
 import { Item } from "../systems/Items/Item"
+import type { ItemDeposit } from "../systems/Items/ItemDeposit"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { RNG } from "../tools/RNG"
 import { Aura } from "../systems/Aura/Aura"
@@ -1192,7 +1193,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         const result = this.getMergeResult(item)
         if (result) {
             const completedItem = ItemRegistry.create(result.result.key, this.scene)
-            this.unequipItem(result.component)
+            // The consumed component is merged, never stored: no fly-to-backpack effect.
+            this.unequipItem(result.component, false, { animate: false })
             result.component.sprite.destroy(true)
             this.scene.availableItems.delete(item)
             this.scene.availableItems.delete(result.component)
@@ -1215,23 +1217,24 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return false
     }
 
-    equipItem(_item: Item, fromThiefsGloves = false) {
+    equipItem(_item: Item, fromThiefsGloves = false): Item | undefined {
         const item = this.tryMerge(_item)
 
         // thief's gloves conditions
         if (this.hasThiefsGloves() && !fromThiefsGloves) {
-            item.drop()
-            return
+            return this.rejectEquip(item)
         }
         if (Item.isThiefsGloves(item) && this.items.size > 0) {
-            item.drop()
-            return
+            return this.rejectEquip(item)
         }
 
-        if (this.items.size === 3) return
+        if (this.items.size === 3) {
+            return this.rejectEquip(item)
+        }
 
-        if (item.user) {
-            item.user.unequipItem(item)
+        if (item.user && item.user !== this) {
+            // Move the item between owners without routing it through the backpack.
+            item.user.unequipItem(item, true)
         }
 
         this.items.add(item)
@@ -1241,9 +1244,26 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         }
         // Debug: log when adding the move listener
         this.on("move", item.syncPosition, item)
+
+        return item
     }
 
-    unequipItem(item: Item, silent = false) {
+    /** Restores an item that could not be equipped to its previous owner.
+     *  Returns `undefined` so callers can react to the rejected equip. */
+    private rejectEquip(item: Item): undefined {
+        if (item.user && item.user !== this) {
+            item.user.unequipItem(item, true)
+        }
+        item.user = undefined
+        return undefined
+    }
+
+    /**
+     * Removes the item from this creature. `deposit` carries the visual context of the
+     * transfer: subclasses that own the player backpack (`Character`) forward it so the
+     * item flies in from the right spot, the others ignore it.
+     */
+    unequipItem(item: Item, silent = false, _deposit?: ItemDeposit) {
         this.items.delete(item)
         item.user = undefined
         item.cleanup(this)

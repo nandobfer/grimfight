@@ -34,7 +34,7 @@ describe("Item aicontext", () => {
     it("documents item systems and item catalogs without numeric balance values", () => {
         const context = readSource(contextPath)
 
-        for (const heading of ["### Item", "### ItemRegistry", "### Components", "### Completed Items", "### Artifacts", "### Drag Tooltip And Snap", "### Thiefsgloves"]) {
+        for (const heading of ["### Item", "### ItemRegistry", "### Components", "### Completed Items", "### Artifacts", "### Inventory", "### Drag Tooltip And Snap", "### Thiefsgloves"]) {
             expect(context).toContain(heading)
         }
 
@@ -83,8 +83,7 @@ describe("Item base contracts", () => {
         expect(source).toContain("handleItemOnPoint")
         expect(source).toContain("removeDragHandlers()")
         expect(source).toContain("snapToCreature(creature: Creature)")
-        expect(source).toContain("dropOnBoard()")
-        expect(source).toContain("drop()")
+        expect(source).toContain("store()")
         expect(source).toContain("syncPosition(creature: Creature")
     })
 })

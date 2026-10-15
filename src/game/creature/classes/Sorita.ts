@@ -98,8 +98,8 @@ Passive: whenever an enemy dies, she rolls a hundred-sided die and keeps the bes
 
     private dropItem(drop: SoritaDrop): void {
         const item = this.createDropItem(drop)
-        this.scene.availableItems.add(item)
-        item.dropOnBoard()
+        // Sorita's loot flies into the bag from the creature that produced it.
+        this.scene.addItemToBag(item, { from: { x: this.x, y: this.y } })
         this.scene.saveProgress()
     }
 
