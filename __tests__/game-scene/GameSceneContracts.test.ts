@@ -50,8 +50,8 @@ describe("Game Scene contracts", () => {
         expect(source).toContain("onFloorDefeated()")
         expect(source).toContain("this.floor += 1")
         expect(source).toContain("buildFloor()")
-        expect(source).toContain("this.playerTeam.grantFloorReward(this.floor)")
-        expect(playerTeamSource).toContain("grantFloorReward(floor: number)")
+        expect(source).toContain("this.playerTeam.grantFloorReward(this.floor, fastVictory)")
+        expect(playerTeamSource).toContain("grantFloorReward(floor: number, fastVictory = false)")
         expect(playerTeamSource).toContain("if (floor % 10 === 0)")
         expect(playerTeamSource).toContain("this.scene.changePlayerLives(this.scene.playerLives + 3)")
         expect(source).toContain("generateEncounter(this, this.floor)")
@@ -85,6 +85,35 @@ describe("Game Scene contracts", () => {
         expect(source).toContain("CharacterRegistry.random(this)")
         expect(source).toContain("this.playerTeam.add(randomCharacter)")
         expect(source).toContain("this.grid.updateCharacterCount()")
+    })
+
+    it("runs a battle timer that accelerates overtime and rewards fast victories", () => {
+        const source = readSource(join(sceneDir, "Game.ts"))
+        const playerTeamSource = readSource(join(root, "src/game/creature/character/PlayerTeam.ts"))
+
+        expect(source).toContain("new BattleTimer(")
+        expect(source).toContain("this.battleTimer.tick(delta)")
+        expect(source).toContain("this.startBattleTimer()")
+        expect(source).toContain("this.stopBattleTimer()")
+        expect(source).toContain("this.resetBattleTimer()")
+        expect(source).toContain("this.applyGameSpeed()")
+        expect(source).toContain("getBattleTimerSnapshot()")
+        expect(playerTeamSource).toContain("calculateFloorVictoryReward(floor, fastVictory)")
+    })
+
+    it("renders the battle timer through Phaser instead of the React overlay", () => {
+        const source = readSource(join(sceneDir, "Game.ts"))
+        const hudSource = readSource(join(root, "src/game/ui/BattleTimerHud.ts"))
+        const uiSource = readSource(join(root, "src/ui/Ui.tsx"))
+
+        expect(source).toContain("new BattleTimerHud(this)")
+        expect(source).toContain("this.battleTimerHud.update(this.battleTimer)")
+        expect(source).toContain("this.battleTimerHud?.destroy()")
+        expect(source).not.toContain("battle-timer")
+        expect(source).not.toContain("battleTimerBroadcast")
+        expect(hudSource).toContain("scene.add")
+        expect(hudSource).toContain("Phaser.GameObjects.Text")
+        expect(uiSource).not.toContain("BattleTimer")
     })
 
     it("cleans up persistent listeners on scene shutdown", () => {

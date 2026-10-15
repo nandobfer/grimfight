@@ -17,6 +17,7 @@ Lightweight 2D action built with Phaser + React, shipped as a static web build.
 * Augments & Events: Every few floors, pick from random augments that reshape your run. Enemies earn augments on milestones too.
 * Abilities With Style: From Dracula’s blood hunt to Rogue’s blink-flurry and Ymir’s freezing nova, each unit has a defining kit.
 * Roguelite Loop: 10 lives, escalating floors, gold rewards, occasional loot drops, and run records saved locally.
+* Timed Battles: Every fight has a time limit. Outlast the clock and the battle speeds up; win before time runs out for bonus gold.
 * Satisfying Juice: Damage numbers, glow/border highlights, blood bursts, lighting, and smooth tweened movement.
 
 ## How to Play
@@ -24,6 +25,7 @@ Lightweight 2D action built with Phaser + React, shipped as a static web build.
 * Drag heroes from your roster/bench onto the grid.
 * Click the backpack fixed in the top-right corner of the map to open its panel, split into Artifact, Completed and Component dividers. The grid grows with your loot and scrolls once it fills three rows; drag an item out of it onto a hero to equip or merge. Anything that lands in the backpack flies in and settles on its slot.
 * Press Space to start the round.
+* Win before the battle timer runs out for a gold bonus. If the timer expires, the fight continues at double speed until one side is wiped.
 * Win the floor to earn gold, loot, and augments at milestones. Lose all lives and your run ends (your record is saved).
 
 (Dev only) D: toggle physics debug.
