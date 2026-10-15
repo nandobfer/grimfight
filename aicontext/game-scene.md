@@ -22,7 +22,9 @@ Quando o tempo acaba, o combate continua, mas a cena aplica um multiplicador de 
 
 A velocidade efetiva combina a velocidade manual de debug (`setManualGameSpeed`) com o multiplicador de overtime, de modo que a aceleracao automatica nunca sobrescreve a escolha manual. Ao encerrar a batalha, a cena captura se a vitoria aconteceu dentro do tempo antes de sair de `fighting`, volta a velocidade normal e reinicia o cronometro.
 
-A cena publica snapshots do cronometro pelo `EventBus` (`battle-timer`) para a UI exibir o tempo restante e o multiplicador de overtime. O cronometro e um estado transitorio: nao entra na persistencia local.
+A leitura do cronometro e desenhada pela propria cena Phaser: o HUD acompanha o estado do `BattleTimer` e projeta o tempo restante ou o multiplicador de overtime em um texto, sem overlay React e sem emissao de eventos por segundo. O cronometro e um estado transitorio: nao entra na persistencia local.
+
+O HUD e criado junto do controlador, atualizado durante o combate, ocultado fora dele e destruido no cleanup da cena. A cena nao recria o HUD a cada round.
 
 ### Fast Victory Reward
 Vencer antes do tempo concede um bonus de ouro sobre a recompensa normal do floor. O calculo fica em helpers puros (`floorReward`), e `PlayerTeam.grantFloorReward` recebe se a vitoria foi rapida. Vidas extras de floors de boss, loot e a consolacao de derrota nao sao afetados pelo bonus.

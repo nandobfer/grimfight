@@ -97,9 +97,23 @@ describe("Game Scene contracts", () => {
         expect(source).toContain("this.stopBattleTimer()")
         expect(source).toContain("this.resetBattleTimer()")
         expect(source).toContain("this.applyGameSpeed()")
-        expect(source).toContain("EventBus.emit(\"battle-timer\"")
         expect(source).toContain("getBattleTimerSnapshot()")
         expect(playerTeamSource).toContain("calculateFloorVictoryReward(floor, fastVictory)")
+    })
+
+    it("renders the battle timer through Phaser instead of the React overlay", () => {
+        const source = readSource(join(sceneDir, "Game.ts"))
+        const hudSource = readSource(join(root, "src/game/ui/BattleTimerHud.ts"))
+        const uiSource = readSource(join(root, "src/ui/Ui.tsx"))
+
+        expect(source).toContain("new BattleTimerHud(this)")
+        expect(source).toContain("this.battleTimerHud.update(this.battleTimer)")
+        expect(source).toContain("this.battleTimerHud?.destroy()")
+        expect(source).not.toContain("battle-timer")
+        expect(source).not.toContain("battleTimerBroadcast")
+        expect(hudSource).toContain("scene.add")
+        expect(hudSource).toContain("Phaser.GameObjects.Text")
+        expect(uiSource).not.toContain("BattleTimer")
     })
 
     it("cleans up persistent listeners on scene shutdown", () => {

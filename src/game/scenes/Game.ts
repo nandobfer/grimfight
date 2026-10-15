@@ -26,6 +26,7 @@ import { Item } from "../systems/Items/Item"
 import { Tavern } from "../systems/Tavern"
 import { ArtifactAndCompletedAnvilAugment } from "../systems/Augment/ArtifactAndCompletedAnvilAugment"
 import { BattleTimer, BattleTimerSnapshot, defaultBattleTimerOptions } from "../systems/BattleTimer"
+import { BattleTimerHud } from "../ui/BattleTimerHud"
 
 export type GameState = "fighting" | "idle"
 
@@ -44,9 +45,6 @@ export interface GameProgressDto {
 export const starting_player_lives = 10
 export const starting_player_gold = 1
 export const max_bench_size = Infinity
-
-/** How often the scene pushes a battle timer snapshot to the UI, in milliseconds. */
-const battleTimerBroadcastIntervalMs = 250
 
 export class Game extends Scene {
     version = "v1.1.0"
@@ -71,8 +69,8 @@ export class Game extends Scene {
     isHydratingSavedRun = false
 
     battleTimer: BattleTimer
+    battleTimerHud: BattleTimerHud
     private manualGameSpeed = 1
-    private battleTimerBroadcast?: Phaser.Time.TimerEvent
     private fastVictory = false
 
     playerGold = starting_player_gold
@@ -126,6 +124,7 @@ export class Game extends Scene {
         this.shopkeeper = new Shopkeeper(this)
         this.tavern = new Tavern(this)
         this.battleTimer = new BattleTimer(defaultBattleTimerOptions)
+        this.battleTimerHud = new BattleTimerHud(this)
 
         this.configurePhysics()
         this.createLight()
@@ -198,8 +197,8 @@ export class Game extends Scene {
         this.shopkeeper?.dispose()
         this.tavern?.dispose()
         this.playerTeam?.damageChart?.dispose?.()
-        this.stopBattleTimerBroadcast()
         this.battleTimer?.reset()
+        this.battleTimerHud?.destroy()
         this.dragFromBoard.clear()
         this.uiGhost = undefined
     }
@@ -937,43 +936,22 @@ export class Game extends Scene {
         this.fastVictory = false
         this.battleTimer.start()
         this.applyGameSpeed()
-        this.broadcastBattleTimer()
-        this.scheduleBattleTimerBroadcast()
+        this.battleTimerHud.update(this.battleTimer)
     }
 
     /** Capture whether the battle ended within the time limit, then stop the timer. */
     private stopBattleTimer() {
         this.fastVictory = this.battleTimer.isRunning && !this.battleTimer.isExpired
         this.battleTimer.stop()
-        this.stopBattleTimerBroadcast()
         this.applyGameSpeed()
-        this.broadcastBattleTimer()
+        this.battleTimerHud.update(this.battleTimer)
     }
 
     private resetBattleTimer() {
         this.fastVictory = false
         this.battleTimer.reset()
-        this.stopBattleTimerBroadcast()
         this.applyGameSpeed()
-        this.broadcastBattleTimer()
-    }
-
-    private scheduleBattleTimerBroadcast() {
-        this.stopBattleTimerBroadcast()
-        this.battleTimerBroadcast = this.time.addEvent({
-            delay: battleTimerBroadcastIntervalMs,
-            loop: true,
-            callback: () => this.broadcastBattleTimer(),
-        })
-    }
-
-    private stopBattleTimerBroadcast() {
-        this.battleTimerBroadcast?.remove(false)
-        this.battleTimerBroadcast = undefined
-    }
-
-    private broadcastBattleTimer() {
-        EventBus.emit("battle-timer", this.getBattleTimerSnapshot())
+        this.battleTimerHud.update(this.battleTimer)
     }
 
     update(_time: number, delta: number): void {
@@ -983,10 +961,13 @@ export class Game extends Scene {
             return
         }
 
-        if (this.state === "fighting" && this.battleTimer.tick(delta)) {
-            // Battle time ran out: switch to overtime speed.
-            this.applyGameSpeed()
-            this.broadcastBattleTimer()
+        if (this.state === "fighting") {
+            if (this.battleTimer.tick(delta)) {
+                // Battle time ran out: switch to overtime speed.
+                this.applyGameSpeed()
+            }
+
+            this.battleTimerHud.update(this.battleTimer)
         }
     }
 }
