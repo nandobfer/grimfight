@@ -10,9 +10,15 @@
   socket rootless em SSH, transfere imagem/manifests via SCP para releases isoladas,
   confere checksum, importa imagem e recria o serviço sem build/pull. Confere o ID
   efetivo da imagem e disponibilidade HTTP no servidor.
-- `docker-compose.deploy.yml` recebe `GRIMFIGHT_IMAGE` e impede pull. O Compose
-  usa explicitamente o diretório de produção e seu `.env`; não altera o checkout,
-  não roda git pull, não muda o proxy nginx e não envia secrets no artefato.
+- `docker-compose.deploy.yml` recebe `GRIMFIGHT_IMAGE`, impede pull e fixa o
+  `container_name` de produção. O Compose usa explicitamente o diretório de
+  produção e seu `.env`; não altera o checkout, não roda git pull, não muda o
+  proxy nginx e não envia secrets no artefato.
+- O compose base publica a porta interna fixa `8080` em todas as interfaces
+  (`0.0.0.0:${PORT}`), então a aplicação responde direto em IP:porta sem
+  depender de proxy reverso; `PORT` é obrigatório e vem do `.env`. O compose base
+  não fixa `container_name`, permitindo que prévias subam em projeto Compose
+  isolado (`docker compose -p <projeto>`).
 - Mantém manifests/imagens para rollback manual; remove apenas o arquivo da imagem
   após a tentativa de recriação. Não há rollback automático ou prune global.
 - O deploy executa TypeScript com Node nativo, sem instalar dependências. Cache de
