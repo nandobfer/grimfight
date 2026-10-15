@@ -6,12 +6,13 @@ services:
       target: runner
       network: host
     image: nandoburgos/grimfight
-    container_name: grimfight
     restart: always
     ports:
-      # O nginx do container escuta fixo em 8080; publica só em 127.0.0.1 e o
-      # nginx do host faz o proxy reverso (TLS). PORT vem do .env.
-      - "127.0.0.1:${PORT:?defina PORT no .env}:8080"
+      # O nginx do container escuta fixo em 8080. A publicação é feita em todas
+      # as interfaces (0.0.0.0) para o serviço responder direto em IP:porta, sem
+      # exigir proxy reverso; prévias do Opex usam a mesma publicação com outra
+      # PORT. PORT é lido do .env.
+      - "0.0.0.0:${PORT:?defina PORT no .env}:8080"
     environment:
       NODE_ENV: production
     deploy:

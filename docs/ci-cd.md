@@ -12,7 +12,8 @@ Não utiliza registry, build no servidor ou pull de imagem em produção.
 - Diretório: `/home/burgos/code/grimfight`.
 - Projeto/serviço Compose: `grimfight`.
 - Imagem: `nandoburgos/grimfight:<sha-do-commit>`, plataforma `linux/amd64`.
-- `.env` existente: `PORT=4008`; healthcheck: `http://127.0.0.1:4008/`.
+- `.env` existente: `PORT=4008`; healthcheck: `http://127.0.0.1:4008/` (a porta é
+  publicada em todas as interfaces; o healthcheck continua usando o loopback do servidor).
 
 Imagem e plataforma estão fixadas no `env` do workflow. Não há build args públicos.
 O nginx do host e o `.env` não são alterados. O servidor precisa de Docker Compose,
@@ -144,6 +145,28 @@ No primeiro deploy, o container antigo pode usar uma tag sem release em `.deploy
 Nesse caso, use os manifests da primeira release com a referência antiga mostrada
 no log. Não use `docker restart`: ele não troca a imagem.
 
+## Prévias acessíveis por IP:porta
+
+O compose base publica a porta interna `8080` em todas as interfaces
+(`0.0.0.0:${PORT}`) e não fixa `container_name`. Uma prévia sobe com projeto
+Compose isolado e uma `PORT` da faixa reservada, sem tocar no container de produção:
+
+```bash
+PORT=7091 docker compose -p grimfight-gri-14 up -d --build
+```
+
+- `PORT` é obrigatório (o compose falha cedo sem ele) e é a única variável
+  necessária para trocar a porta publicada; o nginx do container continua na `8080`.
+- Como o nome do container não é fixado no compose base, `-p <projeto>` evita
+  colisão com o container `grimfight` de produção.
+- Não é necessário editar o nginx do host nem criar proxy reverso para abrir a
+  prévia por IP:porta; o proxy de produção continua funcionando via
+  `127.0.0.1:${PORT}` (TLS).
+- O firewall do host/provedor precisa liberar a porta reservada: bind correto não
+  abre porta bloqueada externamente.
+- Confira a configuração resolvida antes de subir, sem executar build:
+  `PORT=7091 docker compose -p grimfight-gri-14 config`.
+
 ## Troubleshooting
 
 - Cache do pnpm: instalar pnpm **antes** de setup-node no job Test; no deploy,
@@ -151,7 +174,8 @@ no log. Não use `docker restart`: ele não troca a imagem.
 - `Permission denied`: confira a chave pública e permissões `700`/`600` do SSH.
 - Host key: o secret precisa corresponder exatamente ao IP configurado; confira fingerprint.
 - Docker rootless: o daemon de `burgos` precisa estar ativo em sessões SSH não interativas.
-- Healthcheck: confira `PORT=4008`, logs do container e o bind em `127.0.0.1`.
+- Healthcheck: confira `PORT=4008`, logs do container e a publicação da porta em
+  todas as interfaces (`0.0.0.0`). O proxy do host continua apontando para `127.0.0.1:4008`.
 - Falta de secret/variable: falha antes de qualquer alteração remota.
 - Espaço em disco: mantenha releases/imagens de rollback necessárias; não use prune global
   neste host, que pode executar outros projetos.

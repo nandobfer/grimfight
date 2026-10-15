@@ -1,5 +1,9 @@
 # Recebe a imagem já construída pelo GitHub; não busca imagem em registry.
+# Este override é aplicado apenas em produção: o compose base não fixa o nome do
+# container, então prévias podem subir em projeto Compose isolado (`-p`) sem
+# colidir com o container de produção. Produção mantém o nome estável aqui.
 services:
   grimfight:
     image: ${GRIMFIGHT_IMAGE:?defina GRIMFIGHT_IMAGE (repositorio:tag)}
     pull_policy: never
+    container_name: grimfight

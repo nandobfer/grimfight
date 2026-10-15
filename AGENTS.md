@@ -130,7 +130,7 @@ Antes de implementar, leia nesta ordem:
 - Desenvolvimento web: `pnpm dev-nolog`.
 - Build web: `pnpm build-nolog`.
 - Deploy (Docker): `docker compose up -d --build` (build da imagem + sobe o container nginx).
-- O nginx do container escuta na porta fixa `8080`; o compose publica em `127.0.0.1:${PORT}` (rede bridge) e o nginx do host faz proxy reverso. `PORT` é lido do `.env`.
+- O nginx do container escuta na porta fixa `8080`; o compose publica em `0.0.0.0:${PORT}` (rede bridge), então produção e prévias respondem direto em IP:porta, sem depender de proxy reverso; o proxy do host continua funcionando via `127.0.0.1:${PORT}`. `PORT` é lido do `.env`. O `container_name` de produção é fixado somente em `docker-compose.deploy.yml`; o compose base não fixa nome, para que prévias usem projeto Compose isolado (`-p`) sem colisão.
 - Não use `npm install`, `npm run`, `yarn` ou `yarn.lock` como fonte de verdade.
 - Arquivos `package-lock.json` e `yarn.lock`, se presentes, devem ser tratados como legado até a migração completa para `pnpm-lock.yaml`.
 
