@@ -54,13 +54,19 @@ const PANEL_PADDING = 12
 const PANEL_RADIUS = 10
 const PANEL_GAP = 12
 const VIEWPORT_MARGIN = 8
-const HEADER_HEIGHT = 26
+const TITLE_ROW_HEIGHT = 22
+const LEGEND_ROW_HEIGHT = 18
+/** Title plus the compact category legend that replaced the old divider rows. */
+const HEADER_HEIGHT = TITLE_ROW_HEIGHT + LEGEND_ROW_HEIGHT
 const ARENA_MARGIN = 6
 
 const SLOT_SIZE = 46
+/** The one and only spacing of the grid: columns, rows and categories share it. */
 const SLOT_GAP = 6
 const SLOT_ICON_INSET = 10
-const DIVIDER_HEIGHT = 26
+
+const LEGEND_GAP = 10
+const LEGEND_FONT_SIZE = 11
 
 /** Grid caps requested for the backpack: 5 columns wide, 3 rows before scrolling. */
 const MAX_COLUMNS = 5
@@ -88,7 +94,19 @@ const SCROLLBAR_THUMB_HOVER = 0xc0a06a
 
 const TEXT_COLOR = "#f2e2c4"
 const MUTED_COLOR = "#b7a184"
-const ACCENT_COLOR = "#ffd98a"
+
+/** One colour per category, shared by the header legend and its separator line. */
+const CATEGORY_LINE_COLORS: Record<InventoryCategory, number> = {
+    artifact: 0xd9a441,
+    completed: 0x6fa8d4,
+    component: 0x8fbf6f,
+}
+
+const CATEGORY_TEXT_COLORS: Record<InventoryCategory, string> = {
+    artifact: "#e5b662",
+    completed: "#8fc0e8",
+    component: "#a6d08a",
+}
 
 /** Matches the Item drag threshold so a press needs real movement to become a drag. */
 const DRAG_THRESHOLD = 32
@@ -99,13 +117,17 @@ const CATEGORY_LABELS: Record<InventoryCategory, string> = {
     component: "Componente",
 }
 
+/** Header legend entry for a category; the bullet doubles as its colour mark. */
+function legendLabel(category: InventoryCategory): string {
+    return `\u2022 ${CATEGORY_LABELS[category]}`
+}
+
 export class InventoryBag {
     private readonly scene: Game
     private readonly inventory: ItemInventory
     private readonly metrics: GridMetrics = {
         slotSize: SLOT_SIZE,
         gap: SLOT_GAP,
-        dividerHeight: DIVIDER_HEIGHT,
         maxColumns: MAX_COLUMNS,
         maxRows: MAX_ROWS,
     }
@@ -238,16 +260,18 @@ export class InventoryBag {
 
         for (const category of INVENTORY_CATEGORIES) {
             this.categoryLabels.push(
-                scene.add.text(0, 0, CATEGORY_LABELS[category], {
-                    fontSize: "13px",
-                    fontFamily: "Arial",
-                    color: ACCENT_COLOR,
-                })
+                scene.add
+                    .text(0, 0, legendLabel(category), {
+                        fontSize: `${LEGEND_FONT_SIZE}px`,
+                        fontFamily: "Arial",
+                        color: CATEGORY_TEXT_COLORS[category],
+                    })
+                    .setOrigin(0, 0)
             )
         }
 
-        this.content.add([this.contentGraphics, ...this.categoryLabels])
-        this.panel.add([this.panelGraphics, this.titleText, this.closeText, this.emptyText, this.content])
+        this.content.add([this.contentGraphics])
+        this.panel.add([this.panelGraphics, this.titleText, this.closeText, this.emptyText, this.content, ...this.categoryLabels])
 
         this.scrollTrack = scene.add.rectangle(0, 0, SCROLLBAR_WIDTH, 1, SCROLLBAR_TRACK, 0.7).setOrigin(0, 0).setDepth(PANEL_UI_DEPTH)
         this.thumbHitArea = new Phaser.Geom.Rectangle(0, 0, SCROLLBAR_WIDTH, 1)
@@ -286,7 +310,15 @@ export class InventoryBag {
     }
 
     private contentWidth(): number {
-        return Math.max(this.layout.gridWidth, MIN_CONTENT_WIDTH)
+        return Math.max(this.layout.gridWidth, MIN_CONTENT_WIDTH, this.legendWidth())
+    }
+
+    /** Width the one-line category legend needs so no label is ever clipped. */
+    private legendWidth(): number {
+        const text = this.categoryLabels.reduce((total, label) => total + label.width, 0)
+        const gaps = Math.max(0, this.categoryLabels.length - 1) * LEGEND_GAP
+
+        return text + gaps
     }
 
     /** Panel-local rect of the scroll window. */
@@ -552,6 +584,12 @@ export class InventoryBag {
         this.titleText.setPosition(PANEL_PADDING, PANEL_PADDING)
         this.closeText.setPosition(this.panelWidth - PANEL_PADDING, PANEL_PADDING - 2)
         this.emptyText.setPosition(PANEL_PADDING + window.width / 2, window.y + window.height / 2)
+
+        let legendX = PANEL_PADDING
+        for (const label of this.categoryLabels) {
+            label.setPosition(legendX, PANEL_PADDING + TITLE_ROW_HEIGHT)
+            legendX += label.width + LEGEND_GAP
+        }
         this.scrollTrack
             .setPosition(this.panelWidth - PANEL_PADDING - SCROLLBAR_WIDTH + 2, window.y)
             .setSize(SCROLLBAR_WIDTH, window.height)
@@ -578,7 +616,7 @@ export class InventoryBag {
         this.emptyText.setVisible(this.layout.rows === 0)
     }
 
-    /** Draws the slots and the labelled dividers in content-local coordinates. */
+    /** Draws the slots and the thin category separators in content-local coordinates. */
     private drawContent() {
         const graphics = this.contentGraphics
         const layout = this.layout
@@ -600,17 +638,13 @@ export class InventoryBag {
             }
         }
 
+        // A category is set apart by a thin line drawn inside the regular row gap,
+        // so grouping items never widens the spacing between two rows.
         layout.dividerTops.forEach((top, index) => {
             const run = layout.runs[index + 1]
-            const label = this.categoryLabels[index]
 
-            graphics.lineStyle(1, DIVIDER_COLOR, 0.7).lineBetween(0, top + DIVIDER_HEIGHT - 6, layout.gridWidth, top + DIVIDER_HEIGHT - 6)
-            label.setPosition(0, top + 2).setText(CATEGORY_LABELS[run.category]).setVisible(true)
+            graphics.lineStyle(1, CATEGORY_LINE_COLORS[run.category], 0.6).lineBetween(0, top, this.contentWidth(), top)
         })
-
-        for (let index = layout.dividerTops.length; index < this.categoryLabels.length; index++) {
-            this.categoryLabels[index].setVisible(false)
-        }
     }
 
     /** Places every held item on its cell, storing the ones outside the window. */

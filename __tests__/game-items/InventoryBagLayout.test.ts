@@ -15,7 +15,7 @@ import {
 } from "../../src/game/systems/Items/InventoryBagLayout"
 
 /** Mirrors the values the Phaser backpack uses. */
-const metrics: GridMetrics = { slotSize: 46, gap: 6, dividerHeight: 26, maxColumns: 5, maxRows: 3 }
+const metrics: GridMetrics = { slotSize: 46, gap: 6, maxColumns: 5, maxRows: 3 }
 
 const region = { x: 0, y: 0, width: 400, height: 300 }
 const bagSize = { width: 74, height: 74 }
@@ -80,19 +80,23 @@ describe("inventory bag anchor", () => {
 describe("inventory panel placement", () => {
     const panelSize = { width: 254, height: 200 }
 
-    it("hangs the panel below the bag, right-aligned with it", () => {
-        const bag = topRightAnchor(region, bagSize, 6)
+    it("hangs the panel to the left of the bag, top-aligned with it", () => {
+        const bag = { x: 700, y: 400 }
         const position = attachedPanelPosition(bag, bagSize, viewport, panelSize, 12, 8)
 
-        expect(position.x + panelSize.width).toBe(bag.x + bagSize.width / 2)
-        expect(position.y).toBe(bag.y + bagSize.height / 2 + 12)
+        expect(position.x + panelSize.width).toBe(bag.x - bagSize.width / 2 - 12)
+        expect(position.y).toBe(bag.y - bagSize.height / 2)
+        expect(position.x + panelSize.width).toBeLessThan(bag.x - bagSize.width / 2)
     })
 
-    it("flips above the bag when there is no room below", () => {
-        const bag = { x: 700, y: viewport.height - 40 }
-        const position = attachedPanelPosition(bag, bagSize, viewport, panelSize, 12, 8)
+    it("never covers the icon, whatever the panel height", () => {
+        const bag = { x: 700, y: 400 }
 
-        expect(position.y).toBe(bag.y - bagSize.height / 2 - 12 - panelSize.height)
+        for (const height of [80, 200, 520]) {
+            const position = attachedPanelPosition(bag, bagSize, viewport, { width: panelSize.width, height }, 12, 8)
+
+            expect(position.x + panelSize.width).toBeLessThanOrEqual(bag.x - bagSize.width / 2 - 12)
+        }
     })
 
     it("always keeps the panel inside the viewport", () => {
@@ -161,8 +165,43 @@ describe("inventory grid growth", () => {
         expect(layout.rows).toBe(3)
         expect(layout.runs).toHaveLength(3)
         expect(layout.dividerTops).toHaveLength(2)
-        expect(layout.contentHeight).toBe(3 * rowHeight + 2 * metrics.dividerHeight)
+        expect(layout.contentHeight).toBe(3 * rowHeight + 2 * metrics.gap)
         expect(layout.scrollRange).toBe(0)
+    })
+
+    it("keeps the gap between rows equal to the gap between columns", () => {
+        const layout = bagContentLayout(counts(7, 2, 6), metrics)
+
+        // Every consecutive pair of rows, inside a category or across two of them,
+        // is separated by exactly one stride.
+        expect(layout.rowTops.length).toBeGreaterThan(2)
+        for (let index = 1; index < layout.rowTops.length; index++) {
+            expect(layout.rowTops[index] - layout.rowTops[index - 1]).toBe(rowStride)
+        }
+
+        // The horizontal stride is the same value, so both axes share one spacing.
+        const first = cellRect(0, layout.rowTops[0], { x: 0, y: 0 }, metrics)
+        const second = cellRect(1, layout.rowTops[0], { x: 0, y: 0 }, metrics)
+
+        expect(second.x - first.x).toBe(rowStride)
+        expect(layout.gridWidth).toBe(layout.columns * rowHeight + (layout.columns - 1) * metrics.gap)
+        expect(layout.contentHeight).toBe(layout.rows * rowHeight + (layout.rows - 1) * metrics.gap)
+    })
+
+    it("draws each category separator inside the regular row gap", () => {
+        const layout = bagContentLayout(counts(3, 3, 3), metrics)
+
+        expect(layout.dividerTops).toHaveLength(2)
+
+        for (const top of layout.dividerTops) {
+            const rowAbove = layout.rowTops.filter((rowTop) => rowTop + rowHeight <= top).pop()
+            const rowBelow = layout.rowTops.find((rowTop) => rowTop >= top)
+
+            expect(rowAbove).toBeDefined()
+            expect(rowBelow).toBeDefined()
+            expect(top - (rowAbove! + rowHeight)).toBe(metrics.gap / 2)
+            expect(rowBelow! - top).toBe(metrics.gap / 2)
+        }
     })
 
     it("gives every category a contiguous run so a divider never splits a row", () => {
@@ -191,7 +230,7 @@ describe("inventory grid growth", () => {
             expect(top).toBeGreaterThan(0)
             expect(top).toBeLessThan(layout.contentHeight)
         }
-        expect(layout.contentHeight).toBeLessThanOrEqual(layout.rows * rowStride + layout.dividerTops.length * metrics.dividerHeight)
+        expect(layout.contentHeight).toBeLessThanOrEqual(layout.rows * rowStride)
     })
 })
 

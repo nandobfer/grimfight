@@ -228,6 +228,26 @@ describe("InventoryBag contracts", () => {
         expect(layout).not.toContain("cornerSpawnPosition")
     })
 
+    it("spaces rows and columns with the same gap instead of divider rows", () => {
+        const source = readSource(bagPath)
+        const layout = readSource(join(itemsDir, "InventoryBagLayout.ts"))
+
+        expect(source).toContain("const SLOT_GAP = 6")
+        expect(source).toContain("gap: SLOT_GAP")
+        expect(source).not.toContain("DIVIDER_HEIGHT")
+        expect(layout).not.toContain("dividerHeight")
+    })
+
+    it("opens the panel to the left of the icon instead of below it", () => {
+        const layout = readSource(join(itemsDir, "InventoryBagLayout.ts"))
+        const start = layout.indexOf("export function attachedPanelPosition(")
+        const position = layout.slice(start, layout.indexOf("/**", start))
+
+        expect(position).toContain("bag.x - bagSize.width / 2 - gap - panelSize.width")
+        expect(position).toContain("bag.y - bagSize.height / 2")
+        expect(position).not.toContain("bag.y + bagSize.height / 2 + gap")
+    })
+
     it("clips the scroll window and keeps out-of-window items inert", () => {
         const source = readSource(bagPath)
 
