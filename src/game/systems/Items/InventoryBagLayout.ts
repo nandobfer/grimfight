@@ -28,10 +28,12 @@ export interface Point {
 export interface GridMetrics {
     /** Side of a single item slot. */
     slotSize: number
-    /** Space between two neighbouring slots. */
+    /**
+     * Space between two neighbouring slots. It is the only spacing of the grid:
+     * the same value separates two columns, two rows and two categories, so the
+     * gap between rows always matches the gap between columns.
+     */
     gap: number
-    /** Height of the labelled divider drawn between two categories. */
-    dividerHeight: number
     /** Hard cap on how wide the grid is allowed to grow. */
     maxColumns: number
     /** Hard cap on how many rows are visible before the grid scrolls. */
@@ -56,9 +58,13 @@ export interface BagContentLayout {
     runs: CategoryRun[]
     /** Content-local y of every grid row. */
     rowTops: number[]
-    /** Content-local y of every category divider strip. */
+    /**
+     * Content-local y of the thin separator drawn between two categories. It sits
+     * in the middle of the regular row gap, so splitting categories never adds
+     * vertical space to the grid.
+     */
     dividerTops: number[]
-    /** Full height of the content, including dividers. */
+    /** Full height of the content, including the separators between categories. */
     contentHeight: number
     /** Height of the visible window. */
     viewportHeight: number
@@ -122,24 +128,20 @@ export function topRightAnchor(region: Rect, size: Size, margin = 0): Point {
 }
 
 /**
- * Top-left position for the panel: hanging below the bag, right-aligned with it,
- * flipping above the bag when there is no room below and clamped to the viewport.
+ * Top-left position for the panel: it hangs to the left of the bag icon, its top
+ * aligned with the icon's top, clamped to the viewport.
  */
 export function attachedPanelPosition(bag: Point, bagSize: Size, viewport: Rect, panelSize: Size, gap: number, margin = 0): Point {
-    let x = bag.x + bagSize.width / 2 - panelSize.width
-    let y = bag.y + bagSize.height / 2 + gap
-
-    if (y + panelSize.height > viewport.y + viewport.height - margin) {
-        y = bag.y - bagSize.height / 2 - gap - panelSize.height
-    }
+    const x = bag.x - bagSize.width / 2 - gap - panelSize.width
+    const y = bag.y - bagSize.height / 2
 
     const maxX = Math.max(viewport.x + margin, viewport.x + viewport.width - panelSize.width - margin)
     const maxY = Math.max(viewport.y + margin, viewport.y + viewport.height - panelSize.height - margin)
 
-    x = clamp(x, viewport.x + margin, maxX)
-    y = clamp(y, viewport.y + margin, maxY)
-
-    return { x, y }
+    return {
+        x: clamp(x, viewport.x + margin, maxX),
+        y: clamp(y, viewport.y + margin, maxY),
+    }
 }
 
 /**
@@ -176,8 +178,11 @@ export function bagContentLayout(counts: Record<InventoryCategory, number>, metr
 
     runs.forEach((run, index) => {
         if (index > 0) {
-            dividerTops.push(cursor)
-            cursor += metrics.dividerHeight
+            // The separator between two categories uses the very same gap that
+            // divides columns, so `rowTops[i + 1] - rowTops[i]` is always the row
+            // stride, no matter whether the boundary crosses a category.
+            dividerTops.push(cursor + metrics.gap / 2)
+            cursor += metrics.gap
         }
 
         for (let local = 0; local < run.rows; local++) {
@@ -190,9 +195,7 @@ export function bagContentLayout(counts: Record<InventoryCategory, number>, metr
     const contentHeight = cursor
     const visibleRows = Math.min(rows, Math.max(1, Math.floor(metrics.maxRows)))
     const visibleRunHeight = Math.max(0, visibleRows * metrics.slotSize + Math.max(0, visibleRows - 1) * metrics.gap)
-    // A divider only takes room inside the window when it sits between two visible rows.
-    const visibleDividers = Math.min(Math.max(0, runs.length - 1), Math.max(0, visibleRows - 1))
-    const viewportHeight = Math.min(contentHeight, visibleRunHeight + visibleDividers * metrics.dividerHeight)
+    const viewportHeight = Math.min(contentHeight, visibleRunHeight)
 
     return {
         columns,

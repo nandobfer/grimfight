@@ -15,13 +15,15 @@ A classe preserva a ordem de exibição dos itens e expõe uma superfície parec
 A reordenação mantém a posição relativa dos itens de outras categorias e limita o destino a uma posição válida da categoria do item movido.
 
 ### InventoryBagLayout
-`InventoryBagLayout` concentra a geometria pura da bolsa, também livre de Phaser, cobrindo quatro responsabilidades: ancorar o ícone da bolsa no canto superior direito do mapa; posicionar o painel abaixo do ícone, alinhado à direita e limitado à área visível; calcular o grid a partir da quantidade de itens por categoria, respeitando os limites de colunas e de linhas visíveis e informando quanto do conteúdo precisa ser rolado; e derivar a geometria da scrollbar e o destino de um arraste.
+`InventoryBagLayout` concentra a geometria pura da bolsa, também livre de Phaser, cobrindo quatro responsabilidades: ancorar o ícone da bolsa no canto superior direito do mapa; posicionar o painel à esquerda do ícone, com o topo alinhado ao topo do ícone e limitado à área visível; calcular o grid a partir da quantidade de itens por categoria, respeitando os limites de colunas e de linhas visíveis e informando quanto do conteúdo precisa ser rolado; e derivar a geometria da scrollbar e o destino de um arraste.
 
-O grid começa tão estreito quanto o conteúdo precisa e cresce até o limite de colunas. Cada categoria ocupa um bloco contíguo de linhas, então um divisor nunca corta uma linha no meio; o excedente de altura fica acessível por rolagem. As funções também mapeiam um ponto do conteúdo para a célula e para o índice dentro da categoria, usados pela reordenação.
+O grid começa tão estreito quanto o conteúdo precisa e cresce até o limite de colunas. Um único valor de espaçamento separa colunas, linhas e categorias, então a distância entre linhas é exatamente a distância entre colunas em qualquer ponto do grid. Cada categoria ocupa um bloco contíguo de linhas, então um separador nunca corta uma linha no meio; o excedente de altura fica acessível por rolagem. As funções também mapeiam um ponto do conteúdo para a célula e para o índice dentro da categoria, usados pela reordenação.
 
 ### InventoryBag
-`InventoryBag` desenha a bolsa inteiramente com objetos Phaser, sem nenhuma interface React: um sprite de bolsa, um contador e um painel com fundo, título, divisor por categoria, slots e scrollbar.
-O ícone fica fixo no canto superior direito do mapa e não se move. O tamanho da âncora vem da constante de tamanho visual da bolsa, nunca do sprite, porque esse cálculo acontece antes de o sprite existir. Um clique abre ou fecha o painel, que é montado abaixo do ícone.
+`InventoryBag` desenha a bolsa inteiramente com objetos Phaser, sem nenhuma interface React: um sprite de bolsa, um contador e um painel com fundo, título, legenda de categorias, slots e scrollbar.
+O ícone fica fixo no canto superior direito do mapa e não se move. O tamanho da âncora vem da constante de tamanho visual da bolsa, nunca do sprite, porque esse cálculo acontece antes de o sprite existir. Um clique abre ou fecha o painel, que é montado à esquerda do ícone, com o topo alinhado ao topo do ícone.
+
+As categorias são identificadas por uma legenda compacta no cabeçalho, uma cor por categoria, e no grid por uma linha fina desenhada dentro do espaçamento normal entre linhas. Assim a separação entre categorias não aumenta a distância entre linhas, que continua idêntica à distância entre colunas.
 
 O grid visível cresce com o conteúdo até o limite de colunas e de linhas; quando o conteúdo passa desse limite, a bolsa passa a ter rolagem vertical, acionada pela roda do mouse sobre a área do painel, pela scrollbar ou por arrastar o fundo do painel (toque). A área de conteúdo é recortada por máscara, e itens fora da janela ficam escondidos, sem hover e sem servirem de destino de drop.
 
