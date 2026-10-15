@@ -11,6 +11,7 @@
 
 import { EventBus } from "../../tools/EventBus"
 import type { Item } from "./Item"
+import { depositOrigin, type ItemDeposit } from "./ItemDeposit"
 import { ItemRegistry } from "./ItemRegistry"
 import { emptyGroups, reorderWithinCategory, type InventoryCategory, type InventoryGroups } from "./ItemInventoryLayout"
 
@@ -41,12 +42,24 @@ export class ItemInventory implements Iterable<Item> {
         return this.items.find((item) => item.id === id)
     }
 
-    /** Adds the item to the backpack and hides its in-world sprite. Idempotent. */
-    add(item: Item): this {
+    /**
+     * Adds the item to the backpack and hides its in-world sprite. Idempotent.
+     *
+     * `deposit` tells the backpack where the item visually came from so it can fly
+     * it into the bag; without an origin the item is stored silently (save
+     * hydration, drops that already ended on the backpack).
+     */
+    add(item: Item, deposit?: ItemDeposit): this {
         if (!this.items.includes(item)) {
             this.items.push(item)
         }
         item.store()
+
+        // Emitted before the group update so the backpack can reserve the item and
+        // keep it out of the grid while it is still flying.
+        const from = depositOrigin(deposit)
+        if (from) EventBus.emit("inventory-deposit", { item, from })
+
         this.emit()
         return this
     }

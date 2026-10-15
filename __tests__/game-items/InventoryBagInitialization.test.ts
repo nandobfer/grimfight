@@ -87,6 +87,8 @@ vi.mock("phaser", () => {
 })
 
 import { InventoryBag } from "../../src/game/ui/InventoryBag"
+import { EventBus } from "../../src/game/tools/EventBus"
+import { ITEM_FLY_DEPTH } from "../../src/game/systems/Items/InventoryDepths"
 import type { ItemInventory } from "../../src/game/systems/Items/ItemInventory"
 import type { Game } from "../../src/game/scenes/Game"
 
@@ -113,6 +115,10 @@ interface FakeGameObject {
     masks: unknown[]
     children: FakeGameObject[]
     hitArea?: { width: number; height: number }
+    texture?: { key: string }
+    depth: number
+    scale: number
+    scaleX: number
     add(children: FakeGameObject | FakeGameObject[]): FakeGameObject
     clear(): FakeGameObject
     clearMask(): FakeGameObject
@@ -154,9 +160,13 @@ function fakeGameObject(kind: FakeKind, x = 0, y = 0): FakeGameObject {
         displayWidth: 0,
         displayHeight: 0,
         visible: true,
-        interactive: true,
+        // Phaser game objects are only interactive after `setInteractive` runs.
+        interactive: false,
         text: "",
         textureKey: "",
+        depth: 0,
+        scale: 1,
+        scaleX: 1,
         destroyed: false,
         listeners: [],
         masks: [],
@@ -195,7 +205,10 @@ function fakeGameObject(kind: FakeKind, x = 0, y = 0): FakeGameObject {
             object.listeners.push(event)
             return object
         },
-        setDepth: () => object,
+        setDepth: (depth: number) => {
+            object.depth = depth
+            return object
+        },
         setDisplaySize: (width: number, height: number) => {
             object.displayWidth = width
             object.displayHeight = height
@@ -220,7 +233,11 @@ function fakeGameObject(kind: FakeKind, x = 0, y = 0): FakeGameObject {
             return object
         },
         setRotation: () => object,
-        setScale: () => object,
+        setScale: (scale: number) => {
+            object.scale = scale
+            object.scaleX = scale
+            return object
+        },
         setSize: (width: number, height: number) => {
             object.width = width
             object.height = height
@@ -259,6 +276,9 @@ function fakeItem(key: string, index: number): FakeItem {
         stored: false,
     }
 
+    item.sprite.textureKey = `texture-${key}`
+    item.sprite.texture = { key: `texture-${key}` }
+
     return Object.assign(item, {
         store: () => {
             item.stored = true
@@ -271,8 +291,18 @@ function fakeItem(key: string, index: number): FakeItem {
     })
 }
 
+interface FakeTween {
+    targets: unknown
+    x: number
+    y: number
+    scale: number
+    stopped: boolean
+    complete(): void
+}
+
 function createSceneDouble() {
     const created: FakeGameObject[] = []
+    const tweens: FakeTween[] = []
     const track = (object: FakeGameObject) => {
         created.push(object)
         return object
@@ -286,6 +316,7 @@ function createSceneDouble() {
             image: (x: number, y: number, key: string) => {
                 const object = track(fakeGameObject("image", x, y))
                 object.textureKey = key
+                object.texture = { key }
                 return object
             },
             text: (x: number, y: number, value: string) => {
@@ -298,6 +329,35 @@ function createSceneDouble() {
             graphics: () => track(fakeGameObject("graphics")),
         },
         make: { graphics: () => track(fakeGameObject("graphics")) },
+        tweens: {
+            add: (config: { targets: FakeGameObject; x: number; y: number; scale: number; onComplete?: () => void }): FakeTween => {
+                const tween: FakeTween = {
+                    targets: config.targets,
+                    x: config.x,
+                    y: config.y,
+                    scale: config.scale,
+                    stopped: false,
+                    // A real tween only moves its target over time, so the end state is
+                    // applied here instead of when the tween is created.
+                    complete: () => {
+                        if (tween.stopped) return
+
+                        config.targets.x = config.x
+                        config.targets.y = config.y
+                        config.targets.scale = config.scale
+                        config.onComplete?.()
+                    },
+                }
+
+                tweens.push(tween)
+                return tween
+            },
+            killTweensOf: (target: unknown) => {
+                for (const tween of tweens) {
+                    if (tween.targets === target) tween.stopped = true
+                }
+            },
+        },
         input: {
             dragDistanceThreshold: 0,
             setDraggable: () => undefined,
@@ -306,7 +366,7 @@ function createSceneDouble() {
         },
     }
 
-    return { scene: scene as unknown as Game, created }
+    return { scene: scene as unknown as Game, created, tweens }
 }
 
 function createInventoryDouble(items: FakeItem[]) {
@@ -411,6 +471,98 @@ describe("InventoryBag initialization", () => {
 
         expect(bagSprite(created).destroyed).toBe(true)
         expect(contentContainer(created).destroyed).toBe(true)
+    })
+})
+
+describe("InventoryBag fly-in animation", () => {
+    const from = { x: REGION.x + 20, y: REGION.y + REGION.height - 20 }
+
+    function flights(created: FakeGameObject[]) {
+        return created.filter((object) => object.kind === "image" && object.textureKey !== "inventory-bag")
+    }
+
+    it("flies a deposited item from its origin and lands it in a slot", () => {
+        const { scene, created, tweens } = createSceneDouble()
+        const items = [fakeItem("component", 0)]
+        const bag = new InventoryBag(scene, createInventoryDouble(items))
+
+        bag.open()
+        expect(items[0].slotPosition).toBeDefined()
+
+        EventBus.emit("inventory-deposit", { item: items[0], from })
+
+        const flight = flights(created)[0]
+        expect(flight).toBeDefined()
+        expect(flight.textureKey).toBe("texture-component")
+        expect(flight.x).toBe(from.x)
+        expect(flight.y).toBe(from.y)
+        expect(flight.depth).toBe(ITEM_FLY_DEPTH)
+        expect(flight.interactive).toBe(false)
+
+        // While the copy flies, the item stays hidden and out of the grid: no duplicate.
+        expect(items[0].stored).toBe(true)
+        expect(items[0].slotPosition).toBeUndefined()
+
+        const tween = tweens[tweens.length - 1]
+        expect(tween.targets).toBe(flight)
+        expect(tween.x).toBe(bagSprite(created).x)
+        expect(tween.y).toBe(bagSprite(created).y)
+        expect(tween.scale).toBeLessThan(flight.scale + 0.001)
+
+        tween.complete()
+
+        expect(flight.destroyed).toBe(true)
+        expect(items[0].stored).toBe(false)
+        expect(items[0].slotPosition).toBeDefined()
+
+        bag.dispose()
+    })
+
+    it("ignores a repeated deposit while the item is still flying", () => {
+        const { scene, created } = createSceneDouble()
+        const items = [fakeItem("component", 0)]
+        const bag = new InventoryBag(scene, createInventoryDouble(items))
+
+        bag.open()
+        EventBus.emit("inventory-deposit", { item: items[0], from })
+        EventBus.emit("inventory-deposit", { item: items[0], from: { x: 1, y: 1 } })
+
+        expect(flights(created)).toHaveLength(1)
+
+        bag.dispose()
+    })
+
+    it("drops in-flight copies when the run is reset", () => {
+        const { scene, created, tweens } = createSceneDouble()
+        const items = [fakeItem("component", 0)]
+        const bag = new InventoryBag(scene, createInventoryDouble(items))
+
+        bag.open()
+        EventBus.emit("inventory-deposit", { item: items[0], from })
+        const flight = flights(created)[0]
+
+        bag.cancelFlights()
+
+        expect(flight.destroyed).toBe(true)
+        expect(tweens[tweens.length - 1].stopped).toBe(true)
+        expect(items[0].stored).toBe(true)
+
+        bag.dispose()
+    })
+
+    it("destroys in-flight copies on dispose", () => {
+        const { scene, created, tweens } = createSceneDouble()
+        const items = [fakeItem("component", 0)]
+        const bag = new InventoryBag(scene, createInventoryDouble(items))
+
+        bag.open()
+        EventBus.emit("inventory-deposit", { item: items[0], from })
+        const flight = flights(created)[0]
+
+        bag.dispose()
+
+        expect(flight.destroyed).toBe(true)
+        expect(tweens[tweens.length - 1].stopped).toBe(true)
     })
 })
 

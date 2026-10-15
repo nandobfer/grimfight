@@ -4,6 +4,7 @@ import { EventBus } from "../../tools/EventBus"
 import { RNG } from "../../tools/RNG"
 import { ItemRegistry } from "./ItemRegistry"
 import { ITEM_DRAG_BORDER_DEPTH, ITEM_DRAG_DEPTH, ITEM_EQUIPPED_BORDER_DEPTH, ITEM_EQUIPPED_DEPTH } from "./InventoryDepths"
+import type { ItemDeposit } from "./ItemDeposit"
 
 export interface PointerPosition {
     x: number
@@ -235,9 +236,13 @@ export class Item {
                 this.hideBorder()
             } else {
                 // Items are never left loose on the board: return them to the
-                // backpack and let it decide whether this was a reorder.
-                this.user?.unequipItem(this)
-                this.scene.availableItems.add(this)
+                // backpack. Dropping straight onto the bag stores the item right away;
+                // anywhere else makes it fly in from the point where it was released.
+                const droppedOnBag = this.scene.inventoryBag?.blocksPoint(pointer.worldX, pointer.worldY) ?? false
+                const deposit: ItemDeposit = droppedOnBag ? { animate: false } : { from: { x: this.sprite.x, y: this.sprite.y } }
+
+                this.user?.unequipItem(this, false, deposit)
+                this.scene.availableItems.add(this, deposit)
                 this.scene.inventoryBag?.handleSlotDrop(this, pointer)
             }
 

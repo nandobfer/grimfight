@@ -22,7 +22,7 @@ Lightweight 2D action built with Phaser + React, shipped as a static web build.
 ## How to Play
 
 * Drag heroes from your roster/bench onto the grid.
-* Click the backpack fixed in the top-right corner of the map to open its panel, split into Artifact, Completed and Component dividers. The grid grows with your loot and scrolls once it fills three rows; drag an item out of it onto a hero to equip or merge.
+* Click the backpack fixed in the top-right corner of the map to open its panel, split into Artifact, Completed and Component dividers. The grid grows with your loot and scrolls once it fills three rows; drag an item out of it onto a hero to equip or merge. Anything that lands in the backpack flies in and settles on its slot.
 * Press Space to start the round.
 * Win the floor to earn gold, loot, and augments at milestones. Lose all lives and your run ends (your record is saved).
 

@@ -23,6 +23,8 @@ import { GameRecord } from "../systems/GameRecord"
 import { GameRecordTraits } from "../systems/GameRecordTraits"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { ItemInventory } from "../systems/Items/ItemInventory"
+import type { Item } from "../systems/Items/Item"
+import type { ItemDeposit } from "../systems/Items/ItemDeposit"
 import { InventoryBag } from "../ui/InventoryBag"
 import { Tavern } from "../systems/Tavern"
 import { ArtifactAndCompletedAnvilAugment } from "../systems/Augment/ArtifactAndCompletedAnvilAugment"
@@ -444,7 +446,7 @@ export class Game extends Scene {
 
     spawnItem(key: string, silent = false) {
         const item = ItemRegistry.create(key, this)
-        this.availableItems.add(item)
+        this.addItemToBag(item)
 
         if (!silent) {
             this.saveProgress()
@@ -454,12 +456,32 @@ export class Game extends Scene {
     spawnItems(quantity: number, silent = false) {
         for (let count = 1; count <= quantity; count++) {
             const item = ItemRegistry.randomComponent(this)
-            this.availableItems.add(item)
+            this.addItemToBag(item, this.rewardDeposit(count - 1))
 
             if (!silent) {
                 this.saveProgress()
             }
         }
+    }
+
+    /**
+     * Hands an item to the backpack, animating it in from its visible source. Callers
+     * that know where the item physically was (a creature, a drop point) pass their own
+     * `deposit`; rewards and the anvil fall back to the arena delivery point.
+     */
+    addItemToBag(item: Item, deposit?: ItemDeposit) {
+        this.availableItems.add(item, deposit ?? this.rewardDeposit())
+    }
+
+    /** Spreads simultaneous rewards so their fly-in animations do not overlap. */
+    private rewardDeposit(index = 0): ItemDeposit {
+        const point = this.inventoryBag?.deliveryPoint()
+        if (!point) return { animate: false }
+
+        const column = index % 3
+        const row = Math.floor(index / 3)
+
+        return { from: { x: point.x + (column - 1) * 44, y: point.y + (row - 1) * 44 } }
     }
 
     handleLootReward() {
@@ -646,6 +668,8 @@ export class Game extends Scene {
         this.floor = 1
         this.playerLives = starting_player_lives
         this.playerGold = starting_player_gold
+        // Flights from the previous run must not survive the reset.
+        this.inventoryBag?.cancelFlights()
         for (const item of this.availableItems) {
             item.sprite.destroy(true)
         }

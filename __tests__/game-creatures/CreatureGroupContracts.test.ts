@@ -266,7 +266,7 @@ describe("Character contracts", () => {
         expect(source).toContain("this.team.saveCurrentCharacters()")
         expect(source).toContain("this.scene.saveProgress()")
         expect(source).toContain("override unequipItem")
-        expect(source).toContain("this.scene.availableItems.add(item)")
+        expect(source).toContain("this.scene.availableItems.add(item, deposit)")
         expect(source).toContain("onBenchDrop()")
         expect(source).toContain("this.items.forEach((item) => this.unequipItem(item))")
         expect(source).toContain("this.team.resetTraits()")

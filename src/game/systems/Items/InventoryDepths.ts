@@ -23,3 +23,6 @@ export const ITEM_SLOT_DEPTH = 20020
 /** Item being dragged, above the panel so it can leave the bag. */
 export const ITEM_DRAG_DEPTH = 20040
 export const ITEM_DRAG_BORDER_DEPTH = 20041
+
+/** Transient copy of an item flying into the bag, above every other layer. */
+export const ITEM_FLY_DEPTH = 20050

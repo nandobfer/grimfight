@@ -669,9 +669,12 @@ Ao arrastar um item:
 
 - se soltar sobre personagem valido, equipe;
 - se soltar sobre um slot da bolsa da mesma categoria, reordena dentro da categoria;
-- se soltar fora, volta para a bolsa;
+- se soltar sobre o icone ou o painel da bolsa, guarda na hora;
+- se soltar fora, volta para a bolsa voando do ponto onde foi solto;
 - se pairar sobre outro item compativel fora da bolsa, mostra preview do merge resultante;
 - se pairar sobre personagem, pode mostrar preview da composicao final.
+
+Todo item que entra na bolsa por outra origem (desequipar, venda, banco, fusao, loot, recompensa) tambem voa ate o icone, partindo da posicao do personagem, da criatura que gerou o item ou do ponto de entrega na arena. Restaurar um save, consumir um componente em uma fusao e soltar o item sobre a propria bolsa guardam o item sem animacao.
 
 O painel da bolsa tem prioridade sobre o board: enquanto o ponteiro esta sobre a area do painel, criaturas e itens atras dele nao sao considerados.
 

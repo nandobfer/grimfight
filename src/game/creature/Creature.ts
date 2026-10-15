@@ -8,6 +8,7 @@ import { Heal } from "../fx/Heal"
 import { burstBlood } from "../fx/Blood"
 import { StatusEffect } from "../objects/StatusEffect/StatusEffect"
 import { Item } from "../systems/Items/Item"
+import type { ItemDeposit } from "../systems/Items/ItemDeposit"
 import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { RNG } from "../tools/RNG"
 import { Aura } from "../systems/Aura/Aura"
@@ -1192,7 +1193,8 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         const result = this.getMergeResult(item)
         if (result) {
             const completedItem = ItemRegistry.create(result.result.key, this.scene)
-            this.unequipItem(result.component)
+            // The consumed component is merged, never stored: no fly-to-backpack effect.
+            this.unequipItem(result.component, false, { animate: false })
             result.component.sprite.destroy(true)
             this.scene.availableItems.delete(item)
             this.scene.availableItems.delete(result.component)
@@ -1256,7 +1258,12 @@ export class Creature extends Phaser.Physics.Arcade.Sprite {
         return undefined
     }
 
-    unequipItem(item: Item, silent = false) {
+    /**
+     * Removes the item from this creature. `deposit` carries the visual context of the
+     * transfer: subclasses that own the player backpack (`Character`) forward it so the
+     * item flies in from the right spot, the others ignore it.
+     */
+    unequipItem(item: Item, silent = false, _deposit?: ItemDeposit) {
         this.items.delete(item)
         item.user = undefined
         item.cleanup(this)

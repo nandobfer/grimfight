@@ -35,11 +35,13 @@ import {
     BAG_DEPTH,
     ITEM_EQUIPPED_BORDER_DEPTH,
     ITEM_EQUIPPED_DEPTH,
+    ITEM_FLY_DEPTH,
     ITEM_SLOT_DEPTH,
     PANEL_BLOCKER_DEPTH,
     PANEL_DEPTH,
     PANEL_UI_DEPTH,
 } from "../systems/Items/InventoryDepths"
+import type { InventoryDeposit } from "../systems/Items/ItemDeposit"
 import { EventBus } from "../tools/EventBus"
 
 const BAG_TEXTURE = "inventory-bag"
@@ -67,6 +69,10 @@ const MAX_ROWS = 3
 const SCROLLBAR_WIDTH = 8
 const SCROLLBAR_GUTTER = SCROLLBAR_WIDTH + 6
 const WHEEL_STEP = 48
+
+/** Fly-to-bag animation: duration and how small the item gets when it lands. */
+const FLY_DURATION = 380
+const FLY_END_SCALE = 0.55
 
 /** Smallest panel content width, so the empty-state message is never clipped. */
 const MIN_CONTENT_WIDTH = 150
@@ -137,7 +143,14 @@ export class InventoryBag {
     private lastDragY = 0
     private disposed = false
 
+    /**
+     * Items on their way into the bag, drawn as transient copies. While an item is
+     * here the grid skips it, so it never appears twice during the flight.
+     */
+    private readonly flying = new Map<Item, Phaser.GameObjects.Image>()
+
     private readonly onInventoryChange = () => this.refresh()
+    private readonly onDeposit = (deposit: InventoryDeposit) => this.flyToBag(deposit.item, deposit.from)
     private readonly onScenePointerUp = () => this.handlePointerUp()
     private readonly onSceneDragStart = (_pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject) => {
         this.dragged = true
@@ -255,6 +268,7 @@ export class InventoryBag {
         this.refresh()
 
         EventBus.on("inventory-change", this.onInventoryChange)
+        EventBus.on("inventory-deposit", this.onDeposit)
     }
 
     private bagSize(): { width: number; height: number } {
@@ -388,6 +402,68 @@ export class InventoryBag {
         }
 
         this.refresh()
+    }
+
+    /**
+     * Visible spot where items without a physical source (rewards, the anvil) show up
+     * before flying into the bag.
+     */
+    deliveryPoint(): { x: number; y: number } {
+        const region = this.region()
+
+        return { x: region.x + region.width / 2, y: region.y + region.height / 2 }
+    }
+
+    /**
+     * Flies a transient copy of the item from `from` into the bag icon. The item's own
+     * sprite stays stored (and out of the grid) until the copy lands, so an item is
+     * never rendered twice and a second deposit while it flies is ignored.
+     */
+    flyToBag(item: Item, from: { x: number; y: number }) {
+        if (this.disposed || this.flying.has(item)) return
+
+        item.store()
+
+        const image = this.scene.add
+            .image(from.x, from.y, item.sprite.texture.key)
+            .setScale(item.sprite.scaleX || 1)
+            .setDepth(ITEM_FLY_DEPTH)
+
+        this.flying.set(item, image)
+
+        this.scene.tweens.add({
+            targets: image,
+            x: this.bag.x,
+            y: this.bag.y,
+            scale: image.scale * FLY_END_SCALE,
+            duration: FLY_DURATION,
+            ease: "Cubic.easeIn",
+            onComplete: () => this.landItem(item),
+        })
+    }
+
+    private landItem(item: Item) {
+        this.flying.get(item)?.destroy()
+        this.flying.delete(item)
+
+        if (this.disposed) return
+
+        this.refresh()
+    }
+
+    /** Drops every in-flight copy, used when the run is reset and on teardown. */
+    cancelFlights() {
+        for (const image of this.flying.values()) {
+            this.scene.tweens.killTweensOf(image)
+            image.destroy()
+        }
+
+        this.flying.clear()
+    }
+
+    /** True while the item is either being dragged or still flying into the bag. */
+    private isPending(item: Item): boolean {
+        return item.sprite === this.draggingSprite || this.flying.has(item)
     }
 
     /**
@@ -546,7 +622,7 @@ export class InventoryBag {
             for (const run of layout.runs) {
                 groups[run.category].forEach((item, index) => {
                     placed.add(item)
-                    if (item.sprite === this.draggingSprite) return
+                    if (this.isPending(item)) return
 
                     const row = run.startRow + Math.floor(index / layout.columns)
                     const column = index % layout.columns
@@ -577,7 +653,7 @@ export class InventoryBag {
     private storeItems(groups: Record<InventoryCategory, Item[]>) {
         for (const category of INVENTORY_CATEGORIES) {
             for (const item of groups[category]) {
-                if (item.sprite === this.draggingSprite) continue
+                if (this.isPending(item)) continue
 
                 item.store()
             }
@@ -646,10 +722,13 @@ export class InventoryBag {
 
         this.disposed = true
         EventBus.off("inventory-change", this.onInventoryChange)
+        EventBus.off("inventory-deposit", this.onDeposit)
         this.scene.input.off("pointerup", this.onScenePointerUp)
         this.scene.input.off("dragstart", this.onSceneDragStart)
         this.scene.input.off("dragend", this.onSceneDragEnd)
         this.scene.input.off("wheel", this.onWheel)
+
+        this.cancelFlights()
 
         for (const item of this.inventory) {
             item.sprite.clearMask()

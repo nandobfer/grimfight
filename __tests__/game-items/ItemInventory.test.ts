@@ -132,7 +132,7 @@ describe("ItemInventory contracts", () => {
 
         expect(source).toContain("export class ItemInventory")
         expect(source).toContain("implements Iterable<Item>")
-        expect(source).toContain("add(item: Item): this")
+        expect(source).toContain("add(item: Item, deposit?: ItemDeposit): this")
         expect(source).toContain("item.store()")
         expect(source).toContain("delete(item: Item): boolean")
         expect(source).toContain("findById(id: string)")
@@ -156,7 +156,7 @@ describe("ItemInventory contracts", () => {
         expect(itemSource).toContain("store()")
         expect(itemSource).toContain("showInSlot(")
         expect(itemSource).not.toContain("dropOnBoard")
-        expect(itemSource).toContain("this.scene.availableItems.add(this)")
+        expect(itemSource).toContain("this.scene.availableItems.add(this, deposit)")
     })
 })
 
