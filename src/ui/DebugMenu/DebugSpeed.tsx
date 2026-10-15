@@ -11,7 +11,7 @@ export const DebugSpeed: React.FC<DebugFloorProps> = (props) => {
     const [value, setValue] = useState("")
 
     const setSpeed = (speed: number) => {
-        props.game.setGameSpeed(speed)
+        props.game.setManualGameSpeed(speed)
     }
 
     const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {

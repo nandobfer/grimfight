@@ -9,6 +9,7 @@ import { Bench } from "./Bench"
 import { calculateMaxCharactersInBoard } from "./boardLimit"
 import { Character } from "./Character"
 import { CharacterStore } from "./CharacterStore"
+import { calculateFloorVictoryReward } from "./floorReward"
 
 export class PlayerTeam extends CreatureGroup {
     damageChart: DamageChart
@@ -190,9 +191,9 @@ export class PlayerTeam extends CreatureGroup {
         donors.forEach((donor, index) => tweenToKeep(donor, index * 80))
     }
 
-    grantFloorReward(floor: number) {
-        const gold = 1 + Math.round(floor * 0.5)
-        this.scene.addPlayerGold(gold)
+    grantFloorReward(floor: number, fastVictory = false) {
+        const reward = calculateFloorVictoryReward(floor, fastVictory)
+        this.scene.addPlayerGold(reward.totalGold)
         if (floor % 10 === 0) {
             this.scene.changePlayerLives(this.scene.playerLives + 3)
         }

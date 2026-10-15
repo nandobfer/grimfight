@@ -25,6 +25,8 @@ import { ItemRegistry } from "../systems/Items/ItemRegistry"
 import { Item } from "../systems/Items/Item"
 import { Tavern } from "../systems/Tavern"
 import { ArtifactAndCompletedAnvilAugment } from "../systems/Augment/ArtifactAndCompletedAnvilAugment"
+import { BattleTimer, BattleTimerSnapshot, defaultBattleTimerOptions } from "../systems/BattleTimer"
+import { BattleTimerHud } from "../ui/BattleTimerHud"
 
 export type GameState = "fighting" | "idle"
 
@@ -65,6 +67,11 @@ export class Game extends Scene {
     claimedItemChoiceFloors = new Set<number>()
     pendingItemChoiceFloor?: number
     isHydratingSavedRun = false
+
+    battleTimer: BattleTimer
+    battleTimerHud: BattleTimerHud
+    private manualGameSpeed = 1
+    private fastVictory = false
 
     playerGold = starting_player_gold
     playerLives = starting_player_lives
@@ -116,6 +123,8 @@ export class Game extends Scene {
         this.enemyTeam = new EnemyTeam(this, true)
         this.shopkeeper = new Shopkeeper(this)
         this.tavern = new Tavern(this)
+        this.battleTimer = new BattleTimer(defaultBattleTimerOptions)
+        this.battleTimerHud = new BattleTimerHud(this)
 
         this.configurePhysics()
         this.createLight()
@@ -188,6 +197,8 @@ export class Game extends Scene {
         this.shopkeeper?.dispose()
         this.tavern?.dispose()
         this.playerTeam?.damageChart?.dispose?.()
+        this.battleTimer?.reset()
+        this.battleTimerHud?.destroy()
         this.dragFromBoard.clear()
         this.uiGhost = undefined
     }
@@ -423,6 +434,7 @@ export class Game extends Scene {
         this.playerTeam.reset()
         this.playerTeam.damageChart.reset()
         this.changeState("fighting")
+        this.startBattleTimer()
     }
 
     spawnItem(key: string, silent = false) {
@@ -466,7 +478,9 @@ export class Game extends Scene {
     }
 
     onFloorDefeated() {
-        this.playerTeam.grantFloorReward(this.floor)
+        const fastVictory = this.fastVictory
+        this.fastVictory = false
+        this.playerTeam.grantFloorReward(this.floor, fastVictory)
 
         this.handleLootReward()
 
@@ -550,6 +564,7 @@ export class Game extends Scene {
         this.changeState("idle") // wait for player to start
         this.enemyTeam.reset()
         this.playerTeam.reset()
+        this.resetBattleTimer()
     }
 
     onPlayerDefeated() {
@@ -628,6 +643,7 @@ export class Game extends Scene {
     }
 
     resetProgress() {
+        this.resetBattleTimer()
         this.floor = 1
         this.playerLives = starting_player_lives
         this.playerGold = starting_player_gold
@@ -852,6 +868,8 @@ export class Game extends Scene {
     endRoundSoon() {
         if (this.endingRound || this.state !== "fighting") return
         this.endingRound = true
+        // capture whether the battle ended within the time limit before leaving fighting
+        this.stopBattleTimer()
         // flip to idle immediately so actors stop doing combat logic
         this.changeState("idle")
 
@@ -877,25 +895,79 @@ export class Game extends Scene {
         this.endRoundSoon()
     }
 
+    /** Apply an absolute game speed to every timing system the battle depends on. */
     setGameSpeed(factor: number) {
-        this.time.timeScale = factor
-        this.physics.world.timeScale = 1 / factor
-        this.tweens.timeScale = factor
+        const safeFactor = Number.isFinite(factor) && factor > 0 ? factor : 1
+
+        this.time.timeScale = safeFactor
+        this.physics.world.timeScale = 1 / safeFactor
+        this.tweens.timeScale = safeFactor
+        // Global animation scale also covers creatures and FX created after the change.
+        this.anims.globalTimeScale = safeFactor
+
         this.children.list.forEach((child) => {
             if (child.type === "ParticleEmitterManager") {
-                ;(child as Phaser.GameObjects.Particles.ParticleEmitter).timeScale = factor
-            }
-
-            if ((child as any).anims) {
-                ;(child as any).anims.timeScale = factor
+                ;(child as Phaser.GameObjects.Particles.ParticleEmitter).timeScale = safeFactor
             }
         })
+
+        EventBus.emit("game-speed", safeFactor)
     }
 
-    update(_time: number, _delta: number): void {
+    /**
+     * Manual speed requested from the debug menu. Kept separate from the battle
+     * overtime multiplier so the battle never permanently overwrites it.
+     */
+    setManualGameSpeed(factor: number) {
+        this.manualGameSpeed = Number.isFinite(factor) && factor > 0 ? factor : 1
+        this.applyGameSpeed()
+    }
+
+    /** Effective speed: manual debug speed composed with the battle overtime multiplier. */
+    private applyGameSpeed() {
+        this.setGameSpeed(this.manualGameSpeed * this.battleTimer.speedMultiplier)
+    }
+
+    getBattleTimerSnapshot(): BattleTimerSnapshot {
+        return this.battleTimer.snapshot()
+    }
+
+    private startBattleTimer() {
+        this.fastVictory = false
+        this.battleTimer.start()
+        this.applyGameSpeed()
+        this.battleTimerHud.update(this.battleTimer)
+    }
+
+    /** Capture whether the battle ended within the time limit, then stop the timer. */
+    private stopBattleTimer() {
+        this.fastVictory = this.battleTimer.isRunning && !this.battleTimer.isExpired
+        this.battleTimer.stop()
+        this.applyGameSpeed()
+        this.battleTimerHud.update(this.battleTimer)
+    }
+
+    private resetBattleTimer() {
+        this.fastVictory = false
+        this.battleTimer.reset()
+        this.applyGameSpeed()
+        this.battleTimerHud.update(this.battleTimer)
+    }
+
+    update(_time: number, delta: number): void {
         // Update character count display when in idle state
         if (this.state === "idle") {
             this.grid.updateCharacterCount()
+            return
+        }
+
+        if (this.state === "fighting") {
+            if (this.battleTimer.tick(delta)) {
+                // Battle time ran out: switch to overtime speed.
+                this.applyGameSpeed()
+            }
+
+            this.battleTimerHud.update(this.battleTimer)
         }
     }
 }
