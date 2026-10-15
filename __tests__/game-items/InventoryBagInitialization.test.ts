@@ -5,6 +5,30 @@ import { describe, expect, it, vi } from "vitest"
 // this test build the real class in Node without booting the engine (which needs
 // a DOM). The factory stays self-contained so nothing is read before init.
 vi.mock("phaser", () => {
+    class FakeRectangle {
+        x: number
+        y: number
+        width: number
+        height: number
+
+        constructor(x = 0, y = 0, width = 0, height = 0) {
+            this.x = x
+            this.y = y
+            this.width = width
+            this.height = height
+        }
+
+        setSize(width: number, height: number) {
+            this.width = width
+            this.height = height
+            return this
+        }
+
+        static Contains(rect: { x: number; y: number; width: number; height: number }, x: number, y: number) {
+            return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height
+        }
+    }
+
     class FakeEventEmitter {
         private handlers = new Map<string, Set<(...args: unknown[]) => void>>()
 
@@ -51,6 +75,9 @@ vi.mock("phaser", () => {
             Events: {
                 EventEmitter: FakeEventEmitter,
             },
+            Geom: {
+                Rectangle: FakeRectangle,
+            },
         },
         // `EventBus` uses a named import.
         Events: {
@@ -64,7 +91,7 @@ import type { ItemInventory } from "../../src/game/systems/Items/ItemInventory"
 import type { Game } from "../../src/game/scenes/Game"
 
 /** Arena used by the double, mirroring the scaled background bounds. */
-const REGION = { x: 100, y: 100, width: 400, height: 300 }
+const REGION = { x: 100, y: 100, width: 420, height: 320 }
 const VIEWPORT = { width: 768, height: 768 }
 
 type FakeKind = "image" | "text" | "container" | "rectangle" | "graphics"
@@ -73,17 +100,27 @@ interface FakeGameObject {
     kind: FakeKind
     x: number
     y: number
+    width: number
+    height: number
     displayWidth: number
     displayHeight: number
     visible: boolean
+    interactive: boolean
     text: string
     textureKey: string
     destroyed: boolean
     listeners: string[]
-    add(children: unknown): FakeGameObject
+    masks: unknown[]
+    children: FakeGameObject[]
+    hitArea?: { width: number; height: number }
+    add(children: FakeGameObject | FakeGameObject[]): FakeGameObject
     clear(): FakeGameObject
+    clearMask(): FakeGameObject
     clearTint(): FakeGameObject
-    destroy(): FakeGameObject
+    createGeometryMask(): { destroy: () => void }
+    destroy(withChildren?: boolean): FakeGameObject
+    disableInteractive(): FakeGameObject
+    fillRect(): FakeGameObject
     fillRoundedRect(): FakeGameObject
     fillStyle(): FakeGameObject
     lineBetween(): FakeGameObject
@@ -92,11 +129,14 @@ interface FakeGameObject {
     on(event: string): FakeGameObject
     setDepth(): FakeGameObject
     setDisplaySize(width: number, height: number): FakeGameObject
+    setFillStyle(): FakeGameObject
     setInteractive(): FakeGameObject
+    setMask(mask: unknown): FakeGameObject
     setOrigin(): FakeGameObject
     setPosition(x: number, y: number): FakeGameObject
     setRotation(): FakeGameObject
     setScale(): FakeGameObject
+    setSize(width: number, height: number): FakeGameObject
     setText(text: string): FakeGameObject
     setTint(): FakeGameObject
     setVisible(visible: boolean): FakeGameObject
@@ -109,20 +149,43 @@ function fakeGameObject(kind: FakeKind, x = 0, y = 0): FakeGameObject {
         kind,
         x,
         y,
+        width: 0,
+        height: 0,
         displayWidth: 0,
         displayHeight: 0,
         visible: true,
+        interactive: true,
         text: "",
         textureKey: "",
         destroyed: false,
         listeners: [],
-        add: () => object,
+        masks: [],
+        children: [],
+        add: (children: FakeGameObject | FakeGameObject[]) => {
+            for (const child of Array.isArray(children) ? children : [children]) object.children.push(child)
+            return object
+        },
         clear: () => object,
+        clearMask: () => {
+            object.masks = []
+            return object
+        },
         clearTint: () => object,
-        destroy: () => {
+        createGeometryMask: () => ({ destroy: () => undefined }),
+        destroy: (withChildren = false) => {
+            // Phaser containers cascade `destroy(true)` into their children.
+            if (withChildren) {
+                for (const child of object.children) child.destroy(true)
+                object.children = []
+            }
             object.destroyed = true
             return object
         },
+        disableInteractive: () => {
+            object.interactive = false
+            return object
+        },
+        fillRect: () => object,
         fillRoundedRect: () => object,
         fillStyle: () => object,
         lineBetween: () => object,
@@ -136,9 +199,20 @@ function fakeGameObject(kind: FakeKind, x = 0, y = 0): FakeGameObject {
         setDisplaySize: (width: number, height: number) => {
             object.displayWidth = width
             object.displayHeight = height
+            object.width = width
+            object.height = height
             return object
         },
-        setInteractive: () => object,
+        setFillStyle: () => object,
+        setInteractive: (config?: { hitArea?: { width: number; height: number } }) => {
+            object.interactive = true
+            if (config && typeof config === "object" && config.hitArea) object.hitArea = config.hitArea
+            return object
+        },
+        setMask: (mask: unknown) => {
+            object.masks = mask ? [mask] : []
+            return object
+        },
         setOrigin: () => object,
         setPosition: (nextX: number, nextY: number) => {
             object.x = nextX
@@ -147,6 +221,11 @@ function fakeGameObject(kind: FakeKind, x = 0, y = 0): FakeGameObject {
         },
         setRotation: () => object,
         setScale: () => object,
+        setSize: (width: number, height: number) => {
+            object.width = width
+            object.height = height
+            return object
+        },
         setText: (value: string) => {
             object.text = value
             return object
@@ -160,6 +239,36 @@ function fakeGameObject(kind: FakeKind, x = 0, y = 0): FakeGameObject {
     }
 
     return object
+}
+
+interface FakeItem {
+    id: string
+    key: string
+    sprite: FakeGameObject
+    border: FakeGameObject
+    stored: boolean
+    slotPosition?: { x: number; y: number; maxSize: number; depth: number }
+}
+
+function fakeItem(key: string, index: number): FakeItem {
+    const item: FakeItem = {
+        id: `${key}-${index}`,
+        key,
+        sprite: fakeGameObject("image"),
+        border: fakeGameObject("rectangle"),
+        stored: false,
+    }
+
+    return Object.assign(item, {
+        store: () => {
+            item.stored = true
+            item.slotPosition = undefined
+        },
+        showInSlot: (x: number, y: number, maxSize: number, depth: number) => {
+            item.stored = false
+            item.slotPosition = { x, y, maxSize, depth }
+        },
+    })
 }
 
 function createSceneDouble() {
@@ -188,6 +297,7 @@ function createSceneDouble() {
             rectangle: () => track(fakeGameObject("rectangle")),
             graphics: () => track(fakeGameObject("graphics")),
         },
+        make: { graphics: () => track(fakeGameObject("graphics")) },
         input: {
             dragDistanceThreshold: 0,
             setDraggable: () => undefined,
@@ -199,14 +309,18 @@ function createSceneDouble() {
     return { scene: scene as unknown as Game, created }
 }
 
-function createInventoryDouble() {
-    const items: unknown[] = []
+function createInventoryDouble(items: FakeItem[]) {
+    const grouped = { artifact: [] as FakeItem[], completed: [] as FakeItem[], component: [] as FakeItem[] }
+
+    for (const item of items) grouped.component.push(item)
 
     return {
-        size: 0,
-        snapshot: () => ({ artifact: [], completed: [], component: [] }),
+        size: items.length,
+        snapshot: () => ({ artifact: [...grouped.artifact], completed: [...grouped.completed], component: [...grouped.component] }),
         categoryOf: () => "component",
         reorder: () => undefined,
+        has: (item: FakeItem) => items.includes(item),
+        findById: (id: string) => items.find((item) => item.id === id),
         [Symbol.iterator]: () => items[Symbol.iterator](),
     } as unknown as ItemInventory
 }
@@ -214,24 +328,37 @@ function createInventoryDouble() {
 function bagSprite(created: FakeGameObject[]) {
     const sprite = created.find((object) => object.kind === "image")
     if (!sprite) throw new Error("InventoryBag did not create its bag sprite")
+
     return sprite
 }
 
-function expectInsideRegion(bag: InventoryBag, sprite: FakeGameObject) {
-    const position = bag.getPosition()
-    const halfWidth = sprite.displayWidth / 2
-    const halfHeight = sprite.displayHeight / 2
+function blocker(created: FakeGameObject[]) {
+    const rect = created.find((object) => object.kind === "rectangle")
+    if (!rect) throw new Error("InventoryBag did not create its scroll surface")
 
-    expect(position.x).toBeGreaterThanOrEqual(REGION.x + halfWidth)
-    expect(position.x).toBeLessThanOrEqual(REGION.x + REGION.width - halfWidth)
-    expect(position.y).toBeGreaterThanOrEqual(REGION.y + halfHeight)
-    expect(position.y).toBeLessThanOrEqual(REGION.y + REGION.height - halfHeight)
+    return rect
+}
+
+function scrollThumb(created: FakeGameObject[]) {
+    const rects = created.filter((object) => object.kind === "rectangle")
+    const thumb = rects[rects.length - 1]
+    if (!thumb) throw new Error("InventoryBag did not create its scrollbar thumb")
+
+    return thumb
+}
+
+function contentContainer(created: FakeGameObject[]) {
+    const containers = created.filter((object) => object.kind === "container")
+    const content = containers[containers.length - 1]
+    if (!content) throw new Error("InventoryBag did not create its content container")
+
+    return content
 }
 
 describe("InventoryBag initialization", () => {
     it("builds the bag before reading any sprite measurement", () => {
         const { scene, created } = createSceneDouble()
-        const bag = new InventoryBag(scene, createInventoryDouble())
+        const bag = new InventoryBag(scene, createInventoryDouble([]))
 
         const sprite = bagSprite(created)
         expect(sprite.textureKey).toBe("inventory-bag")
@@ -241,39 +368,32 @@ describe("InventoryBag initialization", () => {
         bag.dispose()
     })
 
-    it("spawns a random position fully inside the arena", () => {
-        for (let attempt = 0; attempt < 25; attempt++) {
-            const { scene, created } = createSceneDouble()
-            const bag = new InventoryBag(scene, createInventoryDouble())
-
-            expectInsideRegion(bag, bagSprite(created))
-            bag.dispose()
-        }
-    })
-
-    it("keeps a valid saved position", () => {
+    it("anchors the icon to the top-right corner of the arena", () => {
         const { scene, created } = createSceneDouble()
-        const bag = new InventoryBag(scene, createInventoryDouble(), { x: 250, y: 250 })
-
-        expect(bag.getPosition()).toEqual({ x: 250, y: 250 })
-        expectInsideRegion(bag, bagSprite(created))
-
-        bag.dispose()
-    })
-
-    it("clamps a saved position that no longer fits the arena", () => {
-        const { scene, created } = createSceneDouble()
-        const bag = new InventoryBag(scene, createInventoryDouble(), { x: -5000, y: 5000 })
+        const bag = new InventoryBag(scene, createInventoryDouble([]))
         const sprite = bagSprite(created)
 
-        expect(bag.getPosition()).toEqual({ x: REGION.x + sprite.displayWidth / 2, y: REGION.y + REGION.height - sprite.displayHeight / 2 })
+        const right = REGION.x + REGION.width
+        const top = REGION.y
+        const box = {
+            left: sprite.x - sprite.displayWidth / 2,
+            right: sprite.x + sprite.displayWidth / 2,
+            top: sprite.y - sprite.displayHeight / 2,
+            bottom: sprite.y + sprite.displayHeight / 2,
+        }
+
+        expect(box.right).toBeLessThanOrEqual(right)
+        expect(box.top).toBeGreaterThanOrEqual(top)
+        expect(right - box.right).toBeLessThan(VIEWPORT.width / 4)
+        expect(box.top - top).toBeLessThan(VIEWPORT.height / 4)
+        expect(right - box.right).toBeLessThan(box.left - REGION.x)
 
         bag.dispose()
     })
 
     it("opens, closes and reopens the panel without throwing", () => {
         const { scene } = createSceneDouble()
-        const bag = new InventoryBag(scene, createInventoryDouble())
+        const bag = new InventoryBag(scene, createInventoryDouble([]))
 
         expect(() => bag.open()).not.toThrow()
         expect(() => bag.close()).not.toThrow()
@@ -283,23 +403,93 @@ describe("InventoryBag initialization", () => {
         bag.dispose()
     })
 
-    it("keeps the bag inside the arena when it spawns again", () => {
-        const { scene, created } = createSceneDouble()
-        const bag = new InventoryBag(scene, createInventoryDouble())
-
-        bag.spawnRandom()
-
-        expectInsideRegion(bag, bagSprite(created))
-        bag.dispose()
-    })
-
     it("destroys its Phaser objects on dispose", () => {
         const { scene, created } = createSceneDouble()
-        const bag = new InventoryBag(scene, createInventoryDouble())
+        const bag = new InventoryBag(scene, createInventoryDouble([]))
 
         bag.dispose()
 
         expect(bagSprite(created).destroyed).toBe(true)
-        expect(created.find((object) => object.kind === "container")?.destroyed).toBe(true)
+        expect(contentContainer(created).destroyed).toBe(true)
+    })
+})
+
+describe("InventoryBag grid growth", () => {
+    it("grows the panel with the content and caps the width at five columns", () => {
+        const widths: number[] = []
+
+        for (const count of [1, 3, 5, 6, 16]) {
+            const { scene, created } = createSceneDouble()
+            const items = Array.from({ length: count }, (_value, index) => fakeItem("component", index))
+            const bag = new InventoryBag(scene, createInventoryDouble(items))
+
+            bag.open()
+            widths.push(blocker(created).width)
+            // The scroll surface must follow the panel: Phaser captures the hit area
+            // when `setInteractive` runs, so a stale geom would kill panel gestures.
+            expect(blocker(created).hitArea?.width).toBe(blocker(created).width)
+            expect(blocker(created).hitArea?.height).toBe(blocker(created).height)
+            bag.dispose()
+        }
+
+        for (let index = 1; index < widths.length; index++) {
+            expect(widths[index]).toBeGreaterThanOrEqual(widths[index - 1])
+        }
+
+        expect(widths[2]).toBeGreaterThan(widths[0])
+        // Five columns need 5 * 46 + 4 * 6 of grid, but the panel never grows past it.
+        expect(widths[3]).toBe(widths[2])
+        expect(widths[4]).toBe(widths[2])
+    })
+
+    it("keeps three rows of height and scrolls the rest", () => {
+        const { scene, created } = createSceneDouble()
+        const items = Array.from({ length: 16 }, (_value, index) => fakeItem("component", index))
+        const bag = new InventoryBag(scene, createInventoryDouble(items))
+
+        bag.open()
+        const before = blocker(created).height
+        const shownBefore = items.filter((item) => !item.stored).length
+
+        // Rows 4 do not fit the three-row window, so the last item stays hidden.
+        expect(shownBefore).toBe(15)
+        expect(scrollThumb(created).visible).toBe(true)
+
+        bag.scrollBy(VIEWPORT.height)
+        expect(blocker(created).height).toBe(before)
+        expect(items.filter((item) => item.stored).length).toBe(5)
+        expect(items[0].stored).toBe(true)
+
+        bag.scrollBy(-VIEWPORT.height)
+        expect(items.filter((item) => item.stored).length).toBe(1)
+        expect(items[0].stored).toBe(false)
+
+        bag.dispose()
+    })
+
+    it("hides the scrollbar when everything fits", () => {
+        const { scene, created } = createSceneDouble()
+        const items = Array.from({ length: 3 }, (_value, index) => fakeItem("component", index))
+        const bag = new InventoryBag(scene, createInventoryDouble(items))
+
+        bag.open()
+
+        expect(scrollThumb(created).visible).toBe(false)
+        expect(items.every((item) => !item.stored)).toBe(true)
+
+        bag.dispose()
+    })
+
+    it("hides every item while the panel is closed", () => {
+        const { scene } = createSceneDouble()
+        const items = Array.from({ length: 4 }, (_value, index) => fakeItem("component", index))
+        const bag = new InventoryBag(scene, createInventoryDouble(items))
+
+        bag.open()
+        bag.close()
+
+        expect(items.every((item) => item.stored)).toBe(true)
+
+        bag.dispose()
     })
 })

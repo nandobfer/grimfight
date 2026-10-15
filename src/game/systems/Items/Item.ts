@@ -3,6 +3,7 @@ import { Game } from "../../scenes/Game"
 import { EventBus } from "../../tools/EventBus"
 import { RNG } from "../../tools/RNG"
 import { ItemRegistry } from "./ItemRegistry"
+import { ITEM_DRAG_BORDER_DEPTH, ITEM_DRAG_DEPTH, ITEM_EQUIPPED_BORDER_DEPTH, ITEM_EQUIPPED_DEPTH } from "./InventoryDepths"
 
 export interface PointerPosition {
     x: number
@@ -56,9 +57,9 @@ export class Item {
                 this.big_scale *= 1.5
             }
 
-            this.sprite = scene.add.image(10000, 10000, texture) // spawnin g outside game canvas
+            this.sprite = scene.add.image(10000, 10000, texture) // spawning outside game canvas
             this.sprite.setScale(this.big_scale)
-            this.sprite.setDepth(1000)
+            this.sprite.setDepth(ITEM_EQUIPPED_DEPTH)
 
             this.border = scene.add
                 .rectangle(this.sprite.x, this.sprite.y, this.sprite.displayWidth + 6, this.sprite.displayHeight + 6)
@@ -132,10 +133,16 @@ export class Item {
     cleanup(_creature: Creature) {}
 
     private handleItemOnPoint(pointer: Phaser.Input.Pointer) {
+        // The backpack panel owns the pointer while it is over the panel: merging
+        // two items is not a backpack gesture.
+        if (this.scene.inventoryBag?.blocksPoint(pointer.worldX, pointer.worldY)) return
+
         const x = Phaser.Math.Clamp(pointer.x, 0, this.scene.scale.width)
         const y = Phaser.Math.Clamp(pointer.y, 0, this.scene.scale.height)
 
         const targetItem = Array.from(this.scene.availableItems).find((item: Item) => {
+            if (!item.sprite.visible) return false
+
             const bounds = item.sprite.getBounds()
             const adjustedBounds = {
                 x: Phaser.Math.Clamp(bounds.x, 0, this.scene.scale.width),
@@ -208,8 +215,8 @@ export class Item {
             this.preDrag = { x: this.sprite.x, y: this.sprite.y }
 
             // Set a very high depth to ensure the item is always on top
-            this.sprite.setDepth(9999)
-            this.border.setDepth(10000)
+            this.sprite.setDepth(ITEM_DRAG_DEPTH)
+            this.border.setDepth(ITEM_DRAG_BORDER_DEPTH)
         })
 
         this.sprite.on("drag", (pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
@@ -234,9 +241,9 @@ export class Item {
                 this.scene.inventoryBag?.handleSlotDrop(this, pointer)
             }
 
-            // Reset depth after dragging ends
-            this.sprite.setDepth(1000)
-            this.border.setDepth(1001)
+            // The item kept its drag depth on purpose: `presentItem` below moves it
+            // back to the layer that matches where it landed.
+            this.scene.inventoryBag?.presentItem(this)
         })
 
         this.sprite.on("pointerup", () => {
@@ -325,6 +332,7 @@ export class Item {
     /** Puts the item back into the backpack, hiding its in-world sprite. */
     store() {
         this.user = undefined
+        this.sprite.clearMask()
         this.sprite.setVisible(false)
         this.sprite.setPosition(10000, 10000)
         this.hideBorder()
@@ -332,15 +340,17 @@ export class Item {
 
     /**
      * Draws the item inside a backpack slot. The sprite is scaled down to fit
-     * `maxSize` so items of different texture sizes look consistent.
+     * `maxSize` so items of different texture sizes look consistent, and moved to
+     * the backpack layer so the panel never covers it.
      */
-    showInSlot(x: number, y: number, maxSize: number) {
+    showInSlot(x: number, y: number, maxSize: number, depth = ITEM_EQUIPPED_DEPTH) {
         const largest = Math.max(1, this.sprite.width, this.sprite.height)
 
         this.user = undefined
         this.sprite.setPosition(x, y)
         this.sprite.setScale(maxSize / largest)
         this.sprite.setRotation(0)
+        this.sprite.setDepth(depth)
         this.sprite.setVisible(true)
         this.hideBorder()
     }

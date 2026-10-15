@@ -39,7 +39,7 @@ O estado global da run (ouro, andar, vidas, augments ativos, itens disponíveis)
 
 Itens temporarios ou efeitos de hidratacao nao fazem parte da persistencia permanente da run.
 
-Os itens guardados pertencem a bolsa (`ItemInventory`) e sao persistidos por `progress.availableItems` como a lista de chaves na ordem exibida. A posicao da bolsa e persistida em `progress.bagPosition`; quando nao existe posicao salva a bolsa nasce em um canto aleatorio.
+Os itens guardados pertencem a bolsa (`ItemInventory`) e sao persistidos por `progress.availableItems` como a lista de chaves na ordem exibida. O icone da bolsa e fixo no canto superior direito do mapa, sem posicao persistida; chaves de posicao de saves antigos sao ignoradas.
 
 ### Cleanup
 Para suportar restart da cena ou recarregamentos limpos, a cena desregistra seus listeners de teclado e `EventBus` respondendo ao evento `Phaser.Scenes.Events.SHUTDOWN`.

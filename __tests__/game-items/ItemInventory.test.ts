@@ -167,7 +167,6 @@ describe("InventoryBag contracts", () => {
         expect(source).toContain("export class InventoryBag")
         expect(source).toContain("Phaser.GameObjects.Container")
         expect(source).toContain("BAG_TEXTURE")
-        expect(source).toContain("scene.input.setDraggable(this.bag)")
         expect(source).toContain("CATEGORY_LABELS")
         expect(source).toContain(".setInteractive({ useHandCursor: true })")
         expect(source).toContain("this.panel.add([")
@@ -178,35 +177,65 @@ describe("InventoryBag contracts", () => {
         expect(source).not.toContain("@mui/")
     })
 
-    it("spawns on a random corner of the map and can be dragged", () => {
+    it("anchors the bag to the top-right corner of the map instead of spawning it", () => {
         const source = readSource(bagPath)
 
-        expect(source).toContain("cornerSpawnPosition(")
-        expect(source).toContain("clampToRegion(")
-        expect(source).toContain("spawnRandom()")
-        expect(source).toContain("this.bag.on(\"drag\"")
-        expect(source).toContain("this.bag.on(\"dragend\"")
+        expect(source).toContain("topRightAnchor(this.region(), this.bagSize(), ARENA_MARGIN)")
+        expect(source).toContain("attachedPanelPosition(")
+        expect(source).not.toContain("cornerSpawnPosition")
+        expect(source).not.toContain("spawnRandom")
+        expect(source).not.toContain("this.bag.on(\"drag\"")
         expect(source).toContain("private handlePointerUp()")
         expect(source).toContain("if (!this.dragged) this.toggle()")
-        expect(source).toContain("private shiftItems(dx: number, dy: number)")
     })
 
-    it("keeps the panel under the items so slot sprites stay visible", () => {
-        const source = readSource(bagPath)
-        const panelDepth = Number(source.match(/const PANEL_DEPTH = (\d+)/)?.[1])
-        const itemSource = readSource(join(itemsDir, "Item.ts"))
-        const itemDepth = Number(itemSource.match(/setDepth\((\d+)\)/)?.[1])
+    it("keeps the panel above the creature bars so they never cover the backpack", () => {
+        const depths = readSource(join(itemsDir, "InventoryDepths.ts"))
+        const creature = readSource(join(root, "src/game/creature/Creature.ts"))
+        const barDepth = Number(readSource(join(root, "src/game/ui/ProgressBar.ts")).match(/target\.depth \+ (\d+)/)?.[1])
+        const bagDepth = Number(depths.match(/export const BAG_DEPTH = (\d+)/)?.[1])
+        const panelDepth = Number(depths.match(/export const PANEL_DEPTH = (\d+)/)?.[1])
+        const slotDepth = Number(depths.match(/export const ITEM_SLOT_DEPTH = (\d+)/)?.[1])
 
-        expect(Number.isFinite(panelDepth)).toBe(true)
-        expect(panelDepth).toBeLessThan(itemDepth)
+        expect(Number.isFinite(barDepth)).toBe(true)
+        expect(creature).toContain("this.healthBar")
+        expect(panelDepth).toBeGreaterThan(barDepth)
+        expect(bagDepth).toBeLessThan(panelDepth)
+        expect(slotDepth).toBeGreaterThan(panelDepth)
     })
 
-    it("derives the spawn size from the constant instead of the sprite", () => {
+    it("derives the anchor size from the constant instead of the sprite", () => {
         const source = readSource(bagPath)
         const bagSize = source.slice(source.indexOf("private bagSize()"), source.indexOf("/** Playable map area"))
 
         expect(bagSize).toContain("return { width: BAG_DISPLAY_SIZE, height: BAG_DISPLAY_SIZE }")
         expect(bagSize).not.toContain("this.bag")
+    })
+
+    it("grows the grid with the content and scrolls it past the caps", () => {
+        const source = readSource(bagPath)
+        const layout = readSource(join(itemsDir, "InventoryBagLayout.ts"))
+
+        expect(source).toContain("const MAX_COLUMNS = 5")
+        expect(source).toContain("const MAX_ROWS = 3")
+        expect(source).toContain("bagContentLayout(")
+        expect(source).toContain("scrollBy(")
+        expect(source).toContain("scrollbarGeometry(")
+        expect(source).toContain("this.scene.input.on(\"wheel\"")
+        expect(source).not.toContain("paginate")
+        expect(layout).toContain("export function bagContentLayout(")
+        expect(layout).toContain("export function scrollbarGeometry(")
+        expect(layout).not.toContain("cornerSpawnPosition")
+    })
+
+    it("clips the scroll window and keeps out-of-window items inert", () => {
+        const source = readSource(bagPath)
+
+        expect(source).toContain("createGeometryMask()")
+        expect(source).toContain("this.content.setMask(this.contentMask)")
+        expect(source).toContain("item.sprite.setMask(this.contentMask)")
+        expect(source).toContain("item.sprite.clearMask()")
+        expect(source).toContain("if (rect.y + rect.height <= this.scroll || rect.y >= this.scroll + this.viewportHeight)")
     })
 
     it("reorders only inside the matching divider and swallows drops on its area", () => {
@@ -223,14 +252,18 @@ describe("InventoryBag contracts", () => {
 
         expect(itemSource).toContain("this.scene.inventoryBag?.handleSlotDrop(this, pointer)")
         expect(itemSource).toContain("this.scene.inventoryBag?.blocksPoint(pointer.worldX, pointer.worldY)")
+        expect(itemSource).toContain("this.scene.inventoryBag?.presentItem(this)")
     })
 
-    it("cleans up its listeners and objects", () => {
+    it("cleans up its listeners, mask and objects", () => {
         const source = readSource(bagPath)
 
         expect(source).toContain("dispose()")
         expect(source).toContain("EventBus.off(\"inventory-change\"")
         expect(source).toContain("this.scene.input.off(\"pointerup\"")
+        expect(source).toContain("this.scene.input.off(\"wheel\"")
+        expect(source).toContain("this.contentMask.destroy()")
+        expect(source).toContain("this.maskShape.destroy()")
         expect(source).toContain("this.bag.destroy()")
         expect(source).toContain("this.panel.destroy(true)")
     })
@@ -251,9 +284,9 @@ describe("Game scene inventory wiring", () => {
         expect(source).toContain("inventory = new ItemInventory()")
         expect(source).toContain("inventoryBag?: InventoryBag")
         expect(source).toContain("get availableItems(): ItemInventory")
-        expect(source).toContain("new InventoryBag(this, this.inventory, this.savedBagPosition)")
+        expect(source).toContain("new InventoryBag(this, this.inventory)")
         expect(source).toContain("availableItems: this.inventory.serialize()")
-        expect(source).toContain("bagPosition: this.inventoryBag?.getPosition()")
+        expect(source).not.toContain("bagPosition")
         expect(source).toContain("this.inventoryBag?.dispose()")
         expect(source).not.toContain("ui-item-drag")
         expect(source).not.toContain("installItemDragBridge")

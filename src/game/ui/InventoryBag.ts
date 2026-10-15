@@ -1,11 +1,13 @@
 // src/game/ui/InventoryBag.ts
 //
-// The player's backpack, fully rendered with Phaser objects: a bag sprite that
-// spawns in a random corner of the arena and can be dragged around, plus a
-// panel with one grid per item category ("Artefato", "Completo", "Componente").
+// The player's backpack, fully rendered with Phaser objects: a bag sprite fixed
+// in the top-right corner of the arena opens a panel that lists the held items
+// grouped into the "Artefato", "Completo" and "Componente" dividers.
 //
-// The panel keeps every held item visible in its own slot so the existing item
-// drag-and-drop (equip on a creature, otherwise return to the bag) keeps working
+// The grid grows with the content (up to `MAX_COLUMNS` wide and `MAX_ROWS` tall)
+// and scrolls once it overflows. The panel draws above the creature health bars
+// and is masked to its scroll window, so the items it holds keep working with the
+// existing drag-and-drop (equip on a creature, otherwise return to the bag)
 // without any DOM/React involvement.
 
 import Phaser from "phaser"
@@ -13,7 +15,31 @@ import { Game } from "../scenes/Game"
 import { Item } from "../systems/Items/Item"
 import { ItemInventory } from "../systems/Items/ItemInventory"
 import { INVENTORY_CATEGORIES, InventoryCategory } from "../systems/Items/ItemInventoryLayout"
-import { clampToRegion, cornerSpawnPosition, paginate, panelPosition, rectContains, slotRects, Point, Rect, Size } from "../systems/Items/InventoryBagLayout"
+import {
+    attachedPanelPosition,
+    bagContentLayout,
+    BagContentLayout,
+    categoryIndexAt,
+    cellAt,
+    cellRect,
+    clampScroll,
+    GridMetrics,
+    scrollbarGeometry,
+    scrollOffsetFromThumb,
+    topRightAnchor,
+    Rect,
+    ScrollbarGeometry,
+} from "../systems/Items/InventoryBagLayout"
+import {
+    BAG_BADGE_DEPTH,
+    BAG_DEPTH,
+    ITEM_EQUIPPED_BORDER_DEPTH,
+    ITEM_EQUIPPED_DEPTH,
+    ITEM_SLOT_DEPTH,
+    PANEL_BLOCKER_DEPTH,
+    PANEL_DEPTH,
+    PANEL_UI_DEPTH,
+} from "../systems/Items/InventoryDepths"
 import { EventBus } from "../tools/EventBus"
 
 const BAG_TEXTURE = "inventory-bag"
@@ -24,35 +50,42 @@ const BADGE_OFFSET_Y = 24
 
 const PANEL_PADDING = 12
 const PANEL_RADIUS = 10
-const PANEL_GAP = 10
-const VIEWPORT_MARGIN = 10
-const HEADER_HEIGHT = 24
-const FOOTER_HEIGHT = 22
-const CATEGORY_LABEL_HEIGHT = 18
-const CATEGORY_GAP = 10
+const PANEL_GAP = 12
+const VIEWPORT_MARGIN = 8
+const HEADER_HEIGHT = 26
+const ARENA_MARGIN = 6
+
 const SLOT_SIZE = 46
 const SLOT_GAP = 6
 const SLOT_ICON_INSET = 10
+const DIVIDER_HEIGHT = 26
 
-const SPAWN_INSET = 4
-const SPAWN_JITTER = 26
+/** Grid caps requested for the backpack: 5 columns wide, 3 rows before scrolling. */
+const MAX_COLUMNS = 5
+const MAX_ROWS = 3
 
-/** Mirrors the Item drag threshold so a press needs real movement to become a drag. */
-const BAG_DRAG_THRESHOLD = 32
+const SCROLLBAR_WIDTH = 8
+const SCROLLBAR_GUTTER = SCROLLBAR_WIDTH + 6
+const WHEEL_STEP = 48
 
-const PANEL_DEPTH = 900
-const BAG_DEPTH = 1100
-const BAG_BADGE_DEPTH = 1101
+/** Smallest panel content width, so the empty-state message is never clipped. */
+const MIN_CONTENT_WIDTH = 150
 
 const PANEL_FILL = 0x1e1712
 const PANEL_BORDER = 0xb08a4a
 const SLOT_FILL = 0x2b2218
 const SLOT_BORDER = 0x6b5636
 const DIVIDER_COLOR = 0x6b5636
+const SCROLLBAR_TRACK = 0x2b2218
+const SCROLLBAR_THUMB = 0x8a6f42
+const SCROLLBAR_THUMB_HOVER = 0xc0a06a
 
 const TEXT_COLOR = "#f2e2c4"
 const MUTED_COLOR = "#b7a184"
 const ACCENT_COLOR = "#ffd98a"
+
+/** Matches the Item drag threshold so a press needs real movement to become a drag. */
+const DRAG_THRESHOLD = 32
 
 const CATEGORY_LABELS: Record<InventoryCategory, string> = {
     artifact: "Artefato",
@@ -60,93 +93,90 @@ const CATEGORY_LABELS: Record<InventoryCategory, string> = {
     component: "Componente",
 }
 
-interface SlotTarget {
-    /** Slot in panel-local coordinates. */
-    rect: Rect
-    /** Slot in world coordinates, used for pointer hit tests. */
-    world: Rect
-    category: InventoryCategory
-    /** Index of the slot inside its category (already offset by the current page). */
-    index: number
-    item?: Item
-}
-
 export class InventoryBag {
     private readonly scene: Game
     private readonly inventory: ItemInventory
+    private readonly metrics: GridMetrics = {
+        slotSize: SLOT_SIZE,
+        gap: SLOT_GAP,
+        dividerHeight: DIVIDER_HEIGHT,
+        maxColumns: MAX_COLUMNS,
+        maxRows: MAX_ROWS,
+    }
 
     private readonly bag: Phaser.GameObjects.Image
     private readonly badge: Phaser.GameObjects.Text
+    private readonly blocker: Phaser.GameObjects.Rectangle
     private readonly panel: Phaser.GameObjects.Container
     private readonly panelGraphics: Phaser.GameObjects.Graphics
-    private readonly panelBlocker: Phaser.GameObjects.Rectangle
     private readonly titleText: Phaser.GameObjects.Text
     private readonly closeText: Phaser.GameObjects.Text
     private readonly emptyText: Phaser.GameObjects.Text
-    private readonly pageText: Phaser.GameObjects.Text
-    private readonly previousText: Phaser.GameObjects.Text
-    private readonly nextText: Phaser.GameObjects.Text
+    private readonly content: Phaser.GameObjects.Container
+    private readonly contentGraphics: Phaser.GameObjects.Graphics
     private readonly categoryLabels: Phaser.GameObjects.Text[] = []
+    private readonly scrollTrack: Phaser.GameObjects.Rectangle
+    private readonly scrollThumb: Phaser.GameObjects.Rectangle
+    // Phaser captures the hit area when `setInteractive` runs, so both resizable
+    // rectangles keep their own geoms in sync with their size.
+    private readonly blockerHitArea: Phaser.Geom.Rectangle
+    private readonly thumbHitArea: Phaser.Geom.Rectangle
+    private readonly maskShape: Phaser.GameObjects.Graphics
+    private readonly contentMask: Phaser.Display.Masks.GeometryMask
 
-    private readonly columns: number
-    private readonly rowsPerCategory: number
-    private readonly perCategoryPerPage: number
-    private readonly panelWidth: number
-    private readonly panelHeight: number
+    private layout: BagContentLayout
+    private scroll = 0
+    private panelWidth = 0
+    private panelHeight = 0
+    private viewportHeight = SLOT_SIZE
 
-    private slots: SlotTarget[] = []
-    private page = 0
-    private pageCount = 1
     private opened = false
     private pressed = false
     private dragged = false
     private draggingSprite?: Phaser.GameObjects.GameObject
+    private lastDragY = 0
     private disposed = false
 
     private readonly onInventoryChange = () => this.refresh()
     private readonly onScenePointerUp = () => this.handlePointerUp()
     private readonly onSceneDragStart = (_pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject) => {
-        if (gameObject !== this.bag) this.draggingSprite = gameObject
+        this.dragged = true
+        this.draggingSprite = gameObject
+
+        for (const item of this.inventory) {
+            if (item.sprite !== gameObject) continue
+
+            // The dragged item must escape the scroll window to reach creatures.
+            item.sprite.clearMask()
+            break
+        }
     }
     private readonly onSceneDragEnd = () => {
         this.draggingSprite = undefined
         this.refresh()
     }
+    private readonly onWheel = (pointer: Phaser.Input.Pointer, _objects: unknown, _deltaX: number, deltaY: number) => {
+        if (!this.opened) return
+        if (!this.containsContentWindow(pointer.x, pointer.y)) return
 
-    constructor(scene: Game, inventory: ItemInventory, position?: Point) {
+        this.scrollBy(deltaY > 0 ? WHEEL_STEP : -WHEEL_STEP)
+    }
+
+    constructor(scene: Game, inventory: ItemInventory) {
         this.scene = scene
         this.inventory = inventory
+        this.layout = bagContentLayout({ artifact: 0, completed: 0, component: 0 }, this.metrics)
 
-        const os = scene.sys.game.device.os
-        const isMobile = os.android || os.iOS
-
-        this.columns = isMobile ? 3 : 4
-        this.rowsPerCategory = isMobile ? 1 : 2
-        this.perCategoryPerPage = this.columns * this.rowsPerCategory
-        this.panelWidth = PANEL_PADDING * 2 + this.columns * SLOT_SIZE + (this.columns - 1) * SLOT_GAP
-        this.panelHeight =
-            PANEL_PADDING * 2 +
-            HEADER_HEIGHT +
-            INVENTORY_CATEGORIES.length * (CATEGORY_LABEL_HEIGHT + this.rowsPerCategory * SLOT_SIZE + (this.rowsPerCategory - 1) * SLOT_GAP + CATEGORY_GAP) +
-            FOOTER_HEIGHT
-
-        // A saved position may be stale (different arena size), so it is always
-        // clamped back into the map; without one the bag spawns on a random corner.
-        const spawn = clampToRegion(
-            position ?? cornerSpawnPosition(this.region(), this.bagSize(), Math.random, SPAWN_INSET, SPAWN_JITTER).position,
-            this.region(),
-            this.bagSize()
-        )
+        const anchor = topRightAnchor(this.region(), this.bagSize(), ARENA_MARGIN)
 
         this.bag = scene.add
-            .image(spawn.x, spawn.y, BAG_TEXTURE)
+            .image(anchor.x, anchor.y, BAG_TEXTURE)
             .setDisplaySize(BAG_DISPLAY_SIZE, BAG_DISPLAY_SIZE)
             .setDepth(BAG_DEPTH)
             .setInteractive({ useHandCursor: true })
-        scene.input.setDraggable(this.bag)
 
         this.badge = scene.add
-            .text(spawn.x + BADGE_OFFSET_X, spawn.y + BADGE_OFFSET_Y, "", {
+            .text(anchor.x + BADGE_OFFSET_X, anchor.y + BADGE_OFFSET_Y, "", {
                 fontSize: "15px",
                 fontFamily: "Arial",
                 color: "#2a1e10",
@@ -156,17 +186,28 @@ export class InventoryBag {
             .setOrigin(0.5)
             .setDepth(BAG_BADGE_DEPTH)
 
-        this.panel = scene.add.container(0, 0).setDepth(PANEL_DEPTH).setVisible(false)
+        // Invisible surface that owns the pointer over the open panel: it is the
+        // scroll gesture target for touch and keeps creatures behind the panel out
+        // of the way while it is visible.
+        this.blockerHitArea = new Phaser.Geom.Rectangle(0, 0, 1, 1)
+        this.blocker = scene.add
+            .rectangle(0, 0, 1, 1, 0x000000, 0)
+            .setOrigin(0, 0)
+            .setDepth(PANEL_BLOCKER_DEPTH)
+            .setInteractive({ hitArea: this.blockerHitArea, hitAreaCallback: Phaser.Geom.Rectangle.Contains })
 
-        this.panelBlocker = scene.add.rectangle(0, 0, this.panelWidth, this.panelHeight, 0x000000, 0).setOrigin(0, 0).setInteractive()
+        this.panel = scene.add.container(0, 0).setDepth(PANEL_DEPTH).setVisible(false)
         this.panelGraphics = scene.add.graphics()
+        this.content = scene.add.container(0, 0)
+        this.contentGraphics = scene.add.graphics()
+
         this.titleText = scene.add.text(PANEL_PADDING, PANEL_PADDING, "Bolsa", {
             fontSize: "15px",
             fontFamily: "Arial",
             color: TEXT_COLOR,
         })
         this.closeText = scene.add
-            .text(this.panelWidth - PANEL_PADDING, PANEL_PADDING - 2, "X", {
+            .text(0, PANEL_PADDING - 2, "X", {
                 fontSize: "16px",
                 fontFamily: "Arial",
                 color: MUTED_COLOR,
@@ -175,40 +216,16 @@ export class InventoryBag {
             .setInteractive({ useHandCursor: true })
 
         this.emptyText = scene.add
-            .text(this.panelWidth / 2, this.panelHeight / 2, "A bolsa está vazia", {
+            .text(0, 0, "A bolsa está vazia", {
                 fontSize: "13px",
                 fontFamily: "Arial",
                 color: MUTED_COLOR,
             })
             .setOrigin(0.5)
 
-        this.previousText = scene.add
-            .text(PANEL_PADDING, this.panelHeight - PANEL_PADDING - FOOTER_HEIGHT + 2, "<", {
-                fontSize: "15px",
-                fontFamily: "Arial",
-                color: ACCENT_COLOR,
-            })
-            .setOrigin(0, 0)
-            .setInteractive({ useHandCursor: true })
-        this.nextText = scene.add
-            .text(this.panelWidth - PANEL_PADDING, this.panelHeight - PANEL_PADDING - FOOTER_HEIGHT + 2, ">", {
-                fontSize: "15px",
-                fontFamily: "Arial",
-                color: ACCENT_COLOR,
-            })
-            .setOrigin(1, 0)
-            .setInteractive({ useHandCursor: true })
-        this.pageText = scene.add
-            .text(this.panelWidth / 2, this.panelHeight - PANEL_PADDING - FOOTER_HEIGHT + 2, "", {
-                fontSize: "13px",
-                fontFamily: "Arial",
-                color: MUTED_COLOR,
-            })
-            .setOrigin(0.5, 0)
-
         for (const category of INVENTORY_CATEGORIES) {
             this.categoryLabels.push(
-                scene.add.text(PANEL_PADDING, 0, CATEGORY_LABELS[category], {
+                scene.add.text(0, 0, CATEGORY_LABELS[category], {
                     fontSize: "13px",
                     fontFamily: "Arial",
                     color: ACCENT_COLOR,
@@ -216,34 +233,35 @@ export class InventoryBag {
             )
         }
 
-        this.panel.add([
-            this.panelBlocker,
-            this.panelGraphics,
-            this.titleText,
-            this.closeText,
-            this.emptyText,
-            this.previousText,
-            this.nextText,
-            this.pageText,
-            ...this.categoryLabels,
-        ])
+        this.content.add([this.contentGraphics, ...this.categoryLabels])
+        this.panel.add([this.panelGraphics, this.titleText, this.closeText, this.emptyText, this.content])
+
+        this.scrollTrack = scene.add.rectangle(0, 0, SCROLLBAR_WIDTH, 1, SCROLLBAR_TRACK, 0.7).setOrigin(0, 0).setDepth(PANEL_UI_DEPTH)
+        this.thumbHitArea = new Phaser.Geom.Rectangle(0, 0, SCROLLBAR_WIDTH, 1)
+        this.scrollThumb = scene.add
+            .rectangle(0, 0, SCROLLBAR_WIDTH, 1, SCROLLBAR_THUMB, 1)
+            .setOrigin(0, 0)
+            .setDepth(PANEL_UI_DEPTH + 1)
+            .setInteractive({ hitArea: this.thumbHitArea, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true })
+
+        // Mask for the scroll window: the panel chrome stays unmasked while the
+        // content container and every item placed in a slot are clipped to it.
+        this.maskShape = scene.make.graphics({ x: 0, y: 0 }, false)
+        this.contentMask = this.maskShape.createGeometryMask()
+        this.content.setMask(this.contentMask)
 
         this.installInput()
-        this.positionPanel()
-        this.updateBadge()
+        this.layoutPanel()
+        this.refresh()
 
         EventBus.on("inventory-change", this.onInventoryChange)
     }
 
-    /**
-     * Visual size of the bag. Derived from the constant (not from the sprite)
-     * because the spawn/clamp math runs before the sprite is created.
-     */
-    private bagSize(): Size {
+    private bagSize(): { width: number; height: number } {
         return { width: BAG_DISPLAY_SIZE, height: BAG_DISPLAY_SIZE }
     }
 
-    /** Playable map area used both for spawning and for dragging the bag. */
+    /** Playable map area: the bag is anchored to its top-right corner. */
     private region(): Rect {
         const bounds = this.scene.background.getBounds()
         return { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height }
@@ -253,37 +271,60 @@ export class InventoryBag {
         return { x: 0, y: 0, width: this.scene.cameras.main.width, height: this.scene.cameras.main.height }
     }
 
+    private contentWidth(): number {
+        return Math.max(this.layout.gridWidth, MIN_CONTENT_WIDTH)
+    }
+
+    /** Panel-local rect of the scroll window. */
+    private contentWindow(): Rect {
+        return { x: PANEL_PADDING, y: PANEL_PADDING + HEADER_HEIGHT, width: this.contentWidth(), height: this.viewportHeight }
+    }
+
+    private containsContentWindow(x: number, y: number): boolean {
+        const window = this.contentWindow()
+        const rect = { x: this.panel.x + window.x, y: this.panel.y + window.y, width: window.width, height: window.height }
+
+        return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height
+    }
+
+    private panelRect(): Rect {
+        return { x: this.panel.x, y: this.panel.y, width: this.panelWidth, height: this.panelHeight }
+    }
+
     private installInput() {
-        // Matches the Item drag threshold: the pointer must travel this far before
-        // a press becomes a drag, so a plain click still toggles the panel.
-        this.scene.input.dragDistanceThreshold = BAG_DRAG_THRESHOLD
+        this.scene.input.dragDistanceThreshold = DRAG_THRESHOLD
 
         this.bag.on("pointerover", () => this.bag.setTint(0xffe9b0))
         this.bag.on("pointerout", () => this.bag.clearTint())
-
         this.bag.on("pointerdown", () => {
             if (this.scene.state !== "idle") return
+
             this.pressed = true
             this.dragged = false
         })
 
-        this.bag.on("drag", (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-            this.dragged = true
-            this.moveBag(dragX, dragY)
-        })
-
-        this.bag.on("dragend", () => {
-            this.dragged = true
-            this.scene.saveProgress()
-        })
-
         this.closeText.on("pointerdown", () => this.close())
-        this.previousText.on("pointerdown", () => this.changePage(-1))
-        this.nextText.on("pointerdown", () => this.changePage(1))
+
+        // Dragging the panel surface (never an item drawn on top of it) scrolls.
+        this.scene.input.setDraggable(this.blocker)
+        this.blocker.on("dragstart", (pointer: Phaser.Input.Pointer) => {
+            this.lastDragY = pointer.y
+        })
+        this.blocker.on("drag", (pointer: Phaser.Input.Pointer) => {
+            this.scrollBy(this.lastDragY - pointer.y)
+            this.lastDragY = pointer.y
+        })
+        this.blocker.disableInteractive()
+
+        this.scene.input.setDraggable(this.scrollThumb)
+        this.scrollThumb.on("pointerover", () => this.scrollThumb.setFillStyle(SCROLLBAR_THUMB_HOVER, 1))
+        this.scrollThumb.on("pointerout", () => this.scrollThumb.setFillStyle(SCROLLBAR_THUMB, 1))
+        this.scrollThumb.on("drag", (pointer: Phaser.Input.Pointer) => this.scrollToThumb(pointer.y))
 
         this.scene.input.on("pointerup", this.onScenePointerUp)
         this.scene.input.on("dragstart", this.onSceneDragStart)
         this.scene.input.on("dragend", this.onSceneDragEnd)
+        this.scene.input.on("wheel", this.onWheel)
     }
 
     private handlePointerUp() {
@@ -302,8 +343,9 @@ export class InventoryBag {
         if (this.opened || this.disposed) return
 
         this.opened = true
-        this.page = 0
+        this.scroll = 0
         this.panel.setVisible(true)
+        this.blocker.setInteractive()
         this.refresh()
     }
 
@@ -312,75 +354,39 @@ export class InventoryBag {
 
         this.opened = false
         this.panel.setVisible(false)
+        this.blocker.disableInteractive()
+        this.scrollTrack.setVisible(false)
+        this.scrollThumb.setVisible(false)
         this.refresh()
     }
 
-    /** Moves the bag to a new random corner of the map. */
-    spawnRandom() {
-        const spawn = cornerSpawnPosition(this.region(), this.bagSize(), Math.random, SPAWN_INSET, SPAWN_JITTER)
-        this.moveBag(spawn.position.x, spawn.position.y)
-    }
+    /** True while the bag icon or the open panel owns the given world point. */
+    blocksPoint(x: number, y: number): boolean {
+        if (this.disposed) return false
 
-    getPosition(): Point {
-        return { x: this.bag.x, y: this.bag.y }
-    }
+        const half = this.bag.displayWidth / 2
+        if (x >= this.bag.x - half && x <= this.bag.x + half && y >= this.bag.y - half && y <= this.bag.y + half) return true
+        if (!this.opened) return false
 
-    private moveBag(x: number, y: number) {
-        const clamped = clampToRegion({ x, y }, this.region(), this.bagSize())
-
-        this.bag.setPosition(clamped.x, clamped.y)
-        this.badge.setPosition(clamped.x + BADGE_OFFSET_X, clamped.y + BADGE_OFFSET_Y)
-
-        const previousX = this.panel.x
-        const previousY = this.panel.y
-        this.positionPanel()
-
-        if (this.opened) this.shiftItems(this.panel.x - previousX, this.panel.y - previousY)
+        const rect = this.panelRect()
+        return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height
     }
 
     /**
-     * Moves the slotted items with the panel. Keeps the slot hit areas in sync
-     * without rebuilding the panel graphics on every drag frame.
+     * Called by `Item` when a drag ends. Re-applies the presentation that matches
+     * where the item landed: a backpack slot while it is still held, otherwise the
+     * world layer used by equipped items.
      */
-    private shiftItems(dx: number, dy: number) {
-        if (dx === 0 && dy === 0) return
+    presentItem(item: Item) {
+        if (this.disposed) return
 
-        for (const slot of this.slots) {
-            slot.world.x += dx
-            slot.world.y += dy
-
-            const item = slot.item
-            if (!item || item.sprite === this.draggingSprite) continue
-
-            item.showInSlot(slot.world.x + slot.world.width / 2, slot.world.y + slot.world.height / 2, SLOT_SIZE - SLOT_ICON_INSET)
+        if (!this.inventory.has(item)) {
+            item.sprite.clearMask()
+            item.sprite.setDepth(ITEM_EQUIPPED_DEPTH)
+            item.border.setDepth(ITEM_EQUIPPED_BORDER_DEPTH)
+            return
         }
-    }
 
-    private positionPanel() {
-        const position = panelPosition(
-            { x: this.bag.x, y: this.bag.y },
-            this.bagSize(),
-            this.viewport(),
-            { width: this.panelWidth, height: this.panelHeight },
-            PANEL_GAP,
-            VIEWPORT_MARGIN
-        )
-
-        this.panel.setPosition(position.x, position.y)
-    }
-
-    /** True while the open panel owns the given world point. */
-    blocksPoint(x: number, y: number): boolean {
-        if (this.disposed || !this.opened) return false
-
-        return rectContains({ x: this.panel.x, y: this.panel.y, width: this.panelWidth, height: this.panelHeight }, x, y)
-    }
-
-    private changePage(direction: number) {
-        const next = Phaser.Math.Clamp(this.page + direction, 0, this.pageCount - 1)
-        if (next === this.page) return
-
-        this.page = next
         this.refresh()
     }
 
@@ -389,111 +395,244 @@ export class InventoryBag {
      * item when the drop happened on a slot of its own category.
      */
     handleSlotDrop(item: Item, pointer: Phaser.Input.Pointer) {
-        const x = pointer.worldX
-        const y = pointer.worldY
-        if (!this.blocksPoint(x, y)) return
-
-        const target = this.slots.find((slot) => rectContains(slot.world, x, y))
+        const target = this.cellUnderPointer(pointer.worldX, pointer.worldY)
         if (!target) return
         if (target.category !== this.inventory.categoryOf(item)) return
 
         this.inventory.reorder(item.id, target.index)
     }
 
-    /** Redraws the panel and places every held item on its slot. */
+    private cellUnderPointer(worldX: number, worldY: number): { category: InventoryCategory; index: number } | undefined {
+        if (!this.opened) return undefined
+
+        const cell = cellAt(worldX - this.content.x, worldY - this.content.y, this.layout, this.metrics)
+        if (!cell) return undefined
+
+        return categoryIndexAt(this.layout, cell.row, cell.column)
+    }
+
+    /** Recomputes the grid for the current inventory and redraws the panel. */
     refresh() {
         if (this.disposed) return
 
         this.updateBadge()
 
+        const groups = this.inventory.snapshot()
+
         if (!this.opened) {
-            for (const item of this.inventory) {
-                if (item.sprite === this.draggingSprite) continue
-                item.store()
-            }
+            this.storeItems(groups)
             return
         }
 
-        const groups = this.inventory.snapshot()
-        this.pageCount = Math.max(
-            1,
-            ...INVENTORY_CATEGORIES.map((category) => paginate(groups[category], 0, this.perCategoryPerPage).pageCount)
+        this.layout = bagContentLayout(
+            {
+                artifact: groups.artifact.length,
+                completed: groups.completed.length,
+                component: groups.component.length,
+            },
+            this.metrics
         )
-        this.page = Phaser.Math.Clamp(this.page, 0, this.pageCount - 1)
+        this.scroll = clampScroll(this.scroll, this.layout.scrollRange)
 
-        this.drawPanel(groups)
+        this.layoutPanel()
+        this.drawPanel()
+        this.drawContent()
         this.placeItems(groups)
+        this.updateScrollbar()
     }
 
-    private drawPanel(groups: Record<InventoryCategory, Item[]>) {
+    /** Sizes the panel from the current grid, then repositions it and its mask. */
+    private layoutPanel() {
+        this.viewportHeight = this.layout.rows === 0 ? SLOT_SIZE : this.layout.viewportHeight
+        this.panelWidth = PANEL_PADDING * 2 + this.contentWidth() + SCROLLBAR_GUTTER
+        this.panelHeight = PANEL_PADDING * 2 + HEADER_HEIGHT + this.viewportHeight
+
+        this.reposition()
+        this.updateMask()
+    }
+
+    /** Places the icon, the panel, the scroll surface and the scrollbar. */
+    private reposition() {
+        const anchor = topRightAnchor(this.region(), this.bagSize(), ARENA_MARGIN)
+
+        this.bag.setPosition(anchor.x, anchor.y)
+        this.badge.setPosition(anchor.x + BADGE_OFFSET_X, anchor.y + BADGE_OFFSET_Y)
+
+        const position = attachedPanelPosition(
+            anchor,
+            this.bagSize(),
+            this.viewport(),
+            { width: this.panelWidth, height: this.panelHeight },
+            PANEL_GAP,
+            VIEWPORT_MARGIN
+        )
+
+        const window = this.contentWindow()
+
+        this.panel.setPosition(position.x, position.y)
+        this.blocker.setPosition(position.x, position.y)
+        this.blocker.setSize(this.panelWidth, this.panelHeight)
+        this.blockerHitArea.setSize(this.panelWidth, this.panelHeight)
+        this.titleText.setPosition(PANEL_PADDING, PANEL_PADDING)
+        this.closeText.setPosition(this.panelWidth - PANEL_PADDING, PANEL_PADDING - 2)
+        this.emptyText.setPosition(PANEL_PADDING + window.width / 2, window.y + window.height / 2)
+        this.scrollTrack
+            .setPosition(this.panelWidth - PANEL_PADDING - SCROLLBAR_WIDTH + 2, window.y)
+            .setSize(SCROLLBAR_WIDTH, window.height)
+        this.content.setPosition(position.x + window.x, position.y + window.y - this.scroll)
+    }
+
+    private updateMask() {
+        const window = this.contentWindow()
+
+        this.maskShape.clear()
+        this.maskShape.fillStyle(0xffffff, 1)
+        this.maskShape.fillRect(this.panel.x + window.x, this.panel.y + window.y, window.width, window.height)
+    }
+
+    private drawPanel() {
         const graphics = this.panelGraphics
+        const headerBottom = PANEL_PADDING + HEADER_HEIGHT - 4
+
         graphics.clear()
         graphics.fillStyle(PANEL_FILL, 0.94).fillRoundedRect(0, 0, this.panelWidth, this.panelHeight, PANEL_RADIUS)
         graphics.lineStyle(2, PANEL_BORDER, 0.9).strokeRoundedRect(0, 0, this.panelWidth, this.panelHeight, PANEL_RADIUS)
+        graphics.lineStyle(1, DIVIDER_COLOR, 0.5).lineBetween(PANEL_PADDING, headerBottom, this.panelWidth - PANEL_PADDING, headerBottom)
 
-        this.slots = []
-
-        const panelX = this.panel.x
-        const panelY = this.panel.y
-        let cursorY = PANEL_PADDING + HEADER_HEIGHT
-
-        INVENTORY_CATEGORIES.forEach((category, index) => {
-            this.categoryLabels[index].setPosition(PANEL_PADDING, cursorY)
-            cursorY += CATEGORY_LABEL_HEIGHT
-
-            const page = paginate(groups[category], this.page, this.perCategoryPerPage)
-            const rects = slotRects({ x: PANEL_PADDING, y: cursorY }, this.columns, this.rowsPerCategory, SLOT_SIZE, SLOT_GAP)
-
-            rects.forEach((rect, slotIndex) => {
-                graphics.fillStyle(SLOT_FILL, 0.9).fillRoundedRect(rect.x, rect.y, rect.width, rect.height, 6)
-                graphics.lineStyle(1, SLOT_BORDER, 0.8).strokeRoundedRect(rect.x, rect.y, rect.width, rect.height, 6)
-
-                this.slots.push({
-                    rect,
-                    world: { x: panelX + rect.x, y: panelY + rect.y, width: rect.width, height: rect.height },
-                    category,
-                    index: page.offset + slotIndex,
-                    item: page.items[slotIndex],
-                })
-            })
-
-            cursorY += this.rowsPerCategory * SLOT_SIZE + (this.rowsPerCategory - 1) * SLOT_GAP
-
-            if (index < INVENTORY_CATEGORIES.length - 1) {
-                graphics.lineStyle(1, DIVIDER_COLOR, 0.6).lineBetween(PANEL_PADDING, cursorY + CATEGORY_GAP / 2, this.panelWidth - PANEL_PADDING, cursorY + CATEGORY_GAP / 2)
-            }
-
-            cursorY += CATEGORY_GAP
-        })
-
-        const empty = this.inventory.size === 0
-        this.emptyText.setVisible(empty)
-        const paged = this.pageCount > 1
-        this.previousText.setVisible(paged)
-        this.nextText.setVisible(paged)
-        this.pageText.setVisible(paged).setText(`${this.page + 1}/${this.pageCount}`)
+        this.emptyText.setVisible(this.layout.rows === 0)
     }
 
-    private placeItems(groups: Record<InventoryCategory, Item[]>) {
-        const placed = new Set<Item>()
+    /** Draws the slots and the labelled dividers in content-local coordinates. */
+    private drawContent() {
+        const graphics = this.contentGraphics
+        const layout = this.layout
 
-        for (const slot of this.slots) {
-            const item = slot.item
-            if (!item) continue
+        graphics.clear()
+        if (layout.rows === 0) return
 
-            if (item.sprite !== this.draggingSprite) {
-                item.showInSlot(slot.world.x + slot.world.width / 2, slot.world.y + slot.world.height / 2, SLOT_SIZE - SLOT_ICON_INSET)
+        for (const run of layout.runs) {
+            for (let local = 0; local < run.rows; local++) {
+                const rowTop = layout.rowTops[run.startRow + local]
+
+                for (let column = 0; column < layout.columns; column++) {
+                    const index = local * layout.columns + column
+                    const rect = cellRect(column, rowTop, { x: 0, y: 0 }, this.metrics)
+
+                    graphics.fillStyle(SLOT_FILL, 0.9).fillRoundedRect(rect.x, rect.y, rect.width, rect.height, 6)
+                    graphics.lineStyle(1, SLOT_BORDER, index < run.count ? 0.8 : 0.35).strokeRoundedRect(rect.x, rect.y, rect.width, rect.height, 6)
+                }
             }
-            placed.add(item)
         }
 
-        // Items on other pages stay stored (hidden) until their page is shown.
+        layout.dividerTops.forEach((top, index) => {
+            const run = layout.runs[index + 1]
+            const label = this.categoryLabels[index]
+
+            graphics.lineStyle(1, DIVIDER_COLOR, 0.7).lineBetween(0, top + DIVIDER_HEIGHT - 6, layout.gridWidth, top + DIVIDER_HEIGHT - 6)
+            label.setPosition(0, top + 2).setText(CATEGORY_LABELS[run.category]).setVisible(true)
+        })
+
+        for (let index = layout.dividerTops.length; index < this.categoryLabels.length; index++) {
+            this.categoryLabels[index].setVisible(false)
+        }
+    }
+
+    /** Places every held item on its cell, storing the ones outside the window. */
+    private placeItems(groups: Record<InventoryCategory, Item[]>) {
+        const placed = new Set<Item>()
+        const layout = this.layout
+
+        if (this.opened) {
+            for (const run of layout.runs) {
+                groups[run.category].forEach((item, index) => {
+                    placed.add(item)
+                    if (item.sprite === this.draggingSprite) return
+
+                    const row = run.startRow + Math.floor(index / layout.columns)
+                    const column = index % layout.columns
+                    const rect = cellRect(column, layout.rowTops[row], { x: 0, y: 0 }, this.metrics)
+
+                    // Cells scrolled out of the window stay hidden so they can never
+                    // be hovered or used as a drop target.
+                    if (rect.y + rect.height <= this.scroll || rect.y >= this.scroll + this.viewportHeight) {
+                        item.store()
+                        return
+                    }
+
+                    item.showInSlot(this.content.x + rect.x + rect.width / 2, this.content.y + rect.y + rect.height / 2, SLOT_SIZE - SLOT_ICON_INSET, ITEM_SLOT_DEPTH)
+                    item.sprite.setMask(this.contentMask)
+                })
+            }
+        }
+
         for (const category of INVENTORY_CATEGORIES) {
             for (const item of groups[category]) {
-                if (placed.has(item) || item.sprite === this.draggingSprite) continue
+                if (placed.has(item)) continue
+
                 item.store()
             }
         }
+    }
+
+    private storeItems(groups: Record<InventoryCategory, Item[]>) {
+        for (const category of INVENTORY_CATEGORIES) {
+            for (const item of groups[category]) {
+                if (item.sprite === this.draggingSprite) continue
+
+                item.store()
+            }
+        }
+    }
+
+    private updateScrollbar() {
+        const geometry = this.opened ? this.scrollGeometry() : undefined
+
+        if (!geometry) {
+            this.scrollTrack.setVisible(false)
+            this.scrollThumb.setVisible(false)
+            return
+        }
+
+        this.scrollTrack.setVisible(true)
+        this.scrollThumb.setVisible(true).setSize(geometry.thumb.width, geometry.thumb.height).setPosition(geometry.thumb.x, geometry.thumb.y)
+        this.thumbHitArea.setSize(geometry.thumb.width, geometry.thumb.height)
+    }
+
+    private scrollGeometry(): ScrollbarGeometry | undefined {
+        const track = { x: this.scrollTrack.x, y: this.scrollTrack.y, width: SCROLLBAR_WIDTH, height: this.viewportHeight }
+
+        return scrollbarGeometry(track, this.layout.contentHeight, this.viewportHeight, this.scroll)
+    }
+
+    /** Scrolls by a pixel delta, clamped to the content. */
+    scrollBy(delta: number) {
+        if (this.layout.scrollRange <= 0) return
+
+        const next = clampScroll(this.scroll + delta, this.layout.scrollRange)
+        if (next === this.scroll) return
+
+        this.scroll = next
+        this.applyScroll()
+    }
+
+    private scrollToThumb(pointerY: number) {
+        const geometry = this.scrollGeometry()
+        if (!geometry) return
+
+        const next = clampScroll(scrollOffsetFromThumb(pointerY - geometry.thumb.height / 2, geometry, this.layout.scrollRange), this.layout.scrollRange)
+        if (next === this.scroll) return
+
+        this.scroll = next
+        this.applyScroll()
+    }
+
+    /** Moves the content container and the slotted items to the current offset. */
+    private applyScroll() {
+        const window = this.contentWindow()
+        this.content.setPosition(this.panel.x + window.x, this.panel.y + window.y - this.scroll)
+
+        this.placeItems(this.inventory.snapshot())
+        this.updateScrollbar()
     }
 
     private updateBadge() {
@@ -510,10 +649,21 @@ export class InventoryBag {
         this.scene.input.off("pointerup", this.onScenePointerUp)
         this.scene.input.off("dragstart", this.onSceneDragStart)
         this.scene.input.off("dragend", this.onSceneDragEnd)
+        this.scene.input.off("wheel", this.onWheel)
+
+        for (const item of this.inventory) {
+            item.sprite.clearMask()
+        }
+
+        this.content.setMask(undefined)
+        this.contentMask.destroy()
+        this.maskShape.destroy()
 
         this.bag.destroy()
         this.badge.destroy()
+        this.blocker.destroy()
+        this.scrollTrack.destroy()
+        this.scrollThumb.destroy()
         this.panel.destroy(true)
-        this.slots = []
     }
 }

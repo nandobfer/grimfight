@@ -668,12 +668,12 @@ Subclasses de item sobrescrevem:
 Ao arrastar um item:
 
 - se soltar sobre personagem valido, equipe;
-- se soltar sobre o painel da bolsa, reordena dentro da categoria;
+- se soltar sobre um slot da bolsa da mesma categoria, reordena dentro da categoria;
 - se soltar fora, volta para a bolsa;
-- se pairar sobre outro item compativel, mostra preview do merge resultante;
+- se pairar sobre outro item compativel fora da bolsa, mostra preview do merge resultante;
 - se pairar sobre personagem, pode mostrar preview da composicao final.
 
-O painel da bolsa tem prioridade sobre o board: enquanto o ponteiro esta sobre a area do painel, criaturas atras dele nao sao destacadas nem equipadas.
+O painel da bolsa tem prioridade sobre o board: enquanto o ponteiro esta sobre a area do painel, criaturas e itens atras dele nao sao considerados.
 
 ### Slot limit
 
@@ -1234,6 +1234,8 @@ O limite cresce com o floor, mas e capado em `6`. Isso afeta summon automatico, 
 ## 8. `inventory` e a bolsa de itens
 
 Ao equipar um item em `Character`, o item sai da bolsa. Ao desequipar, vender, enviar ao bench ou descartar fora de uma criatura, ele volta para a bolsa. Nao existem mais itens soltos no board.
+
+O icone da bolsa fica fixo no canto superior direito do mapa. O grid cresce com o conteudo, respeitando limites de colunas e de linhas visiveis, e passa a rolar quando o conteudo ultrapassa esses limites. A area rolavel e recortada por mascara e itens fora da janela nao recebem hover nem drop. O painel desenha acima das barras de vida das criaturas.
 
 ## 9. Morte e fim de round sao assincronos
 

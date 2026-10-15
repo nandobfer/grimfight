@@ -39,8 +39,6 @@ export interface GameProgressDto {
     availableItems: string[]
     claimedItemChoiceFloors?: number[]
     record?: GameRecord
-    /** Centre of the backpack sprite on the arena, so it survives a reload. */
-    bagPosition?: { x: number; y: number }
 }
 
 export const starting_player_lives = 10
@@ -69,7 +67,6 @@ export class Game extends Scene {
     claimedItemChoiceFloors = new Set<number>()
     pendingItemChoiceFloor?: number
     isHydratingSavedRun = false
-    private savedBagPosition?: { x: number; y: number }
 
     playerGold = starting_player_gold
     playerLives = starting_player_lives
@@ -135,7 +132,7 @@ export class Game extends Scene {
 
         this.loadProgress()
         this.loadPlayerCharacters()
-        this.inventoryBag = new InventoryBag(this, this.inventory, this.savedBagPosition)
+        this.inventoryBag = new InventoryBag(this, this.inventory)
         this.createArenaTorches()
         this.buildFloor()
 
@@ -653,7 +650,6 @@ export class Game extends Scene {
             item.sprite.destroy(true)
         }
         this.availableItems.clear()
-        this.inventoryBag?.spawnRandom()
         this.claimedItemChoiceFloors.clear()
         this.pendingItemChoiceFloor = undefined
         this.resetAugments()
@@ -736,7 +732,6 @@ export class Game extends Scene {
             playerAugments: Array.from(this.playerTeam.augments.values()),
             enemyAugments: Array.from(this.enemyTeam.augments.values()),
             availableItems: this.inventory.serialize(),
-            bagPosition: this.inventoryBag?.getPosition(),
             claimedItemChoiceFloors: Array.from(this.claimedItemChoiceFloors.values()),
         }
         progress.record = this.getCurrentRecord(progress)
@@ -766,7 +761,6 @@ export class Game extends Scene {
                 this.playerLives = progress.playerLives
                 this.currentRecord = progress.record || this.getCurrentRecord(progress)
                 this.claimedItemChoiceFloors = new Set(progress.claimedItemChoiceFloors ?? [])
-                this.savedBagPosition = progress.bagPosition
                 progress.availableItems?.forEach((item) => this.availableItems.add(ItemRegistry.create(item, this)))
                 progress.playerAugments?.forEach((aug) => this.playerTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
                 progress.enemyAugments?.forEach((aug) => this.enemyTeam.augments.add(AugmentsRegistry.create(aug.name, aug)))
