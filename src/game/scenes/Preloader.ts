@@ -26,6 +26,7 @@ export class Preloader extends Scene {
         this.load.setPath("assets")
 
         this.load.image("arena", "dark_arena_2.png")
+        this.load.svg("inventory-bag", "ui/backpack.svg", { width: 96, height: 96 })
 
         CharacterRegistry.preloadVisuals(this)
         MonsterRegistry.preloadVisuals(this)

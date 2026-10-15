@@ -101,10 +101,18 @@ export class CharacterStore {
     sell(character: Character) {
         const refund = this.getCost(character.level)
         this.scene.changePlayerGold(this.scene.playerGold + refund)
+
+        // Return the equipped items to the backpack before the character is gone.
+        for (const item of Array.from(character.items)) {
+            if (item.temporarySource) continue
+            character.unequipItem(item)
+        }
+
         character.destroy(true)
         this.team.reset()
         this.team.bench.remove(character.id)
         this.scene.savePlayerCharacters(this.team.getChildren().map((char) => char.getDto()))
+        this.scene.saveProgress()
     }
 
     getMatchingCharacter(item: StoreItem) {

@@ -13,7 +13,7 @@ Lightweight 2D action built with Phaser + React, shipped as a static web build.
 ## Features
 
 * Tactical Auto-Battles: Your squad fights automatically; you set the stage with placement, items, and synergies.
-* Deep Item Crafting: Combine components into completed items (think TFT-style recipes). Loot lands in your backpack, ready to reorder; drag an item from the backpack onto a hero to equip, and it merges automatically when a valid pair is present.
+* Deep Item Crafting: Combine components into completed items (think TFT-style recipes). Loot lands in your backpack, a Phaser panel you can open, reorder and drag items out of onto a hero to equip or merge.
 * Augments & Events: Every few floors, pick from random augments that reshape your run. Enemies earn augments on milestones too.
 * Abilities With Style: From Dracula’s blood hunt to Rogue’s blink-flurry and Ymir’s freezing nova, each unit has a defining kit.
 * Roguelite Loop: 10 lives, escalating floors, gold rewards, occasional loot drops, and run records saved locally.
@@ -22,7 +22,7 @@ Lightweight 2D action built with Phaser + React, shipped as a static web build.
 ## How to Play
 
 * Drag heroes from your roster/bench onto the grid.
-* Open the backpack to see every item you own, split into Artifact, Completed and Component dividers. Drag an item out of it onto a hero to equip or merge.
+* Click the backpack sitting on the map (drag it anywhere) to open its panel, split into Artifact, Completed and Component dividers. Drag an item out of it onto a hero to equip or merge.
 * Press Space to start the round.
 * Win the floor to earn gold, loot, and augments at milestones. Lose all lives and your run ends (your record is saved).
 

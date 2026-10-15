@@ -14,7 +14,7 @@ Itens possuem hooks de regra como `applyModifier`, `afterApplying` e `cleanup`. 
 
 `ItemInventoryLayout` concentra as regras puras de layout: categorização em artefato, completo e componente, agrupamento e reordenação dentro da própria categoria. `ItemRegistry.categoryOf` define a categoria de cada item.
 
-A interface React da bolsa (`Inventory`) escuta `inventory-change`, mostra um ícone próprio e os três divisores, permite reordenar por arraste dentro da categoria e emite `ui-item-drag-start`, `ui-item-drag-move` e `ui-item-drag-end` para equipar itens arrastados até o board. Arrastar para fora do painel pede à cena que resolva o drop; arrastar dentro do painel apenas reordena.
+A bolsa propriamente dita e desenhada em Phaser por `InventoryBag`: um sprite de bolsa que nasce em um canto aleatorio do mapa, pode ser arrastado e abre um painel com os tres divisores e um slot por item. O painel tem prioridade sobre o board enquanto o ponteiro esta sobre ele, reordena quando o item e solto em um slot da mesma categoria e fecha ao entrar em combate.
 
 ### ItemRegistry
 `ItemRegistry` centraliza registros de componentes, itens completos, artifacts e receitas. O registry cria itens por chave, lista categorias, sorteia itens respeitando exclusões, resolve receitas e expõe receitas relacionadas a componentes.

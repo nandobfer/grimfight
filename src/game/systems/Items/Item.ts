@@ -193,8 +193,9 @@ export class Item {
         })
 
         this.sprite.on("pointerout", () => {
-            if (!this.user) this.showLooseBorder() // back to 0.6 when loose
-            else this.hideBorder()
+            // Items only ever live in the backpack or equipped to a creature, so
+            // leaving hover always hides the highlight border.
+            this.hideBorder()
 
             this.resetTooltip()
         })
@@ -226,9 +227,11 @@ export class Item {
                 character.equipItem(this)
                 this.hideBorder()
             } else {
-                // Items are never left loose on the board: return them to the backpack.
+                // Items are never left loose on the board: return them to the
+                // backpack and let it decide whether this was a reorder.
                 this.user?.unequipItem(this)
                 this.scene.availableItems.add(this)
+                this.scene.inventoryBag?.handleSlotDrop(this, pointer)
             }
 
             // Reset depth after dragging ends
@@ -299,6 +302,10 @@ export class Item {
     }
 
     private handleCreatureOnPoint(pointer: Phaser.Input.Pointer) {
+        // The backpack panel owns the pointer while it is over the panel area,
+        // so creatures behind the panel are never highlighted or equipped.
+        if (this.scene.inventoryBag?.blocksPoint(pointer.worldX, pointer.worldY)) return
+
         const x = pointer.x
         const y = pointer.y
         const cell = this.scene.grid.worldToCell(x, y)
@@ -320,6 +327,21 @@ export class Item {
         this.user = undefined
         this.sprite.setVisible(false)
         this.sprite.setPosition(10000, 10000)
+        this.hideBorder()
+    }
+
+    /**
+     * Draws the item inside a backpack slot. The sprite is scaled down to fit
+     * `maxSize` so items of different texture sizes look consistent.
+     */
+    showInSlot(x: number, y: number, maxSize: number) {
+        const largest = Math.max(1, this.sprite.width, this.sprite.height)
+
+        this.user = undefined
+        this.sprite.setPosition(x, y)
+        this.sprite.setScale(maxSize / largest)
+        this.sprite.setRotation(0)
+        this.sprite.setVisible(true)
         this.hideBorder()
     }
 

@@ -668,9 +668,12 @@ Subclasses de item sobrescrevem:
 Ao arrastar um item:
 
 - se soltar sobre personagem valido, equipe;
+- se soltar sobre o painel da bolsa, reordena dentro da categoria;
 - se soltar fora, volta para a bolsa;
 - se pairar sobre outro item compativel, mostra preview do merge resultante;
 - se pairar sobre personagem, pode mostrar preview da composicao final.
+
+O painel da bolsa tem prioridade sobre o board: enquanto o ponteiro esta sobre a area do painel, criaturas atras dele nao sao destacadas nem equipadas.
 
 ### Slot limit
 

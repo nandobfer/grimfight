@@ -384,7 +384,8 @@ export class Character extends Creature {
 
     override unequipItem(item: Item, fromThiefsGloves = false): void {
         super.unequipItem(item, fromThiefsGloves)
-        if (!fromThiefsGloves) this.scene.availableItems.add(item)
+        // Temporary items (Thief's Gloves) are round scoped and never stored.
+        if (!fromThiefsGloves && !item.temporarySource) this.scene.availableItems.add(item)
         if (!this.scene.isHydratingSavedRun && !fromThiefsGloves) {
             this.team.saveCurrentCharacters()
             this.scene.saveProgress()
