@@ -201,6 +201,14 @@ describe("InventoryBag contracts", () => {
         expect(panelDepth).toBeLessThan(itemDepth)
     })
 
+    it("derives the spawn size from the constant instead of the sprite", () => {
+        const source = readSource(bagPath)
+        const bagSize = source.slice(source.indexOf("private bagSize()"), source.indexOf("/** Playable map area"))
+
+        expect(bagSize).toContain("return { width: BAG_DISPLAY_SIZE, height: BAG_DISPLAY_SIZE }")
+        expect(bagSize).not.toContain("this.bag")
+    })
+
     it("reorders only inside the matching divider and swallows drops on its area", () => {
         const source = readSource(bagPath)
 

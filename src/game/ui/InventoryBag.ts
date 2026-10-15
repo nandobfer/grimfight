@@ -235,8 +235,12 @@ export class InventoryBag {
         EventBus.on("inventory-change", this.onInventoryChange)
     }
 
+    /**
+     * Visual size of the bag. Derived from the constant (not from the sprite)
+     * because the spawn/clamp math runs before the sprite is created.
+     */
     private bagSize(): Size {
-        return { width: this.bag.displayWidth, height: this.bag.displayHeight }
+        return { width: BAG_DISPLAY_SIZE, height: BAG_DISPLAY_SIZE }
     }
 
     /** Playable map area used both for spawning and for dragging the bag. */

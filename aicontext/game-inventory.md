@@ -20,7 +20,7 @@ A reordenação mantém a posição relativa dos itens de outras categorias e li
 ### InventoryBag
 `InventoryBag` desenha a bolsa inteiramente com objetos Phaser, sem nenhuma interface React: um sprite de bolsa, um contador e um painel com fundo, título, divisor por categoria e slots.
 
-A bolsa nasce em um canto aleatório do mapa com uma animação curta de surgimento, igual ao antigo drop de itens, e pode ser arrastada pela arena durante o estado `idle`. Um arraste só começa depois de o ponteiro se mover o suficiente, então o mesmo gesto distingue clique (abre ou fecha o painel) de arraste (move a bolsa). A posição é persistida ao fim do arraste.
+A bolsa nasce em um canto aleatório do mapa com uma animação curta de surgimento, igual ao antigo drop de itens, e pode ser arrastada pela arena durante o estado `idle`. A posição de nascimento, os limites de arraste e o clamp de uma posição salva são calculados a partir da constante de tamanho visual da bolsa, nunca do sprite, porque esse cálculo acontece antes de o sprite existir. Um arraste só começa depois de o ponteiro se mover o suficiente, então o mesmo gesto distingue clique (abre ou fecha o painel) de arraste (move a bolsa). A posição é persistida ao fim do arraste.
 
 Com a bolsa aberta, cada item guardado fica visível no seu slot usando a escala do slot. A ordem de exibição vem das categorias do inventário, e o painel pagina automaticamente quando a categoria transborda.
 
